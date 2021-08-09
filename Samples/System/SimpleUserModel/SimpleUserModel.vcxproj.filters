@@ -1,0 +1,467 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>9077a08a-c9c8-4d22-86f6-680487defc4c</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>625210d6-1fc0-4af6-8d11-b5c743acf550</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>afec4d5c-570e-49d2-be53-54d61cc80670</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>c734a8d6-79b1-43fc-a95d-11e766f67652</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenSource">
+      <UniqueIdentifier>{048ba372-7e90-4a8c-98f9-5256efef33d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenSource\HarfBuzz">
+      <UniqueIdentifier>{ccf30966-1123-47d8-a8a4-ff9cea13b589}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenSource\FreeType2">
+      <UniqueIdentifier>{a244969f-7a11-40b1-8aa6-fefd1e1c9231}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenSource\HarfBuzz\include">
+      <UniqueIdentifier>{fd494c8a-5642-4d18-97d4-577ff3993d8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenSource\FreeType2\include">
+      <UniqueIdentifier>{2dec334a-dcfb-41db-b31c-ce2fdba0156d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenSource\HarfBuzz\lib">
+      <UniqueIdentifier>{319927e4-23a1-41c9-b50c-04e8cb4a8d54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenSource\FreeType2\lib">
+      <UniqueIdentifier>{d39bf80a-d326-40c3-924f-4dd7a9062a92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenSource\FreeType2\include\freetype">
+      <UniqueIdentifier>{44d4d47c-86ba-4a31-be29-ac510b42129b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenSource\FreeType2\include\freetype\config">
+      <UniqueIdentifier>{9b482510-6dc5-4d73-aafe-04ee6d18aecc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Fonts">
+      <UniqueIdentifier>{eae2a84c-7666-4298-8519-4d239f72ce78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Textures">
+      <UniqueIdentifier>{5c8a9aea-8384-4c24-a139-cbe92ee367e7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="SimpleUserModel.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\UnicodeRendering\GlyphCache.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-gobject-structs.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-graphite2.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-icu.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-map.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-color.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-deprecated.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-font.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-layout.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-math.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-meta.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-metrics.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-name.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-shape.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-var.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-set.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-shape.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-shape-plan.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-style.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-subset.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-unicode.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-uniscribe.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-version.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-aat.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-aat-layout.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-blob.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-buffer.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-common.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-coretext.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-deprecated.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-directwrite.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-draw.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-face.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-font.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ft.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-gdi.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-glib.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-gobject.h">
+      <Filter>OpenSource\HarfBuzz\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\ft2build.h">
+      <Filter>OpenSource\FreeType2\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftcid.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftcolor.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftdriver.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\fterrdef.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\fterrors.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftfntfmt.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftgasp.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftglyph.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftgxval.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftgzip.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftimage.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftincrem.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftlcdfil.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftlist.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftlzw.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftmac.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftmm.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftmodapi.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftmoderr.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftotval.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftoutln.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftparams.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftpfr.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftrender.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftsizes.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftsnames.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftstroke.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftsynth.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftsystem.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\fttrigon.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\fttypes.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftwinfnt.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\t1tables.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ttnameid.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\tttables.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\tttags.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\freetype.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftadvanc.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftbbox.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftbdf.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftbitmap.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftbzip2.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftcache.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftchapters.h">
+      <Filter>OpenSource\FreeType2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\config\ftoption.h">
+      <Filter>OpenSource\FreeType2\include\freetype\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\config\ftstdlib.h">
+      <Filter>OpenSource\FreeType2\include\freetype\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\config\integer-types.h">
+      <Filter>OpenSource\FreeType2\include\freetype\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\config\mac-support.h">
+      <Filter>OpenSource\FreeType2\include\freetype\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\config\public-macros.h">
+      <Filter>OpenSource\FreeType2\include\freetype\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\config\ftconfig.h">
+      <Filter>OpenSource\FreeType2\include\freetype\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\config\ftheader.h">
+      <Filter>OpenSource\FreeType2\include\freetype\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\config\ftmodule.h">
+      <Filter>OpenSource\FreeType2\include\freetype\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\Texture.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="SimpleUserModel.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\UnicodeRendering\GlyphCache.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\Texture.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGame.Config" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\UILayout.json">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\OFL\NotoNaskhArabic-Regular.ttf">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\OFL\NotoSansCJKjp-Regular.otf">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\OFL\NotoSansCJKkr-Regular.otf">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\OFL\NotoSansCJKsc-Regular.otf">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\OFL\NotoSans-Regular.ttf">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\OFL\NotoSerifBengali-Regular.ttf">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\OFL\NotoSerifDevanagari-Regular.ttf">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\OFL\NotoSerifHebrew-Regular.ttf">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\OFL\NotoSerifThai-Regular.ttf">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Textures\UI\LOGO_ATG_SMALL.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_24.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_24_Bold.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_24_Italic.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18_Bold.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18_Italic.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\..\Kits\OpenSource\HarfBuzz\lib\release\harfbuzz.lib">
+      <Filter>OpenSource\HarfBuzz\lib</Filter>
+    </Library>
+    <Library Include="..\..\..\Kits\OpenSource\FreeType2\lib\x64\ReleaseStatic\freetype.lib">
+      <Filter>OpenSource\FreeType2\lib</Filter>
+    </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="readme.docx" />
+    <None Include="..\..\..\Kits\OpenSource\FreeType2\lib\x64\ReleaseStatic\freetype.pdb">
+      <Filter>OpenSource\FreeType2\lib</Filter>
+    </None>
+  </ItemGroup>
+</Project>

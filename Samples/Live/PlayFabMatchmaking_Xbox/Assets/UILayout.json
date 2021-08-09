@@ -1,0 +1,134 @@
+﻿{
+  "$schema": "https://atgsamplessa.blob.core.windows.net/uitkschema/latest/layout.schema.json",
+  "includes": [
+    "Assets/Layouts/sample-styles.json"
+  ],
+  "definitions": {
+    "#fullscreen": [ 1920, 1080 ],
+    "#console_window_width": 1400,
+    "#console_window_height": 900,
+    "#menu_left_coordinate": 50
+  },
+  "layout": {
+    "id": "SamplePanel",
+    "classId": "panel",
+    "styleId": "background_style",
+    "panel": {
+      "positioningAnchor": [ "left", "top" ],
+      "position": [ 0, 0 ],
+      "sizingAnchor": [ "left", "top" ],
+      "size": "#fullscreen"
+    },
+    "childElements": [
+      {
+        "classId": "staticText",
+        "id": "Level_Label",
+        "styleId": "panel_label_style",
+        "staticText": {
+          "text": "Match Level: 5",
+          "size": [ 200, 50 ],
+          "position": [ "#menu_left_coordinate", 100 ]
+        }
+      },
+      {
+        "id": "Set_Match_Level_Slider",
+        "prefabRef": "Assets/Layouts/level-slider.json",
+        "position": [ "#menu_left_coordinate", 150 ]
+      },
+      {
+        "id": "Find_Simple_Match_Button",
+        "prefabRef": "Assets/Layouts/menu-button.json",
+        "position": [ "#menu_left_coordinate", 250 ],
+        "subElements": [
+          {
+            "classId": "staticText",
+            "id": "Label",
+            "styleId": "button_label_style",
+            "staticText": {
+              "text": "Find Simple Match"
+            }
+          }
+        ]
+      },
+      {
+        "id": "Get_Region_Latencies_Button",
+        "prefabRef": "Assets/Layouts/menu-button.json",
+        "position": [ "#menu_left_coordinate", 500 ],
+        "subElements": [
+          {
+            "classId": "staticText",
+            "id": "Label",
+            "styleId": "button_label_style",
+            "staticText": {
+              "text": "Get Region Latencies"
+            }
+          }
+        ]
+      },
+      {
+        "id": "Find_Region_Match_Button",
+        "prefabRef": "Assets/Layouts/menu-button.json",
+        "position": [ "#menu_left_coordinate", 600 ],
+        "subElements": [
+          {
+            "classId": "staticText",
+            "id": "Label",
+            "styleId": "button_label_style",
+            "staticText": {
+              "text": "Find Region Match"
+            }
+          }
+        ]
+      },
+      {
+        "id": "Cancel_Matchmaking_Button",
+        "prefabRef": "Assets/Layouts/menu-button.json",
+        "position": [ "#menu_left_coordinate", 820 ],
+        "subElements": [
+          {
+            "classId": "staticText",
+            "id": "Label",
+            "styleId": "button_label_style",
+            "staticText": {
+              "text": "Cancel Matchmaking"
+            }
+          }
+        ]
+      },
+      {
+        "id": "Exit_Button",
+        "prefabRef": "Assets/Layouts/menu-button.json",
+        "position": [ "#menu_left_coordinate", 920 ],
+        "subElements": [
+          {
+            "classId": "staticText",
+            "id": "Label",
+            "styleId": "button_label_style",
+            "staticText": {
+              "text": "Exit"
+            }
+          }
+        ]
+      },
+      {
+        "classId": "Image",
+        "id": "Console_Background",
+        "size": [ "#console_window_width", "#console_window_height" ],
+        "positioningAnchor": [ "right", "top" ],
+        "position": [ -50, 100 ],
+        "sizingAnchor": [ "right", "top" ],
+        "style": {
+          "classId": "SpriteStyle",
+          "colorUsage": "override",
+          "color": [ 32, 32, 32, 1 ]
+        },
+        "childElements": [
+          {
+            "id": "Console_Window",
+            "prefabRef": "Assets/Layouts/console-window.json"
+          }
+        ]
+      }
+    ]
+  }
+}

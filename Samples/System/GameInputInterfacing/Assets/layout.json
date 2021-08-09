@@ -1,0 +1,35 @@
+{
+  "includes": [
+    "Assets/styles.json"
+  ],
+  "layout": {
+    "classId": "Panel",
+    "id": "Control_Panel",
+    "positioningAnchor": [ "left", "top" ],
+    "position": [ 0, 0 ],
+    "sizingAnchor": [ "left", "top" ],
+    "size": [ 1920, 1080 ],
+    "visible": true,
+    "style": {
+      "classId": "SpriteStyle",
+      "id": "Layout_Style",
+      "colorUsage": "override",
+      "color": [ 0, 0, 0, 1.0 ]
+    },
+    "childElements": [
+      {
+        "classId": "VerticalStackPanel",
+        "id": "Devices",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 0, 0 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 1920, 1080 ],
+        "stackingOrientation": "Down",
+        "stackElementPadding": 1,
+        "style": {
+          "classId": "nullstyle"
+        }
+      }
+    ]
+  }
+}

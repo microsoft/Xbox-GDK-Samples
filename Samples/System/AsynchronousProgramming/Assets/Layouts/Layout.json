@@ -1,0 +1,281 @@
+{
+  "styles":
+  [
+    {
+      "classId": "SpriteStyle",
+      "id": "Invisible_Panel_Style",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 0.0 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Dark_Panel_Style",
+      "colorUsage": "override",
+      "color": [ 38, 38, 38, 1.0 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Debug_Panel_Style",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 0.5 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "ATG_Logo_Style",
+      "colorUsage": "override",
+      "color": [195, 181, 152, 1.0],
+      "texture": "Assets/Textures/LOGO_ATG_SMALL.png"
+    },
+    
+    {
+      "classId": "SpriteStyle",
+      "id": "Slider_Button_Style",
+      "colorUsage": "setExisting",
+      "color": [ 255, 255, 255, 1.0 ],
+      "texture": "Assets/Textures/Slider_Unfocused.png"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Slider_Focused_Button_Style",
+      "inheritsFromId": "Slider_Button_Style",
+      "texture": "Assets/Textures/Slider_Focused.png"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Slider_Disabled_Button_Style",
+      "inheritsFromId": "Slider_Button_Style",
+      "texture": "Assets/Textures/Slider_Disabled.png"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Slider_Pressed_Button_Style",
+      "inheritsFromId": "Slider_Button_Style",
+      "texture": "Assets/Textures/Slider_Pressed.png"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Slider_Hovered_Button_Style",
+      "inheritsFromId": "Slider_Button_Style",
+      "texture": "Assets/Textures/Slider_Hovered.png"
+    },
+
+    {
+      "classId": "TextStyle",
+      "id": "Sample_Text_Style",
+      "colorUsage": "override",
+      "color": [195, 181, 152, 1.0],
+      "verticalAlign": "bottom",
+      "horizontalAlign": "left"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Sample_Title_Style",
+      "inheritsFromId": "Sample_Text_Style",
+      "size": 24,
+      "weight": "Bold",
+      "verticalAlign": "middle",
+      "horizontalAlign": "left",
+      "padding": [ 20, 0, 0, 0 ]
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Button_Label_Style",
+      "inheritsFromId": "Sample_Title_Style",
+      "size": 18,
+      "weight": "Bold",
+      "horizontalAlign": "center",
+      "padding": [ 0, 0, 0, 0 ]
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Button_Label_Style_Dark",
+      "inheritsFromId": "Button_Label_Style",
+      "color": [0, 0, 0, 1.0]
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Test_Description_Style",
+      "inheritsFromId": "Sample_Text_Style",
+      "verticalAlign": "top",
+      "padding": [ 0, 0, 0, 0 ]
+    }
+  ],
+
+  "layout":
+  {
+    "classId": "Panel",
+    "id": "Control_Panel",
+    "positioningAnchor": [ "left", "top" ],
+    "position": [ 0, 0 ],
+    "sizingAnchor": [ "left", "top" ],
+    "size": [ 1920, 1080 ],
+    "styleId": "Invisible_Panel_Style",
+    "childElements":
+    [
+      {
+        "classId": "HorizontalStackPanel",
+        "id": "Sample_Title_Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "position": [ 45, 25 ],
+        "size": [ 1920, 120 ],
+        "styleId": "Invisible_Panel_Style",
+        "stackingOrientation": "right",
+        "childElements":
+        [
+          {
+            "classId": "Image",
+            "id": "ATG_Logo_Image",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 100, 109 ],
+            "styleId": "ATG_Logo_Style"
+          },
+          {
+            "classId": "StaticText",
+            "id": "Panel_Title_Label",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "text": "Asynchronous Programming Sample",
+            "styleId": "Sample_Title_Style"
+          }
+        ]
+      },
+
+      {
+        "classId": "VerticalStackPanel",
+        "id": "Button_Stack_Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "position": [ 60, 160 ],
+        "size": [ 360, 920 ],
+        "styleId": "Invisible_Panel_Style",
+        "childElements":
+        [
+          {
+            "id": "Test_Button_1",
+            "prefabRef": "Assets/Layouts/TestButtonPrefab.json"
+          },
+          {
+            "id": "Test_Button_2",
+            "prefabRef": "Assets/Layouts/TestButtonPrefab.json"
+          },
+          {
+            "id": "Test_Button_3",
+            "prefabRef": "Assets/Layouts/TestButtonPrefab.json"
+          },
+          {
+            "id": "Test_Button_4",
+            "prefabRef": "Assets/Layouts/TestButtonPrefab.json"
+          },
+          {
+            "id": "Test_Button_5",
+            "prefabRef": "Assets/Layouts/TestButtonPrefab.json"
+          },
+          {
+            "id": "Test_Button_6",
+            "prefabRef": "Assets/Layouts/TestButtonPrefab.json"
+          },
+          {
+            "id": "Test_Button_7",
+            "prefabRef": "Assets/Layouts/TestButtonPrefab.json"
+          },
+          {
+            "id": "Test_Button_8",
+            "prefabRef": "Assets/Layouts/TestButtonPrefab.json"
+          },
+          {
+            "classId": "StaticText",
+            "id": "Test_Description_Label",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 330, 240 ],
+            "text": "This is a long description\nabout the currently highlighted\nor focused test. The actual\ntest runtime information\nand results will display\nin the content areas to\nthe right. I want this text\nto be super long so I\ncan get a good test case for\nthe description!",
+            "styleId": "Test_Description_Style"
+          }
+        ]
+      },
+
+      {
+        "classId": "Panel",
+        "id": "Output_Console_Window_Outer_Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "position": [ 430, 160 ],
+        "size": [ 1470, 850 ],
+        "styleId": "Dark_Panel_Style",
+        "childElements":
+        [
+          {
+            "classId": "ConsoleWindow",
+            "id": "Output_Console_Window",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "position": [ 0, 0 ],
+            "size": [ 1470, 850 ],
+            "focusable": true,
+            "maxConsoleLines": 200,
+            "styleId": "Sample_Text_Style",
+            "verticalSliderSubElementId": "Output_Console_Window_Slider",
+            "viewportPanelSubElementId": "Output_Console_Window_Panel",
+            "subElements":
+            [
+              {
+                "classId": "Panel",
+                "id": "Output_Console_Window_Panel",
+                "positioningAnchor": [ "left", "top" ],
+                "position": [ 0, 0 ],
+                "sizingAnchor": [ "left", "top" ],
+                "size": [ 1470, 850 ],
+                "styleId": "Invisible_Panel_Style"
+              },
+              {
+                "classId": "Slider",
+                "id": "Output_Console_Window_Slider",
+                "size": [35, 850],
+                "style":
+                {
+                  "classId": "NullStyle"
+                },
+                "thumbButtonSubElementId": "Output_Console_Window_Slider_Thumb",
+                "backgroundSubElementId": "Output_Console_Window_Slider_Background",
+                "sliderOrientation": "TopToBottom",
+                "sliderType": "discrete",
+                "numDiscreteSteps": 1,
+                "initialValue": 0,
+                "sizingAnchor": [ "right", "top" ],
+                "positioningAnchor": [ "right", "top" ],
+                "focusable": true,
+                "subElements":
+                [
+                  {
+                    "classId": "Image",
+                    "id": "Output_Console_Window_Slider_Background",
+                    "size": [ 35, 850 ],
+                    "style":
+                    {
+                      "classId": "SpriteStyle",
+                      "color": [ 128, 128, 128, 1.0 ],
+                      "colorUsage": "override"
+                    }
+                  },
+                  {
+                    "classId": "Button",
+                    "id": "Output_Console_Window_Slider_Thumb",
+                    "size": [ 35, 45 ],
+                    "styleId": "Slider_Button_Style",
+                    "focusable": true,
+                    "focusedStyleId": "Slider_Focused_Button_Style",
+                    "hoveredStyleId": "Slider_Hovered_Button_Style",
+                    "pressedStyleId": "Slider_Pressed_Button_Style",
+                    "disabledStyleId": "Slider_Disabled_Button_Style"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

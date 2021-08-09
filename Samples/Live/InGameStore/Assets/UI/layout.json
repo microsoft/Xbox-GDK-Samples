@@ -1,0 +1,378 @@
+{
+  "$schema": "https://atgsamplessa.blob.core.windows.net/uitkschema/latest/layout.schema.json",
+  "includes": [
+    "Assets/UI/defs.json",
+    "Assets/UI/styles.json"
+  ],
+  "layout": {
+    "id": "MasterPanel",
+    "classId": "Panel",
+    "position": [ 0, 0 ],
+    "size": [ 1920, 1280 ],
+    "positioningAnchor": [ "left", "top" ],
+    "sizingAnchor": [ "left", "top" ],
+    "styleId": "BasicPanelStyle",
+    "childElements": [
+      {
+        "id": "ATGLogo",
+        "classId": "Image",
+        "styleId": "LogoStyle",
+        "position": [ 50, 65 ],
+        "size": [ 110, 120 ]
+      },
+      {
+        "id": "SampleTitle",
+        "classId": "StaticText",
+        "size": [ 500, 50 ],
+        "position": [ 175, 60 ],
+        "verticalAlign": "left",
+        "horizontalAlign": "top",
+        "styleId": "BoldTextStyle",
+        "text": "In-Game Store Sample"
+      },
+      {
+        "id": "LicenseInfo1",
+        "classId": "StaticText",
+        "size": [ 1000, 50 ],
+        "position": [ 175, 100 ],
+        "verticalAlign": "left",
+        "horizontalAlign": "top",
+        "styleId": "BasicTextStyle",
+        "text": ""
+      },
+      {
+        "id": "LicenseInfo2",
+        "classId": "StaticText",
+        "size": [ 1000, 50 ],
+        "position": [ 175, 150 ],
+        "verticalAlign": "left",
+        "horizontalAlign": "top",
+        "styleId": "BasicTextStyle",
+        "text": ""
+      },
+      {
+        "id": "LocaleInfo",
+        "classId": "StaticText",
+        "size": [ 100, 50 ],
+        "position": [ 1770, 100 ],
+        "verticalAlign": "right",
+        "horizontalAlign": "top",
+        "styleId": "BasicTextStyle",
+        "text": ""
+      },
+
+      {
+        "classId": "TwistMenu",
+        "id": "ProductTypeFilter",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 50, 200 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 700, 100 ],
+        "infinitelyCycleItems": false,
+        "displayTextSubElementId": "TwistText",
+        "leftButtonSubElementId": "TwistLeft",
+        "rightButtonSubElementId": "TwistRight",
+        "pipStripSubElementId": "TwistPips",
+        "items": [
+          "ALL",
+          "DURABLES",
+          "DLC",
+          "CONSUMABLES",
+          "BUNDLES",
+          "OTHER"
+        ],
+        "style": {
+          "classId": "NullStyle"
+        },
+        "subElements": [
+          {
+            "id": "TwistLeft",
+            "classId": "Button",
+            "size": [ 100, 70 ],
+            "styleId": "BasicButtonStyle",
+            "focusable": true,
+            "focusedStyleId": "FocusedButtonStyle",
+            "hoveredStyleId": "HoveredButtonStyle",
+            "pressedStyleId": "PressedButtonStyle",
+            "disabledStyleId": "DisabledButtonStyle",
+            "subElements": [
+              {
+                "id": "TwistLeftText",
+                "classId": "StaticText",
+                "position": [ 0, 0 ],
+                "size": [ 100, 60 ],
+                "positioningAnchor": [ "center", "middle" ],
+                "sizingAnchor": [ "center", "middle" ],
+                "text": "[LB]",
+                "isLegend": true,
+                "styleId": "LegendTextStyle"
+              }
+            ]
+          },
+          {
+            "id": "TwistRight",
+            "classId": "Button",
+            "positioningAnchor": [ "right", "top" ],
+            "sizingAnchor": [ "right", "top" ],
+            "size": [ 100, 70 ],
+            "styleId": "BasicButtonStyle",
+            "focusable": true,
+            "focusedStyleId": "FocusedButtonStyle",
+            "hoveredStyleId": "HoveredButtonStyle",
+            "pressedStyleId": "PressedButtonStyle",
+            "disabledStyleId": "DisabledButtonStyle",
+            "subElements": [
+              {
+                "id": "TwistRightText",
+                "classId": "StaticText",
+                "position": [ 0, 0 ],
+                "size": [ 100, 60 ],
+                "positioningAnchor": [ "center", "middle" ],
+                "sizingAnchor": [ "center", "middle" ],
+                "text": "[RB]",
+                "isLegend": true,
+                "styleId": "LegendTextStyle"
+              }
+            ]
+
+          },
+          {
+            "id": "TwistText",
+            "classId": "StaticText",
+            "positioningAnchor": [ "center", "top" ],
+            "position": [ 0, -25 ],
+            "size": [ 400, 70 ],
+            "sizingAnchor": [ "center", "top" ],
+            "styleId": "BasicTwistStyle"
+          },
+          {
+            "id": "TwistPips",
+            "classId": "PipStrip",
+            "style": {
+              "classId": "NullStyle"
+            },
+            "position": [ 0, -30 ],
+            "positioningAnchor": [ "center", "bottom" ],
+            "sizingAnchor": [ "center", "bottom" ],
+            "pipSize": [ 40, 40 ],
+            "pipSpacing": 20,
+            "numberOfPips": 5,
+            "inactivePipStyleId": "UnselectedPip",
+            "activePipStyleId": "SelectedPip"
+          }
+        ]
+      },
+      
+      {
+        "id": "ItemList",
+        "classId": "VerticalStackPanel",
+        "position": [ 50, 300 ],
+        "size": [ 700, 700 ],
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "styleId": "BasicPanelStyle",
+        "stackingOrientation": "down",
+        "stackElementPadding": 8.0,
+        "maxVisibleItems": 4,
+        "sliderSubElementId" : "ItemListScrollbar",
+        "subElements": [
+          {
+            "id": "ItemListScrollbar",
+            "prefabRef": "#slider_prefab",
+            "position": [ 700, 0 ],
+            "size": [ 50, 625 ]
+          }
+        ]
+      },
+
+      {
+        "id": "NumResultsText",
+        "classId": "StaticText",
+        "position": [ 50, 925 ],
+        "size": [ 400, 50 ],
+        "styleId": "BoldTextStyle",
+        "text": ""
+      },
+
+      {
+        "id": "MenuButton",
+        "classId": "Button",
+        "position": [ 800, 200 ],
+        "size": [ 70, 70 ],
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "styleId": "BasicButtonStyle",
+        "focusable": true,
+        "focusedStyleId": "FocusedButtonStyle",
+        "hoveredStyleId": "HoveredButtonStyle",
+        "pressedStyleId": "PressedButtonStyle",
+        "disabledStyleId": "DisabledButtonStyle",
+        "subElements": [
+          {
+            "id": "MenuLegendText",
+            "classId": "StaticText",
+            "position": [ 0, 2 ],
+            "size": [ 65, 65 ],
+            "positioningAnchor": [ "center", "middle" ],
+            "sizingAnchor": [ "center", "middle" ],
+            "text": "[Menu]",
+            "isLegend": true,
+            "styleId": "SmallLegendTextStyle"
+          }
+        ]
+      },
+
+      {
+        "id": "StoreIdText",
+        "classId": "StaticText",
+        "position": [ 800, 300 ],
+        "size": [ 400, 50 ],
+        "styleId": "BoldTextStyle",
+        "text": ""
+      },
+      
+      {
+        "id": "PriceTag",
+        "classId": "Image",
+        "styleId": "PriceTagStyle",
+        "position": [ 1150, 200 ],
+        "size": [ 142, 42 ]
+      },
+      {
+        "id": "PriceText",
+        "classId": "StaticText",
+        "position": [ 1150, 200 ],
+        "size": [ 135, 38 ],
+        "styleId": "PriceTextStyle",
+        "text": ""
+      },
+      
+      
+      {
+        "id": "DescriptionText",
+        "classId": "StaticText",
+        "position": [ 800, 350 ],
+        "size": [ 500, 450 ],
+        "styleId": "DescriptionTextStyle",
+        "horzWrap": "wrapAtSpace",
+        "vertTrunc": "Truncate",
+        "text": "",
+        "sliderSubElementId" : "DescTextScroller",
+        "subElements": [
+          {
+            "id": "DescTextScroller",
+            "prefabRef": "#slider_prefab",
+            "position": [ 500, 0 ],
+            "size": [ 50, 500 ]
+          }
+        ]
+      },
+
+      {
+        "id": "ItemInfoText",
+        "classId": "StaticText",
+        "position": [ 800, 825 ],
+        "size": [ 500, 125 ],
+        "styleId": "ItemInfoTextStyle",
+        "horzWrap": "wrapAtSpace",
+        "vertTrunc": "Truncate",
+        "text": "",
+        "sliderSubElementId" : "InfoTextScroller",
+        "subElements": [
+          {
+            "id": "InfoTextScroller",
+            "prefabRef": "#slider_prefab",
+            "position": [ 500, 0 ],
+            "size": [ 50, 125 ]
+          }
+        ]
+      },
+
+      {
+        "id": "Poster",
+        "classId": "Image",
+        "styleId": "PosterStyle",
+        "position": [ 1350, 200 ],
+        "size": [ 524, 800 ]
+      },
+
+      {
+        "classId": "Panel",
+        "id": "ConsolePanel",
+        "size": [ 1720, 900 ],
+        "position": [ 100, 100 ],
+        "visible": false,
+        "style": {
+          "classId": "SpriteStyle",
+          "color": [ 0, 0, 0, 0.8 ],
+          "colorUsage": "override"
+        },
+        "subElements": [
+          {
+            "id": "ConsoleWindow",
+            "prefabRef": "#console_prefab"
+          }
+        ]
+      },
+      
+      {
+        "classId": "VerticalStackPanel",
+        "id": "ItemMenu",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "styleId": "BasicButtonStyle",
+        "stackingOrientation": "down",
+        "stackElementPadding": 0.0,
+        "visible": false
+      },
+      
+      {
+        "classId": "Panel",
+        "id": "OkPopup",
+        "positioningAnchor": [ "center", "middle" ],
+        "sizingAnchor": [ "center", "middle" ],
+        "size": [ 600, 200 ],
+        "position": [ 0, -100 ],
+        "styleId": "MenuBasicButtonStyle",
+        "visible": false,
+        "subElements": [
+          {
+            "id": "PopupText",
+            "classId": "StaticText",
+            "position": [ 0, 0 ],
+            "size": [ 600, 130 ],
+            "styleId": "PopupTextStyle",
+            "horzWrap": "wrapAtSpace",
+            "text": "Popup text"
+          },
+          {
+            "id": "PopupButton",
+            "classId": "Button",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "position": [ 0, 130 ],
+            "size": [ 600, 70 ],
+            "styleId": "MenuBasicButtonStyle",
+            "focusable": true,
+            "disabledStyleId": "MenuDisabledButtonStyle",
+            "focusedStyleId": "MenuFocusedButtonStyle",
+            "hoveredStyleId": "MenuHoveredButtonStyle",
+            "pressedStyleId": "MenuPressedButtonStyle",
+            "subElements": [
+              {
+                "id": "PopupButtonText",
+                "classId": "StaticText",
+                "styleId": "SmallLegendTextStyle",
+                "isLegend": true,
+                "horizontalAlign": "middle",
+                "verticalAlign": "center",
+                "text": "[A] Ok"
+              }
+            ]
+          }
+        ]
+      }
+      
+   ]
+  }
+}

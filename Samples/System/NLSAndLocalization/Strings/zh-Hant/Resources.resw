@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="ApplicationDescription">
+    <value>Sample for NLS APIs and localization (zh-Hant)</value>
+  </data>
+  <data name="ApplicationDisplayName">
+    <value>NLS And Localization (zh-Hant)</value>
+  </data>
+</root>

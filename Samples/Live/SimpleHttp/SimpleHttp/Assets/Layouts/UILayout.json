@@ -1,0 +1,103 @@
+﻿{
+  "$schema": "https://atgsamplessa.blob.core.windows.net/uitkschema/latest/layout.schema.json",
+  "includes": [
+    "Assets/Layouts/sample-styles.json"
+  ],
+  "definitions": {
+    "#console_window_width": 1400,
+    "#console_window_height": 830,
+    "#menu_left_coordinate": 50
+  },
+  "layout": {
+    "id": "SamplePanel",
+    "classId": "panel",
+    "styleId": "background_style",
+    "panel": {
+      "positioningAnchor": [ "left", "top" ],
+      "position": [ 0, 150 ],
+      "sizingAnchor": [ "left", "top" ],
+      "size": [ 1920, "#console_window_height" ]
+    },
+    "childElements": [
+      {
+        "id": "HttpRequestButton",
+        "prefabRef": "Assets/Layouts/menu-button.json",
+        "position": [ "#menu_left_coordinate", 50 ],
+        "subElements": [
+          {
+            "classId": "staticText",
+            "id": "Label",
+            "styleId": "button_label_style",
+            "staticText": {
+              "text": "HTTP Request"
+            }
+          }
+        ]
+      },
+      {
+        "id": "XBLRequestButton",
+        "prefabRef": "Assets/Layouts/menu-button.json",
+        "position": [ "#menu_left_coordinate", 110 ],
+        "subElements": [
+          {
+            "classId": "staticText",
+            "id": "Label",
+            "styleId": "button_label_style",
+            "staticText": {
+              "text": "XBL Service HTTP Request"
+            }
+          }
+        ]
+      },
+      {
+        "id": "GameServiceRequestButton",
+        "prefabRef": "Assets/Layouts/menu-button.json",
+        "position": [ "#menu_left_coordinate", 170 ],
+        "subElements": [
+          {
+            "classId": "staticText",
+            "id": "Label",
+            "styleId": "button_label_style",
+            "staticText": {
+              "text": "Game Service HTTP Request"
+            }
+          }
+        ]
+      },
+      {
+        "classId": "Image",
+        "id": "Console_Background",
+        "size": [ "#console_window_width", "#console_window_height" ],
+        "positioningAnchor": [ "right", "top" ],
+        "position": [ 0, 0 ],
+        "sizingAnchor": [ "right", "top" ],
+        "style": {
+          "classId": "SpriteStyle",
+          "colorUsage": "override",
+          "color": [ 32, 32, 32, 1 ]
+        },
+        "childElements": [
+          {
+            "id": "ConsoleWindow",
+            "prefabRef": "Assets/Layouts/console-window.json"
+          }
+        ]
+      },
+      {
+        "id": "ExitButton",
+        "prefabRef": "Assets/Layouts/menu-button.json",
+        "position": [ "#menu_left_coordinate", 700 ],
+        "subElements": [
+          {
+            "classId": "staticText",
+            "id": "Label",
+            "styleId": "button_label_style",
+            "staticText": {
+              "text": "Exit"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,176 @@
+{
+  "includes": [
+    "Assets/styles.json"
+  ],
+  "prefab": {
+    "classId": "Panel",
+    "size": [ 450, 270 ],
+    "styleId": "Basic_Panel_Style",
+    "subElements": [
+      {
+        "classId": "StaticText",
+        "id": "Title",
+        "position": [ 0, 10 ],
+        "size": [ 450, 30 ],
+        "text": "Gamepad",
+        "styleId": "Basic_Title_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Inputs",
+        "isLegend": true,
+        "text": "",
+        "position": [ 20, 40 ],
+        "size": [ 455, 30 ],
+        "style": {
+          "classId": "TextStyle",
+          "legendFont": "Assets/Fonts/XboxOneControllerLegendSmall"
+        }
+      },
+      {
+        "classId": "StaticText",
+        "id": "LT Label",
+        "text": "LT",
+        "position": [ 20, 70 ],
+        "size": [ 90, 30 ],
+        "style": {
+          "classId": "TextStyle",
+          "colorUsage": "override",
+          "color": [ 0, 0, 0, 1.0 ]
+        }
+      },
+      {
+        "classId": "StaticText",
+        "id": "LT Value",
+        "text": "",
+        "position": [ 20, 100 ],
+        "size": [ 90, 30 ],
+        "style": {
+          "classId": "TextStyle",
+          "colorUsage": "override",
+          "color": [ 0, 0, 0, 1.0 ]
+        }
+      },
+      {
+        "classId": "StaticText",
+        "id": "RT Label",
+        "text": "RT",
+        "position": [ 20, 140 ],
+        "size": [ 90, 30 ],
+        "style": {
+          "classId": "TextStyle",
+          "colorUsage": "override",
+          "color": [ 0, 0, 0, 1.0 ]
+        }
+      },
+      {
+        "classId": "StaticText",
+        "id": "RT Value",
+        "text": "",
+        "position": [ 20, 170 ],
+        "size": [ 90, 30 ],
+        "style": {
+          "classId": "TextStyle",
+          "colorUsage": "override",
+          "color": [ 0, 0, 0, 1.0 ]
+        }
+      },
+      {
+        "classId": "StaticText",
+        "id": "LeftX Label",
+        "text": "LeftX",
+        "position": [ 140, 70 ],
+        "size": [ 90, 30 ],
+        "style": {
+          "classId": "TextStyle",
+          "colorUsage": "override",
+          "color": [ 0, 0, 0, 1.0 ]
+        }
+      },
+      {
+        "classId": "StaticText",
+        "id": "LeftX Value",
+        "text": "",
+        "position": [ 140, 100 ],
+        "size": [ 90, 30 ],
+        "style": {
+          "classId": "TextStyle",
+          "colorUsage": "override",
+          "color": [ 0, 0, 0, 1.0 ]
+        }
+      },
+      {
+        "classId": "StaticText",
+        "id": "LeftY Label",
+        "text": "LeftY",
+        "position": [ 140, 140 ],
+        "size": [ 90, 30 ],
+        "style": {
+          "classId": "TextStyle",
+          "colorUsage": "override",
+          "color": [ 0, 0, 0, 1.0 ]
+        }
+      },
+      {
+        "classId": "StaticText",
+        "id": "LeftY Value",
+        "text": "",
+        "position": [ 140, 170 ],
+        "size": [ 90, 30 ],
+        "style": {
+          "classId": "TextStyle",
+          "colorUsage": "override",
+          "color": [ 0, 0, 0, 1.0 ]
+        }
+      },
+      {
+        "classId": "StaticText",
+        "id": "RightX Label",
+        "text": "RightX",
+        "position": [ 260, 70 ],
+        "size": [ 90, 30 ],
+        "style": {
+          "classId": "TextStyle",
+          "colorUsage": "override",
+          "color": [ 0, 0, 0, 1.0 ]
+        }
+      },
+      {
+        "classId": "StaticText",
+        "id": "RightX Value",
+        "text": "",
+        "position": [ 260, 100 ],
+        "size": [ 90, 30 ],
+        "style": {
+          "classId": "TextStyle",
+          "colorUsage": "override",
+          "color": [ 0, 0, 0, 1.0 ]
+        }
+      },
+      {
+        "classId": "StaticText",
+        "id": "RightY Label",
+        "text": "RightY",
+        "position": [ 260, 140 ],
+        "size": [ 90, 30 ],
+        "style": {
+          "classId": "TextStyle",
+          "colorUsage": "override",
+          "color": [ 0, 0, 0, 1.0 ]
+        }
+      },
+      {
+        "classId": "StaticText",
+        "id": "RightY Value",
+        "text": "",
+        "position": [ 260, 170 ],
+        "size": [ 90, 30 ],
+        "style": {
+          "classId": "TextStyle",
+          "colorUsage": "override",
+          "color": [ 0, 0, 0, 1.0 ]
+        }
+      }
+    ]
+  }
+}

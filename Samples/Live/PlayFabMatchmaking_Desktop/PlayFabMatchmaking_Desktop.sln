@@ -1,0 +1,38 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30406.217
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PlayFabMatchmaking_Desktop", "PlayFabMatchmaking_Desktop.vcxproj", "{0E6CCB59-DBE9-414D-8773-AC49B64430A3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTK12", "..\..\..\Kits\DirectXTK12\DirectXTK12_GRDK_2019.vcxproj", "{535FFCD9-54A5-41C3-98A9-C2A35BDA8955}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UITK", "..\..\..\Kits\UITK\UITK.vcxitems", "{2BFC8F59-E285-4B88-949E-1009233B11E1}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\..\..\Kits\UITK\UITK.vcxitems*{0e6ccb59-dbe9-414d-8773-ac49b64430a3}*SharedItemsImports = 4
+		..\..\..\Kits\UITK\UITK.vcxitems*{2bfc8f59-e285-4b88-949e-1009233b11e1}*SharedItemsImports = 9
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Gaming.Desktop.x64 = Debug|Gaming.Desktop.x64
+		Release|Gaming.Desktop.x64 = Release|Gaming.Desktop.x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0E6CCB59-DBE9-414D-8773-AC49B64430A3}.Debug|Gaming.Desktop.x64.ActiveCfg = Debug|Gaming.Desktop.x64
+		{0E6CCB59-DBE9-414D-8773-AC49B64430A3}.Debug|Gaming.Desktop.x64.Build.0 = Debug|Gaming.Desktop.x64
+		{0E6CCB59-DBE9-414D-8773-AC49B64430A3}.Debug|Gaming.Desktop.x64.Deploy.0 = Debug|Gaming.Desktop.x64
+		{0E6CCB59-DBE9-414D-8773-AC49B64430A3}.Release|Gaming.Desktop.x64.ActiveCfg = Release|Gaming.Desktop.x64
+		{0E6CCB59-DBE9-414D-8773-AC49B64430A3}.Release|Gaming.Desktop.x64.Build.0 = Release|Gaming.Desktop.x64
+		{0E6CCB59-DBE9-414D-8773-AC49B64430A3}.Release|Gaming.Desktop.x64.Deploy.0 = Release|Gaming.Desktop.x64
+		{535FFCD9-54A5-41C3-98A9-C2A35BDA8955}.Debug|Gaming.Desktop.x64.ActiveCfg = Debug|Gaming.Desktop.x64
+		{535FFCD9-54A5-41C3-98A9-C2A35BDA8955}.Debug|Gaming.Desktop.x64.Build.0 = Debug|Gaming.Desktop.x64
+		{535FFCD9-54A5-41C3-98A9-C2A35BDA8955}.Release|Gaming.Desktop.x64.ActiveCfg = Release|Gaming.Desktop.x64
+		{535FFCD9-54A5-41C3-98A9-C2A35BDA8955}.Release|Gaming.Desktop.x64.Build.0 = Release|Gaming.Desktop.x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1270E1FE-AA62-4A54-A5A3-795CEC5054C0}
+	EndGlobalSection
+EndGlobal

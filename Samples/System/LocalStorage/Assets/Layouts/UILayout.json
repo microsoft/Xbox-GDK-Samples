@@ -1,0 +1,322 @@
+﻿{
+  "$schema": "https://atgsamplessa.blob.core.windows.net/uitkschema/latest/layout.schema.json",
+
+  "definitions":
+  {
+    "#fullscreen": [ 1920, 1080 ],
+    "#title_color": [195, 181, 152, 1.0],
+    "#panel_background": [38, 38, 38, 1.0],
+
+    "#white": [255, 255, 255, 1.0],
+    "#black": [0, 0, 0, 1.0],
+    "#gray": [128, 128, 128, 1.0],
+    "#invisible": [255, 255, 255, 0.0]
+  },
+
+  "styles":
+  [
+    {
+      "classId": "SpriteStyle",
+      "id": "Invisible_Panel_Style",
+      "spriteStyle":
+      {
+        "colorUsage": "override",
+        "color": "#invisible"
+      }
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Dark_Panel_Style",
+      "colorUsage": "override",
+      "color": "#panel_background"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "ATG_Logo_Style",
+      "spriteStyle":
+      {
+        "colorUsage": "override",
+        "color": "#title_color",
+        "texture": "Assets/Textures/LOGO_ATG_SMALL.png"
+      }
+    },
+    
+    {
+      "classId": "SpriteStyle",
+      "id": "Slider_Button_Style",
+      "spriteStyle":
+      {
+        "colorUsage": "setExisting",
+        "color": "#white",
+        "texture": "Assets/Textures/Slider_Unfocused.png"
+      }
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Slider_Focused_Button_Style",
+      "inheritsFromId": "Slider_Button_Style",
+      "spriteStyle":
+      {
+        "texture": "Assets/Textures/Slider_Focused.png"
+      }
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Slider_Disabled_Button_Style",
+      "inheritsFromId": "Slider_Button_Style",
+      "spriteStyle":
+      {
+        "texture": "Assets/Textures/Slider_Disabled.png"
+      }
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Slider_Pressed_Button_Style",
+      "inheritsFromId": "Slider_Button_Style",
+      "spriteStyle":
+      {
+        "texture": "Assets/Textures/Slider_Pressed.png"
+      }
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Slider_Hovered_Button_Style",
+      "inheritsFromId": "Slider_Button_Style",
+      "spriteStyle":
+      {
+        "texture": "Assets/Textures/Slider_Hovered.png"
+      }
+    },
+
+    {
+      "classId": "TextStyle",
+      "id": "Sample_Text_Style",
+      "colorUsage": "override",
+      "color": "#title_color",
+      "verticalAlign": "bottom",
+      "horizontalAlign": "left"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Sample_Title_Style",
+      "inheritsFromId": "Sample_Text_Style",
+      "size": 24,
+      "weight": "Bold",
+      "verticalAlign": "middle",
+      "horizontalAlign": "left",
+      "padding": [ 20, 0, 0, 0 ]
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Button_Label_Style",
+      "inheritsFromId": "Sample_Title_Style",
+      "size": 18,
+      "weight": "Bold",
+      "horizontalAlign": "center",
+      "padding": [ 0, 0, 0, 0 ]
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Button_Label_Style_Dark",
+      "inheritsFromId": "Button_Label_Style",
+      "color": "#black"
+    }
+  ],
+
+  "layout":
+  {
+    "id": "SamplePanel",
+    "classId": "panel",
+    "styleId": "Invisible_Panel_Style",
+    "panel":
+    {
+      "positioningAnchor": [ "left", "top" ],
+      "position": [ 0, 0 ],
+      "sizingAnchor": [ "left", "top" ],
+      "size": "#fullscreen"
+    },
+    "childElements":
+    [
+      {
+        "classId": "HorizontalStackPanel",
+        "id": "Sample_Title_Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "position": [ 45, 25 ],
+        "size": [ 1920, 120 ],
+        "styleId": "Invisible_Panel_Style",
+        "stackingOrientation": "right",
+        "childElements":
+        [
+          {
+            "classId": "Image",
+            "id": "ATG_Logo_Image",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 100, 109 ],
+            "styleId": "ATG_Logo_Style"
+          },
+          {
+            "classId": "StaticText",
+            "id": "Panel_Title_Label",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "text": "Local Storage Sample",
+            "styleId": "Sample_Title_Style"
+          }
+        ]
+      },
+
+      {
+        "classId": "StaticText",
+        "id": "Storage_Info_Text",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "text": "Storage Type: [Type]",
+        "styleId": "Button_Label_Style",
+        "position": [ 40, 100 ],
+        "size": [ 360, 200 ]
+      },
+      {
+        "id": "Left_Button",
+        "prefabRef": "Assets/Layouts/ButtonPrefab.json",
+        "position": [ 160, 220 ],
+        "size": [ 80, 80 ],
+        "positioningAnchor": [ "left", "top" ]
+      },
+      {
+        "id": "Right_Button",
+        "prefabRef": "Assets/Layouts/ButtonPrefab.json",
+        "position": [ 280, 220 ],
+        "size": [ 80, 80 ],
+        "positioningAnchor": [ "left", "top" ]
+      },
+
+      {
+        "classId": "VerticalStackPanel",
+        "id": "Button_Stack_Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "position": [ 60, 360 ],
+        "size": [ 360, 720 ],
+        "styleId": "Invisible_Panel_Style",
+        "childElements":
+        [
+          {
+            "id": "Button_1",
+            "prefabRef": "Assets/Layouts/ButtonPrefab.json"
+          },
+          {
+            "id": "Button_2",
+            "prefabRef": "Assets/Layouts/ButtonPrefab.json"
+          },
+          {
+            "id": "Button_3",
+            "prefabRef": "Assets/Layouts/ButtonPrefab.json"
+          },
+          {
+            "id": "Button_4",
+            "prefabRef": "Assets/Layouts/ButtonPrefab.json"
+          },
+          {
+            "id": "Button_5",
+            "prefabRef": "Assets/Layouts/ButtonPrefab.json"
+          },
+          {
+            "id": "Button_6",
+            "prefabRef": "Assets/Layouts/ButtonPrefab.json"
+          },
+          {
+            "id": "Button_7",
+            "prefabRef": "Assets/Layouts/ButtonPrefab.json"
+          },
+          {
+            "id": "Button_8",
+            "prefabRef": "Assets/Layouts/ButtonPrefab.json"
+          }
+        ]
+      },
+
+      {
+        "classId": "Panel",
+        "id": "Output_Console_Window_Outer_Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "position": [ 430, 160 ],
+        "size": [ 1470, 850 ],
+        "styleId": "Dark_Panel_Style",
+        "childElements":
+        [
+          {
+            "classId": "ConsoleWindow",
+            "id": "Output_Console_Window",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "position": [ 0, 0 ],
+            "size": [ 1470, 850 ],
+            "focusable": false,
+            "maxConsoleLines": 200,
+            "styleId": "Sample_Text_Style",
+            "verticalSliderSubElementId": "Output_Console_Window_Slider",
+            "viewportPanelSubElementId": "Output_Console_Window_Panel",
+            "subElements":
+            [
+              {
+                "classId": "Panel",
+                "id": "Output_Console_Window_Panel",
+                "positioningAnchor": [ "left", "top" ],
+                "position": [ 0, 0 ],
+                "sizingAnchor": [ "left", "top" ],
+                "size": [ 1470, 850 ],
+                "styleId": "Invisible_Panel_Style"
+              },
+              {
+                "classId": "Slider",
+                "id": "Output_Console_Window_Slider",
+                "size": [35, 850],
+                "style":
+                {
+                  "classId": "NullStyle"
+                },
+                "thumbButtonSubElementId": "Output_Console_Window_Slider_Thumb",
+                "backgroundSubElementId": "Output_Console_Window_Slider_Background",
+                "sliderOrientation": "TopToBottom",
+                "sliderType": "discrete",
+                "numDiscreteSteps": 1,
+                "initialValue": 0,
+                "sizingAnchor": [ "right", "top" ],
+                "positioningAnchor": [ "right", "top" ],
+                "focusable": false,
+                "subElements":
+                [
+                  {
+                    "classId": "Image",
+                    "id": "Output_Console_Window_Slider_Background",
+                    "size": [ 35, 850 ],
+                    "style":
+                    {
+                      "classId": "SpriteStyle",
+                      "color": "#gray",
+                      "colorUsage": "override"
+                    }
+                  },
+                  {
+                    "classId": "Button",
+                    "id": "Output_Console_Window_Slider_Thumb",
+                    "size": [ 35, 45 ],
+                    "styleId": "Slider_Button_Style",
+                    "focusable": false,
+                    "focusedStyleId": "Slider_Focused_Button_Style",
+                    "hoveredStyleId": "Slider_Hovered_Button_Style",
+                    "pressedStyleId": "Slider_Pressed_Button_Style",
+                    "disabledStyleId": "Slider_Disabled_Button_Style"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

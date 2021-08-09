@@ -1,0 +1,66 @@
+{
+  "styles": [
+    {
+      "classId": "SpriteStyle",
+      "id": "Basic_Button_Style",
+      "colorUsage": "setExisting",
+      "color": [ 255, 255, 255, 1.0 ],
+      "texture": "Assets/Textures/Button_Unfocused.png"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Focused_Button_Style",
+      "inheritsFromId": "Basic_Button_Style",
+      "texture": "Assets/Textures/Button_Focused.png"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Disabled_Button_Style",
+      "inheritsFromId": "Basic_Button_Style",
+      "texture": "Assets/Textures/Button_Disabled.png"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Pressed_Button_Style",
+      "inheritsFromId": "Basic_Button_Style",
+      "texture": "Assets/Textures/Button_Pressed.png"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Hovered_Button_Style",
+      "inheritsFromId": "Basic_Button_Style",
+      "texture": "Assets/Textures/Button_Hovered.png"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Selected_Button_Style",
+      "inheritsFromId": "Basic_Button_Style",
+      "colorUsage": "setExisting",
+      "color": [ 70, 70, 70, 1.0 ],
+      "texture": "Assets/Textures/Button_Hovered.png"
+    }
+  ],
+
+  "prefab": {
+    "classId": "Button",
+    "positioningAnchor": [ "center", "top" ],
+    "sizingAnchor": [ "center", "top" ],
+    "size": [ 500, 50 ],
+    "styleId": "Basic_Button_Style",
+    "focusable": true,
+    "disabledStyleId": "Disabled_Button_Style",
+    "focusedStyleId": "Focused_Button_Style",
+    "hoveredStyleId": "Hovered_Button_Style",
+    "pressedStyleId": "Pressed_Button_Style",
+    "subElements": [
+      {
+        "classId": "StaticText",
+        "id": "Test_Button_Label",
+        "positioningAnchor": [ "center", "middle" ],
+        "sizingAnchor": [ "center", "middle" ],
+        "text": "en-US",
+        "styleId": "Button_Label_Style"
+      }
+    ]
+  }
+}

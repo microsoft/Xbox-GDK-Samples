@@ -1,0 +1,377 @@
+{
+  "styles": [
+    {
+      "classId": "SpriteStyle",
+      "id": "Basic_Panel_Style",
+      "colorUsage": "override",
+      "color": [ 192, 192, 192, 1.0 ],
+      "texture": "Assets/roundy-border.png",
+      "spriteType": "nineSliced",
+      "innerUVExtents": [ 0.1, 0.1, 0.9, 0.9 ],
+      "padding": [ 20, 20, 20, 20 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Selected_Pip",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "texture": "Assets/Selected.dds"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Unselected_Pip",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "texture": "Assets/Unselected.dds"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Checked",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "texture": "Assets/Owned.png"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Unchecked",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "texture": "Assets/blank.png"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Basic_Twist_Style",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "verticalAlign": "middle",
+      "horizontalAlign": "center"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Basic_Console_Style",
+      "font": "Assets/Fonts/Courier",
+      "size": 16,
+      "colorUsage": "override",
+      "color": [ 192, 192, 192, 1.0 ],
+      "verticalAlign": "top",
+      "horizontalAlign": "left"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Basic_DLC_Style",
+      "verticalAlign": "middle",
+      "horizontalAlign": "left"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Basic_Store_Style",
+      "verticalAlign": "middle",
+      "horizontalAlign": "left"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Basic_Legend_Style",
+      "colorUsage": "override",
+      "color": [ 192, 192, 192, 1.0 ],
+      "legendFont": "Assets/Fonts/XboxOneControllerLegendSmall"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Basic_Button_Style",
+      "inheritsFromId": "Basic_Panel_Style",
+      "colorUsage": "setExisting",
+      "color": [ 255, 255, 255, 1.0 ],
+      "padding": [ 20, 0, 0, 0 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Focused_Button_Style",
+      "inheritsFromId": "Basic_Button_Style",
+      "color": [ 0, 255, 255, 1.0 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Disabled_Button_Style",
+      "inheritsFromId": "Basic_Button_Style",
+      "color": [ 128, 128, 128, 1.0 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Pressed_Button_Style",
+      "inheritsFromId": "Basic_Button_Style",
+      "color": [ 0, 192, 192, 1.0 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Hovered_Button_Style",
+      "inheritsFromId": "Basic_Button_Style",
+      "color": [ 128, 255, 128, 1.0 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "DLC_Basic_Button_Style",
+      "texture": "Assets/black-square.png",
+      "colorUsage": "setExisting",
+      "color": [ 255, 255, 255, 0.5 ],
+      "padding": [ 20, 0, 0, 0 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "DLC_Focused_Button_Style",
+      "inheritsFromId": "DLC_Basic_Button_Style",
+      "colorUsage": "override",
+      "color": [ 0, 255, 255, 0.8 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "DLC_Disabled_Button_Style",
+      "inheritsFromId": "DLC_Basic_Button_Style",
+      "color": [ 128, 128, 128, 0.5 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "DLC_Pressed_Button_Style",
+      "inheritsFromId": "DLC_Basic_Button_Style",
+      "color": [ 0, 192, 192, 0.5 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "DLC_Hovered_Button_Style",
+      "inheritsFromId": "DLC_Basic_Button_Style",
+      "color": [ 128, 255, 128, 0.5 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Store_Basic_Button_Style",
+      "texture": "Assets/black-square.png",
+      "colorUsage": "setExisting",
+      "color": [ 255, 255, 255, 0.5 ],
+      "padding": [ 20, 0, 0, 0 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Store_Focused_Button_Style",
+      "inheritsFromId": "Store_Basic_Button_Style",
+      "colorUsage": "override",
+      "color": [ 0, 255, 255, 0.8 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Store_Disabled_Button_Style",
+      "inheritsFromId": "Store_Basic_Button_Style",
+      "color": [ 128, 128, 128, 0.5 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Store_Pressed_Button_Style",
+      "inheritsFromId": "Store_Basic_Button_Style",
+      "color": [ 0, 192, 192, 0.5 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Store_Hovered_Button_Style",
+      "inheritsFromId": "Store_Basic_Button_Style",
+      "color": [ 128, 255, 128, 0.5 ]
+    },
+    {
+      "id": "ProgressBarStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "texture": "Assets/progressbar.png",
+      "outerUVExtents": [ 0.0, 0.0, 0.5, 1.0 ]
+    },
+    {
+      "id": "ProgressBarBackStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "texture": "Assets/progressbar.png",
+      "outerUVExtents": [ 0.5, 0.0, 1.0, 1.0 ]
+    }
+  ],
+  "definitions": {
+    "#dlc_button_prefab": "Assets/Layouts/dlc_button.json",
+    "#store_button_prefab": "Assets/Layouts/store_button.json"
+  },
+  "layout": {
+    "classId": "Panel",
+    "id": "Control_Panel",
+    "positioningAnchor": [ "left", "top" ],
+    "position": [ 0, 96 ],
+    "sizingAnchor": [ "left", "top" ],
+    "size": [ 1920, 800 ],
+    "visible": true,
+    "style": {
+      "classId": "SpriteStyle",
+      "id": "Layout_Style",
+      "colorUsage": "override",
+      "color": "#2f2f2f"
+    },
+    "childElements": [
+      {
+        "classId": "Image",
+        "id": "BackgroundImage",
+        "position": [ 249, 0 ],
+        "positioningAnchor": [ "left", "top" ],
+        "size": [ 1422, 800 ],
+        "sizingAnchor": [ "left", "top" ],
+        "style": {
+          "classId": "SpriteStyle",
+          "id": "BackgroundStyle",
+          "colorUsage": "override",
+          "color": [ 255, 255, 255, 1.0 ],
+          "texture": "Assets/unmounted.png"
+        }
+      },
+      {
+        "classId": "TwistMenu",
+        "id": "Filter",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 0, 16 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 900, 100 ],
+        "infinitelyCycleItems": true,
+        "displayTextSubElementId": "twist_text",
+        "leftButtonSubElementId": "twist_left",
+        "pipStripSubElementId": "twist_pips",
+        "rightButtonSubElementId": "twist_right",
+        "items": [
+          "AllDownloadableContent",
+          "AllRelatedPackages",
+          "CurrentTitleOnly",
+          "RelatedTitlesOnly"
+        ],
+        "style": {
+          "classId": "NullStyle"
+        },
+        "subElements": [
+          {
+            "id": "twist_left",
+            "classId": "Button",
+            "positioningAnchor": [ "left", "top" ],
+            "size": [ 100, 70 ],
+            "styleId": "Basic_Button_Style",
+            "focusable": true,
+            "focusedStyleId": "Focused_Button_Style",
+            "hoveredStyleId": "Hovered_Button_Style",
+            "pressedStyleId": "Pressed_Button_Style",
+            "disabledStyleId": "Disabled_Button_Style",
+            "subElements": [
+              {
+                "id": "twist_left_text",
+                "classId": "StaticText",
+                "position": [ 25, 15 ],
+                "size": [ 100, 60 ],
+                "positioningAnchor": [ "center", "middle" ],
+                "sizingAnchor": [ "center", "middle" ],
+                "text": "[LB]",
+                "isLegend": true,
+                "styleId": "Basic_Legend_Style"
+              }
+            ]
+          },
+          {
+            "id": "twist_right",
+            "classId": "Button",
+            "positioningAnchor": [ "right", "top" ],
+            "sizingAnchor": [ "right", "top" ],
+            "size": [ 100, 70 ],
+            "styleId": "Basic_Button_Style",
+            "focusable": true,
+            "focusedStyleId": "Focused_Button_Style",
+            "hoveredStyleId": "Hovered_Button_Style",
+            "pressedStyleId": "Pressed_Button_Style",
+            "disabledStyleId": "Disabled_Button_Style",
+            "subElements": [
+              {
+                "id": "twist_right_text",
+                "classId": "StaticText",
+                "position": [ 25, 15 ],
+                "size": [ 100, 60 ],
+                "positioningAnchor": [ "center", "middle" ],
+                "sizingAnchor": [ "center", "middle" ],
+                "text": "[RB]",
+                "isLegend": true,
+                "styleId": "Basic_Legend_Style"
+              }
+            ]
+
+          },
+          {
+            "id": "twist_text",
+            "classId": "StaticText",
+            "positioningAnchor": [ "center", "top" ],
+            "size": [ 400, 70 ],
+            "sizingAnchor": [ "center", "top" ],
+            "styleId": "Basic_Twist_Style"
+          },
+          {
+            "id": "twist_pips",
+            "classId": "PipStrip",
+            "style": {
+              "classId": "NullStyle"
+            },
+            "position": [ 0, -10 ],
+            "positioningAnchor": [ "center", "bottom" ],
+            "sizingAnchor": [ "center", "bottom" ],
+            "pipSize": [ 20, 20 ],
+            "pipSpacing": 10,
+            "numberOfPips": 5,
+            "inactivePipStyleId": "Unselected_Pip",
+            "activePipStyleId": "Selected_Pip"
+          }
+        ]
+      },
+      {
+        "id": "StoreText",
+        "classId": "StaticText",
+        "size": [ 400, 50 ],
+        "position": [ 800, 50 ],
+        "positioningAnchor": [ "center", "top" ],
+        "sizingAnchor": [ "right", "middle" ],
+        "text": "DLCs in Store",
+        "styleId": "Basic_Store_Style"
+      },
+      {
+        "classId": "VerticalStack",
+        "id": "DlcList",
+        "position": [ 0, 128 ],
+        "positioningAnchor": [ "left", "top" ],
+        "size": [ 960, 600 ],
+        "sizingAnchor": [ "left", "top" ],
+        "spacingBetweenElements": 0,
+        "style": {
+          "classId": "NullStyle"
+        }
+      },
+      {
+        "classId": "VerticalStack",
+        "id": "StoreList",
+        "position": [ 960, 128 ],
+        "positioningAnchor": [ "left", "top" ],
+        "size": [ 960, 600 ],
+        "sizingAnchor": [ "left", "top" ],
+        "spacingBetweenElements": 0,
+        "style": {
+          "classId": "NullStyle"
+        }
+      },
+      {
+        "id": "Legend",
+        "classId": "StaticText",
+        "size": [ 1600, 50 ],
+        "position": [ 100, 850 ],
+        "text": "[Y] to Refresh, [VIEW] to Close Sample",
+        "isLegend": true,
+        "styleId": "Basic_Legend_Style"
+      },
+      {
+        "id": "ErrorText",
+        "classId": "StaticText",
+        "size": [ 400, 60 ],
+        "position": [ 100, 800 ],
+        "text": "Last error : ",
+        "styleId": "Basic_Store_Style"
+      }
+    ]
+  }
+}

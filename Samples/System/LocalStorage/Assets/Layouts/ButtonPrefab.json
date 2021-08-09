@@ -1,0 +1,93 @@
+{
+  "styles":
+  [
+    {
+      "classId": "TextStyle",
+      "id": "Sample_Text_Style",
+      "colorUsage": "override",
+      "color": [195, 181, 152, 1.0],
+      "verticalAlign": "bottom",
+      "horizontalAlign": "left"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Sample_Title_Style",
+      "inheritsFromId": "Sample_Text_Style",
+      "size": 24,
+      "weight": "Bold",
+      "verticalAlign": "middle",
+      "horizontalAlign": "left",
+      "padding": [ 20, 0, 0, 0 ]
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Button_Label_Style",
+      "inheritsFromId": "Sample_Title_Style",
+      "size": 18,
+      "weight": "Bold",
+      "horizontalAlign": "center",
+      "padding": [ 0, 0, 0, 0 ]
+    },
+
+    {
+      "classId": "SpriteStyle",
+      "id": "Basic_Button_Style",
+      "colorUsage": "setExisting",
+      "color": [ 255, 255, 255, 1.0 ],
+      "texture": "Assets/Textures/Button_Unfocused.png"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Focused_Button_Style",
+      "inheritsFromId": "Basic_Button_Style",
+      "texture": "Assets/Textures/Button_Focused.png",
+      "spriteType": "nineSliced",
+      "innerUVExtents": [ 0.1, 0.1, 0.9, 0.9 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Disabled_Button_Style",
+      "inheritsFromId": "Basic_Button_Style",
+      "texture": "Assets/Textures/Button_Disabled.png"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Pressed_Button_Style",
+      "inheritsFromId": "Basic_Button_Style",
+      "texture": "Assets/Textures/Button_Pressed.png",
+      "spriteType": "nineSliced",
+      "innerUVExtents": [ 0.1, 0.1, 0.9, 0.9 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Hovered_Button_Style",
+      "inheritsFromId": "Basic_Button_Style",
+      "texture": "Assets/Textures/Button_Hovered.png"
+    }
+  ],
+
+  "prefab": 
+  {
+    "classId": "Button",
+    "positioningAnchor": [ "center", "top" ],
+    "sizingAnchor": [ "center", "top" ],
+    "size": [ 330, 80 ],
+    "styleId": "Basic_Button_Style",
+    "focusable": true,
+    "disabledStyleId": "Disabled_Button_Style",
+    "focusedStyleId": "Focused_Button_Style",
+    "hoveredStyleId": "Hovered_Button_Style",
+    "pressedStyleId": "Pressed_Button_Style",
+    "subElements": 
+    [
+      {
+        "classId": "StaticText",
+        "id": "Button_Label",
+        "positioningAnchor": [ "center", "middle" ],
+        "sizingAnchor": [ "center", "middle" ],
+        "text": "Test Button",
+        "styleId": "Button_Label_Style"
+      }
+    ]
+  }
+}

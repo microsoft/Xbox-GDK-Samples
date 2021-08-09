@@ -1,0 +1,188 @@
+{
+  "includes": [
+    "Assets/styles.json"
+  ],
+  "prefab": {
+    "classId": "Panel",
+    "size": [ 450, 270 ],
+    "styleId": "Basic_Panel_Style",
+    "subElements": [
+      {
+        "classId": "StaticText",
+        "id": "Title",
+        "position": [ 0, 10 ],
+        "size": [ 450, 30 ],
+        "text": "Buttons",
+        "styleId": "Basic_Title_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Button1",
+        "position": [ 20, 30 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Button2",
+        "position": [ 20, 60 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Button3",
+        "position": [ 20, 90 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Button4",
+        "position": [ 20, 120 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Button5",
+        "position": [ 20, 150 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Button6",
+        "position": [ 20, 180 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Button7",
+        "position": [ 20, 210 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Button8",
+        "position": [ 150, 30 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Button9",
+        "position": [ 150, 60 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Button10",
+        "position": [ 150, 90 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Button11",
+        "position": [ 150, 120 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Button12",
+        "position": [ 150, 150 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Button13",
+        "position": [ 150, 180 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Button14",
+        "position": [ 150, 210 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Button15",
+        "position": [ 280, 30 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Button16",
+        "position": [ 280, 60 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Button17",
+        "position": [ 280, 90 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Button18",
+        "position": [ 280, 120 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Button19",
+        "position": [ 280, 150 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Button20",
+        "position": [ 280, 180 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Button21",
+        "position": [ 280, 210 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      }
+    ]
+  }
+}

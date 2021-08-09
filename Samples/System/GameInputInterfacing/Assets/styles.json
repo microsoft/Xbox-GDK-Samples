@@ -1,0 +1,40 @@
+{
+  "styles": [
+    {
+      "classId": "SpriteStyle",
+      "id": "Basic_Panel_Style",
+      "colorUsage": "override",
+      "color": [ 180, 218, 230, 0.9 ],
+      "texture": "Assets/Textures/roundy-border.png",
+      "spriteType": "nineSliced",
+      "innerUVExtents": [ 0.1, 0.1, 0.9, 0.9 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Device_Panel_Style",
+      "colorUsage": "override",
+      "color": [ 192, 192, 192, 1.0 ]
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Basic_Label_Style",
+      "colorUsage": "override",
+      "color": [ 0, 0, 0, 1.0 ],
+      "verticalAlign": "middle"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Basic_Title_Style",
+      "colorUsage": "override",
+      "color": [ 0, 0, 0, 1.0 ],
+      "verticalAlign": "middle",
+      "horizontalAlign": "center"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Basic_Text_Style",
+      "colorUsage": "override",
+      "color": [ 0, 0, 0, 1.0 ]
+    }
+  ]
+}

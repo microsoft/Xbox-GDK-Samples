@@ -1,0 +1,51 @@
+{
+  "prefab": {
+    "classId": "Panel",
+    "size": [ 600, 100 ],
+    "style": {
+      "classId": "NullStyle"
+    },
+    "subElements": [
+      {
+        "id": "user_id_panel",
+        "classId": "Panel",
+        "position": [ 125, 0 ],
+        "size": [ 50, 50 ],
+        "styleId": "user_number_style",
+        "subElements": [
+          {
+            "id": "user_id_text",
+            "classId": "StaticText",
+            "text": "0",
+            "positioningAnchor": [ "center", "middle" ],
+            "position": [ 0, 0 ],
+            "sizingAnchor": [ "center", "middle" ],
+            "size": [ 50, 50 ],
+            "styleId": "user_number_text_style"
+          }
+        ]
+      },
+      {
+        "id": "device_id_text",
+        "classId": "StaticText",
+        "text": "12345678...90abcdef",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 175, 0 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 400, 50 ],
+        "styleId": "device_id_text_style"
+      },
+      {
+        "id": "input_glyphs_text",
+        "classId": "StaticText",
+        "text": "[A][B][X][Y][LT][RB]",
+        "isLegend": true,
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 200, 50 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 375, 50 ],
+        "styleId": "device_id_text_style"
+      }
+    ]
+  }
+}

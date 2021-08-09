@@ -1,0 +1,15 @@
+CUSTOM_OVERLAY,200,0,0,1920,1080
+LABEL,201,144,135,300,40,GameChat2 Sample
+IMAGE,203,169,201,177,42,participantsLbl.png
+LEGEND,204,138,929,1700,36,[A] Create Chat Session  [X] Find Chat Session,SMALL
+
+CUSTOM_OVERLAY,300,0,0,1920,1080
+LABEL,301,144,135,300,40,GameChat2 Sample
+IMAGE,303,167,201,177,42,participantsLbl.png
+
+LEGEND,304,100,949,1700,50,[A] Toggle Mute  [LB][RB] Toggle Channel  [X] Send Message  [Y] Invite Users  [B] Exit Session,SMALL
+
+CUSTOM_OVERLAY,400,0,0,1920,1080
+LABEL,101,144,135,300,40,GameChat2 Sample
+LABEL,102,1195,504,528,684,Looking for sessions...,SMALL
+LEGEND,103,138,929,763,36,[A] Join Selected  [X] Refresh List  [B] Cancel,SMALL

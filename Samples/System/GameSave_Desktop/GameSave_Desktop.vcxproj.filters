@@ -1,0 +1,471 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>b14702c0-7b50-43dd-8eee-23ffce565e24</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>b01895a0-6789-4190-8f05-578cd5b6ef0f</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>9c0aaae5-abb9-415c-a595-a0cfdf0a46b8</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>8ef041cc-2c19-4830-95c4-75e128a089b7</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameLogic">
+      <UniqueIdentifier>{a718ddff-a48a-4027-b89c-999d89bf489b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameScreens">
+      <UniqueIdentifier>{973faa49-05ec-4e17-b985-c0e62469aa19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers">
+      <UniqueIdentifier>{9c8d248a-64d2-43cc-bc0c-89171dc46c4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Xbox Live Tool Kit">
+      <UniqueIdentifier>{5e181a8f-c257-42d2-ac58-fda1a99372cc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="GameSave_Desktop.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\Processor.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\RDTSCPStopWatch.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\Texture.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\DPIHelpers.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\InputState.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Log.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\StringHelpers.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLogic\AcquireUserScreen.h">
+      <Filter>GameScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLogic\ConfirmPopUpScreen.h">
+      <Filter>GameScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLogic\ErrorPopUpScreen.h">
+      <Filter>GameScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLogic\GameBoardScreen.h">
+      <Filter>GameScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLogic\GameScreen.h">
+      <Filter>GameScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLogic\LaunchOptionsScreen.h">
+      <Filter>GameScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLogic\MenuScreen.h">
+      <Filter>GameScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLogic\GameSaveManager.h">
+      <Filter>GameLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLogic\ScreenManager.h">
+      <Filter>GameLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLogic\StateManager.h">
+      <Filter>GameLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLogic\GameBoard.h">
+      <Filter>GameLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLogic\GameSave.h">
+      <Filter>GameLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLogic\GameSaveContainerMetadata.h">
+      <Filter>GameLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\TaskQueue.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\User.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\UserManager.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\UTF8Helper.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\XGameSaveHandleWrappers.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\XTaskQueueHandleWrapper.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\XUserHandleWrapper.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\AsyncAction.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\AsyncOp.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Buffer.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\HandleWrapperBase.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\ScopedLockWrappers.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\StateMachine.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\LiveTK\LiveResources.h">
+      <Filter>Xbox Live Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="Assets.h" />
+    <ClInclude Include="GlobalConstants.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="GameSave_Desktop.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\Processor.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\RDTSCPStopwatch.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\Texture.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\InputState.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\Log.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLogic\AcquireUserScreen.cpp">
+      <Filter>GameScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLogic\ConfirmPopUpScreen.cpp">
+      <Filter>GameScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLogic\ErrorPopUpScreen.cpp">
+      <Filter>GameScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLogic\GameBoardScreen.cpp">
+      <Filter>GameScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLogic\GameScreen.cpp">
+      <Filter>GameScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLogic\LaunchOptionsScreen.cpp">
+      <Filter>GameScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLogic\MenuScreen.cpp">
+      <Filter>GameScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLogic\GameSaveManager.cpp">
+      <Filter>GameLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLogic\ScreenManager.cpp">
+      <Filter>GameLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLogic\StateManager.cpp">
+      <Filter>GameLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="Helpers\TaskQueue.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Helpers\User.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Helpers\UserManager.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Helpers\UTF8Helper.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Helpers\XTaskQueueHandleWrapper.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Helpers\AsyncOp.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Helpers\Buffer.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\LiveTK\LiveResources.cpp">
+      <Filter>Xbox Live Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="Assets.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGame.Config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Readme.docx" />
+    <None Include="SampleSpecificAssets.inl" />
+    <None Include="Assets\Fonts\SegoeUILight_42_NP.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Fonts\SegoeUISemilight_18_NP.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Fonts\SegoeUISemilight_42_NP.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Fonts\Consolas_12_NP.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Fonts\Consolas_16_NP.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Fonts\SegoeUI_24_NP.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="GameSave_Desktop_ko-kr.docx" />
+    <None Include="GameSave_Desktop_zh-cn.docx" />
+    <None Include="GameSave_Desktop_ja-jp.docx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\WordGame_logo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\blank.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Board\wordformed_arrow_vert.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Board\gameboard.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Board\gameboard_letter_ON.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Board\wordformed_arrow_horiz.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnSaveState_ON.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnDeleteStateBlob.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnDeleteStateBlob_ON.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnDeleteStateContainer.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnDeleteStateContainer_ON.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnGetState.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnGetState_ON.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnListContainer.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnListContainer_ON.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnListContainerBlobs.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnListContainerBlobs_ON.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnReadState.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnReadState_ON.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnSaveSlot01.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnSaveSlot01_ON.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnSaveSlot02.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnSaveSlot02_ON.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnSaveSlot03.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnSaveSlot03_ON.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnSaveSlot04.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnSaveSlot04_ON.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnSaveSlot05.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnSaveSlot05_ON.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnSaveSlot06.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnSaveSlot06_ON.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnSaveSlot07.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnSaveSlot07_ON.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnSaveSlot08.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnSaveSlot08_ON.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnSaveSlot09.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnSaveSlot09_ON.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Buttons\btnSaveState.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Controller\dpad.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Controller\lb.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Controller\ls.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Controller\lt.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Controller\menu.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Controller\rb.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Controller\rs.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Controller\rt.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Controller\view.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Controller\x.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Controller\y.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Controller\a.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Controller\b.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Store\Logo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Store\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+	<Image Include="Assets\Store\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Store\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Store\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Store\WideLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Board\BOARD_BG_PC.jpg">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Assets\TWL06_2to5.txt">
+      <Filter>Assets</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

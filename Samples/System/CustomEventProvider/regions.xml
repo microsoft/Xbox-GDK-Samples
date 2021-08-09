@@ -1,0 +1,157 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<?Copyright (c) Microsoft Corporation. All rights reserved.?>
+<InstrumentationManifest xsi:schemaLocation="file://ntperformance/tools/wpt/Tools Regions_V1.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" >
+  <Instrumentation>
+    <Regions>
+      <RegionRoot Guid="{2A84A8DD-27E7-4972-B7F9-C521A10610BD}"
+                  Name="Sample Region File Root"
+                  FriendlyName="Root">
+        
+        <Region Guid="{0820756B-5763-4214-B9C8-AEC5272593C7}"
+                Name="CpuId 0"
+                FriendlyName="CpuId 0">
+          <Start>
+            <Event Provider="{A4A76336-4BA7-4CD9-85C3-B9C236D3041C}" Id="103" Version="0" />
+            <PayloadIdentifier FieldName="CpuID" FieldValue="0" />
+          </Start>
+          <Stop>
+            <Event Provider="{A4A76336-4BA7-4CD9-85C3-B9C236D3041C}" Id="104" Version="0" />
+            <PayloadIdentifier FieldName="CpuID" FieldValue="0" />
+          </Stop>
+          <Match>
+            <Event TID="true">
+              <Payload FieldName="Seq" />
+            </Event>
+            <SelfNest TID="true">
+              <Payload FieldName="Seq" />
+            </SelfNest>
+          </Match>
+          <Naming>
+            <PayloadBased NameField="Tag" />
+          </Naming>
+        </Region>
+        
+        <Region Guid="{08E72B17-F1E3-412C-A06B-7C56C2C6F6E9}"
+                Name="CpuId 1"
+                FriendlyName="CpuId 1">
+          <Start>
+            <Event Provider="{A4A76336-4BA7-4CD9-85C3-B9C236D3041C}" Id="103" Version="0" />
+            <PayloadIdentifier FieldName="CpuID" FieldValue="1" />
+          </Start>
+          <Stop>
+            <Event Provider="{A4A76336-4BA7-4CD9-85C3-B9C236D3041C}" Id="104" Version="0" />
+            <PayloadIdentifier FieldName="CpuID" FieldValue="1" />
+          </Stop>
+          <Match>
+            <Event TID="true">
+              <Payload FieldName="Seq" />
+            </Event>
+            <SelfNest TID="true">
+              <Payload FieldName="Seq" />
+            </SelfNest>
+          </Match>
+          <Naming>
+            <PayloadBased NameField="Tag" />
+          </Naming>
+        </Region>
+        
+        <Region Guid="{B0EE77ED-69FA-4AFA-9101-E8D19BA8785F}"
+                Name="CpuId 2"
+                FriendlyName="CpuId 2">
+          <Start>
+            <Event Provider="{A4A76336-4BA7-4CD9-85C3-B9C236D3041C}" Id="103" Version="0" />
+            <PayloadIdentifier FieldName="CpuID" FieldValue="2" />
+          </Start>
+          <Stop>
+            <Event Provider="{A4A76336-4BA7-4CD9-85C3-B9C236D3041C}" Id="104" Version="0" />
+            <PayloadIdentifier FieldName="CpuID" FieldValue="2" />
+          </Stop>
+          <Match>
+            <Event TID="true">
+              <Payload FieldName="Seq" />
+            </Event>
+            <SelfNest TID="true">
+              <Payload FieldName="Seq" />
+            </SelfNest>
+          </Match>
+          <Naming>
+            <PayloadBased NameField="Tag" />
+          </Naming>
+        </Region>
+        
+        <Region Guid="{AC66B559-14DF-4F94-9554-96D8A5014DE5}"
+                Name="CpuId 3"
+                FriendlyName="CpuId 3">
+          <Start>
+            <Event Provider="{A4A76336-4BA7-4CD9-85C3-B9C236D3041C}" Id="103" Version="0" />
+            <PayloadIdentifier FieldName="CpuID" FieldValue="3" />
+          </Start>
+          <Stop>
+            <Event Provider="{A4A76336-4BA7-4CD9-85C3-B9C236D3041C}" Id="104" Version="0" />
+            <PayloadIdentifier FieldName="CpuID" FieldValue="3" />
+          </Stop>
+          <Match>
+            <Event TID="true">
+              <Payload FieldName="Seq" />
+            </Event>
+            <SelfNest TID="true">
+              <Payload FieldName="Seq" />
+            </SelfNest>
+          </Match>
+          <Naming>
+            <PayloadBased NameField="Tag" />
+          </Naming>
+        </Region>
+        
+        <Region Guid="{4F78370A-B111-4864-BF8E-F9A6A3864165}"
+                Name="CpuId 4"
+                FriendlyName="CpuId 4">
+          <Start>
+            <Event Provider="{A4A76336-4BA7-4CD9-85C3-B9C236D3041C}" Id="103" Version="0" />
+            <PayloadIdentifier FieldName="CpuID" FieldValue="4" />
+          </Start>
+          <Stop>
+            <Event Provider="{A4A76336-4BA7-4CD9-85C3-B9C236D3041C}" Id="104" Version="0" />
+            <PayloadIdentifier FieldName="CpuID" FieldValue="4" />
+          </Stop>
+          <Match>
+            <Event TID="true">
+              <Payload FieldName="Seq" />
+            </Event>
+            <SelfNest TID="true">
+              <Payload FieldName="Seq" />
+            </SelfNest>
+          </Match>
+          <Naming>
+            <PayloadBased NameField="Tag" />
+          </Naming>
+        </Region>
+        
+        <Region Guid="{DA38E73A-6E62-4BD8-A612-6269D6E1095A}"
+                Name="CpuId 5"
+                FriendlyName="CpuId 5">
+          <Start>
+            <Event Provider="{A4A76336-4BA7-4CD9-85C3-B9C236D3041C}" Id="103" Version="0" />
+            <PayloadIdentifier FieldName="CpuID" FieldValue="5" />
+          </Start>
+          <Stop>
+            <Event Provider="{A4A76336-4BA7-4CD9-85C3-B9C236D3041C}" Id="104" Version="0" />
+            <PayloadIdentifier FieldName="CpuID" FieldValue="5" />
+          </Stop>
+          <Match>
+            <Event TID="true">
+              <Payload FieldName="Seq" />
+            </Event>
+            <SelfNest TID="true">
+              <Payload FieldName="Seq" />
+            </SelfNest>
+          </Match>
+          <Naming>
+            <PayloadBased NameField="Tag" />
+          </Naming>
+        </Region>
+        
+      </RegionRoot>
+    </Regions>
+  </Instrumentation>
+</InstrumentationManifest>

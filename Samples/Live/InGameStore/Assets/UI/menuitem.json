@@ -1,0 +1,41 @@
+{
+  "includes": [
+    "Assets/defs.json",
+    "Assets/styles.json"
+  ],
+
+  "prefab": {
+    "classId": "Button",
+    "positioningAnchor": [ "left", "top" ],
+    "sizingAnchor": [ "left", "top" ],
+    "size": [ 400, 60 ],
+    "styleId": "MenuBasicButtonStyle",
+    "focusable": true,
+    "disabledStyleId": "MenuDisabledButtonStyle",
+    "focusedStyleId": "MenuFocusedButtonStyle",
+    "hoveredStyleId": "MenuHoveredButtonStyle",
+    "pressedStyleId": "MenuPressedButtonStyle",
+    "subElements": [
+      {
+        "id": "MenuItemButtonLegend",
+        "classId": "StaticText",
+        "styleId": "SmallLegendTextStyle",
+        "position": [ 15, 7 ],
+        "size": [ 50, 50 ],
+        "isLegend": true,
+        "verticalAlign": "left",
+        "text": "[A]",
+        "visible": false
+      },
+      {
+        "id": "MenuItemButtonText",
+        "classId": "StaticText",
+        "styleId": "MenuItemTextStyle",
+        "position": [ 60, 0 ],
+        "size": [ 340, 60 ],
+        "verticalAlign": "left"
+      }
+
+    ]
+  }
+}

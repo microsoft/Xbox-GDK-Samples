@@ -1,0 +1,33 @@
+{
+  "$schema": "https://atgsamplessa.blob.core.windows.net/uitkschema/latest/layout.schema.json",
+  "definitions": {
+    "#buttonsize": [ 400, 50 ]
+  },
+  "prefab": {
+    "classId": "button",
+    "styleId": "Basic_Button_Style",
+    "button": {
+      "focusable": true,
+      "positioningAnchor": [ "left", "top" ],
+      "sizingAnchor": [ "left", "top" ],
+      "size": "#buttonsize",
+      "disabledStyleId": "Disabled_Button_Style",
+      "focusedStyleId": "Focused_Button_Style",
+      "hoveredStyleId": "Hovered_Button_Style",
+      "pressedStyleId": "Pressed_Button_Style"
+    },
+    "subElements": [
+      {
+        "classId": "staticText",
+        "id": "Label",
+        "styleId": "button_label_style",
+        "staticText": {
+          "positioningAnchor": [ "center", "middle" ],
+          "sizingAnchor": [ "center", "middle" ],
+          "size": "#buttonsize",
+          "text": "<MENU BUTTON>"
+        }
+      }
+    ]
+  }
+}

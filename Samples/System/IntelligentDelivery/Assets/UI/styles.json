@@ -1,0 +1,248 @@
+{
+  "styles": [
+    {
+      "id": "BasicPanelStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 0, 0, 0, 0.0 ]
+    },
+    {
+      "id": "StatusPanelStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 0, 0, 0, 0.3 ]
+    },
+    {
+      "id": "LogoStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 227, 211, 177, 0.76 ] ,
+      "texture": "Assets/Textures/LOGO_ATG.png"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "BasicLabelStyle",
+      "colorUsage": "override",
+      "color": [ 0, 0, 0, 1.0 ],
+      "horizontalAlign": "center",
+      "verticalAlign": "middle",
+      "fontSize": 24
+    },
+    {
+      "classId": "TextStyle",
+      "id": "BasicTextStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "horizontalAlign": "left",
+      "verticalAlign": "middle",
+      "fontSize": 18
+    },
+    {
+      "classId": "TextStyle",
+      "id": "BoldTextStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "horizontalAlign": "center",
+      "verticalAlign": "middle",
+      "weight": "bold",
+      "fontSize": 24
+    },
+    {
+      "classId": "TextStyle",
+      "id": "StatusStyle",
+      "colorUsage": "override",
+      "color": [ 0, 0, 0, 1.0 ],
+      "horizontalAlign": "center",
+      "verticalAlign": "middle",
+      "fontSize": 18
+    },
+    {
+      "classId": "TextStyle",
+      "id": "LegendTextStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "legendFont": "Assets/Fonts/XboxOneControllerLegendSmall",
+      "horizontalAlign": "left",
+      "verticalAlign": "middle",
+      "fontSize": 18
+    },
+    {
+      "classId": "TextStyle",
+      "id": "ProgressTextStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "horizontalAlign": "right",
+      "verticalAlign": "right",
+      "fontSize": 18
+    },
+    {
+      "id": "ProgressBarStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "texture": "Assets/Textures/progressbar.png",
+      "outerUVExtents": [ 0.0, 0.0, 0.5, 1.0 ]
+    },
+    {
+      "id": "ProgressBarBackStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "texture": "Assets/Textures/progressbar.png",
+      "outerUVExtents": [ 0.5, 0.0, 1.0, 1.0 ]
+    },
+
+    {
+      "id": "DisabledButtonStyle",
+      "inheritsFromId": "BasicButtonStyle",
+      "classId": "SpriteStyle",
+      "color": [ 128, 128, 128, 1.0 ]
+    },
+    {
+      "id": "FocusedButtonStyle",
+      "inheritsFromId": "BasicButtonStyle",
+      "classId": "SpriteStyle",
+      "color": [ 255, 255, 0, 1.0 ]
+    },
+    {
+      "id": "HoveredButtonStyle",
+      "inheritsFromId": "BasicButtonStyle",
+      "classId": "SpriteStyle",
+      "color": [ 128, 255, 128, 1.0 ]
+    },
+    {
+      "id": "PressedButtonStyle",
+      "inheritsFromId": "BasicButtonStyle",
+      "classId": "SpriteStyle",
+      "color": [ 192, 192, 0, 1.0 ]
+    },
+    {
+      "id": "BasicButtonStyle",
+      "classId": "SpriteStyle",
+      "color": [ 192, 192, 192, 1.0 ],
+      "colorUsage": "setExisting",
+      "texture": "Assets/Textures/roundy-border.png",
+      "spriteType": "nineSliced",
+      "innerUVExtents": [ 0.1, 0.1, 0.9, 0.9 ],
+      "padding": [ 0, 0, 0, 0 ]
+    },
+    {
+      "id": "RedButtonStyle",
+      "classId": "SpriteStyle",
+      "color": [ 192, 0, 0, 1.0 ],
+      "colorUsage": "setExisting",
+      "texture": "Assets/Textures/roundy-border.png",
+      "spriteType": "nineSliced",
+      "innerUVExtents": [ 0.1, 0.1, 0.9, 0.9 ],
+      "padding": [ 0, 0, 0, 0 ]
+    },
+    {
+      "id": "GreenButtonStyle",
+      "classId": "SpriteStyle",
+      "color": [ 0, 192, 0, 1.0 ],
+      "colorUsage": "setExisting",
+      "texture": "Assets/Textures/roundy-border.png",
+      "spriteType": "nineSliced",
+      "innerUVExtents": [ 0.1, 0.1, 0.9, 0.9 ],
+      "padding": [ 0, 0, 0, 0 ]
+    },
+    {
+      "id": "BlueButtonStyle",
+      "classId": "SpriteStyle",
+      "color": [ 0, 0, 192, 1.0 ],
+      "colorUsage": "setExisting",
+      "texture": "Assets/Textures/roundy-border.png",
+      "spriteType": "nineSliced",
+      "innerUVExtents": [ 0.1, 0.1, 0.9, 0.9 ],
+      "padding": [ 0, 0, 0, 0 ]
+    },
+    {
+      "id": "BlankFrameStyle",
+      "classId": "SpriteStyle",
+      "color": [ 50, 50, 50, 1.0 ],
+      "colorUsage": "setExisting",
+      "texture": "Assets/Textures/roundy-border.png",
+      "spriteType": "nineSliced",
+      "innerUVExtents": [ 0.1, 0.1, 0.9, 0.9 ],
+      "padding": [ 0, 0, 0, 0 ]
+    },
+    {
+      "id": "RedFrameStyle",
+      "classId": "SpriteStyle",
+      "color": [ 100, 0, 0, 1.0 ],
+      "colorUsage": "setExisting",
+      "texture": "Assets/Textures/roundy-border.png",
+      "spriteType": "nineSliced",
+      "innerUVExtents": [ 0.1, 0.1, 0.9, 0.9 ],
+      "padding": [ 0, 0, 0, 0 ]
+    },
+    {
+      "id": "RedFrameHighlightStyle",
+      "classId": "SpriteStyle",
+      "color": [ 200, 0, 0, 1.0 ],
+      "colorUsage": "setExisting",
+      "texture": "Assets/Textures/roundy-border.png",
+      "spriteType": "nineSliced",
+      "innerUVExtents": [ 0.1, 0.1, 0.9, 0.9 ],
+      "padding": [ 0, 0, 0, 0 ]
+    },
+    {
+      "id": "GreenFrameStyle",
+      "classId": "SpriteStyle",
+      "color": [ 0, 100, 0, 1.0 ],
+      "colorUsage": "setExisting",
+      "texture": "Assets/Textures/roundy-border.png",
+      "spriteType": "nineSliced",
+      "innerUVExtents": [ 0.1, 0.1, 0.9, 0.9 ],
+      "padding": [ 0, 0, 0, 0 ]
+    },
+    {
+      "id": "GreenFrameHighlightStyle",
+      "classId": "SpriteStyle",
+      "color": [ 0, 200, 0, 1.0 ],
+      "colorUsage": "setExisting",
+      "texture": "Assets/Textures/roundy-border.png",
+      "spriteType": "nineSliced",
+      "innerUVExtents": [ 0.1, 0.1, 0.9, 0.9 ],
+      "padding": [ 0, 0, 0, 0 ]
+    },
+    {
+      "id": "BlueFrameStyle",
+      "classId": "SpriteStyle",
+      "color": [ 0, 0, 100, 1.0 ],
+      "colorUsage": "setExisting",
+      "texture": "Assets/Textures/roundy-border.png",
+      "spriteType": "nineSliced",
+      "innerUVExtents": [ 0.1, 0.1, 0.9, 0.9 ],
+      "padding": [ 0, 0, 0, 0 ]
+    },
+    {
+      "id": "BlueFrameHighlightStyle",
+      "classId": "SpriteStyle",
+      "color": [ 0, 0, 200, 1.0 ],
+      "colorUsage": "setExisting",
+      "texture": "Assets/Textures/roundy-border.png",
+      "spriteType": "nineSliced",
+      "innerUVExtents": [ 0.1, 0.1, 0.9, 0.9 ],
+      "padding": [ 0, 0, 0, 0 ]
+    },
+    {
+      "id": "GrayFrameStyle",
+      "classId": "SpriteStyle",
+      "color": [ 100, 100, 100, 1.0 ],
+      "colorUsage": "setExisting",
+      "texture": "Assets/Textures/roundy-border.png",
+      "spriteType": "nineSliced",
+      "innerUVExtents": [ 0.1, 0.1, 0.9, 0.9 ],
+      "padding": [ 0, 0, 0, 0 ]
+    },
+    {
+      "id": "GrayFrameHighlightStyle",
+      "classId": "SpriteStyle",
+      "color": [ 200, 200, 200, 1.0 ],
+      "colorUsage": "setExisting",
+      "texture": "Assets/Textures/roundy-border.png",
+      "spriteType": "nineSliced",
+      "innerUVExtents": [ 0.1, 0.1, 0.9, 0.9 ],
+      "padding": [ 0, 0, 0, 0 ]
+    }
+  ]
+}

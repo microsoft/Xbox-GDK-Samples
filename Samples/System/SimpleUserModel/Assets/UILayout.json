@@ -1,0 +1,144 @@
+﻿{
+  "$schema": "https://atgsamplessa.blob.core.windows.net/uitkschema/latest/layout.schema.json",
+  "definitions":
+  {
+    "#fullscreen": [ 1920, 1080 ],
+    "#title_color": [195, 181, 152, 1.0],
+    "#primary_color": [ 227, 211, 177, 1.0 ],
+    "#primary_color_opaque80": [ 227, 211, 177, 0.8 ],
+    "#secondary_color": [ 140, 198, 199, 1.0 ],
+    "#secondary_color_opaque80": [ 140, 198, 199, 0.8 ]
+  },
+  "styles":
+  [
+    {
+      "classId": "SpriteStyle",
+      "id": "Invisible_Panel_Style",
+      "spriteStyle":
+      {
+        "colorUsage": "override",
+        "color": [ 255, 255, 255, 0.0 ]
+      }
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "ATG_Logo_Style",
+      "spriteStyle":
+      {
+        "colorUsage": "override",
+        "color": [195, 181, 152, 1.0],
+        "texture": "Assets/Textures/LOGO_ATG_SMALL.png"
+      }
+    },
+    {
+      "id": "Gamerpic_Style",
+      "classId": "SpriteStyle",
+      "spriteStyle":
+      {
+        "colorUsage": "override",
+        "color": [ 255, 255, 255, 1.0 ]
+      }
+    },
+
+    {
+      "classId": "TextStyle",
+      "id": "Sample_Text_Style",
+      "colorUsage": "override",
+      "color": "#primary_color",
+      "size": 18,
+      "verticalAlign": "middle",
+      "horizontalAlign": "center"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Sample_Title_Style",
+      "colorUsage": "override",
+      "color": "#title_color",
+      "size": 24,
+      "weight": "Bold",
+      "verticalAlign": "middle",
+      "horizontalAlign": "left",
+      "padding": [ 20, 0, 0, 0 ]
+    },
+    {
+      "id": "Gamertag_Style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": "#secondary_color_opaque80",
+      "fontType": "freetype",
+      "size": 22,      
+      "horizontalAlign": "center",
+      "verticalAlign": "middle"
+    }
+  ],
+  "layout":
+  {
+    "classId": "Panel",
+    "id": "Control_Panel",
+    "positioningAnchor": [ "left", "top" ],
+    "position": [ 0, 0 ],
+    "sizingAnchor": [ "left", "top" ],
+    "size": [ 1920, 1080 ],
+    "styleId": "Invisible_Panel_Style",
+    "childElements":
+    [
+      {
+        "classId": "HorizontalStackPanel",
+        "id": "Sample_Title_Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "position": [ 45, 25 ],
+        "size": [ 1920, 120 ],
+        "styleId": "Invisible_Panel_Style",
+        "stackingOrientation": "right",
+        "childElements":
+        [
+          {
+            "classId": "Image",
+            "id": "ATG_Logo_Image",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 100, 109 ],
+            "styleId": "ATG_Logo_Style"
+          },
+          {
+            "classId": "StaticText",
+            "id": "Panel_Title_Label",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "text": "Simple User Model Sample",
+            "styleId": "Sample_Title_Style"
+          }
+        ]
+      },
+
+      {
+        "classId": "StaticText",
+        "id": "Default_User_Label",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "text": "Default User:",
+        "styleId": "Sample_Text_Style",
+        "position": [ 0, -150 ]
+      },
+      {
+        "id": "Gamerpic",
+        "classId": "Image",
+        "styleId": "Gamerpic_Style",
+        "positioningAnchor": [ "top", "left" ],
+        "sizingAnchor": [ "top", "left" ],
+        "size": [ 240, 240 ],
+        "position": [ 840, 440 ]
+      },
+      {
+        "classId": "StaticText",
+        "id": "Gamertag_Label",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "text": "<Gamertag>",
+        "styleId": "Gamertag_Style",
+        "position": [ 0, 150 ]
+      }
+    ]
+  }
+}

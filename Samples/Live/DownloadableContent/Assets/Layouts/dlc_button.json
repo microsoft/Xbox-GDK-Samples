@@ -1,0 +1,50 @@
+{
+  "prefab": {
+    "classId": "Button",
+    "size": [ 960, 110 ],
+    "styleId": "DLC_Basic_Button_Style",
+    "focusable": true,
+    "focusedStyleId": "DLC_Focused_Button_Style",
+    "hoveredStyleId": "DLC_Hovered_Button_Style",
+    "pressedStyleId": "DLC_Pressed_Button_Style",
+    "disabledStyleId": "DLC_Disabled_Button_Style",
+    "subElements": [
+      {
+        "id": "DLC_Status",
+        "classId": "Image",
+        "position": [ 32, -20 ],
+        "positioningAnchor": [ "left", "middle" ],
+        "size": [ 70, 70 ],
+        "styleId": "Unmounted_DLC"
+      },
+      {
+        "id": "DLC_Name",
+        "classId": "StaticText",
+        "position": [ 100, 0 ],
+        "positioningAnchor": [ "left", "middle" ],
+        "size": [ 300, 30 ],
+        "sizingAnchor": [ "left", "middle" ],
+        "styleId": "Basic_DLC_Style"
+      },
+      {
+        "id": "DLC_StoreID",
+        "classId": "StaticText",
+        "position": [ 0, 0 ],
+        "positioningAnchor": [ "right", "middle" ],
+        "size": [ 200, 30 ],
+        "sizingAnchor": [ "right", "middle" ],
+        "styleId": "Basic_DLC_Style"
+      },
+      {
+        "id": "DLC_License",
+        "classId": "StaticText",
+        "text": "(No License)",
+        "position": [ 0, 28 ],
+        "positioningAnchor": [ "right", "middle" ],
+        "size": [ 200, 30 ],
+        "sizingAnchor": [ "right", "middle" ],
+        "styleId": "Basic_DLC_Style"
+      }
+    ]
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "$schema": "https://atgsamplessa.blob.core.windows.net/uitkschema/latest/layout.schema.json",
+  "definitions": {
+    "#slidersize": [ 400, 80 ],
+    "#sliderbackgroundsize": [ 400, 40 ],
+    "#thumbsize": [ 40, 80 ]
+  },
+  "prefab": {
+    "classId": "slider",
+    "style": {
+      "classId": "NullStyle" 
+    },
+    "slider": {
+      "size": "#slidersize",
+      "backgroundSubElementId": "slider_background",
+      "initialValue": 5,
+      "numDiscreteSteps": 10,
+      "sliderOrientation": "lefttoright",
+      "sliderType": "discrete",
+      "thumbButtonSubElementId": "slider_thumb",
+      "valueRange": [ 1, 10 ]
+    },
+    "subElements": [
+      {
+        "classId": "panel",
+        "id": "slider_background",
+        "styleId": "Basic_Slider_Style",
+        "panel": {
+          "positioningAnchor": [ "left", "middle" ],
+          "sizingAnchor": [ "left", "middle" ],
+          "size": "#buttonsize"
+        }
+      },
+      {
+        "classId": "button",
+        "id": "slider_thumb",
+        "styleId": "Basic_Button_Style",
+        "button": {
+          "focusable": true,
+          "positioningAnchor": [ "left", "top" ],
+          "sizingAnchor": [ "left", "top" ],
+          "size": "#thumbsize",
+          "disabledStyleId": "Disabled_Button_Style",
+          "focusedStyleId": "Focused_Button_Style",
+          "hoveredStyleId": "Hovered_Button_Style",
+          "pressedStyleId": "Pressed_Button_Style"
+        }
+      }
+    ]
+  }
+}

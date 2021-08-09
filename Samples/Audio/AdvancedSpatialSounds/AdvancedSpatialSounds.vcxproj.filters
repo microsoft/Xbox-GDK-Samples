@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>EA6BF579-3AB8-4012-810D-2F3A162A4810</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>2B0F36C1-CC9F-41FB-9382-41411FCA288A</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>8c219abf-e8f7-4716-8f05-7f72695661d0</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\Json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="AdvancedSpatialSounds.h" />
+    <ClInclude Include="ISACRenderer.h" />
+    <ClInclude Include="pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="AdvancedSpatialSounds.cpp" />
+    <ClCompile Include="ISACRenderer.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\callout_circle.dds">
+      <Filter>Assets</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Readme.docx" />
+    <None Include="AdvancedSpatialSounds_ReadMe_ja-jp.docx" />
+    <None Include="AdvancedSpatialSounds_ReadMe_ko-kr.docx" />
+    <None Include="AdvancedSpatialSounds_ReadMe_zh-cn.docx" />
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGame.Config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Assets\Jungle_RainThunder_5.1_mixdown.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\Jungle_RainThunder_SideSurroundL-R.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\Jungle_RainThunder_TopFrontL-R.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\Jungle_RainThunder_TopRearL-R.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\SFX_height_birdHawk01.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\SFX_height_birdLoon01.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\SFX_moving_BirdFlap01.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\SFX_moving_birdFlicker01.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\SFX_moving_birdFlycatcher01.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\SFX_moving_birdLark01.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\SFX_moving_birdLoop01.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\SFX_moving_birdLoop02.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\SFX_moving_birdLoop03.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\SFX_moving_birdLoop04.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\SFX_moving_birdLoop05.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\SFX_moving_birdLoop06.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\SFX_moving_birdSparrow01.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\SFX_moving_birdSparrow02.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\SFX_moving_birdWarbler01.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\SFX_moving_Fly01.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\SFX_moving_Fly02.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\SFX_stationary_cicada01.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\SFX_stationary_grasshopper01.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\SFX_stationary_grasshopper02.wav">
+      <Filter>Assets</Filter>
+    </Media>
+  </ItemGroup>
+</Project>

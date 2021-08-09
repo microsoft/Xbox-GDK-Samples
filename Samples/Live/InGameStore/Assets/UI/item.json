@@ -1,0 +1,54 @@
+{
+  "includes": [
+    "Assets/defs.json",
+    "Assets/styles.json"
+  ],
+
+  "prefab": {
+    "classId": "Button",
+    "positioningAnchor": [ "left", "top" ],
+    "sizingAnchor": [ "left", "top" ],
+    "size": [ 700, 150 ],
+    "styleId": "BasicButtonStyle",
+    "focusable": true,
+    "disabledStyleId": "DisabledButtonStyle",
+    "focusedStyleId": "FocusedButtonStyle",
+    "hoveredStyleId": "HoveredButtonStyle",
+    "pressedStyleId": "PressedButtonStyle",
+    "subElements": [
+      {
+        "id": "ItemName",
+        "classId": "StaticText",
+        "styleId": "ItemTextStyle",
+        "position": [ 170, 0 ],
+        "size": [ 520, 150 ],
+        "verticalAlign": "left",
+        "horzWrap": "wrapAtSpace"
+      },
+      {
+        "id": "ItemBorder",
+        "classId": "Image",
+        "styleId": "BasicButtonStyle",
+        "position": [ -5, -5 ],
+        "size": [ 160, 160 ]
+      },
+      {
+        "id": "ItemImage",
+        "classId": "Image",
+        "styleId": "IconStyle",
+        "position": [ 5, 5 ],
+        "size": [ 140, 140 ]
+      },
+      
+      {
+        "id": "OwnedIcon",
+        "classId": "Image",
+        "styleId": "OwnedIconStyle",
+        "position": [ 570, -25 ],
+        "size": [ 150, 126 ],
+        "visible": false
+      }
+	 
+    ]
+  }
+}

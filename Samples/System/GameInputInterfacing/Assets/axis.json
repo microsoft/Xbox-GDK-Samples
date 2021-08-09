@@ -1,0 +1,148 @@
+{
+  "includes": [
+    "Assets/styles.json"
+  ],
+  "prefab": {
+    "classId": "Panel",
+    "size": [ 450, 270 ],
+    "styleId": "Basic_Panel_Style",
+    "subElements": [
+      {
+        "classId": "StaticText",
+        "id": "Title",
+        "position": [ 0, 10 ],
+        "size": [ 450, 30 ],
+        "text": "Axis",
+        "styleId": "Basic_Title_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Axis1",
+        "position": [ 20, 30 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Axis2",
+        "position": [ 20, 60 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Axis3",
+        "position": [ 20, 90 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Axis4",
+        "position": [ 20, 120 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Axis5",
+        "position": [ 20, 150 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Axis6",
+        "position": [ 20, 180 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Axis7",
+        "position": [ 20, 210 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Axis8",
+        "position": [ 20, 240 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Axis9",
+        "position": [ 150, 30 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Axis10",
+        "position": [ 150, 60 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Axis11",
+        "position": [ 150, 90 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Axis12",
+        "position": [ 150, 120 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Axis13",
+        "position": [ 150, 150 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Axis14",
+        "position": [ 150, 180 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Axis15",
+        "position": [ 150, 210 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Axis16",
+        "position": [ 150, 240 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      }
+    ]
+  }
+}

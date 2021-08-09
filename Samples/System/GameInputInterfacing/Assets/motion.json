@@ -1,0 +1,76 @@
+{
+  "includes": [
+    "Assets/styles.json"
+  ],
+  "prefab": {
+    "classId": "Panel",
+    "size": [ 450, 270 ],
+    "styleId": "Basic_Panel_Style",
+    "subElements": [
+      {
+        "classId": "StaticText",
+        "id": "Title",
+        "position": [ 0, 10 ],
+        "size": [ 450, 30 ],
+        "text": "Motion",
+        "styleId": "Basic_Title_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Mag Acc",
+        "text": "",
+        "position": [ 20, 60 ],
+        "size": [ 450, 30 ],
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Or Acc",
+        "text": "",
+        "position": [ 20, 90 ],
+        "size": [ 450, 30 ],
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Acc",
+        "text": "",
+        "position": [ 20, 120 ],
+        "size": [ 450, 30 ],
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Ang",
+        "text": "",
+        "position": [ 20, 150 ],
+        "size": [ 450, 30 ],
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Mag",
+        "text": "",
+        "position": [ 20, 180 ],
+        "size": [ 450, 30 ],
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Motion1",
+        "text": "",
+        "position": [ 20, 210 ],
+        "size": [ 450, 30 ],
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Motion2",
+        "text": "",
+        "position": [ 20, 240 ],
+        "size": [ 450, 30 ],
+        "styleId": "Basic_Text_Style"
+      }
+    ]
+  }
+}

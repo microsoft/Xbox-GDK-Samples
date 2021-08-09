@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>54fee7b5-489e-4e94-aafa-26139b52579d</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>b93a7374-7ab6-4bf6-847e-a003609e3535</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>1dda3572-1fce-44d7-88b9-3a02d5b5874e</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{8f24573e-2bc2-4e25-bfee-bb4b71c325dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Logos">
+      <UniqueIdentifier>{9ddb04a3-5aa2-4652-a470-301724192061}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Meshes">
+      <UniqueIdentifier>{da08a09e-bcad-408b-aba2-8d8641e20727}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Fonts">
+      <UniqueIdentifier>{bbdedddf-d81c-4218-a2b7-cb5a38147d6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Textures">
+      <UniqueIdentifier>{96d7b93d-0a11-4bba-9a74-4988575879b1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="DeferredParticles.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\Json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="Particles.h" />
+    <ClInclude Include="Shared.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ReadData.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="DeferredParticles.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Particles.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGame.Config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\Logo.png">
+      <Filter>Assets\Logos</Filter>
+    </Image>
+    <Image Include="Assets\LargeLogo.png">
+      <Filter>Assets\Logos</Filter>
+    </Image>
+    <Image Include="Assets\SmallLogo.png">
+      <Filter>Assets\Logos</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.png">
+      <Filter>Assets\Logos</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.png">
+      <Filter>Assets\Logos</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\TankScene\default-normalmap.dds">
+      <Filter>Assets\Meshes</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\TankScene\desert_sky.dds">
+      <Filter>Assets\Meshes</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\TankScene\ground_diff.dds">
+      <Filter>Assets\Meshes</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\TankScene\ground_norm.dds">
+      <Filter>Assets\Meshes</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\TankScene\left_engine_diff.dds">
+      <Filter>Assets\Meshes</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\TankScene\left_engine_norm.dds">
+      <Filter>Assets\Meshes</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\TankScene\turret_diff.dds">
+      <Filter>Assets\Meshes</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\TankScene\turret_norm.dds">
+      <Filter>Assets\Meshes</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\DeferredParticle.dds">
+      <Filter>Assets\Textures</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="DeferredLightingPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="DeferredLightingVS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ParticleDeferredPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ParticleForwardPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ParticleVS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ScenePS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="SceneVS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="SkyPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shared.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\TankScene\desertsky.sdkmesh">
+      <Filter>Assets\Meshes</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\TankScene\tank_barricades.sdkmesh">
+      <Filter>Assets\Meshes</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\TankScene\terrain.sdkmesh">
+      <Filter>Assets\Meshes</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </None>
+    <None Include="readme.docx" />
+    <None Include="DeferredParticles_ReadMe_ja-jp.docx" />
+    <None Include="DeferredParticles_ReadMe_ko-kr.docx" />
+    <None Include="DeferredParticles_ReadMe_zh-cn.docx" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,33 @@
+{
+  "includes": [
+    "Assets/styles.json"
+  ],
+  "prefab": {
+    "classId": "Panel",
+    "position": [ 0, 0 ],
+    "size": [ 1920, 270 ],
+    "styleId": "Device_Panel_Style",
+    "subElements": [
+      {
+        "classId": "StaticText",
+        "id": "Title",
+        "size": [ 100, 270 ],
+        "text": "Device",
+        "styleId": "Basic_Title_Style"
+      },
+      {
+        "classId": "HorizontalStackPanel",
+        "id": "hsp",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 100, 0 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 1820, 270 ],
+        "stackingOrientation": "Right",
+        "stackElementPadding": 5,
+        "style": {
+          "classId": "nullstyle"
+        }
+      }
+    ]
+  }
+}

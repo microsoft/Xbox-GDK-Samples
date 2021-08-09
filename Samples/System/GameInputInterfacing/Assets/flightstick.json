@@ -1,0 +1,92 @@
+{
+  "includes": [
+    "Assets/styles.json"
+  ],
+  "prefab": {
+    "classId": "Panel",
+    "size": [ 450, 270 ],
+    "styleId": "Basic_Panel_Style",
+    "subElements": [
+      {
+        "classId": "StaticText",
+        "id": "Title",
+        "position": [ 0, 10 ],
+        "size": [ 450, 30 ],
+        "text": "FlightStick",
+        "styleId": "Basic_Title_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Inputs",
+        "text": "",
+        "position": [ 20, 40 ],
+        "size": [ 455, 30 ],
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Roll Label",
+        "text": "Roll",
+        "position": [ 20, 70 ],
+        "size": [ 90, 30 ],
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Roll Value",
+        "text": "",
+        "position": [ 20, 100 ],
+        "size": [ 90, 30 ],
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Pitch Label",
+        "text": "Pitch",
+        "position": [ 20, 140 ],
+        "size": [ 90, 30 ],
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Pitch Value",
+        "text": "",
+        "position": [ 20, 170 ],
+        "size": [ 90, 30 ],
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Yaw Label",
+        "text": "Yaw",
+        "position": [ 140, 70 ],
+        "size": [ 90, 30 ],
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Yaw Value",
+        "text": "",
+        "position": [ 140, 100 ],
+        "size": [ 90, 30 ],
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Throttle Label",
+        "text": "Throttle",
+        "position": [ 140, 140 ],
+        "size": [ 90, 30 ],
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Throttle Value",
+        "text": "",
+        "position": [ 140, 170 ],
+        "size": [ 90, 30 ],
+        "styleId": "Basic_Text_Style"
+      }
+    ]
+  }
+}

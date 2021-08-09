@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package>
+  <Recipes>
+    <Recipe Id="default" IncludedFeatures="feature1" />
+  </Recipes>
+  <Features>
+    <Feature Id="feature1" Hidden="true" Tags="mode1" />
+    <Feature Id="feature2" DisplayName="Mode 2" Tags="mode2;maps"/>
+	<Feature Id="feature3" DisplayName="Mode 3" Tags="mode3"/>
+    <Feature Id="feature4" DisplayName="Bonus Content" Tags="bonus"/>
+  </Features>
+
+  <Chunk Id="1000" Marker="Launch">
+    <FileGroup DestinationPath="\" SourcePath="." Include="IntelligentDelivery.exe"/>
+    <FileGroup DestinationPath="\" SourcePath="." Include="*.dll"/>
+    <FileGroup DestinationPath="\" SourcePath="." Include="MicrosoftGame.config"/>
+    <FileGroup DestinationPath="\Assets"    SourcePath=".\Assets"    Include="*.*"/>
+    <FileGroup DestinationPath="\Assets\Fonts"    SourcePath=".\Assets\Fonts"    Include="*.*"/>
+    <FileGroup DestinationPath="\Assets\Textures"    SourcePath=".\Assets\Textures"    Include="*.*"/>
+    <FileGroup DestinationPath="\Assets\Layouts"    SourcePath=".\Assets\Layouts"    Include="*.*"/>
+  </Chunk>
+  <Chunk Id="1001" Tags="mode1">
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb1.txt"/>
+  </Chunk>
+  <Chunk Id="1002" Devices="Xbox-Lockhart" Tags="mode1">
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb2.txt"/>
+  </Chunk>
+  <Chunk Id="1003" Devices="Xbox-Anaconda" Tags="mode1">
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb3.txt"/>
+  </Chunk>
+  <Chunk Id="1004" Languages="en" Tags="mode1">
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb4.txt"/>
+  </Chunk>
+  <Chunk Id="1005" Languages="fr" Tags="mode1">
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb5.txt"/>
+  </Chunk>
+  <Chunk Id="1006" Languages="ja" Tags="mode1">
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb6.txt"/>
+  </Chunk>
+  <Chunk Id="1007" Tags="mode1#bonus">
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb7.txt"/>
+  </Chunk>
+  <Chunk Id="2000" Tags="mode2">
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb8.txt"/>
+  </Chunk>
+  <Chunk Id="2001" Tags="maps">
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb9.txt"/>
+  </Chunk>
+  <Chunk Id="2002" Tags="maps">
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb10.txt"/>
+  </Chunk>
+  <Chunk Id="2003" Tags="mode2#bonus">
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb11.txt"/>
+  </Chunk>
+  <Chunk Id="3000" Tags="mode3">
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb12.txt"/>
+  </Chunk>
+  <Chunk Id="3001" Tags="mode3;mode2">
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb13.txt"/>
+  </Chunk>
+  <Chunk Id="3002" Tags="mode3#bonus">
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb14.txt"/>
+  </Chunk>
+  <Chunk Id="4000" Tags="bonus">
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb15.txt"/>
+  </Chunk>
+</Package>
+

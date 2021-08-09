@@ -1,0 +1,68 @@
+{
+  "includes": [
+    "Assets/Layouts/defs.json",
+    "Assets/Layouts/styles.json"
+  ],
+
+  "prefab": {
+    "classId": "Button",
+    "positioningAnchor": [ "center", "top" ],
+    "sizingAnchor": [ "center", "top" ],
+    "size": [ 700, 300 ],
+    "styleId": "BasicButtonStyle",
+    "focusable": true,
+    "disabledStyleId": "DisabledButtonStyle",
+    "focusedStyleId": "FocusedButtonStyle",
+    "hoveredStyleId": "HoveredButtonStyle",
+    "pressedStyleId": "PressedButtonStyle",
+    "subElements": [
+      {
+        "id": "boxlabel",
+        "classId": "StaticText",
+        "styleId": "BasicLabelStyle"
+      },
+      {
+        "id": "boxstatuspanel",
+        "classId": "Panel",
+        "size": [ 125, 35 ],
+        "position": [ 0, -13 ],
+        "positioningAnchor": [ "center", "bottom" ],
+        "sizingAnchor": [ "center", "bottom" ],
+        "styleId": "StatusPanelStyle",
+        "visible": false,
+        "subElements": [
+          {
+            "id": "boxstatus",
+            "classId": "StaticText",
+            "styleId": "StatusStyle",
+            "text": "text"
+          }
+        ]
+      },
+      {
+        "id": "boxProgressPanel",
+        "classId": "Panel",
+        "size": [ 800, 50 ],
+        "position": [ 0, 0 ],
+        "positioningAnchor": [ "center", "bottom" ],
+        "sizingAnchor": [ "center", "top" ],
+        "styleId": "BasicPanelStyle",
+        "subElements": [
+          {
+            "id": "boxprogressback",
+            "classId": "ProgressBar",
+            "styleId": "ProgressBarBackStyle",
+            "progressPercentage": 1.0
+          },
+          {
+            "id": "boxprogress",
+            "classId": "ProgressBar",
+            "styleId": "ProgressBarStyle",
+            "progressPercentage": 0.0
+          }
+        ]
+      }
+    ]
+  }
+
+}

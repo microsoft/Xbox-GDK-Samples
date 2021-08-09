@@ -1,0 +1,46 @@
+{
+  "$schema": "https://atgsamplessa.blob.core.windows.net/uitkschema/latest/layout.schema.json",
+  "includes": [
+    "Assets/defs.json",
+    "Assets/styles.json"
+  ],
+  
+  "styles": [
+    {
+      "classId": "TextStyle",
+      "id": "BasicConsoleStyle",
+      "font": "Assets/Fonts/Courier",
+      "size": 16,
+      "colorUsage": "override",
+      "color": [ 255, 255, 192, 1.0 ],
+      "verticalAlign": "top",
+      "horizontalAlign": "left"
+    }
+  ],
+  
+  "prefab": {
+    "classId": "ConsoleWindow",
+    "maxConsoleLines": 500,
+    "viewportPanelSubElementId": "ConsolePanel",
+    "verticalSliderSubElementId": "ConsoleSlider",
+    "styleId": "BasicConsoleStyle",
+    "focusable": false,
+    "subElements": [
+      {
+        "classId": "Panel",
+        "id": "ConsolePanel",
+        "style": {
+          "classId": "SpriteStyle",
+          "color": [ 0, 0, 0, 0 ],
+          "colorUsage": "override"
+        }
+      },
+      {
+        "id": "ConsoleSlider",
+        "prefabRef" : "#slider_prefab",
+        "position": [ 0, 0 ],
+        "size": [ 50, 900 ]
+      }
+    ]
+  }
+}

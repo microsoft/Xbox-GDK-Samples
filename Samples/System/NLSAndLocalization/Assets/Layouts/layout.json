@@ -1,0 +1,190 @@
+{
+  "includes": [
+    "Assets/Layouts/styles.json"
+  ],
+  "layout": {
+    "classId": "Panel",
+    "id": "Control_Panel",
+    "positioningAnchor": [ "left", "top" ],
+    "position": [ 0, 0 ],
+    "sizingAnchor": [ "left", "top" ],
+    "size": [ 1920, 1080 ],
+    "styleId": "Invisible_Panel_Style",
+    "childElements": [
+      {
+        "classId": "HorizontalStackPanel",
+        "id": "Sample_Title_Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "position": [ 45, 25 ],
+        "size": [ 1920, 120 ],
+        "styleId": "Invisible_Panel_Style",
+        "stackingOrientation": "right",
+        "childElements": [
+          {
+            "classId": "Image",
+            "id": "ATG_Logo_Image",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 100, 109 ],
+            "styleId": "ATG_Logo_Style"
+          },
+          {
+            "classId": "StaticText",
+            "id": "Panel_Title_Label",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "text": "Localization Sample",
+            "styleId": "Sample_Title_Style"
+          }
+        ]
+      },
+      {
+        "classId": "VerticalStackPanel",
+        "id": "Button_Stack_Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "position": [ 45, 550 ],
+        "size": [ 510, 500 ],
+        "styleId": "Invisible_Panel_Style",
+        "stackingOrientation": "Down",
+        "childElements": [
+          {
+            "id": "Enum_Button_1",
+            "prefabRef": "Assets/Layouts/buttons.json"
+          },
+          {
+            "classId": "Image",
+            "id": "Divider_Line",
+            "positioningAnchor": [ "center", "top" ],
+            "sizingAnchor": [ "center", "top" ],
+            "size": [ 490, 70 ],
+            "styleId": "Divider_Line_Style"
+          },
+          {
+            "id": "Loc_Button_1",
+            "prefabRef": "Assets/Layouts/buttons.json"
+          },
+          {
+            "id": "Loc_Button_2",
+            "prefabRef": "Assets/Layouts/buttons.json"
+          },
+          {
+            "id": "Loc_Button_3",
+            "prefabRef": "Assets/Layouts/buttons.json"
+          },
+          {
+            "id": "Loc_Button_4",
+            "prefabRef": "Assets/Layouts/buttons.json"
+          },
+          {
+            "id": "Loc_Button_5",
+            "prefabRef": "Assets/Layouts/buttons.json"
+          },
+          {
+            "id": "Loc_Button_6",
+            "prefabRef": "Assets/Layouts/buttons.json"
+          },
+          {
+            "id": "Loc_Button_7",
+            "prefabRef": "Assets/Layouts/buttons.json"
+          }
+        ]
+      },
+      {
+        "classId": "Image",
+        "id": "Localization_Image",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "position": [ 330, 150 ],
+        "size": [ 370, 370 ],
+        "styleId": "Localization_Image_en_US_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Localization_Label",
+        "styleId": "Invisible_Panel_Style",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "position": [ 800, 100 ],
+        "size": [ 900, 400 ],
+        "text": "Welcome to Xbox!",
+        "styleId": "Localization_Label_Style"
+      },
+      {
+        "classId": "Panel",
+        "id": "Output_Console_Window_Outer_Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "position": [ 560, 550 ],
+        "size": [ 1300, 500 ],
+        "styleId": "Dark_Panel_Style",
+        "childElements": [
+          {
+            "classId": "ConsoleWindow",
+            "id": "Output_Console_Window",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "position": [ 0, 0 ],
+            "size": [ 1300, 500 ],
+            "maxConsoleLines": 200,
+            "styleId": "Sample_Text_Style",
+            "verticalSliderSubElementId": "Output_Console_Window_Slider",
+            "viewportPanelSubElementId": "Output_Console_Window_Panel",
+            "subElements": [
+              {
+                "classId": "Panel",
+                "id": "Output_Console_Window_Panel",
+                "positioningAnchor": [ "left", "top" ],
+                "position": [ 0, 0 ],
+                "sizingAnchor": [ "left", "top" ],
+                "size": [ 1300, 500 ],
+                "styleId": "Invisible_Panel_Style"
+              },
+              {
+                "classId": "Slider",
+                "id": "Output_Console_Window_Slider",
+                "size": [ 35, 500 ],
+                "style": {
+                  "classId": "NullStyle"
+                },
+                "thumbButtonSubElementId": "Output_Console_Window_Slider_Thumb",
+                "backgroundSubElementId": "Output_Console_Window_Slider_Background",
+                "sliderOrientation": "TopToBottom",
+                "sliderType": "discrete",
+                "numDiscreteSteps": 1,
+                "initialValue": 0,
+                "sizingAnchor": [ "right", "top" ],
+                "positioningAnchor": [ "right", "top" ],
+                "focusable": true,
+                "subElements": [
+                  {
+                    "classId": "Image",
+                    "id": "Output_Console_Window_Slider_Background",
+                    "size": [ 35, 490 ],
+                    "style": {
+                      "classId": "SpriteStyle",
+                      "color": [ 128, 128, 128, 1.0 ],
+                      "colorUsage": "override"
+                    }
+                  },
+                  {
+                    "classId": "Button",
+                    "id": "Output_Console_Window_Slider_Thumb",
+                    "size": [ 35, 45 ],
+                    "styleId": "Slider_Button_Style",
+                    "focusable": true,
+                    "focusedStyleId": "Slider_Focused_Button_Style",
+                    "hoveredStyleId": "Slider_Hovered_Button_Style",
+                    "pressedStyleId": "Slider_Pressed_Button_Style",
+                    "disabledStyleId": "Slider_Disabled_Button_Style"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

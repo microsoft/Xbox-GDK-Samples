@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="TriangleAllocator.cpp" />
+    <ClCompile Include="Importer.cpp" />
+    <ClCompile Include="MeshUtilities.cpp" />
+    <ClCompile Include="FbxTransformer.cpp" />
+    <ClCompile Include="MeshProcessor.cpp" />
+    <ClCompile Include="MeshletSet.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TriangleAllocator.h" />
+    <ClInclude Include="Importer.h" />
+    <ClInclude Include="MeshUtilities.h" />
+    <ClInclude Include="FbxTransformer.h" />
+    <ClInclude Include="MeshProcessor.h" />
+    <ClInclude Include="MeshletSet.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\ReadMe.docx" />
+    <None Include="packages.config" />
+    <None Include="..\MeshletConverter_ReadMe_ja-jp.docx" />
+    <None Include="..\MeshletConverter_ReadMe_ko-kr.docx" />
+    <None Include="..\MeshletConverter_ReadMe_zh-cn.docx" />
+  </ItemGroup>
+</Project>

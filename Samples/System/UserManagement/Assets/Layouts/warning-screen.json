@@ -1,0 +1,109 @@
+{
+  "layout": {
+    "id": "warning-screen",
+    "classId": "Panel",
+    "positioningAnchor": [ "center", "top" ],
+    "position": [ 0, 135 ],
+    "sizingAnchor": [ "center", "top" ],
+    "size": [ 1920, 800 ],
+    "style": {
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 0, 0, 0, 1.0 ]
+    },
+    "subElements": [
+      {
+        "id": "warning_text",
+        "classId": "StaticText",
+        "text": "WARNING:",
+        "styleId": "warning_text_style",
+        "positioningAnchor": [ "center", "top" ],
+        "position": [ 0, 285 ],
+        "sizingAnchor": [ "center", "top" ],
+        "size": [ 1920, 48 ]
+      },
+      {
+        "id": "warning_sub_text1",
+        "classId": "StaticText",
+        "text": "Continuing without a user will disable",
+        "styleId": "warning_sub_text_style",
+        "positioningAnchor": [ "center", "top" ],
+        "position": [ 0, 340 ],
+        "sizingAnchor": [ "center", "top" ],
+        "size": [ 1920, 36 ]
+      },
+      {
+        "id": "warning_sub_text2",
+        "classId": "StaticText",
+        "text": "all saving functionality.",
+        "styleId": "warning_sub_text_style",
+        "positioningAnchor": [ "center", "top" ],
+        "position": [ 0, 390 ],
+        "sizingAnchor": [ "center", "top" ],
+        "size": [ 1920, 30 ]
+      },
+      {
+        "id": "sign_in_button",
+        "classId": "Button",
+        "styleId": "button_default_style",
+        "focusedStyleId": "button_focused_style",
+        "pressedStyleId": "button_pressed_style",
+        "hoveredStyleId": "button_focused_style",
+        "positioningAnchor": [ "center", "top" ],
+        "position": [ 0, 505 ],
+        "sizingAnchor": [ "center", "top" ],
+        "size": [ 400, 90 ],
+        "focusable": false,
+        "subElements": [
+          {
+            "id": "button_border",
+            "classId": "Panel",
+            "styleId": "button_border_style",
+            "visible": true,
+            "sizingAnchor": [ "center", "middle" ],
+            "positioningAnchor": [ "center", "middle" ],
+            "size": [ 414, 104 ]
+          },
+          {
+            "id": "button_label",
+            "classId": "StaticText",
+            "styleId": "button_default_text_style",
+            "text": "Sign In",
+            "size": [ 400, 90 ]
+          }
+        ]
+      },
+      {
+        "id": "continue_button",
+        "classId": "Button",
+        "styleId": "button_default_style",
+        "focusedStyleId": "button_focused_style",
+        "pressedStyleId": "button_pressed_style",
+        "hoveredStyleId": "button_focused_style",
+        "positioningAnchor": [ "center", "top" ],
+        "position": [ 0, 620 ],
+        "sizingAnchor": [ "center", "top" ],
+        "size": [ 400, 90 ],
+        "focusable": false,
+        "subElements": [
+          {
+            "id": "button_border",
+            "classId": "Panel",
+            "styleId": "button_border_style",
+            "visible": false,
+            "sizingAnchor": [ "center", "middle" ],
+            "positioningAnchor": [ "center", "middle" ],
+            "size": [ 414, 104 ]
+          },
+          {
+            "id": "button_label",
+            "classId": "StaticText",
+            "styleId": "button_default_text_style",
+            "text": "Continue",
+            "size": [ 400, 90 ]
+          }
+        ]
+      }
+    ]
+  }
+}

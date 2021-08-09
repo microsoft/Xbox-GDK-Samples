@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\FileHelpers.h">
+      <Filter>ATGTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\OSHelpers.h">
+      <Filter>ATGTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SharedMemory\SharedMemory.h">
+      <Filter>SharedMemory</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="..\SharedMemory\SharedMemory.cpp">
+      <Filter>SharedMemory</Filter>
+    </ClCompile>
+    <ClCompile Include="OutOfProcDumpTool.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="ATGTK">
+      <UniqueIdentifier>{17bab0fd-b7fd-415b-9da3-bf5ffdfaa8ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SharedMemory">
+      <UniqueIdentifier>{33fcc239-560b-4953-b2ab-4d4afe2edc01}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

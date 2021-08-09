@@ -1,0 +1,63 @@
+{
+  "prefab": {
+    "classId": "Button",
+    "size": [ 960, 110 ],
+    "styleId": "Store_Basic_Button_Style",
+    "focusable": true,
+    "focusedStyleId": "Store_Focused_Button_Style",
+    "hoveredStyleId": "Store_Hovered_Button_Style",
+    "pressedStyleId": "Store_Pressed_Button_Style",
+    "disabledStyleId": "Store_Disabled_Button_Style",
+    "subElements": [
+      {
+        "id": "Store_Status",
+        "classId": "Image",
+        "position": [ 32, -20 ],
+        "positioningAnchor": [ "left", "middle" ],
+        "size": [ 70, 70 ],
+        "styleId": "Unmounted_DLC"
+      },
+      {
+        "id": "Store_Name",
+        "classId": "StaticText",
+        "position": [ 100, 0 ],
+        "positioningAnchor": [ "left", "middle" ],
+        "size": [ 300, 30 ],
+        "sizingAnchor": [ "left", "middle" ],
+        "styleId": "Basic_Store_Style"
+      },
+      {
+        "id": "Store_StoreID",
+        "classId": "StaticText",
+        "position": [ -100, 0 ],
+        "positioningAnchor": [ "right", "middle" ],
+        "size": [ 200, 30 ],
+        "sizingAnchor": [ "right", "middle" ],
+        "styleId": "Basic_Store_Style"
+      },
+      {
+        "id": "boxProgressPanel",
+        "classId": "Panel",
+        "size": [ 250, 50 ],
+        "position": [ -200, 10 ],
+        "positioningAnchor": [ "right", "middle" ],
+        "sizingAnchor": [ "center", "top" ],
+        "styleId": "Basic_Panel_Style",
+        "subElements": [
+          {
+            "id": "boxprogressback",
+            "classId": "ProgressBar",
+            "styleId": "ProgressBarBackStyle",
+            "progressPercentage": 1.0
+          },
+          {
+            "id": "boxprogress",
+            "classId": "ProgressBar",
+            "styleId": "ProgressBarStyle",
+            "progressPercentage": 0.0
+          }
+        ]
+      }
+    ]
+  }
+}

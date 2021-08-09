@@ -1,0 +1,177 @@
+{
+  "includes": [
+    "Assets/Layouts/defs.json",
+    "Assets/Layouts/styles.json"
+  ],
+  "layout": {
+    "id": "devices_panel",
+    "classId": "Panel",
+    "sizingAnchor": [ "right", "top" ],
+    "positioningAnchor": [ "right", "top" ],
+    "size": [ 600, 1080 ],
+    "style": {
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 0, 0, 0, 0.0 ]
+    },
+    "subElements": [
+      {
+        "id": "background_panel",
+        "classId": "Panel",
+        "positioningAnchor": [ "right", "top" ],
+        "position": [ 0, 0 ],
+        "sizingAnchor": [ "right", "top" ],
+        "size": [ 500, 1080 ],
+        "styleId": "device_panel_style"
+      },
+      {
+        "id": "primary_user_panel",
+        "classId": "Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 100, 70 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 600, 80 ],
+        "style": {
+          "classId": "NullStyle"
+        },
+        "subElements": [
+          {
+            "id": "primary_user_picture",
+            "classId": "Image",
+            "styleId": "gamerpic_style",
+            "positioningAnchor": [ "left", "middle" ],
+            "position": [ 20, 0 ],
+            "sizingAnchor": [ "left", "middle" ],
+            "size": [ 80, 80 ]
+          },
+          {
+            "id": "primary_user_icon",
+            "classId": "Image",
+            "styleId": "primary_icon_style",
+            "positioningAnchor": [ "left", "middle" ],
+            "position": [ 125, 0 ],
+            "sizingAnchor": [ "left", "middle" ],
+            "size": [ 50, 50 ]
+          },
+          {
+            "id": "primary_user_name",
+            "classId": "StaticText",
+            "text": "GamerTag_NameHere",
+            "styleId": "primary_user_name_style",
+            "positioningAnchor": [ "left", "middle" ],
+            "position": [ 175, 0 ],
+            "sizingAnchor": [ "left", "middle" ],
+            "size": [ 425, 50 ]
+          }
+        ]
+      },
+
+      {
+        "id": "devices_title_panel",
+        "classId": "Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 100, 200 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 500, 60 ],
+        "styleId": "devices_title_panel_style",
+        "subElements": [
+          {
+            "id": "devices_title_text",
+            "classId": "StaticText",
+            "text": "Devices:",
+            "positioningAnchor": [ "left", "middle" ],
+            "position": [ 75, 0 ],
+            "sizingAnchor": [ "left", "middle" ],
+            "size": [ 425, 60 ],
+            "styleId": "devices_title_text_style"
+          }
+        ]
+      },
+
+      {
+        "id": "devices_list",
+        "classId": "VerticalStack",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 0, 280 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 600, 650 ],
+        "style": {
+          "classId": "NullStyle"
+        },
+        "subElements": [
+          {
+            "id": "device0",
+            "prefabRef": "Assets/Layouts/device-prefab.json"
+          },
+          {
+            "id": "device1",
+            "position": [ 0, 100 ],
+            "prefabRef": "Assets/Layouts/device-prefab.json"
+          },
+          {
+            "id": "device2",
+            "position": [ 0, 200 ],
+            "prefabRef": "Assets/Layouts/device-prefab.json"
+          },
+          {
+            "id": "device3",
+            "position": [ 0, 300 ],
+            "prefabRef": "Assets/Layouts/device-prefab.json"
+          },
+          {
+            "id": "device4",
+            "position": [ 0, 400 ],
+            "prefabRef": "Assets/Layouts/device-prefab.json"
+          },
+          {
+            "id": "device5",
+            "position": [ 0, 500 ],
+            "prefabRef": "Assets/Layouts/device-prefab.json"
+          }
+        ]
+      },
+
+      {
+        "id": "primary_user_legend",
+        "classId": "Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 125, 1000 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 450, 50 ],
+        "styleId": "legend_panel_style",
+        "subElements": [
+          {
+            "id": "key_panel",
+            "classId": "Panel",
+            "positioningAnchor": [ "left", "middle" ],
+            "position": [ 0, 0 ],
+            "sizingAnchor": [ "left", "middle" ],
+            "size": [ 50, 50 ],
+            "styleId": "legend_key_panel_style",
+            "subElements": [
+              {
+                "id": "primary_user_icon",
+                "classId": "Image",
+                "styleId": "primary_icon_style",
+                "positioningAnchor": [ "left", "middle" ],
+                "position": [ 0, 0 ],
+                "sizingAnchor": [ "left", "middle" ],
+                "size": [ 50, 50 ]
+              }
+            ]
+          },
+          {
+            "id": "value_text",
+            "classId": "StaticText",
+            "styleId": "legend_value_text_style",
+            "text": "Primary User",
+            "positioningAnchor": [ "left", "middle" ],
+            "position": [ 50, 0 ],
+            "sizingAnchor": [ "left", "middle" ],
+            "size": [ 150, 50 ]
+          }
+        ]
+      }
+    ]
+  }
+}

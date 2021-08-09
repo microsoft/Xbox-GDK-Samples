@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="texconv.cpp" />
+    <ClCompile Include="DirectXTexEXR.cpp">
+      <Filter>EXR</Filter>
+    </ClCompile>
+    <ClCompile Include="ExtendedBMP.cpp">
+      <Filter>BMP</Filter>
+    </ClCompile>
+    <ClCompile Include="PortablePixMap.cpp">
+      <Filter>PBM_PFM</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Readme.docx" />
+    <None Include="packages.config" />
+    <None Include="xtexconv_ReadMe_ja-jp.docx" />
+    <None Include="xtexconv_ReadMe_ko-kr.docx" />
+    <None Include="xtexconv_ReadMe_zh-cn.docx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="EXR">
+      <UniqueIdentifier>{1135ee12-3af6-47b3-90ed-6f81b9884b1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BMP">
+      <UniqueIdentifier>{abbfca7f-4238-4d74-bb67-e0db70f4dd95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PBM_PFM">
+      <UniqueIdentifier>{95e4aa79-c97c-48ca-b2ef-0b168e39ef6d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DirectXTexEXR.h">
+      <Filter>EXR</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

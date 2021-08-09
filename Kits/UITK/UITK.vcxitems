@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{2bfc8f59-e285-4b88-949e-1009233b11e1}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIFontRenderer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIFreeTypeFontRendererD3D.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIButton.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UICheckBox.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIConsoleWindow.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UICore.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIDebugConfig.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIDebugPanel.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIElement.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIPipStrip.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UISpriteFontRendererD3D.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIStackPanel.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIStyle.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIStyleRenderer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UITK.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIVerticalStack.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIWidgets.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIEvent.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIImage.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIInputState.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIKeywords.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UILog.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIMath.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIPanel.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIProgressBar.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UISerializer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UISliderElement.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIStaticText.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIStyleFactories.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIStyleManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIStyleRendererD3D.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIStyleRendererNull.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIStyleImpl.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UITwistMenu.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIUtils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)UIButton.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UICheckBox.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UIConsoleWindow.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UICore.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UIDebugPanel.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UIElement.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UIImage.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UIInputState.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UIJsonImpl.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UILog.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UIManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UIMath.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UIPanel.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UIPipStrip.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UIProgressBar.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UISerializer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UISliderElement.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UISpriteFontRendererD3D.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UIStackPanel.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UIStaticText.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UIStyleFactories.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UIStyleManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UIStyleRendererD3D.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UIStyleImpl.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UIFreeTypeFontRendererD3D.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UITwistMenu.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UIVerticalStack.cpp" />
+  </ItemGroup>
+</Project>

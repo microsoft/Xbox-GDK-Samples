@@ -1,0 +1,132 @@
+{
+  "includes": [
+    "Assets/styles.json"
+  ],
+  "prefab": {
+    "classId": "Panel",
+    "size": [ 450, 270 ],
+    "styleId": "Basic_Panel_Style",
+    "subElements": [
+      {
+        "classId": "StaticText",
+        "id": "Title",
+        "position": [ 0, 10 ],
+        "size": [ 450, 30 ],
+        "text": "ArcadeStick",
+        "styleId": "Basic_Title_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Input1",
+        "position": [ 20, 30 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Input2",
+        "position": [ 20, 60 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Input3",
+        "position": [ 20, 90 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Input4",
+        "position": [ 20, 120 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Input5",
+        "position": [ 20, 150 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Input6",
+        "position": [ 20, 180 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Input7",
+        "position": [ 20, 210 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Input8",
+        "position": [ 200, 30 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Input9",
+        "position": [ 200, 60 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Input10",
+        "position": [ 200, 90 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Input11",
+        "position": [ 200, 120 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Input12",
+        "position": [ 200, 150 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Input13",
+        "position": [ 200, 180 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Input14",
+        "position": [ 200, 210 ],
+        "size": [ 135, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      }
+    ]
+  }
+}

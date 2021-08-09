@@ -1,0 +1,76 @@
+{
+  "includes": [
+    "Assets/styles.json"
+  ],
+  "prefab": {
+    "classId": "Panel",
+    "size": [ 450, 270 ],
+    "styleId": "Basic_Panel_Style",
+    "subElements": [
+      {
+        "classId": "StaticText",
+        "id": "Title",
+        "position": [ 0, 10 ],
+        "size": [ 450, 30 ],
+        "text": "Touch",
+        "styleId": "Basic_Title_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Input1",
+        "position": [ 20, 30 ],
+        "size": [ 450, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Input2",
+        "position": [ 20, 60 ],
+        "size": [ 450, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Input3",
+        "position": [ 20, 90 ],
+        "size": [ 450, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Input4",
+        "position": [ 20, 120 ],
+        "size": [ 450, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Input5",
+        "position": [ 20, 150 ],
+        "size": [ 450, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Input6",
+        "position": [ 20, 180 ],
+        "size": [ 450, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Input7",
+        "position": [ 20, 210 ],
+        "size": [ 450, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      }
+    ]
+  }
+}

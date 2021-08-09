@@ -1,0 +1,368 @@
+{
+  "includes": [
+    "Assets/Layouts/defs.json",
+    "Assets/Layouts/styles.json"
+  ],
+  "layout": {
+    "id": "MasterPanel",
+    "classId": "Panel",
+    "positioningAnchor": [ "left", "top" ],
+    "position": [ 0, 0 ],
+    "sizingAnchor": [ "left", "top" ],
+    "size": [ 1920, 1280 ],
+    "styleId": "BasicPanelStyle",
+    "childElements": [
+      {
+        "id": "ATGLogo",
+        "classId": "Image",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 50, 65 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 110, 120 ],
+        "styleId": "LogoStyle"
+      },
+      {
+        "id": "SampleTitle",
+        "classId": "StaticText",
+        "size": [ 405, 50 ],
+        "position": [ 175, 50 ],
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "verticalAlign": "left",
+        "horizontalAlign": "top",
+        "styleId": "BoldTextStyle",
+        "text": "Intelligent Delivery Sample"
+      },
+      {
+        "id": "LanguageLabel",
+        "classId": "StaticText",
+        "size": [ 500, 50 ],
+        "position": [ 175, 100 ],
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "verticalAlign": "left",
+        "horizontalAlign": "top",
+        "styleId": "BasicTextStyle",
+        "text": "XPackageGetUserLocale result"
+      },
+      {
+        "id": "StatusLabel",
+        "classId": "StaticText",
+        "size": [ 500, 50 ],
+        "position": [ 175, 150 ],
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "verticalAlign": "left",
+        "horizontalAlign": "top",
+        "styleId": "BasicTextStyle",
+        "text": ""
+      },
+      {
+        "id": "progressbarPanel",
+        "classId": "Panel",
+        "size": [ 1800, 50 ],
+        "position": [ 0, 950 ],
+        "positioningAnchor": [ "center", "top" ],
+        "sizingAnchor": [ "center", "top" ],
+        "styleId": "BasicPanelStyle",
+        "childElements": [
+          {
+            "id": "progressbarMainBack",
+            "classId": "ProgressBar",
+            "styleId": "ProgressBarBackStyle",
+            "progressPercentage": 1.0
+          },
+          {
+            "id": "progressbarMain",
+            "classId": "ProgressBar",
+            "styleId": "ProgressBarStyle",
+            "progressPercentage": 0.0
+          }
+        ]
+      },
+      {
+        "id": "legend",
+        "classId": "StaticText",
+        "positioningAnchor": [ "center", "top" ],
+        "position": [ 0, 1000 ],
+        "sizingAnchor": [ "center", "top" ],
+        "size": [ 1780, 50 ],
+        "styleId": "LegendTextStyle",
+        "isLegend": true
+      },
+      {
+        "id": "progressbarLabel",
+        "classId": "StaticText",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 0, 1000 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 1650, 50 ],
+        "styleId": "ProgressTextStyle"
+      },
+      {
+        "id": "progressbarMeter",
+        "classId": "StaticText",
+        "positioningAnchor": [ "center", "top" ],
+        "position": [ 0, 1000 ],
+        "sizingAnchor": [ "center", "top" ],
+        "size": [ 1780, 50 ],
+        "styleId": "ProgressTextStyle"
+      },
+
+      {
+        "classId": "Panel",
+        "id": "MainPanel",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "position": [ 0, 0 ],
+        "size": [ 1500, 500 ],
+        "styleId": "BasicPanelStyle",
+        "childElements": [
+          {
+            "classId": "HorizontalStackPanel",
+            "id": "FeatureSelectors",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "position": [ 1000, 50 ],
+            "size": [ 900, 350 ],
+            "styleId": "BasicPanelStyle",
+            "stackingOrientation": "right",
+            "stackElementPadding": 50.0,
+            "childElements": [
+              {
+                "id": "Feature1",
+                "prefabRef": "Assets/Layouts/chunk.json",
+                "styleId": "RedButtonStyle"
+              },
+              {
+                "id": "Feature2",
+                "prefabRef": "Assets/Layouts/chunk.json",
+                "styleId": "GreenButtonStyle"
+              },
+              {
+                "id": "Feature3",
+                "prefabRef": "Assets/Layouts/chunk.json",
+                "styleId": "BlueButtonStyle"
+              },
+              {
+                "id": "Feature4",
+                "prefabRef": "Assets/Layouts/chunk.json"
+              }
+            ]
+          },
+          {
+            "id": "FeatureHeading",
+            "classId": "StaticText",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 1920, 50 ],
+            "position": [ 0, 235 ],
+            "verticalAlign": "center",
+            "horizontalAlign": "middle",
+            "styleId": "BoldTextStyle",
+            "text": "FEATURES"
+          },
+          {
+            "id": "HorizontalRule",
+            "classId": "Panel",
+            "style": {
+              "classId": "SpriteStyle",
+              "id": "HorizontalRuleStyle",
+              "colorUsage": "override",
+              "color": [ 0, 0, 0, 1.0 ]
+            },
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "position": [ 0, 275 ],
+            "size": [ 1920, 5 ]
+          },
+          {
+            "id": "ChunkHeading",
+            "classId": "StaticText",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 1920, 50 ],
+            "position": [ 0, 265 ],
+            "verticalAlign": "center",
+            "horizontalAlign": "middle",
+            "styleId": "BoldTextStyle",
+            "text": "CHUNKS"
+          },
+
+          {
+            "id": "Feature1Frame",
+            "classId": "Panel",
+            "styleId": "RedFrameStyle",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "position": [ 175, 325 ],
+            "size": [ 1400, 250 ]
+          },
+          {
+            "id": "Feature1HDFrame",
+            "classId": "Panel",
+            "styleId": "RedFrameStyle",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "position": [ 1575, 325 ],
+            "size": [ 200, 250 ]
+          },
+          {
+            "classId": "HorizontalStackPanel",
+            "id": "Feature1Chunks",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "position": [ 200, 350 ],
+            "size": [ 1500, 350 ],
+            "styleId": "BasicPanelStyle",
+            "stackingOrientation": "right",
+            "stackElementPadding": 50.0,
+            "childElements": [
+              {
+                "id": "Chunk1",
+                "prefabRef": "Assets/Layouts/chunk.json"
+              },
+              {
+                "id": "Chunk2",
+                "prefabRef": "Assets/Layouts/chunk.json"
+              },
+              {
+                "id": "Chunk3",
+                "prefabRef": "Assets/Layouts/chunk.json"
+              },
+              {
+                "id": "Chunk4",
+                "prefabRef": "Assets/Layouts/chunk.json"
+              },
+              {
+                "id": "Chunk5",
+                "prefabRef": "Assets/Layouts/chunk.json"
+              },
+              {
+                "id": "Chunk6",
+                "prefabRef": "Assets/Layouts/chunk.json"
+              },
+              {
+                "id": "Chunk7",
+                "prefabRef": "Assets/Layouts/chunk.json"
+              },
+              {
+                "id": "Chunk8",
+                "prefabRef": "Assets/Layouts/chunk.json"
+              }
+            ]
+          },
+          {
+            "id": "Feature2Frame",
+            "classId": "Panel",
+            "styleId": "GreenFrameStyle",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "position": [ 175, 625 ],
+            "size": [ 600, 250 ]
+          },
+          {
+            "id": "Feature2HDFrame",
+            "classId": "Panel",
+            "styleId": "GreenFrameStyle",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "position": [ 775, 625 ],
+            "size": [ 200, 250 ]
+          },
+
+          {
+            "classId": "HorizontalStackPanel",
+            "id": "Feature2Chunks",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "position": [ 200, 650 ],
+            "size": [ 1500, 350 ],
+            "styleId": "BasicPanelStyle",
+            "stackingOrientation": "right",
+            "stackElementPadding": 50.0,
+            "childElements": [
+              {
+                "id": "Chunk9",
+                "prefabRef": "Assets/Layouts/chunk.json"
+              },
+              {
+                "id": "Chunk10",
+                "prefabRef": "Assets/Layouts/chunk.json"
+              },
+              {
+                "id": "Chunk11",
+                "prefabRef": "Assets/Layouts/chunk.json"
+              },
+              {
+                "id": "Chunk12",
+                "prefabRef": "Assets/Layouts/chunk.json"
+              }
+            ]
+          },
+          {
+            "id": "Feature3Frame",
+            "classId": "Panel",
+            "styleId": "BlueFrameStyle",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "position": [ 975, 625 ],
+            "size": [ 400, 250 ]
+          },
+          {
+            "id": "Feature3HDFrame",
+            "classId": "Panel",
+            "styleId": "BlueFrameStyle",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "position": [ 1375, 625 ],
+            "size": [ 200, 250 ]
+          },
+
+          {
+            "classId": "HorizontalStackPanel",
+            "id": "Feature3Chunks",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "position": [ 1000, 650 ],
+            "size": [ 1500, 350 ],
+            "styleId": "BasicPanelStyle",
+            "stackingOrientation": "right",
+            "stackElementPadding": 50.0,
+            "childElements": [
+              {
+                "id": "Chunk13",
+                "prefabRef": "Assets/Layouts/chunk.json"
+              },
+              {
+                "id": "Chunk14",
+                "prefabRef": "Assets/Layouts/chunk.json"
+              },
+              {
+                "id": "Chunk15",
+                "prefabRef": "Assets/Layouts/chunk.json"
+              }
+            ]
+          },
+          {
+            "id": "Feature4Frame",
+            "classId": "Panel",
+            "styleId": "GrayFrameStyle",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "position": [ 1575, 625 ],
+            "size": [ 200, 250 ]
+          },
+          {
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "position": [ 1600, 650 ],
+            "size": [ 150, 150 ],
+            "id": "Chunk16",
+            "prefabRef": "Assets/Layouts/chunk.json"
+          }
+        ]
+      }
+    ]
+  }
+}

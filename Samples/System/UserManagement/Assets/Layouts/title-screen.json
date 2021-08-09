@@ -1,0 +1,81 @@
+{
+  "includes": [
+    "Assets/Layouts/defs.json",
+    "Assets/Layouts/styles.json"
+  ],
+  "layout": {
+    "id": "title-screen",
+    "classId": "Panel",
+    "size": [ 1920, 1080 ],
+    "style": {
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#background_color"
+    },
+    "subElements": [
+      {
+        "id": "title_logo_image",
+        "classId": "Image",
+        "positioningAnchor": [ "center", "top" ],
+        "position": [ 0, 125 ],
+        "sizingAnchor": [ "center", "top" ],
+        "size": [ 200, 200 ],
+        "styleId": "title_logo_image_style"
+      },
+      {
+        "id": "title_logo_text",
+        "classId": "StaticText",
+        "text": "presents",
+        "styleId": "title_logo_text_style",
+        "positioningAnchor": [ "center", "top" ],
+        "position": [ 0, 335 ],
+        "sizingAnchor": [ "center", "top" ],
+        "size": [ 200, 36 ]
+      },
+      {
+        "id": "title_text",
+        "classId": "StaticText",
+        "text": "User Management Sample",
+        "styleId": "title_text_style",
+        "positioningAnchor": [ "center", "middle" ],
+        "position": [ 0, 0 ],
+        "sizingAnchor": [ "center", "middle" ],
+        "size": [ 200, 36 ]
+      },
+      {
+        "id": "start_button",
+        "classId": "Button",
+        "positioningAnchor": [ "center", "top" ],
+        "position": [ 0, 725 ],
+        "sizingAnchor": [ "center", "top" ],
+        "size": [ 250, 60 ],
+        "focusable": true,
+        "style": {
+          "classId": "NullStyle"
+        },
+        "subElements": [
+          {
+            "id": "start_button_label",
+            "classId": "StaticText",
+            "text": " PRESS A BUTTON\nTO START",
+            "styleId": "start_button_text_style",
+            "positioningAnchor": [ "center", "top" ],
+            "position": [ 0, 0 ],
+            "sizingAnchor": [ "center", "top" ],
+            "size": [ 250, 60 ]
+          }
+        ]
+      },
+      {
+        "id": "sandbox_text",
+        "classId": "StaticText",
+        "text": "Sandbox ID: NULL.0",
+        "styleId": "title_sandbox_text_style",
+        "positioningAnchor": [ "center", "top" ],
+        "position": [ 0, 1000 ],
+        "sizingAnchor": [ "center", "top" ],
+        "size": [ 200, 36 ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,154 @@
+{
+  "includes": [
+    "Assets/Layouts/defs.json",
+    "Assets/Layouts/styles.json"
+  ],
+  "layout": {
+    "id": "multiuser-screen",
+    "classId": "Panel",
+    "size": [ 1420, 1080 ],
+    "style": {
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#background_color"
+    },
+    "subElements": [
+      {
+        "id": "menu_logo_image",
+        "classId": "Image",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 90, 40 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 100, 110 ],
+        "styleId": "title_logo_image_style"
+      },
+      {
+        "id": "menu_title_text",
+        "classId": "StaticText",
+        "text": "User Management Sample",
+        "styleId": "menu_title_text_style",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 200, 50 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 1220, 100 ]
+      },
+      {
+        "id": "user1",
+        "prefabRef": "Assets/Layouts/user-prefab.json",
+        "position": [ 75, 180 ]
+      },
+      {
+        "id": "user2",
+        "prefabRef": "Assets/Layouts/user-prefab.json",
+        "position": [ 725, 180 ]
+      },
+      {
+        "id": "user3",
+        "prefabRef": "Assets/Layouts/user-prefab.json",
+        "position": [ 75, 580 ]
+      },
+      {
+        "id": "user4",
+        "prefabRef": "Assets/Layouts/user-prefab.json",
+        "position": [ 725, 580 ]
+      },
+      {
+        "id": "legend_section",
+        "classId": "Panel",
+        "position": [ 90, 980 ],
+        "size": [ 1280, 50 ],
+        "style": {
+          "classId": "NullStyle"
+        },
+        "subElements": [
+          {
+            "id": "navigate_legend",
+            "classId": "Panel",
+            "positioningAnchor": [ "left", "middle" ],
+            "position": [ 10, 0 ],
+            "sizingAnchor": [ "left", "middle" ],
+            "size": [ 210, 50 ],
+            "styleId": "legend_panel_style",
+            "subElements": [
+              {
+                "id": "key_panel",
+                "classId": "Panel",
+                "positioningAnchor": [ "left", "middle" ],
+                "position": [ 0, 0 ],
+                "sizingAnchor": [ "left", "middle" ],
+                "size": [ 50, 50 ],
+                "styleId": "legend_key_panel_style",
+                "subElements": [
+                  {
+                    "id": "key_text",
+                    "classId": "StaticText",
+                    "styleId": "legend_key_text_style",
+                    "isLegend": true,
+                    "text": "[DPad]",
+                    "positioningAnchor": [ "center", "middle" ],
+                    "position": [ 0, 0 ],
+                    "sizingAnchor": [ "center", "middle" ],
+                    "size": [ 50, 50 ]
+                  }
+                ]
+              },
+              {
+                "id": "value_text",
+                "classId": "StaticText",
+                "styleId": "legend_value_text_style",
+                "text": "Navigate",
+                "positioningAnchor": [ "left", "middle" ],
+                "position": [ 50, 0 ],
+                "sizingAnchor": [ "left", "middle" ],
+                "size": [ 150, 50 ]
+              }
+            ]
+          },
+          {
+            "id": "unpaired_legend",
+            "classId": "Panel",
+            "positioningAnchor": [ "left", "middle" ],
+            "position": [ 250, 0 ],
+            "sizingAnchor": [ "left", "middle" ],
+            "size": [ 500, 50 ],
+            "styleId": "legend_panel_style",
+            "subElements": [
+              {
+                "id": "key_panel",
+                "classId": "Panel",
+                "positioningAnchor": [ "left", "middle" ],
+                "position": [ 0, 0 ],
+                "sizingAnchor": [ "left", "middle" ],
+                "size": [ 50, 50 ],
+                "styleId": "legend_key_panel_style",
+                "subElements": [
+                  {
+                    "id": "key_text",
+                    "classId": "StaticText",
+                    "styleId": "legend_key_text_style",
+                    "isLegend": true,
+                    "text": "[A]",
+                    "positioningAnchor": [ "center", "middle" ],
+                    "position": [ 0, 0 ],
+                    "sizingAnchor": [ "center", "middle" ],
+                    "size": [ 50, 50 ]
+                  }
+                ]
+              },
+              {
+                "id": "value_text",
+                "classId": "StaticText",
+                "styleId": "legend_value_text_style",
+                "text": "Unpaired Gamepad: Sign In",
+                "positioningAnchor": [ "left", "middle" ],
+                "position": [ 50, 0 ],
+                "sizingAnchor": [ "left", "middle" ],
+                "size": [ 150, 50 ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,323 @@
+//--------------------------------------------------------------------------------------
+// SimpleUserModel.cpp
+//
+// Advanced Technology Group (ATG)
+// Copyright (C) Microsoft Corporation. All rights reserved.
+//--------------------------------------------------------------------------------------
+
+#include "pch.h"
+#include "SimpleUserModel.h"
+
+#include "ATGColors.h"
+
+extern void ExitSample() noexcept;
+
+using namespace DirectX;
+using namespace ATG::UITK;
+
+using Microsoft::WRL::ComPtr;
+
+Sample::Sample() noexcept(false) :
+    m_frame(0)
+{
+    // Renders only 2D, so no need for a depth buffer.
+    m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_UNKNOWN);
+
+    XTaskQueueCreate(XTaskQueueDispatchMode::ThreadPool, XTaskQueueDispatchMode::Manual, &m_taskQueue);
+
+    // [Simple User Model]
+    // Register for any change events for users.
+    // Change events are triggered when:
+    //  - A user's sign-in status changes
+    //  - A user's Gamertag, GamerPicture, or Privileges changed
+    XUserRegisterForChangeEvent(
+        m_taskQueue,
+        this,
+        &UserChangeEventCallback,
+        &m_userChangeEventCallbackToken
+    );
+}
+
+Sample::~Sample()
+{
+    XUserUnregisterForChangeEvent(m_userChangeEventCallbackToken, false);
+
+    XTaskQueueTerminate(m_taskQueue, false, nullptr, nullptr);
+    XTaskQueueDispatch(m_taskQueue, XTaskQueuePort::Completion, INFINITE);
+    XTaskQueueCloseHandle(m_taskQueue);
+}
+
+// Initialize the Direct3D resources required to run.
+void Sample::Initialize(HWND window)
+{
+    m_gamePad = std::make_unique<GamePad>();
+
+    m_deviceResources->SetWindow(window);
+
+    m_deviceResources->CreateDeviceResources();
+    CreateDeviceDependentResources();
+
+    m_deviceResources->CreateWindowSizeDependentResources();
+    CreateWindowSizeDependentResources();
+
+    InitializeUI();
+
+    SignInDefaultUser();
+}
+
+#pragma region Frame Update
+// Executes basic render loop.
+void Sample::Tick()
+{
+    PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
+
+    m_timer.Tick([&]()
+    {
+        Update(m_timer);
+    });
+
+    Render();
+
+    PIXEndEvent();
+    m_frame++;
+}
+
+// Updates the world.
+void Sample::Update(DX::StepTimer const& timer)
+{
+    PIXScopedEvent(PIX_COLOR_DEFAULT, L"Update");
+
+    float elapsedTime = float(timer.GetElapsedSeconds());
+
+    XTaskQueueDispatch(m_taskQueue, XTaskQueuePort::Completion, 0);
+
+    auto pad = m_gamePad->GetState(0);
+    if (pad.IsConnected())
+    {
+        m_gamePadButtons.Update(pad);
+
+        if (pad.IsViewPressed())
+        {
+            ExitSample();
+        }
+    }
+    else
+    {
+        m_gamePadButtons.Reset();
+    }
+
+    m_inputState.Update(elapsedTime, *m_gamePad);
+    m_uiManager.Update(elapsedTime, m_inputState);
+}
+#pragma endregion
+
+#pragma region Frame Render
+// Draws the scene.
+void Sample::Render()
+{
+    // Don't try to render anything before the first Update.
+    if (m_timer.GetFrameCount() == 0)
+    {
+        return;
+    }
+
+    // Prepare the command list to render a new frame.
+    m_deviceResources->Prepare();
+    Clear();
+
+    auto commandList = m_deviceResources->GetCommandList();
+    PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Render");
+
+    m_uiManager.Render();
+
+    PIXEndEvent(commandList);
+
+    // Show the new frame.
+    PIXBeginEvent(PIX_COLOR_DEFAULT, L"Present");
+    m_deviceResources->Present();
+    m_graphicsMemory->Commit(m_deviceResources->GetCommandQueue());
+    PIXEndEvent();
+}
+
+// Helper method to clear the back buffers.
+void Sample::Clear()
+{
+    auto commandList = m_deviceResources->GetCommandList();
+    PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
+
+    // Clear the views.
+    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
+
+    commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, nullptr);
+    commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
+
+    // Set the viewport and scissor rect.
+    auto viewport = m_deviceResources->GetScreenViewport();
+    auto scissorRect = m_deviceResources->GetScissorRect();
+    commandList->RSSetViewports(1, &viewport);
+    commandList->RSSetScissorRects(1, &scissorRect);
+
+    PIXEndEvent(commandList);
+}
+#pragma endregion
+
+#pragma region Message Handlers
+// Message handlers
+void Sample::OnSuspending()
+{
+    m_deviceResources->Suspend();
+}
+
+void Sample::OnResuming()
+{
+    m_deviceResources->Resume();
+    m_timer.ResetElapsedTime();
+    m_gamePadButtons.Reset();
+    m_inputState.Reset();
+}
+#pragma endregion
+
+#pragma region Direct3D Resources
+// These are the resources that depend on the device.
+void Sample::CreateDeviceDependentResources()
+{
+    auto device = m_deviceResources->GetD3DDevice();
+
+    m_graphicsMemory = std::make_unique<GraphicsMemory>(device);
+
+    auto styleRenderer = std::make_unique<UIStyleRendererD3D>(*this);
+    m_uiManager.GetStyleManager().InitializeStyleRenderer(std::move(styleRenderer));
+}
+
+// Allocate all memory resources that change on a window SizeChanged event.
+void Sample::CreateWindowSizeDependentResources()
+{
+    auto size = m_deviceResources->GetOutputSize();
+    m_uiManager.SetWindowSize(size.right, size.bottom);
+}
+#pragma endregion
+
+// [Simple User Model]
+// This method signs in the default user that launched the application
+void Sample::SignInDefaultUser()
+{
+    XAsyncBlock* asyncBlock = new XAsyncBlock{};
+    asyncBlock->queue = m_taskQueue;
+    asyncBlock->context = this;
+    asyncBlock->callback = [](XAsyncBlock* asyncBlock)
+    {
+        Sample* pThis = static_cast<Sample*>(asyncBlock->context);
+
+        // [Simple User Model]
+        // XUserAddResult is guaranteed to return S_OK when signing in the default user silently with
+        // "XUserAddOptions::AddDefaultUserSilently".
+        DX::ThrowIfFailed(XUserAddResult(asyncBlock, &pThis->m_user));
+        DX::ThrowIfFailed(XUserGetLocalId(pThis->m_user, &pThis->m_userLocalId));
+        pThis->UpdateUserUIData();
+
+        delete asyncBlock;
+    };
+
+    // [Simple User Model]
+    // The default user that launched the application can be added silently. When using the simple user model,
+    // this is guaranteed to succeed in acquiring the user later with XUserAddResult.
+    DX::ThrowIfFailed(XUserAddAsync(XUserAddOptions::AddDefaultUserSilently, asyncBlock));
+}
+
+void Sample::InitializeUI()
+{
+    auto layout = m_uiManager.LoadLayoutFromFile("Assets/UILayout.json");
+    m_uiManager.AttachTo(layout, m_uiManager.GetRootElement());
+
+    m_gamertagText = layout->GetTypedChildById<UIStaticText>(ID("Gamertag_Label"));
+    m_gamerpicImage = layout->GetTypedChildById<UIImage>(ID("Gamerpic"));
+}
+
+// [Simple User Model]
+// This method updates the user's Gamertag and GamerPicture data that's rendered to the screen.
+void Sample::UpdateUserUIData()
+{
+    // Set gamertag
+    char gamertagBuffer[XUserGamertagComponentUniqueModernMaxBytes + 1] = {};
+    size_t gamertagSize = 0;
+    DX::ThrowIfFailed(XUserGetGamertag(m_user, XUserGamertagComponent::UniqueModern, sizeof(gamertagBuffer), gamertagBuffer, &gamertagSize));
+    m_gamertagText->SetDisplayText(gamertagBuffer);
+
+    // Setup gamerpic request
+    XAsyncBlock* asyncBlock = new XAsyncBlock{};
+    asyncBlock->queue = m_taskQueue;
+    asyncBlock->context = this;
+    asyncBlock->callback = [](XAsyncBlock* asyncBlock)
+    {
+        Sample* pThis = static_cast<Sample*>(asyncBlock->context);
+
+        // Get buffer size
+        size_t bufferSize = 0;
+        DX::ThrowIfFailed(XUserGetGamerPictureResultSize(asyncBlock, &bufferSize));
+
+        // Get buffer data
+        std::vector<uint8_t> buffer;
+        buffer.resize(bufferSize);
+        size_t bufferUsed = 0;
+        DX::ThrowIfFailed(XUserGetGamerPictureResult(asyncBlock, bufferSize, buffer.data(), &bufferUsed));
+
+        // Set in UI
+        pThis->m_gamerpicImage->UseTextureData(buffer.data(), buffer.size());
+
+        delete asyncBlock;
+    };
+
+    // Request gamerpic
+    DX::ThrowIfFailed(XUserGetGamerPictureAsync(m_user, XUserGamerPictureSize::Medium, asyncBlock));
+}
+
+// [Simple User Model]
+// This callback is called whenever a user event happens. It was registered with XUserRegisterForChangeEvent in the Sample constructor.
+void CALLBACK Sample::UserChangeEventCallback(
+    _In_opt_ void* context,
+    _In_ XUserLocalId userLocalId,
+    _In_ XUserChangeEvent event
+)
+{
+    // Log the callback
+    {
+        char debugString[512] = {};
+        sprintf_s(debugString, 512, u8"UserChangeEventCallback() : userLocalId = 0x%llx, event = %d\n",
+            userLocalId.value,
+            event
+        );
+        OutputDebugStringA(debugString);
+    }
+
+    // Only handle events for the default user
+    Sample* pThis = static_cast<Sample*>(context);
+    if (userLocalId.value != pThis->m_userLocalId.value)
+    {
+        return;
+    }
+
+    // [Simple User Model]
+    // In the simple user model, these Sign-in/Sign-out events are not intended to be received for the default user by design.
+    //
+    // Instead, the title is suspended if the user ever signs out. If a different user were to then attempt to
+    // start the title, the title is terminated and re-started with the new default user instead of requiring handling
+    // based on these events.
+    //
+    // However, note that they can be caused on a devkit when manually resuming using DevHome or other PLM testing tools.
+    // These will not be received in retail or if testing using the standard Xbox user's home screens to launch.
+    //
+    // See the readme for more in-depth information.
+    if (event == XUserChangeEvent::SignedInAgain ||
+        event == XUserChangeEvent::SignedOut ||
+        event == XUserChangeEvent::SigningOut)
+    {
+        throw std::runtime_error("Got an unexpected user change event that shouldn't happen with the simple user model.");
+    }
+
+    // Update user data if it changed
+    if (event == XUserChangeEvent::GamerPicture ||
+        event == XUserChangeEvent::Gamertag)
+    {
+        pThis->UpdateUserUIData();
+    }
+}

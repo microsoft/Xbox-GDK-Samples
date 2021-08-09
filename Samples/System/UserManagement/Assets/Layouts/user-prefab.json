@@ -1,0 +1,210 @@
+{
+  "prefab": {
+    "classId": "Panel",
+    "style": {
+        "id": "prefab_panel_style",
+        "inheritsFromId": "section_panel_style",
+        "classId": "SpriteStyle"
+    },
+    "size": [660, 440],
+    "subElements": [
+      {
+        "id": "no_user_text",
+        "classId": "StaticText",
+        "isLegend": true,
+        "styleId": "no_user_text_style",
+        "text": "Press [A] to Join",
+        "positioningAnchor": [ "center", "middle" ],
+        "position": [ 0, 0 ],
+        "sizingAnchor": [ "center", "middle" ],
+        "size": [ 660, 440 ]
+      },
+      {
+        "id": "have_user_panel",
+        "classId": "Panel",
+        "styleId": "section_panel_style",
+        "size": [ 660, 440 ],
+        "subElements": [
+          {
+            "id": "primary_image",
+            "classId": "Image",
+            "styleId": "primary_icon_style",
+            "visible": false,
+            "size": [ 60, 60 ]
+          },
+          {
+            "id": "gamer_tag",
+            "classId": "StaticText",
+            "styleId": "primary_user_name_style",
+            "size": [ 600, 60 ],
+            "position": [ 60, 0 ],
+            "text": "<Gamer Tag>"
+          },
+          {
+            "id": "user_id_panel",
+            "classId": "Panel",
+            "position": [ 0, 60 ],
+            "size": [ 60, 60 ],
+            "styleId": "user_number_style",
+            "subElements": [
+              {
+                "id": "user_id_text",
+                "classId": "StaticText",
+                "text": "0",
+                "positioningAnchor": [ "center", "middle" ],
+                "position": [ 0, 0 ],
+                "sizingAnchor": [ "center", "middle" ],
+                "size": [ 60, 60 ],
+                "styleId": "user_number_text_style"
+              }
+            ]
+          },
+          {
+            "id": "profile_pic",
+            "classId": "Image",
+            "styleId": "profile_pic_style",
+            "positioningAnchor": [ "top", "left" ],
+            "position": [ 60, 60 ],
+            "sizingAnchor": [ "top", "left" ],
+            "size": [ 240, 240 ]
+          },
+          {
+            "id": "button_input",
+            "classId": "Button",
+            "styleId": "button_default_style",
+            "focusedStyleId": "button_focused_style",
+            "pressedStyleId": "button_focused_style",
+            "hoveredStyleId": "button_focused_style",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 310, 60 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 310, 75 ],
+            "focusable": false,
+            "subElements": [
+              {
+                "id": "button_border",
+                "classId": "Panel",
+                "styleId": "button_border_style",
+                "visible": false,
+                "sizingAnchor": [ "center", "middle" ],
+                "positioningAnchor": [ "center", "middle" ],
+                "size": [ 324, 89 ]
+              },
+              {
+                "id": "button_label",
+                "classId": "StaticText",
+                "styleId": "button_default_text_style",
+                "text": "Button Input:",
+                "size": [ 310, 75 ]
+              }
+            ]
+          },
+          {
+            "id": "active_button_label",
+            "classId": "StaticText",
+            "isLegend": true,
+            "styleId": "active_button_text_style",
+            "text": "[A][B][X][Y][LT][RB]",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 310, 150 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 310, 75 ]
+          },
+          {
+            "id": "leave_button",
+            "classId": "Button",
+            "styleId": "button_default_style",
+            "focusedStyleId": "button_focused_style",
+            "pressedStyleId": "button_pressed_style",
+            "hoveredStyleId": "button_focused_style",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 310, 220 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 310, 75 ],
+            "focusable": false,
+            "subElements": [
+              {
+                "id": "button_border",
+                "classId": "Panel",
+                "styleId": "button_border_style",
+                "visible": false,
+                "sizingAnchor": [ "center", "middle" ],
+                "positioningAnchor": [ "center", "middle" ],
+                "size": [ 324, 89 ]
+              },
+              {
+                "id": "button_label",
+                "classId": "StaticText",
+                "styleId": "button_default_text_style",
+                "text": "Leave",
+                "size": [ 310, 75 ]
+              }
+            ]
+          },
+          {
+            "id": "deferral_active_text",
+            "classId": "StaticText",
+            "styleId": "button_default_text_style",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 60, 310 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 570, 75 ],
+            "visible": false
+          },
+          {
+            "id": "deferral_checkbox_button",
+            "classId": "Button",
+            "styleId": "button_default_style",
+            "focusedStyleId": "button_focused_style",
+            "hoveredStyleId": "button_focused_style",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 60, 310 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 560, 75 ],
+            "focusable": false,
+            "subElements": [
+              {
+                "id": "button_border",
+                "classId": "Panel",
+                "styleId": "button_border_style",
+                "visible": false,
+                "sizingAnchor": [ "center", "middle" ],
+                "positioningAnchor": [ "center", "middle" ],
+                "size": [ 574, 89 ]
+              },
+              {
+                "id": "button_label",
+                "classId": "StaticText",
+                "styleId": "button_default_text_style",
+                "text": "Request Deferral on Signout",
+                "positioningAnchor": [ "left", "top" ],
+                "position": [ 35, 0 ],
+                "sizingAnchor": [ "left", "top" ],
+                "size": [ 560, 75 ]
+              },
+              {
+                "id": "deferral_panel",
+                "classId": "Panel",
+                "size": [ 75, 75 ],
+                "position": [ 0, 0 ],
+                "styleId": "checkbox_panel_style",
+                "subElements": [
+                  {
+                    "id": "deferral_toggle",
+                    "classId": "CheckBox",
+                    "styleId": "unchecked_checkbox_style",
+                    "checkedStyleId": "checked_checkbox_style",
+                    "positioningAnchor": [ "center", "middle" ],
+                    "sizingAnchor": [ "center", "middle" ],
+                    "size": [ 40, 40 ],
+                    "checked": true
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

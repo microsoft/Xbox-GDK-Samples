@@ -1,0 +1,84 @@
+{
+  "includes": [
+    "Assets/styles.json"
+  ],
+  "prefab": {
+    "classId": "Panel",
+    "size": [ 450, 270 ],
+    "styleId": "Basic_Panel_Style",
+    "subElements": [
+      {
+        "classId": "StaticText",
+        "id": "Title",
+        "position": [ 0, 10 ],
+        "size": [ 450, 30 ],
+        "text": "UINavigation",
+        "styleId": "Basic_Title_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Input1",
+        "position": [ 20, 40 ],
+        "size": [ 450, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Input2",
+        "position": [ 20, 70 ],
+        "size": [ 450, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Input3",
+        "position": [ 20, 100 ],
+        "size": [ 450, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Input4",
+        "position": [ 20, 130 ],
+        "size": [ 450, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Input5",
+        "position": [ 20, 160 ],
+        "size": [ 450, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Input6",
+        "position": [ 20, 190 ],
+        "size": [ 450, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Input7",
+        "position": [ 20, 220 ],
+        "size": [ 450, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Input8",
+        "position": [ 20, 250 ],
+        "size": [ 450, 30 ],
+        "text": "",
+        "styleId": "Basic_Text_Style"
+      }
+    ]
+  }
+}
