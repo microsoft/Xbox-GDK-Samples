@@ -2,56 +2,17 @@
 
 This repo contains game development samples written by the Microsoft Xbox Advanced Technology Group using the Microsoft Game Development Kit (GDK).
 
-* ``Kits`` contains support code used by the samples
-* ``Media`` contains media files used by the samples
-* ``Samples`` contains samples
-  * ``Audio``
-  * ``IntroGraphics``
-  * ``Graphics``
-  * ``System``
-  * ``Tools``
+* [Kits](/Kits) contains support code used by the samples
+* [Media](/Media) contains media files used by the samples
+* [Samples](#Samples-by-category) contains samples
+  * [Audio](#Audio)
+  * [IntroGraphics](#Intro-Graphics)
+  * [Graphics](#Graphics)
+  * [Live](#Live)
+  * [System](#System)
+  * [Tools](#Tools)
 
-## Samples by category
-
-### Introductory Graphics
-
-<table>
- <tr>
-  <td>Basic drawing</td>
-  <td><a href="Samples/IntroGraphics/SimpleTriangle">Xbox</a></td>
-  <td><a href="Samples/IntroGraphics/SimpleTriangleDesktop">PC</a></td>
- </tr>
- <tr>
-  <td>Basic texturing</td>
-  <td><a href="Samples/IntroGraphics/SimpleTexture">Xbox</a></td>
- </tr>
- <tr>
-  <td>Basic lighting</td>
-  <td><a href="Samples/IntroGraphics/SimpleLighting">Xbox</a></td>
- </tr>
- <tr>
-  <td>Bezier</td>
-  <td><a href="Samples/IntroGraphics/SimpleBezier">Xbox</a></td>
- </tr>
- <tr>
-  <td>DirectCompute</td>
-  <td><a href="Samples/IntroGraphics/SimpleCompute">Xbox</a></td>
- </tr>
- <tr>
-  <td>Instancing</td>
-  <td><a href="Samples/IntroGraphics/SimpleInstancing">Xbox</a></td>
- </tr>
- <tr>
-  <td>Multisample Antialiasing</td>
-  <td><a href="Samples/IntroGraphics/SimpleMSAA">Xbox</a></td>
- </tr>
- <tr>
-  <td>Xbox device setup</td>
-  <td><a href="Samples/IntroGraphics/SimpleDeviceAndSwapChain">Xbox</a></td>
- </tr>
-</table>
-
-## Requirements
+# Requirements
 
 * Visual Studio 2017 ([15.9](https://walbourn.github.io/vs-2017-15-9-update/) update) or Visual Studio 2019
 * Microsoft Game Development Kit (GDK)
@@ -73,3 +34,117 @@ This project may contain trademarks or logos for projects, products, or services
 ## Other Samples
 
 For more ATG samples, see [DirectML-Samples](https://github.com/microsoft/DirectML-Samples), [PlayFab-Samples](https://github.com/PlayFab/PlayFab-Samples), [Xbox-ATG-Samples](https://github.com/microsoft/Xbox-ATG-Samples), and [Xbox-LIVE-Samples](https://github.com/microsoft/xbox-live-samples).
+
+## Samples by category
+
+
+### Audio
+
+|                                    Path|                                    Xbox|                                      PC|                                    Tool|
+|----------------------------------------|                                  ------|                                  ------|                                  ------|
+|                   AdvancedSpatialSounds|[Xbox](Samples/Audio/AdvancedSpatialSounds)|                                        |                                        
+|                              InGameChat|        [Xbox](Samples/Audio/InGameChat)|          [PC](Samples/Audio/InGameChat)|                                        
+|                       SimplePlay3DSound| [Xbox](Samples/Audio/SimplePlay3DSound)|                                        |                                        
+|                         SimplePlaySound|   [Xbox](Samples/Audio/SimplePlaySound)|                                        |                                        
+|                   SimplePlaySoundStream|[Xbox](Samples/Audio/SimplePlaySoundStream)|                                        |                                        
+|                  SimpleSpatialPlaySound|[Xbox](Samples/Audio/SimpleSpatialPlaySound)|                                        |                                        
+|                     SimpleWASAPICapture|[Xbox](Samples/Audio/SimpleWASAPICapture)|                                        |                                        
+|                   SimpleWASAPIPlaySound|[Xbox](Samples/Audio/SimpleWASAPIPlaySound)|                                        |                                        
+
+### Graphics
+
+|                                    Path|                                    Xbox|                                      PC|                                    Tool|
+|----------------------------------------|                                  ------|                                  ------|                                  ------|
+|                           AdvancedESRAM|  [Xbox](Samples/Graphics/AdvancedESRAM)|                                        |                                        
+|                        ComputeParticles|[Xbox](Samples/Graphics/ComputeParticles)|                                        |                                        
+|                       DeferredParticles|[Xbox](Samples/Graphics/DeferredParticles)|                                        |                                        
+|                         ExecuteIndirect|[Xbox](Samples/Graphics/ExecuteIndirect)|                                        |                                        
+|                       FastBlockCompress|[Xbox](Samples/Graphics/FastBlockCompress)|                                        |                                        
+|                             HlslCompile|    [Xbox](Samples/Graphics/HlslCompile)|                                        |    [Tool](Samples/Graphics/HlslCompile)
+|                       MeshletInstancing|[Xbox](Samples/Graphics/MeshletInstancing)|[PC](Samples/Graphics/MeshletInstancing)|                                        
+|                            PointSprites|   [Xbox](Samples/Graphics/PointSprites)|                                        |                                        
+|                         SmokeSimulation|[Xbox](Samples/Graphics/SmokeSimulation)|                                        |                                        
+
+### IntroGraphics
+
+|                                    Path|                                    Xbox|                                      PC|                                    Tool|
+|----------------------------------------|                                  ------|                                  ------|                                  ------|
+|                            SimpleBezier|[Xbox](Samples/IntroGraphics/SimpleBezier)|                                        |                                        
+|                           SimpleCompute|[Xbox](Samples/IntroGraphics/SimpleCompute)|                                        |                                        
+|                SimpleDeviceAndSwapChain|[Xbox](Samples/IntroGraphics/SimpleDeviceAndSwapChain)|                                        |                                        
+|                        SimpleInstancing|[Xbox](Samples/IntroGraphics/SimpleInstancing)|                                        |                                        
+|                          SimpleLighting|[Xbox](Samples/IntroGraphics/SimpleLighting)|                                        |                                        
+|                        SimpleMeshShader|[Xbox](Samples/IntroGraphics/SimpleMeshShader)|[PC](Samples/IntroGraphics/SimpleMeshShader)|                                        
+|                              SimpleMSAA|[Xbox](Samples/IntroGraphics/SimpleMSAA)|                                        |                                        
+|                   SimpleSamplerFeedback|[Xbox](Samples/IntroGraphics/SimpleSamplerFeedback)|                                        |                                        
+|                           SimpleTexture|[Xbox](Samples/IntroGraphics/SimpleTexture)|                                        |                                        
+|                          SimpleTriangle|[Xbox](Samples/IntroGraphics/SimpleTriangle)|[PC](Samples/IntroGraphics/SimpleTriangleDesktop)|                                        
+
+### Live
+
+|                                    Path|                                    Xbox|                                      PC|                                    Tool|
+|----------------------------------------|                                  ------|                                  ------|                                  ------|
+|                        Achievements2017|   [Xbox](Samples/Live/Achievements2017)|[PC](Samples/Live/Achievements2017_desktop)|                                        
+|                     DownloadableContent|[Xbox](Samples/Live/DownloadableContent)|  [PC](Samples/Live/DownloadableContent)|                                        
+|                            Fundamentals|                                        | [PC](Samples/Live/Fundamentals_Desktop)|                                        
+|                             InGameStore|        [Xbox](Samples/Live/InGameStore)|          [PC](Samples/Live/InGameStore)|                                        
+|                            Leaderboards|       [Xbox](Samples/Live/Leaderboards)| [PC](Samples/Live/Leaderboards_Desktop)|                                        
+|                LeaderboardsTitleManaged|[Xbox](Samples/Live/LeaderboardsTitleManaged)|[PC](Samples/Live/LeaderboardsTitleManaged_Desktop)|                                        
+|                                    mDNS|               [Xbox](Samples/Live/mDNS)|         [PC](Samples/Live/mDNS_Desktop)|                                        
+|                      PlayFabMatchmaking|[Xbox](Samples/Live/PlayFabMatchmaking_Xbox)|[PC](Samples/Live/PlayFabMatchmaking_Desktop)|                                        
+|                      SimpleCrossGenMPSD| [Xbox](Samples/Live/SimpleCrossGenMPSD)|   [PC](Samples/Live/SimpleCrossGenMPSD)|                                        
+|                              SimpleHttp|         [Xbox](Samples/Live/SimpleHttp)|           [PC](Samples/Live/SimpleHttp)|                                        
+|                        SimpleWebSockets|   [Xbox](Samples/Live/SimpleWebSockets)|     [PC](Samples/Live/SimpleWebSockets)|                                        
+|                                  Social|             [Xbox](Samples/Live/Social)|       [PC](Samples/Live/Social_Desktop)|                                        
+|                            TitleStorage|       [Xbox](Samples/Live/TitleStorage)|                                        |                                        
+
+### System
+
+|                                    Path|                                    Xbox|                                      PC|                                    Tool|
+|----------------------------------------|                                  ------|                                  ------|                                  ------|
+|               AdvancedExceptionHandling|[Xbox](Samples/System/AdvancedExceptionHandling)|[PC](Samples/System/AdvancedExceptionHandling)|                                        
+|                       OutOfProcDumpTool|[Xbox](Samples/System/AdvancedExceptionHandling)|                                        |                                        
+|                 AsynchronousProgramming|[Xbox](Samples/System/AsynchronousProgramming)|[PC](Samples/System/AsynchronousProgramming)|                                        
+|                               Collision|        [Xbox](Samples/System/Collision)|          [PC](Samples/System/Collision)|                                        
+|                     CustomEventProvider|[Xbox](Samples/System/CustomEventProvider)|                                        |                                        
+|                         DataBreakPoints|  [Xbox](Samples/System/DataBreakPoints)|    [PC](Samples/System/DataBreakPoints)|                                        
+|                          FrontPanelDemo|   [Xbox](Samples/System/FrontPanelDemo)|                                        |                                        
+|                       FrontPanelDolphin|[Xbox](Samples/System/FrontPanelDolphin)|                                        |                                        
+|                          FrontPanelGame|   [Xbox](Samples/System/FrontPanelGame)|                                        |                                        
+|                          FrontPanelLogo|   [Xbox](Samples/System/FrontPanelLogo)|                                        |                                        
+|                          FrontPanelText|   [Xbox](Samples/System/FrontPanelText)|                                        |                                        
+|                    GameInputInterfacing|[Xbox](Samples/System/GameInputInterfacing)|                                        |                                        
+|                     GameInputSequential|[Xbox](Samples/System/GameInputSequential)|                                        |                                        
+|                                 Gamepad|          [Xbox](Samples/System/Gamepad)|                                        |                                        
+|                        GamepadVibration| [Xbox](Samples/System/GamepadVibration)|                                        |                                        
+|                                GameSave|         [Xbox](Samples/System/GameSave)|   [PC](Samples/System/GameSave_Desktop)|                                        
+|                     IntelligentDelivery|[Xbox](Samples/System/IntelligentDelivery)|[PC](Samples/System/IntelligentDelivery)|                                        
+|                            LocalStorage|     [Xbox](Samples/System/LocalStorage)|       [PC](Samples/System/LocalStorage)|                                        
+|                              MouseInput|       [Xbox](Samples/System/MouseInput)|                                        |                                        
+|                      NLSAndLocalization|[Xbox](Samples/System/NLSAndLocalization)| [PC](Samples/System/NLSAndLocalization)|                                        
+|                 SimpleExceptionHandling|[Xbox](Samples/System/SimpleExceptionHandling)|[PC](Samples/System/SimpleExceptionHandling)|                                        
+|                          SimpleFFBWheel|   [Xbox](Samples/System/SimpleFFBWheel)|                                        |                                        
+|                        SimpleFrontPanel| [Xbox](Samples/System/SimpleFrontPanel)|                                        |                                        
+|                               SimplePLM|        [Xbox](Samples/System/SimplePLM)|                                        |                                        
+|                         SimpleUserModel|  [Xbox](Samples/System/SimpleUserModel)|                                        |                                        
+|                              SystemInfo|       [Xbox](Samples/System/SystemInfo)|         [PC](Samples/System/SystemInfo)|                                        
+|                          UserManagement|   [Xbox](Samples/System/UserManagement)|                                        |                                        
+
+### Tools
+
+|                                    Path|                                    Xbox|                                      PC|                                    Tool|
+|----------------------------------------|                                  ------|                                  ------|                                  ------|
+|                             BWOIExample|       [Xbox](Samples/Tools/BWOIExample)|         [PC](Samples/Tools/BWOIExample)|                                        
+|                          CacheTestCombo|    [Xbox](Samples/Tools/CacheTestCombo)|      [PC](Samples/Tools/CacheTestCombo)|                                        
+|                                DumpTool|          [Xbox](Samples/Tools/DumpTool)|                                        |                                        
+|                            ConverterApp|                                        |                                        |  [Tool](Samples/Tools/MeshletConverter)
+|                                 Runtime|                                        |                                        |  [Tool](Samples/Tools/MeshletConverter)
+|                    OSPrimitiveTestCombo|[Xbox](Samples/Tools/OSPrimitiveTestCombo)|[PC](Samples/Tools/OSPrimitiveTestCombo)|                                        
+|                               xbgamepad|                                        |                                        |         [Tool](Samples/Tools/xbgamepad)
+|                                xtexconv|                                        |                                        |          [Tool](Samples/Tools/xtexconv)
+
+### xCloud
+
+|                                    Path|                                    Xbox|                                      PC|                                    Tool|
+|----------------------------------------|                                  ------|                                  ------|                                  ------|
+|                  SimpleCloudAwareSample|[Xbox](Samples/xCloud/SimpleCloudAwareSample)|                                        |                                        
