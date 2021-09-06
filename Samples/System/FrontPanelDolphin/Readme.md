@@ -4,11 +4,14 @@ languages:
 - cpp
 products:
 - gdk
+urlFragment: "frontpaneldolphin"
 extendedZipContent:
+- path: LICENSE
+  target: LICENSE
 - path: Kits
-  target: /
+  target: Kits
 - path: Media
-  target: /
+  target: Media
 description: "FrontPanelDolphin demonstrates how to use the GPU to render to the Xbox DevKit FrontPanel."
 ---
 

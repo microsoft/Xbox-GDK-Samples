@@ -4,11 +4,14 @@ languages:
 - cpp
 products:
 - gdk
+urlFragment: "leaderboardstitlemanaged"
 extendedZipContent:
+- path: LICENSE
+  target: LICENSE
 - path: Kits
-  target: /
+  target: Kits
 - path: Media
-  target: /
+  target: Media
 description: "The leaderboards sample demonstrates the usage of Xbox Live Leaderboards with Title-Managed stats on Xbox."
 ---
 

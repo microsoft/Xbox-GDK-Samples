@@ -4,11 +4,10 @@ languages:
 - cpp
 products:
 - gdk
+urlFragment: "bwoiexample"
 extendedZipContent:
-- path: Kits
-  target: /
-- path: Media
-  target: /
+- path: LICENSE
+  target: LICENSE
 description: "This example demonstrates a method for building MSBuild-based projects using the Gaming.*.x64 platforms without having the Microsoft GDK installed."
 ---
 

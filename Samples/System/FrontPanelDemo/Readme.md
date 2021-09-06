@@ -4,11 +4,14 @@ languages:
 - cpp
 products:
 - gdk
+urlFragment: "frontpaneldemo"
 extendedZipContent:
+- path: LICENSE
+  target: LICENSE
 - path: Kits
-  target: /
+  target: Kits
 - path: Media
-  target: /
+  target: Media
 description: "FrontPanelDemo combines several samples into one executable and then ties together the functionality with a menu system all hosted entirely on the Xbox DevKit front panel."
 ---
 
