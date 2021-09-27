@@ -4,11 +4,14 @@ languages:
 - cpp
 products:
 - gdk
+urlFragment: "gamepadvibration"
 extendedZipContent:
+- path: LICENSE
+  target: LICENSE
 - path: Kits
-  target: /
+  target: Kits
 - path: Media
-  target: /
+  target: Media
 description: "This sample demonstrates how to use vibration with a gamepad on an Xbox."
 ---
 

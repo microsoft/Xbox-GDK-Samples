@@ -4,11 +4,14 @@ languages:
 - cpp
 products:
 - gdk
+urlFragment: "asynchronousprogramming"
 extendedZipContent:
+- path: LICENSE
+  target: LICENSE
 - path: Kits
-  target: /
+  target: Kits
 - path: Media
-  target: /
+  target: Media
 description: "This sample shows how to use XAsync, XTaskQueue, and XAsyncProvider to implement asynchronous programming and task handling in various ways."
 ---
 

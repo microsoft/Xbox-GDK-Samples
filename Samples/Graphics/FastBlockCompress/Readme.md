@@ -4,11 +4,14 @@ languages:
 - cpp
 products:
 - gdk
+urlFragment: "fastblockcompress"
 extendedZipContent:
+- path: LICENSE
+  target: LICENSE
 - path: Kits
-  target: /
+  target: Kits
 - path: Media
-  target: /
+  target: Media
 description: "This sample demonstrates how you can use DirectCompute to perform fast texture compression at run time to the BC1, BC3, and BC5 formats based on the classic Fast Block Compression algorithm on Xbox."
 ---
 

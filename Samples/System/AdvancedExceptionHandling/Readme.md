@@ -4,11 +4,14 @@ languages:
 - cpp
 products:
 - gdk
+urlFragment: "advancedexceptionhandling"
 extendedZipContent:
+- path: LICENSE
+  target: LICENSE
 - path: Kits
-  target: /
+  target: Kits
 - path: Media
-  target: /
+  target: Media
 description: "Demonstrates various ways that C++ and SEH exceptions can occur in Microsoft GDK titles including advanced scenarios."
 ---
 

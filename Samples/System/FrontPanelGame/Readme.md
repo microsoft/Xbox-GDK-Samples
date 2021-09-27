@@ -4,11 +4,14 @@ languages:
 - cpp
 products:
 - gdk
+urlFragment: "frontpanelgame"
 extendedZipContent:
+- path: LICENSE
+  target: LICENSE
 - path: Kits
-  target: /
+  target: Kits
 - path: Media
-  target: /
+  target: Media
 description: "FrontPanelGame is the classic 'snake game' implemented completely on the Xbox DevKit Front Panel."
 ---
 

@@ -4,11 +4,14 @@ languages:
 - cpp
 products:
 - gdk
+urlFragment: "playfabmatchmakingdesktop"
 extendedZipContent:
+- path: LICENSE
+  target: LICENSE
 - path: Kits
-  target: /
+  target: Kits
 - path: Media
-  target: /
+  target: Media
 description: "This sample provides a simplified demonstration and example of PlayFab Matchmaking services and APIs on PC."
 ---
 

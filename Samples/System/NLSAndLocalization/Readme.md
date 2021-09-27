@@ -4,11 +4,14 @@ languages:
 - cpp
 products:
 - gdk
+urlFragment: "nlsandlocalization"
 extendedZipContent:
+- path: LICENSE
+  target: LICENSE
 - path: Kits
-  target: /
+  target: Kits
 - path: Media
-  target: /
+  target: Media
 description: "This sample demonstrates how to localize package manifest as well as in-title resources. It also demonstrate usage of the NLS APIs on Xbox."
 ---
 

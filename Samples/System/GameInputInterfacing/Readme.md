@@ -4,11 +4,14 @@ languages:
 - cpp
 products:
 - gdk
+urlFragment: "gameinputinterfacing"
 extendedZipContent:
+- path: LICENSE
+  target: LICENSE
 - path: Kits
-  target: /
+  target: Kits
 - path: Media
-  target: /
+  target: Media
 description: "This sample demonstrates how to effectively interface and read inputs from a gamepad, arcade sticks, racing wheels, and more in the Microsoft GDK."
 ---
 

@@ -4,11 +4,14 @@ languages:
 - cpp
 products:
 - gdk
+urlFragment: "simplelighting"
 extendedZipContent:
+- path: LICENSE
+  target: LICENSE
 - path: Kits
-  target: /
+  target: Kits
 - path: Media
-  target: /
+  target: Media
 description: "This sample demonstrates how to create a static Direct3D 12 vertex, index, and constant buffer to draw indexed geometry lit by using static and dynamic Lambertian lighting on Xbox."
 ---
 

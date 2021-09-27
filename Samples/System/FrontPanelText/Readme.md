@@ -4,11 +4,14 @@ languages:
 - cpp
 products:
 - gdk
+urlFragment: "frontpaneltext"
 extendedZipContent:
+- path: LICENSE
+  target: LICENSE
 - path: Kits
-  target: /
+  target: Kits
 - path: Media
-  target: /
+  target: Media
 description: "The FrontPanelText sample demonstrates how to use the CPU to draw text on the Xbox Devkit Front Panel Display."
 ---
 

@@ -4,11 +4,14 @@ languages:
 - cpp
 products:
 - gdk
+urlFragment: "advancedspatialsounds"
 extendedZipContent:
+- path: LICENSE
+  target: LICENSE
 - path: Kits
-  target: /
+  target: Kits
 - path: Media
-  target: /
+  target: Media
 description: "This sample demonstrates how use ISpatialAudioClient to playback both static and dynamic positional audio using Windows Sonic technologies in an Xbox title."
 ---
 

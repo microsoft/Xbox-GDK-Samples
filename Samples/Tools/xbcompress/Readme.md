@@ -4,20 +4,16 @@ languages:
 - cpp
 products:
 - gdk
-urlFragment: "simpledeviceandswapchain"
+urlFragment: "xbcompress"
 extendedZipContent:
 - path: LICENSE
   target: LICENSE
-- path: Kits
-  target: Kits
-- path: Media
-  target: Media
-description: "This sample demonstrates how to create a Direct3D 12 device and swap chain for an GameCore on Xbox title."
+description: "This samples demonstrates the Compression API introduced with Windows 8 which is supported for all Gaming.*.x64 platforms."
 ---
 
-# SimpleDeviceAndSwapChain
+# xbcompress
 
-For more information see this [Word document](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/IntroGraphics/SimpleDeviceAndSwapChain/Readme.docx).
+For more information see this [Word document](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Tools/xbcompress/readme.docx).
 
 ## Privacy statement
 

@@ -4,20 +4,16 @@ languages:
 - cpp
 products:
 - gdk
-urlFragment: "simpledeviceandswapchain"
+urlFragment: "cmakeexample"
 extendedZipContent:
 - path: LICENSE
   target: LICENSE
-- path: Kits
-  target: Kits
-- path: Media
-  target: Media
-description: "This sample demonstrates how to create a Direct3D 12 device and swap chain for an GameCore on Xbox title."
+description: "This is an example of using the CMake cross-platform build system to build an executable with the Microsoft Game Development Kit via the Ninja generator."
 ---
 
-# SimpleDeviceAndSwapChain
+# CMakeExample
 
-For more information see this [Word document](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/IntroGraphics/SimpleDeviceAndSwapChain/Readme.docx).
+For more information see this [Word document](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Tools/CMakeExample/readme.docx).
 
 ## Privacy statement
 

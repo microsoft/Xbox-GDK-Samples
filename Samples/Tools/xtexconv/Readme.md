@@ -4,11 +4,14 @@ languages:
 - cpp
 products:
 - gdk
+urlFragment: "xtexconv"
 extendedZipContent:
+- path: LICENSE
+  target: LICENSE
 - path: Kits
-  target: /
+  target: Kits
 - path: Media
-  target: /
+  target: Media
 description: "This sample is a PC side command-line tool which extends the standard TexConv command-line tool for texture conversion and preparation to support Xbox offline texture tiling for use with the CreatePlacedResourceX APIs in DirectX 12.X."
 ---
 

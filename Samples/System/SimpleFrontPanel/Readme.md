@@ -4,11 +4,14 @@ languages:
 - cpp
 products:
 - gdk
+urlFragment: "simplefrontpanel"
 extendedZipContent:
+- path: LICENSE
+  target: LICENSE
 - path: Kits
-  target: /
+  target: Kits
 - path: Media
-  target: /
+  target: Media
 description: "The SimpleFrontPanel sample demonstrates the API covering the basic functionality that you will need to get started programming for the Xbox DevKit Front Panel."
 ---
 
