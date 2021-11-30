@@ -15,7 +15,6 @@
 #pragma once
 
 #include "HandleWrapperBase.h"
-#include <XGameSave.h>
 
 namespace ATG
 {

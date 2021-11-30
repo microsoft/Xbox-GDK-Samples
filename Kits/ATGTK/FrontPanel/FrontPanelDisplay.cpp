@@ -1,7 +1,7 @@
 //--------------------------------------------------------------------------------------
 // FrontPanelDisplay.cpp
 //
-// Microsoft Game Core on Xbox
+// Microsoft GDK with Xbox extensions
 //
 // Advanced Technology Group (ATG)
 // Copyright (C) Microsoft Corporation. All rights reserved.

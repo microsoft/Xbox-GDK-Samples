@@ -68,6 +68,9 @@
     <Filter Include="PlayFabGDK\lib\Gaming.Desktop.x64\Release">
       <UniqueIdentifier>{83a9a08b-05f6-41af-a119-1f2d069f313a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayFabGDK\lib\Gaming.Desktop.x64\Profile">
+      <UniqueIdentifier>{fb9d38c5-3c72-4feb-8d78-8b17bcf3e650}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -370,6 +373,9 @@
     <ClInclude Include="..\..\..\Kits\ATGTK\Texture.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Kits\PlayFabGDK\PlayFabResources.h">
+      <Filter>PlayFabGDK</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -401,6 +407,9 @@
     </ClCompile>
     <ClCompile Include="SampleLogic.cpp">
       <Filter>SampleLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\PlayFabGDK\PlayFabResources.cpp">
+      <Filter>PlayFabGDK</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -491,24 +500,30 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.docx" />
-    <None Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Desktop.x64\Debug\lib_json.pdb">
+    <None Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Desktop.x64\v141\Debug\lib_json.pdb">
       <Filter>PlayFabGDK\lib\Gaming.Desktop.x64\Debug</Filter>
     </None>
-    <None Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Desktop.x64\Debug\XPlatCppGdk.pdb">
+    <None Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Desktop.x64\v141\Debug\XPlatCppGdk.pdb">
       <Filter>PlayFabGDK\lib\Gaming.Desktop.x64\Debug</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Desktop.x64\Debug\lib_json.lib">
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Desktop.x64\v141\Profile\lib_json.lib">
+      <Filter>PlayFabGDK\lib\Gaming.Desktop.x64\Profile</Filter>
+    </Library>
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Desktop.x64\v141\Debug\lib_json.lib">
       <Filter>PlayFabGDK\lib\Gaming.Desktop.x64\Debug</Filter>
     </Library>
-    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Desktop.x64\Debug\XPlatCppGdk.lib">
-      <Filter>PlayFabGDK\lib\Gaming.Desktop.x64\Debug</Filter>
-    </Library>
-    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Desktop.x64\Release\lib_json.lib">
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Desktop.x64\v141\Release\lib_json.lib">
       <Filter>PlayFabGDK\lib\Gaming.Desktop.x64\Release</Filter>
     </Library>
-    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Desktop.x64\Release\XPlatCppGdk.lib">
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Desktop.x64\v141\Debug\XPlatCppGdk.lib">
+      <Filter>PlayFabGDK\lib\Gaming.Desktop.x64\Debug</Filter>
+    </Library>
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Desktop.x64\v141\Profile\XPlatCppGdk.lib">
+      <Filter>PlayFabGDK\lib\Gaming.Desktop.x64\Profile</Filter>
+    </Library>
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Desktop.x64\v141\Release\XPlatCppGdk.lib">
       <Filter>PlayFabGDK\lib\Gaming.Desktop.x64\Release</Filter>
     </Library>
   </ItemGroup>

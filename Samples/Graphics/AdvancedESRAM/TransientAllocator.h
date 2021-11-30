@@ -78,7 +78,7 @@ namespace ATG
         //
         //  Uninitializes the allocator, releasing all D3D and OS resources.
         //
-        void Uninitialize();
+        void Uninitialize(ID3D12CommandQueue* queue);
 
         //
         //  Advances the allocator to the next frame. This is separate than Finalize, since multiple Finalize may happen multiple times per frame.

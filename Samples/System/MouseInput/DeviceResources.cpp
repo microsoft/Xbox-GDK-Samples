@@ -151,30 +151,42 @@ void DeviceResources::CreateDeviceResources()
     m_fenceEvent.Attach(CreateEventEx(nullptr, nullptr, 0, EVENT_MODIFY_STATE | SYNCHRONIZE));
     if (!m_fenceEvent.IsValid())
     {
-        throw std::exception("CreateEvent");
+        throw std::system_error(std::error_code(static_cast<int>(GetLastError()), std::system_category()), "CreateEventEx");
     }
 
-    if (m_options & c_Enable4K_UHD)
+    if (m_options & (c_Enable4K_UHD | c_EnableQHD))
     {
         switch (XSystemGetDeviceType())
         {
         case XSystemDeviceType::XboxOne:
         case XSystemDeviceType::XboxOneS:
+            m_options &= ~(c_Enable4K_UHD | c_EnableQHD);
+            break;
+
         case XSystemDeviceType::XboxScarlettLockhart /* Xbox Series S */:
             m_options &= ~c_Enable4K_UHD;
-#ifdef _DEBUG
-            OutputDebugStringA("INFO: Swapchain using 1080p (1920 x 1080)\n");
-#endif
+            if (m_options & c_EnableQHD)
+            {
+                m_outputSize = { 0, 0, 2560, 1440 };
+            }
             break;
 
         default:
-            m_outputSize = { 0, 0, 3840, 2160 };
-#ifdef _DEBUG
-            OutputDebugStringA("INFO: Swapchain using 4k (3840 x 2160)\n");
-#endif
+            m_outputSize = (m_options & c_Enable4K_UHD) ? RECT{ 0, 0, 3840, 2160 } : RECT{ 0, 0, 2560, 1440 };
             break;
         }
     }
+
+#ifdef _DEBUG
+    const char* info = nullptr;
+    switch (m_outputSize.bottom)
+    {
+    case 2160:    info = "INFO: Swapchain using 4k (3840 x 2160)\n"; break;
+    case 1440:    info = "INFO: Swapchain using 1440p (2560 x 1440)\n"; break;
+    default:      info = "INFO: Swapchain using 1080p (1920 x 1080)\n"; break;
+    }
+    OutputDebugStringA(info);
+#endif
 
     RegisterFrameEvents();
 }
@@ -184,7 +196,7 @@ void DeviceResources::CreateWindowSizeDependentResources()
 {
     if (!m_window)
     {
-        throw std::exception("Call SetWindow with a valid window handle");
+        throw std::logic_error("Call SetWindow with a valid Win32 window handle");
     }
 
     // Wait until all previous GPU work is complete.
@@ -223,11 +235,11 @@ void DeviceResources::CreateWindowSizeDependentResources()
     for (UINT n = 0; n < m_backBufferCount; n++)
     {
         ThrowIfFailed(m_d3dDevice->CreateCommittedResource(
-            &swapChainHeapProperties, 
+            &swapChainHeapProperties,
             D3D12_HEAP_FLAG_ALLOW_DISPLAY,
-            &swapChainBufferDesc, 
-            D3D12_RESOURCE_STATE_PRESENT,  
-            &swapChainOptimizedClearValue, 
+            &swapChainBufferDesc,
+            D3D12_RESOURCE_STATE_PRESENT,
+            &swapChainOptimizedClearValue,
             IID_GRAPHICS_PPV_ARGS(m_renderTargets[n].GetAddressOf())));
 
         wchar_t name[25] = {};

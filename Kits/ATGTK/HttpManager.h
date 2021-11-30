@@ -11,6 +11,7 @@ struct HttpHeader;
 struct HttpRequestContext;
 
 #include <XCurl.h>
+#include <functional>
 
 class HttpManager
 {
@@ -23,8 +24,9 @@ public:
 
     void HttpManagerLog(std::string message);
 
-    HRESULT MakeHttpRequestAsync(XUserHandle user, const std::string& verb, const std::string& uri, const std::vector<HttpHeader>& headers, uint8_t* body, size_t bodyLen, std::function<void(HttpRequestContext*)> OnCompleted);
-    
+    HRESULT MakeHttpRequestAsync(XUserHandle user, const std::string& verb, const std::string& uri, const std::vector<HttpHeader>& headers, uint8_t* bodyBytes, size_t bodyLen, std::function<void(HttpRequestContext*)> OnCompleted);
+    HRESULT MakeHttpRequestAsync(XUserHandle user, const std::string& verb, const std::string& uri, const std::vector<HttpHeader>& headers, std::string bodyString, size_t bodyLen, std::function<void(HttpRequestContext*)> OnCompleted);
+
 private:
     void Initialize();
     void CleanUp();
@@ -46,13 +48,26 @@ private:
 
 struct HttpRequestContext
 {
-    HttpRequestContext(HttpManager* inHttpManager, XUserHandle user, const std::string& verb, const std::string& url, const std::vector<HttpHeader>& headers, uint8_t* body, size_t bodyLen, std::function<void(HttpRequestContext*)> inOnCompleted) :
+    HttpRequestContext(HttpManager* inHttpManager, XUserHandle user, const std::string& verb, const std::string& url, const std::vector<HttpHeader>& headers, uint8_t* bodyBytes, size_t bodyLen, std::function<void(HttpRequestContext*)> inOnCompleted) :
         httpManager(inHttpManager),
         authUser(user),
         verb(verb),
         url(url),
         requestHeaders(headers),
-        body(body),
+        requestBodyBytes(bodyBytes),
+        bodySize(bodyLen),
+        onCompleted(inOnCompleted)
+    {
+    }
+
+    HttpRequestContext(HttpManager* inHttpManager, XUserHandle user, const std::string& verb, const std::string& url, const std::vector<HttpHeader>& headers, const std::string& bodyString, size_t bodyLen, std::function<void(HttpRequestContext*)> inOnCompleted) :
+        httpManager(inHttpManager),
+        authUser(user),
+        verb(verb),
+        url(url),
+        requestHeaders(headers),
+        requestBodyBytes(nullptr),
+        requestBodyString(bodyString),
         bodySize(bodyLen),
         onCompleted(inOnCompleted)
     {
@@ -81,7 +96,9 @@ struct HttpRequestContext
     std::string url;
     std::vector<HttpHeader> requestHeaders;
     struct curl_slist* curlHeaderList = nullptr;
-    uint8_t* body = nullptr;
+    uint8_t* requestBodyBytes = nullptr;
+    std::string requestBodyString;
+    std::string requestBodyContentType;
     size_t bodySize = 0;
     size_t bytesSent = 0;
     std::function<void(HttpRequestContext*)> onCompleted = nullptr;

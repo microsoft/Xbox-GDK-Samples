@@ -5,15 +5,14 @@
 //
 // Copyright (c) Microsoft Corporation. All rights reserved.
 
-#include "..\pch.h"
-#include "MenuScreen.h"
-#include "..\Assets.h"
-#include "..\Common\InputState.h"
-#include "..\SampleGame.h"
-#include "..\Helpers\UserManager.h"
-#include "ScreenManager.h"
+#include "pch.h"
 
-#include <math.h>
+#include "MenuScreen.h"
+#include "Assets.h"
+#include "InputState.h"
+#include "SampleGame.h"
+#include "UserManager.h"
+#include "ScreenManager.h"
 
 using namespace DirectX;
 

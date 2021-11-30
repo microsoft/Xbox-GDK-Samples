@@ -5,18 +5,13 @@
 //
 // Copyright (c) Microsoft Corporation. All rights reserved.
 
-#include "..\pch.h"
-#include "..\Helpers\UTF8Helper.h"
-#include "..\Assets.h"
+#include "pch.h"
+
+#include "UTF8Helper.h"
+#include "Assets.h"
 #include "ScreenManager.h"
-
-#include "..\Common\InputState.h"
-#include "..\SampleGame.h"
-
-#include <CommonStates.h>
-#include <SpriteBatch.h>
-#include <SpriteFont.h>
-#include <algorithm>
+#include "InputState.h"
+#include "SampleGame.h"
 
 using namespace DirectX;
 

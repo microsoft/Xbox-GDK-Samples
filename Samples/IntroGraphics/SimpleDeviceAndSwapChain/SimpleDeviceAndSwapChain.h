@@ -56,7 +56,7 @@ private:
     int                                                 m_outputHeight;
 
     // Direct3D Objects
-    static const UINT                                   c_swapBufferCount = 2;
+    static constexpr UINT                               c_swapBufferCount = 2;
     UINT                                                m_backBufferIndex;
     Microsoft::WRL::ComPtr<ID3D12Device>                m_d3dDevice;
     Microsoft::WRL::ComPtr<ID3D12CommandQueue>          m_commandQueue;

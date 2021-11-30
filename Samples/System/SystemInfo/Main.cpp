@@ -1,7 +1,7 @@
 //--------------------------------------------------------------------------------------
 // Main.cpp
 //
-// Entry point for Microsoft Game Development Kit
+// Entry point for Microsoft Game Development Kit (GDK)
 //
 // Advanced Technology Group (ATG)
 // Copyright (C) Microsoft Corporation. All rights reserved.
@@ -26,6 +26,15 @@ using namespace DirectX;
 #endif
 
 #pragma warning(disable : 4061)
+
+#ifdef USING_D3D12_AGILITY_SDK
+extern "C"
+{
+    // Used to enable the "Agility SDK" components
+    __declspec(dllexport) extern const UINT D3D12SDKVersion = D3D12_SDK_VERSION;
+    __declspec(dllexport) extern const char* D3D12SDKPath = u8".\\D3D12\\";
+}
+#endif
 
 namespace
 {

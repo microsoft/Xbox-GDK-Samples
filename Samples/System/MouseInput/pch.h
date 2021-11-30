@@ -56,14 +56,20 @@
 
 #include <algorithm>
 #include <atomic>
+#include <cassert>
 #include <cmath>
+#include <cstddef>
 #include <cstdint>
+#include <cstdio>
+#include <cstring>
+#include <cwchar>
 #include <exception>
+#include <iterator>
 #include <memory>
 #include <stdexcept>
+#include <string>
+#include <system_error>
 
-#include <assert.h>
-#include <stdio.h>
 #include <pix3.h>
 
 #include <XGame.h>
@@ -90,7 +96,7 @@ namespace DX
     class com_exception : public std::exception
     {
     public:
-        com_exception(HRESULT hr) : result(hr) {}
+        com_exception(HRESULT hr) noexcept : result(hr) {}
 
         const char* what() const override
         {

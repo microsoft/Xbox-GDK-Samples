@@ -20,7 +20,7 @@ namespace ATG
     //--------------------------------------------------------------------------------------
     // Constants
 
-    static const int g_MaxGroundBursts = 20;
+    constexpr int g_MaxGroundBursts = 20;
 
     //--------------------------------------------------------------------------------------
     // Vertex definition for particle vertices

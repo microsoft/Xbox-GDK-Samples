@@ -34,7 +34,7 @@ Sample::Sample() noexcept(false)
 {
     // Use gamma-correct rendering.
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM_SRGB, DXGI_FORMAT_D32_FLOAT, 2,
-        DX::DeviceResources::c_Enable4K_UHD);
+        DX::DeviceResources::c_Enable4K_UHD | DX::DeviceResources::c_EnableQHD);
 }
 
 Sample::~Sample()
@@ -97,7 +97,7 @@ void Sample::Update(DX::StepTimer const& timer)
     }
 
     // Rotate the cube around the origin
-    XMStoreFloat4x4(&m_worldMatrix, XMMatrixRotationY(m_curRotationAngleRad));
+    m_worldMatrix = XMMatrixRotationY(m_curRotationAngleRad);
 
     // Setup our lighting parameters
     m_lightDirs[0] = XMFLOAT4(-0.577f, 0.577f, -0.577f, 1.0f);
@@ -172,9 +172,9 @@ void Sample::Render()
     ConstantBuffer sceneParameters = {};
 
     // Shaders compiled with default row-major matrices
-    sceneParameters.worldMatrix = XMMatrixTranspose(XMLoadFloat4x4(&m_worldMatrix));
-    sceneParameters.viewMatrix = XMMatrixTranspose(XMLoadFloat4x4(&m_viewMatrix));
-    sceneParameters.projectionMatrix = XMMatrixTranspose(XMLoadFloat4x4(&m_projectionMatrix));
+    sceneParameters.worldMatrix = XMMatrixTranspose(m_worldMatrix);
+    sceneParameters.viewMatrix = XMMatrixTranspose(m_viewMatrix);
+    sceneParameters.projectionMatrix = XMMatrixTranspose(m_projectionMatrix);
 
     sceneParameters.lightDir[0] = XMLoadFloat4(&m_lightDirs[0]);
     sceneParameters.lightDir[1] = XMLoadFloat4(&m_lightDirs[1]);
@@ -487,13 +487,13 @@ void Sample::CreateDeviceDependentResources()
     m_deviceResources->GetCommandQueue()->Signal(m_fence.Get(), currentIdx);
 
     // Initialize the world matrix
-    XMStoreFloat4x4(&m_worldMatrix, XMMatrixIdentity());
+    m_worldMatrix = XMMatrixIdentity();
 
     // Initialize the view matrix
     static const XMVECTORF32 c_eye = { 0.0f, 4.0f, -10.0f, 0.0f };
     static const XMVECTORF32 c_at = { 0.0f, 1.0f, 0.0f, 0.0f };
     static const XMVECTORF32 c_up = { 0.0f, 1.0f, 0.0f, 0.0 };
-    XMStoreFloat4x4(&m_viewMatrix, XMMatrixLookAtLH(c_eye, c_at, c_up));
+    m_viewMatrix = XMMatrixLookAtLH(c_eye, c_at, c_up);
 
     // Initialize the lighting parameters
     m_lightDirs[0] = XMFLOAT4(-0.577f, 0.577f, -0.577f, 1.0f);
@@ -511,8 +511,6 @@ void Sample::CreateWindowSizeDependentResources()
 {
     // Initialize the projection matrix
     auto size = m_deviceResources->GetOutputSize();
-    XMMATRIX projection = XMMatrixPerspectiveFovLH(XM_PIDIV4, float(size.right) / float(size.bottom), 0.01f, 100.0f);
-
-    XMStoreFloat4x4(&m_projectionMatrix, projection);
+    m_projectionMatrix = XMMatrixPerspectiveFovLH(XM_PIDIV4, float(size.right) / float(size.bottom), 0.01f, 100.0f);
 }
 #pragma endregion

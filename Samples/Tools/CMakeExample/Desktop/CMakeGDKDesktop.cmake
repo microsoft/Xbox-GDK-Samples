@@ -15,7 +15,7 @@ set(XdkEditionTarget "200600" CACHE STRING "Microsoft GDK Edition")
 
 message("XdkEditionTarget = ${XdkEditionTarget}")
 
-set(CMAKE_TRY_COMPILE_PLATFORM_VARIABLES XdkEditionTarget)
+set(CMAKE_TRY_COMPILE_PLATFORM_VARIABLES XdkEditionTarget BUILD_USING_BWOI)
 
 # Windows 10 SDK
 if (NOT SDKVersion)

@@ -5,10 +5,11 @@
 //
 // Copyright (c) Microsoft Corporation. All rights reserved.
 
-#include "..\pch.h"
-#include "..\SampleGame.h"
-#include "..\Assets.h"
-#include "..\Helpers\UserManager.h"
+#include "pch.h"
+
+#include "SampleGame.h"
+#include "Assets.h"
+#include "UserManager.h"
 #include "GameBoardScreen.h"
 #include "ConfirmPopUpScreen.h"
 #include "GameSaveManager.h"

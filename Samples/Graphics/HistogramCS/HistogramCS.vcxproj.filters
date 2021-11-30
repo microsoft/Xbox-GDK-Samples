@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>2645ad58-dfff-476c-bea6-1115b7f7fd29</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>98f67cd7-221d-4a19-b949-12f817e701a9</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>e536145f-19a9-48ba-9d94-5f9f3c7a9b78</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>a7630044-56a1-4625-8125-c3e748fea011</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts">
+      <UniqueIdentifier>{3f3df41a-1e51-4911-a649-a5d09a19ca75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\FPSRoom">
+      <UniqueIdentifier>{706d9672-48d3-4ac1-a14f-b27737dfdd88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{5bf590b9-c0e7-41f7-afb4-f325be0c7e33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ATG Tool Kit\FullScreenQuad">
+      <UniqueIdentifier>{aae16f32-a8ac-4778-864b-03e048176c65}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="HistogramCS.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ReadData.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuad.h">
+      <Filter>ATG Tool Kit\FullScreenQuad</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\PerformanceTimersXbox.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="HistogramCS.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuad.cpp">
+      <Filter>ATG Tool Kit\FullScreenQuad</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\PerformanceTimersXbox.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGame.Config" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Media\Meshes\FPSRoom\ABox001LightingMap.dds">
+      <Filter>Assets\FPSRoom</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\FPSRoom\ACeilingLightingMap.dds">
+      <Filter>Assets\FPSRoom</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\FPSRoom\AFloortLightingMap.dds">
+      <Filter>Assets\FPSRoom</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\FPSRoom\AWallsLightingMap.dds">
+      <Filter>Assets\FPSRoom</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\FPSRoom\Ceiling.dds">
+      <Filter>Assets\FPSRoom</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\FPSRoom\Cement.dds">
+      <Filter>Assets\FPSRoom</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\FPSRoom\clouds.dds">
+      <Filter>Assets\FPSRoom</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\FPSRoom\Pillar.dds">
+      <Filter>Assets\FPSRoom</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Media\Meshes\FPSRoom\FPSRoom.sdkmesh">
+      <Filter>Assets\FPSRoom</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Readme.docx" />
+    <None Include="Shaders\HistogramCS.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneController.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuad.hlsli">
+      <Filter>ATG Tool Kit\FullScreenQuad</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\HistogramCS_Brute.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\HistogramCS_GSM.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\HistogramCS_GSM_U.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\HistogramCS_U.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuadVS.hlsl">
+      <Filter>ATG Tool Kit\FullScreenQuad</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\RenderHistogramPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+</Project>

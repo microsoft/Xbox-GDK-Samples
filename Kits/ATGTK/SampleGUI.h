@@ -136,20 +136,20 @@ namespace ATG
         void XM_CALLCONV SetForegroundColor(DirectX::FXMVECTOR color) { DirectX::XMStoreFloat4(&m_fgColor, color); }
         void XM_CALLCONV SetBackgroundColor(DirectX::FXMVECTOR color) { DirectX::XMStoreFloat4(&m_bgColor, color); }
 
-        static const unsigned c_StyleAlignLeft = 0;
-        static const unsigned c_StyleAlignCenter = 0x1;
-        static const unsigned c_StyleAlignRight = 0x2;
-        static const unsigned c_StyleAlignTop = 0x0;
-        static const unsigned c_StyleAlignMiddle = 0x4;
-        static const unsigned c_StyleAlignBottom = 0x8;
-        static const unsigned c_StyleTransparent = 0x10;
-        static const unsigned c_StyleWordWrap = 0x20;
+        static constexpr unsigned c_StyleAlignLeft = 0;
+        static constexpr unsigned c_StyleAlignCenter = 0x1;
+        static constexpr unsigned c_StyleAlignRight = 0x2;
+        static constexpr unsigned c_StyleAlignTop = 0x0;
+        static constexpr unsigned c_StyleAlignMiddle = 0x4;
+        static constexpr unsigned c_StyleAlignBottom = 0x8;
+        static constexpr unsigned c_StyleTransparent = 0x10;
+        static constexpr unsigned c_StyleWordWrap = 0x20;
 
-        static const unsigned c_StyleFontSmall = 0x10000;
-        static const unsigned c_StyleFontMid = 0;
-        static const unsigned c_StyleFontLarge = 0x20000;
-        static const unsigned c_StyleFontBold = 0x40000;
-        static const unsigned c_StyleFontItalic = 0x80000;
+        static constexpr unsigned c_StyleFontSmall = 0x10000;
+        static constexpr unsigned c_StyleFontMid = 0;
+        static constexpr unsigned c_StyleFontLarge = 0x20000;
+        static constexpr unsigned c_StyleFontBold = 0x40000;
+        static constexpr unsigned c_StyleFontItalic = 0x80000;
 
         void SetStyle(unsigned style) { m_style = style; }
         unsigned GetStyle() const { return m_style; }
@@ -198,19 +198,19 @@ namespace ATG
         void XM_CALLCONV SetForegroundColor(DirectX::FXMVECTOR color) { DirectX::XMStoreFloat4(&m_fgColor, color); }
         void XM_CALLCONV SetBackgroundColor(DirectX::FXMVECTOR color) { DirectX::XMStoreFloat4(&m_bgColor, color); }
 
-        static const unsigned c_StyleAlignLeft = 0;
-        static const unsigned c_StyleAlignCenter = 0x1;
-        static const unsigned c_StyleAlignRight = 0x2;
-        static const unsigned c_StyleAlignTop = 0x0;
-        static const unsigned c_StyleAlignMiddle = 0x4;
-        static const unsigned c_StyleAlignBottom = 0x8;
-        static const unsigned c_StyleTransparent = 0x10;
+        static constexpr unsigned c_StyleAlignLeft = 0;
+        static constexpr unsigned c_StyleAlignCenter = 0x1;
+        static constexpr unsigned c_StyleAlignRight = 0x2;
+        static constexpr unsigned c_StyleAlignTop = 0x0;
+        static constexpr unsigned c_StyleAlignMiddle = 0x4;
+        static constexpr unsigned c_StyleAlignBottom = 0x8;
+        static constexpr unsigned c_StyleTransparent = 0x10;
 
-        static const unsigned c_StyleFontSmall = 0x10000;
-        static const unsigned c_StyleFontMid = 0;
-        static const unsigned c_StyleFontLarge = 0x20000;
-        static const unsigned c_StyleFontBold = 0x40000;
-        static const unsigned c_StyleFontItalic = 0x80000;
+        static constexpr unsigned c_StyleFontSmall = 0x10000;
+        static constexpr unsigned c_StyleFontMid = 0;
+        static constexpr unsigned c_StyleFontLarge = 0x20000;
+        static constexpr unsigned c_StyleFontBold = 0x40000;
+        static constexpr unsigned c_StyleFontItalic = 0x80000;
 
         void SetStyle(unsigned style) { m_style = style; }
         unsigned GetStyle() const { return m_style; }
@@ -245,15 +245,15 @@ namespace ATG
 
         void XM_CALLCONV SetColor(DirectX::FXMVECTOR color) { DirectX::XMStoreFloat4(&m_color, color); }
 
-        static const unsigned c_StyleExit = 0x1;
-        static const unsigned c_StyleDefault = 0x2;
-        static const unsigned c_StyleTransparent = 0x4;
+        static constexpr unsigned c_StyleExit = 0x1;
+        static constexpr unsigned c_StyleDefault = 0x2;
+        static constexpr unsigned c_StyleTransparent = 0x4;
 
-        static const unsigned c_StyleFontSmall = 0x10000;
-        static const unsigned c_StyleFontMid = 0;
-        static const unsigned c_StyleFontLarge = 0x20000;
-        static const unsigned c_StyleFontBold = 0x40000;
-        static const unsigned c_StyleFontItalic = 0x80000;
+        static constexpr unsigned c_StyleFontSmall = 0x10000;
+        static constexpr unsigned c_StyleFontMid = 0;
+        static constexpr unsigned c_StyleFontLarge = 0x20000;
+        static constexpr unsigned c_StyleFontBold = 0x40000;
+        static constexpr unsigned c_StyleFontItalic = 0x80000;
 
         void SetStyle(unsigned style) { m_style = style; }
         unsigned GetStyle() const { return m_style; }
@@ -287,10 +287,10 @@ namespace ATG
         void SetEnabled(bool enabled = true) { m_enabled = enabled; }
         bool IsEnabled() const { return m_enabled; }
 
-        static const unsigned c_StyleExit = 0x1;
-        static const unsigned c_StyleDefault = 0x2;
-        static const unsigned c_StyleBackground = 0x4;
-        static const unsigned c_StyleTransparent = 0x8;
+        static constexpr unsigned c_StyleExit = 0x1;
+        static constexpr unsigned c_StyleDefault = 0x2;
+        static constexpr unsigned c_StyleBackground = 0x4;
+        static constexpr unsigned c_StyleTransparent = 0x8;
 
         void SetStyle(unsigned style) { m_style = style; }
         unsigned GetStyle() const { return m_style; }
@@ -323,13 +323,13 @@ namespace ATG
         void SetChecked(bool checked = true) { m_checked = checked; }
         bool IsChecked() const { return m_checked; }
 
-        static const unsigned c_StyleTransparent = 0x1;
+        static constexpr unsigned c_StyleTransparent = 0x1;
 
-        static const unsigned c_StyleFontSmall = 0x10000;
-        static const unsigned c_StyleFontMid = 0;
-        static const unsigned c_StyleFontLarge = 0x20000;
-        static const unsigned c_StyleFontBold = 0x40000;
-        static const unsigned c_StyleFontItalic = 0x80000;
+        static constexpr unsigned c_StyleFontSmall = 0x10000;
+        static constexpr unsigned c_StyleFontMid = 0;
+        static constexpr unsigned c_StyleFontLarge = 0x20000;
+        static constexpr unsigned c_StyleFontBold = 0x40000;
+        static constexpr unsigned c_StyleFontItalic = 0x80000;
 
         void SetStyle(unsigned style) { m_style = style; }
         unsigned GetStyle() const { return m_style; }
@@ -359,7 +359,7 @@ namespace ATG
         void SetEnabled(bool enabled = true) { m_enabled = enabled; if (!enabled) m_dragging = false; }
         bool IsEnabled() const { return m_enabled; }
 
-        static const unsigned c_StyleTransparent = 0x1;
+        static constexpr unsigned c_StyleTransparent = 0x1;
 
         void SetStyle(unsigned style) { m_style = style; }
         unsigned GetStyle() const { return m_style; }
@@ -483,15 +483,15 @@ namespace ATG
         void SetEnabled(bool enabled = true) { m_enabled = enabled; }
         bool IsEnabled() const { return m_enabled; }
 
-        static const unsigned c_StyleMultiSelection = 0x1;
-        static const unsigned c_StyleTransparent = 0x2;
-        static const unsigned c_StyleScrollBar = 0x4;
+        static constexpr unsigned c_StyleMultiSelection = 0x1;
+        static constexpr unsigned c_StyleTransparent = 0x2;
+        static constexpr unsigned c_StyleScrollBar = 0x4;
 
-        static const unsigned c_StyleFontSmall = 0x10000;
-        static const unsigned c_StyleFontMid = 0;
-        static const unsigned c_StyleFontLarge = 0x20000;
-        static const unsigned c_StyleFontBold = 0x40000;
-        static const unsigned c_StyleFontItalic = 0x80000;
+        static constexpr unsigned c_StyleFontSmall = 0x10000;
+        static constexpr unsigned c_StyleFontMid = 0;
+        static constexpr unsigned c_StyleFontLarge = 0x20000;
+        static constexpr unsigned c_StyleFontBold = 0x40000;
+        static constexpr unsigned c_StyleFontItalic = 0x80000;
 
         void SetStyle(unsigned style) { m_style = style; }
         unsigned GetStyle() const { return m_style; }
@@ -528,15 +528,15 @@ namespace ATG
         // Properties
         void XM_CALLCONV SetForegroundColor(DirectX::FXMVECTOR color) { DirectX::XMStoreFloat4(&m_color, color); }
 
-        static const unsigned c_StyleTransparent = 0x1;
-        static const unsigned c_StyleScrollBar = 0x2;
-        static const unsigned c_StyleNoBackground = 0x4;
+        static constexpr unsigned c_StyleTransparent = 0x1;
+        static constexpr unsigned c_StyleScrollBar = 0x2;
+        static constexpr unsigned c_StyleNoBackground = 0x4;
 
-        static const unsigned c_StyleFontSmall = 0x10000;
-        static const unsigned c_StyleFontMid = 0;
-        static const unsigned c_StyleFontLarge = 0x20000;
-        static const unsigned c_StyleFontBold = 0x40000;
-        static const unsigned c_StyleFontItalic = 0x80000;
+        static constexpr unsigned c_StyleFontSmall = 0x10000;
+        static constexpr unsigned c_StyleFontMid = 0;
+        static constexpr unsigned c_StyleFontLarge = 0x20000;
+        static constexpr unsigned c_StyleFontBold = 0x40000;
+        static constexpr unsigned c_StyleFontItalic = 0x80000;
 
         void SetStyle(unsigned style) { m_style = style; }
         unsigned GetStyle() const { return m_style; }
@@ -842,8 +842,8 @@ namespace ATG
 #   error Please #include <d3d11.h> or <d3d12.h>
 #endif
 
-        UIManager(UIManager&& moveFrom);
-        UIManager& operator= (UIManager&& moveFrom);
+        UIManager(UIManager&&) noexcept;
+        UIManager& operator= (UIManager&&) noexcept;
 
         UIManager(UIManager const&) = delete;
         UIManager& operator=(UIManager const&) = delete;
@@ -909,7 +909,7 @@ namespace ATG
         void SetRotation(DXGI_MODE_ROTATION rotation);
 
         // Texture registry for images (used by controls)
-        static const unsigned c_LayoutImageIdStart = 0x10000;
+        static constexpr unsigned c_LayoutImageIdStart = 0x10000;
 
 #if defined(__d3d12_h__) || defined(__d3d12_x_h__) || defined(__XBOX_D3D12_X__)
         void RegisterImage(unsigned id, D3D12_GPU_DESCRIPTOR_HANDLE tex, DirectX::XMUINT2 texSize);

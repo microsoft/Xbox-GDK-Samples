@@ -18,7 +18,7 @@ set(XdkEditionTarget "200600" CACHE STRING "Microsoft GDK Edition")
 
 message("XdkEditionTarget = ${XdkEditionTarget}")
 
-set(CMAKE_TRY_COMPILE_PLATFORM_VARIABLES XdkEditionTarget)
+set(CMAKE_TRY_COMPILE_PLATFORM_VARIABLES XdkEditionTarget BUILD_USING_BWOI)
 
 # Windows 10 SDK
 set(SDKVersion 10.0.19041.0)
@@ -42,6 +42,9 @@ if(NOT EXISTS ${VCInstallDir})
 endif()
 if(NOT EXISTS ${VCInstallDir})
     set(VCInstallDir "$ENV{ProgramFiles\(x86\)}/Microsoft Visual Studio/2019/Preview/VC")
+endif()
+if(NOT EXISTS ${VCInstallDir})
+    set(VCInstallDir "$ENV{ProgramFiles\(x86\)}/Microsoft Visual Studio/2019/BuildTools/VC")
 endif()
 if(EXISTS ${VCInstallDir})
     message("VCInstallDir = ${VCInstallDir}")

@@ -44,19 +44,19 @@ public:
 
 private:
 
-    static const int GAME_BOARD_LEFT = 256 / 4 + 2;
-    static const int GAME_BOARD_TOP = 2;
+    static constexpr int GAME_BOARD_LEFT = 256 / 4 + 2;
+    static constexpr int GAME_BOARD_TOP = 2;
 
-    static const int GAME_BOARD_DOT_SIZE = 4;
+    static constexpr int GAME_BOARD_DOT_SIZE = 4;
 
-    static const int GAME_BOARD_WIDTH = (254 - GAME_BOARD_LEFT) / GAME_BOARD_DOT_SIZE;
-    static const int GAME_BOARD_HEIGHT = (62 - GAME_BOARD_TOP) / GAME_BOARD_DOT_SIZE;
+    static constexpr int GAME_BOARD_WIDTH = (254 - GAME_BOARD_LEFT) / GAME_BOARD_DOT_SIZE;
+    static constexpr int GAME_BOARD_HEIGHT = (62 - GAME_BOARD_TOP) / GAME_BOARD_DOT_SIZE;
 
-    static const int GAME_BOARD_OUTLINE_LEFT = GAME_BOARD_LEFT - 1;
-    static const int GAME_BOARD_OUTLINE_TOP = GAME_BOARD_TOP - 1;
+    static constexpr int GAME_BOARD_OUTLINE_LEFT = GAME_BOARD_LEFT - 1;
+    static constexpr int GAME_BOARD_OUTLINE_TOP = GAME_BOARD_TOP - 1;
 
-    static const int GAME_BOARD_OUTLINE_WIDTH = GAME_BOARD_WIDTH * GAME_BOARD_DOT_SIZE + 2;
-    static const int GAME_BOARD_OUTLINE_HEIGHT = GAME_BOARD_HEIGHT *  GAME_BOARD_DOT_SIZE + 2;
+    static constexpr int GAME_BOARD_OUTLINE_WIDTH = GAME_BOARD_WIDTH * GAME_BOARD_DOT_SIZE + 2;
+    static constexpr int GAME_BOARD_OUTLINE_HEIGHT = GAME_BOARD_HEIGHT *  GAME_BOARD_DOT_SIZE + 2;
 
     ATG::FrontPanelDisplay &frontPanelDisplay;
 

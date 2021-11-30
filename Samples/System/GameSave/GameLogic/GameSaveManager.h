@@ -16,12 +16,11 @@
 
 #include "GameBoard.h"
 #include "GameSave.h"
-#include <DirectXMath.h>
-#include "..\Helpers\XGameSaveHandleWrappers.h"
-#include "..\Helpers\XUserHandleWrapper.h"
-#include "..\Helpers\ScopedLockWrappers.h"
-#include "..\Helpers\User.h"
-#include "..\Helpers\AsyncAction.h"
+#include "XGameSaveHandleWrappers.h"
+#include "XUserHandleWrapper.h"
+#include "ScopedLockWrappers.h"
+#include "User.h"
+#include "AsyncAction.h"
 
 /**
  *	The container name used for the game board index.
@@ -102,7 +101,8 @@ namespace GameSaveSample
       /**
        * Creates a new GameSaveManager instance.
        * 
-       * \param char const* serviceConfigId - the service config ID (SCID) used by this title. For Game Core titles
+       * \param char const* serviceConfigId - the service config ID (SCID) used by this title.
+       *                                      For Microsoft GDK with Xbox extensions titles
        *                                      this is typically of the form 00000000-0000-0000-0000-0000NNNNNNNN, where
        *                                      NNNNNNNN is the title ID as a hexadecimal value.
        */

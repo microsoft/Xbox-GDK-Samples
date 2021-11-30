@@ -5,11 +5,12 @@
 //
 // Copyright (c) Microsoft Corporation. All rights reserved.
 
-#include "..\pch.h"
+#include "pch.h"
+
 #include "LaunchOptionsScreen.h"
-#include "..\Assets.h"
+#include "Assets.h"
 #include "GameSaveManager.h"
-#include "..\SampleGame.h"
+#include "SampleGame.h"
 
 using namespace DirectX;
 

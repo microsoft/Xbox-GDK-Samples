@@ -1,6 +1,8 @@
 //
 // DeviceResources.h - A wrapper for the Direct3D 12.X device and swapchain
 //
+// Modified to use ID3D12Device8/ID3D12GraphicsCommandList5
+//
 
 #pragma once
 
@@ -10,7 +12,8 @@ namespace DX
     class DeviceResources
     {
     public:
-        static const unsigned int c_Enable4K_UHD    = 0x1;
+        static constexpr unsigned int c_Enable4K_UHD = 0x1;
+        static constexpr unsigned int c_EnableQHD    = 0x2;
 
         DeviceResources(DXGI_FORMAT backBufferFormat = DXGI_FORMAT_B8G8R8A8_UNORM,
                         DXGI_FORMAT depthBufferFormat = DXGI_FORMAT_D32_FLOAT,
@@ -70,7 +73,7 @@ namespace DX
         void MoveToNextFrame();
         void RegisterFrameEvents();
 
-        static const size_t MAX_BACK_BUFFER_COUNT = 3;
+        static constexpr size_t MAX_BACK_BUFFER_COUNT = 3;
 
         UINT                                                m_backBufferIndex;
 

@@ -34,6 +34,7 @@
 
 #include <wrl/client.h>
 #include <wrl/event.h>
+#include <wrl/implements.h>
 
 #include <gxdk.h>
 
@@ -56,17 +57,30 @@
 
 #include <algorithm>
 #include <atomic>
+#include <cassert>
 #include <cmath>
+#include <cstddef>
 #include <cstdint>
+#include <cstdio>
+#include <cstring>
+#include <ctime>
+#include <cwchar>
 #include <exception>
+#include <functional>
+#include <iterator>
 #include <memory>
+#include <map>
+#include <mutex>
+#include <set>
 #include <stdexcept>
 #include <string>
+#include <system_error>
+#include <unordered_map>
 #include <vector>
 
-#include <assert.h>
-#include <stdio.h>
-#include <time.h>
+#include <malloc.h>
+#include <memory.h>
+#include <process.h>
 
 #include <pix3.h>
 
@@ -75,11 +89,12 @@
 
 #include <GameInput.h>
 
-#include <XUser.h>
-#include <XTaskQueue.h>
+#include <XAsync.h>
 #include <XGame.h>
 #include <XGameSave.h>
 #include <XSystem.h>
+#include <XTaskQueue.h>
+#include <XUser.h>
 
 #include "Audio.h"
 #include "CommonStates.h"

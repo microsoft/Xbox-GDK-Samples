@@ -1,7 +1,7 @@
 //--------------------------------------------------------------------------------------
 // FrontPanelInput.h
 //
-// Microsoft Game Core on Xbox
+// Microsoft GDK with Xbox extensions
 //
 // Advanced Technology Group (ATG)
 // Copyright (C) Microsoft Corporation. All rights reserved.
@@ -19,8 +19,8 @@ namespace ATG
     public:
         FrontPanelInput();
 
-        FrontPanelInput(FrontPanelInput &&moveFrom);
-        FrontPanelInput& operator=(FrontPanelInput &&moveFrom);
+        FrontPanelInput(FrontPanelInput &&) noexcept;
+        FrontPanelInput& operator=(FrontPanelInput &&) noexcept;
 
         FrontPanelInput(FrontPanelInput const&) = delete;
         FrontPanelInput& operator=(FrontPanelInput const&) = delete;

@@ -8,10 +8,8 @@
 #pragma once
 
 #include "GameScreen.h"
-#include "..\Common\InputState.h"
+#include "InputState.h"
 #include "Texture.h"
-#include <functional>
-#include <DirectXMath.h>
 
 namespace GameSaveSample
 {

@@ -7,15 +7,10 @@
 
 #pragma once
 
-#include "..\Helpers\Buffer.h"
-#include "..\Helpers\XGameSaveHandleWrappers.h"
+#include "Buffer.h"
+#include "XGameSaveHandleWrappers.h"
 #include "GameSaveContainerMetadata.h"
-#include <XGameSave.h>
-#include <map>
-#include <mutex>
-#include <wrl/implements.h>
 #include "RDTSCPStopWatch.h"
-
 
 #ifdef _DEBUG
 // set this to a value > 0 and <= 16 MB to add padding for the purposes of simulating large game save scenarios, for 

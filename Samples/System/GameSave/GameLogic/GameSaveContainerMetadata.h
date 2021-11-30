@@ -7,8 +7,6 @@
 
 #pragma once
 
-#include <vector>
-
 struct GameSaveBlobMetadata
 {
     GameSaveBlobMetadata( const char* blobName = nullptr, uint32_t blobSize = 0 )

@@ -141,7 +141,46 @@ void GPUTimer::BeginFrame(_In_ ID3D12GraphicsCommandList* commandList)
 
 void GPUTimer::EndFrame(_In_ ID3D12GraphicsCommandList* commandList)
 {
-    commandList->ResolveQueryData(m_heap.Get(), D3D12_QUERY_TYPE_TIMESTAMP, 0, c_timerSlots, m_buffer.Get(), 0);
+    // Resolve the query data in ranges to minimize API call count
+    struct
+    {
+        uint32_t start;
+        uint32_t size;
+    } ranges[c_maxTimers / 2]{};
+    uint32_t count = 0;
+
+    for (uint32_t j = 0; j < c_maxTimers; ++j)
+    {
+        if (m_used[j])
+        {
+            // Determine if we're starting a new range
+            if (ranges[count].size == 0)
+            {
+                ranges[count].start = j * 2;
+            }
+
+            ranges[count].size += 2; // Two slots per timer (begin, end timestamps)
+
+            // Special case to end the range straddling the timer list end
+            if (j == (c_maxTimers - 1))
+            {
+                ++count;
+            }
+        }
+        else if (ranges[count].size > 0)
+        {
+            // End this range
+            ++count;
+        }
+    }
+
+    for (uint32_t j = 0; j < count; ++j)
+    {
+        commandList->ResolveQueryData(m_heap.Get(), D3D12_QUERY_TYPE_TIMESTAMP, ranges[j].start, ranges[j].size, m_buffer.Get(), ranges[j].start * sizeof(UINT64));
+    }
+
+    memset(m_used, 0, sizeof(m_used));
+
 
     // Grab read-back data for the queries
     D3D12_RANGE dataRange =
@@ -178,6 +217,8 @@ void GPUTimer::Start(_In_ ID3D12GraphicsCommandList* commandList, uint32_t timer
         throw std::out_of_range("Timer ID out of range");
 
     commandList->EndQuery(m_heap.Get(), D3D12_QUERY_TYPE_TIMESTAMP, timerid * 2);
+
+    m_used[timerid] = true;
 }
 
 void GPUTimer::Stop(_In_ ID3D12GraphicsCommandList* commandList, uint32_t timerid)

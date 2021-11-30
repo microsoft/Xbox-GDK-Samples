@@ -1,0 +1,166 @@
+{
+  "includes": [
+    "Assets/UI/defs.json",
+    "Assets/UI/styles.json"
+  ],
+  "layout": {
+    "id": "clawback-screen",
+    "classId": "Panel",
+    "size": [ 800, 600 ],
+    "position": [ 510, 500 ],
+    "style": {
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#background_color"
+    },
+    "subElements": [
+      {
+        "id": "button_section",
+        "classId": "Panel",
+        "position": [ 0, 0 ],
+        "size": [ 1920, 1080 ],
+        "style": {
+          "classId": "NullStyle"
+        },
+        "subElements": [
+          {
+            "id": "view_user_clawback",
+            "classId": "Button",
+            "styleId": "button_default_style",
+            "focusedStyleId": "button_focused_style",
+            "pressedStyleId": "button_pressed_style",
+            "hoveredStyleId": "button_focused_style",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 70, 0 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 500, 75 ],
+            "focusable": true,
+            "subElements": [
+              {
+                "id": "button_border",
+                "classId": "Panel",
+                "styleId": "button_border_style",
+                "visible": false,
+                "sizingAnchor": [ "center", "middle" ],
+                "positioningAnchor": [ "center", "middle" ],
+                "size": [ 514, 89 ]
+              },
+              {
+                "id": "button_label",
+                "classId": "StaticText",
+                "styleId": "button_default_text_style",
+                "text": "View User's Refunds",
+                "positioningAnchor": [ "center", "middle" ],
+                "position": [ 0, 0 ],
+                "sizingAnchor": [ "center", "middle" ],
+                "size": [ 500, 75 ]
+              }
+            ]
+          },
+          {
+            "id": "view_user_balances",
+            "classId": "Button",
+            "styleId": "button_default_style",
+            "focusedStyleId": "button_focused_style",
+            "pressedStyleId": "button_pressed_style",
+            "hoveredStyleId": "button_focused_style",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 70, 110 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 500, 75 ],
+            "focusable": true,
+            "subElements": [
+              {
+                "id": "button_border",
+                "classId": "Panel",
+                "styleId": "button_border_style",
+                "visible": false,
+                "sizingAnchor": [ "center", "middle" ],
+                "positioningAnchor": [ "center", "middle" ],
+                "size": [ 514, 89 ]
+              },
+              {
+                "id": "button_label",
+                "classId": "StaticText",
+                "styleId": "button_default_text_style",
+                "text": "View User Balances",
+                "positioningAnchor": [ "center", "middle" ],
+                "position": [ 0, 0 ],
+                "sizingAnchor": [ "center", "middle" ],
+                "size": [ 500, 75 ]
+              }
+            ]
+          },
+          {
+            "id": "view_clawback_queue_button",
+            "classId": "Button",
+            "styleId": "button_default_style",
+            "focusedStyleId": "button_focused_style",
+            "pressedStyleId": "button_pressed_style",
+            "hoveredStyleId": "button_focused_style",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 70, 220 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 500, 75 ],
+            "focusable": true,
+            "subElements": [
+              {
+                "id": "button_border",
+                "classId": "Panel",
+                "styleId": "button_border_style",
+                "visible": false,
+                "sizingAnchor": [ "center", "middle" ],
+                "positioningAnchor": [ "center", "middle" ],
+                "size": [ 514, 89 ]
+              },
+              {
+                "id": "button_label",
+                "classId": "StaticText",
+                "styleId": "button_default_text_style",
+                "text": "View clawback Queue",
+                "positioningAnchor": [ "center", "middle" ],
+                "position": [ 0, 0 ],
+                "sizingAnchor": [ "center", "middle" ],
+                "size": [ 500, 75 ]
+              }
+            ]
+          },
+          {
+            "id": "run_clawback_validation",
+            "classId": "Button",
+            "styleId": "button_default_style",
+            "focusedStyleId": "button_focused_style",
+            "pressedStyleId": "button_pressed_style",
+            "hoveredStyleId": "button_focused_style",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 70, 330 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 500, 75 ],
+            "focusable": true,
+            "subElements": [
+              {
+                "id": "button_border",
+                "classId": "Panel",
+                "styleId": "button_border_style",
+                "visible": false,
+                "sizingAnchor": [ "center", "middle" ],
+                "positioningAnchor": [ "center", "middle" ],
+                "size": [ 514, 89 ]
+              },
+              {
+                "id": "button_label",
+                "classId": "StaticText",
+                "styleId": "button_default_text_style",
+                "text": "Run Validation Task",
+                "positioningAnchor": [ "center", "middle" ],
+                "position": [ 0, 0 ],
+                "sizingAnchor": [ "center", "middle" ],
+                "size": [ 500, 75 ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

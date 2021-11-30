@@ -97,8 +97,8 @@ private:
     void InitializeMeshes();
 
     // Instance paramters
-    static const uint32_t                       m_maxInstances = 2048U;
-    static const uint32_t                       m_cullThreadgroupSize = 64U;
+    static constexpr uint32_t                   m_maxInstances = 2048U;
+    static constexpr uint32_t                   m_cullThreadgroupSize = 64U;
     float                                       m_timeTotal;
     struct s_BoundingSphere
     {

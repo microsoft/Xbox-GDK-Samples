@@ -7,11 +7,6 @@
 
 #pragma once
 
-#include <DirectXMath.h>
-#include <functional>
-#include <stdexcept>
-#include <vector>
-
 namespace GameSaveSample
 {
     struct GameTile

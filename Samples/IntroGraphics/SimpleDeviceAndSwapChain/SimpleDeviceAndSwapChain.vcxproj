@@ -346,6 +346,8 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\Media\Textures\1920x1080.DDS" />
+    <Image Include="..\..\..\Media\Textures\1920x1080_basic.DDS" />
+    <Image Include="..\..\..\Media\Textures\2560x1440.DDS" />
     <Image Include="..\..\..\Media\Textures\3840x2160.DDS" />
   </ItemGroup>
   <ItemGroup>

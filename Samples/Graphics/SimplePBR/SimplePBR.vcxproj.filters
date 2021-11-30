@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>705982b4-8c6f-455c-a9fd-492871f4bb43</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>d36c87f9-c903-4d92-b193-f987ff4aff9b</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>6ab43766-3120-4d59-b351-bf2afce28807</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>abda6d31-1d33-436d-a9cf-e31395c89176</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts">
+      <UniqueIdentifier>{f3a93a79-2fce-4508-908a-e61c6f75622f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ATG Tool Kit\Skybox">
+      <UniqueIdentifier>{50924767-b827-4946-9434-13d493bcf9af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Backgrounds">
+      <UniqueIdentifier>{0475551c-508a-4600-804a-667de3b2426c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Fonts">
+      <UniqueIdentifier>{7703c238-fc4c-4e14-80e9-c704b0e3051e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Logos">
+      <UniqueIdentifier>{daebb848-d7b5-4f43-afbc-14e0c3c34058}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Models">
+      <UniqueIdentifier>{75625504-4563-4366-a283-f5d36c1a9273}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Models\ToyRobot">
+      <UniqueIdentifier>{82eb0566-f019-48e5-9ab5-35d27807ab6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Models\XboxOrb">
+      <UniqueIdentifier>{9ccaaf03-e4a1-4790-9dd3-360ed8f43cb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Models\ToyRobot\Floor">
+      <UniqueIdentifier>{596cbf78-2251-4ec7-85e7-8ed0a9522fe3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Models\ToyRobot\ToyRobot">
+      <UniqueIdentifier>{056cfe0b-a10a-4ecf-aacc-6fbb02142f3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Models\ToyRobot\WoodBlocks">
+      <UniqueIdentifier>{6fc77ab8-4768-4564-bd16-32bf9ac56f61}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SimplePBR.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\Skybox\Skybox.h">
+      <Filter>ATG Tool Kit\Skybox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\Skybox\SkyboxEffect.h">
+      <Filter>ATG Tool Kit\Skybox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\OrbitCamera.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ReadData.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\RenderTexture.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="PBRModel.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SimplePBR.cpp" />
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\Skybox\SkyboxEffect.cpp">
+      <Filter>ATG Tool Kit\Skybox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\OrbitCamera.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\RenderTexture.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGame.Config" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\LargeLogo.png">
+      <Filter>Assets\Logos</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Logo.png">
+      <Filter>Assets\Logos</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SmallLogo.png">
+      <Filter>Assets\Logos</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SplashScreen.png">
+      <Filter>Assets\Logos</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\StoreLogo.png">
+      <Filter>Assets\Logos</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Kits\ATGTK\Skybox\SkyboxEffect_Common.hlsli">
+      <Filter>ATG Tool Kit\Skybox</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </None>
+    <None Include="..\..\..\Media\PBR\ToyRobot\Floor\Floor.sdkmesh">
+      <Filter>Assets\Models\ToyRobot\Floor</Filter>
+    </None>
+    <None Include="..\..\..\Media\PBR\ToyRobot\ToyRobot\ToyRobot.sdkmesh">
+      <Filter>Assets\Models\ToyRobot\ToyRobot</Filter>
+    </None>
+    <None Include="..\..\..\Media\PBR\ToyRobot\WoodBlocks\WoodBlocks.sdkmesh">
+      <Filter>Assets\Models\ToyRobot\WoodBlocks</Filter>
+    </None>
+    <None Include="..\..\..\Media\PBR\XboxOrb\XboxOrb.sdkmesh">
+      <Filter>Assets\Models\XboxOrb</Filter>
+    </None>
+    <None Include="Readme.docx" />
+    <None Include="Scripts\Desktop.PostBuild.bat">
+      <Filter>Scripts</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\..\..\Kits\ATGTK\Skybox\SkyboxEffect_PS.hlsl">
+      <Filter>ATG Tool Kit\Skybox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\ATGTK\Skybox\SkyboxEffect_VS.hlsl">
+      <Filter>ATG Tool Kit\Skybox</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Media\HDR\Stonewall_Ref_irradiance.dds">
+      <Filter>Assets\Backgrounds</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\HDR\Stonewall_Ref_radiance.dds">
+      <Filter>Assets\Backgrounds</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\PBR\ToyRobot\Floor\Floor_BaseColor.dds">
+      <Filter>Assets\Models\ToyRobot\Floor</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\PBR\ToyRobot\Floor\Floor_Normal.DDS">
+      <Filter>Assets\Models\ToyRobot\Floor</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\PBR\ToyRobot\Floor\Floor_RMA.DDS">
+      <Filter>Assets\Models\ToyRobot\Floor</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\PBR\ToyRobot\ToyRobot\ToyRobot_BaseColor.dds">
+      <Filter>Assets\Models\ToyRobot\ToyRobot</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\PBR\ToyRobot\ToyRobot\Toyrobot_Normal.DDS">
+      <Filter>Assets\Models\ToyRobot\ToyRobot</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\PBR\ToyRobot\ToyRobot\Toyrobot_RMA.DDS">
+      <Filter>Assets\Models\ToyRobot\ToyRobot</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\PBR\ToyRobot\WoodBlocks\WoodBlocks_BaseColor.dds">
+      <Filter>Assets\Models\ToyRobot\WoodBlocks</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\PBR\ToyRobot\WoodBlocks\WoodBlocks_Normal.DDS">
+      <Filter>Assets\Models\ToyRobot\WoodBlocks</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\PBR\ToyRobot\WoodBlocks\WoodBlocks_RMA.DDS">
+      <Filter>Assets\Models\ToyRobot\WoodBlocks</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

@@ -154,27 +154,42 @@ void DeviceResources::CreateDeviceResources()
         throw std::system_error(std::error_code(static_cast<int>(GetLastError()), std::system_category()), "CreateEventEx");
     }
 
-    if (m_options & c_Enable4K_UHD)
+    if (m_options & (c_Enable4K_UHD | c_EnableQHD))
     {
         switch (XSystemGetDeviceType())
         {
         case XSystemDeviceType::XboxOne:
         case XSystemDeviceType::XboxOneS:
-        case XSystemDeviceType::XboxScarlettLockhart /* Xbox Series S */:
-            m_options &= ~c_Enable4K_UHD;
-#ifdef _DEBUG
-            OutputDebugStringA("INFO: Swapchain using 1080p (1920 x 1080)\n");
-#endif
+            m_options &= ~(c_Enable4K_UHD | c_EnableQHD);
             break;
 
+        case XSystemDeviceType::XboxScarlettLockhart /* Xbox Series S */:
+            m_options &= ~c_Enable4K_UHD;
+            if (m_options & c_EnableQHD)
+            {
+                m_outputSize = { 0, 0, 2560, 1440 };
+            }
+            break;
+
+        case XSystemDeviceType::XboxScarlettAnaconda /* Xbox Series X */:
+        case XSystemDeviceType::XboxOneXDevkit:
+        case XSystemDeviceType::XboxScarlettDevkit:
         default:
-            m_outputSize = { 0, 0, 3840, 2160 };
-#ifdef _DEBUG
-            OutputDebugStringA("INFO: Swapchain using 4k (3840 x 2160)\n");
-#endif
+            m_outputSize = (m_options & c_Enable4K_UHD) ? RECT{ 0, 0, 3840, 2160 } : RECT{ 0, 0, 2560, 1440 };
             break;
         }
     }
+
+#ifdef _DEBUG
+    const char* info = nullptr;
+    switch (m_outputSize.bottom)
+    {
+    case 2160:    info = "INFO: Swapchain using 4k (3840 x 2160)\n"; break;
+    case 1440:    info = "INFO: Swapchain using 1440p (2560 x 1440)\n"; break;
+    default:      info = "INFO: Swapchain using 1080p (1920 x 1080)\n"; break;
+    }
+    OutputDebugStringA(info);
+#endif
 
     RegisterFrameEvents();
 }

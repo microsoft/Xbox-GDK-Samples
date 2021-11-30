@@ -109,7 +109,7 @@ namespace
 
         if (copiedSize > 0)
         {
-            memcpy(data, context->body + context->bytesSent, copiedSize);
+            memcpy(data, context->requestBodyBytes + context->bytesSent, copiedSize);
             context->bytesSent += copiedSize;
         }
 
@@ -267,9 +267,9 @@ void HttpManager::CleanUp()
     }
 }
 
-HRESULT HttpManager::MakeHttpRequestAsync(XUserHandle user, const std::string& verb, const std::string& uri, const std::vector<HttpHeader>& headers, uint8_t* body, size_t bodyLen, std::function<void(HttpRequestContext*)> OnCompleted)
+HRESULT HttpManager::MakeHttpRequestAsync(XUserHandle user, const std::string& verb, const std::string& uri, const std::vector<HttpHeader>& headers, uint8_t* bodyBytes, size_t bodyLen, std::function<void(HttpRequestContext*)> OnCompleted)
 {
-    HttpManagerLog("HttpManager::MakeHttpRequestAsync:");
+    HttpManagerLog("HttpManager::MakeHttpRequestAsync: ");
 
     if (m_initialized == false)
     {
@@ -278,7 +278,35 @@ HRESULT HttpManager::MakeHttpRequestAsync(XUserHandle user, const std::string& v
         return E_FAIL;
     }
 
-    HttpRequestContext* context = new HttpRequestContext(this, user, verb, uri, headers, body, bodyLen, OnCompleted);
+    HttpRequestContext* context = new HttpRequestContext(this, user, verb, uri, headers, bodyBytes, bodyLen, OnCompleted);
+    if (context)
+    {
+        if (context->authUser)
+        {
+            return BeginAuthorization(context);
+        }
+        else
+        {
+            // Skip directly to sending the request
+            return SendHttpRequest(context);
+        }
+    }
+
+    return E_FAIL;
+}
+
+HRESULT HttpManager::MakeHttpRequestAsync(XUserHandle user, const std::string& verb, const std::string& uri, const std::vector<HttpHeader>& headers, std::string bodyString, size_t bodyLen, std::function<void(HttpRequestContext*)> OnCompleted)
+{
+    HttpManagerLog("HttpManager::MakeHttpRequestAsync: ");
+
+    if (m_initialized == false)
+    {
+        HttpManagerLog("HttpManager::MakeHttpRequestAsync: HttpManager is not initialized");
+
+        return E_FAIL;
+    }
+
+    HttpRequestContext* context = new HttpRequestContext(this, user, verb, uri, headers, bodyString, bodyLen, OnCompleted);
     if (context)
     {
         if (context->authUser)
@@ -387,7 +415,7 @@ HRESULT HttpManager::BeginAuthorization(HttpRequestContext* context)
         headerCount,
         context->headersForSignature,
         context->bodySize,
-        context->body,
+        context->requestBodyBytes,
         async
     );
 
@@ -449,7 +477,74 @@ HRESULT HttpManager::SendHttpRequest(HttpRequestContext* context)
             }
         }
 
-        if (context->body && context->bodySize != 0)
+        // URL
+        resEasy = curl_easy_setopt(curlEasyHandle, CURLOPT_URL, context->url.c_str());
+        if (resEasy != CURLE_OK)
+        {
+            HttpManagerLog("HttpManager::SendHttpRequest: curl_easy_setopt CURLOPT_URL failed with error: " + GetCurlErrorString(resEasy));
+            return E_FAIL;
+        }
+
+        // VERB
+        if (context->verb == "POST")
+        {
+            resEasy = curl_easy_setopt(curlEasyHandle, CURLOPT_POST, 1);
+            if (resEasy != CURLE_OK)
+            {
+                HttpManagerLog("HttpManager::SendHttpRequest: curl_easy_setopt CURLOPT_POST failed with error: " + GetCurlErrorString(resEasy));
+                return E_FAIL;
+            }
+
+            if (!context->requestBodyString.empty())
+            {
+                resEasy = curl_easy_setopt(curlEasyHandle, CURLOPT_POSTFIELDS, context->requestBodyString.c_str());
+                if (resEasy != CURLE_OK)
+                {
+                    HttpManagerLog("HttpManager::SendHttpRequest: curl_easy_setopt CURLOPT_POSTFIELDS with requestBodyString failed with error: " + GetCurlErrorString(resEasy));
+                    return E_FAIL;
+                }
+            }
+            else
+            {
+                // Default to what is in the requestBytes structure by setting the PostFields to Null and using the CURLOPT_READDATA and
+                // CURLOPT_READFUNCTION code below.
+                resEasy = curl_easy_setopt(curlEasyHandle, CURLOPT_POSTFIELDS, NULL);
+                if (resEasy != CURLE_OK)
+                {
+                    HttpManagerLog("HttpManager::SendHttpRequest: curl_easy_setopt CURLOPT_POSTFIELDS NULL failed with error: " + GetCurlErrorString(resEasy));
+                    return E_FAIL;
+                }
+            }
+        }
+        else if (context->verb == "PUT")
+        {
+            //  Not tested
+            resEasy = curl_easy_setopt(curlEasyHandle, CURLOPT_UPLOAD, 1);
+            if (resEasy != CURLE_OK)
+            {
+                HttpManagerLog("HttpManager::SendHttpRequest: curl_easy_setopt CURLOPT_PUT failed with error: " + GetCurlErrorString(resEasy));
+                return E_FAIL;
+            }
+
+            resEasy = curl_easy_setopt(curlEasyHandle, CURLOPT_INFILESIZE_LARGE, context->bodySize);
+            if (resEasy != CURLE_OK)
+            {
+                HttpManagerLog("HttpManager::SendHttpRequest: curl_easy_setopt CURLOPT_INFILESIZE_LARGE failed with error: " + GetCurlErrorString(resEasy));
+                return E_FAIL;
+            }
+
+        }
+        else  // Default to GET
+        {
+            resEasy = curl_easy_setopt(curlEasyHandle, CURLOPT_HTTPGET, 1);
+            if (resEasy != CURLE_OK)
+            {
+                HttpManagerLog("HttpManager::SendHttpRequest: curl_easy_setopt CURLOPT_HTTPGET failed with error: " + GetCurlErrorString(resEasy));
+                return E_FAIL;
+            }
+        }
+
+        if (context->requestBodyBytes && context->bodySize != 0)
         {
             resEasy = curl_easy_setopt(curlEasyHandle, CURLOPT_READDATA, context);
             if (resEasy != CURLE_OK)
@@ -495,14 +590,6 @@ HRESULT HttpManager::SendHttpRequest(HttpRequestContext* context)
         if (resEasy != CURLE_OK)
         {
             HttpManagerLog("HttpManager::SendHttpRequest: curl_easy_setopt CURLOPT_WRITEFUNCTION failed with error: " + GetCurlErrorString(resEasy));
-            return E_FAIL;
-        }
-
-        // URL
-        resEasy = curl_easy_setopt(curlEasyHandle, CURLOPT_URL, context->url.c_str());
-        if (resEasy != CURLE_OK)
-        {
-            HttpManagerLog("HttpManager::SendHttpRequest: curl_easy_setopt CURLOPT_URL failed with error: " + GetCurlErrorString(resEasy));
             return E_FAIL;
         }
 

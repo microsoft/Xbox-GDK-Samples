@@ -114,6 +114,8 @@
 #include "SpriteBatch.h"
 #include "SpriteFont.h"
 
+#include "uitk.h"
+
 namespace DX
 {
     // Helper class for COM exceptions

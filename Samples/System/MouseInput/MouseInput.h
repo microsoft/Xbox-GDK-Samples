@@ -41,6 +41,7 @@ public:
     void OnResuming();
 
     bool IsRunning4k() const { return m_deviceResources ? (m_deviceResources->GetDeviceOptions() & DX::DeviceResources::c_Enable4K_UHD) != 0 : false; }
+    bool IsRunning1440p() const { return m_deviceResources ? (m_deviceResources->GetDeviceOptions() & DX::DeviceResources::c_EnableQHD) != 0 : false; }
 
     int m_screenLocation_x;
     int m_screenLocation_y;
@@ -112,8 +113,8 @@ private:
     std::unique_ptr<DX::CompressedTextureFactory>   m_modelRTSResources;
     std::unique_ptr<DirectX::Model> m_modelFPS;
     std::unique_ptr<DirectX::Model> m_modelRTS;
-    std::vector<std::shared_ptr<DirectX::IEffect>> m_modelFPSEffect;
-    std::vector<std::shared_ptr<DirectX::IEffect>> m_modelRTSEffect;
+    DirectX::Model::EffectCollection m_modelFPSEffect;
+    DirectX::Model::EffectCollection m_modelRTSEffect;
     Microsoft::WRL::ComPtr<ID3D12Resource> m_texture_background;
     Microsoft::WRL::ComPtr<ID3D12Resource> m_texture_tile;
     Microsoft::WRL::ComPtr<ID3D12Resource> m_texture_tile_border;

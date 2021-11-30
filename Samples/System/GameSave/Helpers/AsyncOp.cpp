@@ -12,8 +12,8 @@
 // PARTICULAR PURPOSE.
 //--------------------------------------------------------------------------------------
 
-#include "..\pch.h"
-#include <vector>
+#include "pch.h"
+
 #include "AsyncOp.h"
 
 namespace ATG

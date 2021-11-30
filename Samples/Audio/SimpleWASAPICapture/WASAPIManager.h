@@ -33,7 +33,7 @@ enum class DeviceState
     DeviceStateStopped
 };
 
-static const REFERENCE_TIME	REFTIMES_PER_SEC = 10000000LL;
+constexpr REFERENCE_TIME REFTIMES_PER_SEC = 10000000LL;
 
 class WASAPIManager
 {

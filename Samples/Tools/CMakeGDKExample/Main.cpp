@@ -89,12 +89,21 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
         {
         case XSystemDeviceType::XboxOne:
         case XSystemDeviceType::XboxOneS:
-        case XSystemDeviceType::XboxScarlettLockhart /* Xbox Series S */:
 #ifdef _DEBUG
             OutputDebugStringA("INFO: Swapchain using 1080p (1920 x 1080)\n");
 #endif
             break;
 
+        case XSystemDeviceType::XboxScarlettLockhart /* Xbox Series S */:
+            rc = { 0, 0, 2560, 1440 };
+#ifdef _DEBUG
+            OutputDebugStringA("INFO: Swapchain using 1440p (2560 x 1440)\n");
+#endif
+            break;
+
+        case XSystemDeviceType::XboxScarlettAnaconda /* Xbox Series X */:
+        case XSystemDeviceType::XboxOneXDevkit:
+        case XSystemDeviceType::XboxScarlettDevkit:
         default:
             rc = { 0, 0, 3840, 2160 };
 #ifdef _DEBUG

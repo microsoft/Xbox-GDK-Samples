@@ -1861,20 +1861,10 @@ GlyphCache::GlyphCache(size_t maxTextures, LONG textureDimension, size_t maxCach
 {
 }
 
-GlyphCache::GlyphCache(GlyphCache&& moveFrom) noexcept
-    : pImpl(std::move(moveFrom.pImpl))
-{
-}
+GlyphCache::GlyphCache(GlyphCache&&) noexcept = default;
+GlyphCache& GlyphCache::operator= (GlyphCache&&) noexcept = default;
+GlyphCache::~GlyphCache() = default;
 
-GlyphCache& GlyphCache::operator= (GlyphCache&& moveFrom) noexcept
-{
-    pImpl = std::move(moveFrom.pImpl);
-    return *this;
-}
-
-GlyphCache::~GlyphCache()
-{
-}
 
 _Use_decl_annotations_
 void GlyphCache::CreateDeviceDependentResources(ID3D12CommandQueue* commandQueue, DXGI_FORMAT backBufferFormat, DXGI_FORMAT depthBufferFormat)

@@ -51,6 +51,7 @@ public:
 
     // Initialization and management
     void Initialize(HWND window);
+    void Uninitialize();
 
     // Basic Sample loop
     void Tick();
@@ -78,7 +79,7 @@ private:
     // Represents an instance of a scene object.
     struct ObjectInstance
     {
-        using EffectList = std::vector<std::shared_ptr<DirectX::IEffect>>;
+        using EffectList = DirectX::Model::EffectCollection;
 
         DirectX::SimpleMath::Matrix world;
         DirectX::Model*             model;

@@ -18,6 +18,7 @@
 
 #include "DeviceResources.h"
 #include "StepTimer.h"
+#include "FlyCamera.h"
 
 // Shader constants
 struct ConstantBuffer
@@ -131,9 +132,7 @@ private:
 
     // Camera
     std::unique_ptr<DX::FlyCamera>              m_camera;
-    DirectX::XMFLOAT4X4                         m_worldMatrix;
-    DirectX::XMFLOAT4X4                         m_viewMatrix;
-    DirectX::XMFLOAT4X4                         m_projectionMatrix;
+    DirectX::SimpleMath::Matrix                 m_worldMatrix;
 
     // Desriptors for m_resourceDescriptorHeap
     enum class ResourceDescriptors

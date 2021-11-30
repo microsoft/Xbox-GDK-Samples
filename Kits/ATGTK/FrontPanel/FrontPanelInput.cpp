@@ -1,7 +1,7 @@
 //--------------------------------------------------------------------------------------
 // FrontPanelInput.cpp
 //
-// Microsoft Game Core on Xbox
+// Microsoft GDK with Xbox extensions
 //
 // Advanced Technology Group (ATG)
 // Copyright (C) Microsoft Corporation. All rights reserved.
@@ -98,24 +98,11 @@ FrontPanelInput::FrontPanelInput()
 {
 }
 
-// Move constructor.
-FrontPanelInput::FrontPanelInput(FrontPanelInput && moveFrom)
-    : pImpl(std::move(moveFrom.pImpl))
-{
-    pImpl->mOwner = this;
-}
 
-// Move assignment.
-FrontPanelInput & FrontPanelInput::operator=(FrontPanelInput && moveFrom)
-{
-    pImpl = std::move(moveFrom.pImpl);
-    pImpl->mOwner = this;
-    return *this;
-}
+FrontPanelInput::FrontPanelInput(FrontPanelInput&&) noexcept = default;
+FrontPanelInput& FrontPanelInput::operator=(FrontPanelInput&&) noexcept = default;
+FrontPanelInput::~FrontPanelInput() = default;
 
-FrontPanelInput::~FrontPanelInput()
-{
-}
 
 FrontPanelInput::State FrontPanelInput::GetState()
 {

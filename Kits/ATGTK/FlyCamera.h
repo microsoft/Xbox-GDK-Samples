@@ -30,8 +30,8 @@ namespace DX
     public:
         FlyCamera();
 
-        FlyCamera(FlyCamera&& moveFrom);
-        FlyCamera& operator= (FlyCamera&& moveFrom);
+        FlyCamera(FlyCamera&&) noexcept;
+        FlyCamera& operator= (FlyCamera&&) noexcept;
 
         FlyCamera(FlyCamera const&) = delete;
         FlyCamera& operator=(FlyCamera const&) = delete;
@@ -85,12 +85,12 @@ namespace DX
         void XM_CALLCONV SetLookAt(DirectX::FXMVECTOR position, DirectX::FXMVECTOR target);
 
         // Behavior control flags
-        static const unsigned int c_FlagsInvertY = 0x1;                     // Invert Y axis rotation controls
-        static const unsigned int c_FlagsDisableRotateX = 0x2;              // Disables rotation in X
-        static const unsigned int c_FlagsDisableRotateY = 0x4;              // Disables rotation in Y
-        static const unsigned int c_FlagsDisableRotation = 0x6;             // Disables all rotation controls
-        static const unsigned int c_Flags_XY = 0x8;                         // Instead of translate X/Z, do translate in X/Y
-        static const unsigned int c_FlagsDisableSensitivityControl = 0x10;  // Disable sensitivity controls
+        static constexpr unsigned int c_FlagsInvertY = 0x1;                    // Invert Y axis rotation controls
+        static constexpr unsigned int c_FlagsDisableRotateX = 0x2;             // Disables rotation in X
+        static constexpr unsigned int c_FlagsDisableRotateY = 0x4;             // Disables rotation in Y
+        static constexpr unsigned int c_FlagsDisableRotation = 0x6;            // Disables all rotation controls
+        static constexpr unsigned int c_Flags_XY = 0x8;                        // Instead of translate X/Z, do translate in X/Y
+        static constexpr unsigned int c_FlagsDisableSensitivityControl = 0x10; // Disable sensitivity controls
 
         void SetFlags(unsigned int flags);
 

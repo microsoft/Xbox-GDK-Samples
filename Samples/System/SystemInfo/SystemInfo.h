@@ -100,6 +100,7 @@ private:
         DIRECT3D_OPT1,
         DIRECT3D_OPT2,
         DIRECT3D_OPT3,
+        DIRECT3D_OPT4,
         DXGI,
 #else
         DIRECT3D,

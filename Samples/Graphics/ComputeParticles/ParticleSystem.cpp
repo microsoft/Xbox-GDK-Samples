@@ -17,21 +17,21 @@ using namespace DirectX::SimpleMath;
 namespace
 {
 	// Various particle constants and default values.
-	static const float g_maxOrbitRadius = 60.0f;
-	static const float g_maxEmitterHeight = 25.0f;
-	static const float g_minEmitterHeight = 2.0f;
-	static const int   g_maxParticles = 2097152;
-	static const int   g_minParticles = 128;
-	static const float g_particleLifeMin = 24.0f;
-	static const float g_particleLifeMax = 28.0f;
-	static const float g_particleSpeedMax = 1.75f;
-	static const float g_particleSpeedMin = 1.25f;
-	static const float g_particleDirectionHorizontalStrength = 7.0f;
-	static const float g_particleMaxMass = 1.75f;
-	static const float g_particleMinMass = 0.65f;
-	static const float g_defaultParticleUpdateSpeed = 4.0f;
-	static const float g_minParticleUpdateSpeed = 0.1f;
-	static const float g_maxParticleUpdateSpeed = 6.0f;
+	constexpr float g_maxOrbitRadius = 60.0f;
+	constexpr float g_maxEmitterHeight = 25.0f;
+	constexpr float g_minEmitterHeight = 2.0f;
+	constexpr int   g_maxParticles = 2097152;
+	constexpr int   g_minParticles = 128;
+	constexpr float g_particleLifeMin = 24.0f;
+	constexpr float g_particleLifeMax = 28.0f;
+	constexpr float g_particleSpeedMax = 1.75f;
+	constexpr float g_particleSpeedMin = 1.25f;
+	constexpr float g_particleDirectionHorizontalStrength = 7.0f;
+	constexpr float g_particleMaxMass = 1.75f;
+	constexpr float g_particleMinMass = 0.65f;
+	constexpr float g_defaultParticleUpdateSpeed = 4.0f;
+	constexpr float g_minParticleUpdateSpeed = 0.1f;
+	constexpr float g_maxParticleUpdateSpeed = 6.0f;
 
 	// 1D-lookup table for the blackbody color spectrum - copied to an ID3D12Resource for shader reference.
 	static const DWORD g_blackbodySpectrum[64] =

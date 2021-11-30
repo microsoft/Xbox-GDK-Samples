@@ -12,6 +12,7 @@
 #include "UITK.h"
 #include "LiveInfoHUD.h"
 #include "LiveResources.h"
+#include "PlayFabResources.h"
 #include "ILoggingInterface.h"
 #include "PlayFabMatchmakingManager.h"
 #include "AsyncStatusWidget.h"
@@ -114,18 +115,9 @@ private:
     std::shared_ptr<ATG::LiveResources> m_liveResources;
     void LoginToXboxLive(bool silentAuth = true);
     void HandleXboxLiveLoginComplete();
-
-    // step: get an Xbox user token
-    std::string m_userToken;
-    void RequestLiveUserToken();
-    void HandleLiveUserTokenRequestComplete();
-
+   
     // step: log into PlayFab
-    std::string m_playFabId;
-    std::string m_entityId;
-    std::string m_entityType;
-    std::string m_entityToken;
-    void LoginToPlayFab();
+    std::unique_ptr<ATG::PlayFabResources> m_playFabResources;
     void HandlePlayFabLoginComplete();
 
     // step: get the latency to the region data center

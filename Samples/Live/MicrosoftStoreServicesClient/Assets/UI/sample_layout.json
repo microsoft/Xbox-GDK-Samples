@@ -1,0 +1,17 @@
+{
+  "layout": {
+    "classId": "Panel",
+    "id": "Control_Panel",
+    "positioningAnchor": [ "right", "top" ],
+    "position": [ -100, 100 ],
+    "sizingAnchor": [ "right", "top" ],
+    "size": [ 400, 800 ],
+    "style": {
+      "classId": "SpriteStyle",
+      "id": "Basic_Panel_Style",
+      "colorUsage": "override",
+      "color": [ 192, 192, 192, 1.0 ],
+      "texture": "Assets/Textures/roundy-border.png"
+    }
+  }
+}

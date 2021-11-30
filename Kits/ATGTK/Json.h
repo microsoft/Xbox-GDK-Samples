@@ -21,6 +21,7 @@
 
 #pragma warning(push)
 #pragma warning(disable : 4061)
+#pragma warning(disable : 26451)
 
 #include "json/json.hpp"
 

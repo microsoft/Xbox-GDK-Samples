@@ -10,9 +10,9 @@ extern "C" void OutputDebugStringW(const wchar_t* lpOutputString);
 
 int main()
 {
-    std::cout << "Hello, world from GameCore on Xbox" << std::endl;
+    std::cout << "Hello, world from Xbox" << std::endl;
 
-    OutputDebugStringW(L"INFO: Hello, world from GameCore on Xbox");
+    OutputDebugStringW(L"INFO: Hello, world from Xbox");
 
     if (!DirectX::XMVerifyCPUSupport())
     {

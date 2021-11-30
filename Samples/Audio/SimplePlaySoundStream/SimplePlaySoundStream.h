@@ -83,8 +83,8 @@ public:
 
 private:
 
-    static const uint32_t STREAMING_BUFFER_SIZE = 65536;
-    static const size_t MAX_BUFFER_COUNT = 3;
+    static constexpr uint32_t STREAMING_BUFFER_SIZE = 65536;
+    static constexpr size_t MAX_BUFFER_COUNT = 3;
 
     void InitializeXAudio();
 
@@ -177,12 +177,13 @@ private:
     IXAudio2MasteringVoice*                     m_pMasteringVoice;
     IXAudio2SourceVoice*                        m_pSourceVoice;
 
-    bool				                        m_DoneSubmitting;
-    PlaySoundStreamVoiceContext					m_VoiceContext;
-    WaveFile								    m_WaveFile;
+    bool                                        m_DoneSubmitting;
+    bool                                        m_DonePlaying;
+    PlaySoundStreamVoiceContext                 m_VoiceContext;
+    WaveFile                                    m_WaveFile;
     uint32_t                                    m_waveSize;
     uint32_t                                    m_currentPosition;
-    XAUDIO2_BUFFER						        m_Buffers[MAX_BUFFER_COUNT];
+    XAUDIO2_BUFFER                              m_Buffers[MAX_BUFFER_COUNT];
     size_t                                      m_NumberOfBuffersProduced;
     size_t                                      m_NumberOfBuffersConsumed;
     HANDLE                                      m_producerThread;

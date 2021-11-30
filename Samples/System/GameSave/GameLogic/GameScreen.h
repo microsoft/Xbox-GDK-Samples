@@ -7,8 +7,8 @@
 
 #pragma once
 
-#include "..\Common\InputState.h"
-#include "..\Assets.h"
+#include "InputState.h"
+#include "Assets.h"
 
 namespace GameSaveSample
 {

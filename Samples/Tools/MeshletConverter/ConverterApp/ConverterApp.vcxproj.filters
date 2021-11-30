@@ -19,9 +19,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\ReadMe.docx" />
-    <None Include="packages.config" />
     <None Include="..\MeshletConverter_ReadMe_ja-jp.docx" />
     <None Include="..\MeshletConverter_ReadMe_ko-kr.docx" />
     <None Include="..\MeshletConverter_ReadMe_zh-cn.docx" />
+    <None Include="..\..\..\NuGet.config" />
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

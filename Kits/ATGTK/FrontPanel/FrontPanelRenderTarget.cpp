@@ -1,7 +1,7 @@
 //--------------------------------------------------------------------------------------
 // FrontPanelRenderTarget.cpp
 //
-// Microsoft Game Core on Xbox for DirectX 12
+// Microsoft GDK with Xbox extensions (DirectX 12)
 //
 // Advanced Technology Group (ATG)
 // Copyright (C) Microsoft Corporation. All rights reserved.

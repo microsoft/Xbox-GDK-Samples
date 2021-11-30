@@ -13,12 +13,12 @@
 //--------------------------------------------------------------------------------------
 
 #include "pch.h"
-#include <memory>
+
 #include "HandleWrapperBase.h"
 #include "XUserHandleWrapper.h"
 #include "ScopedLockWrappers.h"
 #include "User.h"
-#include "..\Common\InputDeviceManager.h"
+#include "InputDeviceManager.h"
 
 namespace ATG
 {

@@ -9,18 +9,18 @@
 
 namespace ATG
 {
-	// Converts a length in device-independent pixels (DIPs) to a length in physical pixels.
-	inline float ConvertDipsToPixels(float dips, float dpi)
-	{
-		static const float dipsPerInch = 96.0f;
-		return floorf(dips * dpi / dipsPerInch + 0.5f); // Round to nearest integer.
-	}
+    // Converts a length in device-independent pixels (DIPs) to a length in physical pixels.
+    inline float ConvertDipsToPixels(float dips, float dpi)
+    {
+        constexpr float dipsPerInch = 96.0f;
+        return floorf(dips * dpi / dipsPerInch + 0.5f); // Round to nearest integer.
+    }
 
     inline float GetScaleFactorForWindow(const RECT& viewportBounds)
     {
-        static const float referenceWidth = 1920.f;
-        static const float referenceHeight = 1080.f;
-        static const float referenceAspectRatio = referenceWidth / referenceHeight;
+        constexpr float referenceWidth = 1920.f;
+        constexpr float referenceHeight = 1080.f;
+        constexpr float referenceAspectRatio = referenceWidth / referenceHeight;
         float viewportWidth = float(viewportBounds.right);
         float viewportHeight = float(viewportBounds.bottom);
         float aspectRatio = viewportWidth / viewportHeight;

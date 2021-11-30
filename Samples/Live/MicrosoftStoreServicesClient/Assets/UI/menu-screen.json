@@ -1,0 +1,348 @@
+{
+  "includes": [
+    "Assets/UI/defs.json",
+    "Assets/UI/styles.json"
+  ],
+  "layout": {
+    "id": "menu-screen",
+    "classId": "Panel",
+    "size": [ 1920, 1080 ],
+    "style": {
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#background_color"
+    },
+    "subElements": [
+      {
+        "id": "menu_logo_image",
+        "classId": "Image",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 90, 40 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 100, 110 ],
+        "styleId": "title_logo_image_style"
+      },
+      {
+        "id": "menu_title_text",
+        "classId": "StaticText",
+        "text": "Microsoft.StoreServices Client Sample",
+        "styleId": "menu_title_text_style",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 200, 50 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 1220, 100 ]
+      },
+      {
+        "id": "menu_section",
+        "classId": "Panel",
+        "position": [ 100, 200 ],
+        "size": [ 1280, 880 ],
+        "style": {
+          "classId": "NullStyle"
+        },
+        "subElements": [
+          {
+            "id": "authentication_button",
+            "classId": "Button",
+            "styleId": "button_default_style",
+            "focusedStyleId": "button_focused_style",
+            "pressedStyleId": "button_pressed_style",
+            "hoveredStyleId": "button_focused_style",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 0, 300 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 400, 75 ],
+            "focusable": true,
+            "subElements": [
+              {
+                "id": "button_border",
+                "classId": "Panel",
+                "styleId": "button_border_style",
+                "visible": true,
+                "sizingAnchor": [ "center", "middle" ],
+                "positioningAnchor": [ "center", "middle" ],
+                "size": [ 414, 89 ]
+              },
+              {
+                "id": "button_label",
+                "classId": "StaticText",
+                "styleId": "button_focused_text_style",
+                "text": "Refresh UserStoreIds",
+                "size": [ 400, 75 ]
+              }
+            ]
+          },
+          {
+            "id": "collection_button",
+            "classId": "Button",
+            "styleId": "button_default_style",
+            "focusedStyleId": "button_focused_style",
+            "pressedStyleId": "button_pressed_style",
+            "hoveredStyleId": "button_focused_style",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 0, 410 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 400, 75 ],
+            "focusable": true,
+            "subElements": [
+              {
+                "id": "button_border",
+                "classId": "Panel",
+                "styleId": "button_border_style",
+                "visible": false,
+                "sizingAnchor": [ "center", "middle" ],
+                "positioningAnchor": [ "center", "middle" ],
+                "size": [ 414, 89 ]
+              },
+              {
+                "id": "button_label",
+                "classId": "StaticText",
+                "styleId": "button_default_text_style",
+                "text": "Collections",
+                "size": [ 400, 75 ]
+              }
+            ]
+          },
+          {
+            "id": "subscription_button",
+            "classId": "Button",
+            "styleId": "button_default_style",
+            "focusedStyleId": "button_focused_style",
+            "pressedStyleId": "button_pressed_style",
+            "hoveredStyleId": "button_focused_style",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 0, 520 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 400, 75 ],
+            "focusable": true,
+            "subElements": [
+              {
+                "id": "button_border",
+                "classId": "Panel",
+                "styleId": "button_border_style",
+                "visible": false,
+                "sizingAnchor": [ "center", "middle" ],
+                "positioningAnchor": [ "center", "middle" ],
+                "size": [ 414, 89 ]
+              },
+              {
+                "id": "button_label",
+                "classId": "StaticText",
+                "styleId": "button_default_text_style",
+                "text": "Subscriptions",
+                "size": [ 400, 75 ]
+              }
+            ]
+          },
+          {
+            "id": "refund_button",
+            "classId": "Button",
+            "styleId": "button_default_style",
+            "focusedStyleId": "button_focused_style",
+            "pressedStyleId": "button_pressed_style",
+            "hoveredStyleId": "button_focused_style",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 0, 630 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 400, 75 ],
+            "focusable": true,
+            "subElements": [
+              {
+                "id": "button_border",
+                "classId": "Panel",
+                "styleId": "button_border_style",
+                "visible": false,
+                "sizingAnchor": [ "center", "middle" ],
+                "positioningAnchor": [ "center", "middle" ],
+                "size": [ 414, 89 ]
+              },
+              {
+                "id": "button_label",
+                "classId": "StaticText",
+                "styleId": "button_default_text_style",
+                "text": "Clawback",
+                "size": [ 400, 75 ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "legend_section",
+        "classId": "Panel",
+        "position": [ 90, 940 ],
+        "size": [ 1280, 50 ],
+        "style": {
+          "classId": "NullStyle"
+        },
+        "subElements": [
+          {
+            "id": "navigate_legend",
+            "classId": "Panel",
+            "positioningAnchor": [ "left", "middle" ],
+            "position": [ 10, 0 ],
+            "sizingAnchor": [ "left", "middle" ],
+            "size": [ 210, 50 ],
+            "styleId": "legend_panel_style",
+            "subElements": [
+              {
+                "id": "key_panel",
+                "classId": "Panel",
+                "positioningAnchor": [ "left", "middle" ],
+                "position": [ 0, 0 ],
+                "sizingAnchor": [ "left", "middle" ],
+                "size": [ 50, 50 ],
+                "styleId": "legend_key_panel_style",
+                "subElements": [
+                  {
+                    "id": "key_text",
+                    "classId": "StaticText",
+                    "styleId": "legend_key_text_style",
+                    "text": "[DPad]",
+                    "isLegend": true,
+                    "positioningAnchor": [ "center", "middle" ],
+                    "position": [ 0, 0 ],
+                    "sizingAnchor": [ "center", "middle" ],
+                    "size": [ 50, 50 ]
+                  }
+                ]
+              },
+              {
+                "id": "value_text",
+                "classId": "StaticText",
+                "styleId": "legend_value_text_style",
+                "text": "Navigate",
+                "positioningAnchor": [ "left", "middle" ],
+                "position": [ 58, 0 ],
+                "sizingAnchor": [ "left", "middle" ],
+                "size": [ 150, 50 ]
+              }
+            ]
+          },
+          {
+            "id": "select_legend",
+            "classId": "Panel",
+            "positioningAnchor": [ "left", "middle" ],
+            "position": [ 240, 0 ],
+            "sizingAnchor": [ "left", "middle" ],
+            "size": [ 170, 50 ],
+            "styleId": "legend_panel_style",
+            "subElements": [
+              {
+                "id": "key_panel",
+                "classId": "Panel",
+                "positioningAnchor": [ "left", "middle" ],
+                "position": [ 0, 0 ],
+                "sizingAnchor": [ "left", "middle" ],
+                "size": [ 50, 50 ],
+                "styleId": "legend_key_panel_style",
+                "subElements": [
+                  {
+                    "id": "key_text",
+                    "classId": "StaticText",
+                    "styleId": "legend_key_text_style",
+                    "text": "[A]",
+                    "isLegend": true,
+                    "positioningAnchor": [ "center", "middle" ],
+                    "position": [ 0, 0 ],
+                    "sizingAnchor": [ "center", "middle" ],
+                    "size": [ 50, 50 ]
+                  }
+                ]
+              },
+              {
+                "id": "value_text",
+                "classId": "StaticText",
+                "styleId": "legend_value_text_style",
+                "text": "Select",
+                "positioningAnchor": [ "left", "middle" ],
+                "position": [ 58, 0 ],
+                "sizingAnchor": [ "left", "middle" ],
+                "size": [ 150, 50 ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "classId": "Panel",
+        "id": "Output_Console_Window_Outer_Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "position": [ 100, 170 ],
+        "size": [ 1730, 310 ],
+        "style": {
+          "classId": "SpriteStyle",
+          "colorUsage": "override",
+          "color": "#black"
+        },
+        "subElements": [
+          {
+            "classId": "ConsoleWindow",
+            "id": "Output_Console_Window",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "position": [ 0, 0 ],
+            "size": [ 1730, 280 ],
+            "focusable": true,
+            "maxConsoleLines": 200,
+            "styleId": "Console_Window_Text_Style",
+            "verticalSliderSubElementId": "Output_Console_Window_Slider",
+            "viewportPanelSubElementId": "Output_Console_Window_Panel",
+            "subElements": [
+              {
+                "classId": "Panel",
+                "id": "Output_Console_Window_Panel",
+                "positioningAnchor": [ "left", "top" ],
+                "position": [ 0, 0 ],
+                "sizingAnchor": [ "left", "top" ],
+                "size": [ 1730, 310 ],
+                "styleId": "Invisible_Panel_Style"
+              },
+              {
+                "classId": "Slider",
+                "id": "Output_Console_Window_Slider",
+                "size": [ 35, 310 ],
+                "style": {
+                  "classId": "NullStyle"
+                },
+                "thumbButtonSubElementId": "Output_Console_Window_Slider_Thumb",
+                "backgroundSubElementId": "Output_Console_Window_Slider_Background",
+                "sliderOrientation": "TopToBottom",
+                "sliderType": "discrete",
+                "numDiscreteSteps": 1,
+                "initialValue": 0,
+                "sizingAnchor": [ "right", "top" ],
+                "positioningAnchor": [ "right", "top" ],
+                "focusable": true,
+                "subElements": [
+                  {
+                    "classId": "Image",
+                    "id": "Output_Console_Window_Slider_Background",
+                    "size": [ 35, 310 ],
+                    "style": {
+                      "classId": "SpriteStyle",
+                      "color": [ 128, 128, 128, 1.0 ],
+                      "colorUsage": "override"
+                    }
+                  },
+                  {
+                    "classId": "Button",
+                    "id": "Output_Console_Window_Slider_Thumb",
+                    "size": [ 35, 45 ],
+                    "styleId": "Slider_Button_Style",
+                    "focusable": true,
+                    "focusedStyleId": "Slider_Focused_Button_Style",
+                    "hoveredStyleId": "Slider_Hovered_Button_Style",
+                    "pressedStyleId": "Slider_Pressed_Button_Style",
+                    "disabledStyleId": "Slider_Disabled_Button_Style"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -14,7 +14,7 @@
 
 #pragma once
 
-#include "..\Helpers\ScopedLockWrappers.h"
+#include "ScopedLockWrappers.h"
 
 #ifdef _DEBUG
 #define ENABLE_LOGGING_TO_FILE

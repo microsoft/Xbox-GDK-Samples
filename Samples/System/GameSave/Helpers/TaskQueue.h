@@ -18,8 +18,6 @@
 
 #pragma once
 
-#include <XAsync.h>
-
 namespace ATG
 {
    // The maximum number of cores that will be used. Cores will be numbered from 0 to MAX_THREAD_CORES - 1.
