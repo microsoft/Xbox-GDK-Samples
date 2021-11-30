@@ -153,7 +153,7 @@ private:
         Vector3 direction;
     };
 
-    static const size_t c_groupCount = 4;
+    static constexpr size_t c_groupCount = 4;
 
     BoundingFrustum     m_primaryFrustum;
     BoundingOrientedBox m_primaryOrientedBox;

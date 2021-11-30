@@ -1,0 +1,417 @@
+{
+  "styles": [
+    {
+      "id": "title_logo_image_style",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#primary_color_opaque76",
+      "texture": "Assets/Textures/LOGO_ATG.png"
+    },
+    {
+      "id": "title_logo_text_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": "#primary_color_opaque76",
+      "font": "Assets/Fonts/segoeui_27pt_sharp",
+      "size": 36,
+      "weight": "Bold",
+      "horizontalAlign": "center",
+      "verticalAlign": "bottom"
+    },
+    {
+      "id": "title_text_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": "#primary_color",
+      "font": "Assets/Fonts/segoeui_72pt_sharp",
+      "size": 96,
+      "horizontalAlign": "center",
+      "verticalAlign": "bottom"
+    },
+    {
+      "id": "start_button_text_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": "#secondary_color",
+      "font": "Assets/Fonts/segoeuisb_27pt_sharp",
+      "size": 36,
+      "horizontalAlign": "center",
+      "verticalAlign": "bottom"
+    },
+    {
+      "id": "title_sandbox_text_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": "#primary_color_opaque76",
+      "font": "Assets/Fonts/segoeui_18pt_sharp",
+      "size": 24,
+      "weight": "Bold",
+      "horizontalAlign": "center",
+      "verticalAlign": "bottom"
+    },
+
+    {
+      "id": "warning_text_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": "#primary_color",
+      "font": "Assets/Fonts/segoeui_36pt_sharp",
+      "size": 48,
+      "weight": "Bold",
+      "horizontalAlign": "center",
+      "verticalAlign": "bottom"
+    },
+    {
+      "id": "warning_sub_text_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": "#primary_color",
+      "font": "Assets/Fonts/segoeui_27pt_sharp",
+      "size": 36,
+      "horizontalAlign": "center",
+      "verticalAlign": "bottom"
+    },
+
+    {
+      "id": "button_border_style",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#secondary_color",
+      "texture": "Assets/Textures/frame_panel_3.png",
+      "spriteType": "eightSliced",
+      "innerUVExtents": [ 0.1, 0.1, 0.9, 0.9 ]
+    },
+    {
+      "id": "button_default_style",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#primary_color_opaque10"
+    },
+    {
+      "id": "button_focused_style",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#primary_color"
+    },
+    {
+      "id": "button_pressed_style",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#primary_color_opaque76"
+    },
+    {
+      "id": "button_disabled_style",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "texture": "Assets/Textures/GFX_Disabled_Button.png",
+      "color": "#primary_color"
+    },
+    {
+      "id": "button_default_text_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": "#primary_color_opaque80",
+      "font": "Assets/Fonts/segoeuisb_27pt_sharp",
+      "size": 36,
+      "weight": "bold",
+      "horizontalAlign": "center",
+      "verticalAlign": "middle"
+    },
+    {
+      "id": "button_focused_text_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": "#black",
+      "font": "Assets/Fonts/segoeuisb_27pt_sharp",
+      "size": 36,
+      "weight": "bold",
+      "horizontalAlign": "center",
+      "verticalAlign": "middle"
+    },
+    {
+      "id": "button_disabled_text_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": "#primary_color_opaque80",
+      "font": "Assets/Fonts/segoeuisb_27pt_sharp",
+      "size": 36,
+      "weight": "bold",
+      "horizontalAlign": "center",
+      "verticalAlign": "middle"
+    },
+    {
+      "id": "menu_title_text_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": "#primary_color",
+      "font": "Assets/Fonts/segoeui_36pt_sharp",
+      "size": 48,
+      "horizontalAlign": "left",
+      "verticalAlign": "middle"
+    },
+    {
+      "id": "divider_image_style",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#secondary_color_opaque35",
+      "texture": "Assets/Textures/divider_vertical.png"
+    },
+    {
+      "id": "legend_panel_style",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#secondary_color_opaque5"
+    },
+    {
+      "id": "legend_key_panel_style",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#secondary_color_opaque10"
+    },
+    {
+      "id": "legend_key_text_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": "#secondary_color_opaque80",
+      "legendFont": "Assets/Fonts/XboxOneControllerLegendSmall",
+      "horizontalAlign": "center",
+      "verticalAlign": "middle"
+    },
+    {
+      "id": "legend_value_text_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": "#secondary_color_opaque80",
+      "font": "Assets/Fonts/segoeui_24pt_sharp",
+      "size": 32,
+      "weight": "bold",
+      "horizontalAlign": "left",
+      "verticalAlign": "middle"
+    },
+
+    {
+      "id": "device_panel_style",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#panel_background_color"
+    },
+    {
+      "id": "gamerpic_style",
+      "classId": "SpriteStyle"
+    },
+    {
+      "id": "primary_icon_style",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#secondary_color_opaque80",
+      "texture": "Assets/Textures/crown.png"
+    },
+    {
+      "id": "primary_user_name_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": "#secondary_color_opaque80",
+      "font": "Assets/Fonts/segoeuisb_27pt_sharp",
+      "size": 36,
+      "horizontalAlign": "left",
+      "verticalAlign": "middle"
+    },
+    {
+      "id": "no_user_text_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": "#secondary_color_opaque80",
+      "font": "Assets/Fonts/segoeuisb_27pt_sharp",
+      "size": 36,
+      "horizontalAlign": "center",
+      "verticalAlign": "middle"
+    },
+    {
+      "id": "no_user_label_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": "#secondary_color_opaque80",
+      "font": "Assets/Fonts/segoeuisb_27pt_sharp",
+      "size": 36,
+      "legendFont": "Assets/Fonts/XboxOneControllerLegendSmall",
+      "verticalAlign": "middle",
+      "horizontalAlign": "center"
+    },
+    {
+      "id": "devices_title_panel_style",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#primary_color_opaque10"
+    },
+    {
+      "id": "devices_title_text_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": "#primary_color",
+      "font": "Assets/Fonts/segoeuisb_27pt_sharp",
+      "size": 36,
+      "horizontalAlign": "left",
+      "verticalAlign": "middle"
+    },
+    {
+      "id": "devices_text_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": "#secondary_color_opaque80",
+      "font": "Assets/Fonts/segoeui_24pt_sharp",
+      "size": 32,
+      "weight": "bold",
+      "horizontalAlign": "left",
+      "verticalAlign": "middle"
+    },
+    {
+      "id": "checkbox_panel_style",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#primary_color_opaque30"
+    },
+    {
+      "id": "unchecked_checkbox_style",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#black",
+      "texture": "Assets/Textures/unchecked.png"
+    },
+    {
+      "id": "checked_checkbox_style",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#black",
+      "texture": "Assets/Textures/checked.png"
+    },
+    {
+      "id": "primary_image_style",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#unselected_color",
+      "texture": "Assets/Textures/crown.png"
+    },
+    {
+      "id": "user_number_style",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#secondary_color_opaque80"
+    },
+    {
+      "id": "device_type_icon_style",
+      "classId": "SpriteStyle",
+      "inheritsFromId": "user_number_style",
+      "texture": "Assets/Textures/crown.png"
+    },
+    {
+      "id": "user_number_text_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": [ 0, 0, 0, 1.0 ],
+      "font": "Assets/Fonts/segoeui_24pt_sharp",
+      "size": 32,
+      "weight": "bold",
+      "horizontalAlign": "center",
+      "verticalAlign": "middle"
+    },
+    {
+      "id": "device_id_text_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": "#secondary_color_opaque80",
+      "font": "Assets/Fonts/segoeui_24pt_sharp",
+      "size": 32,
+      "horizontalAlign": "left",
+      "verticalAlign": "middle"
+    },
+    {
+      "id": "active_button_text_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": "#secondary_color_opaque80",
+      "font": "Assets/Fonts/segoeui_24pt_sharp",
+      "legendFont": "Assets/Fonts/XboxOneControllerLegendSmall",
+      "size": 32,
+      "verticalAlign": "middle"
+    },
+    {
+      "id": "section_panel_style",
+      "classId": "SpriteStyle",
+      "colorUsage": "setExisting",
+      "color": "#unselected_color",
+      "texture": "Assets/Textures/invis_panel.png"
+    },
+    {
+      "id": "selected_section_panel_style",
+      "classId": "SpriteStyle",
+      "inheritsFromId": "section_panel_style",
+      "color": "#selected_color"
+    },
+    {
+      "id": "profile_pic_style",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ]
+    },
+    {
+      "id": "deferral_toggle_style",
+      "classId": "SpriteStyle",
+      "colorUsage": "useExisting",
+      "color": "#unselected_color"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Invisible_Panel_Style",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 0.0 ]
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Sample_Text_Style",
+      "colorUsage": "override",
+      "color": [ 195, 181, 152, 1.0 ],
+      "verticalAlign": "bottom",
+      "horizontalAlign": "left"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Console_Window_Text_Style",
+      "colorUsage": "override",
+      "color": [ 195, 181, 152, 1.0 ],
+      "verticalAlign": "bottom",
+      "horizontalAlign": "left",
+      "font": "Assets/Fonts/Courier",
+      "size": 16
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Slider_Button_Style",
+      "colorUsage": "setExisting",
+      "color": [ 255, 255, 255, 1.0 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Slider_Focused_Button_Style",
+      "inheritsFromId": "Slider_Button_Style",
+      "color": [ 255, 255, 255, 1.0 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Slider_Disabled_Button_Style",
+      "inheritsFromId": "Slider_Button_Style",
+      "color": [ 255, 255, 255, 1.0 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Slider_Pressed_Button_Style",
+      "inheritsFromId": "Slider_Button_Style",
+      "color": [ 255, 255, 255, 1.0 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Slider_Hovered_Button_Style",
+      "inheritsFromId": "Slider_Button_Style",
+      "color": [ 255, 255, 255, 1.0 ]
+    }
+  ]
+}

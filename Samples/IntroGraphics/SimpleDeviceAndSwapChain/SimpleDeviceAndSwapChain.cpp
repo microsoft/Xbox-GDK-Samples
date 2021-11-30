@@ -2,7 +2,7 @@
 //--------------------------------------------------------------------------------------
 // SimpleDeviceAndSwapChain.cpp
 //
-// Setting up a Direct3D 12.X device and swapchain for Xbox Gaming Extensions (GX)
+// Setting up a Direct3D 12.X device and swapchain for Microsoft GDK on Xbox
 //
 // Advanced Technology Group (ATG)
 // Copyright (C) Microsoft Corporation. All rights reserved.
@@ -260,9 +260,9 @@ void Sample::CreateDevice()
     if (hr == D3D12_ERROR_DRIVER_VERSION_MISMATCH)
     {
 #ifdef _GAMING_XBOX_SCARLETT
-        OutputDebugStringA("ERROR: Running a d3d12_xs.lib (Scarlett) linked binary on an Xbox One is not supported\n");
+        OutputDebugStringA("ERROR: Running a d3d12_xs.lib (Xbox Series X|S) linked binary on an Xbox One is not supported\n");
 #else
-        OutputDebugStringA("ERROR: Running a d3d12_x.lib (Xbox One) linked binary on a Scarlett device is not supported\n");
+        OutputDebugStringA("ERROR: Running a d3d12_x.lib (Xbox One) linked binary on a Xbox Series X|S in 'Scarlett' mode is not supported\n");
 #endif
     }
 #endif
@@ -311,17 +311,27 @@ void Sample::CreateDevice()
     }
 
 #if defined(ENABLE_4K)
-    // Opt-in to 4K swapchains
+    // Opt-in to >1080p swapchains
     switch (XSystemGetDeviceType())
     {
     case XSystemDeviceType::XboxOne:
     case XSystemDeviceType::XboxOneS:
-    case XSystemDeviceType::XboxScarlettLockhart /* Xbox Series S */:
 #ifdef _DEBUG
         OutputDebugStringA("INFO: Swapchain using 1080p (1920 x 1080)\n");
 #endif
         break;
 
+    case XSystemDeviceType::XboxScarlettLockhart /* Xbox Series S */:
+        m_outputWidth = 2560;
+        m_outputHeight = 1440;
+#ifdef _DEBUG
+        OutputDebugStringA("INFO: Swapchain using 1440p (2560 x 1440)\n");
+#endif
+        break;
+
+    case XSystemDeviceType::XboxScarlettAnaconda /* Xbox Series X */:
+    case XSystemDeviceType::XboxOneXDevkit:
+    case XSystemDeviceType::XboxScarlettDevkit:
     default:
         m_outputWidth = 3840;
         m_outputHeight = 2160;
@@ -443,10 +453,18 @@ void Sample::CreateResources()
 
     resourceUpload.Begin();
 
+    const wchar_t* texture = nullptr;
+    switch (m_outputHeight)
+    {
+    case 2160: texture = L"3840x2160.dds"; break;
+    case 1440: texture = L"2560x1440.dds"; break;
+    case 1080: texture = L"1920x1080.dds"; break;
+    default:   texture = L"1920x1080_basic.dds"; break;
+    }
+
     DX::ThrowIfFailed(
         CreateDDSTextureFromFileEx(m_d3dDevice.Get(), resourceUpload,
-            m_outputHeight > 1080 ? L"3840x2160.dds" : L"1920x1080.dds",
-            0, D3D12_RESOURCE_FLAG_NONE, DDS_LOADER_FORCE_SRGB,
+            texture, 0, D3D12_RESOURCE_FLAG_NONE, DDS_LOADER_FORCE_SRGB,
             m_background.ReleaseAndGetAddressOf()));
 
     CreateShaderResourceView(m_d3dDevice.Get(), m_background.Get(),

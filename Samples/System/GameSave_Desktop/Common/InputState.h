@@ -17,7 +17,7 @@ namespace DirectX {
    class InputState
    {
    public:
-      static const size_t MaxInputs = GamePad::MAX_PLAYER_COUNT;
+      static constexpr size_t MaxInputs = GamePad::MAX_PLAYER_COUNT;
 
       InputState();
 

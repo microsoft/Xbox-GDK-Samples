@@ -5,19 +5,18 @@
 //
 // Copyright (c) Microsoft Corporation. All rights reserved.
 
-#include "..\pch.h"
-#include "..\Helpers\User.h"
-#include "StateManager.h"
+#include "pch.h"
 
+#include "User.h"
+#include "StateManager.h"
 #include "AcquireUserScreen.h"
 #include "ConfirmPopUpScreen.h"
 #include "ErrorPopUpScreen.h"
 #include "GameBoardScreen.h"
 #include "LaunchOptionsScreen.h"
-#include "..\SampleGame.h"
+#include "SampleGame.h"
 #include "ScreenManager.h"
-#include <memory>
-#include "..\Helpers\AsyncOp.h"
+#include "AsyncOp.h"
 
 namespace
 {

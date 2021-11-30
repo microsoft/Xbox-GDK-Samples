@@ -6,9 +6,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 
 #pragma once
-#include "..\Helpers\AsyncAction.h"
-#include "..\Helpers\ScopedLockWrappers.h"
-#include "..\Helpers\User.h"
+
+#include "AsyncAction.h"
+#include "ScopedLockWrappers.h"
+#include "User.h"
 #include "LiveResources.h"
 #include "ScreenManager.h"
 

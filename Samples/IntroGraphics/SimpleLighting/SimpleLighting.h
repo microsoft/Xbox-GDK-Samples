@@ -90,7 +90,7 @@ private:
 
     // In this simple sample, we know that there are three draw calls
     // and we will update the scene constants for each draw call.
-    static const unsigned int                    c_numDrawCalls = 3;
+    static constexpr unsigned int                    c_numDrawCalls = 3;
 
     // A synchronization fence and an event. These members will be used
     // to synchronize the CPU with the GPU so that there will be no
@@ -99,16 +99,16 @@ private:
     Microsoft::WRL::Wrappers::Event              m_fenceEvent;
 
     // Index in the root parameter table
-    static const UINT                            c_rootParameterCB = 0;
+    static constexpr UINT                        c_rootParameterCB = 0;
 
     // Scene constants, updated per-frame
     float                                        m_curRotationAngleRad;
 
     // These computed values will be loaded into a ConstantBuffer
     // during Render
-    DirectX::XMFLOAT4X4                          m_worldMatrix;
-    DirectX::XMFLOAT4X4                          m_viewMatrix;
-    DirectX::XMFLOAT4X4                          m_projectionMatrix;
+    DirectX::SimpleMath::Matrix                  m_worldMatrix;
+    DirectX::SimpleMath::Matrix                  m_viewMatrix;
+    DirectX::SimpleMath::Matrix                  m_projectionMatrix;
     DirectX::XMFLOAT4                            m_lightDirs[2];
     DirectX::XMFLOAT4                            m_lightColors[2];
     DirectX::XMFLOAT4                            m_outputColor;

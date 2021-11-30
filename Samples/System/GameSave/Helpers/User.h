@@ -14,7 +14,6 @@
 
 #pragma once
 
-#include <XUser.h>
 #include "XUserHandleWrapper.h"
 
 namespace ATG { namespace UserManager { class SingleSignedInUserManager; }; };

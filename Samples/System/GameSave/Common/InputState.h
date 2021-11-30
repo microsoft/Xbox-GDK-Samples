@@ -7,8 +7,7 @@
 
 #pragma once
 
-#include <GameInput.h>
-#include ".\GamePad.h"
+#include "GamePad.h"
 #include "InputDeviceManager.h"
 #include <Keyboard.h>
 #include <Mouse.h>
@@ -20,7 +19,7 @@ namespace DirectX {
    class InputState
    {
    public:
-      static const size_t MaxInputs = ATG::GamePad::MAX_PLAYER_COUNT;
+      static constexpr size_t MaxInputs = ATG::GamePad::MAX_PLAYER_COUNT;
 
       InputState();
 

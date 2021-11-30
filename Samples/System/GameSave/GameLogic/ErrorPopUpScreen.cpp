@@ -5,11 +5,12 @@
 //
 // Copyright (c) Microsoft Corporation. All rights reserved.
 
-#include "..\pch.h"
+#include "pch.h"
+
 #include "Texture.h"
-#include "..\Assets.h"
+#include "Assets.h"
 #include "ErrorPopUpScreen.h"
-#include "..\Common\InputState.h"
+#include "InputState.h"
 #include "ScreenManager.h"
 
 using namespace DirectX;

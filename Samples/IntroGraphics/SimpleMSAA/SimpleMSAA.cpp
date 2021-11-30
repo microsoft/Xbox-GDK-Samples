@@ -37,7 +37,7 @@ Sample::Sample() noexcept(false) :
     unsigned int flags = 0;
 
 #ifdef ENABLE_4K
-    flags |= DX::DeviceResources::c_Enable4K_UHD;
+    flags |= DX::DeviceResources::c_Enable4K_UHD | DX::DeviceResources::c_EnableQHD;
 #endif
 
     m_deviceResources = std::make_unique<DX::DeviceResources>(

@@ -23,7 +23,7 @@ using Microsoft::WRL::ComPtr;
 
 namespace
 {
-    static const float c_cameraSpacing = 50.f;
+    constexpr float c_cameraSpacing = 50.f;
 
     //--------------------------------------------------------------------------------------
     // Returns the color based on the collision result and the group number.

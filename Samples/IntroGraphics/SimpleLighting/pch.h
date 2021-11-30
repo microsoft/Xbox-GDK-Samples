@@ -78,6 +78,7 @@
 #include "GamePad.h"
 #include "GraphicsMemory.h"
 #include "RenderTargetState.h"
+#include "SimpleMath.h"
 
 namespace DX
 {

@@ -20,7 +20,6 @@ using namespace std::chrono;
 namespace
 {
     constexpr const char* c_PlayFabTitleId = "C8C15";
-    constexpr const char* c_TokenProviderUrl = "https://playfabapi.com/";
     constexpr int c_SocketBufferLen = 8;
     constexpr int c_QosServerUdpPort = PlayFab::QoS::PORT;
     constexpr int c_MatchmakingTimeoutInSeconds = 30;
@@ -174,119 +173,6 @@ void Sample::LoginToXboxLive(bool silentAuth)
     }
 }
 
-void Sample::RequestLiveUserToken()
-{
-    Log("RequestLiveUserToken() started.");
-    m_asyncOpWidget->Show(u8"Requesting token for user");
-
-    auto tokenAsyncBlock = new XAsyncBlock
-    {
-        m_theTaskQueue/*XTaskQueue queue*/,
-        this/*void* context*/
-    };
-
-    tokenAsyncBlock->callback = [](XAsyncBlock* ab)
-    {
-        Sample* sample = reinterpret_cast<Sample*>(ab->context);
-
-        size_t bufferSize = 0;
-        auto hr = XUserGetTokenAndSignatureResultSize(ab, &bufferSize);
-
-        if (FAILED(hr))
-        {
-            sample->Log(">>> XUserGetTokenAndSignatureAsync() failure with hr = %08x", hr);
-        }
-        else
-        {
-            std::vector<uint8_t> buffer(bufferSize);
-
-            XUserGetTokenAndSignatureData* userTokenData = nullptr;
-
-            hr = XUserGetTokenAndSignatureResult(
-                ab,
-                bufferSize,
-                buffer.data(),
-                &userTokenData,
-                nullptr/*bufferUsed*/);
-            sample->m_userToken = userTokenData->token;
-
-            if (FAILED(hr))
-            {
-                sample->Log(">>> XUserGetTokenAndSignatureAsync() failed: %08x", hr);
-            }
-            else
-            {
-                sample->Log(">>> XUserGetTokenAndSignatureAsync() success!!!");
-                sample->HandleLiveUserTokenRequestComplete();
-            }
-        }
-
-        delete ab;
-    };
-
-    XUserGetTokenAndSignatureOptions options = XUserGetTokenAndSignatureOptions::None;
-
-    //if (forceRefresh)
-    {
-        options |= XUserGetTokenAndSignatureOptions::ForceRefresh;
-    }
-
-    auto hr = XUserGetTokenAndSignatureAsync(
-        m_liveResources->GetUser(),
-        options,
-        "GET",
-        c_TokenProviderUrl,
-        0,
-        nullptr,
-        0,
-        nullptr,
-        tokenAsyncBlock);
-
-    if (FAILED(hr))
-    {
-        Log(">>> Immediate failure with hr = %08x", hr);
-        delete tokenAsyncBlock;
-    }
-}
-
-void Sample::LoginToPlayFab()
-{
-    Log("LoginToPlayFab() started.");
-    m_asyncOpWidget->Show(u8"Logging into PlayFab");
-
-    PlayFabSettings::staticSettings->titleId = c_PlayFabTitleId;
-
-    ClientModels::LoginWithXboxRequest loginRequest;
-    loginRequest.CreateAccount = true;
-    loginRequest.TitleId = c_PlayFabTitleId;
-    loginRequest.XboxToken = m_userToken;
-
-    PlayFabClientAPI::LoginWithXbox(
-        loginRequest,
-        [](ClientModels::LoginResult loginResult, void* customData)
-        {
-            Sample* sample = reinterpret_cast<Sample*>(customData);
-            sample->Log("PlayFabXboxLogin::LoginPlayFab() success!!!");
-            sample->m_playFabId = loginResult.PlayFabId;
-            sample->m_entityId = loginResult.EntityToken->Entity->Id;
-            sample->m_entityType = loginResult.EntityToken->Entity->Type;
-            sample->m_entityToken = loginResult.EntityToken->EntityToken;
-            sample->HandlePlayFabLoginComplete();
-
-            ClientModels::UpdateUserTitleDisplayNameRequest request;
-            request.DisplayName = sample->m_liveResources->GetGamertag();
-            PlayFabClientAPI::UpdateUserTitleDisplayName(
-                request,
-                [](const ClientModels::UpdateUserTitleDisplayNameResult&, void*)
-                {});
-        },
-        [](const PlayFabError& error, void* customData)
-        {
-            Sample* sample = reinterpret_cast<Sample*>(customData);
-            sample->Log(">> LoginWithXbox() failed with error = %d", error.ErrorCode);
-            sample->Log(">> %s", error.ErrorMessage.c_str());
-        }, this);
-}
 int Sample::PingServerUrl(const char* serverUrl, int serverPort)
 {
     Log("Getting ping time for %s:%d", serverUrl, serverPort);
@@ -478,20 +364,43 @@ void Sample::HandleNetworkInitializationComplete()
 void Sample::HandleXboxLiveLoginComplete()
 {
     m_asyncOpWidget->Hide();
-    RequestLiveUserToken();
-    m_liveInfoHUD->SetUser(m_liveResources->GetUser(), m_theTaskQueue);
-}
 
-void Sample::HandleLiveUserTokenRequestComplete()
-{
-    m_asyncOpWidget->Hide();
-    LoginToPlayFab();
+    m_asyncOpWidget->Show(u8"Logging into PlayFab");
+
+    m_playFabResources = std::make_unique<ATG::PlayFabResources>(
+        c_PlayFabTitleId,
+        m_liveResources->GetUser(),
+        m_liveResources->GetGamertag().c_str(),
+        m_theTaskQueue,
+        [this](HRESULT hr, const char* msg)->bool
+        {
+            if (SUCCEEDED(hr))
+            {
+                Log("PlayFabClientAPI::LoginWithXbox() success!");
+
+                HandlePlayFabLoginComplete();
+            }
+            else
+            {
+                Log("Error: %s 0x%0x", msg, hr);
+                m_asyncOpWidget->Hide();
+            }
+
+            return SUCCEEDED(hr);
+        });
+
+    m_liveInfoHUD->SetUser(m_liveResources->GetUser(), m_theTaskQueue);
 }
 
 void Sample::HandlePlayFabLoginComplete()
 {
     m_asyncOpWidget->Hide();
-    m_matchmakingManager->Initialize(m_playFabId.c_str(), m_entityId.c_str(), m_entityToken.c_str());
+
+    m_matchmakingManager->Initialize(
+        m_playFabResources->GetPlayFabId().c_str(),
+        m_playFabResources->GetEntityId().c_str(),
+        m_playFabResources->GetEntityToken().c_str());
+
     m_findSimpleMatchButton->SetEnabled(true);
     m_getRegionLatenciesButton->SetEnabled(true);
 }

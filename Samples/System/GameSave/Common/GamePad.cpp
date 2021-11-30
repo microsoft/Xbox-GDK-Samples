@@ -6,9 +6,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 //--------------------------------------------------------------------------------------
 
-#include "..\pch.h"
-#include <XUser.h>
-#include <GameInput.h>
+#include "pch.h"
+
 #include "GamePad.h"
 #include "InputDeviceManager.h"
 

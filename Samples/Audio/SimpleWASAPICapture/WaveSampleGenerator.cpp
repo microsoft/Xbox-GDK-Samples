@@ -307,7 +307,7 @@ HRESULT WaveSampleGenerator::GenerateSampleBuffer( BYTE* pWaveData, DWORD waveSi
 
         while ( !writer.IsEOF() )
         {
-            static const UINT32 nMaxChannels = 8;
+            constexpr UINT32 nMaxChannels = 8;
             FLOAT               channelData[ nMaxChannels ];
 
             //  Get a block of channel data (as much as we're interested in).

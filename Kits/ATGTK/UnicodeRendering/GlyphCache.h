@@ -65,8 +65,8 @@ namespace ATG
         // internal shaped strings based on language changes inside of the string.
         GlyphCache(size_t maxTextures, LONG textureDimension, size_t maxCachedShapedStrings, _In_ ID3D12Device* d3dDevice);
 
-        GlyphCache(GlyphCache&& moveFrom) noexcept;
-        GlyphCache& operator= (GlyphCache&& moveFrom) noexcept;
+        GlyphCache(GlyphCache&&) noexcept;
+        GlyphCache& operator= (GlyphCache&&) noexcept;
 
         GlyphCache(GlyphCache const&) = delete;
         GlyphCache& operator= (GlyphCache const&) = delete;

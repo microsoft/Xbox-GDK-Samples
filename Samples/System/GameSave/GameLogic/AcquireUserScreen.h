@@ -9,7 +9,7 @@
 
 #include "MenuScreen.h"
 #include "Texture.h"
-#include "..\Helpers\UserManager.h"
+#include "UserManager.h"
 
 namespace GameSaveSample
 {

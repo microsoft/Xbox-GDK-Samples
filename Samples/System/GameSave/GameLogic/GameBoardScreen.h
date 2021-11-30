@@ -9,7 +9,6 @@
 
 #include "MenuScreen.h"
 #include "Texture.h"
-#include <set>
 
 namespace GameSaveSample
 {

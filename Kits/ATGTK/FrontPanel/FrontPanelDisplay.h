@@ -1,7 +1,7 @@
 //--------------------------------------------------------------------------------------
 // FrontPanelDisplay.h
 //
-// Microsoft Game Core on Xbox
+// Microsoft GDK with Xbox extensions
 //
 // Advanced Technology Group (ATG)
 // Copyright (C) Microsoft Corporation. All rights reserved.
@@ -23,8 +23,8 @@ namespace ATG
 
         FrontPanelDisplay();
 
-        FrontPanelDisplay(FrontPanelDisplay &&moveFrom) = default;
-        FrontPanelDisplay& operator=(FrontPanelDisplay &&moveFrom) = default;
+        FrontPanelDisplay(FrontPanelDisplay &&) = default;
+        FrontPanelDisplay& operator=(FrontPanelDisplay &&) = default;
 
         FrontPanelDisplay(FrontPanelDisplay const&) = delete;
         FrontPanelDisplay& operator=(FrontPanelDisplay const&) = delete;

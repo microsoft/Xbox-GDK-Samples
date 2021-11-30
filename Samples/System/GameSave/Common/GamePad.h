@@ -26,7 +26,7 @@ namespace ATG
       virtual ~GamePad();
 
       static constexpr int MERGED_CONTROLLER_INPUT_PLAYER_INDEX = -1; 
-      static const int MAX_PLAYER_COUNT = 8;
+      static constexpr int MAX_PLAYER_COUNT = 8;
 
       enum DeadZone
       {

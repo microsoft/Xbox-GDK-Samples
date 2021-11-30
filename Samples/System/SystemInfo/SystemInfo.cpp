@@ -803,7 +803,7 @@ void Sample::Render()
         // Determine highest feature level
         static const D3D_FEATURE_LEVEL s_featureLevels[] =
         {
-#if defined(NTDDI_WIN10_FE) && (NTDDI_VERSION >= NTDDI_WIN10_FE)
+#if defined(NTDDI_WIN10_FE) || defined(USING_D3D12_AGILITY_SDK)
             D3D_FEATURE_LEVEL_12_2,
 #endif
             D3D_FEATURE_LEVEL_12_1,
@@ -829,7 +829,7 @@ void Sample::Render()
         case D3D_FEATURE_LEVEL_11_1: featLevel = L"11.1"; break;
         case D3D_FEATURE_LEVEL_12_0: featLevel = L"12.0"; break;
         case D3D_FEATURE_LEVEL_12_1: featLevel = L"12.1"; break;
-#if defined(NTDDI_WIN10_FE) && (NTDDI_VERSION >= NTDDI_WIN10_FE)
+#if defined(NTDDI_WIN10_FE) || defined(USING_D3D12_AGILITY_SDK)
         case D3D_FEATURE_LEVEL_12_2: featLevel = L"12.2"; break;
 #endif
         }
@@ -853,15 +853,11 @@ void Sample::Render()
         }
 
         D3D12_FEATURE_DATA_SHADER_MODEL shaderModel = {};
-    #if defined(NTDDI_WIN10_FE) && (NTDDI_VERSION >= NTDDI_WIN10_FE)
+#if defined(NTDDI_WIN10_FE) || defined(USING_D3D12_AGILITY_SDK)
         shaderModel.HighestShaderModel = D3D_SHADER_MODEL_6_7;
-    #elif defined(NTDDI_WIN10_VB) && (NTDDI_VERSION >= NTDDI_WIN10_VB)
+#else
         shaderModel.HighestShaderModel = D3D_SHADER_MODEL_6_6;
-    #elif defined(NTDDI_WIN10_19H1) && (NTDDI_VERSION >= NTDDI_WIN10_19H1)
-        shaderModel.HighestShaderModel = D3D_SHADER_MODEL_6_5;
-    #else
-        shaderModel.HighestShaderModel = D3D_SHADER_MODEL_6_4;
-    #endif
+#endif
         HRESULT hr = device->CheckFeatureSupport(D3D12_FEATURE_SHADER_MODEL, &shaderModel, sizeof(shaderModel));
         while (hr == E_INVALIDARG && shaderModel.HighestShaderModel > D3D_SHADER_MODEL_6_0)
         {
@@ -882,18 +878,12 @@ void Sample::Render()
         case D3D_SHADER_MODEL_6_2: shaderModelVer = L"6.2"; break;
         case D3D_SHADER_MODEL_6_3: shaderModelVer = L"6.3"; break;
         case D3D_SHADER_MODEL_6_4: shaderModelVer = L"6.4"; break;
-
-    #if defined(NTDDI_WIN10_19H1) && (NTDDI_VERSION >= NTDDI_WIN10_19H1)
         case D3D_SHADER_MODEL_6_5: shaderModelVer = L"6.5"; break;
-    #endif
-
-    #if defined(NTDDI_WIN10_VB) && (NTDDI_VERSION >= NTDDI_WIN10_VB)
         case D3D_SHADER_MODEL_6_6: shaderModelVer = L"6.6"; break;
-    #endif
 
-    #if defined(NTDDI_WIN10_FE) && (NTDDI_VERSION >= NTDDI_WIN10_FE)
+#if defined(NTDDI_WIN10_FE) || defined(USING_D3D12_AGILITY_SDK)
         case D3D_SHADER_MODEL_6_7: shaderModelVer = L"6.7"; break;
-    #endif
+#endif
         }
 
         wchar_t buff[128] = {};
@@ -979,7 +969,7 @@ void Sample::Render()
 
     case InfoPage::DIRECT3D_OPT1:
     {
-        y += DrawStringCenter(m_batch.get(), m_largeFont.get(), L"Direct3D 12 Optional Features", mid, y, ATG::Colors::LightGrey, m_scale);
+        y += DrawStringCenter(m_batch.get(), m_largeFont.get(), L"Direct3D 12 Optional Features (1 of 4)", mid, y, ATG::Colors::LightGrey, m_scale);
 
         auto device = m_deviceResources->GetD3DDevice();
 
@@ -1094,7 +1084,7 @@ void Sample::Render()
 
     case InfoPage::DIRECT3D_OPT2:
     {
-        y += DrawStringCenter(m_batch.get(), m_largeFont.get(), L"Direct3D 12 Optional Features (continued)", mid, y, ATG::Colors::LightGrey, m_scale);
+        y += DrawStringCenter(m_batch.get(), m_largeFont.get(), L"Direct3D 12 Optional Features (2 of 4)", mid, y, ATG::Colors::LightGrey, m_scale);
 
         auto device = m_deviceResources->GetD3DDevice();
 
@@ -1123,10 +1113,7 @@ void Sample::Render()
                 {
                 case D3D12_SHARED_RESOURCE_COMPATIBILITY_TIER_0: srcompatTier = L"Tier 0"; break;
                 case D3D12_SHARED_RESOURCE_COMPATIBILITY_TIER_1: srcompatTier = L"Tier 1"; break;
-
-    #if defined(NTDDI_WIN10_VB) && (NTDDI_VERSION >= NTDDI_WIN10_VB)
                 case D3D12_SHARED_RESOURCE_COMPATIBILITY_TIER_2: srcompatTier = L"Tier 2"; break;
-    #endif
                 }
 
                 DrawStringLeft(m_batch.get(), m_smallFont.get(), L"SharedResourceCompatibilityTier", left, y, m_scale);
@@ -1201,10 +1188,7 @@ void Sample::Render()
                 {
                 case D3D12_RAYTRACING_TIER_NOT_SUPPORTED: rtTier = L"Not Supported"; break;
                 case D3D12_RAYTRACING_TIER_1_0: rtTier = L"Tier 1"; break;
-
-    #if defined(NTDDI_WIN10_VB) && (NTDDI_VERSION >= NTDDI_WIN10_VB)
                 case D3D12_RAYTRACING_TIER_1_1: rtTier = L"Tier 1.1"; break;
-    #endif
                 }
 
                 DrawStringLeft(m_batch.get(), m_smallFont.get(), L"RaytracingTier", left, y, m_scale);
@@ -1221,7 +1205,7 @@ void Sample::Render()
 
     case InfoPage::DIRECT3D_OPT3:
     {
-        y += DrawStringCenter(m_batch.get(), m_largeFont.get(), L"Direct3D 12 Optional Features (continued)", mid, y, ATG::Colors::LightGrey, m_scale);
+        y += DrawStringCenter(m_batch.get(), m_largeFont.get(), L"Direct3D 12 Optional Features (3 of 4)", mid, y, ATG::Colors::LightGrey, m_scale);
 
         auto device = m_deviceResources->GetD3DDevice();
 
@@ -1234,7 +1218,6 @@ void Sample::Render()
             bool found = false;
 
             // Optional Direct3D 12 features for Windows 10 May 2019 Update
-    #if defined(NTDDI_WIN10_19H1) && (NTDDI_VERSION >= NTDDI_WIN10_19H1)
             D3D12_FEATURE_DATA_D3D12_OPTIONS6 d3d12opts6 = {};
             if (SUCCEEDED(device->CheckFeatureSupport(D3D12_FEATURE_D3D12_OPTIONS6, &d3d12opts6, sizeof(d3d12opts6))))
             {
@@ -1243,7 +1226,7 @@ void Sample::Render()
                 DrawStringLeft(m_batch.get(), m_smallFont.get(), L"AdditionalShadingRatesSupported", left, y, m_scale);
                 y += DrawStringRight(m_batch.get(), m_smallFont.get(), d3d12opts6.AdditionalShadingRatesSupported ? L"true" : L"false", right, y, m_scale);
 
-                DrawStringLeft(m_batch.get(), m_smallFont.get(), L"PerPrimitiveShadingRateSupportedWithViewportIndexing", left, y, m_scale);
+                DrawStringLeft(m_batch.get(), m_smallFont.get(), L"PerPrimitive VRS ViewportIndexing", left, y, m_scale);
                 y += DrawStringRight(m_batch.get(), m_smallFont.get(), d3d12opts6.PerPrimitiveShadingRateSupportedWithViewportIndexing ? L"true" : L"false", right, y, m_scale);
 
                 const wchar_t* vrsTier = L"Unknown";
@@ -1265,10 +1248,8 @@ void Sample::Render()
                 DrawStringLeft(m_batch.get(), m_smallFont.get(), L"BackgroundProcessingSupported", left, y, m_scale);
                 y += DrawStringRight(m_batch.get(), m_smallFont.get(), d3d12opts6.BackgroundProcessingSupported ? L"true" : L"false", right, y, m_scale);
             }
-    #endif
 
             // Optional Direct3D 12 features for Windows 10 "20H1" Update
-    #if defined(NTDDI_WIN10_VB) && (NTDDI_VERSION >= NTDDI_WIN10_VB)
             D3D12_FEATURE_DATA_D3D12_OPTIONS7 d3d12opts7 = {};
             if (SUCCEEDED(device->CheckFeatureSupport(D3D12_FEATURE_D3D12_OPTIONS7, &d3d12opts7, sizeof(d3d12opts7))))
             {
@@ -1303,11 +1284,99 @@ void Sample::Render()
                 DrawStringLeft(m_batch.get(), m_smallFont.get(), L"SamplerFeedbackTier", left, y, m_scale);
                 y += DrawStringRight(m_batch.get(), m_smallFont.get(), sfTier, right, y, m_scale);
             }
-    #endif
 
             if (!found)
             {
                 y += DrawStringCenter(m_batch.get(), m_smallFont.get(), L"Requires Windows 10 May 2019 Update or later", mid, y, ATG::Colors::Orange, m_scale);
+            }
+        }
+    }
+    break;
+
+    case InfoPage::DIRECT3D_OPT4:
+    {
+        y += DrawStringCenter(m_batch.get(), m_largeFont.get(), L"Direct3D 12 Optional Features (4 of 4)", mid, y, ATG::Colors::LightGrey, m_scale);
+
+        auto device = m_deviceResources->GetD3DDevice();
+
+        if (!device)
+        {
+            y += DrawStringCenter(m_batch.get(), m_smallFont.get(), L"Not supported", mid, y, ATG::Colors::Orange, m_scale);
+        }
+        else
+        {
+            bool found = false;
+
+#if defined(NTDDI_WIN10_FE) || defined(USING_D3D12_AGILITY_SDK)
+            // Optional Direct3D 12 features for Agility SDK or Windows 11
+            D3D12_FEATURE_DATA_D3D12_OPTIONS8 d3d12opts8 = {};
+            if (SUCCEEDED(device->CheckFeatureSupport(D3D12_FEATURE_D3D12_OPTIONS8, &d3d12opts8, sizeof(d3d12opts8))))
+            {
+                found = true;
+
+                DrawStringLeft(m_batch.get(), m_smallFont.get(), L"UnalignedBlockTexturesSupported", left, y, m_scale);
+                y += DrawStringRight(m_batch.get(), m_smallFont.get(), d3d12opts8.UnalignedBlockTexturesSupported ? L"true" : L"false", right, y, m_scale);
+            }
+
+            D3D12_FEATURE_DATA_D3D12_OPTIONS9 d3d12opts9 = {};
+            if (SUCCEEDED(device->CheckFeatureSupport(D3D12_FEATURE_D3D12_OPTIONS9, &d3d12opts9, sizeof(d3d12opts9))))
+            {
+                found = true;
+
+                DrawStringLeft(m_batch.get(), m_smallFont.get(), L"MS PipelineStatsSupported", left, y, m_scale);
+                y += DrawStringRight(m_batch.get(), m_smallFont.get(), d3d12opts9.MeshShaderPipelineStatsSupported ? L"true" : L"false", right, y, m_scale);
+
+                DrawStringLeft(m_batch.get(), m_smallFont.get(), L"MS FullRange RTArrayIndex", left, y, m_scale);
+                y += DrawStringRight(m_batch.get(), m_smallFont.get(), d3d12opts9.MeshShaderSupportsFullRangeRenderTargetArrayIndex ? L"true" : L"false", right, y, m_scale);
+
+                DrawStringLeft(m_batch.get(), m_smallFont.get(), L"AtomicInt64 OnTypedResource", left, y, m_scale);
+                y += DrawStringRight(m_batch.get(), m_smallFont.get(), d3d12opts9.AtomicInt64OnTypedResourceSupported ? L"true" : L"false", right, y, m_scale);
+
+                DrawStringLeft(m_batch.get(), m_smallFont.get(), L"AtomicInt64 OnGroupShared", left, y, m_scale);
+                y += DrawStringRight(m_batch.get(), m_smallFont.get(), d3d12opts9.AtomicInt64OnGroupSharedSupported ? L"true" : L"false", right, y, m_scale);
+
+                DrawStringLeft(m_batch.get(), m_smallFont.get(), L"Derivatives in MS & AS", left, y, m_scale);
+                y += DrawStringRight(m_batch.get(), m_smallFont.get(), d3d12opts9.DerivativesInMeshAndAmplificationShadersSupported ? L"true" : L"false", right, y, m_scale);
+
+                const wchar_t* wavemma = L"Unknown";
+                switch (d3d12opts9.WaveMMATier)
+                {
+                case D3D12_WAVE_MMA_TIER_NOT_SUPPORTED: wavemma = L"Not Supported"; break;
+                case D3D12_WAVE_MMA_TIER_1_0: wavemma = L"Tier 1.0"; break;
+                }
+
+                DrawStringLeft(m_batch.get(), m_smallFont.get(), L"WaveMMATier", left, y, m_scale);
+                y += DrawStringRight(m_batch.get(), m_smallFont.get(), wavemma, right, y, m_scale);
+            }
+#endif
+
+#if defined(NTDDI_WIN10_CO) || defined(USING_D3D12_AGILITY_SDK)
+            // Optional Direct3D 12 features for Agility SDK or Windows 11
+            D3D12_FEATURE_DATA_D3D12_OPTIONS10 d3d12opts10 = {};
+            if (SUCCEEDED(device->CheckFeatureSupport(D3D12_FEATURE_D3D12_OPTIONS10, &d3d12opts10, sizeof(d3d12opts10))))
+            {
+                found = true;
+
+                DrawStringLeft(m_batch.get(), m_smallFont.get(), L"VRS SumCombinerSupported", left, y, m_scale);
+                y += DrawStringRight(m_batch.get(), m_smallFont.get(), d3d12opts10.VariableRateShadingSumCombinerSupported ? L"true" : L"false", right, y, m_scale);
+
+                DrawStringLeft(m_batch.get(), m_smallFont.get(), L"MS PerPrimitive VRS", left, y, m_scale);
+                y += DrawStringRight(m_batch.get(), m_smallFont.get(), d3d12opts10.MeshShaderPerPrimitiveShadingRateSupported ? L"true" : L"false", right, y, m_scale);
+            }
+
+            D3D12_FEATURE_DATA_D3D12_OPTIONS11 d3d12opts11 = {};
+            if (SUCCEEDED(device->CheckFeatureSupport(D3D12_FEATURE_D3D12_OPTIONS11, &d3d12opts11, sizeof(d3d12opts11))))
+            {
+                found = true;
+
+                DrawStringLeft(m_batch.get(), m_smallFont.get(), L"AtomicInt64 OnDescriptorHeapResource", left, y, m_scale);
+                y += DrawStringRight(m_batch.get(), m_smallFont.get(), d3d12opts11.AtomicInt64OnDescriptorHeapResourceSupported ? L"true" : L"false", right, y, m_scale);
+            }
+#endif
+
+            if (!found)
+            {
+                y += DrawStringCenter(m_batch.get(), m_smallFont.get(), L"Requires Agilty SDK or Windows 11", mid, y, ATG::Colors::Orange, m_scale);
             }
         }
     }

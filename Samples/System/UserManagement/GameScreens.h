@@ -120,7 +120,7 @@ namespace ATG
         ATG::UITK::UIElementPtr m_devicesListPanel;
         std::shared_ptr<ATG::UITK::UIStaticText> m_gamerpic;
         std::shared_ptr<ATG::UITK::UIStaticText> m_gamertag;
-        static const int deviceListSize = 6;
+        static constexpr int deviceListSize = 6;
         ATG::UITK::UIElementPtr m_devicesList[deviceListSize];
     };
 
@@ -273,7 +273,7 @@ namespace ATG
     {
     public:
 
-        static const unsigned int s_maxUsers = 4;
+        static constexpr unsigned int s_maxUsers = 4;
 
     public:
 

@@ -53,7 +53,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
     // Default main thread to CPU 0
     SetThreadAffinityMask(GetCurrentThread(), 0x1);
 
-    // Microsoft Game Core on Xbox supports UTF-8 everywhere
+    // Microsoft GDKX supports UTF-8 everywhere
     assert(GetACP() == CP_UTF8);
 
     g_sample = std::make_unique<Sample>();

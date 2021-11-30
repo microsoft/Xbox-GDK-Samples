@@ -9,7 +9,7 @@
 
 #include "MenuScreen.h"
 #include "Texture.h"
-#include "..\Assets.h"
+#include "Assets.h"
 
 namespace GameSaveSample
 {

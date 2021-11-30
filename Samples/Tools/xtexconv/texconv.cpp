@@ -1,7 +1,7 @@
 //--------------------------------------------------------------------------------------
 // File: TexConv.cpp
 //
-// DirectX Texture Converter for Game Core on Xbox
+// DirectX Texture Converter for Microsoft GDK with Xbox extensions
 //
 // Copyright (c) Microsoft Corporation. All rights reserved.
 //--------------------------------------------------------------------------------------
@@ -37,6 +37,7 @@
 #include <new>
 #include <set>
 #include <string>
+#include <tuple>
 
 #include <wrl\client.h>
 
@@ -479,6 +480,7 @@ namespace
         { L"11.1", 16384 },
         { L"12.0", 16384 },
         { L"12.1", 16384 },
+        { L"12.2", 16384 },
         { nullptr, 0 },
     };
 }
@@ -836,9 +838,9 @@ namespace
     void PrintLogo()
     {
 #ifdef _USE_SCARLETT
-        wprintf(L"Microsoft (R) DirectX Texture Converter for Game Core on Xbox for Scarlett\n");
+        wprintf(L"Microsoft (R) DirectX Texture Converter for Microsoft GDKX for Scarlett\n");
 #else
-        wprintf(L"Microsoft (R) DirectX Texture Converter for Game Core on Xbox for Xbox One\n");
+        wprintf(L"Microsoft (R) DirectX Texture Converter for Microsoft GDKX for Xbox One\n");
 #endif
         wprintf(L"Copyright (C) Microsoft Corp. All rights reserved.\n");
 #ifdef _DEBUG
@@ -1870,6 +1872,8 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
                     return 1;
                 }
 
+                inFile.imbue(std::locale::classic());
+
                 ProcessFileList(inFile, conversion);
             }
             break;
@@ -1999,10 +2003,10 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
     }
 
     LARGE_INTEGER qpcFreq = {};
-    (void)QueryPerformanceFrequency(&qpcFreq);
+    std::ignore = QueryPerformanceFrequency(&qpcFreq);
 
     LARGE_INTEGER qpcStart = {};
-    (void)QueryPerformanceCounter(&qpcStart);
+    std::ignore = QueryPerformanceCounter(&qpcStart);
 
     // Convert images
     bool sizewarn = false;
@@ -3612,7 +3616,7 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
 
             if (dwOptions & (uint64_t(1) << OPT_TOLOWER))
             {
-                (void)_wcslwr_s(szDest);
+                std::ignore = _wcslwr_s(szDest);
             }
 
             if (wcslen(szDest) > _MAX_PATH)
@@ -3706,7 +3710,7 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
                                 options.pstrName = const_cast<wchar_t*>(L"ImageQuality");
                                 varValues.vt = VT_R4;
                                 varValues.fltVal = (wicLossless) ? 1.f : wicQuality;
-                                (void)props->Write(1, &options, &varValues);
+                                std::ignore = props->Write(1, &options, &varValues);
                             }
                             break;
 
@@ -3726,7 +3730,7 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
                                 varValues.vt = VT_R4;
                                 varValues.fltVal = wicQuality;
                             }
-                            (void)props->Write(1, &options, &varValues);
+                            std::ignore = props->Write(1, &options, &varValues);
                         }
                         break;
 
@@ -3748,7 +3752,7 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
                                 varValues.vt = VT_R4;
                                 varValues.fltVal = wicQuality;
                             }
-                            (void)props->Write(1, &options, &varValues);
+                            std::ignore = props->Write(1, &options, &varValues);
                         }
                         break;
                         }
@@ -3784,7 +3788,7 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
     if (dwOptions & (uint64_t(1) << OPT_TIMING))
     {
         LARGE_INTEGER qpcEnd = {};
-        (void)QueryPerformanceCounter(&qpcEnd);
+        std::ignore = QueryPerformanceCounter(&qpcEnd);
 
         LONGLONG delta = qpcEnd.QuadPart - qpcStart.QuadPart;
         wprintf(L"\n Processing time: %f seconds\n", double(delta) / double(qpcFreq.QuadPart));

@@ -230,8 +230,6 @@ private:
     std::shared_ptr<ATG::LiveResources>                             m_liveResources;
     std::unique_ptr<ATG::LiveInfoHUD>                               m_liveInfoHUD;
 
-    std::shared_ptr<ATG::FileDownloader>                            m_downloader;
-
     // UITK members
     ATG::UITK::UIManager                                            m_uiManager;
     ATG::UITK::UIInputState                                         m_uiInputState;

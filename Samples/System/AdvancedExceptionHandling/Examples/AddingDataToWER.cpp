@@ -23,7 +23,7 @@ extern "C" LONG WINAPI AddDataToWERExceptionFilter(LPEXCEPTION_POINTERS const ex
 
 namespace
 {
-    static const uint64_t c_memoryBlockSize = (64 * 1024) / sizeof(uint32_t);       // maximum size for a WER registered memory block
+    constexpr uint64_t c_memoryBlockSize = (64 * 1024) / sizeof(uint32_t);       // maximum size for a WER registered memory block
     FILE *g_logFile = nullptr;                                                      // Log file that will be included with the WER upload
     uint32_t *g_savedMemoryBlock = nullptr;                                         // The memory block that will be included with the WER upload
     uint32_t g_savedBlockWriteIndex = 0;                                            // The data block for this sample appends an increasing number on each log output

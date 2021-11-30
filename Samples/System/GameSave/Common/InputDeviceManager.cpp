@@ -12,13 +12,12 @@
 // PARTICULAR PURPOSE.
 //--------------------------------------------------------------------------------------
 
-#include "..\pch.h"
-#include <GameInput.h>
+#include "pch.h"
+
 #include "GamePad.h"
-#include "..\Helpers\ScopedLockWrappers.h"
+#include "ScopedLockWrappers.h"
 #include "InputDeviceManager.h"
-#include "..\Helpers\XUserHandleWrapper.h"
-#include <vector>
+#include "XUserHandleWrapper.h"
 
 static SRWLOCK s_inputDevMgrInitLock = SRWLOCK_INIT;
 static IGameInput* s_gameInput = nullptr;

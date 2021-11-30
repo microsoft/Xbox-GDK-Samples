@@ -66,6 +66,12 @@
     <Image Include="..\..\..\Media\Textures\3840x2160.DDS">
       <Filter>Assets</Filter>
     </Image>
+    <Image Include="..\..\..\Media\Textures\1920x1080_basic.DDS">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\2560x1440.DDS">
+      <Filter>Assets</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="Readme.docx" />

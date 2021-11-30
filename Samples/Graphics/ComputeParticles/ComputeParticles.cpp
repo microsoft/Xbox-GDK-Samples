@@ -21,10 +21,10 @@ namespace
 {
     const wchar_t* g_sampleTitle = L"Compute Particles";
 
-    static const float g_minOrbitRadius = 5.0f;
-    static const float g_maxOrbitRadius = 60.0f;
-    static const float g_maxCameraHeight = 25.0f;
-    static const float g_minCameraHeight = 0.2f;
+    constexpr float g_minOrbitRadius = 5.0f;
+    constexpr float g_maxOrbitRadius = 60.0f;
+    constexpr float g_maxCameraHeight = 25.0f;
+    constexpr float g_minCameraHeight = 0.2f;
 
     static const XMVECTOR g_lightDirection = XMVectorSet(0.15f, -2.0f, 3.0f, 0.0f);
 
@@ -359,11 +359,14 @@ void Sample::CreateDeviceDependentResources()
 
         std::for_each(m_scene[i].Effects.begin(), m_scene[i].Effects.end(), [&](std::shared_ptr<IEffect>& e)
         {
-            auto effect = reinterpret_cast<NormalMapEffect*>(e.get());
-            effect->EnableDefaultLighting();
-            effect->SetLightEnabled(0, true);
-            effect->SetLightDiffuseColor(0, XMVectorSet(1, 1, 1, 1));
-            effect->SetLightDirection(0, XMVector3NormalizeEst(g_lightDirection));
+            auto effect = dynamic_cast<IEffectLights*>(e.get());
+            if (effect)
+            {
+                effect->EnableDefaultLighting();
+                effect->SetLightEnabled(0, true);
+                effect->SetLightDiffuseColor(0, XMVectorSet(1, 1, 1, 1));
+                effect->SetLightDirection(0, XMVector3NormalizeEst(g_lightDirection));
+            }
         });
     }
 }

@@ -1,7 +1,7 @@
 //--------------------------------------------------------------------------------------
 // Main.cpp
 //
-// Entry point for Microsoft Game Core on Xbox.
+// Entry point for Microsoft GDK with Xbox extensions
 //
 // Advanced Technology Group (ATG)
 // Copyright (C) Microsoft Corporation. All rights reserved.
@@ -17,14 +17,22 @@
 
 using namespace DirectX;
 
+#ifdef __clang__
+#pragma clang diagnostic ignored "-Wcovered-switch-default"
+#pragma clang diagnostic ignored "-Wswitch-enum"
+#endif
+
+#pragma warning(disable : 4061)
+
 namespace
 {
     std::unique_ptr<Sample> g_sample;
     HANDLE g_plmSuspendComplete = nullptr;
     HANDLE g_plmSignalResume = nullptr;
-};
+}
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+void ExitSample() noexcept;
 
 // Entry point
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
@@ -48,7 +56,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
     // Default main thread to CPU 0
     SetThreadAffinityMask(GetCurrentThread(), 0x1);
 
-    // Microsoft Game Core on Xbox supports UTF-8 everywhere
+    // Microsoft GDKX supports UTF-8 everywhere
     assert(GetACP() == CP_UTF8);
 
     g_sample = std::make_unique<Sample>();
@@ -63,7 +71,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
         wcex.lpfnWndProc = WndProc;
         wcex.hInstance = hInstance;
         wcex.lpszClassName = u8"SystemInfoWindowClass";
-        wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+        wcex.hbrBackground = reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1);
         if (!RegisterClassExA(&wcex))
             return 1;
 
@@ -135,7 +143,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
 
     XGameRuntimeUninitialize();
 
-    return (int) msg.wParam;
+    return static_cast<int>(msg.wParam);
 }
 
 // Windows procedure
@@ -169,15 +177,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_MOUSEMOVE:
         if (sample)
         {
-            sample->m_screenLocation_x = static_cast<short>(LOWORD(lParam)); // GET_X_LPARAM(lParam);
-            sample->m_screenLocation_y = static_cast<short>(HIWORD(lParam)); // GET_X_LPARAM(lParam);
+            // WM_MOUSEMOVE on Xbox is providing logical pixels at 1080p
+            int mx = static_cast<short>(LOWORD(lParam)); // GET_X_LPARAM(lParam);
+            int my = static_cast<short>(HIWORD(lParam)); // GET_X_LPARAM(lParam);
 
             if (sample->IsRunning4k())
             {
-                //WM_MOUSEMOVE is providing logical pixels at 1080p, scale to 4k
-                sample->m_screenLocation_x *= 2;
-                sample->m_screenLocation_y *= 2;
+                // Scale to 4k resolution
+                mx *= 2;
+                my *= 2;
             }
+            else if (sample->IsRunning1440p())
+            {
+                // Scale to 1440p
+                mx = static_cast<int>(float(mx) * 1.33333f);
+                my = static_cast<int>(float(my) * 1.33333f);;
+            }
+
+            sample->m_screenLocation_x = mx;
+            sample->m_screenLocation_y = my;
         }
         break;
 

@@ -12,14 +12,12 @@
 // PARTICULAR PURPOSE.
 //--------------------------------------------------------------------------------------
 
-#include "..\pch.h"
-#include <XUser.h>
-#include <XGameSave.h>
-#include "..\Helpers\UTF8Helper.h"
+#include "pch.h"
+
+#include "UTF8Helper.h"
 #include "GameSaveManager.h"
-#include "..\Helpers\TaskQueue.h"
-#include <functional>
-#include "..\SampleGame.h"
+#include "TaskQueue.h"
+#include "SampleGame.h"
 
 namespace GameSaveSample
 {

@@ -47,15 +47,24 @@ namespace ATG
         m_dram = std::make_unique<PageAllocatorDram>(device, m_useEsram ? static_cast<uint8_t*>(address) + c_esramSizeBytes : address, maxSizeBytes);
     }
 
-    void TransientAllocator::Uninitialize()
+    void TransientAllocator::Uninitialize(ID3D12CommandQueue* queue)
     {
 #ifdef _GAMING_XBOX_XBOXONE
         m_esram.reset();
 #endif
-        m_dram.reset();
-        m_virtualAddress.reset();
+
+        if (queue != nullptr)
+        {
+            m_cache.Foreach([queue](CachedResource& it)
+            {
+                queue->ClearPageMappingsX(it.GpuAddress(), it.pageCount, D3D12XBOX_PAGE_MAPPING_FLAG_NONE);
+            });
+        }
 
         m_cache.Uninitialize();
+
+        m_dram.reset();
+        m_virtualAddress.reset();
     }
 
     void TransientAllocator::NextFrame()

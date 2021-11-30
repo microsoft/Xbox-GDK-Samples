@@ -23,10 +23,10 @@ namespace
 {
     const wchar_t* g_sampleTitle = L"Deferred Particles";
 
-    static const float g_minOrbitRadius = 50.0f;
-    static const float g_maxOrbitRadius = 600.0f;
-    static const float g_maxCameraHeight = 250.0f;
-    static const float g_minCameraHeight = 25.0f;
+    constexpr float g_minOrbitRadius = 50.0f;
+    constexpr float g_maxOrbitRadius = 600.0f;
+    constexpr float g_maxCameraHeight = 250.0f;
+    constexpr float g_minCameraHeight = 25.0f;
 
     static const XMVECTOR g_lightDirection = XMVectorSet(0.15f, -2.0f, 3.0f, 0.0f);
     static const XMVECTOR g_lightColor = g_XMOne;

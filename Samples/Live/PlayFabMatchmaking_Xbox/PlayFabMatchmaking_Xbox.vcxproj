@@ -41,7 +41,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
@@ -50,16 +50,16 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
     <EmbedManifest>false</EmbedManifest>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
@@ -68,16 +68,16 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
     <EmbedManifest>false</EmbedManifest>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <EmbedManifest>false</EmbedManifest>
@@ -85,7 +85,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <EmbedManifest>false</EmbedManifest>
@@ -166,7 +166,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">
     <Link>
-      <AdditionalDependencies>uuid.lib;$(Console_Libs);%(XboxExtensionsDependencies);$(SolutionDir)\..\..\..\Kits\PlayFabGDK\lib\$(PlatformName)\$(Configuration)\lib_json.lib;$(SolutionDir)\..\..\..\Kits\PlayFabGDK\lib\$(PlatformName)\$(Configuration)\XPlatCppGdk.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>uuid.lib;$(Console_Libs);%(XboxExtensionsDependencies);$(SolutionDir)..\..\..\Kits\PlayFabGDK\lib\$(PlatformName)\v141\$(Configuration)\lib_json.lib;$(SolutionDir)..\..\..\Kits\PlayFabGDK\lib\$(PlatformName)\v141\$(Configuration)\XPlatCppGdk.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -176,7 +176,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\PlayFabGDK\include;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\LiveTK;..\..\..\Kits\ATGTelemetry\GDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\PlayFabGDK;..\..\..\Kits\PlayFabGDK\include;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\LiveTK;..\..\..\Kits\ATGTelemetry\GDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories />
       <ForcedUsingFiles />
       <Optimization>MaxSpeed</Optimization>
@@ -191,7 +191,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">
     <Link>
-      <AdditionalDependencies>uuid.lib;$(Console_Libs);%(XboxExtensionsDependencies);$(SolutionDir)\..\..\..\Kits\PlayFabGDK\lib\$(PlatformName)\$(Configuration)\lib_json.lib;$(SolutionDir)\..\..\..\Kits\PlayFabGDK\lib\$(PlatformName)\$(Configuration)\XPlatCppGdk.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>uuid.lib;$(Console_Libs);%(XboxExtensionsDependencies);$(SolutionDir)..\..\..\Kits\PlayFabGDK\lib\$(PlatformName)\v141\$(Configuration)\lib_json.lib;$(SolutionDir)..\..\..\Kits\PlayFabGDK\lib\$(PlatformName)\v141\$(Configuration)\XPlatCppGdk.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -201,7 +201,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\PlayFabGDK\include;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\LiveTK;..\..\..\Kits\ATGTelemetry\GDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\PlayFabGDK;..\..\..\Kits\PlayFabGDK\include;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\LiveTK;..\..\..\Kits\ATGTelemetry\GDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>
       </AdditionalUsingDirectories>
       <ForcedUsingFiles>
@@ -218,7 +218,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">
     <Link>
-      <AdditionalDependencies>uuid.lib;$(Console_Libs);%(XboxExtensionsDependencies);$(SolutionDir)\..\..\..\Kits\PlayFabGDK\lib\$(PlatformName)\$(Configuration)\lib_json.lib;$(SolutionDir)\..\..\..\Kits\PlayFabGDK\lib\$(PlatformName)\$(Configuration)\XPlatCppGdk.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>uuid.lib;$(Console_Libs);%(XboxExtensionsDependencies);$(SolutionDir)..\..\..\Kits\PlayFabGDK\lib\$(PlatformName)\v141\$(Configuration)\lib_json.lib;$(SolutionDir)..\..\..\Kits\PlayFabGDK\lib\$(PlatformName)\v141\$(Configuration)\XPlatCppGdk.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -228,7 +228,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\PlayFabGDK\include;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\LiveTK;..\..\..\Kits\ATGTelemetry\GDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\PlayFabGDK;..\..\..\Kits\PlayFabGDK\include;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\LiveTK;..\..\..\Kits\ATGTelemetry\GDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories />
       <ForcedUsingFiles />
       <Optimization>MaxSpeed</Optimization>
@@ -243,7 +243,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">
     <Link>
-      <AdditionalDependencies>uuid.lib;$(Console_Libs);%(XboxExtensionsDependencies);$(SolutionDir)\..\..\..\Kits\PlayFabGDK\lib\$(PlatformName)\$(Configuration)\lib_json.lib;$(SolutionDir)\..\..\..\Kits\PlayFabGDK\lib\$(PlatformName)\$(Configuration)\XPlatCppGdk.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>uuid.lib;$(Console_Libs);%(XboxExtensionsDependencies);$(SolutionDir)..\..\..\Kits\PlayFabGDK\lib\$(PlatformName)\v141\$(Configuration)\lib_json.lib;$(SolutionDir)..\..\..\Kits\PlayFabGDK\lib\$(PlatformName)\v141\$(Configuration)\XPlatCppGdk.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -253,7 +253,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\PlayFabGDK\include;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\LiveTK;..\..\..\Kits\ATGTelemetry\GDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\PlayFabGDK;..\..\..\Kits\PlayFabGDK\include;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\LiveTK;..\..\..\Kits\ATGTelemetry\GDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>
       </AdditionalUsingDirectories>
       <ForcedUsingFiles>
@@ -270,16 +270,16 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">
     <Link>
-      <AdditionalDependencies>uuid.lib;$(Console_Libs);%(XboxExtensionsDependencies);$(SolutionDir)\..\..\..\Kits\PlayFabGDK\lib\$(PlatformName)\$(Configuration)\lib_json.lib;$(SolutionDir)\..\..\..\Kits\PlayFabGDK\lib\$(PlatformName)\$(Configuration)\XPlatCppGdk.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>uuid.lib;$(Console_Libs);%(XboxExtensionsDependencies);$(SolutionDir)..\..\..\Kits\PlayFabGDK\lib\$(PlatformName)\v141\$(Configuration)\lib_json.lib;$(SolutionDir)..\..\..\Kits\PlayFabGDK\lib\$(PlatformName)\v141\$(Configuration)\XPlatCppGdk.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">/IGNORE:4099 /IGNORE:4098 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ClCompile>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MinimalRebuild>false</MinimalRebuild>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\PlayFabGDK\include;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\LiveTK;..\..\..\Kits\ATGTelemetry\GDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\PlayFabGDK;..\..\..\Kits\PlayFabGDK\include;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\LiveTK;..\..\..\Kits\ATGTelemetry\GDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories />
       <ForcedUsingFiles />
       <WarningLevel>Level4</WarningLevel>
@@ -292,7 +292,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">
     <Link>
-      <AdditionalDependencies>uuid.lib;$(Console_Libs);%(XboxExtensionsDependencies);$(SolutionDir)\..\..\..\Kits\PlayFabGDK\lib\$(PlatformName)\$(Configuration)\lib_json.lib;$(SolutionDir)\..\..\..\Kits\PlayFabGDK\lib\$(PlatformName)\$(Configuration)\XPlatCppGdk.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>uuid.lib;$(Console_Libs);%(XboxExtensionsDependencies);$(SolutionDir)..\..\..\Kits\PlayFabGDK\lib\$(PlatformName)\v141\$(Configuration)\lib_json.lib;$(SolutionDir)..\..\..\Kits\PlayFabGDK\lib\$(PlatformName)\v141\$(Configuration)\XPlatCppGdk.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
@@ -301,7 +301,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MinimalRebuild>false</MinimalRebuild>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\PlayFabGDK\include;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\LiveTK;..\..\..\Kits\ATGTelemetry\GDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\PlayFabGDK;..\..\..\Kits\PlayFabGDK\include;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\LiveTK;..\..\..\Kits\ATGTelemetry\GDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>
       </AdditionalUsingDirectories>
       <ForcedUsingFiles>
@@ -408,6 +408,7 @@
     <ClInclude Include="..\..\..\Kits\PlayFabGDK\include\playfab\QoS\QoSSocket.h" />
     <ClInclude Include="..\..\..\Kits\PlayFabGDK\include\playfab\QoS\RegionResult.h" />
     <ClInclude Include="..\..\..\Kits\PlayFabGDK\include\playfab\QoS\XPlatSocket.h" />
+    <ClInclude Include="..\..\..\Kits\PlayFabGDK\PlayFabResources.h" />
     <ClInclude Include="AsyncStatusWidget.h" />
     <ClInclude Include="ILoggingInterface.h" />
     <ClInclude Include="PlayFabMatchmakingManager.h" />
@@ -425,6 +426,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\Kits\LiveTK\LiveInfoHUD.cpp" />
     <ClCompile Include="..\..\..\Kits\LiveTK\LiveResources.cpp" />
+    <ClCompile Include="..\..\..\Kits\PlayFabGDK\PlayFabResources.cpp" />
     <ClCompile Include="AsyncStatusWidget.cpp" />
     <ClCompile Include="PlayFabMatchmakingManager.cpp" />
     <ClCompile Include="PlayFabMatchmaking_Xbox.cpp" />
@@ -444,12 +446,9 @@
     <ClCompile Include="SampleLogic.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Kits\DirectXTK12\DirectXTK12_GXDK_2019.vcxproj">
-      <Project>{b47a013a-4de2-4183-a279-a363289e19b8}</Project>
-    </ProjectReference>
+    <MGCCompile Include="MicrosoftGame.Config">
+      <SubType>Designer</SubType>
+    </MGCCompile>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Assets\UILayout.json" />
@@ -771,105 +770,62 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\Debug\lib_json.pdb">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
+    <None Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\v141\Debug\lib_json.pdb">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
     </None>
-    <None Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\Debug\XPlatCppGdk.pdb">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
+    <None Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\v141\Debug\XPlatCppGdk.pdb">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
     </None>
-    <None Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\Debug\lib_json.pdb">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
+    <None Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\v141\Debug\lib_json.pdb">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
     </None>
-    <None Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\Debug\XPlatCppGdk.pdb">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
+    <None Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\v141\Debug\XPlatCppGdk.pdb">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
     </None>
     <None Include="ReadMe.docx" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\Debug\lib_json.lib">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\v141\Debug\lib_json.lib">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
     </Library>
-    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\Debug\XPlatCppGdk.lib">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\v141\Debug\XPlatCppGdk.lib">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
     </Library>
-    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\Release\lib_json.lib">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\v141\Profile\lib_json.lib">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
     </Library>
-    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\Release\XPlatCppGdk.lib">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\v141\Profile\XPlatCppGdk.lib">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
     </Library>
-    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\Debug\lib_json.lib">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\v141\Release\lib_json.lib">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
     </Library>
-    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\Debug\XPlatCppGdk.lib">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\v141\Release\XPlatCppGdk.lib">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
     </Library>
-    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\Release\lib_json.lib">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\v141\Debug\lib_json.lib">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
     </Library>
-    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\Release\XPlatCppGdk.lib">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\v141\Debug\XPlatCppGdk.lib">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
     </Library>
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\v141\Profile\lib_json.lib">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </Library>
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\v141\Profile\XPlatCppGdk.lib">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </Library>
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\v141\Release\lib_json.lib">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </Library>
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\v141\Release\XPlatCppGdk.lib">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Kits\DirectXTK12\DirectXTK12_GXDK_2017.vcxproj">
+      <Project>{b47a013a-4de2-4183-a279-a363289e19b8}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

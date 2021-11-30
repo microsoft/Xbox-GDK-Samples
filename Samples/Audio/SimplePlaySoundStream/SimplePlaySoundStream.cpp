@@ -22,6 +22,7 @@ Sample::Sample() noexcept(false) :
     m_pMasteringVoice(nullptr),
     m_pSourceVoice(nullptr),
     m_DoneSubmitting(false),
+    m_DonePlaying(false),
     m_waveSize(0),
     m_currentPosition(0),
     m_Buffers{},
@@ -109,6 +110,8 @@ void Sample::InitializeXAudio()
     // Open the file for reading and parse its header
     DX::ThrowIfFailed(LoadPCMFile(L"71_setup_sweep_xbox.wav"));
 
+    assert(m_pSourceVoice != nullptr);
+
     // Start the voice.
     DX::ThrowIfFailed(m_pSourceVoice->Start(0));
 
@@ -177,16 +180,14 @@ void Sample::Render()
     }
 
     // Check to see if buffer has finished playing
-    if (!m_DoneSubmitting && m_pSourceVoice && m_NumberOfBuffersProduced > 0)
+    if (!m_DonePlaying && m_pSourceVoice && m_NumberOfBuffersProduced > 0 && m_NumberOfBuffersConsumed > 0)
     {
-        XAUDIO2_VOICE_STATE state;
+        XAUDIO2_VOICE_STATE state = {};
         m_pSourceVoice->GetState(&state, XAUDIO2_VOICE_NOSAMPLESPLAYED);
         bool isRunning = (state.BuffersQueued > 0);
         if (isRunning == false)
         {
-            m_pSourceVoice->DestroyVoice();
-            m_pSourceVoice = nullptr;
-            m_DoneSubmitting = false;
+            m_DonePlaying = true;
         }
     }
     
@@ -331,7 +332,13 @@ DWORD WINAPI Sample::ReadFileThread(LPVOID lpParam)
             // For the purposes of this sample, we'll just yield.
             //
             SwitchToThread();
+
+            if (sample->m_terminateThread)
+                break;
         }
+
+        if (sample->m_terminateThread)
+            break;
 
         uint32_t cbValid = std::min(STREAMING_BUFFER_SIZE, sample->m_waveSize - sample->m_currentPosition);
 
@@ -385,6 +392,8 @@ DWORD WINAPI Sample::ReadFileThread(LPVOID lpParam)
 DWORD WINAPI Sample::SubmitAudioBufferThread(LPVOID lpParam)
 {
     auto sample = static_cast<Sample*>(lpParam);
+    assert(sample != nullptr);
+    assert(sample->m_pSourceVoice != nullptr);
 
     while (!sample->m_terminateThread)
     {
@@ -401,10 +410,11 @@ DWORD WINAPI Sample::SubmitAudioBufferThread(LPVOID lpParam)
         //
         // Wait for XAudio2 to be ready - we need at least one free spot inside XAudio2's queue.
         //
-        for (;;)
+        while (!sample->m_terminateThread)
         {
-            XAUDIO2_VOICE_STATE state;
+            assert(sample->m_pSourceVoice != nullptr);
 
+            XAUDIO2_VOICE_STATE state = {};
             sample->m_pSourceVoice->GetState(&state, XAUDIO2_VOICE_NOSAMPLESPLAYED);
 
             if (state.BuffersQueued < MAX_BUFFER_COUNT - 1)
@@ -412,6 +422,9 @@ DWORD WINAPI Sample::SubmitAudioBufferThread(LPVOID lpParam)
 
             WaitForSingleObject(sample->m_VoiceContext.m_hBufferEndEvent, INFINITE);
         }
+
+        if (sample->m_terminateThread)
+            break;
 
         //
         // Now we have at least one spot free in our buffer queue, and at least one spot free

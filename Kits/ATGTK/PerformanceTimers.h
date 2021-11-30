@@ -17,7 +17,7 @@ namespace DX
     class CPUTimer
     {
     public:
-        static const size_t c_maxTimers = 8;
+        static constexpr size_t c_maxTimers = 8;
 
         CPUTimer();
 
@@ -60,17 +60,19 @@ namespace DX
     class GPUTimer
     {
     public:
-        static const size_t c_maxTimers = 8;
+        static constexpr size_t c_maxTimers = 8;
 
         GPUTimer() :
             m_gpuFreqInv(1.f),
             m_avg{},
+            m_used{},
             m_timing{}
         {}
 
         GPUTimer(ID3D12Device* device, ID3D12CommandQueue* commandQueue) :
             m_gpuFreqInv(1.f),
             m_avg{},
+            m_used{},
             m_timing{}
         {
             RestoreDevice(device, commandQueue);
@@ -113,12 +115,13 @@ namespace DX
         void RestoreDevice(_In_ ID3D12Device* device, _In_ ID3D12CommandQueue* commandQueue);
 
     private:
-        static const size_t c_timerSlots = c_maxTimers * 2;
+        static constexpr size_t c_timerSlots = c_maxTimers * 2;
 
         Microsoft::WRL::ComPtr<ID3D12QueryHeap> m_heap;
         Microsoft::WRL::ComPtr<ID3D12Resource>  m_buffer;
         double                                  m_gpuFreqInv;
         float                                   m_avg[c_maxTimers];
+        bool                                    m_used[c_maxTimers];
         UINT64                                  m_timing[c_timerSlots];
     };
 
@@ -129,7 +132,7 @@ namespace DX
     {
     public:
     public:
-        static const size_t c_maxTimers = 8;
+        static constexpr size_t c_maxTimers = 8;
 
         GPUTimer() :
             m_currentFrame(0),
@@ -178,7 +181,7 @@ namespace DX
         void RestoreDevice(_In_ ID3D11Device* device);
 
     private:
-        static const size_t c_bufferCount = 3;
+        static constexpr size_t c_bufferCount = 3;
 
         unsigned m_currentFrame;
         struct Frame

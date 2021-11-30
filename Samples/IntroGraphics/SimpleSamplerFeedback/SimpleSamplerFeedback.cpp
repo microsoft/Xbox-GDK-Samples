@@ -7,6 +7,9 @@
 
 #include "pch.h"
 #include "SimpleSamplerFeedback.h"
+#include "ATGColors.h"
+#include "ControllerFont.h"
+#include "ReadData.h"
 
 extern void ExitSample() noexcept;
 
@@ -30,7 +33,8 @@ Sample::Sample() noexcept(false)
     , m_constantBufferDataGpuAddr(0)
     , m_feedbackMapStagingTexture{}
 {
-    m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM_SRGB, DXGI_FORMAT_D32_FLOAT, 2, DX::DeviceResources::c_Enable4K_UHD);
+    m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM_SRGB, DXGI_FORMAT_D32_FLOAT, 2,
+        DX::DeviceResources::c_Enable4K_UHD | DX::DeviceResources::c_EnableQHD);
 }
 
 Sample::~Sample()
@@ -54,10 +58,7 @@ void Sample::Initialize(HWND window)
     m_deviceResources->CreateWindowSizeDependentResources();
     CreateWindowSizeDependentResources();
 
-    // Initialize matrices
-    XMStoreFloat4x4(&m_worldMatrix, XMMatrixIdentity());
-    XMStoreFloat4x4(&m_viewMatrix, XMMatrixIdentity());
-    XMStoreFloat4x4(&m_projectionMatrix, XMMatrixIdentity());
+    m_worldMatrix = XMMatrixIdentity();
 }
 
 #pragma region Frame Update
@@ -142,7 +143,7 @@ void Sample::Render()
 
     // Set the per-frame shader constants
     ConstantBuffer sceneParameters = {};
-    sceneParameters.worldMatrix = XMMatrixTranspose(XMLoadFloat4x4(&m_worldMatrix));
+    sceneParameters.worldMatrix = XMMatrixTranspose(m_worldMatrix);
     sceneParameters.viewMatrix = XMMatrixTranspose(m_camera->GetView());
     sceneParameters.projectionMatrix = XMMatrixTranspose(m_camera->GetProjection());
     memcpy(m_mappedConstantBufferData, &sceneParameters, sizeof(ConstantBuffer));
@@ -189,8 +190,8 @@ float Sample::ReadBackFeedbackMapValue()
         m_feedbackMapStagingTexture.Unmap();
 
         // On Scarlett, this is a 5.3 fixed point value
-        static const BYTE FractionalShift = 3;
-        static const BYTE Mask = (1 << FractionalShift);
+        constexpr BYTE FractionalShift = 3;
+        constexpr BYTE Mask = (1 << FractionalShift);
         minRequestedMip = float(feedbackValue >> FractionalShift);
         minRequestedMip += (feedbackValue & (Mask - 1)) / float(Mask);
 
@@ -478,11 +479,6 @@ void Sample::CreateDeviceDependentResources()
 // Allocate all memory resources that change on a window SizeChanged event.
 void Sample::CreateWindowSizeDependentResources()
 {
-    // Initialize the projection matrix
-    auto size = m_deviceResources->GetOutputSize();
-    XMMATRIX projection = XMMatrixPerspectiveFovLH(XM_PIDIV4, float(size.right) / float(size.bottom), 0.01f, 100.0f);
-    XMStoreFloat4x4(&m_projectionMatrix, projection);
-
     // Initialize camera
     m_camera = std::make_unique<DX::FlyCamera>();
     m_camera->SetWindow(static_cast<int>(m_deviceResources->GetScreenViewport().Width), static_cast<int>(m_deviceResources->GetScreenViewport().Height));

@@ -77,8 +77,8 @@ private:
         PartitionFractionalOdd
     };
 
-    static const size_t c_numPixelShaders = 2;
-    static const size_t c_numHullShaders = 3;
+    static constexpr size_t  c_numPixelShaders = 2;
+    static constexpr size_t  c_numHullShaders = 3;
 
     Microsoft::WRL::ComPtr<ID3D12RootSignature>     m_rootSignature;
     Microsoft::WRL::ComPtr<ID3D12PipelineState>     m_PSOs[c_numPixelShaders][c_numHullShaders];
@@ -91,7 +91,7 @@ private:
     ConstantBuffer*                                 m_mappedConstantData;
 
     // Index in the root parameter table
-    static const UINT                               c_rootParameterCB = 0;
+    static constexpr UINT                           c_rootParameterCB = 0;
 
     // Control variables
     float                                           m_subdivs;

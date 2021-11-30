@@ -12,11 +12,10 @@
 // PARTICULAR PURPOSE.
 //--------------------------------------------------------------------------------------
 
-#include "..\pch.h"
+#include "pch.h"
+
 #include "Log.h"
-#include "..\Helpers\UTF8Helper.h"
-#include <mutex>
-#include "malloc.h"
+#include "UTF8Helper.h"
 
 namespace Log
 {

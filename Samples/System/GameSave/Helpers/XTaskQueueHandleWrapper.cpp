@@ -12,7 +12,8 @@
 // PARTICULAR PURPOSE.
 //--------------------------------------------------------------------------------------
 
-#include "..\pch.h"
+#include "pch.h"
+
 #include "XTaskQueueHandleWrapper.h"
 
 /**

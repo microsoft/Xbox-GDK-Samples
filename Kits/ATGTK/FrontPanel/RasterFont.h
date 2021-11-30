@@ -18,7 +18,7 @@ namespace ATG
     template <typename STORAGE_UNIT_T>
     inline unsigned GetStorageSize(unsigned bitCount)
     {
-        static const size_t unitSize = sizeof(STORAGE_UNIT_T) * 8;
+        constexpr size_t unitSize = sizeof(STORAGE_UNIT_T) * 8;
         return unsigned(bitCount / unitSize + !!(bitCount % unitSize));
     }
 
@@ -258,8 +258,8 @@ namespace ATG
     class RasterFontHeader
     {
     public:
-        static const uint16_t CURRENT_MAJOR_VERSION = 0;
-        static const uint16_t CURRENT_MINOR_VERSION = 1;
+        static constexpr uint16_t CURRENT_MAJOR_VERSION = 0;
+        static constexpr uint16_t CURRENT_MINOR_VERSION = 1;
 
         RasterFontHeader();
 

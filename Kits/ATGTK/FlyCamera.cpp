@@ -68,11 +68,13 @@ public:
 			{
 				move.x = pad.thumbSticks.leftX;
 				move.y = pad.thumbSticks.leftY;
+                move.z = pad.triggers.right - pad.triggers.left;
 			}
 			else
 			{
 				move.x = pad.thumbSticks.leftX;
 				move.z = pad.thumbSticks.leftY * handed;
+                move.y = pad.triggers.right - pad.triggers.left;
 			}
 
 			if (move.x != 0 || move.y != 0 || move.z != 0)
@@ -105,8 +107,11 @@ public:
 
 			if (spin.x != 0 || spin.y != 0)
 			{
+                float upSign = copysignf(1, im.Up().y);
+                Vector3 up = upSign * Vector3::Up;
+
 				m_cameraRotation = XMQuaternionMultiply(m_cameraRotation, XMQuaternionRotationAxis(im.Right(), -spin.y * handed));
-				m_cameraRotation = XMQuaternionMultiply(m_cameraRotation, XMQuaternionRotationAxis(im.Up(), spin.x * handed));
+                m_cameraRotation = XMQuaternionMultiply(m_cameraRotation, XMQuaternionRotationAxis(up, spin.x * handed));
 				m_cameraRotation = XMQuaternionNormalize(m_cameraRotation);
 				m_viewDirty = true;
 			}
@@ -190,18 +195,18 @@ public:
 				if (kbstate.Down || kbstate.S)
 					move.y -= scale;
 
-				if (kbstate.PageUp)
+				if (kbstate.PageUp || kbstate.E)
 					move.z += scale * handed;
 
-				if (kbstate.PageDown)
+				if (kbstate.PageDown || kbstate.Q)
 					move.z -= scale * handed;
 			}
 			else
 			{
-				if (kbstate.PageUp)
+				if (kbstate.PageUp || kbstate.E)
 					move.y += scale;
 
-				if (kbstate.PageDown)
+				if (kbstate.PageDown || kbstate.Q)
 					move.y -= scale;
 
 				if (kbstate.Up || kbstate.W)
@@ -267,8 +272,10 @@ public:
 
 				if (spin.x != 0 || spin.y != 0)
 				{
+                    float upSign = copysignf(1, im.Up().y);
+
 					m_cameraRotation = XMQuaternionMultiply(m_cameraRotation, XMQuaternionRotationAxis(im.Right(), spin.y * handed));
-					m_cameraRotation = XMQuaternionMultiply(m_cameraRotation, XMQuaternionRotationAxis(im.Up(), spin.x * handed));
+					m_cameraRotation = XMQuaternionMultiply(m_cameraRotation, XMQuaternionRotationAxis(upSign * Vector3::Up, spin.x * handed));
 					m_cameraRotation = XMQuaternionNormalize(m_cameraRotation);
 					m_viewDirty = true;
 				}
@@ -371,23 +378,11 @@ FlyCamera::FlyCamera()
 	pImpl->Reset();
 }
 
-// Move constructor.
-FlyCamera::FlyCamera(FlyCamera&& moveFrom)
-	: pImpl(std::move(moveFrom.pImpl))
-{
-}
 
-// Move assignment.
-FlyCamera& FlyCamera::operator= (FlyCamera&& moveFrom)
-{
-	pImpl = std::move(moveFrom.pImpl);
-	return *this;
-}
+FlyCamera::FlyCamera(FlyCamera&&) noexcept = default;
+FlyCamera& FlyCamera::operator= (FlyCamera&&) noexcept = default;
+FlyCamera::~FlyCamera() = default;
 
-// Public destructor.
-FlyCamera::~FlyCamera()
-{
-}
 
 // Public methods.
 void FlyCamera::Update(float elapsedTime, const GamePad::State& pad)

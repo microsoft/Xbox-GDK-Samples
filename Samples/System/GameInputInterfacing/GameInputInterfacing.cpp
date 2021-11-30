@@ -287,7 +287,7 @@ void Sample::Update(DX::StepTimer const& timer)
                 }
 
                 //Touch states
-                //PC ONLY
+                //PC AND XCLOUD ONLY
                 inputCount = m_reading->GetTouchCount();
                 if (inputCount > 0)
                 {

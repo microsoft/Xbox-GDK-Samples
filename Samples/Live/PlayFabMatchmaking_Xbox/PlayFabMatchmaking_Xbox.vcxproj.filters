@@ -74,6 +74,12 @@
     <Filter Include="PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\Release">
       <UniqueIdentifier>{0325b82d-dced-4932-8ed0-4c1697ba9d39}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\Profile">
+      <UniqueIdentifier>{c716f8af-9a76-42ea-8f8e-00390d501d9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\Profile">
+      <UniqueIdentifier>{d5c9ca5e-e03f-40c8-a606-ffc4a66fd3eb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -373,6 +379,9 @@
     <ClInclude Include="..\..\..\Kits\ATGTK\Texture.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Kits\PlayFabGDK\PlayFabResources.h">
+      <Filter>PlayFabGDK</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -404,6 +413,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\ATGTK\Texture.cpp">
       <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\PlayFabGDK\PlayFabResources.cpp">
+      <Filter>PlayFabGDK</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -499,42 +511,54 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.docx" />
-    <None Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\Debug\lib_json.pdb">
+    <None Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\v141\Debug\lib_json.pdb">
       <Filter>PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\Debug</Filter>
     </None>
-    <None Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\Debug\XPlatCppGdk.pdb">
+    <None Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\v141\Debug\lib_json.pdb">
+      <Filter>PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\Debug</Filter>
+    </None>
+    <None Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\v141\Debug\XPlatCppGdk.pdb">
+      <Filter>PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\Debug</Filter>
+    </None>
+    <None Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\v141\Debug\XPlatCppGdk.pdb">
       <Filter>PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\Debug</Filter>
-    </None>
-    <None Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\Debug\lib_json.pdb">
-      <Filter>PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\Debug</Filter>
-    </None>
-    <None Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\Debug\XPlatCppGdk.pdb">
-      <Filter>PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\Debug</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\Debug\lib_json.lib">
-      <Filter>PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\Debug</Filter>
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\v141\Profile\lib_json.lib">
+      <Filter>PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\Profile</Filter>
     </Library>
-    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\Debug\XPlatCppGdk.lib">
-      <Filter>PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\Debug</Filter>
-    </Library>
-    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\Release\lib_json.lib">
-      <Filter>PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\Release</Filter>
-    </Library>
-    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\Release\XPlatCppGdk.lib">
-      <Filter>PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\Release</Filter>
-    </Library>
-    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\Debug\lib_json.lib">
-      <Filter>PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\Debug</Filter>
-    </Library>
-    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\Debug\XPlatCppGdk.lib">
-      <Filter>PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\Debug</Filter>
-    </Library>
-    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\Release\lib_json.lib">
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\v141\Release\lib_json.lib">
       <Filter>PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\Release</Filter>
     </Library>
-    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\Release\XPlatCppGdk.lib">
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\v141\Debug\lib_json.lib">
+      <Filter>PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\Debug</Filter>
+    </Library>
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\v141\Profile\lib_json.lib">
+      <Filter>PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\Profile</Filter>
+    </Library>
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\v141\Release\lib_json.lib">
+      <Filter>PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\Release</Filter>
+    </Library>
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\v141\Debug\lib_json.lib">
+      <Filter>PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\Debug</Filter>
+    </Library>
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\v141\Profile\XPlatCppGdk.lib">
+      <Filter>PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\Profile</Filter>
+    </Library>
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\v141\Profile\XPlatCppGdk.lib">
+      <Filter>PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\Profile</Filter>
+    </Library>
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\v141\Debug\XPlatCppGdk.lib">
+      <Filter>PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\Debug</Filter>
+    </Library>
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\v141\Release\XPlatCppGdk.lib">
+      <Filter>PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\Release</Filter>
+    </Library>
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\v141\Debug\XPlatCppGdk.lib">
+      <Filter>PlayFabGDK\lib\Gaming.Xbox.Scarlett.x64\Debug</Filter>
+    </Library>
+    <Library Include="..\..\..\Kits\PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\v141\Release\XPlatCppGdk.lib">
       <Filter>PlayFabGDK\lib\Gaming.Xbox.XboxOne.x64\Release</Filter>
     </Library>
   </ItemGroup>

@@ -35,9 +35,9 @@
 #include <wrl/client.h>
 #include <wrl/event.h>
 
-#include <grdk.h>
+#include <gxdk.h>
 
-#if _GRDK_VER < 0x4A610D2B /* GXDK Edition 200600 */
+#if _GXDK_VER < 0x4A610D2B /* GXDK Edition 200600 */
 #error This sample requires the June 2020 GDK or later
 #endif
 

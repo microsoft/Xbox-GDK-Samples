@@ -122,8 +122,8 @@ private:
     std::unique_ptr<DirectX::XMVECTOR[], aligned_deleter>   m_velocities;
     uint32_t                                                m_usedInstanceCount;
 
-    DirectX::XMFLOAT4X4                         m_proj;
-    DirectX::XMFLOAT4X4                         m_clip;
+    DirectX::SimpleMath::Matrix                 m_proj;
+    DirectX::SimpleMath::Matrix                 m_view;
     Lights                                      m_lights;
     float                                       m_pitch;
     float                                       m_yaw;

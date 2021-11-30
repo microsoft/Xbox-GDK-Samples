@@ -200,8 +200,6 @@ Sample::Sample() noexcept(false) :
     m_liveResources = std::make_shared<ATG::LiveResources>(m_asyncQueue);
     m_liveInfoHUD = std::make_unique<ATG::LiveInfoHUD>("");
 
-    m_downloader = std::make_unique<ATG::FileDownloader>();
-
     m_baseGameStoreId = "";
     m_selectedStoreId = "";
 }
@@ -943,7 +941,7 @@ void Sample::PreviewLicense(const char* storeId)
 void Sample::AcquireLicense(const char* storeId)
 {
     // This switches on hasDigitalDownload which is populated if Durable has a package
-    // Depending on this, different API must be used to acquire licenseD
+    // Depending on this, different API must be used to acquire license
 
     auto &product = m_catalogDetails[storeId];
 

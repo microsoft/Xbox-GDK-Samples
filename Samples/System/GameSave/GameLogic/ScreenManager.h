@@ -7,17 +7,11 @@
 
 #pragma once
 
-#include "..\DeviceResources.h"
-#include "..\StepTimer.h"
+#include "DeviceResources.h"
+#include "StepTimer.h"
 #include "GameScreen.h"
-#include "..\Common\InputState.h"
-#include "..\Assets.h"
-#include <memory>
-#include <vector>
-#include <string>
-#include <CommonStates.h>
-#include <SpriteBatch.h>
-#include <SpriteFont.h>
+#include "InputState.h"
+#include "Assets.h"
 
 namespace GameSaveSample
 {

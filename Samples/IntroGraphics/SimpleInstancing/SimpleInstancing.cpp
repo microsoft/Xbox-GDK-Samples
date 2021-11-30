@@ -49,11 +49,9 @@ Sample::Sample() noexcept(false) :
     m_pitch(0.0f),
     m_yaw(0.0f)
 {
-    XMStoreFloat4x4(&m_proj, XMMatrixIdentity());
-
     // Use gamma-correct rendering.
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM_SRGB, DXGI_FORMAT_D32_FLOAT, 2,
-        DX::DeviceResources::c_Enable4K_UHD);
+        DX::DeviceResources::c_Enable4K_UHD | DX::DeviceResources::c_EnableQHD);
 }
 
 Sample::~Sample()
@@ -168,9 +166,7 @@ void Sample::Update(DX::StepTimer const& timer)
 
     // Update transforms.
     XMMATRIX camera = XMMatrixLookAtLH(g_XMZero, lookAt, g_XMIdentityR1);
-    XMMATRIX proj = XMLoadFloat4x4(&m_proj);
-    XMMATRIX clip = XMMatrixTranspose(XMMatrixMultiply(camera, proj));
-    XMStoreFloat4x4(&m_clip, clip);
+    m_view = XMMatrixTranspose(XMMatrixMultiply(camera, m_proj));
 
     // Update instance data for the next frame.
     for (size_t i = 1; i < m_usedInstanceCount; ++i)
@@ -259,7 +255,7 @@ void Sample::Render()
 
     // We use the DirectX Tool Kit helper for managing constants memory
     // (see SimpleLighting12 for how to provide constants without this helper)
-    auto vertexConstants = m_graphicsMemory->AllocateConstant<XMFLOAT4X4>(m_clip);
+    auto vertexConstants = m_graphicsMemory->AllocateConstant<XMFLOAT4X4>(m_view);
     auto pixelConstants = m_graphicsMemory->AllocateConstant<Lights>(m_lights);
 
     commandList->SetGraphicsRootConstantBufferView(0, vertexConstants.GpuAddress());
@@ -652,8 +648,7 @@ void Sample::CreateWindowSizeDependentResources()
     auto uploadResourcesFinished = resourceUpload.End(m_deviceResources->GetCommandQueue());
     uploadResourcesFinished.wait();
 
-    XMMATRIX proj = XMMatrixPerspectiveFovLH(XM_PIDIV4, float(size.right) / float(size.bottom), 0.1f, 500.0f);
-    XMStoreFloat4x4(&m_proj, proj);
+    m_proj = XMMatrixPerspectiveFovLH(XM_PIDIV4, float(size.right) / float(size.bottom), 0.1f, 500.0f);
 
     // Set the viewport for our SpriteBatch.
     m_batch->SetViewport(m_deviceResources->GetScreenViewport());

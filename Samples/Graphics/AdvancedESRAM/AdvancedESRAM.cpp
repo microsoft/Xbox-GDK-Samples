@@ -97,7 +97,7 @@ namespace
     };
 
     // Full screen triangle geometry definition.
-    const std::vector<GeometricPrimitive::VertexType> s_triVertex =
+    const GeometricPrimitive::VertexCollection s_triVertex =
     {
         { XMFLOAT3{ -1.0f,  1.0f, 0.0f }, XMFLOAT3{ 0.0f, 0.0f, -1.0f }, XMFLOAT2{ 0.0f, 0.0f } },  // Top-left
         { XMFLOAT3{ 3.0f,  1.0f, 0.0f }, XMFLOAT3{ 0.0f, 0.0f, -1.0f }, XMFLOAT2{ 2.0f, 0.0f } },   // Top-right
@@ -153,6 +153,8 @@ Sample::Sample()
 
 Sample::~Sample()
 {
+    Uninitialize();
+
     if (m_deviceResources)
     {
         m_deviceResources->WaitForGpu();
@@ -169,6 +171,14 @@ void Sample::Initialize(HWND window)
 
     m_deviceResources->CreateWindowSizeDependentResources();
     CreateWindowSizeDependentResources();
+}
+
+void Sample::Uninitialize()
+{
+    if (m_deviceResources)
+    {
+        m_allocator->Uninitialize(m_deviceResources->GetCommandQueue());
+    }
 }
 #pragma endregion
 

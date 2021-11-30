@@ -13,17 +13,13 @@
 //--------------------------------------------------------------------------------------
 
 #include "pch.h"
-#include <memory.h>
-#include <functional>
-#include <XUser.h>
+
 #include "HandleWrapperBase.h"
 #include "XUserHandleWrapper.h"
 #include "User.h"
 #include "UserManager.h"
 #include "AsyncOp.h"
 #include "ScopedLockWrappers.h"
-#include <unordered_map>
-#include <mutex>
 
 #pragma region Private implementation
 

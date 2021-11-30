@@ -5,13 +5,11 @@
 //
 // Copyright (c) Microsoft Corporation. All rights reserved.
 
-#include "..\pch.h"
+#include "pch.h"
+
 #include "GameScreen.h"
-
 #include "ScreenManager.h"
-#include "..\Common\InputState.h"
-
-#include <algorithm>
+#include "InputState.h"
 
 using namespace DirectX;
 

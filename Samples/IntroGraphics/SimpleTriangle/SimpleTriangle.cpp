@@ -31,7 +31,7 @@ Sample::Sample() noexcept(false) :
 {
     // Use gamma-correct rendering.
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM_SRGB, DXGI_FORMAT_D32_FLOAT, 2,
-        DX::DeviceResources::c_Enable4K_UHD);
+        DX::DeviceResources::c_Enable4K_UHD | DX::DeviceResources::c_EnableQHD);
 }
 
 // Initialize the Direct3D resources required to run.

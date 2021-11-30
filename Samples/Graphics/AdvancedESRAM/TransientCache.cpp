@@ -147,6 +147,13 @@ namespace ATG
         return ResourceHandle{ key, m_frameNumber, index };
     }
 
+    void TransientCache::Foreach(std::function<void(CachedResource&)>&& func)
+    {
+        for (auto& it : m_cache)
+            for (auto& it2 : it.second)
+                func(it2);
+    }
+
     void TransientCache::AcquireResource(const TransientDesc& desc, size_t& index, size_t& key)
     {
         // Generate the key.

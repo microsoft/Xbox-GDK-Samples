@@ -13,8 +13,8 @@
 //--------------------------------------------------------------------------------------
 
 #pragma once
+
 #include "StateMachine.h"
-#include <memory>
 
 namespace ATG
 {

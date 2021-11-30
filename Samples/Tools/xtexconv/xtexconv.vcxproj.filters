@@ -14,10 +14,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Readme.docx" />
-    <None Include="packages.config" />
     <None Include="xtexconv_ReadMe_ja-jp.docx" />
     <None Include="xtexconv_ReadMe_ko-kr.docx" />
     <None Include="xtexconv_ReadMe_zh-cn.docx" />
+    <None Include="..\..\NuGet.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="EXR">

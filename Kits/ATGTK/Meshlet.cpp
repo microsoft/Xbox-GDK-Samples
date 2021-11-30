@@ -112,7 +112,7 @@ uint32_t MeshletSet::CalcThreadGroupCount(uint32_t submeshIndex, uint32_t groupS
 
 uint32_t MeshletSet::InstancesPerDispatch(uint32_t submeshIndex, uint32_t groupSize) const
 {
-    static const uint32_t s_maxThreadGroups = 65536; // Only use X dimension - limited to 65536
+    constexpr uint32_t s_maxThreadGroups = 65536; // Only use X dimension - limited to 65536
 
     return uint32_t(float(s_maxThreadGroups - 1) / (GetMeshletCount(submeshIndex) - 1 + float(GetLastMeshletSize(submeshIndex)) / groupSize));
 }
@@ -136,7 +136,7 @@ uint32_t MeshletSet::CalcThreadGroupCount(uint32_t groupSize, uint32_t instanceC
 
 uint32_t MeshletSet::InstancesPerDispatch(uint32_t groupSize) const
 {
-    static const uint32_t s_maxThreadGroups = 65536; // Only use X dimension - limited to 65536
+    constexpr uint32_t s_maxThreadGroups = 65536; // Only use X dimension - limited to 65536
 
     return uint32_t(float(s_maxThreadGroups - 1) / (GetMeshletCount() - 1 + float(GetLastMeshletSize()) / groupSize));
 }

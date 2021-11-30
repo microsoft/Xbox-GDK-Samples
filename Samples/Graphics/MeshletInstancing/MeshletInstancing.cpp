@@ -65,10 +65,10 @@ namespace
         { HelpID::X_BUTTON, L"Switch Render Mode" },
         { HelpID::LEFT_STICK, L"Camera Zoom" },
         { HelpID::RIGHT_STICK, L"Camera Rotate" },
-        { HelpID::LEFT_SHOULDER, L"Decrease LOD" },
-        { HelpID::LEFT_TRIGGER, L"Increase LOD" },
+        { HelpID::DPAD_LEFT, L"Decrease LOD" },
+        { HelpID::DPAD_RIGHT, L"Increase LOD" },
+        { HelpID::LEFT_SHOULDER, L"Decrease Instance Level" },
         { HelpID::RIGHT_SHOULDER, L"Increase Instance Level" },
-        { HelpID::RIGHT_TRIGGER, L"Decrease Instance Level" },
         { HelpID::MENU_BUTTON, L"Show Help Screen" },
         { HelpID::VIEW_BUTTON, L"Exit Sample" },
     };
@@ -198,8 +198,8 @@ void Sample::Update(DX::StepTimer const& timer)
         controls.ToggleHelp = m_gamePadButtons.menu == ButtonState::PRESSED;
         controls.CycleViz = m_gamePadButtons.x == ButtonState::PRESSED;
         controls.CycleInst = m_gamePadButtons.a == ButtonState::PRESSED;
-        controls.InstLevelChange = m_gamePadButtons.rightShoulder == ButtonState::PRESSED ? 1 : (m_gamePadButtons.rightTrigger == ButtonState::PRESSED ? -1 : 0);
-        controls.LodChange = m_gamePadButtons.leftShoulder == ButtonState::PRESSED ? 1 : (m_gamePadButtons.leftTrigger == ButtonState::PRESSED ? -1 : 0);
+        controls.InstLevelChange = m_gamePadButtons.rightShoulder == ButtonState::PRESSED ? 1 : (m_gamePadButtons.leftShoulder == ButtonState::PRESSED ? -1 : 0);
+        controls.LodChange = m_gamePadButtons.dpadLeft == ButtonState::PRESSED ? 1 : (m_gamePadButtons.dpadRight == ButtonState::PRESSED ? -1 : 0);
 
         // Update Camera
         m_camera.Update(elapsedTime, pad);

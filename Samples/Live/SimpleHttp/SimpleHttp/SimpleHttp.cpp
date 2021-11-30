@@ -259,7 +259,7 @@ void Sample::OnHttpRequestButtonPressed()
         }
     });
 
-    if (FAILED(hr))
+    if (hr != E_PENDING && FAILED(hr))
     {
         Log("Sample::OnHttpRequestButtonPressed: MakeHttpRequestAsync failed with HRESULT = 0x%08x", hr);
     }
@@ -308,7 +308,7 @@ void Sample::OnXBLRequestButtonPressed()
             }
         });
 
-        if (FAILED(hr))
+        if (hr != E_PENDING && FAILED(hr))
         {
             Log("Sample::OnXBLRequestButtonPressed: MakeHttpRequestAsync failed with HRESULT = 0x%08x", hr);
         }
@@ -358,7 +358,7 @@ void Sample::OnGameServiceRequestButtonPressed()
             }
         });
 
-        if (FAILED(hr))
+        if (hr != E_PENDING && FAILED(hr))
         {
             Log("Sample::OnGameServiceRequestButtonPressed: MakeHttpRequestAsync failed with HRESULT = 0x%08x", hr);
         }

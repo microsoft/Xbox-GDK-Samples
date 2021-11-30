@@ -1567,7 +1567,7 @@ public:
                 nullptr,
                 IID_GRAPHICS_PPV_ARGS(m_defaultTex.GetAddressOf())));
 
-        static const uint32_t s_pixel = 0xffffffff;
+        static constexpr uint32_t s_pixel = 0xffffffff;
 
         D3D12_SUBRESOURCE_DATA initData = { &s_pixel, sizeof(uint32_t), 0 };
 
@@ -1673,7 +1673,7 @@ public:
 
         // Create 1x1 white default texture
         {
-            static const uint32_t s_pixel = 0xffffffff;
+            static constexpr uint32_t s_pixel = 0xffffffff;
 
             D3D11_SUBRESOURCE_DATA initData = { &s_pixel, sizeof(uint32_t), 0 };
 
@@ -2142,25 +2142,9 @@ UIManager::UIManager(_In_ ID3D11DeviceContext* context, const UIConfig& config) 
 #endif
 
 
-// Move constructor.
-UIManager::UIManager(UIManager&& moveFrom)
-    : pImpl(std::move(moveFrom.pImpl))
-{
-}
-
-
-// Move assignment.
-UIManager& UIManager::operator= (UIManager&& moveFrom)
-{
-    pImpl = std::move(moveFrom.pImpl);
-    return *this;
-}
-
-
-// Public destructor.
-UIManager::~UIManager()
-{
-}
+UIManager::UIManager(UIManager&&) noexcept = default;
+UIManager& UIManager::operator= (UIManager&&) noexcept = default;
+UIManager::~UIManager() = default;
 
 
 // Public methods.

@@ -41,7 +41,7 @@ struct DEVICEPROPS
 	unsigned long           Frequency;
 };
 
-static const REFERENCE_TIME	REFTIMES_PER_SEC = 10000000LL;
+static constexpr REFERENCE_TIME REFTIMES_PER_SEC = 10000000LL;
 
 class WASAPIManager
 {

@@ -1,0 +1,483 @@
+{
+  "includes": [
+    "Assets/UI/defs.json",
+    "Assets/UI/styles.json"
+  ],
+  "layout": {
+    "id": "collection-screen",
+    "classId": "Panel",
+    "size": [ 800, 600 ],
+    "position": [ 510, 500 ],
+    "style": {
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#background_color"
+    },
+    "subElements": [
+      {
+        "id": "divider_image",
+        "classId": "Image",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 0, 0 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 60, 440 ],
+        "styleId": "divider_image_style"
+      },
+      {
+        "id": "item_name_panel1",
+        "classId": "Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 70, 0 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 370, 75 ],
+        "styleId": "devices_title_panel_style",
+        "subElements": [
+          {
+            "id": "panel_text",
+            "classId": "StaticText",
+            "text": "ItemName1",
+            "positioningAnchor": [ "center", "middle" ],
+            "position": [ 15, 0 ],
+            "sizingAnchor": [ "center", "middle" ],
+            "size": [ 370, 60 ],
+            "styleId": "devices_title_text_style"
+          }
+        ]
+      },
+      {
+        "id": "item_name_panel2",
+        "classId": "Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 70, 110 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 370, 75 ],
+        "styleId": "devices_title_panel_style",
+        "subElements": [
+          {
+            "id": "panel_text",
+            "classId": "StaticText",
+            "text": "ItemName2",
+            "positioningAnchor": [ "center", "middle" ],
+            "position": [ 15, 0 ],
+            "sizingAnchor": [ "center", "middle" ],
+            "size": [ 370, 60 ],
+            "styleId": "devices_title_text_style"
+          }
+        ]
+      },
+      {
+        "id": "item_name_panel3",
+        "classId": "Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 70, 220 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 370, 75 ],
+        "styleId": "devices_title_panel_style",
+        "subElements": [
+          {
+            "id": "panel_text",
+            "classId": "StaticText",
+            "text": "ItemName3",
+            "positioningAnchor": [ "center", "middle" ],
+            "position": [ 15, 0 ],
+            "sizingAnchor": [ "center", "middle" ],
+            "size": [ 370, 60 ],
+            "styleId": "devices_title_text_style"
+          }
+        ]
+      },
+      {
+        "id": "item_name_panel4",
+        "classId": "Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 70, 330 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 370, 75 ],
+        "styleId": "devices_title_panel_style",
+        "subElements": [
+          {
+            "id": "panel_text",
+            "classId": "StaticText",
+            "text": "ItemName4",
+            "positioningAnchor": [ "center", "middle" ],
+            "position": [ 15, 0 ],
+            "sizingAnchor": [ "center", "middle" ],
+            "size": [ 370, 60 ],
+            "styleId": "devices_title_text_style"
+          }
+        ]
+      },
+      {
+        "id": "item_num_panel1",
+        "classId": "Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 960, 0 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 100, 75 ],
+        "styleId": "devices_title_panel_style",
+        "subElements": [
+          {
+            "id": "item_quantity_text",
+            "classId": "StaticText",
+            "text": "0",
+            "positioningAnchor": [ "center", "middle" ],
+            "position": [ 25, 0 ],
+            "sizingAnchor": [ "center", "middle" ],
+            "size": [ 75, 60 ],
+            "styleId": "devices_title_text_style"
+          }
+        ]
+      },
+      {
+        "id": "item_num_panel2",
+        "classId": "Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 960, 110 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 100, 75 ],
+        "styleId": "devices_title_panel_style",
+        "subElements": [
+          {
+            "id": "item_quantity_text",
+            "classId": "StaticText",
+            "text": "0",
+            "positioningAnchor": [ "center", "middle" ],
+            "position": [ 25, 0 ],
+            "sizingAnchor": [ "center", "middle" ],
+            "size": [ 75, 60 ],
+            "styleId": "devices_title_text_style"
+          }
+        ]
+      },
+      {
+        "id": "item_num_panel3",
+        "classId": "Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 960, 220 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 100, 75 ],
+        "styleId": "devices_title_panel_style",
+        "subElements": [
+          {
+            "id": "item_quantity_text",
+            "classId": "StaticText",
+            "text": "0",
+            "positioningAnchor": [ "center", "middle" ],
+            "position": [ 25, 0 ],
+            "sizingAnchor": [ "center", "middle" ],
+            "size": [ 75, 60 ],
+            "styleId": "devices_title_text_style"
+          }
+        ]
+      },
+      {
+        "id": "item_num_panel4",
+        "classId": "Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 960, 330 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 100, 75 ],
+        "styleId": "devices_title_panel_style",
+        "subElements": [
+          {
+            "id": "item_quantity_text",
+            "classId": "StaticText",
+            "text": "0",
+            "positioningAnchor": [ "center", "middle" ],
+            "position": [ 25, 0 ],
+            "sizingAnchor": [ "center", "middle" ],
+            "size": [ 75, 60 ],
+            "styleId": "devices_title_text_style"
+          }
+        ]
+      },
+
+      {
+        "id": "button_section",
+        "classId": "Panel",
+        "position": [ 0, 0 ],
+        "size": [ 1920, 1080 ],
+        "style": {
+          "classId": "NullStyle"
+        },
+        "subElements": [
+          {
+            "id": "type_panel1",
+            "classId": "Panel",
+            "styleId": "devices_title_panel_style",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 470, 0 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 465, 75 ],
+            "subElements": [
+              {
+                "id": "item_type_text",
+                "classId": "StaticText",
+                "styleId": "devices_title_text_style",
+                "text": "ProductType1",
+                "positioningAnchor": [ "center", "middle" ],
+                "position": [ 15, 0 ],
+                "sizingAnchor": [ "center", "middle" ],
+                "size": [ 465, 75 ]
+              }
+            ]
+          },
+          {
+            "id": "consume_button1",
+            "classId": "Button",
+            "styleId": "button_default_style",
+            "focusedStyleId": "button_focused_style",
+            "pressedStyleId": "button_pressed_style",
+            "hoveredStyleId": "button_focused_style",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 1085, 0 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 235, 75 ],
+            "focusable": true,
+            "subElements": [
+              {
+                "id": "button_border",
+                "classId": "Panel",
+                "styleId": "button_border_style",
+                "visible": false,
+                "sizingAnchor": [ "center", "middle" ],
+                "positioningAnchor": [ "center", "middle" ],
+                "size": [ 249, 89 ]
+              },
+              {
+                "id": "button_label",
+                "classId": "StaticText",
+                "styleId": "button_default_text_style",
+                "text": "Consume",
+                "positioningAnchor": [ "center", "middle" ],
+                "position": [ 0, 0 ],
+                "sizingAnchor": [ "center", "middle" ],
+                "size": [ 220, 75 ]
+              }
+            ]
+          },
+          {
+            "id": "type_panel2",
+            "classId": "Panel",
+            "styleId": "devices_title_panel_style",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 470, 110 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 465, 75 ],
+            "subElements": [
+              {
+                "id": "item_type_text",
+                "classId": "StaticText",
+                "styleId": "devices_title_text_style",
+                "text": "ProductType1",
+                "positioningAnchor": [ "center", "middle" ],
+                "position": [ 15, 0 ],
+                "sizingAnchor": [ "center", "middle" ],
+                "size": [ 465, 75 ]
+              }
+            ]
+          },
+          {
+            "id": "consume_button2",
+            "classId": "Button",
+            "styleId": "button_default_style",
+            "focusedStyleId": "button_focused_style",
+            "pressedStyleId": "button_pressed_style",
+            "hoveredStyleId": "button_focused_style",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 1085, 110 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 235, 75 ],
+            "focusable": true,
+            "subElements": [
+              {
+                "id": "button_border",
+                "classId": "Panel",
+                "styleId": "button_border_style",
+                "visible": false,
+                "sizingAnchor": [ "center", "middle" ],
+                "positioningAnchor": [ "center", "middle" ],
+                "size": [ 249, 89 ]
+              },
+              {
+                "id": "button_label",
+                "classId": "StaticText",
+                "styleId": "button_default_text_style",
+                "text": "Consume",
+                "positioningAnchor": [ "center", "middle" ],
+                "position": [ 0, 0 ],
+                "sizingAnchor": [ "center", "middle" ],
+                "size": [ 220, 75 ]
+              }
+            ]
+          },
+          {
+            "id": "type_panel3",
+            "classId": "Panel",
+            "styleId": "devices_title_panel_style",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 470, 220 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 465, 75 ],
+            "subElements": [
+              {
+                "id": "item_type_text",
+                "classId": "StaticText",
+                "styleId": "devices_title_text_style",
+                "text": "ProductType1",
+                "positioningAnchor": [ "center", "middle" ],
+                "position": [ 15, 0 ],
+                "sizingAnchor": [ "center", "middle" ],
+                "size": [ 465, 75 ]
+              }
+            ]
+          },
+          {
+            "id": "consume_button3",
+            "classId": "Button",
+            "styleId": "button_default_style",
+            "focusedStyleId": "button_focused_style",
+            "pressedStyleId": "button_pressed_style",
+            "hoveredStyleId": "button_focused_style",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 1085, 220 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 235, 75 ],
+            "focusable": true,
+            "subElements": [
+              {
+                "id": "button_border",
+                "classId": "Panel",
+                "styleId": "button_border_style",
+                "visible": false,
+                "sizingAnchor": [ "center", "middle" ],
+                "positioningAnchor": [ "center", "middle" ],
+                "size": [ 249, 89 ]
+              },
+              {
+                "id": "button_label",
+                "classId": "StaticText",
+                "styleId": "button_default_text_style",
+                "text": "Consume",
+                "positioningAnchor": [ "center", "middle" ],
+                "position": [ 0, 0 ],
+                "sizingAnchor": [ "center", "middle" ],
+                "size": [ 220, 75 ]
+              }
+            ]
+          },
+          {
+            "id": "type_panel4",
+            "classId": "Panel",
+            "styleId": "devices_title_panel_style",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 470, 330 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 465, 75 ],
+            "subElements": [
+              {
+                "id": "item_type_text",
+                "classId": "StaticText",
+                "styleId": "devices_title_text_style",
+                "text": "ProductType1",
+                "positioningAnchor": [ "center", "middle" ],
+                "position": [ 15, 0 ],
+                "sizingAnchor": [ "center", "middle" ],
+                "size": [ 465, 75 ]
+              }
+            ]
+          },
+          {
+            "id": "consume_button4",
+            "classId": "Button",
+            "styleId": "button_default_style",
+            "focusedStyleId": "button_focused_style",
+            "pressedStyleId": "button_pressed_style",
+            "hoveredStyleId": "button_focused_style",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 1085, 330 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 235, 75 ],
+            "focusable": true,
+            "subElements": [
+              {
+                "id": "button_border",
+                "classId": "Panel",
+                "styleId": "button_border_style",
+                "visible": false,
+                "sizingAnchor": [ "center", "middle" ],
+                "positioningAnchor": [ "center", "middle" ],
+                "size": [ 249, 89 ]
+              },
+              {
+                "id": "button_label",
+                "classId": "StaticText",
+                "styleId": "button_default_text_style",
+                "text": "Consume",
+                "positioningAnchor": [ "center", "middle" ],
+                "position": [ 0, 0 ],
+                "sizingAnchor": [ "center", "middle" ],
+                "size": [ 220, 75 ]
+              }
+            ]
+          },
+          {
+            "id": "pageNumber_panel",
+            "classId": "Panel",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 850, 440 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 210, 75 ],
+            "styleId": "legend_panel_style",
+            "subElements": [
+              {
+                "id": "panel_text",
+                "classId": "StaticText",
+                "styleId": "legend_value_text_style",
+                "text": "Page #/#",
+                "positioningAnchor": [ "center", "middle" ],
+                "position": [ 5, 0 ],
+                "sizingAnchor": [ "center", "middle" ],
+                "size": [ 150, 75 ]
+              }
+            ]
+          },
+          {
+            "id": "nextpage_button",
+            "classId": "Button",
+            "styleId": "button_default_style",
+            "focusedStyleId": "button_focused_style",
+            "pressedStyleId": "button_pressed_style",
+            "hoveredStyleId": "button_focused_style",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 1085, 440 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 235, 75 ],
+            "focusable": true,
+            "subElements": [
+              {
+                "id": "button_border",
+                "classId": "Panel",
+                "styleId": "button_border_style",
+                "visible": false,
+                "sizingAnchor": [ "center", "middle" ],
+                "positioningAnchor": [ "center", "middle" ],
+                "size": [ 249, 89 ]
+              },
+              {
+                "id": "button_label",
+                "classId": "StaticText",
+                "styleId": "button_default_text_style",
+                "text": "Next Page",
+                "positioningAnchor": [ "center", "middle" ],
+                "position": [ 0, 0 ],
+                "sizingAnchor": [ "center", "middle" ],
+                "size": [ 220, 75 ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

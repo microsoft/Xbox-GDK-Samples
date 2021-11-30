@@ -6,7 +6,7 @@
 //
 // ATG Toolkit's GamePad implementation is for single-user cases and composes all input devices
 // into a single state representation. This file contains classes for treating input from different
-// sources separately using the GameInput library from Microsoft Game Core.
+// sources separately using the GameInput library from the Microsoft GDK.
 //--------------------------------------------------------------------------------------
 
 #pragma once

@@ -8,6 +8,7 @@
 #pragma once
 
 #include "TransientResource.h"
+#include <functional>
 
 namespace ATG
 {
@@ -69,6 +70,8 @@ namespace ATG
 
         // Finds or creates an available resource matching the resource description.
         ResourceHandle Create(const TransientDesc& desc);
+
+        void Foreach(std::function<void(CachedResource&)>&& func);
 
     private:
         void AcquireResource(const TransientDesc& desc, size_t& index, size_t& key);

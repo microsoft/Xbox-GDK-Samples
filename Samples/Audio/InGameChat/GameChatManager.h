@@ -81,7 +81,7 @@ public:
         );
 
     // The number of voice channels available
-    static const int c_numberOfChannels = 3;
+    static constexpr int c_numberOfChannels = 3;
 
 private:
     void HandleTextMessage(

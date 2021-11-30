@@ -1,0 +1,554 @@
+{
+  "includes": [
+    "Assets/UI/defs.json",
+    "Assets/UI/styles.json"
+  ],
+  "layout": {
+    "id": "subscription-screen",
+    "classId": "Panel",
+    "size": [ 800, 600 ],
+    "position": [ 510, 500 ],
+    "style": {
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#background_color"
+    },
+    "subElements": [
+      {
+        "id": "divider_image",
+        "classId": "Image",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 0, 0 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 60, 440 ],
+        "styleId": "divider_image_style"
+      },
+      {
+        "id": "subsucription_panel1",
+        "classId": "Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 70, 0 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 370, 75 ],
+        "styleId": "devices_title_panel_style",
+        "subElements": [
+          {
+            "id": "panel_text",
+            "classId": "StaticText",
+            "text": "ItemName",
+            "positioningAnchor": [ "center", "middle" ],
+            "position": [ 15, 0 ],
+            "sizingAnchor": [ "center", "middle" ],
+            "size": [ 370, 60 ],
+            "styleId": "devices_title_text_style"
+          }
+        ]
+      },
+      {
+        "id": "subsucription_panel2",
+        "classId": "Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 70, 110 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 370, 75 ],
+        "styleId": "devices_title_panel_style",
+        "subElements": [
+          {
+            "id": "panel_text",
+            "classId": "StaticText",
+            "text": "ItemName",
+            "positioningAnchor": [ "center", "middle" ],
+            "position": [ 15, 0 ],
+            "sizingAnchor": [ "center", "middle" ],
+            "size": [ 370, 60 ],
+            "styleId": "devices_title_text_style"
+          }
+        ]
+      },
+      {
+        "id": "subsucription_panel3",
+        "classId": "Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 70, 220 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 370, 75 ],
+        "styleId": "devices_title_panel_style",
+        "subElements": [
+          {
+            "id": "panel_text",
+            "classId": "StaticText",
+            "text": "ItemName",
+            "positioningAnchor": [ "center", "middle" ],
+            "position": [ 15, 0 ],
+            "sizingAnchor": [ "center", "middle" ],
+            "size": [ 370, 60 ],
+            "styleId": "devices_title_text_style"
+          }
+        ]
+      },
+      {
+        "id": "subsucription_panel4",
+        "classId": "Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 70, 330 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 370, 75 ],
+        "styleId": "devices_title_panel_style",
+        "subElements": [
+          {
+            "id": "panel_text",
+            "classId": "StaticText",
+            "text": "ItemName",
+            "positioningAnchor": [ "center", "middle" ],
+            "position": [ 15, 0 ],
+            "sizingAnchor": [ "center", "middle" ],
+            "size": [ 370, 60 ],
+            "styleId": "devices_title_text_style"
+          }
+        ]
+      },
+      {
+        "id": "start_panel1",
+        "classId": "Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 470, 0 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 220, 75 ],
+        "styleId": "devices_title_panel_style",
+        "subElements": [
+          {
+            "id": "panel_text",
+            "classId": "StaticText",
+            "text": "Start Date",
+            "positioningAnchor": [ "center", "middle" ],
+            "position": [ 5, 0 ],
+            "sizingAnchor": [ "center", "middle" ],
+            "size": [ 220, 75 ],
+            "styleId": "devices_title_text_style"
+          }
+        ]
+      },
+      {
+        "id": "start_panel2",
+        "classId": "Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 470, 110 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 220, 75 ],
+        "styleId": "devices_title_panel_style",
+        "subElements": [
+          {
+            "id": "panel_text",
+            "classId": "StaticText",
+            "text": "Start Date",
+            "positioningAnchor": [ "center", "middle" ],
+            "position": [ 5, 0 ],
+            "sizingAnchor": [ "center", "middle" ],
+            "size": [ 220, 75 ],
+            "styleId": "devices_title_text_style"
+          }
+        ]
+      },
+      {
+        "id": "start_panel3",
+        "classId": "Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 470, 220 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 220, 75 ],
+        "styleId": "devices_title_panel_style",
+        "subElements": [
+          {
+            "id": "panel_text",
+            "classId": "StaticText",
+            "text": "Start Date",
+            "positioningAnchor": [ "center", "middle" ],
+            "position": [ 5, 0 ],
+            "sizingAnchor": [ "center", "middle" ],
+            "size": [ 220, 75 ],
+            "styleId": "devices_title_text_style"
+          }
+        ]
+      },
+      {
+        "id": "start_panel4",
+        "classId": "Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 470, 330 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 220, 75 ],
+        "styleId": "devices_title_panel_style",
+        "subElements": [
+          {
+            "id": "panel_text",
+            "classId": "StaticText",
+            "text": "Start Date",
+            "positioningAnchor": [ "center", "middle" ],
+            "position": [ 5, 0 ],
+            "sizingAnchor": [ "center", "middle" ],
+            "size": [ 220, 75 ],
+            "styleId": "devices_title_text_style"
+          }
+        ]
+      },
+      {
+        "id": "end_panel1",
+        "classId": "Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 715, 0 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 220, 75 ],
+        "styleId": "devices_title_panel_style",
+        "subElements": [
+          {
+            "id": "panel_text",
+            "classId": "StaticText",
+            "text": "End Date",
+            "positioningAnchor": [ "center", "middle" ],
+            "position": [ 5, 0 ],
+            "sizingAnchor": [ "center", "middle" ],
+            "size": [ 220, 75 ],
+            "styleId": "devices_title_text_style"
+          }
+        ]
+      },
+      {
+        "id": "end_panel2",
+        "classId": "Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 715, 110 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 220, 75 ],
+        "styleId": "devices_title_panel_style",
+        "subElements": [
+          {
+            "id": "panel_text",
+            "classId": "StaticText",
+            "text": "End Date",
+            "positioningAnchor": [ "center", "middle" ],
+            "position": [ 5, 0 ],
+            "sizingAnchor": [ "center", "middle" ],
+            "size": [ 220, 75 ],
+            "styleId": "devices_title_text_style"
+          }
+        ]
+      },
+      {
+        "id": "end_panel3",
+        "classId": "Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 715, 220 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 220, 75 ],
+        "styleId": "devices_title_panel_style",
+        "subElements": [
+          {
+            "id": "panel_text",
+            "classId": "StaticText",
+            "text": "End Date",
+            "positioningAnchor": [ "center", "middle" ],
+            "position": [ 5, 0 ],
+            "sizingAnchor": [ "center", "middle" ],
+            "size": [ 220, 75 ],
+            "styleId": "devices_title_text_style"
+          }
+        ]
+      },
+      {
+        "id": "end_panel4",
+        "classId": "Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 715, 330 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 220, 75 ],
+        "styleId": "devices_title_panel_style",
+        "subElements": [
+          {
+            "id": "panel_text",
+            "classId": "StaticText",
+            "text": "End Date",
+            "positioningAnchor": [ "center", "middle" ],
+            "position": [ 5, 0 ],
+            "sizingAnchor": [ "center", "middle" ],
+            "size": [ 220, 75 ],
+            "styleId": "devices_title_text_style"
+          }
+        ]
+      },
+      {
+        "id": "state_panel1",
+        "classId": "Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 960, 0 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 100, 75 ],
+        "styleId": "devices_title_panel_style",
+        "subElements": [
+          {
+            "id": "panel_text",
+            "classId": "StaticText",
+            "text": "",
+            "positioningAnchor": [ "center", "middle" ],
+            "position": [ 25, 0 ],
+            "sizingAnchor": [ "center", "middle" ],
+            "size": [ 75, 60 ],
+            "styleId": "devices_title_text_style"
+          }
+        ]
+      },
+      {
+        "id": "state_panel2",
+        "classId": "Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 960, 0 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 100, 75 ],
+        "styleId": "devices_title_panel_style",
+        "subElements": [
+          {
+            "id": "panel_text",
+            "classId": "StaticText",
+            "text": "",
+            "positioningAnchor": [ "center", "middle" ],
+            "position": [ 25, 0 ],
+            "sizingAnchor": [ "center", "middle" ],
+            "size": [ 75, 60 ],
+            "styleId": "devices_title_text_style"
+          }
+        ]
+      },
+      {
+        "id": "state_panel3",
+        "classId": "Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 960, 0 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 100, 75 ],
+        "styleId": "devices_title_panel_style",
+        "subElements": [
+          {
+            "id": "panel_text",
+            "classId": "StaticText",
+            "text": "",
+            "positioningAnchor": [ "center", "middle" ],
+            "position": [ 25, 0 ],
+            "sizingAnchor": [ "center", "middle" ],
+            "size": [ 75, 60 ],
+            "styleId": "devices_title_text_style"
+          }
+        ]
+      },
+      {
+        "id": "state_panel4",
+        "classId": "Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 960, 0 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 100, 75 ],
+        "styleId": "devices_title_panel_style",
+        "subElements": [
+          {
+            "id": "panel_text",
+            "classId": "StaticText",
+            "text": "",
+            "positioningAnchor": [ "center", "middle" ],
+            "position": [ 25, 0 ],
+            "sizingAnchor": [ "center", "middle" ],
+            "size": [ 75, 60 ],
+            "styleId": "devices_title_text_style"
+          }
+        ]
+      },
+      {
+        "id": "button_section",
+        "classId": "Panel",
+        "position": [ 0, 0 ],
+        "size": [ 1920, 1080 ],
+        "style": {
+          "classId": "NullStyle"
+        },
+        "subElements": [
+          {
+            "id": "subscription_button1",
+            "classId": "Button",
+            "styleId": "button_default_style",
+            "focusedStyleId": "button_focused_style",
+            "pressedStyleId": "button_pressed_style",
+            "hoveredStyleId": "button_focused_style",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 1085, 0 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 235, 75 ],
+            "focusable": true,
+            "subElements": [
+              {
+                "id": "button_border",
+                "classId": "Panel",
+                "styleId": "button_border_style",
+                "visible": false,
+                "sizingAnchor": [ "center", "middle" ],
+                "positioningAnchor": [ "center", "middle" ],
+                "size": [ 249, 89 ]
+              },
+              {
+                "id": "button_label",
+                "classId": "StaticText",
+                "styleId": "button_default_text_style",
+                "text": "Purchase",
+                "size": [ 235, 75 ]
+              }
+            ]
+          },
+          {
+            "id": "subscription_button2",
+            "classId": "Button",
+            "styleId": "button_default_style",
+            "focusedStyleId": "button_focused_style",
+            "pressedStyleId": "button_pressed_style",
+            "hoveredStyleId": "button_focused_style",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 1085, 110 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 235, 75 ],
+            "focusable": true,
+            "subElements": [
+              {
+                "id": "button_border",
+                "classId": "Panel",
+                "styleId": "button_border_style",
+                "visible": false,
+                "sizingAnchor": [ "center", "middle" ],
+                "positioningAnchor": [ "center", "middle" ],
+                "size": [ 249, 89 ]
+              },
+              {
+                "id": "button_label",
+                "classId": "StaticText",
+                "styleId": "button_default_text_style",
+                "text": "Purchase",
+                "size": [ 235, 75 ]
+              }
+            ]
+          },
+          {
+            "id": "subscription_button3",
+            "classId": "Button",
+            "styleId": "button_default_style",
+            "focusedStyleId": "button_focused_style",
+            "pressedStyleId": "button_pressed_style",
+            "hoveredStyleId": "button_focused_style",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 1085, 220 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 235, 75 ],
+            "focusable": true,
+            "subElements": [
+              {
+                "id": "button_border",
+                "classId": "Panel",
+                "styleId": "button_border_style",
+                "visible": false,
+                "sizingAnchor": [ "center", "middle" ],
+                "positioningAnchor": [ "center", "middle" ],
+                "size": [ 249, 89 ]
+              },
+              {
+                "id": "button_label",
+                "classId": "StaticText",
+                "styleId": "button_default_text_style",
+                "text": "Purchase",
+                "size": [ 235, 75 ]
+              }
+            ]
+          },
+          {
+            "id": "subscription_button4",
+            "classId": "Button",
+            "styleId": "button_default_style",
+            "focusedStyleId": "button_focused_style",
+            "pressedStyleId": "button_pressed_style",
+            "hoveredStyleId": "button_focused_style",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 1085, 330 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 235, 75 ],
+            "focusable": true,
+            "subElements": [
+              {
+                "id": "button_border",
+                "classId": "Panel",
+                "styleId": "button_border_style",
+                "visible": false,
+                "sizingAnchor": [ "center", "middle" ],
+                "positioningAnchor": [ "center", "middle" ],
+                "size": [ 249, 89 ]
+              },
+              {
+                "id": "button_label",
+                "classId": "StaticText",
+                "styleId": "button_default_text_style",
+                "text": "Purchase",
+                "size": [ 235, 75 ]
+              }
+            ]
+          },
+          {
+            "id": "pageNumber_panel",
+            "classId": "Panel",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 850, 440 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 210, 75 ],
+            "styleId": "legend_panel_style",
+            "subElements": [
+              {
+                "id": "panel_text",
+                "classId": "StaticText",
+                "styleId": "legend_value_text_style",
+                "text": "Page #/#",
+                "positioningAnchor": [ "center", "middle" ],
+                "position": [ 5, 0 ],
+                "sizingAnchor": [ "center", "middle" ],
+                "size": [ 150, 75 ]
+              }
+            ]
+          },
+          {
+            "id": "nextpage_button",
+            "classId": "Button",
+            "styleId": "button_default_style",
+            "focusedStyleId": "button_focused_style",
+            "pressedStyleId": "button_pressed_style",
+            "hoveredStyleId": "button_focused_style",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 1085, 440 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 235, 75 ],
+            "focusable": true,
+            "subElements": [
+              {
+                "id": "button_border",
+                "classId": "Panel",
+                "styleId": "button_border_style",
+                "visible": false,
+                "sizingAnchor": [ "center", "middle" ],
+                "positioningAnchor": [ "center", "middle" ],
+                "size": [ 249, 89 ]
+              },
+              {
+                "id": "button_label",
+                "classId": "StaticText",
+                "styleId": "button_default_text_style",
+                "text": "Next Page",
+                "positioningAnchor": [ "center", "middle" ],
+                "position": [ 0, 0 ],
+                "sizingAnchor": [ "center", "middle" ],
+                "size": [ 220, 75 ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -14,10 +14,7 @@
 
 #pragma once
 
-#include <string>
-#include <time.h>
-#include "..\Helpers\UTF8Helper.h"
-#include <cmath>
+#include "UTF8Helper.h"
 
 /**
  * Formats an HRESULT as a hexadecimal text string.

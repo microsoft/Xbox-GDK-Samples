@@ -52,7 +52,7 @@ public:
     // Properties
     void GetDefaultSize(int& width, int& height) const noexcept;
 
-    static const int MAXUSERS = 8;
+    static constexpr int MAXUSERS = 8;
     static Sample* Instance() { return s_instance; }
 
     void LogToConsole(const char* message);

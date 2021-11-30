@@ -10,9 +10,9 @@
 namespace
 {
     // Conversion functions
-    template <typename T> inline constexpr T Kibibytes(T val) { return val * 1024u; }
-    template <typename T> inline constexpr T Mebibytes(T val) { return Kibibytes(val * 1024u); }
-    template <typename T> inline constexpr T Gibibytes(T val) { return Mebibytes(val * 1024u); }
+    template <typename T> constexpr T Kibibytes(T val) { return val * 1024u; }
+    template <typename T> constexpr T Mebibytes(T val) { return Kibibytes(val * 1024u); }
+    template <typename T> constexpr T Gibibytes(T val) { return Mebibytes(val * 1024u); }
 
 
     // Common Constants
@@ -27,7 +27,7 @@ namespace
     constexpr uint32_t c_dramBlockSize = c_dramBlockPageCount * c_pageSizeBytes; // 4 MiB per DRAM block
 
     template <typename T>
-    inline constexpr T DivRoundUp(T num, T denom)
+    constexpr T DivRoundUp(T num, T denom)
     {
         return (num + denom - 1) / denom;
     }

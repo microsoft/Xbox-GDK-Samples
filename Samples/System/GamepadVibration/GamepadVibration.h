@@ -17,7 +17,7 @@
 class Sample
 {
 public:
-    static const int TRIGGEREFFECTS_MAX = 5;
+    static constexpr int TRIGGEREFFECTS_MAX = 5;
 
     enum class TRIGGEREFFECTS
     {

@@ -13,8 +13,8 @@
 // It is a single block of memory that is mapped into both the title process as well as the secondary process
 namespace SharedMemory
 {
-    static const uint32_t c_maxBaseDumpName = MAX_PATH;
-    static const uint32_t c_maxApplicationName = MAX_PATH;
+    constexpr uint32_t c_maxBaseDumpName = MAX_PATH;
+    constexpr uint32_t c_maxApplicationName = MAX_PATH;
     struct SharedMemoryBlock
     {
         bool shutdown;

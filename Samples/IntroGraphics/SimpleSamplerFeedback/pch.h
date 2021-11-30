@@ -35,9 +35,9 @@
 #include <wrl/client.h>
 #include <wrl/event.h>
 
-#include <grdk.h>
+#include <gxdk.h>
 
-#if _GRDK_VER < 0x4A610D2B /* GXDK Edition 200600 */
+#if _GXDK_VER < 0x4A610D2B /* GXDK Edition 200600 */
 #error This sample requires the June 2020 GDK or later
 #endif
 
@@ -73,7 +73,6 @@
 #include <XGame.h>
 #include <XSystem.h>
 
-// DirectXTK12
 #include "CommonStates.h"
 #include "DescriptorHeap.h"
 #include "DDSTextureLoader.h"
@@ -84,12 +83,6 @@
 #include "SimpleMath.h"
 #include "SpriteBatch.h"
 #include "SpriteFont.h"
-
-// ATGTK
-#include "ATGColors.h"
-#include "ControllerFont.h"
-#include "FlyCamera.h"
-#include "ReadData.h"
 
 namespace DX
 {
