@@ -1,0 +1,74 @@
+﻿{
+  "version": 2,
+  "configurePresets": [
+    {
+      "name": "base",
+      "displayName": "Basic Config",
+      "description": "Basic build using Visual Studio generator",
+      "generator": "Visual Studio 16 2019",
+      "architecture": {
+        "value": "x64",
+        "strategy": "set"
+      },
+      "hidden": true,
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "cacheVariables": {
+        "XdkEditionTarget": "220300",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}"
+      }
+    },
+
+    {
+      "name": "Desktop",
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": {
+          "value": "${sourceDir}/grdk_toolchain.cmake",
+          "type": "FILEPATH"
+        }
+      },
+      "hidden": true
+    },
+
+    {
+      "name": "Scarlett",
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": {
+          "value": "${sourceDir}/gxdk_xs_toolchain.cmake",
+          "type": "FILEPATH"
+        }
+      },
+      "hidden": true
+    },
+
+    {
+      "name": "XboxOne",
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": {
+          "value": "${sourceDir}/gxdk_toolchain.cmake",
+          "type": "FILEPATH"
+        }
+      },
+      "hidden": true
+    },
+
+    {
+      "name": "Clang",
+      "hidden": true,
+      "toolset": "ClangCL",
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "intelliSenseMode": "windows-clang-x64"
+        }
+      }
+    },
+
+    { "name": "x64-Desktop"      , "description": "MSVC for x64  for Gaming.x64.Desktop", "inherits": [ "base", "Desktop" ] },
+    { "name": "x64-Desktop-Clang", "description": "Clang/LLVM for x64 for Gaming.x64.Desktop", "inherits": [ "base", "Desktop", "Clang" ] },
+
+    { "name": "x64-Scarlett"      , "description": "MSVC for x64  for Gaming.x64.Desktop", "inherits": [ "base", "Scarlett" ] },
+    { "name": "x64-Scarlett-Clang", "description": "Clang/LLVM for x64 for Gaming.x64.Desktop", "inherits": [ "base", "Desktop", "Scarlett" ] },
+
+    { "name": "x64-XboxOne"      , "description": "MSVC for x64  for Gaming.x64.Desktop", "inherits": [ "base", "XboxOne" ] },
+    { "name": "x64-XboxOne-Clang", "description": "Clang/LLVM for x64 for Gaming.x64.Desktop", "inherits": [ "base", "XboxOne", "Clang" ] }
+  ]
+}

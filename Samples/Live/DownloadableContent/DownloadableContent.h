@@ -180,8 +180,7 @@ public:
     XTaskQueueRegistrationToken RegisterPackageEvents(XStoreLicenseHandle license, PackageEventContext *context);
     void UnregisterPackageEvents(XStoreLicenseHandle license, XTaskQueueRegistrationToken licenseLostEvent);
     void AddNewMountedPackage(std::string &storeId, XStoreLicenseHandle license, XTaskQueueRegistrationToken token, XPackageMountHandle mountHandle, PackageEventContext *context);
-    bool IsPackageMounted(const std::string &storeId);
-    bool IsPackageLicensed(const std::string &storeId);
+    PackageMountInfo* GetPackageMountInfo(const std::string &storeId);
     PackageDetails* GetPackageDetail(const std::string &storeId);
 
 private:

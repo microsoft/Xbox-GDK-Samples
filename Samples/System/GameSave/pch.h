@@ -75,6 +75,7 @@
 #include <stdexcept>
 #include <string>
 #include <system_error>
+#include <tuple>
 #include <unordered_map>
 #include <vector>
 

@@ -78,6 +78,7 @@
 #include <cwchar>
 #include <exception>
 #include <iterator>
+#include <map>
 #include <memory>
 #include <stdexcept>
 #include <string>
@@ -109,13 +110,8 @@
 #include "SpriteBatch.h"
 #include "SpriteFont.h"
 
-#include <map>
 #include "UITK.h"
 
-
-#if !defined(PIXScopedEvent)
-#define PIXScopedEvent
-#endif
 
 namespace DX
 {

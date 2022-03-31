@@ -58,11 +58,11 @@ void Sample::Initialize(HWND window, int width, int height)
     m_keyboard = std::make_unique<Keyboard>();
 
     m_mouse = std::make_unique<Mouse>();
+    m_mouse->SetWindow(window);
 
 #ifdef _GAMING_XBOX
     m_ui->LoadLayout(L".\\Assets\\Layout.csv", L".\\Assets");
 #else
-    m_mouse->SetWindow(window);
     m_ui->LoadLayout(L".\\Assets\\Layout_Desktop.csv", L".\\Assets");
 #endif
 
@@ -85,7 +85,6 @@ void Sample::Initialize(HWND window, int width, int height)
         this,
         [](void* context, const char* inviteUri)
         {
-            // TODO: In 1906 use XSAPI to parse the uri
             // ms-xbl-76b1590e://inviteHandleAccept/?invitedXuid=2814645439730606&handle=27a705f6-f080-4aa7-8bd7-ec8c51befd3d&senderXuid=2814626418925179
             std::string uri = inviteUri;
 
@@ -720,6 +719,18 @@ void Sample::GetDefaultSize(int& width, int& height) const noexcept
 void Sample::CreateDeviceDependentResources()
 {
     auto device = m_deviceResources->GetD3DDevice();
+
+#ifdef _GAMING_DESKTOP
+    D3D12_FEATURE_DATA_SHADER_MODEL shaderModel = { D3D_SHADER_MODEL_6_0 };
+    if (FAILED(device->CheckFeatureSupport(D3D12_FEATURE_SHADER_MODEL, &shaderModel, sizeof(shaderModel)))
+        || (shaderModel.HighestShaderModel < D3D_SHADER_MODEL_6_0))
+    {
+#ifdef _DEBUG
+        OutputDebugStringA("ERROR: Shader Model 6.0 is not supported!\n");
+#endif
+        throw std::runtime_error("Shader Model 6.0 is not supported!");
+    }
+#endif
 
     m_graphicsMemory = std::make_unique<GraphicsMemory>(device);
     m_resourceDescriptors = std::make_unique<DirectX::DescriptorPile>(

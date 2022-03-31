@@ -41,6 +41,15 @@
     <Filter Include="DLCPackage\Package_XDK\Assets">
       <UniqueIdentifier>{b303deb9-b5a9-4652-846a-8db0c41b3707}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DLCPackagePC">
+      <UniqueIdentifier>{5b583dc3-ca51-49e1-bab3-0b058b9b5f73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLCPackagePC\Package">
+      <UniqueIdentifier>{d07d7001-bb39-4f32-ba4f-d288fecb9026}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLCPackagePC\Package\Assets">
+      <UniqueIdentifier>{ff8aba59-b653-4edf-82d0-42b24cd740fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -183,6 +192,33 @@
     <None Include="DLCPackage\chunks.xml">
       <Filter>DLCPackage</Filter>
     </None>
+    <None Include="DLCPackagePC\makedlcpkg.cmd">
+      <Filter>DLCPackagePC</Filter>
+    </None>
+    <None Include="DLCPackagePC\Package\MicrosoftGame.config">
+      <Filter>DLCPackagePC\Package</Filter>
+    </None>
+    <None Include="DLCPackagePC\chunks.xml">
+      <Filter>DLCPackagePC</Filter>
+    </None>
+    <None Include="DLCPackagePC\Package\Image.jpg">
+      <Filter>DLCPackagePC\Package</Filter>
+    </None>
+    <None Include="DLCPackagePC\Package\Assets\LargeLogo.png">
+      <Filter>DLCPackagePC\Package\Assets</Filter>
+    </None>
+    <None Include="DLCPackagePC\Package\Assets\Logo.png">
+      <Filter>DLCPackagePC\Package\Assets</Filter>
+    </None>
+    <None Include="DLCPackagePC\Package\Assets\StoreLogo.png">
+      <Filter>DLCPackagePC\Package\Assets</Filter>
+    </None>
+    <None Include="DLCPackagePC\Package\Assets\SplashScreen.png">
+      <Filter>DLCPackagePC\Package\Assets</Filter>
+    </None>
+    <None Include="DLCPackagePC\Package\Assets\SmallLogo.png">
+      <Filter>DLCPackagePC\Package\Assets</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <MGCCompile Include="MicrosoftGame.Config" />
@@ -205,9 +241,6 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <CopyFileToFolders Include="Assets\SampleUI.csv">
-      <Filter>Assets</Filter>
-    </CopyFileToFolders>
     <CopyFileToFolders Include="Assets\Owned.png">
       <Filter>Assets</Filter>
     </CopyFileToFolders>

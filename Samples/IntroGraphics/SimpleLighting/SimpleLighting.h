@@ -35,6 +35,8 @@ public:
     // Messages
     void OnSuspending();
     void OnResuming();
+    void OnConstrained() {}
+    void OnUnConstrained() {}
 
 private:
 
@@ -90,7 +92,7 @@ private:
 
     // In this simple sample, we know that there are three draw calls
     // and we will update the scene constants for each draw call.
-    static constexpr unsigned int                    c_numDrawCalls = 3;
+    static constexpr unsigned int                c_numDrawCalls = 3;
 
     // A synchronization fence and an event. These members will be used
     // to synchronize the CPU with the GPU so that there will be no

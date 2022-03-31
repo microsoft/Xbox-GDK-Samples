@@ -112,7 +112,7 @@ namespace
             static_cast<char32_t>(secondByte & MUL_BYTE_CONT);
     }
 
-    static char32_t ConvertUTF8ToUTF32_OneByte(char firstByte)
+    static constexpr char32_t ConvertUTF8ToUTF32_OneByte(char firstByte)
     {
         return static_cast<char32_t>(firstByte & ONE_BYTE_CONT);
     }
@@ -200,10 +200,10 @@ std::string DX::WideToUtf8(const std::wstring& wideString)
 std::u32string DX::Utf8ToUtf32(const std::string& utf8String)
 {
     std::u32string outStr;
-    size_t stringSize = utf8String.size();
+    const size_t stringSize = utf8String.size();
     for (size_t index = 0; index < stringSize;)
     {
-        char firstByte = utf8String[index];
+        const char firstByte = utf8String[index];
         if ((firstByte & ONE_BYTE_MASK) == ONE_BYTE_VAL)
         {
             outStr.push_back(ConvertUTF8ToUTF32_OneByte(firstByte));
@@ -260,7 +260,7 @@ std::string DX::Utf32ToUtf8(const std::u32string& utf32String)
 {
     std::string utf8String;
 
-    for (char32_t unicodeCharacter : utf32String)
+    for (const char32_t unicodeCharacter : utf32String)
     {
         if (unicodeCharacter >= 0x0 && unicodeCharacter <= 0x7F)
         {

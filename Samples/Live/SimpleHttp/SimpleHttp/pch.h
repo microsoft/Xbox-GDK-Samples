@@ -111,10 +111,6 @@
 #include "RenderTargetState.h"
 #include "UITK.h"
 
-#if !defined(PIXScopedEvent)
-#define PIXScopedEvent
-#endif
-
 
 namespace DX
 {

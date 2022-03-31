@@ -1,4 +1,3 @@
-
 //--------------------------------------------------------------------------------------
 // SimpleDeviceAndSwapChain.cpp
 //
@@ -29,8 +28,8 @@ using Microsoft::WRL::ComPtr;
 
 namespace
 {
-    const DXGI_FORMAT c_backBufferFormat = DXGI_FORMAT_B8G8R8A8_UNORM_SRGB;
-    const DXGI_FORMAT c_depthBufferFormat = DXGI_FORMAT_D32_FLOAT;
+    constexpr DXGI_FORMAT c_backBufferFormat = DXGI_FORMAT_B8G8R8A8_UNORM_SRGB;
+    constexpr DXGI_FORMAT c_depthBufferFormat = DXGI_FORMAT_D32_FLOAT;
 }
 
 Sample::Sample() noexcept :
@@ -55,7 +54,7 @@ Sample::~Sample()
     // Ensure we present a blank screen before cleaning up resources.
     if (m_commandQueue)
     {
-        (void)m_commandQueue->PresentX(0, nullptr, nullptr);
+        std::ignore = m_commandQueue->PresentX(0, nullptr, nullptr);
     }
 }
 
@@ -124,7 +123,7 @@ void Sample::Render()
 
     m_batch->Begin(m_commandList.Get());
 
-    RECT fullscreen = { 0, 0, m_outputWidth, m_outputHeight };
+    const RECT fullscreen = { 0, 0, m_outputWidth, m_outputHeight };
 
     m_batch->Draw(m_resourceDescriptors->GetGpuHandle(Descriptors::Background),
         GetTextureSize(m_background.Get()), fullscreen);
@@ -152,13 +151,15 @@ void Sample::Clear()
     DX::ThrowIfFailed(m_commandList->Reset(m_commandAllocators[m_backBufferIndex].Get(), nullptr));
 
     // Transition the render target into the correct state to allow for drawing into it.
-    D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(m_renderTargets[m_backBufferIndex].Get(), D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET);
+    const D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
+        m_renderTargets[m_backBufferIndex].Get(),
+        D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET);
     m_commandList->ResourceBarrier(1, &barrier);
 
     // Clear the views.
     PIXBeginEvent(m_commandList.Get(), PIX_COLOR_DEFAULT, L"Clear");
 
-    CD3DX12_CPU_DESCRIPTOR_HANDLE rtvDescriptor(
+    const CD3DX12_CPU_DESCRIPTOR_HANDLE rtvDescriptor(
         m_rtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart(),
         static_cast<INT>(m_backBufferIndex), m_rtvDescriptorSize);
     CD3DX12_CPU_DESCRIPTOR_HANDLE dsvDescriptor(m_dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart());
@@ -167,8 +168,8 @@ void Sample::Clear()
     m_commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    D3D12_VIEWPORT viewport = { 0.0f, 0.0f, static_cast<float>(m_outputWidth), static_cast<float>(m_outputHeight), D3D12_MIN_DEPTH, D3D12_MAX_DEPTH };
-    D3D12_RECT scissorRect = { 0, 0, m_outputWidth, m_outputHeight };
+    const D3D12_VIEWPORT viewport = { 0.0f, 0.0f, static_cast<float>(m_outputWidth), static_cast<float>(m_outputHeight), D3D12_MIN_DEPTH, D3D12_MAX_DEPTH };
+    const D3D12_RECT scissorRect = { 0, 0, m_outputWidth, m_outputHeight };
     m_commandList->RSSetViewports(1, &viewport);
     m_commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -183,7 +184,9 @@ void Sample::Present()
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Present");
 
     // Transition the render target to the state that allows it to be presented to the display.
-    D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(m_renderTargets[m_backBufferIndex].Get(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT);
+    const D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
+        m_renderTargets[m_backBufferIndex].Get(),
+        D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT);
     m_commandList->ResourceBarrier(1, &barrier);
 
     // Send the command list off to the GPU for processing.
@@ -200,7 +203,7 @@ void Sample::Present()
         m_commandQueue->PresentX(1, &planeParameters, nullptr)
     );
 
-    // Xbox One apps do not need to handle DXGI_ERROR_DEVICE_REMOVED or DXGI_ERROR_DEVICE_RESET.
+    // Xbox apps do not need to handle DXGI_ERROR_DEVICE_REMOVED or DXGI_ERROR_DEVICE_RESET.
 
     MoveToNextFrame();
 
@@ -213,7 +216,7 @@ void Sample::Present()
 void Sample::OnSuspending()
 {
     //
-    // Xbox One apps need to explictly suspend the GPU.
+    // Xbox apps need to explictly suspend the GPU.
     //
     // Ensure that no other threads are rendering when this call is made.
     //
@@ -373,7 +376,7 @@ void Sample::CreateResources()
 
     // Obtain the back buffers for this window which will be the final render targets
     // and create render target views for each of them.
-    CD3DX12_HEAP_PROPERTIES swapChainHeapProperties(D3D12_HEAP_TYPE_DEFAULT);
+    const CD3DX12_HEAP_PROPERTIES swapChainHeapProperties(D3D12_HEAP_TYPE_DEFAULT);
 
     D3D12_RESOURCE_DESC swapChainBufferDesc = CD3DX12_RESOURCE_DESC::Tex2D(
         c_backBufferFormat,
@@ -407,7 +410,7 @@ void Sample::CreateResources()
         rtvDesc.Format = c_backBufferFormat;
         rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 
-        CD3DX12_CPU_DESCRIPTOR_HANDLE rtvDescriptor(
+        const CD3DX12_CPU_DESCRIPTOR_HANDLE rtvDescriptor(
             m_rtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart(),
             static_cast<INT>(n), m_rtvDescriptorSize);
         m_d3dDevice->CreateRenderTargetView(m_renderTargets[n].Get(), &rtvDesc, rtvDescriptor);
@@ -418,7 +421,7 @@ void Sample::CreateResources()
 
     // Allocate a 2-D surface as the depth/stencil buffer and create a depth/stencil view
     // on this surface.
-    CD3DX12_HEAP_PROPERTIES depthHeapProperties(D3D12_HEAP_TYPE_DEFAULT);
+    const CD3DX12_HEAP_PROPERTIES depthHeapProperties(D3D12_HEAP_TYPE_DEFAULT);
 
     D3D12_RESOURCE_DESC depthStencilDesc = CD3DX12_RESOURCE_DESC::Tex2D(
         c_depthBufferFormat,
@@ -470,7 +473,7 @@ void Sample::CreateResources()
     CreateShaderResourceView(m_d3dDevice.Get(), m_background.Get(),
         m_resourceDescriptors->GetCpuHandle(Descriptors::Background));
 
-    RenderTargetState rtState(c_backBufferFormat, c_depthBufferFormat);
+    const RenderTargetState rtState(c_backBufferFormat, c_depthBufferFormat);
 
     SpriteBatchPipelineStateDescription pd(rtState);
     m_batch = std::make_unique<SpriteBatch>(m_d3dDevice.Get(), resourceUpload, pd);
@@ -487,7 +490,7 @@ void Sample::WaitForGpu()
 
     // Wait until the Signal has been processed.
     DX::ThrowIfFailed(m_fence->SetEventOnCompletion(m_fenceValues[m_backBufferIndex], m_fenceEvent.Get()));
-    WaitForSingleObjectEx(m_fenceEvent.Get(), INFINITE, FALSE);
+    std::ignore = WaitForSingleObjectEx(m_fenceEvent.Get(), INFINITE, FALSE);
 
     // Increment the fence value for the current frame.
     m_fenceValues[m_backBufferIndex]++;

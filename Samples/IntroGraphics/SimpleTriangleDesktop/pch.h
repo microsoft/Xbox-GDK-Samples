@@ -53,6 +53,7 @@
 #endif
 
 #define D3DX12_NO_STATE_OBJECT_HELPERS
+#define D3DX12_NO_CHECK_FEATURE_SUPPORT_CLASS
 #include "d3dx12.h"
 
 #define _XM_NO_XMVECTOR_OVERLOADS_
@@ -75,6 +76,7 @@
 #include <stdexcept>
 #include <string>
 #include <system_error>
+#include <tuple>
 
 // To use graphics and CPU markup events with the latest version of PIX, change this to include <pix3.h>
 // then add the NuGet package WinPixEventRuntime to the project.

@@ -440,9 +440,7 @@ void Sample::Initialize(HWND window)
     m_keyboard = std::make_unique<Keyboard>();
 
     m_mouse = std::make_unique<Mouse>();
-#ifdef _GAMING_DESKTOP
     m_mouse->SetWindow(window);
-#endif
 
     m_deviceResources->SetWindow(window);
 

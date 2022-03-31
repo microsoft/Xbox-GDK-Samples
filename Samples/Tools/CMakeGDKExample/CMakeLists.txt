@@ -132,7 +132,10 @@ endif()
 # Xbox.Services.API.C Xbox.XCurl.API Xbox.Game.Chat.2.Cpp.API PlayFab.Party.Cpp PlayFab.PartyXboxLive.Cpp
 set_property(TARGET ${PROJECT_NAME} PROPERTY VS_GLOBAL_GDKExtLibNames Xbox.Services.API.C)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE "libHttpClient.${MSVC_TOOLSET_VERSION}.GDK.C.lib" "Microsoft.Xbox.Services.${MSVC_TOOLSET_VERSION}.GDK.C.lib" winhttp.lib crypt32.lib)
+# VC++ binary compatibility means we can use the VS 2019 version with VS 2019 or VS 2022
+set(ExtensionPlatformToolset 142)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE "libHttpClient.${ExtensionPlatformToolset}.GDK.C.lib" "Microsoft.Xbox.Services.${ExtensionPlatformToolset}.GDK.C.lib" winhttp.lib crypt32.lib)
 
 if(CMAKE_VS_PLATFORM_NAME STREQUAL "Gaming.Desktop.x64")
     target_link_libraries(${PROJECT_NAME} PRIVATE appnotify.lib)

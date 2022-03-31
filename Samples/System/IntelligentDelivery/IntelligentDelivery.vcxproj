@@ -285,7 +285,6 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
     </Link>
     <Manifest>
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
@@ -304,6 +303,8 @@
     </ClCompile>
     <FXCompile>
       <ShaderModel>6.0</ShaderModel>
+      <EnableDebuggingInformation>true</EnableDebuggingInformation>
+      <AdditionalOptions>/Fd "$(OutDir)%(Filename).pdb" %(AdditionalOptions)</AdditionalOptions>
     </FXCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">
@@ -367,7 +368,6 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
     </Link>
     <Manifest>
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
@@ -386,6 +386,8 @@
     </ClCompile>
     <FXCompile>
       <ShaderModel>6.0</ShaderModel>
+      <EnableDebuggingInformation>true</EnableDebuggingInformation>
+      <AdditionalOptions>/Fd "$(OutDir)%(Filename).pdb" %(AdditionalOptions)</AdditionalOptions>
     </FXCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">
@@ -441,7 +443,6 @@
       <AdditionalDependencies>uuid.lib;$(Console_Libs);%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
     </Link>
     <Manifest>
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
@@ -459,9 +460,17 @@
     </ClCompile>
     <FXCompile>
       <ShaderModel>6.0</ShaderModel>
+      <EnableDebuggingInformation>true</EnableDebuggingInformation>
+      <AdditionalOptions>/Fd "$(OutDir)%(Filename).pdb" %(AdditionalOptions)</AdditionalOptions>
     </FXCompile>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup>
+    <CopyFileToFolders>
+      <DestinationFolders>$(OutDir)Assets</DestinationFolders>
+    </CopyFileToFolders>
+  </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h" />
     <ClInclude Include="..\..\..\Kits\ATGTK\DebugDraw.h" />
     <ClInclude Include="..\..\..\Kits\ATGTK\TextConsole.h" />
     <ClInclude Include="..\..\..\Kits\ATGTK\Texture.h" />
@@ -495,106 +504,120 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <CopyFileToFolders Include="Assets\LargeLogo.png" />
+    <CopyFileToFolders Include="Assets\Logo.png" />
+    <CopyFileToFolders Include="Assets\SmallLogo.png" />
+    <CopyFileToFolders Include="Assets\SplashScreen.png" />
+    <CopyFileToFolders Include="Assets\StoreLogo.png" />
     <CopyFileToFolders Include="..\..\..\Kits\UITK\doc\example_assets\textures\roundy-border.png">
-      <DestinationFileName>Assets/Textures/%(Filename)%(Extension)</DestinationFileName>
+      <DestinationFileName>Textures/%(Filename)%(Extension)</DestinationFileName>
     </CopyFileToFolders>
-    <Image Include="Assets\Logo.png" />
     <CopyFileToFolders Include="Assets\progressbar.png">
-      <DestinationFileName>Assets/Textures/%(Filename)%(Extension)</DestinationFileName>
+      <DestinationFileName>Textures/%(Filename)%(Extension)</DestinationFileName>
     </CopyFileToFolders>
     <CopyFileToFolders Include="Assets\logo_atg.png">
-      <DestinationFileName>Assets/Textures/%(Filename)%(Extension)</DestinationFileName>
+      <DestinationFileName>Textures/%(Filename)%(Extension)</DestinationFileName>
     </CopyFileToFolders>
-    <Image Include="Assets\SmallLogo.png" />
-    <Image Include="Assets\LargeLogo.png" />
-    <Image Include="Assets\SplashScreen.png" />
-    <Image Include="Assets\StoreLogo.png" />
-  </ItemGroup>
-  <ItemGroup>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
       <FileType>Document</FileType>
-      <DestinationFileName>Assets/Fonts/%(Filename)%(Extension)</DestinationFileName>
+      <DestinationFileName>Fonts/%(Filename)%(Extension)</DestinationFileName>
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18_Bold.spritefont">
       <FileType>Document</FileType>
-      <DestinationFileName>Assets/Fonts/%(Filename)%(Extension)</DestinationFileName>
+      <DestinationFileName>Fonts/%(Filename)%(Extension)</DestinationFileName>
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18_Italic.spritefont">
       <FileType>Document</FileType>
-      <DestinationFileName>Assets/Fonts/%(Filename)%(Extension)</DestinationFileName>
+      <DestinationFileName>Fonts/%(Filename)%(Extension)</DestinationFileName>
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_24.spritefont">
       <FileType>Document</FileType>
-      <DestinationFileName>Assets/Fonts/%(Filename)%(Extension)</DestinationFileName>
+      <DestinationFileName>Fonts/%(Filename)%(Extension)</DestinationFileName>
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\Courier_16.spritefont">
       <FileType>Document</FileType>
-      <DestinationFileName>Assets/Fonts/%(Filename)%(Extension)</DestinationFileName>
+      <DestinationFileName>Fonts/%(Filename)%(Extension)</DestinationFileName>
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_24_Bold.spritefont">
       <FileType>Document</FileType>
-      <DestinationFileName>Assets/Fonts/%(Filename)%(Extension)</DestinationFileName>
+      <DestinationFileName>Fonts/%(Filename)%(Extension)</DestinationFileName>
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_30.spritefont">
       <FileType>Document</FileType>
-      <DestinationFileName>Assets/Fonts/%(Filename)%(Extension)</DestinationFileName>
+      <DestinationFileName>Fonts/%(Filename)%(Extension)</DestinationFileName>
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_30_Bold.spritefont">
       <FileType>Document</FileType>
-      <DestinationFileName>Assets/Fonts/%(Filename)%(Extension)</DestinationFileName>
+      <DestinationFileName>Fonts/%(Filename)%(Extension)</DestinationFileName>
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
       <FileType>Document</FileType>
-      <DestinationFileName>Assets/Fonts/%(Filename)%(Extension)</DestinationFileName>
+      <DestinationFileName>Fonts/%(Filename)%(Extension)</DestinationFileName>
     </CopyFileToFolders>
     <CopyFileToFolders Include="Assets\UI\chunk.json">
       <FileType>Document</FileType>
-      <DestinationFileName>Assets/Layouts/%(Filename)%(Extension)</DestinationFileName>
+      <DestinationFileName>Layouts/%(Filename)%(Extension)</DestinationFileName>
     </CopyFileToFolders>
     <CopyFileToFolders Include="Assets\UI\defs.json">
       <FileType>Document</FileType>
-      <DestinationFileName>Assets/Layouts/%(Filename)%(Extension)</DestinationFileName>
+      <DestinationFileName>Layouts/%(Filename)%(Extension)</DestinationFileName>
     </CopyFileToFolders>
     <CopyFileToFolders Include="Assets\UI\layout.json">
       <FileType>Document</FileType>
-      <DestinationFileName>Assets/Layouts/%(Filename)%(Extension)</DestinationFileName>
+      <DestinationFileName>Layouts/%(Filename)%(Extension)</DestinationFileName>
     </CopyFileToFolders>
     <CopyFileToFolders Include="Assets\UI\styles.json">
       <FileType>Document</FileType>
-      <DestinationFileName>Assets/Layouts/%(Filename)%(Extension)</DestinationFileName>
+      <DestinationFileName>Layouts/%(Filename)%(Extension)</DestinationFileName>
     </CopyFileToFolders>
     <CopyFileToFolders Include="Assets\UI\feature.json">
       <FileType>Document</FileType>
-      <DestinationFileName>Assets/Layouts/%(Filename)%(Extension)</DestinationFileName>
+      <DestinationFileName>Layouts/%(Filename)%(Extension)</DestinationFileName>
     </CopyFileToFolders>
-    <None Include="CreateInstallPackage_Scarlett.bat" />
-    <None Include="CreateInstallPackage_XboxOne.bat" />
-    <None Include="CreateXVC_Scarlett.bat" />
-    <None Include="CreateXVC_XboxOne.bat" />
-    <None Include="MicrosoftGame_Scarlett.Config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="MicrosoftGame_XboxOne.Config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="readme.docx" />
-    <None Include="StreamingInstall_ja-jp.docx" />
-    <None Include="StreamingInstall_ko-kr.docx" />
-    <None Include="StreamingInstall_zh-cn.docx" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="CreateInstallPackage_PC.bat" />
+    <None Include="CreateInstallPackage_Scarlett.bat" />
+    <None Include="CreateInstallPackage_XboxOne.bat" />
+    <None Include="CreateMSIXVC_PC.bat" />
+    <None Include="CreateXVC_Scarlett.bat" />
+    <None Include="CreateXVC_XboxOne.bat" />
+    <None Include="readme.docx" />
+    <None Include="readme_ja-JP.docx" />
+    <None Include="readme_ko-KR.docx" />
+    <None Include="readme_zh-CN.docx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Chunks_PC.xml">
+      <SubType>Designer</SubType>
+    </Xml>
     <Xml Include="Chunks_Scarlett.xml">
-      <ExcludedFromBuild>
-      </ExcludedFromBuild>
-      <DeploymentContent>false</DeploymentContent>
       <SubType>Designer</SubType>
     </Xml>
     <Xml Include="Chunks_XboxOne.xml">
-      <ExcludedFromBuild>
-      </ExcludedFromBuild>
-      <DeploymentContent>false</DeploymentContent>
       <SubType>Designer</SubType>
     </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGame_PC.Config">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'=='Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
+      <SubType>Designer</SubType>
+    </MGCCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGame_XboxOne.Config">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'=='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <SubType>Designer</SubType>
+    </MGCCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGame_Scarlett.Config">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'=='Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
+      <SubType>Designer</SubType>
+    </MGCCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

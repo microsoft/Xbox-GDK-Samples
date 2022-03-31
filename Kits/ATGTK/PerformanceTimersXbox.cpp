@@ -17,6 +17,7 @@
 #include <atomic>
 #include <exception>
 #include <stdexcept>
+#include <tuple>
 
 #include "xmem.h"
 #pragma comment(lib, "xmem.lib")
@@ -161,7 +162,7 @@ public:
     {
         if (m_memory)
         {
-            (void)VirtualFree(m_memory, m_size, MEM_RELEASE);
+            std::ignore = VirtualFree(m_memory, m_size, MEM_RELEASE);
             m_memory = nullptr;
         }
     }

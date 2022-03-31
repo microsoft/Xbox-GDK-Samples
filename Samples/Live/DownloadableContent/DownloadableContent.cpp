@@ -93,10 +93,7 @@ void Sample::Initialize(HWND window, int width, int height)
     m_gamePad = std::make_unique<GamePad>();
     m_keyboard = std::make_unique<Keyboard>();
     m_mouse = std::make_unique<Mouse>();
-
-#ifdef _GAMING_DESKTOP
     m_mouse->SetWindow(window);
-#endif
 
     m_deviceResources->SetWindow(window, width, height);
 
@@ -543,11 +540,13 @@ void Sample::RefreshInstalledPackages()
 
             PackageDetails package(details);
 
-            if (pThis->IsPackageMounted(package.storeId))
+            auto mountInfo = pThis->GetPackageMountInfo(package.storeId);
+
+            if (mountInfo)
             {
                 package.isMounted = true;
 
-                if (pThis->IsPackageLicensed(package.storeId))
+                if (XStoreIsLicenseValid(mountInfo->packageLicense))
                 {
                     package.isLicense = true;
                 }
@@ -739,9 +738,12 @@ void Sample::UnmountSelectedPackage(PackageDetails &package)
     {
         auto &[license, licenseLostEvent, mountHandle, context] = mountInfo->second;
 
-        UnregisterPackageEvents(license, licenseLostEvent);
-
-        delete context;
+        // If it has license lost event.
+        if (context)
+        {
+            UnregisterPackageEvents(license, licenseLostEvent);
+            delete context;
+        }
 
         // Close the handle to the DLC Package
         XPackageCloseMountHandle(mountHandle);
@@ -767,7 +769,9 @@ XTaskQueueRegistrationToken Sample::RegisterPackageEvents(XStoreLicenseHandle li
 
         debugPrint("Package license lost event received: %s\n", storeId.c_str());
 
-        if (pThis->IsPackageMounted(storeId))
+        auto mountInfo = pThis->GetPackageMountInfo(storeId);
+            
+        if (mountInfo)
         {
             // Unmounting immediately on license terminated is not required and is left to the title
             // to determine the correct time to unmount the package. For example after the current
@@ -784,6 +788,10 @@ XTaskQueueRegistrationToken Sample::RegisterPackageEvents(XStoreLicenseHandle li
 
         pThis->RefreshInstalledPackages();
         delete reinterpret_cast<PackageEventContext*>(context);
+
+        pThis->UnregisterPackageEvents(mountInfo->packageLicense, mountInfo->licenseLostEvent);
+        mountInfo->context = nullptr;
+
     }, &token);
 
     if (FAILED(hr))
@@ -859,21 +867,16 @@ void Sample::AddNewMountedPackage(std::string &storeId, XStoreLicenseHandle lice
     m_backgroundImage->UseTextureData(buffer.get(), fileSize.LowPart);
 }
 
-bool Sample::IsPackageMounted(const std::string &storeId)
-{
-    return m_mountedPackageList.find(storeId) != m_mountedPackageList.end();
-}
-
-bool Sample::IsPackageLicensed(const std::string &storeId)
+PackageMountInfo* Sample::GetPackageMountInfo(const std::string &storeId)
 {
     auto package = m_mountedPackageList.find(storeId);
 
     if (package != m_mountedPackageList.end())
     {
-        return XStoreIsLicenseValid(package->second.packageLicense);
+        return &package->second;
     }
 
-    return false;
+    return nullptr;
 }
 #pragma endregion
 
@@ -1131,6 +1134,18 @@ void Sample::GetDefaultSize(int& width, int& height) const
 void Sample::CreateDeviceDependentResources()
 {
     auto device = m_deviceResources->GetD3DDevice();
+
+#ifdef _GAMING_DESKTOP
+    D3D12_FEATURE_DATA_SHADER_MODEL shaderModel = { D3D_SHADER_MODEL_6_0 };
+    if (FAILED(device->CheckFeatureSupport(D3D12_FEATURE_SHADER_MODEL, &shaderModel, sizeof(shaderModel)))
+        || (shaderModel.HighestShaderModel < D3D_SHADER_MODEL_6_0))
+    {
+#ifdef _DEBUG
+        OutputDebugStringA("ERROR: Shader Model 6.0 is not supported!\n");
+#endif
+        throw std::runtime_error("Shader Model 6.0 is not supported!");
+    }
+#endif
 
     m_graphicsMemory = std::make_unique<GraphicsMemory>(device);
 

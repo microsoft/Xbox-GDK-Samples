@@ -127,7 +127,6 @@
 #define JSON_HAS_RVALUE_REFERENCES 0
 #endif
 
-#ifndef JSONCPP_DEPRECATED
 #ifdef __clang__
 #if __has_extension(attribute_deprecated_with_message)
 #define JSONCPP_DEPRECATED(message) __attribute__((deprecated(message)))
@@ -139,7 +138,6 @@
 #define JSONCPP_DEPRECATED(message) __attribute__((__deprecated__))
 #endif // GNUC version
 #endif // __clang__ || __GNUC__
-#endif
 
 #if !defined(JSONCPP_DEPRECATED)
 #define JSONCPP_DEPRECATED(message)

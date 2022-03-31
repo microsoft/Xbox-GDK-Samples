@@ -23,7 +23,7 @@ using Microsoft::WRL::ComPtr;
 namespace
 {
     // Public site setup for WebSocket experimentation
-    const char* c_webSocketAddress = "https://echo.websocket.org";
+    const char* c_webSocketAddress = "https://ws.ifelse.io";
 }
 
 Sample::Sample() noexcept(false) :
@@ -111,9 +111,7 @@ void Sample::Initialize(HWND window, int width, int height)
     m_gamePad = std::make_unique<GamePad>();
     m_keyboard = std::make_unique<Keyboard>();
     m_mouse = std::make_unique<Mouse>();
-#ifdef _GAMING_DESKTOP
     m_mouse->SetWindow(window);
-#endif
 
     m_deviceResources->SetWindow(window, width, height);
     m_deviceResources->CreateDeviceResources();

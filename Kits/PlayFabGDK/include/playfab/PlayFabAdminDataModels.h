@@ -5374,7 +5374,7 @@ namespace PlayFab
             GenericErrorCodesEvaluationModePlayerCountExceeded,
             GenericErrorCodesGetPlayersInSegmentRateLimitExceeded,
             GenericErrorCodesCloudScriptFunctionNameSizeExceeded,
-            GenericErrorCodesInsightsManagementTitleInEvaluationMode,
+            GenericErrorCodesPaidInsightsFeaturesNotEnabled,
             GenericErrorCodesCloudScriptAzureFunctionsQueueRequestError,
             GenericErrorCodesEvaluationModeTitleCountExceeded,
             GenericErrorCodesInsightsManagementTitleNotInFlight,
@@ -5393,6 +5393,22 @@ namespace PlayFab
             GenericErrorCodesDuplicateKeys,
             GenericErrorCodesWasNotCreatedWithCloudRoot,
             GenericErrorCodesLegacyMultiplayerServersDeprecated,
+            GenericErrorCodesVirtualCurrencyCurrentlyUnavailable,
+            GenericErrorCodesSteamUserNotFound,
+            GenericErrorCodesElasticSearchOperationFailed,
+            GenericErrorCodesNotImplemented,
+            GenericErrorCodesPublisherNotFound,
+            GenericErrorCodesPublisherDeleted,
+            GenericErrorCodesApiDisabledForMigration,
+            GenericErrorCodesResourceNameUpdateNotAllowed,
+            GenericErrorCodesApiNotEnabledForTitle,
+            GenericErrorCodesDuplicateTitleNameForPublisher,
+            GenericErrorCodesAzureTitleCreationInProgress,
+            GenericErrorCodesDuplicateAzureResourceId,
+            GenericErrorCodesTitleConstraintsPublisherDeletion,
+            GenericErrorCodesInvalidPlayerAccountPoolId,
+            GenericErrorCodesPlayerAccountPoolNotFound,
+            GenericErrorCodesPlayerAccountPoolDeleted,
             GenericErrorCodesMatchmakingEntityInvalid,
             GenericErrorCodesMatchmakingPlayerAttributesInvalid,
             GenericErrorCodesMatchmakingQueueNotFound,
@@ -5414,9 +5430,15 @@ namespace PlayFab
             GenericErrorCodesMatchmakingQueueLimitExceeded,
             GenericErrorCodesMatchmakingRequestTypeMismatch,
             GenericErrorCodesMatchmakingBadRequest,
+            GenericErrorCodesPubSubFeatureNotEnabledForTitle,
+            GenericErrorCodesPubSubTooManyRequests,
+            GenericErrorCodesPubSubConnectionHandleAccessDenied,
+            GenericErrorCodesPubSubConnectionHandleInvalid,
+            GenericErrorCodesPubSubSubscriptionLimitExceeded,
             GenericErrorCodesTitleConfigNotFound,
             GenericErrorCodesTitleConfigUpdateConflict,
             GenericErrorCodesTitleConfigSerializationError,
+            GenericErrorCodesCatalogApiNotImplemented,
             GenericErrorCodesCatalogEntityInvalid,
             GenericErrorCodesCatalogTitleIdMissing,
             GenericErrorCodesCatalogPlayerIdMissing,
@@ -5427,7 +5449,6 @@ namespace PlayFab
             GenericErrorCodesCatalogSearchParameterInvalid,
             GenericErrorCodesCatalogFeatureDisabled,
             GenericErrorCodesCatalogConfigInvalid,
-            GenericErrorCodesCatalogUnauthorized,
             GenericErrorCodesCatalogItemTypeInvalid,
             GenericErrorCodesCatalogBadRequest,
             GenericErrorCodesCatalogTooManyRequests,
@@ -5455,9 +5476,26 @@ namespace PlayFab
             GenericErrorCodesExportCannotParseQuery,
             GenericErrorCodesExportControlCommandsNotAllowed,
             GenericErrorCodesExportQueryMissingTableReference,
+            GenericErrorCodesExplorerBasicInvalidQueryName,
+            GenericErrorCodesExplorerBasicInvalidQueryDescription,
+            GenericErrorCodesExplorerBasicInvalidQueryConditions,
+            GenericErrorCodesExplorerBasicInvalidQueryStartDate,
+            GenericErrorCodesExplorerBasicInvalidQueryEndDate,
+            GenericErrorCodesExplorerBasicInvalidQueryGroupBy,
+            GenericErrorCodesExplorerBasicInvalidQueryAggregateType,
+            GenericErrorCodesExplorerBasicInvalidQueryAggregateProperty,
+            GenericErrorCodesExplorerBasicLoadQueriesError,
+            GenericErrorCodesExplorerBasicLoadQueryError,
+            GenericErrorCodesExplorerBasicCreateQueryError,
+            GenericErrorCodesExplorerBasicDeleteQueryError,
+            GenericErrorCodesExplorerBasicUpdateQueryError,
+            GenericErrorCodesExplorerBasicSavedQueriesLimit,
+            GenericErrorCodesExplorerBasicSavedQueryNotFound,
+            GenericErrorCodesTenantShardMapperShardNotFound,
             GenericErrorCodesTitleNotEnabledForParty,
             GenericErrorCodesPartyVersionNotFound,
             GenericErrorCodesMultiplayerServerBuildReferencedByMatchmakingQueue,
+            GenericErrorCodesMultiplayerServerBuildReferencedByBuildAlias,
             GenericErrorCodesExperimentationExperimentStopped,
             GenericErrorCodesExperimentationExperimentRunning,
             GenericErrorCodesExperimentationExperimentNotFound,
@@ -5473,9 +5511,52 @@ namespace PlayFab
             GenericErrorCodesExperimentationInvalidDuration,
             GenericErrorCodesExperimentationMaxExperimentsReached,
             GenericErrorCodesExperimentationExperimentSchedulingInProgress,
+            GenericErrorCodesExperimentationInvalidEndDate,
+            GenericErrorCodesExperimentationInvalidStartDate,
+            GenericErrorCodesExperimentationMaxDurationExceeded,
+            GenericErrorCodesExperimentationExclusionGroupNotFound,
+            GenericErrorCodesExperimentationExclusionGroupInsufficientCapacity,
+            GenericErrorCodesExperimentationExclusionGroupCannotDelete,
+            GenericErrorCodesExperimentationExclusionGroupInvalidTrafficAllocation,
+            GenericErrorCodesExperimentationExclusionGroupInvalidName,
             GenericErrorCodesMaxActionDepthExceeded,
             GenericErrorCodesTitleNotOnUpdatedPricingPlan,
-            GenericErrorCodesSnapshotNotFound
+            GenericErrorCodesSegmentManagementTitleNotInFlight,
+            GenericErrorCodesSegmentManagementNoExpressionTree,
+            GenericErrorCodesSegmentManagementTriggerActionCountOverLimit,
+            GenericErrorCodesSegmentManagementSegmentCountOverLimit,
+            GenericErrorCodesSegmentManagementInvalidSegmentId,
+            GenericErrorCodesSegmentManagementInvalidInput,
+            GenericErrorCodesSegmentManagementInvalidSegmentName,
+            GenericErrorCodesDeleteSegmentRateLimitExceeded,
+            GenericErrorCodesCreateSegmentRateLimitExceeded,
+            GenericErrorCodesUpdateSegmentRateLimitExceeded,
+            GenericErrorCodesGetSegmentsRateLimitExceeded,
+            GenericErrorCodesAsyncExportNotInFlight,
+            GenericErrorCodesAsyncExportNotFound,
+            GenericErrorCodesAsyncExportRateLimitExceeded,
+            GenericErrorCodesSnapshotNotFound,
+            GenericErrorCodesInventoryApiNotImplemented,
+            GenericErrorCodesLobbyDoesNotExist,
+            GenericErrorCodesLobbyRateLimitExceeded,
+            GenericErrorCodesLobbyPlayerAlreadyJoined,
+            GenericErrorCodesLobbyNotJoinable,
+            GenericErrorCodesLobbyMemberCannotRejoin,
+            GenericErrorCodesLobbyCurrentPlayersMoreThanMaxPlayers,
+            GenericErrorCodesLobbyPlayerNotPresent,
+            GenericErrorCodesLobbyBadRequest,
+            GenericErrorCodesLobbyPlayerMaxLobbyLimitExceeded,
+            GenericErrorCodesLobbyNewOwnerMustBeConnected,
+            GenericErrorCodesLobbyCurrentOwnerStillConnected,
+            GenericErrorCodesLobbyMemberIsNotOwner,
+            GenericErrorCodesEventSamplingInvalidRatio,
+            GenericErrorCodesEventSamplingInvalidEventNamespace,
+            GenericErrorCodesEventSamplingInvalidEventName,
+            GenericErrorCodesEventSamplingRatioNotFound,
+            GenericErrorCodesEventSinkConnectionInvalid,
+            GenericErrorCodesEventSinkConnectionUnauthorized,
+            GenericErrorCodesEventSinkRegionInvalid,
+            GenericErrorCodesOperationCanceled
         };
 
         inline void ToJsonEnum(const GenericErrorCodes input, Json::Value& output)
@@ -7890,9 +7971,9 @@ namespace PlayFab
                 output = Json::Value("CloudScriptFunctionNameSizeExceeded");
                 return;
             }
-            if (input == GenericErrorCodes::GenericErrorCodesInsightsManagementTitleInEvaluationMode)
+            if (input == GenericErrorCodes::GenericErrorCodesPaidInsightsFeaturesNotEnabled)
             {
-                output = Json::Value("InsightsManagementTitleInEvaluationMode");
+                output = Json::Value("PaidInsightsFeaturesNotEnabled");
                 return;
             }
             if (input == GenericErrorCodes::GenericErrorCodesCloudScriptAzureFunctionsQueueRequestError)
@@ -7983,6 +8064,86 @@ namespace PlayFab
             if (input == GenericErrorCodes::GenericErrorCodesLegacyMultiplayerServersDeprecated)
             {
                 output = Json::Value("LegacyMultiplayerServersDeprecated");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesVirtualCurrencyCurrentlyUnavailable)
+            {
+                output = Json::Value("VirtualCurrencyCurrentlyUnavailable");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesSteamUserNotFound)
+            {
+                output = Json::Value("SteamUserNotFound");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesElasticSearchOperationFailed)
+            {
+                output = Json::Value("ElasticSearchOperationFailed");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesNotImplemented)
+            {
+                output = Json::Value("NotImplemented");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesPublisherNotFound)
+            {
+                output = Json::Value("PublisherNotFound");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesPublisherDeleted)
+            {
+                output = Json::Value("PublisherDeleted");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesApiDisabledForMigration)
+            {
+                output = Json::Value("ApiDisabledForMigration");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesResourceNameUpdateNotAllowed)
+            {
+                output = Json::Value("ResourceNameUpdateNotAllowed");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesApiNotEnabledForTitle)
+            {
+                output = Json::Value("ApiNotEnabledForTitle");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesDuplicateTitleNameForPublisher)
+            {
+                output = Json::Value("DuplicateTitleNameForPublisher");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesAzureTitleCreationInProgress)
+            {
+                output = Json::Value("AzureTitleCreationInProgress");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesDuplicateAzureResourceId)
+            {
+                output = Json::Value("DuplicateAzureResourceId");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesTitleConstraintsPublisherDeletion)
+            {
+                output = Json::Value("TitleConstraintsPublisherDeletion");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesInvalidPlayerAccountPoolId)
+            {
+                output = Json::Value("InvalidPlayerAccountPoolId");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesPlayerAccountPoolNotFound)
+            {
+                output = Json::Value("PlayerAccountPoolNotFound");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesPlayerAccountPoolDeleted)
+            {
+                output = Json::Value("PlayerAccountPoolDeleted");
                 return;
             }
             if (input == GenericErrorCodes::GenericErrorCodesMatchmakingEntityInvalid)
@@ -8090,6 +8251,31 @@ namespace PlayFab
                 output = Json::Value("MatchmakingBadRequest");
                 return;
             }
+            if (input == GenericErrorCodes::GenericErrorCodesPubSubFeatureNotEnabledForTitle)
+            {
+                output = Json::Value("PubSubFeatureNotEnabledForTitle");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesPubSubTooManyRequests)
+            {
+                output = Json::Value("PubSubTooManyRequests");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesPubSubConnectionHandleAccessDenied)
+            {
+                output = Json::Value("PubSubConnectionHandleAccessDenied");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesPubSubConnectionHandleInvalid)
+            {
+                output = Json::Value("PubSubConnectionHandleInvalid");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesPubSubSubscriptionLimitExceeded)
+            {
+                output = Json::Value("PubSubSubscriptionLimitExceeded");
+                return;
+            }
             if (input == GenericErrorCodes::GenericErrorCodesTitleConfigNotFound)
             {
                 output = Json::Value("TitleConfigNotFound");
@@ -8103,6 +8289,11 @@ namespace PlayFab
             if (input == GenericErrorCodes::GenericErrorCodesTitleConfigSerializationError)
             {
                 output = Json::Value("TitleConfigSerializationError");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesCatalogApiNotImplemented)
+            {
+                output = Json::Value("CatalogApiNotImplemented");
                 return;
             }
             if (input == GenericErrorCodes::GenericErrorCodesCatalogEntityInvalid)
@@ -8153,11 +8344,6 @@ namespace PlayFab
             if (input == GenericErrorCodes::GenericErrorCodesCatalogConfigInvalid)
             {
                 output = Json::Value("CatalogConfigInvalid");
-                return;
-            }
-            if (input == GenericErrorCodes::GenericErrorCodesCatalogUnauthorized)
-            {
-                output = Json::Value("CatalogUnauthorized");
                 return;
             }
             if (input == GenericErrorCodes::GenericErrorCodesCatalogItemTypeInvalid)
@@ -8295,6 +8481,86 @@ namespace PlayFab
                 output = Json::Value("ExportQueryMissingTableReference");
                 return;
             }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryName)
+            {
+                output = Json::Value("ExplorerBasicInvalidQueryName");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryDescription)
+            {
+                output = Json::Value("ExplorerBasicInvalidQueryDescription");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryConditions)
+            {
+                output = Json::Value("ExplorerBasicInvalidQueryConditions");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryStartDate)
+            {
+                output = Json::Value("ExplorerBasicInvalidQueryStartDate");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryEndDate)
+            {
+                output = Json::Value("ExplorerBasicInvalidQueryEndDate");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryGroupBy)
+            {
+                output = Json::Value("ExplorerBasicInvalidQueryGroupBy");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryAggregateType)
+            {
+                output = Json::Value("ExplorerBasicInvalidQueryAggregateType");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryAggregateProperty)
+            {
+                output = Json::Value("ExplorerBasicInvalidQueryAggregateProperty");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicLoadQueriesError)
+            {
+                output = Json::Value("ExplorerBasicLoadQueriesError");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicLoadQueryError)
+            {
+                output = Json::Value("ExplorerBasicLoadQueryError");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicCreateQueryError)
+            {
+                output = Json::Value("ExplorerBasicCreateQueryError");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicDeleteQueryError)
+            {
+                output = Json::Value("ExplorerBasicDeleteQueryError");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicUpdateQueryError)
+            {
+                output = Json::Value("ExplorerBasicUpdateQueryError");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicSavedQueriesLimit)
+            {
+                output = Json::Value("ExplorerBasicSavedQueriesLimit");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicSavedQueryNotFound)
+            {
+                output = Json::Value("ExplorerBasicSavedQueryNotFound");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesTenantShardMapperShardNotFound)
+            {
+                output = Json::Value("TenantShardMapperShardNotFound");
+                return;
+            }
             if (input == GenericErrorCodes::GenericErrorCodesTitleNotEnabledForParty)
             {
                 output = Json::Value("TitleNotEnabledForParty");
@@ -8308,6 +8574,11 @@ namespace PlayFab
             if (input == GenericErrorCodes::GenericErrorCodesMultiplayerServerBuildReferencedByMatchmakingQueue)
             {
                 output = Json::Value("MultiplayerServerBuildReferencedByMatchmakingQueue");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesMultiplayerServerBuildReferencedByBuildAlias)
+            {
+                output = Json::Value("MultiplayerServerBuildReferencedByBuildAlias");
                 return;
             }
             if (input == GenericErrorCodes::GenericErrorCodesExperimentationExperimentStopped)
@@ -8385,6 +8656,46 @@ namespace PlayFab
                 output = Json::Value("ExperimentationExperimentSchedulingInProgress");
                 return;
             }
+            if (input == GenericErrorCodes::GenericErrorCodesExperimentationInvalidEndDate)
+            {
+                output = Json::Value("ExperimentationInvalidEndDate");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExperimentationInvalidStartDate)
+            {
+                output = Json::Value("ExperimentationInvalidStartDate");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExperimentationMaxDurationExceeded)
+            {
+                output = Json::Value("ExperimentationMaxDurationExceeded");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExperimentationExclusionGroupNotFound)
+            {
+                output = Json::Value("ExperimentationExclusionGroupNotFound");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExperimentationExclusionGroupInsufficientCapacity)
+            {
+                output = Json::Value("ExperimentationExclusionGroupInsufficientCapacity");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExperimentationExclusionGroupCannotDelete)
+            {
+                output = Json::Value("ExperimentationExclusionGroupCannotDelete");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExperimentationExclusionGroupInvalidTrafficAllocation)
+            {
+                output = Json::Value("ExperimentationExclusionGroupInvalidTrafficAllocation");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExperimentationExclusionGroupInvalidName)
+            {
+                output = Json::Value("ExperimentationExclusionGroupInvalidName");
+                return;
+            }
             if (input == GenericErrorCodes::GenericErrorCodesMaxActionDepthExceeded)
             {
                 output = Json::Value("MaxActionDepthExceeded");
@@ -8395,9 +8706,184 @@ namespace PlayFab
                 output = Json::Value("TitleNotOnUpdatedPricingPlan");
                 return;
             }
+            if (input == GenericErrorCodes::GenericErrorCodesSegmentManagementTitleNotInFlight)
+            {
+                output = Json::Value("SegmentManagementTitleNotInFlight");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesSegmentManagementNoExpressionTree)
+            {
+                output = Json::Value("SegmentManagementNoExpressionTree");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesSegmentManagementTriggerActionCountOverLimit)
+            {
+                output = Json::Value("SegmentManagementTriggerActionCountOverLimit");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesSegmentManagementSegmentCountOverLimit)
+            {
+                output = Json::Value("SegmentManagementSegmentCountOverLimit");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesSegmentManagementInvalidSegmentId)
+            {
+                output = Json::Value("SegmentManagementInvalidSegmentId");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesSegmentManagementInvalidInput)
+            {
+                output = Json::Value("SegmentManagementInvalidInput");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesSegmentManagementInvalidSegmentName)
+            {
+                output = Json::Value("SegmentManagementInvalidSegmentName");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesDeleteSegmentRateLimitExceeded)
+            {
+                output = Json::Value("DeleteSegmentRateLimitExceeded");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesCreateSegmentRateLimitExceeded)
+            {
+                output = Json::Value("CreateSegmentRateLimitExceeded");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesUpdateSegmentRateLimitExceeded)
+            {
+                output = Json::Value("UpdateSegmentRateLimitExceeded");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesGetSegmentsRateLimitExceeded)
+            {
+                output = Json::Value("GetSegmentsRateLimitExceeded");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesAsyncExportNotInFlight)
+            {
+                output = Json::Value("AsyncExportNotInFlight");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesAsyncExportNotFound)
+            {
+                output = Json::Value("AsyncExportNotFound");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesAsyncExportRateLimitExceeded)
+            {
+                output = Json::Value("AsyncExportRateLimitExceeded");
+                return;
+            }
             if (input == GenericErrorCodes::GenericErrorCodesSnapshotNotFound)
             {
                 output = Json::Value("SnapshotNotFound");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesInventoryApiNotImplemented)
+            {
+                output = Json::Value("InventoryApiNotImplemented");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesLobbyDoesNotExist)
+            {
+                output = Json::Value("LobbyDoesNotExist");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesLobbyRateLimitExceeded)
+            {
+                output = Json::Value("LobbyRateLimitExceeded");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesLobbyPlayerAlreadyJoined)
+            {
+                output = Json::Value("LobbyPlayerAlreadyJoined");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesLobbyNotJoinable)
+            {
+                output = Json::Value("LobbyNotJoinable");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesLobbyMemberCannotRejoin)
+            {
+                output = Json::Value("LobbyMemberCannotRejoin");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesLobbyCurrentPlayersMoreThanMaxPlayers)
+            {
+                output = Json::Value("LobbyCurrentPlayersMoreThanMaxPlayers");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesLobbyPlayerNotPresent)
+            {
+                output = Json::Value("LobbyPlayerNotPresent");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesLobbyBadRequest)
+            {
+                output = Json::Value("LobbyBadRequest");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesLobbyPlayerMaxLobbyLimitExceeded)
+            {
+                output = Json::Value("LobbyPlayerMaxLobbyLimitExceeded");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesLobbyNewOwnerMustBeConnected)
+            {
+                output = Json::Value("LobbyNewOwnerMustBeConnected");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesLobbyCurrentOwnerStillConnected)
+            {
+                output = Json::Value("LobbyCurrentOwnerStillConnected");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesLobbyMemberIsNotOwner)
+            {
+                output = Json::Value("LobbyMemberIsNotOwner");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesEventSamplingInvalidRatio)
+            {
+                output = Json::Value("EventSamplingInvalidRatio");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesEventSamplingInvalidEventNamespace)
+            {
+                output = Json::Value("EventSamplingInvalidEventNamespace");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesEventSamplingInvalidEventName)
+            {
+                output = Json::Value("EventSamplingInvalidEventName");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesEventSamplingRatioNotFound)
+            {
+                output = Json::Value("EventSamplingRatioNotFound");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesEventSinkConnectionInvalid)
+            {
+                output = Json::Value("EventSinkConnectionInvalid");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesEventSinkConnectionUnauthorized)
+            {
+                output = Json::Value("EventSinkConnectionUnauthorized");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesEventSinkRegionInvalid)
+            {
+                output = Json::Value("EventSinkRegionInvalid");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesOperationCanceled)
+            {
+                output = Json::Value("OperationCanceled");
                 return;
             }
         }
@@ -10818,9 +11304,9 @@ namespace PlayFab
                 output = GenericErrorCodes::GenericErrorCodesCloudScriptFunctionNameSizeExceeded;
                 return;
             }
-            if (inputStr == "InsightsManagementTitleInEvaluationMode")
+            if (inputStr == "PaidInsightsFeaturesNotEnabled")
             {
-                output = GenericErrorCodes::GenericErrorCodesInsightsManagementTitleInEvaluationMode;
+                output = GenericErrorCodes::GenericErrorCodesPaidInsightsFeaturesNotEnabled;
                 return;
             }
             if (inputStr == "CloudScriptAzureFunctionsQueueRequestError")
@@ -10911,6 +11397,86 @@ namespace PlayFab
             if (inputStr == "LegacyMultiplayerServersDeprecated")
             {
                 output = GenericErrorCodes::GenericErrorCodesLegacyMultiplayerServersDeprecated;
+                return;
+            }
+            if (inputStr == "VirtualCurrencyCurrentlyUnavailable")
+            {
+                output = GenericErrorCodes::GenericErrorCodesVirtualCurrencyCurrentlyUnavailable;
+                return;
+            }
+            if (inputStr == "SteamUserNotFound")
+            {
+                output = GenericErrorCodes::GenericErrorCodesSteamUserNotFound;
+                return;
+            }
+            if (inputStr == "ElasticSearchOperationFailed")
+            {
+                output = GenericErrorCodes::GenericErrorCodesElasticSearchOperationFailed;
+                return;
+            }
+            if (inputStr == "NotImplemented")
+            {
+                output = GenericErrorCodes::GenericErrorCodesNotImplemented;
+                return;
+            }
+            if (inputStr == "PublisherNotFound")
+            {
+                output = GenericErrorCodes::GenericErrorCodesPublisherNotFound;
+                return;
+            }
+            if (inputStr == "PublisherDeleted")
+            {
+                output = GenericErrorCodes::GenericErrorCodesPublisherDeleted;
+                return;
+            }
+            if (inputStr == "ApiDisabledForMigration")
+            {
+                output = GenericErrorCodes::GenericErrorCodesApiDisabledForMigration;
+                return;
+            }
+            if (inputStr == "ResourceNameUpdateNotAllowed")
+            {
+                output = GenericErrorCodes::GenericErrorCodesResourceNameUpdateNotAllowed;
+                return;
+            }
+            if (inputStr == "ApiNotEnabledForTitle")
+            {
+                output = GenericErrorCodes::GenericErrorCodesApiNotEnabledForTitle;
+                return;
+            }
+            if (inputStr == "DuplicateTitleNameForPublisher")
+            {
+                output = GenericErrorCodes::GenericErrorCodesDuplicateTitleNameForPublisher;
+                return;
+            }
+            if (inputStr == "AzureTitleCreationInProgress")
+            {
+                output = GenericErrorCodes::GenericErrorCodesAzureTitleCreationInProgress;
+                return;
+            }
+            if (inputStr == "DuplicateAzureResourceId")
+            {
+                output = GenericErrorCodes::GenericErrorCodesDuplicateAzureResourceId;
+                return;
+            }
+            if (inputStr == "TitleConstraintsPublisherDeletion")
+            {
+                output = GenericErrorCodes::GenericErrorCodesTitleConstraintsPublisherDeletion;
+                return;
+            }
+            if (inputStr == "InvalidPlayerAccountPoolId")
+            {
+                output = GenericErrorCodes::GenericErrorCodesInvalidPlayerAccountPoolId;
+                return;
+            }
+            if (inputStr == "PlayerAccountPoolNotFound")
+            {
+                output = GenericErrorCodes::GenericErrorCodesPlayerAccountPoolNotFound;
+                return;
+            }
+            if (inputStr == "PlayerAccountPoolDeleted")
+            {
+                output = GenericErrorCodes::GenericErrorCodesPlayerAccountPoolDeleted;
                 return;
             }
             if (inputStr == "MatchmakingEntityInvalid")
@@ -11018,6 +11584,31 @@ namespace PlayFab
                 output = GenericErrorCodes::GenericErrorCodesMatchmakingBadRequest;
                 return;
             }
+            if (inputStr == "PubSubFeatureNotEnabledForTitle")
+            {
+                output = GenericErrorCodes::GenericErrorCodesPubSubFeatureNotEnabledForTitle;
+                return;
+            }
+            if (inputStr == "PubSubTooManyRequests")
+            {
+                output = GenericErrorCodes::GenericErrorCodesPubSubTooManyRequests;
+                return;
+            }
+            if (inputStr == "PubSubConnectionHandleAccessDenied")
+            {
+                output = GenericErrorCodes::GenericErrorCodesPubSubConnectionHandleAccessDenied;
+                return;
+            }
+            if (inputStr == "PubSubConnectionHandleInvalid")
+            {
+                output = GenericErrorCodes::GenericErrorCodesPubSubConnectionHandleInvalid;
+                return;
+            }
+            if (inputStr == "PubSubSubscriptionLimitExceeded")
+            {
+                output = GenericErrorCodes::GenericErrorCodesPubSubSubscriptionLimitExceeded;
+                return;
+            }
             if (inputStr == "TitleConfigNotFound")
             {
                 output = GenericErrorCodes::GenericErrorCodesTitleConfigNotFound;
@@ -11031,6 +11622,11 @@ namespace PlayFab
             if (inputStr == "TitleConfigSerializationError")
             {
                 output = GenericErrorCodes::GenericErrorCodesTitleConfigSerializationError;
+                return;
+            }
+            if (inputStr == "CatalogApiNotImplemented")
+            {
+                output = GenericErrorCodes::GenericErrorCodesCatalogApiNotImplemented;
                 return;
             }
             if (inputStr == "CatalogEntityInvalid")
@@ -11081,11 +11677,6 @@ namespace PlayFab
             if (inputStr == "CatalogConfigInvalid")
             {
                 output = GenericErrorCodes::GenericErrorCodesCatalogConfigInvalid;
-                return;
-            }
-            if (inputStr == "CatalogUnauthorized")
-            {
-                output = GenericErrorCodes::GenericErrorCodesCatalogUnauthorized;
                 return;
             }
             if (inputStr == "CatalogItemTypeInvalid")
@@ -11223,6 +11814,86 @@ namespace PlayFab
                 output = GenericErrorCodes::GenericErrorCodesExportQueryMissingTableReference;
                 return;
             }
+            if (inputStr == "ExplorerBasicInvalidQueryName")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryName;
+                return;
+            }
+            if (inputStr == "ExplorerBasicInvalidQueryDescription")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryDescription;
+                return;
+            }
+            if (inputStr == "ExplorerBasicInvalidQueryConditions")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryConditions;
+                return;
+            }
+            if (inputStr == "ExplorerBasicInvalidQueryStartDate")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryStartDate;
+                return;
+            }
+            if (inputStr == "ExplorerBasicInvalidQueryEndDate")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryEndDate;
+                return;
+            }
+            if (inputStr == "ExplorerBasicInvalidQueryGroupBy")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryGroupBy;
+                return;
+            }
+            if (inputStr == "ExplorerBasicInvalidQueryAggregateType")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryAggregateType;
+                return;
+            }
+            if (inputStr == "ExplorerBasicInvalidQueryAggregateProperty")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryAggregateProperty;
+                return;
+            }
+            if (inputStr == "ExplorerBasicLoadQueriesError")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicLoadQueriesError;
+                return;
+            }
+            if (inputStr == "ExplorerBasicLoadQueryError")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicLoadQueryError;
+                return;
+            }
+            if (inputStr == "ExplorerBasicCreateQueryError")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicCreateQueryError;
+                return;
+            }
+            if (inputStr == "ExplorerBasicDeleteQueryError")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicDeleteQueryError;
+                return;
+            }
+            if (inputStr == "ExplorerBasicUpdateQueryError")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicUpdateQueryError;
+                return;
+            }
+            if (inputStr == "ExplorerBasicSavedQueriesLimit")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicSavedQueriesLimit;
+                return;
+            }
+            if (inputStr == "ExplorerBasicSavedQueryNotFound")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicSavedQueryNotFound;
+                return;
+            }
+            if (inputStr == "TenantShardMapperShardNotFound")
+            {
+                output = GenericErrorCodes::GenericErrorCodesTenantShardMapperShardNotFound;
+                return;
+            }
             if (inputStr == "TitleNotEnabledForParty")
             {
                 output = GenericErrorCodes::GenericErrorCodesTitleNotEnabledForParty;
@@ -11236,6 +11907,11 @@ namespace PlayFab
             if (inputStr == "MultiplayerServerBuildReferencedByMatchmakingQueue")
             {
                 output = GenericErrorCodes::GenericErrorCodesMultiplayerServerBuildReferencedByMatchmakingQueue;
+                return;
+            }
+            if (inputStr == "MultiplayerServerBuildReferencedByBuildAlias")
+            {
+                output = GenericErrorCodes::GenericErrorCodesMultiplayerServerBuildReferencedByBuildAlias;
                 return;
             }
             if (inputStr == "ExperimentationExperimentStopped")
@@ -11313,6 +11989,46 @@ namespace PlayFab
                 output = GenericErrorCodes::GenericErrorCodesExperimentationExperimentSchedulingInProgress;
                 return;
             }
+            if (inputStr == "ExperimentationInvalidEndDate")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExperimentationInvalidEndDate;
+                return;
+            }
+            if (inputStr == "ExperimentationInvalidStartDate")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExperimentationInvalidStartDate;
+                return;
+            }
+            if (inputStr == "ExperimentationMaxDurationExceeded")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExperimentationMaxDurationExceeded;
+                return;
+            }
+            if (inputStr == "ExperimentationExclusionGroupNotFound")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExperimentationExclusionGroupNotFound;
+                return;
+            }
+            if (inputStr == "ExperimentationExclusionGroupInsufficientCapacity")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExperimentationExclusionGroupInsufficientCapacity;
+                return;
+            }
+            if (inputStr == "ExperimentationExclusionGroupCannotDelete")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExperimentationExclusionGroupCannotDelete;
+                return;
+            }
+            if (inputStr == "ExperimentationExclusionGroupInvalidTrafficAllocation")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExperimentationExclusionGroupInvalidTrafficAllocation;
+                return;
+            }
+            if (inputStr == "ExperimentationExclusionGroupInvalidName")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExperimentationExclusionGroupInvalidName;
+                return;
+            }
             if (inputStr == "MaxActionDepthExceeded")
             {
                 output = GenericErrorCodes::GenericErrorCodesMaxActionDepthExceeded;
@@ -11323,9 +12039,184 @@ namespace PlayFab
                 output = GenericErrorCodes::GenericErrorCodesTitleNotOnUpdatedPricingPlan;
                 return;
             }
+            if (inputStr == "SegmentManagementTitleNotInFlight")
+            {
+                output = GenericErrorCodes::GenericErrorCodesSegmentManagementTitleNotInFlight;
+                return;
+            }
+            if (inputStr == "SegmentManagementNoExpressionTree")
+            {
+                output = GenericErrorCodes::GenericErrorCodesSegmentManagementNoExpressionTree;
+                return;
+            }
+            if (inputStr == "SegmentManagementTriggerActionCountOverLimit")
+            {
+                output = GenericErrorCodes::GenericErrorCodesSegmentManagementTriggerActionCountOverLimit;
+                return;
+            }
+            if (inputStr == "SegmentManagementSegmentCountOverLimit")
+            {
+                output = GenericErrorCodes::GenericErrorCodesSegmentManagementSegmentCountOverLimit;
+                return;
+            }
+            if (inputStr == "SegmentManagementInvalidSegmentId")
+            {
+                output = GenericErrorCodes::GenericErrorCodesSegmentManagementInvalidSegmentId;
+                return;
+            }
+            if (inputStr == "SegmentManagementInvalidInput")
+            {
+                output = GenericErrorCodes::GenericErrorCodesSegmentManagementInvalidInput;
+                return;
+            }
+            if (inputStr == "SegmentManagementInvalidSegmentName")
+            {
+                output = GenericErrorCodes::GenericErrorCodesSegmentManagementInvalidSegmentName;
+                return;
+            }
+            if (inputStr == "DeleteSegmentRateLimitExceeded")
+            {
+                output = GenericErrorCodes::GenericErrorCodesDeleteSegmentRateLimitExceeded;
+                return;
+            }
+            if (inputStr == "CreateSegmentRateLimitExceeded")
+            {
+                output = GenericErrorCodes::GenericErrorCodesCreateSegmentRateLimitExceeded;
+                return;
+            }
+            if (inputStr == "UpdateSegmentRateLimitExceeded")
+            {
+                output = GenericErrorCodes::GenericErrorCodesUpdateSegmentRateLimitExceeded;
+                return;
+            }
+            if (inputStr == "GetSegmentsRateLimitExceeded")
+            {
+                output = GenericErrorCodes::GenericErrorCodesGetSegmentsRateLimitExceeded;
+                return;
+            }
+            if (inputStr == "AsyncExportNotInFlight")
+            {
+                output = GenericErrorCodes::GenericErrorCodesAsyncExportNotInFlight;
+                return;
+            }
+            if (inputStr == "AsyncExportNotFound")
+            {
+                output = GenericErrorCodes::GenericErrorCodesAsyncExportNotFound;
+                return;
+            }
+            if (inputStr == "AsyncExportRateLimitExceeded")
+            {
+                output = GenericErrorCodes::GenericErrorCodesAsyncExportRateLimitExceeded;
+                return;
+            }
             if (inputStr == "SnapshotNotFound")
             {
                 output = GenericErrorCodes::GenericErrorCodesSnapshotNotFound;
+                return;
+            }
+            if (inputStr == "InventoryApiNotImplemented")
+            {
+                output = GenericErrorCodes::GenericErrorCodesInventoryApiNotImplemented;
+                return;
+            }
+            if (inputStr == "LobbyDoesNotExist")
+            {
+                output = GenericErrorCodes::GenericErrorCodesLobbyDoesNotExist;
+                return;
+            }
+            if (inputStr == "LobbyRateLimitExceeded")
+            {
+                output = GenericErrorCodes::GenericErrorCodesLobbyRateLimitExceeded;
+                return;
+            }
+            if (inputStr == "LobbyPlayerAlreadyJoined")
+            {
+                output = GenericErrorCodes::GenericErrorCodesLobbyPlayerAlreadyJoined;
+                return;
+            }
+            if (inputStr == "LobbyNotJoinable")
+            {
+                output = GenericErrorCodes::GenericErrorCodesLobbyNotJoinable;
+                return;
+            }
+            if (inputStr == "LobbyMemberCannotRejoin")
+            {
+                output = GenericErrorCodes::GenericErrorCodesLobbyMemberCannotRejoin;
+                return;
+            }
+            if (inputStr == "LobbyCurrentPlayersMoreThanMaxPlayers")
+            {
+                output = GenericErrorCodes::GenericErrorCodesLobbyCurrentPlayersMoreThanMaxPlayers;
+                return;
+            }
+            if (inputStr == "LobbyPlayerNotPresent")
+            {
+                output = GenericErrorCodes::GenericErrorCodesLobbyPlayerNotPresent;
+                return;
+            }
+            if (inputStr == "LobbyBadRequest")
+            {
+                output = GenericErrorCodes::GenericErrorCodesLobbyBadRequest;
+                return;
+            }
+            if (inputStr == "LobbyPlayerMaxLobbyLimitExceeded")
+            {
+                output = GenericErrorCodes::GenericErrorCodesLobbyPlayerMaxLobbyLimitExceeded;
+                return;
+            }
+            if (inputStr == "LobbyNewOwnerMustBeConnected")
+            {
+                output = GenericErrorCodes::GenericErrorCodesLobbyNewOwnerMustBeConnected;
+                return;
+            }
+            if (inputStr == "LobbyCurrentOwnerStillConnected")
+            {
+                output = GenericErrorCodes::GenericErrorCodesLobbyCurrentOwnerStillConnected;
+                return;
+            }
+            if (inputStr == "LobbyMemberIsNotOwner")
+            {
+                output = GenericErrorCodes::GenericErrorCodesLobbyMemberIsNotOwner;
+                return;
+            }
+            if (inputStr == "EventSamplingInvalidRatio")
+            {
+                output = GenericErrorCodes::GenericErrorCodesEventSamplingInvalidRatio;
+                return;
+            }
+            if (inputStr == "EventSamplingInvalidEventNamespace")
+            {
+                output = GenericErrorCodes::GenericErrorCodesEventSamplingInvalidEventNamespace;
+                return;
+            }
+            if (inputStr == "EventSamplingInvalidEventName")
+            {
+                output = GenericErrorCodes::GenericErrorCodesEventSamplingInvalidEventName;
+                return;
+            }
+            if (inputStr == "EventSamplingRatioNotFound")
+            {
+                output = GenericErrorCodes::GenericErrorCodesEventSamplingRatioNotFound;
+                return;
+            }
+            if (inputStr == "EventSinkConnectionInvalid")
+            {
+                output = GenericErrorCodes::GenericErrorCodesEventSinkConnectionInvalid;
+                return;
+            }
+            if (inputStr == "EventSinkConnectionUnauthorized")
+            {
+                output = GenericErrorCodes::GenericErrorCodesEventSinkConnectionUnauthorized;
+                return;
+            }
+            if (inputStr == "EventSinkRegionInvalid")
+            {
+                output = GenericErrorCodes::GenericErrorCodesEventSinkRegionInvalid;
+                return;
+            }
+            if (inputStr == "OperationCanceled")
+            {
+                output = GenericErrorCodes::GenericErrorCodesOperationCanceled;
                 return;
             }
         }
@@ -11900,6 +12791,4959 @@ namespace PlayFab
             if (inputStr == "InsightsScheduledScaling")
             {
                 output = ScheduledTaskType::ScheduledTaskTypeInsightsScheduledScaling;
+                return;
+            }
+        }
+
+        enum class SegmentCountryCode
+        {
+            SegmentCountryCodeAF,
+            SegmentCountryCodeAX,
+            SegmentCountryCodeAL,
+            SegmentCountryCodeDZ,
+            SegmentCountryCodeAS,
+            SegmentCountryCodeAD,
+            SegmentCountryCodeAO,
+            SegmentCountryCodeAI,
+            SegmentCountryCodeAQ,
+            SegmentCountryCodeAG,
+            SegmentCountryCodeAR,
+            SegmentCountryCodeAM,
+            SegmentCountryCodeAW,
+            SegmentCountryCodeAU,
+            SegmentCountryCodeAT,
+            SegmentCountryCodeAZ,
+            SegmentCountryCodeBS,
+            SegmentCountryCodeBH,
+            SegmentCountryCodeBD,
+            SegmentCountryCodeBB,
+            SegmentCountryCodeBY,
+            SegmentCountryCodeBE,
+            SegmentCountryCodeBZ,
+            SegmentCountryCodeBJ,
+            SegmentCountryCodeBM,
+            SegmentCountryCodeBT,
+            SegmentCountryCodeBO,
+            SegmentCountryCodeBQ,
+            SegmentCountryCodeBA,
+            SegmentCountryCodeBW,
+            SegmentCountryCodeBV,
+            SegmentCountryCodeBR,
+            SegmentCountryCodeIO,
+            SegmentCountryCodeBN,
+            SegmentCountryCodeBG,
+            SegmentCountryCodeBF,
+            SegmentCountryCodeBI,
+            SegmentCountryCodeKH,
+            SegmentCountryCodeCM,
+            SegmentCountryCodeCA,
+            SegmentCountryCodeCV,
+            SegmentCountryCodeKY,
+            SegmentCountryCodeCF,
+            SegmentCountryCodeTD,
+            SegmentCountryCodeCL,
+            SegmentCountryCodeCN,
+            SegmentCountryCodeCX,
+            SegmentCountryCodeCC,
+            SegmentCountryCodeCO,
+            SegmentCountryCodeKM,
+            SegmentCountryCodeCG,
+            SegmentCountryCodeCD,
+            SegmentCountryCodeCK,
+            SegmentCountryCodeCR,
+            SegmentCountryCodeCI,
+            SegmentCountryCodeHR,
+            SegmentCountryCodeCU,
+            SegmentCountryCodeCW,
+            SegmentCountryCodeCY,
+            SegmentCountryCodeCZ,
+            SegmentCountryCodeDK,
+            SegmentCountryCodeDJ,
+            SegmentCountryCodeDM,
+            SegmentCountryCodeDO,
+            SegmentCountryCodeEC,
+            SegmentCountryCodeEG,
+            SegmentCountryCodeSV,
+            SegmentCountryCodeGQ,
+            SegmentCountryCodeER,
+            SegmentCountryCodeEE,
+            SegmentCountryCodeET,
+            SegmentCountryCodeFK,
+            SegmentCountryCodeFO,
+            SegmentCountryCodeFJ,
+            SegmentCountryCodeFI,
+            SegmentCountryCodeFR,
+            SegmentCountryCodeGF,
+            SegmentCountryCodePF,
+            SegmentCountryCodeTF,
+            SegmentCountryCodeGA,
+            SegmentCountryCodeGM,
+            SegmentCountryCodeGE,
+            SegmentCountryCodeDE,
+            SegmentCountryCodeGH,
+            SegmentCountryCodeGI,
+            SegmentCountryCodeGR,
+            SegmentCountryCodeGL,
+            SegmentCountryCodeGD,
+            SegmentCountryCodeGP,
+            SegmentCountryCodeGU,
+            SegmentCountryCodeGT,
+            SegmentCountryCodeGG,
+            SegmentCountryCodeGN,
+            SegmentCountryCodeGW,
+            SegmentCountryCodeGY,
+            SegmentCountryCodeHT,
+            SegmentCountryCodeHM,
+            SegmentCountryCodeVA,
+            SegmentCountryCodeHN,
+            SegmentCountryCodeHK,
+            SegmentCountryCodeHU,
+            SegmentCountryCodeIS,
+            SegmentCountryCodeIN,
+            SegmentCountryCodeID,
+            SegmentCountryCodeIR,
+            SegmentCountryCodeIQ,
+            SegmentCountryCodeIE,
+            SegmentCountryCodeIM,
+            SegmentCountryCodeIL,
+            SegmentCountryCodeIT,
+            SegmentCountryCodeJM,
+            SegmentCountryCodeJP,
+            SegmentCountryCodeJE,
+            SegmentCountryCodeJO,
+            SegmentCountryCodeKZ,
+            SegmentCountryCodeKE,
+            SegmentCountryCodeKI,
+            SegmentCountryCodeKP,
+            SegmentCountryCodeKR,
+            SegmentCountryCodeKW,
+            SegmentCountryCodeKG,
+            SegmentCountryCodeLA,
+            SegmentCountryCodeLV,
+            SegmentCountryCodeLB,
+            SegmentCountryCodeLS,
+            SegmentCountryCodeLR,
+            SegmentCountryCodeLY,
+            SegmentCountryCodeLI,
+            SegmentCountryCodeLT,
+            SegmentCountryCodeLU,
+            SegmentCountryCodeMO,
+            SegmentCountryCodeMK,
+            SegmentCountryCodeMG,
+            SegmentCountryCodeMW,
+            SegmentCountryCodeMY,
+            SegmentCountryCodeMV,
+            SegmentCountryCodeML,
+            SegmentCountryCodeMT,
+            SegmentCountryCodeMH,
+            SegmentCountryCodeMQ,
+            SegmentCountryCodeMR,
+            SegmentCountryCodeMU,
+            SegmentCountryCodeYT,
+            SegmentCountryCodeMX,
+            SegmentCountryCodeFM,
+            SegmentCountryCodeMD,
+            SegmentCountryCodeMC,
+            SegmentCountryCodeMN,
+            SegmentCountryCodeME,
+            SegmentCountryCodeMS,
+            SegmentCountryCodeMA,
+            SegmentCountryCodeMZ,
+            SegmentCountryCodeMM,
+            SegmentCountryCodeNA,
+            SegmentCountryCodeNR,
+            SegmentCountryCodeNP,
+            SegmentCountryCodeNL,
+            SegmentCountryCodeNC,
+            SegmentCountryCodeNZ,
+            SegmentCountryCodeNI,
+            SegmentCountryCodeNE,
+            SegmentCountryCodeNG,
+            SegmentCountryCodeNU,
+            SegmentCountryCodeNF,
+            SegmentCountryCodeMP,
+            SegmentCountryCodeNO,
+            SegmentCountryCodeOM,
+            SegmentCountryCodePK,
+            SegmentCountryCodePW,
+            SegmentCountryCodePS,
+            SegmentCountryCodePA,
+            SegmentCountryCodePG,
+            SegmentCountryCodePY,
+            SegmentCountryCodePE,
+            SegmentCountryCodePH,
+            SegmentCountryCodePN,
+            SegmentCountryCodePL,
+            SegmentCountryCodePT,
+            SegmentCountryCodePR,
+            SegmentCountryCodeQA,
+            SegmentCountryCodeRE,
+            SegmentCountryCodeRO,
+            SegmentCountryCodeRU,
+            SegmentCountryCodeRW,
+            SegmentCountryCodeBL,
+            SegmentCountryCodeSH,
+            SegmentCountryCodeKN,
+            SegmentCountryCodeLC,
+            SegmentCountryCodeMF,
+            SegmentCountryCodePM,
+            SegmentCountryCodeVC,
+            SegmentCountryCodeWS,
+            SegmentCountryCodeSM,
+            SegmentCountryCodeST,
+            SegmentCountryCodeSA,
+            SegmentCountryCodeSN,
+            SegmentCountryCodeRS,
+            SegmentCountryCodeSC,
+            SegmentCountryCodeSL,
+            SegmentCountryCodeSG,
+            SegmentCountryCodeSX,
+            SegmentCountryCodeSK,
+            SegmentCountryCodeSI,
+            SegmentCountryCodeSB,
+            SegmentCountryCodeSO,
+            SegmentCountryCodeZA,
+            SegmentCountryCodeGS,
+            SegmentCountryCodeSS,
+            SegmentCountryCodeES,
+            SegmentCountryCodeLK,
+            SegmentCountryCodeSD,
+            SegmentCountryCodeSR,
+            SegmentCountryCodeSJ,
+            SegmentCountryCodeSZ,
+            SegmentCountryCodeSE,
+            SegmentCountryCodeCH,
+            SegmentCountryCodeSY,
+            SegmentCountryCodeTW,
+            SegmentCountryCodeTJ,
+            SegmentCountryCodeTZ,
+            SegmentCountryCodeTH,
+            SegmentCountryCodeTL,
+            SegmentCountryCodeTG,
+            SegmentCountryCodeTK,
+            SegmentCountryCodeTO,
+            SegmentCountryCodeTT,
+            SegmentCountryCodeTN,
+            SegmentCountryCodeTR,
+            SegmentCountryCodeTM,
+            SegmentCountryCodeTC,
+            SegmentCountryCodeTV,
+            SegmentCountryCodeUG,
+            SegmentCountryCodeUA,
+            SegmentCountryCodeAE,
+            SegmentCountryCodeGB,
+            SegmentCountryCodeUS,
+            SegmentCountryCodeUM,
+            SegmentCountryCodeUY,
+            SegmentCountryCodeUZ,
+            SegmentCountryCodeVU,
+            SegmentCountryCodeVE,
+            SegmentCountryCodeVN,
+            SegmentCountryCodeVG,
+            SegmentCountryCodeVI,
+            SegmentCountryCodeWF,
+            SegmentCountryCodeEH,
+            SegmentCountryCodeYE,
+            SegmentCountryCodeZM,
+            SegmentCountryCodeZW
+        };
+
+        inline void ToJsonEnum(const SegmentCountryCode input, Json::Value& output)
+        {
+            if (input == SegmentCountryCode::SegmentCountryCodeAF)
+            {
+                output = Json::Value("AF");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeAX)
+            {
+                output = Json::Value("AX");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeAL)
+            {
+                output = Json::Value("AL");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeDZ)
+            {
+                output = Json::Value("DZ");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeAS)
+            {
+                output = Json::Value("AS");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeAD)
+            {
+                output = Json::Value("AD");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeAO)
+            {
+                output = Json::Value("AO");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeAI)
+            {
+                output = Json::Value("AI");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeAQ)
+            {
+                output = Json::Value("AQ");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeAG)
+            {
+                output = Json::Value("AG");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeAR)
+            {
+                output = Json::Value("AR");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeAM)
+            {
+                output = Json::Value("AM");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeAW)
+            {
+                output = Json::Value("AW");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeAU)
+            {
+                output = Json::Value("AU");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeAT)
+            {
+                output = Json::Value("AT");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeAZ)
+            {
+                output = Json::Value("AZ");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeBS)
+            {
+                output = Json::Value("BS");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeBH)
+            {
+                output = Json::Value("BH");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeBD)
+            {
+                output = Json::Value("BD");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeBB)
+            {
+                output = Json::Value("BB");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeBY)
+            {
+                output = Json::Value("BY");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeBE)
+            {
+                output = Json::Value("BE");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeBZ)
+            {
+                output = Json::Value("BZ");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeBJ)
+            {
+                output = Json::Value("BJ");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeBM)
+            {
+                output = Json::Value("BM");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeBT)
+            {
+                output = Json::Value("BT");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeBO)
+            {
+                output = Json::Value("BO");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeBQ)
+            {
+                output = Json::Value("BQ");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeBA)
+            {
+                output = Json::Value("BA");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeBW)
+            {
+                output = Json::Value("BW");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeBV)
+            {
+                output = Json::Value("BV");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeBR)
+            {
+                output = Json::Value("BR");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeIO)
+            {
+                output = Json::Value("IO");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeBN)
+            {
+                output = Json::Value("BN");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeBG)
+            {
+                output = Json::Value("BG");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeBF)
+            {
+                output = Json::Value("BF");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeBI)
+            {
+                output = Json::Value("BI");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeKH)
+            {
+                output = Json::Value("KH");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeCM)
+            {
+                output = Json::Value("CM");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeCA)
+            {
+                output = Json::Value("CA");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeCV)
+            {
+                output = Json::Value("CV");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeKY)
+            {
+                output = Json::Value("KY");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeCF)
+            {
+                output = Json::Value("CF");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeTD)
+            {
+                output = Json::Value("TD");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeCL)
+            {
+                output = Json::Value("CL");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeCN)
+            {
+                output = Json::Value("CN");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeCX)
+            {
+                output = Json::Value("CX");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeCC)
+            {
+                output = Json::Value("CC");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeCO)
+            {
+                output = Json::Value("CO");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeKM)
+            {
+                output = Json::Value("KM");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeCG)
+            {
+                output = Json::Value("CG");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeCD)
+            {
+                output = Json::Value("CD");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeCK)
+            {
+                output = Json::Value("CK");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeCR)
+            {
+                output = Json::Value("CR");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeCI)
+            {
+                output = Json::Value("CI");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeHR)
+            {
+                output = Json::Value("HR");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeCU)
+            {
+                output = Json::Value("CU");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeCW)
+            {
+                output = Json::Value("CW");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeCY)
+            {
+                output = Json::Value("CY");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeCZ)
+            {
+                output = Json::Value("CZ");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeDK)
+            {
+                output = Json::Value("DK");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeDJ)
+            {
+                output = Json::Value("DJ");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeDM)
+            {
+                output = Json::Value("DM");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeDO)
+            {
+                output = Json::Value("DO");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeEC)
+            {
+                output = Json::Value("EC");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeEG)
+            {
+                output = Json::Value("EG");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeSV)
+            {
+                output = Json::Value("SV");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeGQ)
+            {
+                output = Json::Value("GQ");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeER)
+            {
+                output = Json::Value("ER");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeEE)
+            {
+                output = Json::Value("EE");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeET)
+            {
+                output = Json::Value("ET");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeFK)
+            {
+                output = Json::Value("FK");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeFO)
+            {
+                output = Json::Value("FO");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeFJ)
+            {
+                output = Json::Value("FJ");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeFI)
+            {
+                output = Json::Value("FI");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeFR)
+            {
+                output = Json::Value("FR");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeGF)
+            {
+                output = Json::Value("GF");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodePF)
+            {
+                output = Json::Value("PF");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeTF)
+            {
+                output = Json::Value("TF");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeGA)
+            {
+                output = Json::Value("GA");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeGM)
+            {
+                output = Json::Value("GM");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeGE)
+            {
+                output = Json::Value("GE");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeDE)
+            {
+                output = Json::Value("DE");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeGH)
+            {
+                output = Json::Value("GH");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeGI)
+            {
+                output = Json::Value("GI");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeGR)
+            {
+                output = Json::Value("GR");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeGL)
+            {
+                output = Json::Value("GL");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeGD)
+            {
+                output = Json::Value("GD");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeGP)
+            {
+                output = Json::Value("GP");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeGU)
+            {
+                output = Json::Value("GU");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeGT)
+            {
+                output = Json::Value("GT");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeGG)
+            {
+                output = Json::Value("GG");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeGN)
+            {
+                output = Json::Value("GN");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeGW)
+            {
+                output = Json::Value("GW");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeGY)
+            {
+                output = Json::Value("GY");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeHT)
+            {
+                output = Json::Value("HT");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeHM)
+            {
+                output = Json::Value("HM");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeVA)
+            {
+                output = Json::Value("VA");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeHN)
+            {
+                output = Json::Value("HN");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeHK)
+            {
+                output = Json::Value("HK");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeHU)
+            {
+                output = Json::Value("HU");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeIS)
+            {
+                output = Json::Value("IS");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeIN)
+            {
+                output = Json::Value("IN");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeID)
+            {
+                output = Json::Value("ID");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeIR)
+            {
+                output = Json::Value("IR");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeIQ)
+            {
+                output = Json::Value("IQ");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeIE)
+            {
+                output = Json::Value("IE");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeIM)
+            {
+                output = Json::Value("IM");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeIL)
+            {
+                output = Json::Value("IL");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeIT)
+            {
+                output = Json::Value("IT");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeJM)
+            {
+                output = Json::Value("JM");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeJP)
+            {
+                output = Json::Value("JP");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeJE)
+            {
+                output = Json::Value("JE");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeJO)
+            {
+                output = Json::Value("JO");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeKZ)
+            {
+                output = Json::Value("KZ");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeKE)
+            {
+                output = Json::Value("KE");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeKI)
+            {
+                output = Json::Value("KI");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeKP)
+            {
+                output = Json::Value("KP");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeKR)
+            {
+                output = Json::Value("KR");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeKW)
+            {
+                output = Json::Value("KW");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeKG)
+            {
+                output = Json::Value("KG");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeLA)
+            {
+                output = Json::Value("LA");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeLV)
+            {
+                output = Json::Value("LV");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeLB)
+            {
+                output = Json::Value("LB");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeLS)
+            {
+                output = Json::Value("LS");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeLR)
+            {
+                output = Json::Value("LR");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeLY)
+            {
+                output = Json::Value("LY");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeLI)
+            {
+                output = Json::Value("LI");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeLT)
+            {
+                output = Json::Value("LT");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeLU)
+            {
+                output = Json::Value("LU");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeMO)
+            {
+                output = Json::Value("MO");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeMK)
+            {
+                output = Json::Value("MK");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeMG)
+            {
+                output = Json::Value("MG");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeMW)
+            {
+                output = Json::Value("MW");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeMY)
+            {
+                output = Json::Value("MY");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeMV)
+            {
+                output = Json::Value("MV");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeML)
+            {
+                output = Json::Value("ML");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeMT)
+            {
+                output = Json::Value("MT");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeMH)
+            {
+                output = Json::Value("MH");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeMQ)
+            {
+                output = Json::Value("MQ");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeMR)
+            {
+                output = Json::Value("MR");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeMU)
+            {
+                output = Json::Value("MU");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeYT)
+            {
+                output = Json::Value("YT");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeMX)
+            {
+                output = Json::Value("MX");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeFM)
+            {
+                output = Json::Value("FM");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeMD)
+            {
+                output = Json::Value("MD");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeMC)
+            {
+                output = Json::Value("MC");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeMN)
+            {
+                output = Json::Value("MN");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeME)
+            {
+                output = Json::Value("ME");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeMS)
+            {
+                output = Json::Value("MS");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeMA)
+            {
+                output = Json::Value("MA");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeMZ)
+            {
+                output = Json::Value("MZ");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeMM)
+            {
+                output = Json::Value("MM");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeNA)
+            {
+                output = Json::Value("NA");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeNR)
+            {
+                output = Json::Value("NR");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeNP)
+            {
+                output = Json::Value("NP");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeNL)
+            {
+                output = Json::Value("NL");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeNC)
+            {
+                output = Json::Value("NC");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeNZ)
+            {
+                output = Json::Value("NZ");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeNI)
+            {
+                output = Json::Value("NI");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeNE)
+            {
+                output = Json::Value("NE");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeNG)
+            {
+                output = Json::Value("NG");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeNU)
+            {
+                output = Json::Value("NU");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeNF)
+            {
+                output = Json::Value("NF");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeMP)
+            {
+                output = Json::Value("MP");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeNO)
+            {
+                output = Json::Value("NO");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeOM)
+            {
+                output = Json::Value("OM");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodePK)
+            {
+                output = Json::Value("PK");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodePW)
+            {
+                output = Json::Value("PW");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodePS)
+            {
+                output = Json::Value("PS");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodePA)
+            {
+                output = Json::Value("PA");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodePG)
+            {
+                output = Json::Value("PG");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodePY)
+            {
+                output = Json::Value("PY");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodePE)
+            {
+                output = Json::Value("PE");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodePH)
+            {
+                output = Json::Value("PH");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodePN)
+            {
+                output = Json::Value("PN");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodePL)
+            {
+                output = Json::Value("PL");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodePT)
+            {
+                output = Json::Value("PT");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodePR)
+            {
+                output = Json::Value("PR");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeQA)
+            {
+                output = Json::Value("QA");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeRE)
+            {
+                output = Json::Value("RE");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeRO)
+            {
+                output = Json::Value("RO");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeRU)
+            {
+                output = Json::Value("RU");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeRW)
+            {
+                output = Json::Value("RW");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeBL)
+            {
+                output = Json::Value("BL");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeSH)
+            {
+                output = Json::Value("SH");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeKN)
+            {
+                output = Json::Value("KN");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeLC)
+            {
+                output = Json::Value("LC");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeMF)
+            {
+                output = Json::Value("MF");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodePM)
+            {
+                output = Json::Value("PM");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeVC)
+            {
+                output = Json::Value("VC");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeWS)
+            {
+                output = Json::Value("WS");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeSM)
+            {
+                output = Json::Value("SM");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeST)
+            {
+                output = Json::Value("ST");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeSA)
+            {
+                output = Json::Value("SA");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeSN)
+            {
+                output = Json::Value("SN");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeRS)
+            {
+                output = Json::Value("RS");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeSC)
+            {
+                output = Json::Value("SC");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeSL)
+            {
+                output = Json::Value("SL");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeSG)
+            {
+                output = Json::Value("SG");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeSX)
+            {
+                output = Json::Value("SX");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeSK)
+            {
+                output = Json::Value("SK");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeSI)
+            {
+                output = Json::Value("SI");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeSB)
+            {
+                output = Json::Value("SB");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeSO)
+            {
+                output = Json::Value("SO");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeZA)
+            {
+                output = Json::Value("ZA");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeGS)
+            {
+                output = Json::Value("GS");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeSS)
+            {
+                output = Json::Value("SS");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeES)
+            {
+                output = Json::Value("ES");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeLK)
+            {
+                output = Json::Value("LK");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeSD)
+            {
+                output = Json::Value("SD");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeSR)
+            {
+                output = Json::Value("SR");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeSJ)
+            {
+                output = Json::Value("SJ");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeSZ)
+            {
+                output = Json::Value("SZ");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeSE)
+            {
+                output = Json::Value("SE");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeCH)
+            {
+                output = Json::Value("CH");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeSY)
+            {
+                output = Json::Value("SY");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeTW)
+            {
+                output = Json::Value("TW");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeTJ)
+            {
+                output = Json::Value("TJ");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeTZ)
+            {
+                output = Json::Value("TZ");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeTH)
+            {
+                output = Json::Value("TH");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeTL)
+            {
+                output = Json::Value("TL");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeTG)
+            {
+                output = Json::Value("TG");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeTK)
+            {
+                output = Json::Value("TK");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeTO)
+            {
+                output = Json::Value("TO");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeTT)
+            {
+                output = Json::Value("TT");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeTN)
+            {
+                output = Json::Value("TN");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeTR)
+            {
+                output = Json::Value("TR");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeTM)
+            {
+                output = Json::Value("TM");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeTC)
+            {
+                output = Json::Value("TC");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeTV)
+            {
+                output = Json::Value("TV");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeUG)
+            {
+                output = Json::Value("UG");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeUA)
+            {
+                output = Json::Value("UA");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeAE)
+            {
+                output = Json::Value("AE");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeGB)
+            {
+                output = Json::Value("GB");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeUS)
+            {
+                output = Json::Value("US");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeUM)
+            {
+                output = Json::Value("UM");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeUY)
+            {
+                output = Json::Value("UY");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeUZ)
+            {
+                output = Json::Value("UZ");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeVU)
+            {
+                output = Json::Value("VU");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeVE)
+            {
+                output = Json::Value("VE");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeVN)
+            {
+                output = Json::Value("VN");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeVG)
+            {
+                output = Json::Value("VG");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeVI)
+            {
+                output = Json::Value("VI");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeWF)
+            {
+                output = Json::Value("WF");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeEH)
+            {
+                output = Json::Value("EH");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeYE)
+            {
+                output = Json::Value("YE");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeZM)
+            {
+                output = Json::Value("ZM");
+                return;
+            }
+            if (input == SegmentCountryCode::SegmentCountryCodeZW)
+            {
+                output = Json::Value("ZW");
+                return;
+            }
+        }
+        inline void FromJsonEnum(const Json::Value& input, SegmentCountryCode& output)
+        {
+            if (!input.isString())
+            {
+                return;
+            }
+            const std::string& inputStr = input.asString();
+            if (inputStr == "AF")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeAF;
+                return;
+            }
+            if (inputStr == "AX")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeAX;
+                return;
+            }
+            if (inputStr == "AL")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeAL;
+                return;
+            }
+            if (inputStr == "DZ")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeDZ;
+                return;
+            }
+            if (inputStr == "AS")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeAS;
+                return;
+            }
+            if (inputStr == "AD")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeAD;
+                return;
+            }
+            if (inputStr == "AO")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeAO;
+                return;
+            }
+            if (inputStr == "AI")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeAI;
+                return;
+            }
+            if (inputStr == "AQ")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeAQ;
+                return;
+            }
+            if (inputStr == "AG")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeAG;
+                return;
+            }
+            if (inputStr == "AR")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeAR;
+                return;
+            }
+            if (inputStr == "AM")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeAM;
+                return;
+            }
+            if (inputStr == "AW")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeAW;
+                return;
+            }
+            if (inputStr == "AU")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeAU;
+                return;
+            }
+            if (inputStr == "AT")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeAT;
+                return;
+            }
+            if (inputStr == "AZ")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeAZ;
+                return;
+            }
+            if (inputStr == "BS")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeBS;
+                return;
+            }
+            if (inputStr == "BH")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeBH;
+                return;
+            }
+            if (inputStr == "BD")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeBD;
+                return;
+            }
+            if (inputStr == "BB")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeBB;
+                return;
+            }
+            if (inputStr == "BY")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeBY;
+                return;
+            }
+            if (inputStr == "BE")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeBE;
+                return;
+            }
+            if (inputStr == "BZ")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeBZ;
+                return;
+            }
+            if (inputStr == "BJ")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeBJ;
+                return;
+            }
+            if (inputStr == "BM")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeBM;
+                return;
+            }
+            if (inputStr == "BT")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeBT;
+                return;
+            }
+            if (inputStr == "BO")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeBO;
+                return;
+            }
+            if (inputStr == "BQ")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeBQ;
+                return;
+            }
+            if (inputStr == "BA")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeBA;
+                return;
+            }
+            if (inputStr == "BW")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeBW;
+                return;
+            }
+            if (inputStr == "BV")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeBV;
+                return;
+            }
+            if (inputStr == "BR")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeBR;
+                return;
+            }
+            if (inputStr == "IO")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeIO;
+                return;
+            }
+            if (inputStr == "BN")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeBN;
+                return;
+            }
+            if (inputStr == "BG")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeBG;
+                return;
+            }
+            if (inputStr == "BF")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeBF;
+                return;
+            }
+            if (inputStr == "BI")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeBI;
+                return;
+            }
+            if (inputStr == "KH")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeKH;
+                return;
+            }
+            if (inputStr == "CM")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeCM;
+                return;
+            }
+            if (inputStr == "CA")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeCA;
+                return;
+            }
+            if (inputStr == "CV")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeCV;
+                return;
+            }
+            if (inputStr == "KY")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeKY;
+                return;
+            }
+            if (inputStr == "CF")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeCF;
+                return;
+            }
+            if (inputStr == "TD")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeTD;
+                return;
+            }
+            if (inputStr == "CL")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeCL;
+                return;
+            }
+            if (inputStr == "CN")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeCN;
+                return;
+            }
+            if (inputStr == "CX")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeCX;
+                return;
+            }
+            if (inputStr == "CC")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeCC;
+                return;
+            }
+            if (inputStr == "CO")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeCO;
+                return;
+            }
+            if (inputStr == "KM")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeKM;
+                return;
+            }
+            if (inputStr == "CG")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeCG;
+                return;
+            }
+            if (inputStr == "CD")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeCD;
+                return;
+            }
+            if (inputStr == "CK")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeCK;
+                return;
+            }
+            if (inputStr == "CR")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeCR;
+                return;
+            }
+            if (inputStr == "CI")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeCI;
+                return;
+            }
+            if (inputStr == "HR")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeHR;
+                return;
+            }
+            if (inputStr == "CU")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeCU;
+                return;
+            }
+            if (inputStr == "CW")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeCW;
+                return;
+            }
+            if (inputStr == "CY")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeCY;
+                return;
+            }
+            if (inputStr == "CZ")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeCZ;
+                return;
+            }
+            if (inputStr == "DK")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeDK;
+                return;
+            }
+            if (inputStr == "DJ")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeDJ;
+                return;
+            }
+            if (inputStr == "DM")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeDM;
+                return;
+            }
+            if (inputStr == "DO")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeDO;
+                return;
+            }
+            if (inputStr == "EC")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeEC;
+                return;
+            }
+            if (inputStr == "EG")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeEG;
+                return;
+            }
+            if (inputStr == "SV")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeSV;
+                return;
+            }
+            if (inputStr == "GQ")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeGQ;
+                return;
+            }
+            if (inputStr == "ER")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeER;
+                return;
+            }
+            if (inputStr == "EE")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeEE;
+                return;
+            }
+            if (inputStr == "ET")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeET;
+                return;
+            }
+            if (inputStr == "FK")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeFK;
+                return;
+            }
+            if (inputStr == "FO")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeFO;
+                return;
+            }
+            if (inputStr == "FJ")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeFJ;
+                return;
+            }
+            if (inputStr == "FI")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeFI;
+                return;
+            }
+            if (inputStr == "FR")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeFR;
+                return;
+            }
+            if (inputStr == "GF")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeGF;
+                return;
+            }
+            if (inputStr == "PF")
+            {
+                output = SegmentCountryCode::SegmentCountryCodePF;
+                return;
+            }
+            if (inputStr == "TF")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeTF;
+                return;
+            }
+            if (inputStr == "GA")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeGA;
+                return;
+            }
+            if (inputStr == "GM")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeGM;
+                return;
+            }
+            if (inputStr == "GE")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeGE;
+                return;
+            }
+            if (inputStr == "DE")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeDE;
+                return;
+            }
+            if (inputStr == "GH")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeGH;
+                return;
+            }
+            if (inputStr == "GI")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeGI;
+                return;
+            }
+            if (inputStr == "GR")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeGR;
+                return;
+            }
+            if (inputStr == "GL")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeGL;
+                return;
+            }
+            if (inputStr == "GD")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeGD;
+                return;
+            }
+            if (inputStr == "GP")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeGP;
+                return;
+            }
+            if (inputStr == "GU")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeGU;
+                return;
+            }
+            if (inputStr == "GT")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeGT;
+                return;
+            }
+            if (inputStr == "GG")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeGG;
+                return;
+            }
+            if (inputStr == "GN")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeGN;
+                return;
+            }
+            if (inputStr == "GW")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeGW;
+                return;
+            }
+            if (inputStr == "GY")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeGY;
+                return;
+            }
+            if (inputStr == "HT")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeHT;
+                return;
+            }
+            if (inputStr == "HM")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeHM;
+                return;
+            }
+            if (inputStr == "VA")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeVA;
+                return;
+            }
+            if (inputStr == "HN")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeHN;
+                return;
+            }
+            if (inputStr == "HK")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeHK;
+                return;
+            }
+            if (inputStr == "HU")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeHU;
+                return;
+            }
+            if (inputStr == "IS")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeIS;
+                return;
+            }
+            if (inputStr == "IN")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeIN;
+                return;
+            }
+            if (inputStr == "ID")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeID;
+                return;
+            }
+            if (inputStr == "IR")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeIR;
+                return;
+            }
+            if (inputStr == "IQ")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeIQ;
+                return;
+            }
+            if (inputStr == "IE")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeIE;
+                return;
+            }
+            if (inputStr == "IM")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeIM;
+                return;
+            }
+            if (inputStr == "IL")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeIL;
+                return;
+            }
+            if (inputStr == "IT")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeIT;
+                return;
+            }
+            if (inputStr == "JM")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeJM;
+                return;
+            }
+            if (inputStr == "JP")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeJP;
+                return;
+            }
+            if (inputStr == "JE")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeJE;
+                return;
+            }
+            if (inputStr == "JO")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeJO;
+                return;
+            }
+            if (inputStr == "KZ")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeKZ;
+                return;
+            }
+            if (inputStr == "KE")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeKE;
+                return;
+            }
+            if (inputStr == "KI")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeKI;
+                return;
+            }
+            if (inputStr == "KP")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeKP;
+                return;
+            }
+            if (inputStr == "KR")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeKR;
+                return;
+            }
+            if (inputStr == "KW")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeKW;
+                return;
+            }
+            if (inputStr == "KG")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeKG;
+                return;
+            }
+            if (inputStr == "LA")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeLA;
+                return;
+            }
+            if (inputStr == "LV")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeLV;
+                return;
+            }
+            if (inputStr == "LB")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeLB;
+                return;
+            }
+            if (inputStr == "LS")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeLS;
+                return;
+            }
+            if (inputStr == "LR")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeLR;
+                return;
+            }
+            if (inputStr == "LY")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeLY;
+                return;
+            }
+            if (inputStr == "LI")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeLI;
+                return;
+            }
+            if (inputStr == "LT")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeLT;
+                return;
+            }
+            if (inputStr == "LU")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeLU;
+                return;
+            }
+            if (inputStr == "MO")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeMO;
+                return;
+            }
+            if (inputStr == "MK")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeMK;
+                return;
+            }
+            if (inputStr == "MG")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeMG;
+                return;
+            }
+            if (inputStr == "MW")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeMW;
+                return;
+            }
+            if (inputStr == "MY")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeMY;
+                return;
+            }
+            if (inputStr == "MV")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeMV;
+                return;
+            }
+            if (inputStr == "ML")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeML;
+                return;
+            }
+            if (inputStr == "MT")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeMT;
+                return;
+            }
+            if (inputStr == "MH")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeMH;
+                return;
+            }
+            if (inputStr == "MQ")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeMQ;
+                return;
+            }
+            if (inputStr == "MR")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeMR;
+                return;
+            }
+            if (inputStr == "MU")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeMU;
+                return;
+            }
+            if (inputStr == "YT")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeYT;
+                return;
+            }
+            if (inputStr == "MX")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeMX;
+                return;
+            }
+            if (inputStr == "FM")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeFM;
+                return;
+            }
+            if (inputStr == "MD")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeMD;
+                return;
+            }
+            if (inputStr == "MC")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeMC;
+                return;
+            }
+            if (inputStr == "MN")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeMN;
+                return;
+            }
+            if (inputStr == "ME")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeME;
+                return;
+            }
+            if (inputStr == "MS")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeMS;
+                return;
+            }
+            if (inputStr == "MA")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeMA;
+                return;
+            }
+            if (inputStr == "MZ")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeMZ;
+                return;
+            }
+            if (inputStr == "MM")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeMM;
+                return;
+            }
+            if (inputStr == "NA")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeNA;
+                return;
+            }
+            if (inputStr == "NR")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeNR;
+                return;
+            }
+            if (inputStr == "NP")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeNP;
+                return;
+            }
+            if (inputStr == "NL")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeNL;
+                return;
+            }
+            if (inputStr == "NC")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeNC;
+                return;
+            }
+            if (inputStr == "NZ")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeNZ;
+                return;
+            }
+            if (inputStr == "NI")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeNI;
+                return;
+            }
+            if (inputStr == "NE")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeNE;
+                return;
+            }
+            if (inputStr == "NG")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeNG;
+                return;
+            }
+            if (inputStr == "NU")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeNU;
+                return;
+            }
+            if (inputStr == "NF")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeNF;
+                return;
+            }
+            if (inputStr == "MP")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeMP;
+                return;
+            }
+            if (inputStr == "NO")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeNO;
+                return;
+            }
+            if (inputStr == "OM")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeOM;
+                return;
+            }
+            if (inputStr == "PK")
+            {
+                output = SegmentCountryCode::SegmentCountryCodePK;
+                return;
+            }
+            if (inputStr == "PW")
+            {
+                output = SegmentCountryCode::SegmentCountryCodePW;
+                return;
+            }
+            if (inputStr == "PS")
+            {
+                output = SegmentCountryCode::SegmentCountryCodePS;
+                return;
+            }
+            if (inputStr == "PA")
+            {
+                output = SegmentCountryCode::SegmentCountryCodePA;
+                return;
+            }
+            if (inputStr == "PG")
+            {
+                output = SegmentCountryCode::SegmentCountryCodePG;
+                return;
+            }
+            if (inputStr == "PY")
+            {
+                output = SegmentCountryCode::SegmentCountryCodePY;
+                return;
+            }
+            if (inputStr == "PE")
+            {
+                output = SegmentCountryCode::SegmentCountryCodePE;
+                return;
+            }
+            if (inputStr == "PH")
+            {
+                output = SegmentCountryCode::SegmentCountryCodePH;
+                return;
+            }
+            if (inputStr == "PN")
+            {
+                output = SegmentCountryCode::SegmentCountryCodePN;
+                return;
+            }
+            if (inputStr == "PL")
+            {
+                output = SegmentCountryCode::SegmentCountryCodePL;
+                return;
+            }
+            if (inputStr == "PT")
+            {
+                output = SegmentCountryCode::SegmentCountryCodePT;
+                return;
+            }
+            if (inputStr == "PR")
+            {
+                output = SegmentCountryCode::SegmentCountryCodePR;
+                return;
+            }
+            if (inputStr == "QA")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeQA;
+                return;
+            }
+            if (inputStr == "RE")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeRE;
+                return;
+            }
+            if (inputStr == "RO")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeRO;
+                return;
+            }
+            if (inputStr == "RU")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeRU;
+                return;
+            }
+            if (inputStr == "RW")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeRW;
+                return;
+            }
+            if (inputStr == "BL")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeBL;
+                return;
+            }
+            if (inputStr == "SH")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeSH;
+                return;
+            }
+            if (inputStr == "KN")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeKN;
+                return;
+            }
+            if (inputStr == "LC")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeLC;
+                return;
+            }
+            if (inputStr == "MF")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeMF;
+                return;
+            }
+            if (inputStr == "PM")
+            {
+                output = SegmentCountryCode::SegmentCountryCodePM;
+                return;
+            }
+            if (inputStr == "VC")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeVC;
+                return;
+            }
+            if (inputStr == "WS")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeWS;
+                return;
+            }
+            if (inputStr == "SM")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeSM;
+                return;
+            }
+            if (inputStr == "ST")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeST;
+                return;
+            }
+            if (inputStr == "SA")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeSA;
+                return;
+            }
+            if (inputStr == "SN")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeSN;
+                return;
+            }
+            if (inputStr == "RS")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeRS;
+                return;
+            }
+            if (inputStr == "SC")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeSC;
+                return;
+            }
+            if (inputStr == "SL")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeSL;
+                return;
+            }
+            if (inputStr == "SG")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeSG;
+                return;
+            }
+            if (inputStr == "SX")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeSX;
+                return;
+            }
+            if (inputStr == "SK")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeSK;
+                return;
+            }
+            if (inputStr == "SI")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeSI;
+                return;
+            }
+            if (inputStr == "SB")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeSB;
+                return;
+            }
+            if (inputStr == "SO")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeSO;
+                return;
+            }
+            if (inputStr == "ZA")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeZA;
+                return;
+            }
+            if (inputStr == "GS")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeGS;
+                return;
+            }
+            if (inputStr == "SS")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeSS;
+                return;
+            }
+            if (inputStr == "ES")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeES;
+                return;
+            }
+            if (inputStr == "LK")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeLK;
+                return;
+            }
+            if (inputStr == "SD")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeSD;
+                return;
+            }
+            if (inputStr == "SR")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeSR;
+                return;
+            }
+            if (inputStr == "SJ")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeSJ;
+                return;
+            }
+            if (inputStr == "SZ")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeSZ;
+                return;
+            }
+            if (inputStr == "SE")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeSE;
+                return;
+            }
+            if (inputStr == "CH")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeCH;
+                return;
+            }
+            if (inputStr == "SY")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeSY;
+                return;
+            }
+            if (inputStr == "TW")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeTW;
+                return;
+            }
+            if (inputStr == "TJ")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeTJ;
+                return;
+            }
+            if (inputStr == "TZ")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeTZ;
+                return;
+            }
+            if (inputStr == "TH")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeTH;
+                return;
+            }
+            if (inputStr == "TL")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeTL;
+                return;
+            }
+            if (inputStr == "TG")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeTG;
+                return;
+            }
+            if (inputStr == "TK")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeTK;
+                return;
+            }
+            if (inputStr == "TO")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeTO;
+                return;
+            }
+            if (inputStr == "TT")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeTT;
+                return;
+            }
+            if (inputStr == "TN")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeTN;
+                return;
+            }
+            if (inputStr == "TR")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeTR;
+                return;
+            }
+            if (inputStr == "TM")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeTM;
+                return;
+            }
+            if (inputStr == "TC")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeTC;
+                return;
+            }
+            if (inputStr == "TV")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeTV;
+                return;
+            }
+            if (inputStr == "UG")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeUG;
+                return;
+            }
+            if (inputStr == "UA")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeUA;
+                return;
+            }
+            if (inputStr == "AE")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeAE;
+                return;
+            }
+            if (inputStr == "GB")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeGB;
+                return;
+            }
+            if (inputStr == "US")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeUS;
+                return;
+            }
+            if (inputStr == "UM")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeUM;
+                return;
+            }
+            if (inputStr == "UY")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeUY;
+                return;
+            }
+            if (inputStr == "UZ")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeUZ;
+                return;
+            }
+            if (inputStr == "VU")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeVU;
+                return;
+            }
+            if (inputStr == "VE")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeVE;
+                return;
+            }
+            if (inputStr == "VN")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeVN;
+                return;
+            }
+            if (inputStr == "VG")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeVG;
+                return;
+            }
+            if (inputStr == "VI")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeVI;
+                return;
+            }
+            if (inputStr == "WF")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeWF;
+                return;
+            }
+            if (inputStr == "EH")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeEH;
+                return;
+            }
+            if (inputStr == "YE")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeYE;
+                return;
+            }
+            if (inputStr == "ZM")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeZM;
+                return;
+            }
+            if (inputStr == "ZW")
+            {
+                output = SegmentCountryCode::SegmentCountryCodeZW;
+                return;
+            }
+        }
+
+        enum class SegmentCurrency
+        {
+            SegmentCurrencyAED,
+            SegmentCurrencyAFN,
+            SegmentCurrencyALL,
+            SegmentCurrencyAMD,
+            SegmentCurrencyANG,
+            SegmentCurrencyAOA,
+            SegmentCurrencyARS,
+            SegmentCurrencyAUD,
+            SegmentCurrencyAWG,
+            SegmentCurrencyAZN,
+            SegmentCurrencyBAM,
+            SegmentCurrencyBBD,
+            SegmentCurrencyBDT,
+            SegmentCurrencyBGN,
+            SegmentCurrencyBHD,
+            SegmentCurrencyBIF,
+            SegmentCurrencyBMD,
+            SegmentCurrencyBND,
+            SegmentCurrencyBOB,
+            SegmentCurrencyBRL,
+            SegmentCurrencyBSD,
+            SegmentCurrencyBTN,
+            SegmentCurrencyBWP,
+            SegmentCurrencyBYR,
+            SegmentCurrencyBZD,
+            SegmentCurrencyCAD,
+            SegmentCurrencyCDF,
+            SegmentCurrencyCHF,
+            SegmentCurrencyCLP,
+            SegmentCurrencyCNY,
+            SegmentCurrencyCOP,
+            SegmentCurrencyCRC,
+            SegmentCurrencyCUC,
+            SegmentCurrencyCUP,
+            SegmentCurrencyCVE,
+            SegmentCurrencyCZK,
+            SegmentCurrencyDJF,
+            SegmentCurrencyDKK,
+            SegmentCurrencyDOP,
+            SegmentCurrencyDZD,
+            SegmentCurrencyEGP,
+            SegmentCurrencyERN,
+            SegmentCurrencyETB,
+            SegmentCurrencyEUR,
+            SegmentCurrencyFJD,
+            SegmentCurrencyFKP,
+            SegmentCurrencyGBP,
+            SegmentCurrencyGEL,
+            SegmentCurrencyGGP,
+            SegmentCurrencyGHS,
+            SegmentCurrencyGIP,
+            SegmentCurrencyGMD,
+            SegmentCurrencyGNF,
+            SegmentCurrencyGTQ,
+            SegmentCurrencyGYD,
+            SegmentCurrencyHKD,
+            SegmentCurrencyHNL,
+            SegmentCurrencyHRK,
+            SegmentCurrencyHTG,
+            SegmentCurrencyHUF,
+            SegmentCurrencyIDR,
+            SegmentCurrencyILS,
+            SegmentCurrencyIMP,
+            SegmentCurrencyINR,
+            SegmentCurrencyIQD,
+            SegmentCurrencyIRR,
+            SegmentCurrencyISK,
+            SegmentCurrencyJEP,
+            SegmentCurrencyJMD,
+            SegmentCurrencyJOD,
+            SegmentCurrencyJPY,
+            SegmentCurrencyKES,
+            SegmentCurrencyKGS,
+            SegmentCurrencyKHR,
+            SegmentCurrencyKMF,
+            SegmentCurrencyKPW,
+            SegmentCurrencyKRW,
+            SegmentCurrencyKWD,
+            SegmentCurrencyKYD,
+            SegmentCurrencyKZT,
+            SegmentCurrencyLAK,
+            SegmentCurrencyLBP,
+            SegmentCurrencyLKR,
+            SegmentCurrencyLRD,
+            SegmentCurrencyLSL,
+            SegmentCurrencyLYD,
+            SegmentCurrencyMAD,
+            SegmentCurrencyMDL,
+            SegmentCurrencyMGA,
+            SegmentCurrencyMKD,
+            SegmentCurrencyMMK,
+            SegmentCurrencyMNT,
+            SegmentCurrencyMOP,
+            SegmentCurrencyMRO,
+            SegmentCurrencyMUR,
+            SegmentCurrencyMVR,
+            SegmentCurrencyMWK,
+            SegmentCurrencyMXN,
+            SegmentCurrencyMYR,
+            SegmentCurrencyMZN,
+            SegmentCurrencyNAD,
+            SegmentCurrencyNGN,
+            SegmentCurrencyNIO,
+            SegmentCurrencyNOK,
+            SegmentCurrencyNPR,
+            SegmentCurrencyNZD,
+            SegmentCurrencyOMR,
+            SegmentCurrencyPAB,
+            SegmentCurrencyPEN,
+            SegmentCurrencyPGK,
+            SegmentCurrencyPHP,
+            SegmentCurrencyPKR,
+            SegmentCurrencyPLN,
+            SegmentCurrencyPYG,
+            SegmentCurrencyQAR,
+            SegmentCurrencyRON,
+            SegmentCurrencyRSD,
+            SegmentCurrencyRUB,
+            SegmentCurrencyRWF,
+            SegmentCurrencySAR,
+            SegmentCurrencySBD,
+            SegmentCurrencySCR,
+            SegmentCurrencySDG,
+            SegmentCurrencySEK,
+            SegmentCurrencySGD,
+            SegmentCurrencySHP,
+            SegmentCurrencySLL,
+            SegmentCurrencySOS,
+            SegmentCurrencySPL,
+            SegmentCurrencySRD,
+            SegmentCurrencySTD,
+            SegmentCurrencySVC,
+            SegmentCurrencySYP,
+            SegmentCurrencySZL,
+            SegmentCurrencyTHB,
+            SegmentCurrencyTJS,
+            SegmentCurrencyTMT,
+            SegmentCurrencyTND,
+            SegmentCurrencyTOP,
+            SegmentCurrencyTRY,
+            SegmentCurrencyTTD,
+            SegmentCurrencyTVD,
+            SegmentCurrencyTWD,
+            SegmentCurrencyTZS,
+            SegmentCurrencyUAH,
+            SegmentCurrencyUGX,
+            SegmentCurrencyUSD,
+            SegmentCurrencyUYU,
+            SegmentCurrencyUZS,
+            SegmentCurrencyVEF,
+            SegmentCurrencyVND,
+            SegmentCurrencyVUV,
+            SegmentCurrencyWST,
+            SegmentCurrencyXAF,
+            SegmentCurrencyXCD,
+            SegmentCurrencyXDR,
+            SegmentCurrencyXOF,
+            SegmentCurrencyXPF,
+            SegmentCurrencyYER,
+            SegmentCurrencyZAR,
+            SegmentCurrencyZMW,
+            SegmentCurrencyZWD
+        };
+
+        inline void ToJsonEnum(const SegmentCurrency input, Json::Value& output)
+        {
+            if (input == SegmentCurrency::SegmentCurrencyAED)
+            {
+                output = Json::Value("AED");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyAFN)
+            {
+                output = Json::Value("AFN");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyALL)
+            {
+                output = Json::Value("ALL");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyAMD)
+            {
+                output = Json::Value("AMD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyANG)
+            {
+                output = Json::Value("ANG");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyAOA)
+            {
+                output = Json::Value("AOA");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyARS)
+            {
+                output = Json::Value("ARS");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyAUD)
+            {
+                output = Json::Value("AUD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyAWG)
+            {
+                output = Json::Value("AWG");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyAZN)
+            {
+                output = Json::Value("AZN");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyBAM)
+            {
+                output = Json::Value("BAM");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyBBD)
+            {
+                output = Json::Value("BBD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyBDT)
+            {
+                output = Json::Value("BDT");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyBGN)
+            {
+                output = Json::Value("BGN");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyBHD)
+            {
+                output = Json::Value("BHD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyBIF)
+            {
+                output = Json::Value("BIF");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyBMD)
+            {
+                output = Json::Value("BMD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyBND)
+            {
+                output = Json::Value("BND");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyBOB)
+            {
+                output = Json::Value("BOB");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyBRL)
+            {
+                output = Json::Value("BRL");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyBSD)
+            {
+                output = Json::Value("BSD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyBTN)
+            {
+                output = Json::Value("BTN");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyBWP)
+            {
+                output = Json::Value("BWP");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyBYR)
+            {
+                output = Json::Value("BYR");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyBZD)
+            {
+                output = Json::Value("BZD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyCAD)
+            {
+                output = Json::Value("CAD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyCDF)
+            {
+                output = Json::Value("CDF");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyCHF)
+            {
+                output = Json::Value("CHF");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyCLP)
+            {
+                output = Json::Value("CLP");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyCNY)
+            {
+                output = Json::Value("CNY");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyCOP)
+            {
+                output = Json::Value("COP");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyCRC)
+            {
+                output = Json::Value("CRC");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyCUC)
+            {
+                output = Json::Value("CUC");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyCUP)
+            {
+                output = Json::Value("CUP");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyCVE)
+            {
+                output = Json::Value("CVE");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyCZK)
+            {
+                output = Json::Value("CZK");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyDJF)
+            {
+                output = Json::Value("DJF");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyDKK)
+            {
+                output = Json::Value("DKK");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyDOP)
+            {
+                output = Json::Value("DOP");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyDZD)
+            {
+                output = Json::Value("DZD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyEGP)
+            {
+                output = Json::Value("EGP");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyERN)
+            {
+                output = Json::Value("ERN");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyETB)
+            {
+                output = Json::Value("ETB");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyEUR)
+            {
+                output = Json::Value("EUR");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyFJD)
+            {
+                output = Json::Value("FJD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyFKP)
+            {
+                output = Json::Value("FKP");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyGBP)
+            {
+                output = Json::Value("GBP");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyGEL)
+            {
+                output = Json::Value("GEL");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyGGP)
+            {
+                output = Json::Value("GGP");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyGHS)
+            {
+                output = Json::Value("GHS");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyGIP)
+            {
+                output = Json::Value("GIP");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyGMD)
+            {
+                output = Json::Value("GMD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyGNF)
+            {
+                output = Json::Value("GNF");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyGTQ)
+            {
+                output = Json::Value("GTQ");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyGYD)
+            {
+                output = Json::Value("GYD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyHKD)
+            {
+                output = Json::Value("HKD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyHNL)
+            {
+                output = Json::Value("HNL");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyHRK)
+            {
+                output = Json::Value("HRK");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyHTG)
+            {
+                output = Json::Value("HTG");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyHUF)
+            {
+                output = Json::Value("HUF");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyIDR)
+            {
+                output = Json::Value("IDR");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyILS)
+            {
+                output = Json::Value("ILS");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyIMP)
+            {
+                output = Json::Value("IMP");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyINR)
+            {
+                output = Json::Value("INR");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyIQD)
+            {
+                output = Json::Value("IQD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyIRR)
+            {
+                output = Json::Value("IRR");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyISK)
+            {
+                output = Json::Value("ISK");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyJEP)
+            {
+                output = Json::Value("JEP");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyJMD)
+            {
+                output = Json::Value("JMD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyJOD)
+            {
+                output = Json::Value("JOD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyJPY)
+            {
+                output = Json::Value("JPY");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyKES)
+            {
+                output = Json::Value("KES");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyKGS)
+            {
+                output = Json::Value("KGS");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyKHR)
+            {
+                output = Json::Value("KHR");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyKMF)
+            {
+                output = Json::Value("KMF");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyKPW)
+            {
+                output = Json::Value("KPW");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyKRW)
+            {
+                output = Json::Value("KRW");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyKWD)
+            {
+                output = Json::Value("KWD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyKYD)
+            {
+                output = Json::Value("KYD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyKZT)
+            {
+                output = Json::Value("KZT");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyLAK)
+            {
+                output = Json::Value("LAK");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyLBP)
+            {
+                output = Json::Value("LBP");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyLKR)
+            {
+                output = Json::Value("LKR");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyLRD)
+            {
+                output = Json::Value("LRD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyLSL)
+            {
+                output = Json::Value("LSL");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyLYD)
+            {
+                output = Json::Value("LYD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyMAD)
+            {
+                output = Json::Value("MAD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyMDL)
+            {
+                output = Json::Value("MDL");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyMGA)
+            {
+                output = Json::Value("MGA");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyMKD)
+            {
+                output = Json::Value("MKD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyMMK)
+            {
+                output = Json::Value("MMK");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyMNT)
+            {
+                output = Json::Value("MNT");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyMOP)
+            {
+                output = Json::Value("MOP");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyMRO)
+            {
+                output = Json::Value("MRO");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyMUR)
+            {
+                output = Json::Value("MUR");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyMVR)
+            {
+                output = Json::Value("MVR");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyMWK)
+            {
+                output = Json::Value("MWK");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyMXN)
+            {
+                output = Json::Value("MXN");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyMYR)
+            {
+                output = Json::Value("MYR");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyMZN)
+            {
+                output = Json::Value("MZN");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyNAD)
+            {
+                output = Json::Value("NAD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyNGN)
+            {
+                output = Json::Value("NGN");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyNIO)
+            {
+                output = Json::Value("NIO");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyNOK)
+            {
+                output = Json::Value("NOK");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyNPR)
+            {
+                output = Json::Value("NPR");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyNZD)
+            {
+                output = Json::Value("NZD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyOMR)
+            {
+                output = Json::Value("OMR");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyPAB)
+            {
+                output = Json::Value("PAB");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyPEN)
+            {
+                output = Json::Value("PEN");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyPGK)
+            {
+                output = Json::Value("PGK");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyPHP)
+            {
+                output = Json::Value("PHP");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyPKR)
+            {
+                output = Json::Value("PKR");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyPLN)
+            {
+                output = Json::Value("PLN");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyPYG)
+            {
+                output = Json::Value("PYG");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyQAR)
+            {
+                output = Json::Value("QAR");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyRON)
+            {
+                output = Json::Value("RON");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyRSD)
+            {
+                output = Json::Value("RSD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyRUB)
+            {
+                output = Json::Value("RUB");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyRWF)
+            {
+                output = Json::Value("RWF");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencySAR)
+            {
+                output = Json::Value("SAR");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencySBD)
+            {
+                output = Json::Value("SBD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencySCR)
+            {
+                output = Json::Value("SCR");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencySDG)
+            {
+                output = Json::Value("SDG");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencySEK)
+            {
+                output = Json::Value("SEK");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencySGD)
+            {
+                output = Json::Value("SGD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencySHP)
+            {
+                output = Json::Value("SHP");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencySLL)
+            {
+                output = Json::Value("SLL");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencySOS)
+            {
+                output = Json::Value("SOS");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencySPL)
+            {
+                output = Json::Value("SPL");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencySRD)
+            {
+                output = Json::Value("SRD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencySTD)
+            {
+                output = Json::Value("STD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencySVC)
+            {
+                output = Json::Value("SVC");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencySYP)
+            {
+                output = Json::Value("SYP");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencySZL)
+            {
+                output = Json::Value("SZL");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyTHB)
+            {
+                output = Json::Value("THB");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyTJS)
+            {
+                output = Json::Value("TJS");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyTMT)
+            {
+                output = Json::Value("TMT");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyTND)
+            {
+                output = Json::Value("TND");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyTOP)
+            {
+                output = Json::Value("TOP");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyTRY)
+            {
+                output = Json::Value("TRY");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyTTD)
+            {
+                output = Json::Value("TTD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyTVD)
+            {
+                output = Json::Value("TVD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyTWD)
+            {
+                output = Json::Value("TWD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyTZS)
+            {
+                output = Json::Value("TZS");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyUAH)
+            {
+                output = Json::Value("UAH");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyUGX)
+            {
+                output = Json::Value("UGX");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyUSD)
+            {
+                output = Json::Value("USD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyUYU)
+            {
+                output = Json::Value("UYU");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyUZS)
+            {
+                output = Json::Value("UZS");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyVEF)
+            {
+                output = Json::Value("VEF");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyVND)
+            {
+                output = Json::Value("VND");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyVUV)
+            {
+                output = Json::Value("VUV");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyWST)
+            {
+                output = Json::Value("WST");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyXAF)
+            {
+                output = Json::Value("XAF");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyXCD)
+            {
+                output = Json::Value("XCD");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyXDR)
+            {
+                output = Json::Value("XDR");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyXOF)
+            {
+                output = Json::Value("XOF");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyXPF)
+            {
+                output = Json::Value("XPF");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyYER)
+            {
+                output = Json::Value("YER");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyZAR)
+            {
+                output = Json::Value("ZAR");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyZMW)
+            {
+                output = Json::Value("ZMW");
+                return;
+            }
+            if (input == SegmentCurrency::SegmentCurrencyZWD)
+            {
+                output = Json::Value("ZWD");
+                return;
+            }
+        }
+        inline void FromJsonEnum(const Json::Value& input, SegmentCurrency& output)
+        {
+            if (!input.isString())
+            {
+                return;
+            }
+            const std::string& inputStr = input.asString();
+            if (inputStr == "AED")
+            {
+                output = SegmentCurrency::SegmentCurrencyAED;
+                return;
+            }
+            if (inputStr == "AFN")
+            {
+                output = SegmentCurrency::SegmentCurrencyAFN;
+                return;
+            }
+            if (inputStr == "ALL")
+            {
+                output = SegmentCurrency::SegmentCurrencyALL;
+                return;
+            }
+            if (inputStr == "AMD")
+            {
+                output = SegmentCurrency::SegmentCurrencyAMD;
+                return;
+            }
+            if (inputStr == "ANG")
+            {
+                output = SegmentCurrency::SegmentCurrencyANG;
+                return;
+            }
+            if (inputStr == "AOA")
+            {
+                output = SegmentCurrency::SegmentCurrencyAOA;
+                return;
+            }
+            if (inputStr == "ARS")
+            {
+                output = SegmentCurrency::SegmentCurrencyARS;
+                return;
+            }
+            if (inputStr == "AUD")
+            {
+                output = SegmentCurrency::SegmentCurrencyAUD;
+                return;
+            }
+            if (inputStr == "AWG")
+            {
+                output = SegmentCurrency::SegmentCurrencyAWG;
+                return;
+            }
+            if (inputStr == "AZN")
+            {
+                output = SegmentCurrency::SegmentCurrencyAZN;
+                return;
+            }
+            if (inputStr == "BAM")
+            {
+                output = SegmentCurrency::SegmentCurrencyBAM;
+                return;
+            }
+            if (inputStr == "BBD")
+            {
+                output = SegmentCurrency::SegmentCurrencyBBD;
+                return;
+            }
+            if (inputStr == "BDT")
+            {
+                output = SegmentCurrency::SegmentCurrencyBDT;
+                return;
+            }
+            if (inputStr == "BGN")
+            {
+                output = SegmentCurrency::SegmentCurrencyBGN;
+                return;
+            }
+            if (inputStr == "BHD")
+            {
+                output = SegmentCurrency::SegmentCurrencyBHD;
+                return;
+            }
+            if (inputStr == "BIF")
+            {
+                output = SegmentCurrency::SegmentCurrencyBIF;
+                return;
+            }
+            if (inputStr == "BMD")
+            {
+                output = SegmentCurrency::SegmentCurrencyBMD;
+                return;
+            }
+            if (inputStr == "BND")
+            {
+                output = SegmentCurrency::SegmentCurrencyBND;
+                return;
+            }
+            if (inputStr == "BOB")
+            {
+                output = SegmentCurrency::SegmentCurrencyBOB;
+                return;
+            }
+            if (inputStr == "BRL")
+            {
+                output = SegmentCurrency::SegmentCurrencyBRL;
+                return;
+            }
+            if (inputStr == "BSD")
+            {
+                output = SegmentCurrency::SegmentCurrencyBSD;
+                return;
+            }
+            if (inputStr == "BTN")
+            {
+                output = SegmentCurrency::SegmentCurrencyBTN;
+                return;
+            }
+            if (inputStr == "BWP")
+            {
+                output = SegmentCurrency::SegmentCurrencyBWP;
+                return;
+            }
+            if (inputStr == "BYR")
+            {
+                output = SegmentCurrency::SegmentCurrencyBYR;
+                return;
+            }
+            if (inputStr == "BZD")
+            {
+                output = SegmentCurrency::SegmentCurrencyBZD;
+                return;
+            }
+            if (inputStr == "CAD")
+            {
+                output = SegmentCurrency::SegmentCurrencyCAD;
+                return;
+            }
+            if (inputStr == "CDF")
+            {
+                output = SegmentCurrency::SegmentCurrencyCDF;
+                return;
+            }
+            if (inputStr == "CHF")
+            {
+                output = SegmentCurrency::SegmentCurrencyCHF;
+                return;
+            }
+            if (inputStr == "CLP")
+            {
+                output = SegmentCurrency::SegmentCurrencyCLP;
+                return;
+            }
+            if (inputStr == "CNY")
+            {
+                output = SegmentCurrency::SegmentCurrencyCNY;
+                return;
+            }
+            if (inputStr == "COP")
+            {
+                output = SegmentCurrency::SegmentCurrencyCOP;
+                return;
+            }
+            if (inputStr == "CRC")
+            {
+                output = SegmentCurrency::SegmentCurrencyCRC;
+                return;
+            }
+            if (inputStr == "CUC")
+            {
+                output = SegmentCurrency::SegmentCurrencyCUC;
+                return;
+            }
+            if (inputStr == "CUP")
+            {
+                output = SegmentCurrency::SegmentCurrencyCUP;
+                return;
+            }
+            if (inputStr == "CVE")
+            {
+                output = SegmentCurrency::SegmentCurrencyCVE;
+                return;
+            }
+            if (inputStr == "CZK")
+            {
+                output = SegmentCurrency::SegmentCurrencyCZK;
+                return;
+            }
+            if (inputStr == "DJF")
+            {
+                output = SegmentCurrency::SegmentCurrencyDJF;
+                return;
+            }
+            if (inputStr == "DKK")
+            {
+                output = SegmentCurrency::SegmentCurrencyDKK;
+                return;
+            }
+            if (inputStr == "DOP")
+            {
+                output = SegmentCurrency::SegmentCurrencyDOP;
+                return;
+            }
+            if (inputStr == "DZD")
+            {
+                output = SegmentCurrency::SegmentCurrencyDZD;
+                return;
+            }
+            if (inputStr == "EGP")
+            {
+                output = SegmentCurrency::SegmentCurrencyEGP;
+                return;
+            }
+            if (inputStr == "ERN")
+            {
+                output = SegmentCurrency::SegmentCurrencyERN;
+                return;
+            }
+            if (inputStr == "ETB")
+            {
+                output = SegmentCurrency::SegmentCurrencyETB;
+                return;
+            }
+            if (inputStr == "EUR")
+            {
+                output = SegmentCurrency::SegmentCurrencyEUR;
+                return;
+            }
+            if (inputStr == "FJD")
+            {
+                output = SegmentCurrency::SegmentCurrencyFJD;
+                return;
+            }
+            if (inputStr == "FKP")
+            {
+                output = SegmentCurrency::SegmentCurrencyFKP;
+                return;
+            }
+            if (inputStr == "GBP")
+            {
+                output = SegmentCurrency::SegmentCurrencyGBP;
+                return;
+            }
+            if (inputStr == "GEL")
+            {
+                output = SegmentCurrency::SegmentCurrencyGEL;
+                return;
+            }
+            if (inputStr == "GGP")
+            {
+                output = SegmentCurrency::SegmentCurrencyGGP;
+                return;
+            }
+            if (inputStr == "GHS")
+            {
+                output = SegmentCurrency::SegmentCurrencyGHS;
+                return;
+            }
+            if (inputStr == "GIP")
+            {
+                output = SegmentCurrency::SegmentCurrencyGIP;
+                return;
+            }
+            if (inputStr == "GMD")
+            {
+                output = SegmentCurrency::SegmentCurrencyGMD;
+                return;
+            }
+            if (inputStr == "GNF")
+            {
+                output = SegmentCurrency::SegmentCurrencyGNF;
+                return;
+            }
+            if (inputStr == "GTQ")
+            {
+                output = SegmentCurrency::SegmentCurrencyGTQ;
+                return;
+            }
+            if (inputStr == "GYD")
+            {
+                output = SegmentCurrency::SegmentCurrencyGYD;
+                return;
+            }
+            if (inputStr == "HKD")
+            {
+                output = SegmentCurrency::SegmentCurrencyHKD;
+                return;
+            }
+            if (inputStr == "HNL")
+            {
+                output = SegmentCurrency::SegmentCurrencyHNL;
+                return;
+            }
+            if (inputStr == "HRK")
+            {
+                output = SegmentCurrency::SegmentCurrencyHRK;
+                return;
+            }
+            if (inputStr == "HTG")
+            {
+                output = SegmentCurrency::SegmentCurrencyHTG;
+                return;
+            }
+            if (inputStr == "HUF")
+            {
+                output = SegmentCurrency::SegmentCurrencyHUF;
+                return;
+            }
+            if (inputStr == "IDR")
+            {
+                output = SegmentCurrency::SegmentCurrencyIDR;
+                return;
+            }
+            if (inputStr == "ILS")
+            {
+                output = SegmentCurrency::SegmentCurrencyILS;
+                return;
+            }
+            if (inputStr == "IMP")
+            {
+                output = SegmentCurrency::SegmentCurrencyIMP;
+                return;
+            }
+            if (inputStr == "INR")
+            {
+                output = SegmentCurrency::SegmentCurrencyINR;
+                return;
+            }
+            if (inputStr == "IQD")
+            {
+                output = SegmentCurrency::SegmentCurrencyIQD;
+                return;
+            }
+            if (inputStr == "IRR")
+            {
+                output = SegmentCurrency::SegmentCurrencyIRR;
+                return;
+            }
+            if (inputStr == "ISK")
+            {
+                output = SegmentCurrency::SegmentCurrencyISK;
+                return;
+            }
+            if (inputStr == "JEP")
+            {
+                output = SegmentCurrency::SegmentCurrencyJEP;
+                return;
+            }
+            if (inputStr == "JMD")
+            {
+                output = SegmentCurrency::SegmentCurrencyJMD;
+                return;
+            }
+            if (inputStr == "JOD")
+            {
+                output = SegmentCurrency::SegmentCurrencyJOD;
+                return;
+            }
+            if (inputStr == "JPY")
+            {
+                output = SegmentCurrency::SegmentCurrencyJPY;
+                return;
+            }
+            if (inputStr == "KES")
+            {
+                output = SegmentCurrency::SegmentCurrencyKES;
+                return;
+            }
+            if (inputStr == "KGS")
+            {
+                output = SegmentCurrency::SegmentCurrencyKGS;
+                return;
+            }
+            if (inputStr == "KHR")
+            {
+                output = SegmentCurrency::SegmentCurrencyKHR;
+                return;
+            }
+            if (inputStr == "KMF")
+            {
+                output = SegmentCurrency::SegmentCurrencyKMF;
+                return;
+            }
+            if (inputStr == "KPW")
+            {
+                output = SegmentCurrency::SegmentCurrencyKPW;
+                return;
+            }
+            if (inputStr == "KRW")
+            {
+                output = SegmentCurrency::SegmentCurrencyKRW;
+                return;
+            }
+            if (inputStr == "KWD")
+            {
+                output = SegmentCurrency::SegmentCurrencyKWD;
+                return;
+            }
+            if (inputStr == "KYD")
+            {
+                output = SegmentCurrency::SegmentCurrencyKYD;
+                return;
+            }
+            if (inputStr == "KZT")
+            {
+                output = SegmentCurrency::SegmentCurrencyKZT;
+                return;
+            }
+            if (inputStr == "LAK")
+            {
+                output = SegmentCurrency::SegmentCurrencyLAK;
+                return;
+            }
+            if (inputStr == "LBP")
+            {
+                output = SegmentCurrency::SegmentCurrencyLBP;
+                return;
+            }
+            if (inputStr == "LKR")
+            {
+                output = SegmentCurrency::SegmentCurrencyLKR;
+                return;
+            }
+            if (inputStr == "LRD")
+            {
+                output = SegmentCurrency::SegmentCurrencyLRD;
+                return;
+            }
+            if (inputStr == "LSL")
+            {
+                output = SegmentCurrency::SegmentCurrencyLSL;
+                return;
+            }
+            if (inputStr == "LYD")
+            {
+                output = SegmentCurrency::SegmentCurrencyLYD;
+                return;
+            }
+            if (inputStr == "MAD")
+            {
+                output = SegmentCurrency::SegmentCurrencyMAD;
+                return;
+            }
+            if (inputStr == "MDL")
+            {
+                output = SegmentCurrency::SegmentCurrencyMDL;
+                return;
+            }
+            if (inputStr == "MGA")
+            {
+                output = SegmentCurrency::SegmentCurrencyMGA;
+                return;
+            }
+            if (inputStr == "MKD")
+            {
+                output = SegmentCurrency::SegmentCurrencyMKD;
+                return;
+            }
+            if (inputStr == "MMK")
+            {
+                output = SegmentCurrency::SegmentCurrencyMMK;
+                return;
+            }
+            if (inputStr == "MNT")
+            {
+                output = SegmentCurrency::SegmentCurrencyMNT;
+                return;
+            }
+            if (inputStr == "MOP")
+            {
+                output = SegmentCurrency::SegmentCurrencyMOP;
+                return;
+            }
+            if (inputStr == "MRO")
+            {
+                output = SegmentCurrency::SegmentCurrencyMRO;
+                return;
+            }
+            if (inputStr == "MUR")
+            {
+                output = SegmentCurrency::SegmentCurrencyMUR;
+                return;
+            }
+            if (inputStr == "MVR")
+            {
+                output = SegmentCurrency::SegmentCurrencyMVR;
+                return;
+            }
+            if (inputStr == "MWK")
+            {
+                output = SegmentCurrency::SegmentCurrencyMWK;
+                return;
+            }
+            if (inputStr == "MXN")
+            {
+                output = SegmentCurrency::SegmentCurrencyMXN;
+                return;
+            }
+            if (inputStr == "MYR")
+            {
+                output = SegmentCurrency::SegmentCurrencyMYR;
+                return;
+            }
+            if (inputStr == "MZN")
+            {
+                output = SegmentCurrency::SegmentCurrencyMZN;
+                return;
+            }
+            if (inputStr == "NAD")
+            {
+                output = SegmentCurrency::SegmentCurrencyNAD;
+                return;
+            }
+            if (inputStr == "NGN")
+            {
+                output = SegmentCurrency::SegmentCurrencyNGN;
+                return;
+            }
+            if (inputStr == "NIO")
+            {
+                output = SegmentCurrency::SegmentCurrencyNIO;
+                return;
+            }
+            if (inputStr == "NOK")
+            {
+                output = SegmentCurrency::SegmentCurrencyNOK;
+                return;
+            }
+            if (inputStr == "NPR")
+            {
+                output = SegmentCurrency::SegmentCurrencyNPR;
+                return;
+            }
+            if (inputStr == "NZD")
+            {
+                output = SegmentCurrency::SegmentCurrencyNZD;
+                return;
+            }
+            if (inputStr == "OMR")
+            {
+                output = SegmentCurrency::SegmentCurrencyOMR;
+                return;
+            }
+            if (inputStr == "PAB")
+            {
+                output = SegmentCurrency::SegmentCurrencyPAB;
+                return;
+            }
+            if (inputStr == "PEN")
+            {
+                output = SegmentCurrency::SegmentCurrencyPEN;
+                return;
+            }
+            if (inputStr == "PGK")
+            {
+                output = SegmentCurrency::SegmentCurrencyPGK;
+                return;
+            }
+            if (inputStr == "PHP")
+            {
+                output = SegmentCurrency::SegmentCurrencyPHP;
+                return;
+            }
+            if (inputStr == "PKR")
+            {
+                output = SegmentCurrency::SegmentCurrencyPKR;
+                return;
+            }
+            if (inputStr == "PLN")
+            {
+                output = SegmentCurrency::SegmentCurrencyPLN;
+                return;
+            }
+            if (inputStr == "PYG")
+            {
+                output = SegmentCurrency::SegmentCurrencyPYG;
+                return;
+            }
+            if (inputStr == "QAR")
+            {
+                output = SegmentCurrency::SegmentCurrencyQAR;
+                return;
+            }
+            if (inputStr == "RON")
+            {
+                output = SegmentCurrency::SegmentCurrencyRON;
+                return;
+            }
+            if (inputStr == "RSD")
+            {
+                output = SegmentCurrency::SegmentCurrencyRSD;
+                return;
+            }
+            if (inputStr == "RUB")
+            {
+                output = SegmentCurrency::SegmentCurrencyRUB;
+                return;
+            }
+            if (inputStr == "RWF")
+            {
+                output = SegmentCurrency::SegmentCurrencyRWF;
+                return;
+            }
+            if (inputStr == "SAR")
+            {
+                output = SegmentCurrency::SegmentCurrencySAR;
+                return;
+            }
+            if (inputStr == "SBD")
+            {
+                output = SegmentCurrency::SegmentCurrencySBD;
+                return;
+            }
+            if (inputStr == "SCR")
+            {
+                output = SegmentCurrency::SegmentCurrencySCR;
+                return;
+            }
+            if (inputStr == "SDG")
+            {
+                output = SegmentCurrency::SegmentCurrencySDG;
+                return;
+            }
+            if (inputStr == "SEK")
+            {
+                output = SegmentCurrency::SegmentCurrencySEK;
+                return;
+            }
+            if (inputStr == "SGD")
+            {
+                output = SegmentCurrency::SegmentCurrencySGD;
+                return;
+            }
+            if (inputStr == "SHP")
+            {
+                output = SegmentCurrency::SegmentCurrencySHP;
+                return;
+            }
+            if (inputStr == "SLL")
+            {
+                output = SegmentCurrency::SegmentCurrencySLL;
+                return;
+            }
+            if (inputStr == "SOS")
+            {
+                output = SegmentCurrency::SegmentCurrencySOS;
+                return;
+            }
+            if (inputStr == "SPL")
+            {
+                output = SegmentCurrency::SegmentCurrencySPL;
+                return;
+            }
+            if (inputStr == "SRD")
+            {
+                output = SegmentCurrency::SegmentCurrencySRD;
+                return;
+            }
+            if (inputStr == "STD")
+            {
+                output = SegmentCurrency::SegmentCurrencySTD;
+                return;
+            }
+            if (inputStr == "SVC")
+            {
+                output = SegmentCurrency::SegmentCurrencySVC;
+                return;
+            }
+            if (inputStr == "SYP")
+            {
+                output = SegmentCurrency::SegmentCurrencySYP;
+                return;
+            }
+            if (inputStr == "SZL")
+            {
+                output = SegmentCurrency::SegmentCurrencySZL;
+                return;
+            }
+            if (inputStr == "THB")
+            {
+                output = SegmentCurrency::SegmentCurrencyTHB;
+                return;
+            }
+            if (inputStr == "TJS")
+            {
+                output = SegmentCurrency::SegmentCurrencyTJS;
+                return;
+            }
+            if (inputStr == "TMT")
+            {
+                output = SegmentCurrency::SegmentCurrencyTMT;
+                return;
+            }
+            if (inputStr == "TND")
+            {
+                output = SegmentCurrency::SegmentCurrencyTND;
+                return;
+            }
+            if (inputStr == "TOP")
+            {
+                output = SegmentCurrency::SegmentCurrencyTOP;
+                return;
+            }
+            if (inputStr == "TRY")
+            {
+                output = SegmentCurrency::SegmentCurrencyTRY;
+                return;
+            }
+            if (inputStr == "TTD")
+            {
+                output = SegmentCurrency::SegmentCurrencyTTD;
+                return;
+            }
+            if (inputStr == "TVD")
+            {
+                output = SegmentCurrency::SegmentCurrencyTVD;
+                return;
+            }
+            if (inputStr == "TWD")
+            {
+                output = SegmentCurrency::SegmentCurrencyTWD;
+                return;
+            }
+            if (inputStr == "TZS")
+            {
+                output = SegmentCurrency::SegmentCurrencyTZS;
+                return;
+            }
+            if (inputStr == "UAH")
+            {
+                output = SegmentCurrency::SegmentCurrencyUAH;
+                return;
+            }
+            if (inputStr == "UGX")
+            {
+                output = SegmentCurrency::SegmentCurrencyUGX;
+                return;
+            }
+            if (inputStr == "USD")
+            {
+                output = SegmentCurrency::SegmentCurrencyUSD;
+                return;
+            }
+            if (inputStr == "UYU")
+            {
+                output = SegmentCurrency::SegmentCurrencyUYU;
+                return;
+            }
+            if (inputStr == "UZS")
+            {
+                output = SegmentCurrency::SegmentCurrencyUZS;
+                return;
+            }
+            if (inputStr == "VEF")
+            {
+                output = SegmentCurrency::SegmentCurrencyVEF;
+                return;
+            }
+            if (inputStr == "VND")
+            {
+                output = SegmentCurrency::SegmentCurrencyVND;
+                return;
+            }
+            if (inputStr == "VUV")
+            {
+                output = SegmentCurrency::SegmentCurrencyVUV;
+                return;
+            }
+            if (inputStr == "WST")
+            {
+                output = SegmentCurrency::SegmentCurrencyWST;
+                return;
+            }
+            if (inputStr == "XAF")
+            {
+                output = SegmentCurrency::SegmentCurrencyXAF;
+                return;
+            }
+            if (inputStr == "XCD")
+            {
+                output = SegmentCurrency::SegmentCurrencyXCD;
+                return;
+            }
+            if (inputStr == "XDR")
+            {
+                output = SegmentCurrency::SegmentCurrencyXDR;
+                return;
+            }
+            if (inputStr == "XOF")
+            {
+                output = SegmentCurrency::SegmentCurrencyXOF;
+                return;
+            }
+            if (inputStr == "XPF")
+            {
+                output = SegmentCurrency::SegmentCurrencyXPF;
+                return;
+            }
+            if (inputStr == "YER")
+            {
+                output = SegmentCurrency::SegmentCurrencyYER;
+                return;
+            }
+            if (inputStr == "ZAR")
+            {
+                output = SegmentCurrency::SegmentCurrencyZAR;
+                return;
+            }
+            if (inputStr == "ZMW")
+            {
+                output = SegmentCurrency::SegmentCurrencyZMW;
+                return;
+            }
+            if (inputStr == "ZWD")
+            {
+                output = SegmentCurrency::SegmentCurrencyZWD;
+                return;
+            }
+        }
+
+        enum class SegmentFilterComparison
+        {
+            SegmentFilterComparisonGreaterThan,
+            SegmentFilterComparisonLessThan,
+            SegmentFilterComparisonEqualTo,
+            SegmentFilterComparisonNotEqualTo,
+            SegmentFilterComparisonGreaterThanOrEqual,
+            SegmentFilterComparisonLessThanOrEqual,
+            SegmentFilterComparisonExists,
+            SegmentFilterComparisonContains,
+            SegmentFilterComparisonNotContains
+        };
+
+        inline void ToJsonEnum(const SegmentFilterComparison input, Json::Value& output)
+        {
+            if (input == SegmentFilterComparison::SegmentFilterComparisonGreaterThan)
+            {
+                output = Json::Value("GreaterThan");
+                return;
+            }
+            if (input == SegmentFilterComparison::SegmentFilterComparisonLessThan)
+            {
+                output = Json::Value("LessThan");
+                return;
+            }
+            if (input == SegmentFilterComparison::SegmentFilterComparisonEqualTo)
+            {
+                output = Json::Value("EqualTo");
+                return;
+            }
+            if (input == SegmentFilterComparison::SegmentFilterComparisonNotEqualTo)
+            {
+                output = Json::Value("NotEqualTo");
+                return;
+            }
+            if (input == SegmentFilterComparison::SegmentFilterComparisonGreaterThanOrEqual)
+            {
+                output = Json::Value("GreaterThanOrEqual");
+                return;
+            }
+            if (input == SegmentFilterComparison::SegmentFilterComparisonLessThanOrEqual)
+            {
+                output = Json::Value("LessThanOrEqual");
+                return;
+            }
+            if (input == SegmentFilterComparison::SegmentFilterComparisonExists)
+            {
+                output = Json::Value("Exists");
+                return;
+            }
+            if (input == SegmentFilterComparison::SegmentFilterComparisonContains)
+            {
+                output = Json::Value("Contains");
+                return;
+            }
+            if (input == SegmentFilterComparison::SegmentFilterComparisonNotContains)
+            {
+                output = Json::Value("NotContains");
+                return;
+            }
+        }
+        inline void FromJsonEnum(const Json::Value& input, SegmentFilterComparison& output)
+        {
+            if (!input.isString())
+            {
+                return;
+            }
+            const std::string& inputStr = input.asString();
+            if (inputStr == "GreaterThan")
+            {
+                output = SegmentFilterComparison::SegmentFilterComparisonGreaterThan;
+                return;
+            }
+            if (inputStr == "LessThan")
+            {
+                output = SegmentFilterComparison::SegmentFilterComparisonLessThan;
+                return;
+            }
+            if (inputStr == "EqualTo")
+            {
+                output = SegmentFilterComparison::SegmentFilterComparisonEqualTo;
+                return;
+            }
+            if (inputStr == "NotEqualTo")
+            {
+                output = SegmentFilterComparison::SegmentFilterComparisonNotEqualTo;
+                return;
+            }
+            if (inputStr == "GreaterThanOrEqual")
+            {
+                output = SegmentFilterComparison::SegmentFilterComparisonGreaterThanOrEqual;
+                return;
+            }
+            if (inputStr == "LessThanOrEqual")
+            {
+                output = SegmentFilterComparison::SegmentFilterComparisonLessThanOrEqual;
+                return;
+            }
+            if (inputStr == "Exists")
+            {
+                output = SegmentFilterComparison::SegmentFilterComparisonExists;
+                return;
+            }
+            if (inputStr == "Contains")
+            {
+                output = SegmentFilterComparison::SegmentFilterComparisonContains;
+                return;
+            }
+            if (inputStr == "NotContains")
+            {
+                output = SegmentFilterComparison::SegmentFilterComparisonNotContains;
+                return;
+            }
+        }
+
+        enum class SegmentLoginIdentityProvider
+        {
+            SegmentLoginIdentityProviderUnknown,
+            SegmentLoginIdentityProviderPlayFab,
+            SegmentLoginIdentityProviderCustom,
+            SegmentLoginIdentityProviderGameCenter,
+            SegmentLoginIdentityProviderGooglePlay,
+            SegmentLoginIdentityProviderSteam,
+            SegmentLoginIdentityProviderXBoxLive,
+            SegmentLoginIdentityProviderPSN,
+            SegmentLoginIdentityProviderKongregate,
+            SegmentLoginIdentityProviderFacebook,
+            SegmentLoginIdentityProviderIOSDevice,
+            SegmentLoginIdentityProviderAndroidDevice,
+            SegmentLoginIdentityProviderTwitch,
+            SegmentLoginIdentityProviderWindowsHello,
+            SegmentLoginIdentityProviderGameServer,
+            SegmentLoginIdentityProviderCustomServer,
+            SegmentLoginIdentityProviderNintendoSwitch,
+            SegmentLoginIdentityProviderFacebookInstantGames,
+            SegmentLoginIdentityProviderOpenIdConnect,
+            SegmentLoginIdentityProviderApple,
+            SegmentLoginIdentityProviderNintendoSwitchAccount
+        };
+
+        inline void ToJsonEnum(const SegmentLoginIdentityProvider input, Json::Value& output)
+        {
+            if (input == SegmentLoginIdentityProvider::SegmentLoginIdentityProviderUnknown)
+            {
+                output = Json::Value("Unknown");
+                return;
+            }
+            if (input == SegmentLoginIdentityProvider::SegmentLoginIdentityProviderPlayFab)
+            {
+                output = Json::Value("PlayFab");
+                return;
+            }
+            if (input == SegmentLoginIdentityProvider::SegmentLoginIdentityProviderCustom)
+            {
+                output = Json::Value("Custom");
+                return;
+            }
+            if (input == SegmentLoginIdentityProvider::SegmentLoginIdentityProviderGameCenter)
+            {
+                output = Json::Value("GameCenter");
+                return;
+            }
+            if (input == SegmentLoginIdentityProvider::SegmentLoginIdentityProviderGooglePlay)
+            {
+                output = Json::Value("GooglePlay");
+                return;
+            }
+            if (input == SegmentLoginIdentityProvider::SegmentLoginIdentityProviderSteam)
+            {
+                output = Json::Value("Steam");
+                return;
+            }
+            if (input == SegmentLoginIdentityProvider::SegmentLoginIdentityProviderXBoxLive)
+            {
+                output = Json::Value("XBoxLive");
+                return;
+            }
+            if (input == SegmentLoginIdentityProvider::SegmentLoginIdentityProviderPSN)
+            {
+                output = Json::Value("PSN");
+                return;
+            }
+            if (input == SegmentLoginIdentityProvider::SegmentLoginIdentityProviderKongregate)
+            {
+                output = Json::Value("Kongregate");
+                return;
+            }
+            if (input == SegmentLoginIdentityProvider::SegmentLoginIdentityProviderFacebook)
+            {
+                output = Json::Value("Facebook");
+                return;
+            }
+            if (input == SegmentLoginIdentityProvider::SegmentLoginIdentityProviderIOSDevice)
+            {
+                output = Json::Value("IOSDevice");
+                return;
+            }
+            if (input == SegmentLoginIdentityProvider::SegmentLoginIdentityProviderAndroidDevice)
+            {
+                output = Json::Value("AndroidDevice");
+                return;
+            }
+            if (input == SegmentLoginIdentityProvider::SegmentLoginIdentityProviderTwitch)
+            {
+                output = Json::Value("Twitch");
+                return;
+            }
+            if (input == SegmentLoginIdentityProvider::SegmentLoginIdentityProviderWindowsHello)
+            {
+                output = Json::Value("WindowsHello");
+                return;
+            }
+            if (input == SegmentLoginIdentityProvider::SegmentLoginIdentityProviderGameServer)
+            {
+                output = Json::Value("GameServer");
+                return;
+            }
+            if (input == SegmentLoginIdentityProvider::SegmentLoginIdentityProviderCustomServer)
+            {
+                output = Json::Value("CustomServer");
+                return;
+            }
+            if (input == SegmentLoginIdentityProvider::SegmentLoginIdentityProviderNintendoSwitch)
+            {
+                output = Json::Value("NintendoSwitch");
+                return;
+            }
+            if (input == SegmentLoginIdentityProvider::SegmentLoginIdentityProviderFacebookInstantGames)
+            {
+                output = Json::Value("FacebookInstantGames");
+                return;
+            }
+            if (input == SegmentLoginIdentityProvider::SegmentLoginIdentityProviderOpenIdConnect)
+            {
+                output = Json::Value("OpenIdConnect");
+                return;
+            }
+            if (input == SegmentLoginIdentityProvider::SegmentLoginIdentityProviderApple)
+            {
+                output = Json::Value("Apple");
+                return;
+            }
+            if (input == SegmentLoginIdentityProvider::SegmentLoginIdentityProviderNintendoSwitchAccount)
+            {
+                output = Json::Value("NintendoSwitchAccount");
+                return;
+            }
+        }
+        inline void FromJsonEnum(const Json::Value& input, SegmentLoginIdentityProvider& output)
+        {
+            if (!input.isString())
+            {
+                return;
+            }
+            const std::string& inputStr = input.asString();
+            if (inputStr == "Unknown")
+            {
+                output = SegmentLoginIdentityProvider::SegmentLoginIdentityProviderUnknown;
+                return;
+            }
+            if (inputStr == "PlayFab")
+            {
+                output = SegmentLoginIdentityProvider::SegmentLoginIdentityProviderPlayFab;
+                return;
+            }
+            if (inputStr == "Custom")
+            {
+                output = SegmentLoginIdentityProvider::SegmentLoginIdentityProviderCustom;
+                return;
+            }
+            if (inputStr == "GameCenter")
+            {
+                output = SegmentLoginIdentityProvider::SegmentLoginIdentityProviderGameCenter;
+                return;
+            }
+            if (inputStr == "GooglePlay")
+            {
+                output = SegmentLoginIdentityProvider::SegmentLoginIdentityProviderGooglePlay;
+                return;
+            }
+            if (inputStr == "Steam")
+            {
+                output = SegmentLoginIdentityProvider::SegmentLoginIdentityProviderSteam;
+                return;
+            }
+            if (inputStr == "XBoxLive")
+            {
+                output = SegmentLoginIdentityProvider::SegmentLoginIdentityProviderXBoxLive;
+                return;
+            }
+            if (inputStr == "PSN")
+            {
+                output = SegmentLoginIdentityProvider::SegmentLoginIdentityProviderPSN;
+                return;
+            }
+            if (inputStr == "Kongregate")
+            {
+                output = SegmentLoginIdentityProvider::SegmentLoginIdentityProviderKongregate;
+                return;
+            }
+            if (inputStr == "Facebook")
+            {
+                output = SegmentLoginIdentityProvider::SegmentLoginIdentityProviderFacebook;
+                return;
+            }
+            if (inputStr == "IOSDevice")
+            {
+                output = SegmentLoginIdentityProvider::SegmentLoginIdentityProviderIOSDevice;
+                return;
+            }
+            if (inputStr == "AndroidDevice")
+            {
+                output = SegmentLoginIdentityProvider::SegmentLoginIdentityProviderAndroidDevice;
+                return;
+            }
+            if (inputStr == "Twitch")
+            {
+                output = SegmentLoginIdentityProvider::SegmentLoginIdentityProviderTwitch;
+                return;
+            }
+            if (inputStr == "WindowsHello")
+            {
+                output = SegmentLoginIdentityProvider::SegmentLoginIdentityProviderWindowsHello;
+                return;
+            }
+            if (inputStr == "GameServer")
+            {
+                output = SegmentLoginIdentityProvider::SegmentLoginIdentityProviderGameServer;
+                return;
+            }
+            if (inputStr == "CustomServer")
+            {
+                output = SegmentLoginIdentityProvider::SegmentLoginIdentityProviderCustomServer;
+                return;
+            }
+            if (inputStr == "NintendoSwitch")
+            {
+                output = SegmentLoginIdentityProvider::SegmentLoginIdentityProviderNintendoSwitch;
+                return;
+            }
+            if (inputStr == "FacebookInstantGames")
+            {
+                output = SegmentLoginIdentityProvider::SegmentLoginIdentityProviderFacebookInstantGames;
+                return;
+            }
+            if (inputStr == "OpenIdConnect")
+            {
+                output = SegmentLoginIdentityProvider::SegmentLoginIdentityProviderOpenIdConnect;
+                return;
+            }
+            if (inputStr == "Apple")
+            {
+                output = SegmentLoginIdentityProvider::SegmentLoginIdentityProviderApple;
+                return;
+            }
+            if (inputStr == "NintendoSwitchAccount")
+            {
+                output = SegmentLoginIdentityProvider::SegmentLoginIdentityProviderNintendoSwitchAccount;
+                return;
+            }
+        }
+
+        enum class SegmentPushNotificationDevicePlatform
+        {
+            SegmentPushNotificationDevicePlatformApplePushNotificationService,
+            SegmentPushNotificationDevicePlatformGoogleCloudMessaging
+        };
+
+        inline void ToJsonEnum(const SegmentPushNotificationDevicePlatform input, Json::Value& output)
+        {
+            if (input == SegmentPushNotificationDevicePlatform::SegmentPushNotificationDevicePlatformApplePushNotificationService)
+            {
+                output = Json::Value("ApplePushNotificationService");
+                return;
+            }
+            if (input == SegmentPushNotificationDevicePlatform::SegmentPushNotificationDevicePlatformGoogleCloudMessaging)
+            {
+                output = Json::Value("GoogleCloudMessaging");
+                return;
+            }
+        }
+        inline void FromJsonEnum(const Json::Value& input, SegmentPushNotificationDevicePlatform& output)
+        {
+            if (!input.isString())
+            {
+                return;
+            }
+            const std::string& inputStr = input.asString();
+            if (inputStr == "ApplePushNotificationService")
+            {
+                output = SegmentPushNotificationDevicePlatform::SegmentPushNotificationDevicePlatformApplePushNotificationService;
+                return;
+            }
+            if (inputStr == "GoogleCloudMessaging")
+            {
+                output = SegmentPushNotificationDevicePlatform::SegmentPushNotificationDevicePlatformGoogleCloudMessaging;
                 return;
             }
         }
@@ -12584,7 +18428,6 @@ namespace PlayFab
             UserOriginationXboxLive,
             UserOriginationParse,
             UserOriginationTwitch,
-            UserOriginationWindowsHello,
             UserOriginationServerCustomId,
             UserOriginationNintendoSwitchDeviceId,
             UserOriginationFacebookInstantGamesId,
@@ -12678,11 +18521,6 @@ namespace PlayFab
             if (input == UserOrigination::UserOriginationTwitch)
             {
                 output = Json::Value("Twitch");
-                return;
-            }
-            if (input == UserOrigination::UserOriginationWindowsHello)
-            {
-                output = Json::Value("WindowsHello");
                 return;
             }
             if (input == UserOrigination::UserOriginationServerCustomId)
@@ -12806,11 +18644,6 @@ namespace PlayFab
             if (inputStr == "Twitch")
             {
                 output = UserOrigination::UserOriginationTwitch;
-                return;
-            }
-            if (inputStr == "WindowsHello")
-            {
-                output = UserOrigination::UserOriginationWindowsHello;
                 return;
             }
             if (inputStr == "ServerCustomId")
@@ -13106,6 +18939,45 @@ namespace PlayFab
                 Json::Value each_AttributedAt; ToJsonUtilT(AttributedAt, each_AttributedAt); output["AttributedAt"] = each_AttributedAt;
                 Json::Value each_CampaignId; ToJsonUtilS(CampaignId, each_CampaignId); output["CampaignId"] = each_CampaignId;
                 Json::Value each_Platform; ToJsonUtilS(Platform, each_Platform); output["Platform"] = each_Platform;
+                return output;
+            }
+        };
+
+        struct AdCampaignSegmentFilter : public PlayFabBaseModel
+        {
+            std::string CampaignId;
+            std::string CampaignSource;
+            Boxed<SegmentFilterComparison> Comparison;
+
+            AdCampaignSegmentFilter() :
+                PlayFabBaseModel(),
+                CampaignId(),
+                CampaignSource(),
+                Comparison()
+            {}
+
+            AdCampaignSegmentFilter(const AdCampaignSegmentFilter& src) :
+                PlayFabBaseModel(),
+                CampaignId(src.CampaignId),
+                CampaignSource(src.CampaignSource),
+                Comparison(src.Comparison)
+            {}
+
+            ~AdCampaignSegmentFilter() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["CampaignId"], CampaignId);
+                FromJsonUtilS(input["CampaignSource"], CampaignSource);
+                FromJsonUtilE(input["Comparison"], Comparison);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_CampaignId; ToJsonUtilS(CampaignId, each_CampaignId); output["CampaignId"] = each_CampaignId;
+                Json::Value each_CampaignSource; ToJsonUtilS(CampaignSource, each_CampaignSource); output["CampaignSource"] = each_CampaignSource;
+                Json::Value each_Comparison; ToJsonUtilE(Comparison, each_Comparison); output["Comparison"] = each_Comparison;
                 return output;
             }
         };
@@ -13579,6 +19451,30 @@ namespace PlayFab
             }
         };
 
+        struct AllPlayersSegmentFilter : public PlayFabBaseModel
+        {
+
+            AllPlayersSegmentFilter() :
+                PlayFabBaseModel()
+            {}
+
+            AllPlayersSegmentFilter(const AllPlayersSegmentFilter&) :
+                PlayFabBaseModel()
+            {}
+
+            ~AllPlayersSegmentFilter() = default;
+
+            void FromJson(const Json::Value&) override
+            {
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                return output;
+            }
+        };
+
         struct ApiCondition : public PlayFabBaseModel
         {
             Boxed<Conditionals> HasSignatureOrEncryption;
@@ -13668,6 +19564,40 @@ namespace PlayFab
                 Json::Value each_MACAddress; ToJsonUtilS(MACAddress, each_MACAddress); output["MACAddress"] = each_MACAddress;
                 Json::Value each_PlayFabId; ToJsonUtilS(PlayFabId, each_PlayFabId); output["PlayFabId"] = each_PlayFabId;
                 Json::Value each_Reason; ToJsonUtilS(Reason, each_Reason); output["Reason"] = each_Reason;
+                return output;
+            }
+        };
+
+        struct BanPlayerSegmentAction : public PlayFabBaseModel
+        {
+            Boxed<Uint32> BanHours;
+            std::string ReasonForBan;
+
+            BanPlayerSegmentAction() :
+                PlayFabBaseModel(),
+                BanHours(),
+                ReasonForBan()
+            {}
+
+            BanPlayerSegmentAction(const BanPlayerSegmentAction& src) :
+                PlayFabBaseModel(),
+                BanHours(src.BanHours),
+                ReasonForBan(src.ReasonForBan)
+            {}
+
+            ~BanPlayerSegmentAction() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilP(input["BanHours"], BanHours);
+                FromJsonUtilS(input["ReasonForBan"], ReasonForBan);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_BanHours; ToJsonUtilP(BanHours, each_BanHours); output["BanHours"] = each_BanHours;
+                Json::Value each_ReasonForBan; ToJsonUtilS(ReasonForBan, each_ReasonForBan); output["ReasonForBan"] = each_ReasonForBan;
                 return output;
             }
         };
@@ -14527,7 +20457,7 @@ namespace PlayFab
         {
             std::string Key;
             time_t LastModified;
-            Uint32 Size;
+            double Size;
 
             ContentInfo() :
                 PlayFabBaseModel(),
@@ -14802,6 +20732,7 @@ namespace PlayFab
             std::string ClientId;
             std::string ClientSecret;
             std::string ConnectionId;
+            Boxed<bool> IgnoreNonce;
             std::string IssuerDiscoveryUrl;
             Boxed<OpenIdIssuerInformation> IssuerInformation;
 
@@ -14810,6 +20741,7 @@ namespace PlayFab
                 ClientId(),
                 ClientSecret(),
                 ConnectionId(),
+                IgnoreNonce(),
                 IssuerDiscoveryUrl(),
                 IssuerInformation()
             {}
@@ -14819,6 +20751,7 @@ namespace PlayFab
                 ClientId(src.ClientId),
                 ClientSecret(src.ClientSecret),
                 ConnectionId(src.ConnectionId),
+                IgnoreNonce(src.IgnoreNonce),
                 IssuerDiscoveryUrl(src.IssuerDiscoveryUrl),
                 IssuerInformation(src.IssuerInformation)
             {}
@@ -14830,6 +20763,7 @@ namespace PlayFab
                 FromJsonUtilS(input["ClientId"], ClientId);
                 FromJsonUtilS(input["ClientSecret"], ClientSecret);
                 FromJsonUtilS(input["ConnectionId"], ConnectionId);
+                FromJsonUtilP(input["IgnoreNonce"], IgnoreNonce);
                 FromJsonUtilS(input["IssuerDiscoveryUrl"], IssuerDiscoveryUrl);
                 FromJsonUtilO(input["IssuerInformation"], IssuerInformation);
             }
@@ -14840,6 +20774,7 @@ namespace PlayFab
                 Json::Value each_ClientId; ToJsonUtilS(ClientId, each_ClientId); output["ClientId"] = each_ClientId;
                 Json::Value each_ClientSecret; ToJsonUtilS(ClientSecret, each_ClientSecret); output["ClientSecret"] = each_ClientSecret;
                 Json::Value each_ConnectionId; ToJsonUtilS(ConnectionId, each_ConnectionId); output["ConnectionId"] = each_ConnectionId;
+                Json::Value each_IgnoreNonce; ToJsonUtilP(IgnoreNonce, each_IgnoreNonce); output["IgnoreNonce"] = each_IgnoreNonce;
                 Json::Value each_IssuerDiscoveryUrl; ToJsonUtilS(IssuerDiscoveryUrl, each_IssuerDiscoveryUrl); output["IssuerDiscoveryUrl"] = each_IssuerDiscoveryUrl;
                 Json::Value each_IssuerInformation; ToJsonUtilO(IssuerInformation, each_IssuerInformation); output["IssuerInformation"] = each_IssuerInformation;
                 return output;
@@ -15021,6 +20956,1127 @@ namespace PlayFab
             }
         };
 
+        struct DeletePlayerSegmentAction : public PlayFabBaseModel
+        {
+
+            DeletePlayerSegmentAction() :
+                PlayFabBaseModel()
+            {}
+
+            DeletePlayerSegmentAction(const DeletePlayerSegmentAction&) :
+                PlayFabBaseModel()
+            {}
+
+            ~DeletePlayerSegmentAction() = default;
+
+            void FromJson(const Json::Value&) override
+            {
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                return output;
+            }
+        };
+
+        struct DeletePlayerStatisticSegmentAction : public PlayFabBaseModel
+        {
+            std::string StatisticName;
+
+            DeletePlayerStatisticSegmentAction() :
+                PlayFabBaseModel(),
+                StatisticName()
+            {}
+
+            DeletePlayerStatisticSegmentAction(const DeletePlayerStatisticSegmentAction& src) :
+                PlayFabBaseModel(),
+                StatisticName(src.StatisticName)
+            {}
+
+            ~DeletePlayerStatisticSegmentAction() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["StatisticName"], StatisticName);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_StatisticName; ToJsonUtilS(StatisticName, each_StatisticName); output["StatisticName"] = each_StatisticName;
+                return output;
+            }
+        };
+
+        struct EmailNotificationSegmentAction : public PlayFabBaseModel
+        {
+            std::string EmailTemplateId;
+            std::string EmailTemplateName;
+
+            EmailNotificationSegmentAction() :
+                PlayFabBaseModel(),
+                EmailTemplateId(),
+                EmailTemplateName()
+            {}
+
+            EmailNotificationSegmentAction(const EmailNotificationSegmentAction& src) :
+                PlayFabBaseModel(),
+                EmailTemplateId(src.EmailTemplateId),
+                EmailTemplateName(src.EmailTemplateName)
+            {}
+
+            ~EmailNotificationSegmentAction() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["EmailTemplateId"], EmailTemplateId);
+                FromJsonUtilS(input["EmailTemplateName"], EmailTemplateName);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_EmailTemplateId; ToJsonUtilS(EmailTemplateId, each_EmailTemplateId); output["EmailTemplateId"] = each_EmailTemplateId;
+                Json::Value each_EmailTemplateName; ToJsonUtilS(EmailTemplateName, each_EmailTemplateName); output["EmailTemplateName"] = each_EmailTemplateName;
+                return output;
+            }
+        };
+
+        struct ExecuteAzureFunctionSegmentAction : public PlayFabBaseModel
+        {
+            std::string AzureFunction;
+            Json::Value FunctionParameter;
+            bool GenerateFunctionExecutedEvents;
+
+            ExecuteAzureFunctionSegmentAction() :
+                PlayFabBaseModel(),
+                AzureFunction(),
+                FunctionParameter(),
+                GenerateFunctionExecutedEvents()
+            {}
+
+            ExecuteAzureFunctionSegmentAction(const ExecuteAzureFunctionSegmentAction& src) :
+                PlayFabBaseModel(),
+                AzureFunction(src.AzureFunction),
+                FunctionParameter(src.FunctionParameter),
+                GenerateFunctionExecutedEvents(src.GenerateFunctionExecutedEvents)
+            {}
+
+            ~ExecuteAzureFunctionSegmentAction() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["AzureFunction"], AzureFunction);
+                FunctionParameter = input["FunctionParameter"];
+                FromJsonUtilP(input["GenerateFunctionExecutedEvents"], GenerateFunctionExecutedEvents);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_AzureFunction; ToJsonUtilS(AzureFunction, each_AzureFunction); output["AzureFunction"] = each_AzureFunction;
+                output["FunctionParameter"] = FunctionParameter;
+                Json::Value each_GenerateFunctionExecutedEvents; ToJsonUtilP(GenerateFunctionExecutedEvents, each_GenerateFunctionExecutedEvents); output["GenerateFunctionExecutedEvents"] = each_GenerateFunctionExecutedEvents;
+                return output;
+            }
+        };
+
+        struct ExecuteCloudScriptSegmentAction : public PlayFabBaseModel
+        {
+            std::string CloudScriptFunction;
+            bool CloudScriptPublishResultsToPlayStream;
+            Json::Value FunctionParameter;
+            std::string FunctionParameterJson;
+
+            ExecuteCloudScriptSegmentAction() :
+                PlayFabBaseModel(),
+                CloudScriptFunction(),
+                CloudScriptPublishResultsToPlayStream(),
+                FunctionParameter(),
+                FunctionParameterJson()
+            {}
+
+            ExecuteCloudScriptSegmentAction(const ExecuteCloudScriptSegmentAction& src) :
+                PlayFabBaseModel(),
+                CloudScriptFunction(src.CloudScriptFunction),
+                CloudScriptPublishResultsToPlayStream(src.CloudScriptPublishResultsToPlayStream),
+                FunctionParameter(src.FunctionParameter),
+                FunctionParameterJson(src.FunctionParameterJson)
+            {}
+
+            ~ExecuteCloudScriptSegmentAction() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["CloudScriptFunction"], CloudScriptFunction);
+                FromJsonUtilP(input["CloudScriptPublishResultsToPlayStream"], CloudScriptPublishResultsToPlayStream);
+                FunctionParameter = input["FunctionParameter"];
+                FromJsonUtilS(input["FunctionParameterJson"], FunctionParameterJson);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_CloudScriptFunction; ToJsonUtilS(CloudScriptFunction, each_CloudScriptFunction); output["CloudScriptFunction"] = each_CloudScriptFunction;
+                Json::Value each_CloudScriptPublishResultsToPlayStream; ToJsonUtilP(CloudScriptPublishResultsToPlayStream, each_CloudScriptPublishResultsToPlayStream); output["CloudScriptPublishResultsToPlayStream"] = each_CloudScriptPublishResultsToPlayStream;
+                output["FunctionParameter"] = FunctionParameter;
+                Json::Value each_FunctionParameterJson; ToJsonUtilS(FunctionParameterJson, each_FunctionParameterJson); output["FunctionParameterJson"] = each_FunctionParameterJson;
+                return output;
+            }
+        };
+
+        struct GrantItemSegmentAction : public PlayFabBaseModel
+        {
+            std::string CatelogId;
+            std::string ItemId;
+            Uint32 Quantity;
+
+            GrantItemSegmentAction() :
+                PlayFabBaseModel(),
+                CatelogId(),
+                ItemId(),
+                Quantity()
+            {}
+
+            GrantItemSegmentAction(const GrantItemSegmentAction& src) :
+                PlayFabBaseModel(),
+                CatelogId(src.CatelogId),
+                ItemId(src.ItemId),
+                Quantity(src.Quantity)
+            {}
+
+            ~GrantItemSegmentAction() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["CatelogId"], CatelogId);
+                FromJsonUtilS(input["ItemId"], ItemId);
+                FromJsonUtilP(input["Quantity"], Quantity);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_CatelogId; ToJsonUtilS(CatelogId, each_CatelogId); output["CatelogId"] = each_CatelogId;
+                Json::Value each_ItemId; ToJsonUtilS(ItemId, each_ItemId); output["ItemId"] = each_ItemId;
+                Json::Value each_Quantity; ToJsonUtilP(Quantity, each_Quantity); output["Quantity"] = each_Quantity;
+                return output;
+            }
+        };
+
+        struct GrantVirtualCurrencySegmentAction : public PlayFabBaseModel
+        {
+            Int32 Amount;
+            std::string CurrencyCode;
+
+            GrantVirtualCurrencySegmentAction() :
+                PlayFabBaseModel(),
+                Amount(),
+                CurrencyCode()
+            {}
+
+            GrantVirtualCurrencySegmentAction(const GrantVirtualCurrencySegmentAction& src) :
+                PlayFabBaseModel(),
+                Amount(src.Amount),
+                CurrencyCode(src.CurrencyCode)
+            {}
+
+            ~GrantVirtualCurrencySegmentAction() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilP(input["Amount"], Amount);
+                FromJsonUtilS(input["CurrencyCode"], CurrencyCode);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_Amount; ToJsonUtilP(Amount, each_Amount); output["Amount"] = each_Amount;
+                Json::Value each_CurrencyCode; ToJsonUtilS(CurrencyCode, each_CurrencyCode); output["CurrencyCode"] = each_CurrencyCode;
+                return output;
+            }
+        };
+
+        struct IncrementPlayerStatisticSegmentAction : public PlayFabBaseModel
+        {
+            Int32 IncrementValue;
+            std::string StatisticName;
+
+            IncrementPlayerStatisticSegmentAction() :
+                PlayFabBaseModel(),
+                IncrementValue(),
+                StatisticName()
+            {}
+
+            IncrementPlayerStatisticSegmentAction(const IncrementPlayerStatisticSegmentAction& src) :
+                PlayFabBaseModel(),
+                IncrementValue(src.IncrementValue),
+                StatisticName(src.StatisticName)
+            {}
+
+            ~IncrementPlayerStatisticSegmentAction() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilP(input["IncrementValue"], IncrementValue);
+                FromJsonUtilS(input["StatisticName"], StatisticName);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_IncrementValue; ToJsonUtilP(IncrementValue, each_IncrementValue); output["IncrementValue"] = each_IncrementValue;
+                Json::Value each_StatisticName; ToJsonUtilS(StatisticName, each_StatisticName); output["StatisticName"] = each_StatisticName;
+                return output;
+            }
+        };
+
+        struct PushNotificationSegmentAction : public PlayFabBaseModel
+        {
+            std::string PushNotificationTemplateId;
+
+            PushNotificationSegmentAction() :
+                PlayFabBaseModel(),
+                PushNotificationTemplateId()
+            {}
+
+            PushNotificationSegmentAction(const PushNotificationSegmentAction& src) :
+                PlayFabBaseModel(),
+                PushNotificationTemplateId(src.PushNotificationTemplateId)
+            {}
+
+            ~PushNotificationSegmentAction() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["PushNotificationTemplateId"], PushNotificationTemplateId);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_PushNotificationTemplateId; ToJsonUtilS(PushNotificationTemplateId, each_PushNotificationTemplateId); output["PushNotificationTemplateId"] = each_PushNotificationTemplateId;
+                return output;
+            }
+        };
+
+        struct SegmentTrigger : public PlayFabBaseModel
+        {
+            Boxed<BanPlayerSegmentAction> BanPlayerAction;
+            Boxed<DeletePlayerSegmentAction> DeletePlayerAction;
+            Boxed<DeletePlayerStatisticSegmentAction> DeletePlayerStatisticAction;
+            Boxed<EmailNotificationSegmentAction> EmailNotificationAction;
+            Boxed<ExecuteAzureFunctionSegmentAction> ExecuteAzureFunctionAction;
+            Boxed<ExecuteCloudScriptSegmentAction> ExecuteCloudScriptAction;
+            Boxed<GrantItemSegmentAction> GrantItemAction;
+            Boxed<GrantVirtualCurrencySegmentAction> GrantVirtualCurrencyAction;
+            Boxed<IncrementPlayerStatisticSegmentAction> IncrementPlayerStatisticAction;
+            Boxed<PushNotificationSegmentAction> PushNotificationAction;
+
+            SegmentTrigger() :
+                PlayFabBaseModel(),
+                BanPlayerAction(),
+                DeletePlayerAction(),
+                DeletePlayerStatisticAction(),
+                EmailNotificationAction(),
+                ExecuteAzureFunctionAction(),
+                ExecuteCloudScriptAction(),
+                GrantItemAction(),
+                GrantVirtualCurrencyAction(),
+                IncrementPlayerStatisticAction(),
+                PushNotificationAction()
+            {}
+
+            SegmentTrigger(const SegmentTrigger& src) :
+                PlayFabBaseModel(),
+                BanPlayerAction(src.BanPlayerAction),
+                DeletePlayerAction(src.DeletePlayerAction),
+                DeletePlayerStatisticAction(src.DeletePlayerStatisticAction),
+                EmailNotificationAction(src.EmailNotificationAction),
+                ExecuteAzureFunctionAction(src.ExecuteAzureFunctionAction),
+                ExecuteCloudScriptAction(src.ExecuteCloudScriptAction),
+                GrantItemAction(src.GrantItemAction),
+                GrantVirtualCurrencyAction(src.GrantVirtualCurrencyAction),
+                IncrementPlayerStatisticAction(src.IncrementPlayerStatisticAction),
+                PushNotificationAction(src.PushNotificationAction)
+            {}
+
+            ~SegmentTrigger() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilO(input["BanPlayerAction"], BanPlayerAction);
+                FromJsonUtilO(input["DeletePlayerAction"], DeletePlayerAction);
+                FromJsonUtilO(input["DeletePlayerStatisticAction"], DeletePlayerStatisticAction);
+                FromJsonUtilO(input["EmailNotificationAction"], EmailNotificationAction);
+                FromJsonUtilO(input["ExecuteAzureFunctionAction"], ExecuteAzureFunctionAction);
+                FromJsonUtilO(input["ExecuteCloudScriptAction"], ExecuteCloudScriptAction);
+                FromJsonUtilO(input["GrantItemAction"], GrantItemAction);
+                FromJsonUtilO(input["GrantVirtualCurrencyAction"], GrantVirtualCurrencyAction);
+                FromJsonUtilO(input["IncrementPlayerStatisticAction"], IncrementPlayerStatisticAction);
+                FromJsonUtilO(input["PushNotificationAction"], PushNotificationAction);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_BanPlayerAction; ToJsonUtilO(BanPlayerAction, each_BanPlayerAction); output["BanPlayerAction"] = each_BanPlayerAction;
+                Json::Value each_DeletePlayerAction; ToJsonUtilO(DeletePlayerAction, each_DeletePlayerAction); output["DeletePlayerAction"] = each_DeletePlayerAction;
+                Json::Value each_DeletePlayerStatisticAction; ToJsonUtilO(DeletePlayerStatisticAction, each_DeletePlayerStatisticAction); output["DeletePlayerStatisticAction"] = each_DeletePlayerStatisticAction;
+                Json::Value each_EmailNotificationAction; ToJsonUtilO(EmailNotificationAction, each_EmailNotificationAction); output["EmailNotificationAction"] = each_EmailNotificationAction;
+                Json::Value each_ExecuteAzureFunctionAction; ToJsonUtilO(ExecuteAzureFunctionAction, each_ExecuteAzureFunctionAction); output["ExecuteAzureFunctionAction"] = each_ExecuteAzureFunctionAction;
+                Json::Value each_ExecuteCloudScriptAction; ToJsonUtilO(ExecuteCloudScriptAction, each_ExecuteCloudScriptAction); output["ExecuteCloudScriptAction"] = each_ExecuteCloudScriptAction;
+                Json::Value each_GrantItemAction; ToJsonUtilO(GrantItemAction, each_GrantItemAction); output["GrantItemAction"] = each_GrantItemAction;
+                Json::Value each_GrantVirtualCurrencyAction; ToJsonUtilO(GrantVirtualCurrencyAction, each_GrantVirtualCurrencyAction); output["GrantVirtualCurrencyAction"] = each_GrantVirtualCurrencyAction;
+                Json::Value each_IncrementPlayerStatisticAction; ToJsonUtilO(IncrementPlayerStatisticAction, each_IncrementPlayerStatisticAction); output["IncrementPlayerStatisticAction"] = each_IncrementPlayerStatisticAction;
+                Json::Value each_PushNotificationAction; ToJsonUtilO(PushNotificationAction, each_PushNotificationAction); output["PushNotificationAction"] = each_PushNotificationAction;
+                return output;
+            }
+        };
+
+        struct FirstLoginDateSegmentFilter : public PlayFabBaseModel
+        {
+            Boxed<SegmentFilterComparison> Comparison;
+            time_t LogInDate;
+
+            FirstLoginDateSegmentFilter() :
+                PlayFabBaseModel(),
+                Comparison(),
+                LogInDate()
+            {}
+
+            FirstLoginDateSegmentFilter(const FirstLoginDateSegmentFilter& src) :
+                PlayFabBaseModel(),
+                Comparison(src.Comparison),
+                LogInDate(src.LogInDate)
+            {}
+
+            ~FirstLoginDateSegmentFilter() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilE(input["Comparison"], Comparison);
+                FromJsonUtilT(input["LogInDate"], LogInDate);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_Comparison; ToJsonUtilE(Comparison, each_Comparison); output["Comparison"] = each_Comparison;
+                Json::Value each_LogInDate; ToJsonUtilT(LogInDate, each_LogInDate); output["LogInDate"] = each_LogInDate;
+                return output;
+            }
+        };
+
+        struct FirstLoginTimespanSegmentFilter : public PlayFabBaseModel
+        {
+            Boxed<SegmentFilterComparison> Comparison;
+            double DurationInMinutes;
+
+            FirstLoginTimespanSegmentFilter() :
+                PlayFabBaseModel(),
+                Comparison(),
+                DurationInMinutes()
+            {}
+
+            FirstLoginTimespanSegmentFilter(const FirstLoginTimespanSegmentFilter& src) :
+                PlayFabBaseModel(),
+                Comparison(src.Comparison),
+                DurationInMinutes(src.DurationInMinutes)
+            {}
+
+            ~FirstLoginTimespanSegmentFilter() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilE(input["Comparison"], Comparison);
+                FromJsonUtilP(input["DurationInMinutes"], DurationInMinutes);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_Comparison; ToJsonUtilE(Comparison, each_Comparison); output["Comparison"] = each_Comparison;
+                Json::Value each_DurationInMinutes; ToJsonUtilP(DurationInMinutes, each_DurationInMinutes); output["DurationInMinutes"] = each_DurationInMinutes;
+                return output;
+            }
+        };
+
+        struct LastLoginDateSegmentFilter : public PlayFabBaseModel
+        {
+            Boxed<SegmentFilterComparison> Comparison;
+            time_t LogInDate;
+
+            LastLoginDateSegmentFilter() :
+                PlayFabBaseModel(),
+                Comparison(),
+                LogInDate()
+            {}
+
+            LastLoginDateSegmentFilter(const LastLoginDateSegmentFilter& src) :
+                PlayFabBaseModel(),
+                Comparison(src.Comparison),
+                LogInDate(src.LogInDate)
+            {}
+
+            ~LastLoginDateSegmentFilter() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilE(input["Comparison"], Comparison);
+                FromJsonUtilT(input["LogInDate"], LogInDate);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_Comparison; ToJsonUtilE(Comparison, each_Comparison); output["Comparison"] = each_Comparison;
+                Json::Value each_LogInDate; ToJsonUtilT(LogInDate, each_LogInDate); output["LogInDate"] = each_LogInDate;
+                return output;
+            }
+        };
+
+        struct LastLoginTimespanSegmentFilter : public PlayFabBaseModel
+        {
+            Boxed<SegmentFilterComparison> Comparison;
+            double DurationInMinutes;
+
+            LastLoginTimespanSegmentFilter() :
+                PlayFabBaseModel(),
+                Comparison(),
+                DurationInMinutes()
+            {}
+
+            LastLoginTimespanSegmentFilter(const LastLoginTimespanSegmentFilter& src) :
+                PlayFabBaseModel(),
+                Comparison(src.Comparison),
+                DurationInMinutes(src.DurationInMinutes)
+            {}
+
+            ~LastLoginTimespanSegmentFilter() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilE(input["Comparison"], Comparison);
+                FromJsonUtilP(input["DurationInMinutes"], DurationInMinutes);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_Comparison; ToJsonUtilE(Comparison, each_Comparison); output["Comparison"] = each_Comparison;
+                Json::Value each_DurationInMinutes; ToJsonUtilP(DurationInMinutes, each_DurationInMinutes); output["DurationInMinutes"] = each_DurationInMinutes;
+                return output;
+            }
+        };
+
+        struct LinkedUserAccountSegmentFilter : public PlayFabBaseModel
+        {
+            Boxed<SegmentLoginIdentityProvider> LoginProvider;
+
+            LinkedUserAccountSegmentFilter() :
+                PlayFabBaseModel(),
+                LoginProvider()
+            {}
+
+            LinkedUserAccountSegmentFilter(const LinkedUserAccountSegmentFilter& src) :
+                PlayFabBaseModel(),
+                LoginProvider(src.LoginProvider)
+            {}
+
+            ~LinkedUserAccountSegmentFilter() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilE(input["LoginProvider"], LoginProvider);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_LoginProvider; ToJsonUtilE(LoginProvider, each_LoginProvider); output["LoginProvider"] = each_LoginProvider;
+                return output;
+            }
+        };
+
+        struct LinkedUserAccountHasEmailSegmentFilter : public PlayFabBaseModel
+        {
+            Boxed<SegmentFilterComparison> Comparison;
+            Boxed<SegmentLoginIdentityProvider> LoginProvider;
+
+            LinkedUserAccountHasEmailSegmentFilter() :
+                PlayFabBaseModel(),
+                Comparison(),
+                LoginProvider()
+            {}
+
+            LinkedUserAccountHasEmailSegmentFilter(const LinkedUserAccountHasEmailSegmentFilter& src) :
+                PlayFabBaseModel(),
+                Comparison(src.Comparison),
+                LoginProvider(src.LoginProvider)
+            {}
+
+            ~LinkedUserAccountHasEmailSegmentFilter() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilE(input["Comparison"], Comparison);
+                FromJsonUtilE(input["LoginProvider"], LoginProvider);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_Comparison; ToJsonUtilE(Comparison, each_Comparison); output["Comparison"] = each_Comparison;
+                Json::Value each_LoginProvider; ToJsonUtilE(LoginProvider, each_LoginProvider); output["LoginProvider"] = each_LoginProvider;
+                return output;
+            }
+        };
+
+        struct LocationSegmentFilter : public PlayFabBaseModel
+        {
+            Boxed<SegmentCountryCode> CountryCode;
+
+            LocationSegmentFilter() :
+                PlayFabBaseModel(),
+                CountryCode()
+            {}
+
+            LocationSegmentFilter(const LocationSegmentFilter& src) :
+                PlayFabBaseModel(),
+                CountryCode(src.CountryCode)
+            {}
+
+            ~LocationSegmentFilter() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilE(input["CountryCode"], CountryCode);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_CountryCode; ToJsonUtilE(CountryCode, each_CountryCode); output["CountryCode"] = each_CountryCode;
+                return output;
+            }
+        };
+
+        struct PushNotificationSegmentFilter : public PlayFabBaseModel
+        {
+            Boxed<SegmentPushNotificationDevicePlatform> PushNotificationDevicePlatform;
+
+            PushNotificationSegmentFilter() :
+                PlayFabBaseModel(),
+                PushNotificationDevicePlatform()
+            {}
+
+            PushNotificationSegmentFilter(const PushNotificationSegmentFilter& src) :
+                PlayFabBaseModel(),
+                PushNotificationDevicePlatform(src.PushNotificationDevicePlatform)
+            {}
+
+            ~PushNotificationSegmentFilter() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilE(input["PushNotificationDevicePlatform"], PushNotificationDevicePlatform);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_PushNotificationDevicePlatform; ToJsonUtilE(PushNotificationDevicePlatform, each_PushNotificationDevicePlatform); output["PushNotificationDevicePlatform"] = each_PushNotificationDevicePlatform;
+                return output;
+            }
+        };
+
+        struct StatisticSegmentFilter : public PlayFabBaseModel
+        {
+            Boxed<SegmentFilterComparison> Comparison;
+            std::string FilterValue;
+            std::string Name;
+            Boxed<bool> UseCurrentVersion;
+            Boxed<Int32> Version;
+
+            StatisticSegmentFilter() :
+                PlayFabBaseModel(),
+                Comparison(),
+                FilterValue(),
+                Name(),
+                UseCurrentVersion(),
+                Version()
+            {}
+
+            StatisticSegmentFilter(const StatisticSegmentFilter& src) :
+                PlayFabBaseModel(),
+                Comparison(src.Comparison),
+                FilterValue(src.FilterValue),
+                Name(src.Name),
+                UseCurrentVersion(src.UseCurrentVersion),
+                Version(src.Version)
+            {}
+
+            ~StatisticSegmentFilter() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilE(input["Comparison"], Comparison);
+                FromJsonUtilS(input["FilterValue"], FilterValue);
+                FromJsonUtilS(input["Name"], Name);
+                FromJsonUtilP(input["UseCurrentVersion"], UseCurrentVersion);
+                FromJsonUtilP(input["Version"], Version);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_Comparison; ToJsonUtilE(Comparison, each_Comparison); output["Comparison"] = each_Comparison;
+                Json::Value each_FilterValue; ToJsonUtilS(FilterValue, each_FilterValue); output["FilterValue"] = each_FilterValue;
+                Json::Value each_Name; ToJsonUtilS(Name, each_Name); output["Name"] = each_Name;
+                Json::Value each_UseCurrentVersion; ToJsonUtilP(UseCurrentVersion, each_UseCurrentVersion); output["UseCurrentVersion"] = each_UseCurrentVersion;
+                Json::Value each_Version; ToJsonUtilP(Version, each_Version); output["Version"] = each_Version;
+                return output;
+            }
+        };
+
+        struct TagSegmentFilter : public PlayFabBaseModel
+        {
+            Boxed<SegmentFilterComparison> Comparison;
+            std::string TagValue;
+
+            TagSegmentFilter() :
+                PlayFabBaseModel(),
+                Comparison(),
+                TagValue()
+            {}
+
+            TagSegmentFilter(const TagSegmentFilter& src) :
+                PlayFabBaseModel(),
+                Comparison(src.Comparison),
+                TagValue(src.TagValue)
+            {}
+
+            ~TagSegmentFilter() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilE(input["Comparison"], Comparison);
+                FromJsonUtilS(input["TagValue"], TagValue);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_Comparison; ToJsonUtilE(Comparison, each_Comparison); output["Comparison"] = each_Comparison;
+                Json::Value each_TagValue; ToJsonUtilS(TagValue, each_TagValue); output["TagValue"] = each_TagValue;
+                return output;
+            }
+        };
+
+        struct TotalValueToDateInUSDSegmentFilter : public PlayFabBaseModel
+        {
+            std::string Amount;
+            Boxed<SegmentFilterComparison> Comparison;
+
+            TotalValueToDateInUSDSegmentFilter() :
+                PlayFabBaseModel(),
+                Amount(),
+                Comparison()
+            {}
+
+            TotalValueToDateInUSDSegmentFilter(const TotalValueToDateInUSDSegmentFilter& src) :
+                PlayFabBaseModel(),
+                Amount(src.Amount),
+                Comparison(src.Comparison)
+            {}
+
+            ~TotalValueToDateInUSDSegmentFilter() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["Amount"], Amount);
+                FromJsonUtilE(input["Comparison"], Comparison);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_Amount; ToJsonUtilS(Amount, each_Amount); output["Amount"] = each_Amount;
+                Json::Value each_Comparison; ToJsonUtilE(Comparison, each_Comparison); output["Comparison"] = each_Comparison;
+                return output;
+            }
+        };
+
+        struct UserOriginationSegmentFilter : public PlayFabBaseModel
+        {
+            Boxed<SegmentLoginIdentityProvider> LoginProvider;
+
+            UserOriginationSegmentFilter() :
+                PlayFabBaseModel(),
+                LoginProvider()
+            {}
+
+            UserOriginationSegmentFilter(const UserOriginationSegmentFilter& src) :
+                PlayFabBaseModel(),
+                LoginProvider(src.LoginProvider)
+            {}
+
+            ~UserOriginationSegmentFilter() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilE(input["LoginProvider"], LoginProvider);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_LoginProvider; ToJsonUtilE(LoginProvider, each_LoginProvider); output["LoginProvider"] = each_LoginProvider;
+                return output;
+            }
+        };
+
+        struct ValueToDateSegmentFilter : public PlayFabBaseModel
+        {
+            std::string Amount;
+            Boxed<SegmentFilterComparison> Comparison;
+            Boxed<SegmentCurrency> Currency;
+
+            ValueToDateSegmentFilter() :
+                PlayFabBaseModel(),
+                Amount(),
+                Comparison(),
+                Currency()
+            {}
+
+            ValueToDateSegmentFilter(const ValueToDateSegmentFilter& src) :
+                PlayFabBaseModel(),
+                Amount(src.Amount),
+                Comparison(src.Comparison),
+                Currency(src.Currency)
+            {}
+
+            ~ValueToDateSegmentFilter() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["Amount"], Amount);
+                FromJsonUtilE(input["Comparison"], Comparison);
+                FromJsonUtilE(input["Currency"], Currency);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_Amount; ToJsonUtilS(Amount, each_Amount); output["Amount"] = each_Amount;
+                Json::Value each_Comparison; ToJsonUtilE(Comparison, each_Comparison); output["Comparison"] = each_Comparison;
+                Json::Value each_Currency; ToJsonUtilE(Currency, each_Currency); output["Currency"] = each_Currency;
+                return output;
+            }
+        };
+
+        struct VirtualCurrencyBalanceSegmentFilter : public PlayFabBaseModel
+        {
+            Int32 Amount;
+            Boxed<SegmentFilterComparison> Comparison;
+            std::string CurrencyCode;
+
+            VirtualCurrencyBalanceSegmentFilter() :
+                PlayFabBaseModel(),
+                Amount(),
+                Comparison(),
+                CurrencyCode()
+            {}
+
+            VirtualCurrencyBalanceSegmentFilter(const VirtualCurrencyBalanceSegmentFilter& src) :
+                PlayFabBaseModel(),
+                Amount(src.Amount),
+                Comparison(src.Comparison),
+                CurrencyCode(src.CurrencyCode)
+            {}
+
+            ~VirtualCurrencyBalanceSegmentFilter() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilP(input["Amount"], Amount);
+                FromJsonUtilE(input["Comparison"], Comparison);
+                FromJsonUtilS(input["CurrencyCode"], CurrencyCode);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_Amount; ToJsonUtilP(Amount, each_Amount); output["Amount"] = each_Amount;
+                Json::Value each_Comparison; ToJsonUtilE(Comparison, each_Comparison); output["Comparison"] = each_Comparison;
+                Json::Value each_CurrencyCode; ToJsonUtilS(CurrencyCode, each_CurrencyCode); output["CurrencyCode"] = each_CurrencyCode;
+                return output;
+            }
+        };
+
+        struct SegmentAndDefinition : public PlayFabBaseModel
+        {
+            Boxed<AdCampaignSegmentFilter> AdCampaignFilter;
+            Boxed<AllPlayersSegmentFilter> AllPlayersFilter;
+            Boxed<FirstLoginDateSegmentFilter> FirstLoginDateFilter;
+            Boxed<FirstLoginTimespanSegmentFilter> FirstLoginFilter;
+            Boxed<LastLoginDateSegmentFilter> LastLoginDateFilter;
+            Boxed<LastLoginTimespanSegmentFilter> LastLoginFilter;
+            Boxed<LinkedUserAccountSegmentFilter> LinkedUserAccountFilter;
+            Boxed<LinkedUserAccountHasEmailSegmentFilter> LinkedUserAccountHasEmailFilter;
+            Boxed<LocationSegmentFilter> LocationFilter;
+            Boxed<PushNotificationSegmentFilter> PushNotificationFilter;
+            Boxed<StatisticSegmentFilter> StatisticFilter;
+            Boxed<TagSegmentFilter> TagFilter;
+            Boxed<TotalValueToDateInUSDSegmentFilter> TotalValueToDateInUSDFilter;
+            Boxed<UserOriginationSegmentFilter> UserOriginationFilter;
+            Boxed<ValueToDateSegmentFilter> ValueToDateFilter;
+            Boxed<VirtualCurrencyBalanceSegmentFilter> VirtualCurrencyBalanceFilter;
+
+            SegmentAndDefinition() :
+                PlayFabBaseModel(),
+                AdCampaignFilter(),
+                AllPlayersFilter(),
+                FirstLoginDateFilter(),
+                FirstLoginFilter(),
+                LastLoginDateFilter(),
+                LastLoginFilter(),
+                LinkedUserAccountFilter(),
+                LinkedUserAccountHasEmailFilter(),
+                LocationFilter(),
+                PushNotificationFilter(),
+                StatisticFilter(),
+                TagFilter(),
+                TotalValueToDateInUSDFilter(),
+                UserOriginationFilter(),
+                ValueToDateFilter(),
+                VirtualCurrencyBalanceFilter()
+            {}
+
+            SegmentAndDefinition(const SegmentAndDefinition& src) :
+                PlayFabBaseModel(),
+                AdCampaignFilter(src.AdCampaignFilter),
+                AllPlayersFilter(src.AllPlayersFilter),
+                FirstLoginDateFilter(src.FirstLoginDateFilter),
+                FirstLoginFilter(src.FirstLoginFilter),
+                LastLoginDateFilter(src.LastLoginDateFilter),
+                LastLoginFilter(src.LastLoginFilter),
+                LinkedUserAccountFilter(src.LinkedUserAccountFilter),
+                LinkedUserAccountHasEmailFilter(src.LinkedUserAccountHasEmailFilter),
+                LocationFilter(src.LocationFilter),
+                PushNotificationFilter(src.PushNotificationFilter),
+                StatisticFilter(src.StatisticFilter),
+                TagFilter(src.TagFilter),
+                TotalValueToDateInUSDFilter(src.TotalValueToDateInUSDFilter),
+                UserOriginationFilter(src.UserOriginationFilter),
+                ValueToDateFilter(src.ValueToDateFilter),
+                VirtualCurrencyBalanceFilter(src.VirtualCurrencyBalanceFilter)
+            {}
+
+            ~SegmentAndDefinition() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilO(input["AdCampaignFilter"], AdCampaignFilter);
+                FromJsonUtilO(input["AllPlayersFilter"], AllPlayersFilter);
+                FromJsonUtilO(input["FirstLoginDateFilter"], FirstLoginDateFilter);
+                FromJsonUtilO(input["FirstLoginFilter"], FirstLoginFilter);
+                FromJsonUtilO(input["LastLoginDateFilter"], LastLoginDateFilter);
+                FromJsonUtilO(input["LastLoginFilter"], LastLoginFilter);
+                FromJsonUtilO(input["LinkedUserAccountFilter"], LinkedUserAccountFilter);
+                FromJsonUtilO(input["LinkedUserAccountHasEmailFilter"], LinkedUserAccountHasEmailFilter);
+                FromJsonUtilO(input["LocationFilter"], LocationFilter);
+                FromJsonUtilO(input["PushNotificationFilter"], PushNotificationFilter);
+                FromJsonUtilO(input["StatisticFilter"], StatisticFilter);
+                FromJsonUtilO(input["TagFilter"], TagFilter);
+                FromJsonUtilO(input["TotalValueToDateInUSDFilter"], TotalValueToDateInUSDFilter);
+                FromJsonUtilO(input["UserOriginationFilter"], UserOriginationFilter);
+                FromJsonUtilO(input["ValueToDateFilter"], ValueToDateFilter);
+                FromJsonUtilO(input["VirtualCurrencyBalanceFilter"], VirtualCurrencyBalanceFilter);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_AdCampaignFilter; ToJsonUtilO(AdCampaignFilter, each_AdCampaignFilter); output["AdCampaignFilter"] = each_AdCampaignFilter;
+                Json::Value each_AllPlayersFilter; ToJsonUtilO(AllPlayersFilter, each_AllPlayersFilter); output["AllPlayersFilter"] = each_AllPlayersFilter;
+                Json::Value each_FirstLoginDateFilter; ToJsonUtilO(FirstLoginDateFilter, each_FirstLoginDateFilter); output["FirstLoginDateFilter"] = each_FirstLoginDateFilter;
+                Json::Value each_FirstLoginFilter; ToJsonUtilO(FirstLoginFilter, each_FirstLoginFilter); output["FirstLoginFilter"] = each_FirstLoginFilter;
+                Json::Value each_LastLoginDateFilter; ToJsonUtilO(LastLoginDateFilter, each_LastLoginDateFilter); output["LastLoginDateFilter"] = each_LastLoginDateFilter;
+                Json::Value each_LastLoginFilter; ToJsonUtilO(LastLoginFilter, each_LastLoginFilter); output["LastLoginFilter"] = each_LastLoginFilter;
+                Json::Value each_LinkedUserAccountFilter; ToJsonUtilO(LinkedUserAccountFilter, each_LinkedUserAccountFilter); output["LinkedUserAccountFilter"] = each_LinkedUserAccountFilter;
+                Json::Value each_LinkedUserAccountHasEmailFilter; ToJsonUtilO(LinkedUserAccountHasEmailFilter, each_LinkedUserAccountHasEmailFilter); output["LinkedUserAccountHasEmailFilter"] = each_LinkedUserAccountHasEmailFilter;
+                Json::Value each_LocationFilter; ToJsonUtilO(LocationFilter, each_LocationFilter); output["LocationFilter"] = each_LocationFilter;
+                Json::Value each_PushNotificationFilter; ToJsonUtilO(PushNotificationFilter, each_PushNotificationFilter); output["PushNotificationFilter"] = each_PushNotificationFilter;
+                Json::Value each_StatisticFilter; ToJsonUtilO(StatisticFilter, each_StatisticFilter); output["StatisticFilter"] = each_StatisticFilter;
+                Json::Value each_TagFilter; ToJsonUtilO(TagFilter, each_TagFilter); output["TagFilter"] = each_TagFilter;
+                Json::Value each_TotalValueToDateInUSDFilter; ToJsonUtilO(TotalValueToDateInUSDFilter, each_TotalValueToDateInUSDFilter); output["TotalValueToDateInUSDFilter"] = each_TotalValueToDateInUSDFilter;
+                Json::Value each_UserOriginationFilter; ToJsonUtilO(UserOriginationFilter, each_UserOriginationFilter); output["UserOriginationFilter"] = each_UserOriginationFilter;
+                Json::Value each_ValueToDateFilter; ToJsonUtilO(ValueToDateFilter, each_ValueToDateFilter); output["ValueToDateFilter"] = each_ValueToDateFilter;
+                Json::Value each_VirtualCurrencyBalanceFilter; ToJsonUtilO(VirtualCurrencyBalanceFilter, each_VirtualCurrencyBalanceFilter); output["VirtualCurrencyBalanceFilter"] = each_VirtualCurrencyBalanceFilter;
+                return output;
+            }
+        };
+
+        struct SegmentOrDefinition : public PlayFabBaseModel
+        {
+            std::list<SegmentAndDefinition> SegmentAndDefinitions;
+
+            SegmentOrDefinition() :
+                PlayFabBaseModel(),
+                SegmentAndDefinitions()
+            {}
+
+            SegmentOrDefinition(const SegmentOrDefinition& src) :
+                PlayFabBaseModel(),
+                SegmentAndDefinitions(src.SegmentAndDefinitions)
+            {}
+
+            ~SegmentOrDefinition() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilO(input["SegmentAndDefinitions"], SegmentAndDefinitions);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_SegmentAndDefinitions; ToJsonUtilO(SegmentAndDefinitions, each_SegmentAndDefinitions); output["SegmentAndDefinitions"] = each_SegmentAndDefinitions;
+                return output;
+            }
+        };
+
+        struct SegmentModel : public PlayFabBaseModel
+        {
+            std::string AzureResourceId;
+            std::string Description;
+            std::list<SegmentTrigger> EnteredSegmentActions;
+            time_t LastUpdateTime;
+            std::list<SegmentTrigger> LeftSegmentActions;
+            std::string Name;
+            std::string SegmentId;
+            std::list<SegmentOrDefinition> SegmentOrDefinitions;
+
+            SegmentModel() :
+                PlayFabBaseModel(),
+                AzureResourceId(),
+                Description(),
+                EnteredSegmentActions(),
+                LastUpdateTime(),
+                LeftSegmentActions(),
+                Name(),
+                SegmentId(),
+                SegmentOrDefinitions()
+            {}
+
+            SegmentModel(const SegmentModel& src) :
+                PlayFabBaseModel(),
+                AzureResourceId(src.AzureResourceId),
+                Description(src.Description),
+                EnteredSegmentActions(src.EnteredSegmentActions),
+                LastUpdateTime(src.LastUpdateTime),
+                LeftSegmentActions(src.LeftSegmentActions),
+                Name(src.Name),
+                SegmentId(src.SegmentId),
+                SegmentOrDefinitions(src.SegmentOrDefinitions)
+            {}
+
+            ~SegmentModel() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["AzureResourceId"], AzureResourceId);
+                FromJsonUtilS(input["Description"], Description);
+                FromJsonUtilO(input["EnteredSegmentActions"], EnteredSegmentActions);
+                FromJsonUtilT(input["LastUpdateTime"], LastUpdateTime);
+                FromJsonUtilO(input["LeftSegmentActions"], LeftSegmentActions);
+                FromJsonUtilS(input["Name"], Name);
+                FromJsonUtilS(input["SegmentId"], SegmentId);
+                FromJsonUtilO(input["SegmentOrDefinitions"], SegmentOrDefinitions);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_AzureResourceId; ToJsonUtilS(AzureResourceId, each_AzureResourceId); output["AzureResourceId"] = each_AzureResourceId;
+                Json::Value each_Description; ToJsonUtilS(Description, each_Description); output["Description"] = each_Description;
+                Json::Value each_EnteredSegmentActions; ToJsonUtilO(EnteredSegmentActions, each_EnteredSegmentActions); output["EnteredSegmentActions"] = each_EnteredSegmentActions;
+                Json::Value each_LastUpdateTime; ToJsonUtilT(LastUpdateTime, each_LastUpdateTime); output["LastUpdateTime"] = each_LastUpdateTime;
+                Json::Value each_LeftSegmentActions; ToJsonUtilO(LeftSegmentActions, each_LeftSegmentActions); output["LeftSegmentActions"] = each_LeftSegmentActions;
+                Json::Value each_Name; ToJsonUtilS(Name, each_Name); output["Name"] = each_Name;
+                Json::Value each_SegmentId; ToJsonUtilS(SegmentId, each_SegmentId); output["SegmentId"] = each_SegmentId;
+                Json::Value each_SegmentOrDefinitions; ToJsonUtilO(SegmentOrDefinitions, each_SegmentOrDefinitions); output["SegmentOrDefinitions"] = each_SegmentOrDefinitions;
+                return output;
+            }
+        };
+
+        struct CreateSegmentRequest : public PlayFabRequestCommon
+        {
+            SegmentModel pfSegmentModel;
+
+            CreateSegmentRequest() :
+                PlayFabRequestCommon(),
+                pfSegmentModel()
+            {}
+
+            CreateSegmentRequest(const CreateSegmentRequest& src) :
+                PlayFabRequestCommon(),
+                pfSegmentModel(src.pfSegmentModel)
+            {}
+
+            ~CreateSegmentRequest() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilO(input["SegmentModel"], pfSegmentModel);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_pfSegmentModel; ToJsonUtilO(pfSegmentModel, each_pfSegmentModel); output["SegmentModel"] = each_pfSegmentModel;
+                return output;
+            }
+        };
+
+        struct CreateSegmentResponse : public PlayFabResultCommon
+        {
+            std::string ErrorMessage;
+            std::string SegmentId;
+
+            CreateSegmentResponse() :
+                PlayFabResultCommon(),
+                ErrorMessage(),
+                SegmentId()
+            {}
+
+            CreateSegmentResponse(const CreateSegmentResponse& src) :
+                PlayFabResultCommon(),
+                ErrorMessage(src.ErrorMessage),
+                SegmentId(src.SegmentId)
+            {}
+
+            ~CreateSegmentResponse() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["ErrorMessage"], ErrorMessage);
+                FromJsonUtilS(input["SegmentId"], SegmentId);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_ErrorMessage; ToJsonUtilS(ErrorMessage, each_ErrorMessage); output["ErrorMessage"] = each_ErrorMessage;
+                Json::Value each_SegmentId; ToJsonUtilS(SegmentId, each_SegmentId); output["SegmentId"] = each_SegmentId;
+                return output;
+            }
+        };
+
         struct CreateTaskResult : public PlayFabResultCommon
         {
             std::string TaskId;
@@ -15143,6 +22199,74 @@ namespace PlayFab
                 Json::Value output;
                 Json::Value each_JobReceiptId; ToJsonUtilS(JobReceiptId, each_JobReceiptId); output["JobReceiptId"] = each_JobReceiptId;
                 Json::Value each_TitleIds; ToJsonUtilS(TitleIds, each_TitleIds); output["TitleIds"] = each_TitleIds;
+                return output;
+            }
+        };
+
+        struct DeleteMembershipSubscriptionRequest : public PlayFabRequestCommon
+        {
+            std::map<std::string, std::string> CustomTags;
+            std::string MembershipId;
+            std::string PlayFabId;
+            std::string SubscriptionId;
+
+            DeleteMembershipSubscriptionRequest() :
+                PlayFabRequestCommon(),
+                CustomTags(),
+                MembershipId(),
+                PlayFabId(),
+                SubscriptionId()
+            {}
+
+            DeleteMembershipSubscriptionRequest(const DeleteMembershipSubscriptionRequest& src) :
+                PlayFabRequestCommon(),
+                CustomTags(src.CustomTags),
+                MembershipId(src.MembershipId),
+                PlayFabId(src.PlayFabId),
+                SubscriptionId(src.SubscriptionId)
+            {}
+
+            ~DeleteMembershipSubscriptionRequest() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["CustomTags"], CustomTags);
+                FromJsonUtilS(input["MembershipId"], MembershipId);
+                FromJsonUtilS(input["PlayFabId"], PlayFabId);
+                FromJsonUtilS(input["SubscriptionId"], SubscriptionId);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_CustomTags; ToJsonUtilS(CustomTags, each_CustomTags); output["CustomTags"] = each_CustomTags;
+                Json::Value each_MembershipId; ToJsonUtilS(MembershipId, each_MembershipId); output["MembershipId"] = each_MembershipId;
+                Json::Value each_PlayFabId; ToJsonUtilS(PlayFabId, each_PlayFabId); output["PlayFabId"] = each_PlayFabId;
+                Json::Value each_SubscriptionId; ToJsonUtilS(SubscriptionId, each_SubscriptionId); output["SubscriptionId"] = each_SubscriptionId;
+                return output;
+            }
+        };
+
+        struct DeleteMembershipSubscriptionResult : public PlayFabResultCommon
+        {
+
+            DeleteMembershipSubscriptionResult() :
+                PlayFabResultCommon()
+            {}
+
+            DeleteMembershipSubscriptionResult(const DeleteMembershipSubscriptionResult&) :
+                PlayFabResultCommon()
+            {}
+
+            ~DeleteMembershipSubscriptionResult() = default;
+
+            void FromJson(const Json::Value&) override
+            {
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
                 return output;
             }
         };
@@ -15278,6 +22402,64 @@ namespace PlayFab
             Json::Value ToJson() const override
             {
                 Json::Value output;
+                return output;
+            }
+        };
+
+        struct DeleteSegmentRequest : public PlayFabRequestCommon
+        {
+            std::string SegmentId;
+
+            DeleteSegmentRequest() :
+                PlayFabRequestCommon(),
+                SegmentId()
+            {}
+
+            DeleteSegmentRequest(const DeleteSegmentRequest& src) :
+                PlayFabRequestCommon(),
+                SegmentId(src.SegmentId)
+            {}
+
+            ~DeleteSegmentRequest() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["SegmentId"], SegmentId);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_SegmentId; ToJsonUtilS(SegmentId, each_SegmentId); output["SegmentId"] = each_SegmentId;
+                return output;
+            }
+        };
+
+        struct DeleteSegmentsResponse : public PlayFabResultCommon
+        {
+            std::string ErrorMessage;
+
+            DeleteSegmentsResponse() :
+                PlayFabResultCommon(),
+                ErrorMessage()
+            {}
+
+            DeleteSegmentsResponse(const DeleteSegmentsResponse& src) :
+                PlayFabResultCommon(),
+                ErrorMessage(src.ErrorMessage)
+            {}
+
+            ~DeleteSegmentsResponse() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["ErrorMessage"], ErrorMessage);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_ErrorMessage; ToJsonUtilS(ErrorMessage, each_ErrorMessage); output["ErrorMessage"] = each_ErrorMessage;
                 return output;
             }
         };
@@ -18010,17 +25192,20 @@ namespace PlayFab
         struct GetPolicyResponse : public PlayFabResultCommon
         {
             std::string PolicyName;
+            Int32 PolicyVersion;
             std::list<PermissionStatement> Statements;
 
             GetPolicyResponse() :
                 PlayFabResultCommon(),
                 PolicyName(),
+                PolicyVersion(),
                 Statements()
             {}
 
             GetPolicyResponse(const GetPolicyResponse& src) :
                 PlayFabResultCommon(),
                 PolicyName(src.PolicyName),
+                PolicyVersion(src.PolicyVersion),
                 Statements(src.Statements)
             {}
 
@@ -18029,6 +25214,7 @@ namespace PlayFab
             void FromJson(const Json::Value& input) override
             {
                 FromJsonUtilS(input["PolicyName"], PolicyName);
+                FromJsonUtilP(input["PolicyVersion"], PolicyVersion);
                 FromJsonUtilO(input["Statements"], Statements);
             }
 
@@ -18036,6 +25222,7 @@ namespace PlayFab
             {
                 Json::Value output;
                 Json::Value each_PolicyName; ToJsonUtilS(PolicyName, each_PolicyName); output["PolicyName"] = each_PolicyName;
+                Json::Value each_PolicyVersion; ToJsonUtilP(PolicyVersion, each_PolicyVersion); output["PolicyVersion"] = each_PolicyVersion;
                 Json::Value each_Statements; ToJsonUtilO(Statements, each_Statements); output["Statements"] = each_Statements;
                 return output;
             }
@@ -18231,6 +25418,69 @@ namespace PlayFab
             {
                 Json::Value output;
                 Json::Value each_Tables; ToJsonUtilO(Tables, each_Tables); output["Tables"] = each_Tables;
+                return output;
+            }
+        };
+
+        struct GetSegmentsRequest : public PlayFabRequestCommon
+        {
+            std::list<std::string> SegmentIds;
+
+            GetSegmentsRequest() :
+                PlayFabRequestCommon(),
+                SegmentIds()
+            {}
+
+            GetSegmentsRequest(const GetSegmentsRequest& src) :
+                PlayFabRequestCommon(),
+                SegmentIds(src.SegmentIds)
+            {}
+
+            ~GetSegmentsRequest() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["SegmentIds"], SegmentIds);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_SegmentIds; ToJsonUtilS(SegmentIds, each_SegmentIds); output["SegmentIds"] = each_SegmentIds;
+                return output;
+            }
+        };
+
+        struct GetSegmentsResponse : public PlayFabResultCommon
+        {
+            std::string ErrorMessage;
+            std::list<SegmentModel> Segments;
+
+            GetSegmentsResponse() :
+                PlayFabResultCommon(),
+                ErrorMessage(),
+                Segments()
+            {}
+
+            GetSegmentsResponse(const GetSegmentsResponse& src) :
+                PlayFabResultCommon(),
+                ErrorMessage(src.ErrorMessage),
+                Segments(src.Segments)
+            {}
+
+            ~GetSegmentsResponse() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["ErrorMessage"], ErrorMessage);
+                FromJsonUtilO(input["Segments"], Segments);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_ErrorMessage; ToJsonUtilS(ErrorMessage, each_ErrorMessage); output["ErrorMessage"] = each_ErrorMessage;
+                Json::Value each_Segments; ToJsonUtilO(Segments, each_Segments); output["Segments"] = each_Segments;
                 return output;
             }
         };
@@ -20536,40 +27786,6 @@ namespace PlayFab
             }
         };
 
-        struct UserWindowsHelloInfo : public PlayFabBaseModel
-        {
-            std::string WindowsHelloDeviceName;
-            std::string WindowsHelloPublicKeyHash;
-
-            UserWindowsHelloInfo() :
-                PlayFabBaseModel(),
-                WindowsHelloDeviceName(),
-                WindowsHelloPublicKeyHash()
-            {}
-
-            UserWindowsHelloInfo(const UserWindowsHelloInfo& src) :
-                PlayFabBaseModel(),
-                WindowsHelloDeviceName(src.WindowsHelloDeviceName),
-                WindowsHelloPublicKeyHash(src.WindowsHelloPublicKeyHash)
-            {}
-
-            ~UserWindowsHelloInfo() = default;
-
-            void FromJson(const Json::Value& input) override
-            {
-                FromJsonUtilS(input["WindowsHelloDeviceName"], WindowsHelloDeviceName);
-                FromJsonUtilS(input["WindowsHelloPublicKeyHash"], WindowsHelloPublicKeyHash);
-            }
-
-            Json::Value ToJson() const override
-            {
-                Json::Value output;
-                Json::Value each_WindowsHelloDeviceName; ToJsonUtilS(WindowsHelloDeviceName, each_WindowsHelloDeviceName); output["WindowsHelloDeviceName"] = each_WindowsHelloDeviceName;
-                Json::Value each_WindowsHelloPublicKeyHash; ToJsonUtilS(WindowsHelloPublicKeyHash, each_WindowsHelloPublicKeyHash); output["WindowsHelloPublicKeyHash"] = each_WindowsHelloPublicKeyHash;
-                return output;
-            }
-        };
-
         struct UserXboxInfo : public PlayFabBaseModel
         {
             std::string XboxUserId;
@@ -20621,7 +27837,6 @@ namespace PlayFab
             Boxed<UserTitleInfo> TitleInfo;
             Boxed<UserTwitchInfo> TwitchInfo;
             std::string Username;
-            Boxed<UserWindowsHelloInfo> WindowsHelloInfo;
             Boxed<UserXboxInfo> XboxInfo;
 
             UserAccountInfo() :
@@ -20646,7 +27861,6 @@ namespace PlayFab
                 TitleInfo(),
                 TwitchInfo(),
                 Username(),
-                WindowsHelloInfo(),
                 XboxInfo()
             {}
 
@@ -20672,7 +27886,6 @@ namespace PlayFab
                 TitleInfo(src.TitleInfo),
                 TwitchInfo(src.TwitchInfo),
                 Username(src.Username),
-                WindowsHelloInfo(src.WindowsHelloInfo),
                 XboxInfo(src.XboxInfo)
             {}
 
@@ -20700,7 +27913,6 @@ namespace PlayFab
                 FromJsonUtilO(input["TitleInfo"], TitleInfo);
                 FromJsonUtilO(input["TwitchInfo"], TwitchInfo);
                 FromJsonUtilS(input["Username"], Username);
-                FromJsonUtilO(input["WindowsHelloInfo"], WindowsHelloInfo);
                 FromJsonUtilO(input["XboxInfo"], XboxInfo);
             }
 
@@ -20727,7 +27939,6 @@ namespace PlayFab
                 Json::Value each_TitleInfo; ToJsonUtilO(TitleInfo, each_TitleInfo); output["TitleInfo"] = each_TitleInfo;
                 Json::Value each_TwitchInfo; ToJsonUtilO(TwitchInfo, each_TwitchInfo); output["TwitchInfo"] = each_TwitchInfo;
                 Json::Value each_Username; ToJsonUtilS(Username, each_Username); output["Username"] = each_Username;
-                Json::Value each_WindowsHelloInfo; ToJsonUtilO(WindowsHelloInfo, each_WindowsHelloInfo); output["WindowsHelloInfo"] = each_WindowsHelloInfo;
                 Json::Value each_XboxInfo; ToJsonUtilO(XboxInfo, each_XboxInfo); output["XboxInfo"] = each_XboxInfo;
                 return output;
             }
@@ -21947,6 +29158,74 @@ namespace PlayFab
             }
         };
 
+        struct SetMembershipOverrideRequest : public PlayFabRequestCommon
+        {
+            std::map<std::string, std::string> CustomTags;
+            time_t ExpirationTime;
+            std::string MembershipId;
+            std::string PlayFabId;
+
+            SetMembershipOverrideRequest() :
+                PlayFabRequestCommon(),
+                CustomTags(),
+                ExpirationTime(),
+                MembershipId(),
+                PlayFabId()
+            {}
+
+            SetMembershipOverrideRequest(const SetMembershipOverrideRequest& src) :
+                PlayFabRequestCommon(),
+                CustomTags(src.CustomTags),
+                ExpirationTime(src.ExpirationTime),
+                MembershipId(src.MembershipId),
+                PlayFabId(src.PlayFabId)
+            {}
+
+            ~SetMembershipOverrideRequest() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["CustomTags"], CustomTags);
+                FromJsonUtilT(input["ExpirationTime"], ExpirationTime);
+                FromJsonUtilS(input["MembershipId"], MembershipId);
+                FromJsonUtilS(input["PlayFabId"], PlayFabId);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_CustomTags; ToJsonUtilS(CustomTags, each_CustomTags); output["CustomTags"] = each_CustomTags;
+                Json::Value each_ExpirationTime; ToJsonUtilT(ExpirationTime, each_ExpirationTime); output["ExpirationTime"] = each_ExpirationTime;
+                Json::Value each_MembershipId; ToJsonUtilS(MembershipId, each_MembershipId); output["MembershipId"] = each_MembershipId;
+                Json::Value each_PlayFabId; ToJsonUtilS(PlayFabId, each_PlayFabId); output["PlayFabId"] = each_PlayFabId;
+                return output;
+            }
+        };
+
+        struct SetMembershipOverrideResult : public PlayFabResultCommon
+        {
+
+            SetMembershipOverrideResult() :
+                PlayFabResultCommon()
+            {}
+
+            SetMembershipOverrideResult(const SetMembershipOverrideResult&) :
+                PlayFabResultCommon()
+            {}
+
+            ~SetMembershipOverrideResult() = default;
+
+            void FromJson(const Json::Value&) override
+            {
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                return output;
+            }
+        };
+
         struct SetPlayerSecretRequest : public PlayFabRequestCommon
         {
             std::string PlayerSecret;
@@ -22220,18 +29499,27 @@ namespace PlayFab
 
         struct SetTitleDataRequest : public PlayFabRequestCommon
         {
+            std::string AzureResourceId;
+            std::map<std::string, std::string> CustomTags;
             std::string Key;
+            std::string TitleId;
             std::string Value;
 
             SetTitleDataRequest() :
                 PlayFabRequestCommon(),
+                AzureResourceId(),
+                CustomTags(),
                 Key(),
+                TitleId(),
                 Value()
             {}
 
             SetTitleDataRequest(const SetTitleDataRequest& src) :
                 PlayFabRequestCommon(),
+                AzureResourceId(src.AzureResourceId),
+                CustomTags(src.CustomTags),
                 Key(src.Key),
+                TitleId(src.TitleId),
                 Value(src.Value)
             {}
 
@@ -22239,14 +29527,20 @@ namespace PlayFab
 
             void FromJson(const Json::Value& input) override
             {
+                FromJsonUtilS(input["AzureResourceId"], AzureResourceId);
+                FromJsonUtilS(input["CustomTags"], CustomTags);
                 FromJsonUtilS(input["Key"], Key);
+                FromJsonUtilS(input["TitleId"], TitleId);
                 FromJsonUtilS(input["Value"], Value);
             }
 
             Json::Value ToJson() const override
             {
                 Json::Value output;
+                Json::Value each_AzureResourceId; ToJsonUtilS(AzureResourceId, each_AzureResourceId); output["AzureResourceId"] = each_AzureResourceId;
+                Json::Value each_CustomTags; ToJsonUtilS(CustomTags, each_CustomTags); output["CustomTags"] = each_CustomTags;
                 Json::Value each_Key; ToJsonUtilS(Key, each_Key); output["Key"] = each_Key;
+                Json::Value each_TitleId; ToJsonUtilS(TitleId, each_TitleId); output["TitleId"] = each_TitleId;
                 Json::Value each_Value; ToJsonUtilS(Value, each_Value); output["Value"] = each_Value;
                 return output;
             }
@@ -22254,24 +29548,29 @@ namespace PlayFab
 
         struct SetTitleDataResult : public PlayFabResultCommon
         {
+            std::string AzureResourceId;
 
             SetTitleDataResult() :
-                PlayFabResultCommon()
+                PlayFabResultCommon(),
+                AzureResourceId()
             {}
 
-            SetTitleDataResult(const SetTitleDataResult&) :
-                PlayFabResultCommon()
+            SetTitleDataResult(const SetTitleDataResult& src) :
+                PlayFabResultCommon(),
+                AzureResourceId(src.AzureResourceId)
             {}
 
             ~SetTitleDataResult() = default;
 
-            void FromJson(const Json::Value&) override
+            void FromJson(const Json::Value& input) override
             {
+                FromJsonUtilS(input["AzureResourceId"], AzureResourceId);
             }
 
             Json::Value ToJson() const override
             {
                 Json::Value output;
+                Json::Value each_AzureResourceId; ToJsonUtilS(AzureResourceId, each_AzureResourceId); output["AzureResourceId"] = each_AzureResourceId;
                 return output;
             }
         };
@@ -22845,12 +30144,14 @@ namespace PlayFab
         {
             bool OverwritePolicy;
             std::string PolicyName;
+            Int32 PolicyVersion;
             std::list<PermissionStatement> Statements;
 
             UpdatePolicyRequest() :
                 PlayFabRequestCommon(),
                 OverwritePolicy(),
                 PolicyName(),
+                PolicyVersion(),
                 Statements()
             {}
 
@@ -22858,6 +30159,7 @@ namespace PlayFab
                 PlayFabRequestCommon(),
                 OverwritePolicy(src.OverwritePolicy),
                 PolicyName(src.PolicyName),
+                PolicyVersion(src.PolicyVersion),
                 Statements(src.Statements)
             {}
 
@@ -22867,6 +30169,7 @@ namespace PlayFab
             {
                 FromJsonUtilP(input["OverwritePolicy"], OverwritePolicy);
                 FromJsonUtilS(input["PolicyName"], PolicyName);
+                FromJsonUtilP(input["PolicyVersion"], PolicyVersion);
                 FromJsonUtilO(input["Statements"], Statements);
             }
 
@@ -22875,6 +30178,7 @@ namespace PlayFab
                 Json::Value output;
                 Json::Value each_OverwritePolicy; ToJsonUtilP(OverwritePolicy, each_OverwritePolicy); output["OverwritePolicy"] = each_OverwritePolicy;
                 Json::Value each_PolicyName; ToJsonUtilS(PolicyName, each_PolicyName); output["PolicyName"] = each_PolicyName;
+                Json::Value each_PolicyVersion; ToJsonUtilP(PolicyVersion, each_PolicyVersion); output["PolicyVersion"] = each_PolicyVersion;
                 Json::Value each_Statements; ToJsonUtilO(Statements, each_Statements); output["Statements"] = each_Statements;
                 return output;
             }
@@ -22973,6 +30277,69 @@ namespace PlayFab
             Json::Value ToJson() const override
             {
                 Json::Value output;
+                return output;
+            }
+        };
+
+        struct UpdateSegmentRequest : public PlayFabRequestCommon
+        {
+            SegmentModel pfSegmentModel;
+
+            UpdateSegmentRequest() :
+                PlayFabRequestCommon(),
+                pfSegmentModel()
+            {}
+
+            UpdateSegmentRequest(const UpdateSegmentRequest& src) :
+                PlayFabRequestCommon(),
+                pfSegmentModel(src.pfSegmentModel)
+            {}
+
+            ~UpdateSegmentRequest() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilO(input["SegmentModel"], pfSegmentModel);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_pfSegmentModel; ToJsonUtilO(pfSegmentModel, each_pfSegmentModel); output["SegmentModel"] = each_pfSegmentModel;
+                return output;
+            }
+        };
+
+        struct UpdateSegmentResponse : public PlayFabResultCommon
+        {
+            std::string ErrorMessage;
+            std::string SegmentId;
+
+            UpdateSegmentResponse() :
+                PlayFabResultCommon(),
+                ErrorMessage(),
+                SegmentId()
+            {}
+
+            UpdateSegmentResponse(const UpdateSegmentResponse& src) :
+                PlayFabResultCommon(),
+                ErrorMessage(src.ErrorMessage),
+                SegmentId(src.SegmentId)
+            {}
+
+            ~UpdateSegmentResponse() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["ErrorMessage"], ErrorMessage);
+                FromJsonUtilS(input["SegmentId"], SegmentId);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_ErrorMessage; ToJsonUtilS(ErrorMessage, each_ErrorMessage); output["ErrorMessage"] = each_ErrorMessage;
+                Json::Value each_SegmentId; ToJsonUtilS(SegmentId, each_SegmentId); output["SegmentId"] = each_SegmentId;
                 return output;
             }
         };

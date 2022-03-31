@@ -112,8 +112,11 @@ void XAsyncExamples::ThreadProc_SingleCore(unsigned int index)
     sprintf_s(buffer, 256, u8"[ThreadProc_SingleCore] Thread Index %d Spawned!", index);
     s_sample->Log(buffer);
 
+    auto threadHandle = GetCurrentThread();
+    SetThreadDescription(threadHandle, L"Single core example thread");
+
     // Set core affinity to this thread's index only
-    DWORD_PTR result = SetThreadAffinityMask(GetCurrentThread(), 1ull << index);
+    DWORD_PTR result = SetThreadAffinityMask(threadHandle, 1ull << index);
     if (result == 0)
     {
         sprintf_s(buffer, 256, u8"[ThreadProc_SingleCore][%d]: Failed to set affinity mask", index);
@@ -137,9 +140,12 @@ void XAsyncExamples::ThreadProc_ManualAndMessageLoop()
     char buffer[256] = {};
     s_sample->Log(u8"[ThreadProc_ManualAndMessageLoop] Thread Index Spawned!");
 
+    auto threadHandle = GetCurrentThread();
+    SetThreadDescription(threadHandle, L"Manual and Message Loop example thread");
+
     // Set core affinity all threads except thread 0 and 1
     DWORD_PTR affinityMask = ~0x3ull;
-    DWORD_PTR result = SetThreadAffinityMask(GetCurrentThread(), affinityMask);
+    DWORD_PTR result = SetThreadAffinityMask(threadHandle, affinityMask);
     if (result == 0)
     {
         sprintf_s(buffer, 256, u8"[ThreadProc_ManualAndMessageLoop]: Failed to set affinity mask");
@@ -843,6 +849,8 @@ void XAsyncExamples::StartTest_AdvancedUsage()
         testData->baseQueueDispatcherThread = std::thread(
             [testData]()
             {
+                SetThreadDescription(GetCurrentThread(), L"Base queue dispatcher thread");
+
                 while (true)
                 {
                     bool processed = XTaskQueueDispatch(testData->baseQueue, XTaskQueuePort::Completion, INFINITE);

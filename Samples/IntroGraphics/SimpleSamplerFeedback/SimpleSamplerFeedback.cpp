@@ -6,7 +6,9 @@
 //--------------------------------------------------------------------------------------
 
 #include "pch.h"
+
 #include "SimpleSamplerFeedback.h"
+
 #include "ATGColors.h"
 #include "ControllerFont.h"
 #include "ReadData.h"
@@ -14,7 +16,7 @@
 extern void ExitSample() noexcept;
 
 using namespace DirectX;
-using namespace SimpleMath;
+using namespace DirectX::SimpleMath;
 using DirectX::Colors::White;
 using Microsoft::WRL::ComPtr;
 
@@ -125,8 +127,8 @@ void Sample::Render()
     {
         // Don't clear feedback map to 0, since that would mean that mip 0 was requested during scene rendering
         static const UINT s_clearValue[4] = { (UINT)-1, (UINT)-1, (UINT)-1, (UINT)-1 };
-        auto gpuHandle = m_resourceDescriptorHeap->GetGpuHandle(static_cast<int>(ResourceDescriptors::FeedbackMapUAV));
-        auto cpuHandle = m_resourceDescriptorHeap->GetCpuHandle(static_cast<int>(ResourceDescriptors::FeedbackMapUAV));
+        auto const gpuHandle = m_resourceDescriptorHeap->GetGpuHandle(static_cast<int>(ResourceDescriptors::FeedbackMapUAV));
+        auto const cpuHandle = m_resourceDescriptorHeap->GetCpuHandle(static_cast<int>(ResourceDescriptors::FeedbackMapUAV));
         commandList->ClearUnorderedAccessViewUint(gpuHandle, cpuHandle, m_feedbackMapResource.Get(), s_clearValue, 0, nullptr);
     }
     PIXEndEvent(commandList);
@@ -179,17 +181,17 @@ float Sample::ReadBackFeedbackMapValue()
         PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"ReadBackFeedbackMapValue");
 
         // Copy feedback values to the staging buffer
-        DirectX::TransitionResource(commandList, m_feedbackMapResource.Get(), D3D12_RESOURCE_STATE_UNORDERED_ACCESS, D3D12_RESOURCE_STATE_COPY_SOURCE);
-        CD3DX12_TEXTURE_COPY_LOCATION SrcLocation(m_feedbackMapResource.Get(), 0);
+        TransitionResource(commandList, m_feedbackMapResource.Get(), D3D12_RESOURCE_STATE_UNORDERED_ACCESS, D3D12_RESOURCE_STATE_COPY_SOURCE);
+        const CD3DX12_TEXTURE_COPY_LOCATION SrcLocation(m_feedbackMapResource.Get(), 0);
         commandList->CopyTextureRegion(&m_feedbackMapStagingTexture.CopyLocation, 0, 0, 0, &SrcLocation, nullptr);
-        DirectX::TransitionResource(commandList, m_feedbackMapResource.Get(), D3D12_RESOURCE_STATE_COPY_SOURCE, D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
+        TransitionResource(commandList, m_feedbackMapResource.Get(), D3D12_RESOURCE_STATE_COPY_SOURCE, D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
 
         // Read the value on the CPU. For this simple sample, there is only 1 value
         auto pRow = static_cast<BYTE*>(m_feedbackMapStagingTexture.Map());
         BYTE feedbackValue = pRow[0];
         m_feedbackMapStagingTexture.Unmap();
 
-        // On Scarlett, this is a 5.3 fixed point value
+        // On Xbox Series X|S, this is a 5.3 fixed point value
         constexpr BYTE FractionalShift = 3;
         constexpr BYTE Mask = (1 << FractionalShift);
         minRequestedMip = float(feedbackValue >> FractionalShift);
@@ -216,8 +218,8 @@ void Sample::RenderUI()
     viewportUI.Height = 1080;
     m_fontBatch->SetViewport(viewportUI);
 
-    const float startX = 50.0f;
-    const float startY = 40.0f;
+    constexpr float startX = 50.0f;
+    constexpr float startY = 40.0f;
     const float fontScale = 0.75f;
     Vector2 fontPos(startX, startY);
 
@@ -245,16 +247,16 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
-    auto dsvDescriptor = m_deviceResources->GetDepthStencilView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::ColorsLinear::Background, 0, nullptr);
     commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -360,8 +362,8 @@ void Sample::CreateDeviceDependentResources()
     }
 
     // Load shader blobs
-    auto vertexShaderBlob = DX::ReadData(L"VertexShader.cso");
-    auto pixelShaderBlob = DX::ReadData(L"PixelShader.cso");
+    auto const vertexShaderBlob = DX::ReadData(L"VertexShader.cso");
+    auto const pixelShaderBlob = DX::ReadData(L"PixelShader.cso");
 
     // Create a root signature. Xbox One best practice is to use HLSL-based root signatures to support shader precompilation.
     DX::ThrowIfFailed(device->CreateRootSignature(0, vertexShaderBlob.data(), vertexShaderBlob.size(),
@@ -381,7 +383,8 @@ void Sample::CreateDeviceDependentResources()
         m_diffuseTexture->SetName(L"Diffuse");
 
         // Fonts
-        RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
+        const RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(),
+            m_deviceResources->GetDepthBufferFormat());
         {
             SpriteBatchPipelineStateDescription pd(rtState, &CommonStates::AlphaBlend);
             m_fontBatch = std::make_unique<SpriteBatch>(device, resourceUpload, pd);
@@ -418,7 +421,7 @@ void Sample::CreateDeviceDependentResources()
         const auto feedbackMapHeight = diffuseTextureHeight;    // See note above
 
         // We create a MinMip feedback map, so use the format DXGI_FORMAT_SAMPLER_FEEDBACK_MIN_MIP_OPAQUE
-        D3D12_RESOURCE_DESC feedbackMapDesc = CD3DX12_RESOURCE_DESC::Tex2D(DXGI_FORMAT_SAMPLER_FEEDBACK_MIN_MIP_OPAQUE, diffuseTextureWidth, diffuseTextureHeight, diffuseTextureDepth, 1, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS);
+        const D3D12_RESOURCE_DESC feedbackMapDesc = CD3DX12_RESOURCE_DESC::Tex2D(DXGI_FORMAT_SAMPLER_FEEDBACK_MIN_MIP_OPAQUE, diffuseTextureWidth, diffuseTextureHeight, diffuseTextureDepth, 1, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS);
         D3D12_RESOURCE_DESC1 feedbackMapDesc1;
         memcpy(&feedbackMapDesc1, &feedbackMapDesc, sizeof(feedbackMapDesc));
         feedbackMapDesc1.SamplerFeedbackMipRegion.Width = (UINT)feedbackMapWidth;
@@ -427,7 +430,7 @@ void Sample::CreateDeviceDependentResources()
         feedbackMapDesc1.Alignment = (UINT64)D3D12_SMALL_RESOURCE_PLACEMENT_ALIGNMENT;
 
         // Create the feedback map texture
-        CD3DX12_HEAP_PROPERTIES HeapProps(D3D12_HEAP_TYPE_DEFAULT);
+        const CD3DX12_HEAP_PROPERTIES HeapProps(D3D12_HEAP_TYPE_DEFAULT);
         device->CreateCommittedResource2(&HeapProps, D3D12_HEAP_FLAG_NONE, &feedbackMapDesc1, D3D12_RESOURCE_STATE_UNORDERED_ACCESS, nullptr, nullptr, __uuidof(m_feedbackMapResource), (void**)&m_feedbackMapResource);
         m_feedbackMapResource->SetName(L"FeedbackMap");
 
@@ -487,7 +490,7 @@ void Sample::CreateWindowSizeDependentResources()
     m_camera->SetSensitivity(100.0f, 100.0f, 100.0f, 0.0f);
     m_camera->SetFlags(DX::FlyCamera::c_FlagsDisableRotation);
 
-    DirectX::BoundingBox bbox(XMFLOAT3(0.0f, 0.0f, 100.0f), XMFLOAT3(0.0f, 0.0f, 100.0f));
+    const BoundingBox bbox(XMFLOAT3(0.0f, 0.0f, 100.0f), XMFLOAT3(0.0f, 0.0f, 100.0f));
     m_camera->SetBoundingBox(bbox);
 }
 
@@ -514,8 +517,8 @@ HRESULT Sample::CreateStagingBufferForTexture(ID3D12Device* pd3dDevice, const D3
         totalBytes *= sliceCount;
     }
 
-    D3D12_RESOURCE_DESC bufferDesc = CD3DX12_RESOURCE_DESC::Buffer(totalBytes);
-    D3D12_HEAP_PROPERTIES heapProperties = CD3DX12_HEAP_PROPERTIES(readback ? D3D12_HEAP_TYPE_READBACK : D3D12_HEAP_TYPE_UPLOAD);
+    const D3D12_RESOURCE_DESC bufferDesc = CD3DX12_RESOURCE_DESC::Buffer(totalBytes);
+    const D3D12_HEAP_PROPERTIES heapProperties = CD3DX12_HEAP_PROPERTIES(readback ? D3D12_HEAP_TYPE_READBACK : D3D12_HEAP_TYPE_UPLOAD);
     HRESULT hr = pd3dDevice->CreateCommittedResource(&heapProperties, D3D12_HEAP_FLAG_NONE, &bufferDesc, readback ? D3D12_RESOURCE_STATE_COPY_DEST : D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, __uuidof(ID3D12Resource), (void**)ppBuffer);
 
     if (pStagingCopyLocation != nullptr)

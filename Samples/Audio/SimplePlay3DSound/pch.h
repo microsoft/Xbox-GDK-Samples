@@ -56,14 +56,15 @@
 
 #include <algorithm>
 #include <atomic>
+#include <cassert>
 #include <cmath>
 #include <cstdint>
+#include <cstdio>
 #include <exception>
 #include <memory>
 #include <stdexcept>
+#include <string>
 
-#include <assert.h>
-#include <stdio.h>
 #include <pix3.h>
 
 #include <XGame.h>

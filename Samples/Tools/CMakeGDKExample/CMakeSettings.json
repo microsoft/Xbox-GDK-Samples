@@ -39,7 +39,7 @@
       "variables": [
         {
           "name": "XdkEditionTarget",
-          "value": "210600",
+          "value": "220300",
           "type": "STRING"
         }
       ],
@@ -58,7 +58,7 @@
       "variables": [
         {
           "name": "XdkEditionTarget",
-          "value": "210600",
+          "value": "220300",
           "type": "STRING"
         }
       ],
@@ -77,7 +77,7 @@
       "variables": [
         {
           "name": "XdkEditionTarget",
-          "value": "210600",
+          "value": "220300",
           "type": "STRING"
         }
       ],
@@ -96,7 +96,7 @@
       "variables": [
         {
           "name": "XdkEditionTarget",
-          "value": "210600",
+          "value": "220300",
           "type": "STRING"
         }
       ],

@@ -145,13 +145,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     switch (message)
     {
-    case WM_ACTIVATEAPP:
-        break;
-
-    case WM_KEYDOWN:
-    case WM_KEYUP:
-        break;
-
     case WM_USER:
         if (sample)
         {

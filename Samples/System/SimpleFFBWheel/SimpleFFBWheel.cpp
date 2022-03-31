@@ -31,8 +31,20 @@ namespace
         0       // uint64_t repeatDelay
     };
 
+// NOTE: The behavior of the force feedback API changed in the October 2021 GDK
+// If using October 2021 GDK or newer, the "angular X" value should be provided
+// instead of the "linear X" value used previously.
     const GameInputForceFeedbackMagnitude c_magnitude =
     {
+#if (_GXDK_EDITION >= 211000)
+        0.0f,   // linear X
+        0.0f,   // Y
+        0.0f,   // Z
+        1.0f,   // angular X
+        0.0f,   // Y
+        0.0f,   // Z
+        0.0f    // normal
+#else
         1.0f,   // linear X
         0.0f,   // Y
         0.0f,   // Z
@@ -40,6 +52,7 @@ namespace
         0.0f,   // Y
         0.0f,   // Z
         0.0f    // normal
+#endif
     };
 
     //const GameInputForceFeedbackConstantParams c_constParams =

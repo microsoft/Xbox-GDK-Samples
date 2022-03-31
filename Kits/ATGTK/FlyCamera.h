@@ -57,7 +57,7 @@ namespace DX
         //         Hold Left Mouse Button: Mouse look
         //        Hold Right Mouse Button: Translate X/Y (Shift Translates Z)
         //
-        void Update(float elapsedTime, DirectX::Mouse& mouse, DirectX::Keyboard& kb);
+        void Update(float elapsedTime, DirectX::Mouse& mouse, const DirectX::Keyboard& kb);
 
         // Reset camera to default position/rotation
         void Reset();

@@ -8,7 +8,7 @@
 #include "pch.h"
 #include "RDTSCPStopWatch.h"
 
-#include "intrin.h"
+#include <intrin.h>
 
 namespace ATG
 {
@@ -18,7 +18,7 @@ namespace ATG
 
     double CalcRDTSCPFrequency()
     {
-        const uint32_t msDuration = 1000;
+        constexpr uint32_t msDuration = 1000;
 
         LARGE_INTEGER qpcTempRate;
         QueryPerformanceFrequency(&qpcTempRate);
@@ -27,36 +27,36 @@ namespace ATG
         double rdtscFrequencyLoad;
         uint32_t tempAux;
 
-        int32_t currentPriority = GetThreadPriority(GetCurrentThread());
+        const int32_t currentPriority = GetThreadPriority(GetCurrentThread());
         SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_TIME_CRITICAL);
-        uint64_t oldAffinityMask = SetThreadAffinityMask(GetCurrentThread(), 0x04);		// don't use the first core, don't really care if this fails the code still works, this is just here as an extra forcing value just in case
+        const uint64_t oldAffinityMask = SetThreadAffinityMask(GetCurrentThread(), 0x04);		// don't use the first core, don't really care if this fails the code still works, this is just here as an extra forcing value just in case
         // Measure __rdtscp() when the machine is mostly idle
         {
-            uint64_t rdtscStart = __rdtscp(&tempAux);
+            const uint64_t rdtscStart = __rdtscp(&tempAux);
             QueryPerformanceCounter(&qpcTempRate);
-            int64_t qpcStart = qpcTempRate.QuadPart;
+            const int64_t qpcStart = qpcTempRate.QuadPart;
             Sleep(msDuration);
-            uint64_t rdtscElapsed = __rdtscp(&tempAux) - rdtscStart;
+            const uint64_t rdtscElapsed = __rdtscp(&tempAux) - rdtscStart;
             QueryPerformanceCounter(&qpcTempRate);
-            int64_t qpcElapsed = qpcTempRate.QuadPart - qpcStart;
+            const int64_t qpcElapsed = qpcTempRate.QuadPart - qpcStart;
             rdtscFrequencyIdle = rdtscElapsed / (qpcElapsed / qpcRate);
         }
 
         // Measure __rdtscp() when the machine is busy
         {
-            uint64_t rdtscStart = __rdtscp(&tempAux);
+            const uint64_t rdtscStart = __rdtscp(&tempAux);
             QueryPerformanceCounter(&qpcTempRate);
-            int64_t qpcStart = qpcTempRate.QuadPart;
-            uint32_t startTick = GetTickCount();
+            const int64_t qpcStart = qpcTempRate.QuadPart;
+            const uint64_t startTick = GetTickCount64();
             for (;;)
             {
-                uint32_t tickDuration = GetTickCount() - startTick;
+                const uint64_t tickDuration = GetTickCount64() - startTick;
                 if (tickDuration >= msDuration)
                     break;
             }
-            uint64_t rdtscElapsed = __rdtscp(&tempAux) - rdtscStart;
+            const uint64_t rdtscElapsed = __rdtscp(&tempAux) - rdtscStart;
             QueryPerformanceCounter(&qpcTempRate);
-            int64_t qpcElapsed = qpcTempRate.QuadPart - qpcStart;
+            const int64_t qpcElapsed = qpcTempRate.QuadPart - qpcStart;
             rdtscFrequencyLoad = rdtscElapsed / (qpcElapsed / qpcRate);
         }
         if (oldAffinityMask != 0)

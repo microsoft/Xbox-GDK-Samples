@@ -995,8 +995,6 @@ void SessionManager::SetSessionActivity()
     {
         DEBUGLOG("SessionManager::SetSessionActivity: XblMultiplayerSetActivityAsync failed with HRESULT = 0x%08x", hr);
     }
-
-    asyncBlock.release();
 }
 
 void SessionManager::ClearSessionActivity()

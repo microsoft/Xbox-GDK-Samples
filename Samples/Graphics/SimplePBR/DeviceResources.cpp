@@ -1,5 +1,6 @@
 //
 // DeviceResources.cpp - A wrapper for the Direct3D 12/12.X device and swapchain
+// This version was modified to support HDR10 on Xbox and PC.
 //
 
 #include "pch.h"
@@ -12,13 +13,14 @@ using namespace DX;
 
 using Microsoft::WRL::ComPtr;
 
-#ifdef _GAMING_DESKTOP
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wcovered-switch-default"
 #pragma clang diagnostic ignored "-Wswitch-enum"
 #endif
 
 #pragma warning(disable : 4061)
+
+#ifdef _GAMING_DESKTOP
 
 namespace
 {
@@ -31,6 +33,13 @@ namespace
         case DXGI_FORMAT_B8G8R8X8_UNORM_SRGB:   return DXGI_FORMAT_B8G8R8X8_UNORM;
         default:                                return fmt;
         }
+    }
+
+    inline long ComputeIntersectionArea(
+        long ax1, long ay1, long ax2, long ay2,
+        long bx1, long by1, long bx2, long by2) noexcept
+    {
+        return std::max(0l, std::min(ax2, bx2) - std::max(ax1, bx1)) * std::max(0l, std::min(ay2, by2) - std::max(ay1, by1));
     }
 }
 #endif
@@ -52,6 +61,10 @@ DeviceResources::DeviceResources(
         m_backBufferFormat(backBufferFormat),
         m_depthBufferFormat(depthBufferFormat),
         m_backBufferCount(backBufferCount),
+#ifdef _GAMING_DESKTOP
+        m_dxgiFactoryFlags(0),
+        m_colorSpace(DXGI_COLOR_SPACE_RGB_FULL_G22_NONE_P709),
+#endif
         m_window(nullptr),
         m_d3dFeatureLevel(D3D_FEATURE_LEVEL_11_0),
         m_outputSize{ 0, 0, 1920, 1080 },
@@ -108,9 +121,9 @@ void DeviceResources::CreateDeviceResources()
     if (hr == D3D12_ERROR_DRIVER_VERSION_MISMATCH)
     {
 #ifdef _GAMING_XBOX_SCARLETT
-        OutputDebugStringA("ERROR: Running a d3d12_xs.lib (Scarlett) linked binary on an Xbox One is not supported\n");
+        OutputDebugStringA("ERROR: Running a d3d12_xs.lib (Xbox Series X|S) linked binary on an Xbox One is not supported\n");
 #else
-        OutputDebugStringA("ERROR: Running a d3d12_x.lib (Xbox One) linked binary on a Scarlett device is not supported\n");
+        OutputDebugStringA("ERROR: Running a d3d12_x.lib (Xbox One) linked binary on a Xbox Series X|S in 'Scarlett' mode is not supported\n");
 #endif
     }
 #endif
@@ -121,8 +134,6 @@ void DeviceResources::CreateDeviceResources()
     m_d3dFeatureLevel = D3D_FEATURE_LEVEL_12_0;
 
 #else
-
-    DWORD dxgiFactoryFlags = 0;
 
 #if defined(_DEBUG)
     // Enable the debug layer (requires the Graphics Tools "optional feature").
@@ -142,7 +153,7 @@ void DeviceResources::CreateDeviceResources()
         ComPtr<IDXGIInfoQueue> dxgiInfoQueue;
         if (SUCCEEDED(DXGIGetDebugInterface1(0, IID_PPV_ARGS(dxgiInfoQueue.GetAddressOf()))))
         {
-            dxgiFactoryFlags = DXGI_CREATE_FACTORY_DEBUG;
+            m_dxgiFactoryFlags = DXGI_CREATE_FACTORY_DEBUG;
 
             dxgiInfoQueue->SetBreakOnSeverity(DXGI_DEBUG_ALL, DXGI_INFO_QUEUE_MESSAGE_SEVERITY_ERROR, true);
             dxgiInfoQueue->SetBreakOnSeverity(DXGI_DEBUG_ALL, DXGI_INFO_QUEUE_MESSAGE_SEVERITY_CORRUPTION, true);
@@ -159,7 +170,7 @@ void DeviceResources::CreateDeviceResources()
     }
 #endif
 
-    ThrowIfFailed(CreateDXGIFactory2(dxgiFactoryFlags, IID_PPV_ARGS(m_dxgiFactory.ReleaseAndGetAddressOf())));
+    ThrowIfFailed(CreateDXGIFactory2(m_dxgiFactoryFlags, IID_PPV_ARGS(m_dxgiFactory.ReleaseAndGetAddressOf())));
 
     ComPtr<IDXGIAdapter1> adapter;
     GetAdapter(adapter.GetAddressOf());
@@ -715,6 +726,13 @@ void DeviceResources::Present(D3D12_RESOURCE_STATES beforeState)
 #endif
 
     MoveToNextFrame();
+
+#ifdef _GAMING_DESKTOP
+    if (!m_dxgiFactory->IsCurrent())
+    {
+        UpdateColorSpace();
+    }
+#endif
 }
 
 // Handle GPU suspend/resume
@@ -872,18 +890,67 @@ void DeviceResources::GetAdapter(IDXGIAdapter1** ppAdapter)
 // Sets the color space for the swap chain in order to handle HDR output.
 void DeviceResources::UpdateColorSpace()
 {
+    if (!m_dxgiFactory)
+        return;
+
+    if (!m_dxgiFactory->IsCurrent())
+    {
+        // Output information is cached on the DXGI Factory. If it is stale we need to create a new factory.
+        ThrowIfFailed(CreateDXGIFactory2(m_dxgiFactoryFlags, IID_PPV_ARGS(m_dxgiFactory.ReleaseAndGetAddressOf())));
+    }
+
     DXGI_COLOR_SPACE_TYPE colorSpace = DXGI_COLOR_SPACE_RGB_FULL_G22_NONE_P709;
 
     bool isDisplayHDR10 = false;
 
-#if defined(NTDDI_WIN10_RS2)
     if (m_swapChain)
     {
-        ComPtr<IDXGIOutput> output;
-        if (SUCCEEDED(m_swapChain->GetContainingOutput(output.GetAddressOf())))
+        // To detect HDR support, we will need to check the color space in the primary
+        // DXGI output associated with the app at this point in time
+        // (using window/display intersection).
+
+        // Get the retangle bounds of the app window.
+        RECT windowBounds;
+        if (!GetWindowRect(m_window, &windowBounds))
+            throw std::system_error(std::error_code(static_cast<int>(GetLastError()), std::system_category()), "GetWindowRect");
+
+        const long ax1 = windowBounds.left;
+        const long ay1 = windowBounds.top;
+        const long ax2 = windowBounds.right;
+        const long ay2 = windowBounds.bottom;
+
+        ComPtr<IDXGIOutput> bestOutput;
+        long bestIntersectArea = -1;
+
+        ComPtr<IDXGIAdapter> adapter;
+        for (UINT adapterIndex = 0;
+            SUCCEEDED(m_dxgiFactory->EnumAdapters(adapterIndex, adapter.ReleaseAndGetAddressOf()));
+            ++adapterIndex)
+        {
+            ComPtr<IDXGIOutput> output;
+            for (UINT outputIndex = 0;
+                SUCCEEDED(adapter->EnumOutputs(outputIndex, output.ReleaseAndGetAddressOf()));
+                ++outputIndex)
+            {
+                // Get the rectangle bounds of current output.
+                DXGI_OUTPUT_DESC desc;
+                ThrowIfFailed(output->GetDesc(&desc));
+                const auto& r = desc.DesktopCoordinates;
+
+                // Compute the intersection
+                const long intersectArea = ComputeIntersectionArea(ax1, ay1, ax2, ay2, r.left, r.top, r.right, r.bottom);
+                if (intersectArea > bestIntersectArea)
+                {
+                    bestOutput.Swap(output);
+                    bestIntersectArea = intersectArea;
+                }
+            }
+        }
+
+        if (bestOutput)
         {
             ComPtr<IDXGIOutput6> output6;
-            if (SUCCEEDED(output.As(&output6)))
+            if (SUCCEEDED(bestOutput.As(&output6)))
             {
                 DXGI_OUTPUT_DESC1 desc;
                 ThrowIfFailed(output6->GetDesc1(&desc));
@@ -896,7 +963,6 @@ void DeviceResources::UpdateColorSpace()
             }
         }
     }
-#endif
 
     if (isDisplayHDR10)
     {
@@ -920,11 +986,13 @@ void DeviceResources::UpdateColorSpace()
     m_colorSpace = colorSpace;
 
     UINT colorSpaceSupport = 0;
-    if (SUCCEEDED(m_swapChain->CheckColorSpaceSupport(colorSpace, &colorSpaceSupport))
+    if (m_swapChain
+        && SUCCEEDED(m_swapChain->CheckColorSpaceSupport(colorSpace, &colorSpaceSupport))
         && (colorSpaceSupport & DXGI_SWAP_CHAIN_COLOR_SPACE_SUPPORT_FLAG_PRESENT))
     {
         ThrowIfFailed(m_swapChain->SetColorSpace1(colorSpace));
     }
 }
 
-#endif
+#endif // _GAMING_DESKTOP
+

@@ -28,11 +28,6 @@ namespace PlayFab
         static const std::shared_ptr<PlayFabApiSettings> staticSettings;
         static const std::shared_ptr<PlayFabAuthenticationContext> staticPlayer;
 
-#if !defined(DISABLE_PLAYFABCLIENT_API)
-        static const std::string AD_TYPE_IDFA;
-        static const std::string AD_TYPE_ANDROID_ID;
-#endif
-
         static void ForgetAllCredentials();
     private:
         PlayFabSettings(); // Private constructor, static class should never have an instance

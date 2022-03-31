@@ -1,6 +1,6 @@
 //
 // DeviceResources.h - A wrapper for the Direct3D 12/12.X device and swapchain
-// This version was modified to support HDR on Xbox and PC.
+// This version was modified to support HDR10 on Xbox and PC.
 //
 
 #pragma once
@@ -44,6 +44,10 @@ namespace DX
         void Suspend();
         void Resume();
         void WaitForGpu() noexcept;
+
+#ifdef _GAMING_DESKTOP
+        void UpdateColorSpace();
+#endif
 
         // Device Accessors.
         RECT GetOutputSize() const noexcept { return m_outputSize; }
@@ -99,7 +103,6 @@ namespace DX
         void RegisterFrameEvents();
 #else
         void GetAdapter(IDXGIAdapter1** ppAdapter);
-        void UpdateColorSpace();
 #endif
         static constexpr size_t MAX_BACK_BUFFER_COUNT = 3;
 
@@ -150,6 +153,7 @@ namespace DX
 
 #ifdef _GAMING_DESKTOP
         // HDR Support
+        DWORD                                               m_dxgiFactoryFlags;
         DXGI_COLOR_SPACE_TYPE                               m_colorSpace;
 #endif
         // Cached device properties.

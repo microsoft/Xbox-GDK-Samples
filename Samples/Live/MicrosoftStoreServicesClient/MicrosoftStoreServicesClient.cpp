@@ -22,7 +22,7 @@ using Microsoft::WRL::ComPtr;
 #pragma message( __FILE__  ": TODO update SAMPLE_SERVICE_HOST to be your deployed Service Sample" )
 // The host address where you have deployed your version of the Microsoft.StoreServices Sample
 // https://github.com/microsoft/Microsoft-Store-Services-Sample
-#define SAMPLE_SERVICE_HOST "atgstoreservicedev.azurewebsites.net"
+#define SAMPLE_SERVICE_HOST "localhost:5001"//"atgstoreservicedev.azurewebsites.net"
 
 /// <summary>
 /// Built-in URL's and functionality of the Microsoft.StoreServices Sample service.
@@ -128,9 +128,7 @@ void Sample::Initialize(HWND window, int width, int height)
     m_keyboard = std::make_unique<Keyboard>();
 
     m_mouse = std::make_unique<Mouse>();
-#ifdef _GAMING_DESKTOP
     m_mouse->SetWindow(window);
-#endif
 
     m_deviceResources->SetWindow(window, width, height);
 
@@ -611,6 +609,18 @@ void Sample::CreateDeviceDependentResources()
 {
     auto device = m_deviceResources->GetD3DDevice();
 
+#ifdef _GAMING_DESKTOP
+    D3D12_FEATURE_DATA_SHADER_MODEL shaderModel = { D3D_SHADER_MODEL_6_0 };
+    if (FAILED(device->CheckFeatureSupport(D3D12_FEATURE_SHADER_MODEL, &shaderModel, sizeof(shaderModel)))
+        || (shaderModel.HighestShaderModel < D3D_SHADER_MODEL_6_0))
+    {
+#ifdef _DEBUG
+        OutputDebugStringA("ERROR: Shader Model 6.0 is not supported!\n");
+#endif
+        throw std::runtime_error("Shader Model 6.0 is not supported!");
+    }
+#endif
+
     m_graphicsMemory = std::make_unique<GraphicsMemory>(device);
 
     RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
@@ -838,7 +848,7 @@ void Sample::ShowCollectionNextPage(uint64_t StartPos)
         text->SetDisplayText(item.productId);
 
         //  If this is a type of consumable we want to show the Consume / Purchase button for this item
-        if (item.productKind == "Consumable" || item.productKind == "UnmanagedConsuamble")
+        if (item.productKind == "Consumable" || item.productKind == "UnmanagedConsumable")
         {
             m_collectionsQuantityPanels[uiRow]->SetVisible(true);
             text = m_collectionsQuantityPanels[uiRow]->GetTypedSubElementById<UIStaticText>(ID("item_quantity_text"));
@@ -963,6 +973,12 @@ void Sample::ConsumeItem(CollectionsItem Item)
     jRequest["Quantity"] = Item.quantity;
     jRequest["ProductId"] = Item.productId;
     jRequest["sbx"] = m_currentSandbox;
+    jRequest["IncludeOrderIds"] = true;
+
+    if (Item.productKind == "UnmanagedConsumable")
+    {
+        jRequest["IsUnmanagedConsumable"] = true;
+    }
 
     std::string requestBody = jRequest.dump();
     size_t bodySize = requestBody.size();

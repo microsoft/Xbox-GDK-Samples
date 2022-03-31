@@ -52,7 +52,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
         if (hr == E_GAMERUNTIME_DLL_NOT_FOUND || hr == E_GAMERUNTIME_VERSION_MISMATCH)
         {
 #ifdef _GAMING_DESKTOP
-            (void)MessageBoxW(nullptr, L"Game Runtime is not installed on this system or needs updating.", g_szAppName, MB_ICONERROR | MB_OK);
+            std::ignore = MessageBoxW(nullptr, L"Game Runtime is not installed on this system or needs updating.", g_szAppName, MB_ICONERROR | MB_OK);
 #endif
         }
         return 1;
@@ -150,7 +150,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
                 PostMessage(reinterpret_cast<HWND>(context), WM_USER, 0, 0);
 
                 // To defer suspend, you must wait to exit this callback
-                (void)WaitForSingleObject(g_plmSuspendComplete, INFINITE);
+                std::ignore = WaitForSingleObject(g_plmSuspendComplete, INFINITE);
             }
             else
             {
@@ -227,7 +227,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // Complete deferral
             SetEvent(g_plmSuspendComplete);
 
-            (void)WaitForSingleObject(g_plmSignalResume, INFINITE);
+            std::ignore = WaitForSingleObject(g_plmSignalResume, INFINITE);
 
             game->OnResuming();
         }
@@ -241,7 +241,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         else
         {
             PAINTSTRUCT ps;
-            (void)BeginPaint(hWnd, &ps);
+            std::ignore = BeginPaint(hWnd, &ps);
             EndPaint(hWnd, &ps);
         }
         break;

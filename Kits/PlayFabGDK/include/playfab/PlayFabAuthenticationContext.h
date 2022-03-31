@@ -14,13 +14,8 @@ namespace PlayFab
 #else
     private: // But, static library memory size and alloc issues mean it always needs to exist
 #endif
-        // DisableAdvertising is provided for completeness, but changing it is not suggested
-        // Disabling this may prevent your advertising-related PlayFab marketplace partners from working correctly
-        bool disableAdvertising;
         std::string playFabId; // Master_Player_Entity Id for the Player that logged in
         std::string clientSessionTicket; // Client session ticket that is used as an authentication token in many PlayFab API methods.
-        std::string advertisingIdType; // Set this to the appropriate AD_TYPE_X constant below
-        std::string advertisingIdValue; // Set this to corresponding device value
 
     public:
         std::string entityId; // Entity Id for the active entity

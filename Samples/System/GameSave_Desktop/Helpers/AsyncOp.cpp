@@ -16,6 +16,11 @@
 #include <vector>
 #include "AsyncOp.h"
 
+#ifdef __clang__
+#pragma clang diagnostic ignored "-Wunknown-warning-option"
+#pragma clang diagnostic ignored "-Wunused-but-set-variable"
+#endif
+
 namespace ATG
 {
    const std::vector<AsyncOpStates> s_TerminalStatesList = {
@@ -37,12 +42,8 @@ namespace ATG
          // but if we're being destroyed that's fine.
 
          bool success = Reset();
-#ifdef _DEBUG
          assert(success && "Couldn't reset asyncop");
-#else
-		 //NOTE: This causes build errors in Release mode in our build system. Normally I wouldn't expect this to be necessary.
-		 (void)success;
-#endif
+         std::ignore = success;
       }
 
       if (!IsReady())
@@ -51,6 +52,7 @@ namespace ATG
 
          bool success = Cancel();
          assert(success && "Couldn't cancel asyncop");
+         std::ignore = success;
 
          WaitForCompletion(); // infinite wait until we hit a terminal state. Even if we couldn't cancel, 
                               // we should get here eventually.

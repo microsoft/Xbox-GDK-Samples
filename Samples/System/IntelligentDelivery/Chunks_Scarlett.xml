@@ -5,9 +5,9 @@
   </Recipes>
   <Features>
     <Feature Id="feature1" Hidden="true" Tags="mode1" />
-    <Feature Id="feature2" DisplayName="Mode 2" Tags="mode2;maps"/>
-	<Feature Id="feature3" DisplayName="Mode 3" Tags="mode3"/>
-    <Feature Id="feature4" DisplayName="Bonus Content" Tags="bonus"/>
+    <Feature Id="feature2" DisplayName="Mode 2" Image="Assets\feature2.png" Tags="mode2;maps"/>
+    <Feature Id="feature3" DisplayName="Mode 3" Image="Assets\feature3.png" Tags="mode3"/>
+    <Feature Id="feature4" DisplayName="Bonus Content" Image="Assets\feature4.png" Tags="bonus"/>
   </Features>
 
   <Chunk Id="1000" Marker="Launch">

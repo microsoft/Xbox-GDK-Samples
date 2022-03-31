@@ -155,8 +155,8 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
-    auto dsvDescriptor = m_deviceResources->GetDepthStencilView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
 
@@ -166,8 +166,8 @@ void Sample::Clear()
     commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -202,6 +202,11 @@ void Sample::OnWindowMoved()
     m_deviceResources->WindowSizeChanged(r.right, r.bottom);
 }
 
+void Sample::OnDisplayChange()
+{
+    m_deviceResources->UpdateColorSpace();
+}
+
 void Sample::OnWindowSizeChanged(int width, int height)
 {
     if (!m_deviceResources->WindowSizeChanged(width, height))
@@ -224,6 +229,16 @@ void Sample::CreateDeviceDependentResources()
 {
     auto device = m_deviceResources->GetD3DDevice();
 
+    D3D12_FEATURE_DATA_SHADER_MODEL shaderModel = { D3D_SHADER_MODEL_6_0 };
+    if (FAILED(device->CheckFeatureSupport(D3D12_FEATURE_SHADER_MODEL, &shaderModel, sizeof(shaderModel)))
+        || (shaderModel.HighestShaderModel < D3D_SHADER_MODEL_6_0))
+    {
+#ifdef _DEBUG
+        OutputDebugStringA("ERROR: Shader Model 6.0 is not supported!\n");
+#endif
+        throw std::runtime_error("Shader Model 6.0 is not supported!");
+    }
+
     m_graphicsMemory = std::make_unique<GraphicsMemory>(device);
 
     // Create an empty root signature.
@@ -241,9 +256,9 @@ void Sample::CreateDeviceDependentResources()
     }
 
     // Create the pipeline state, which includes loading shaders.
-    auto vertexShaderBlob = DX::ReadData(L"VertexShader.cso");
+    auto const vertexShaderBlob = DX::ReadData(L"VertexShader.cso");
 
-    auto pixelShaderBlob = DX::ReadData(L"PixelShader.cso");
+    auto const pixelShaderBlob = DX::ReadData(L"PixelShader.cso");
 
     static const D3D12_INPUT_ELEMENT_DESC s_inputElementDesc[2] =
     {
@@ -271,7 +286,7 @@ void Sample::CreateDeviceDependentResources()
         device->CreateGraphicsPipelineState(&psoDesc,
             IID_PPV_ARGS(m_pipelineState.ReleaseAndGetAddressOf())));
 
-// Create vertex buffer.
+    // Create vertex buffer.
     {
         static const Vertex s_vertexData[3] =
         {
@@ -284,16 +299,16 @@ void Sample::CreateDeviceDependentResources()
         // recommended. Every time the GPU needs it, the upload heap will be marshalled 
         // over. Please read up on Default Heap usage. An upload heap is used here for 
         // code simplicity and because there are very few verts to actually transfer.
-        CD3DX12_HEAP_PROPERTIES heapProps(D3D12_HEAP_TYPE_UPLOAD);
-        auto resDesc = CD3DX12_RESOURCE_DESC::Buffer(sizeof(s_vertexData));
+        const CD3DX12_HEAP_PROPERTIES heapProps(D3D12_HEAP_TYPE_UPLOAD);
+        auto const resDesc = CD3DX12_RESOURCE_DESC::Buffer(sizeof(s_vertexData));
 
         DX::ThrowIfFailed(
             device->CreateCommittedResource(&heapProps,
-                                            D3D12_HEAP_FLAG_NONE,
-                                            &resDesc,
-                                            D3D12_RESOURCE_STATE_GENERIC_READ,
-                                            nullptr,
-                                            IID_PPV_ARGS(m_vertexBuffer.ReleaseAndGetAddressOf())));
+            D3D12_HEAP_FLAG_NONE,
+            &resDesc,
+            D3D12_RESOURCE_STATE_GENERIC_READ,
+            nullptr,
+            IID_PPV_ARGS(m_vertexBuffer.ReleaseAndGetAddressOf())));
 
         // Copy the triangle data to the vertex buffer.
         UINT8* pVertexDataBegin;

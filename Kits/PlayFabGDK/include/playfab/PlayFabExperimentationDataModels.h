@@ -202,6 +202,74 @@ namespace PlayFab
         }
 
         // Experimentation Classes
+        struct CreateExclusionGroupRequest : public PlayFabRequestCommon
+        {
+            std::map<std::string, std::string> CustomTags;
+            std::string Description;
+            std::string Name;
+
+            CreateExclusionGroupRequest() :
+                PlayFabRequestCommon(),
+                CustomTags(),
+                Description(),
+                Name()
+            {}
+
+            CreateExclusionGroupRequest(const CreateExclusionGroupRequest& src) :
+                PlayFabRequestCommon(),
+                CustomTags(src.CustomTags),
+                Description(src.Description),
+                Name(src.Name)
+            {}
+
+            ~CreateExclusionGroupRequest() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["CustomTags"], CustomTags);
+                FromJsonUtilS(input["Description"], Description);
+                FromJsonUtilS(input["Name"], Name);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_CustomTags; ToJsonUtilS(CustomTags, each_CustomTags); output["CustomTags"] = each_CustomTags;
+                Json::Value each_Description; ToJsonUtilS(Description, each_Description); output["Description"] = each_Description;
+                Json::Value each_Name; ToJsonUtilS(Name, each_Name); output["Name"] = each_Name;
+                return output;
+            }
+        };
+
+        struct CreateExclusionGroupResult : public PlayFabResultCommon
+        {
+            std::string ExclusionGroupId;
+
+            CreateExclusionGroupResult() :
+                PlayFabResultCommon(),
+                ExclusionGroupId()
+            {}
+
+            CreateExclusionGroupResult(const CreateExclusionGroupResult& src) :
+                PlayFabResultCommon(),
+                ExclusionGroupId(src.ExclusionGroupId)
+            {}
+
+            ~CreateExclusionGroupResult() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["ExclusionGroupId"], ExclusionGroupId);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_ExclusionGroupId; ToJsonUtilS(ExclusionGroupId, each_ExclusionGroupId); output["ExclusionGroupId"] = each_ExclusionGroupId;
+                return output;
+            }
+        };
+
         struct Variable : public PlayFabBaseModel
         {
             std::string Name;
@@ -299,7 +367,9 @@ namespace PlayFab
         {
             std::map<std::string, std::string> CustomTags;
             std::string Description;
-            Uint32 Duration;
+            Boxed<time_t> EndDate;
+            std::string ExclusionGroupId;
+            Boxed<Uint32> ExclusionGroupTrafficAllocation;
             Boxed<ExperimentType> pfExperimentType;
             std::string Name;
             std::string SegmentId;
@@ -311,7 +381,9 @@ namespace PlayFab
                 PlayFabRequestCommon(),
                 CustomTags(),
                 Description(),
-                Duration(),
+                EndDate(),
+                ExclusionGroupId(),
+                ExclusionGroupTrafficAllocation(),
                 pfExperimentType(),
                 Name(),
                 SegmentId(),
@@ -324,7 +396,9 @@ namespace PlayFab
                 PlayFabRequestCommon(),
                 CustomTags(src.CustomTags),
                 Description(src.Description),
-                Duration(src.Duration),
+                EndDate(src.EndDate),
+                ExclusionGroupId(src.ExclusionGroupId),
+                ExclusionGroupTrafficAllocation(src.ExclusionGroupTrafficAllocation),
                 pfExperimentType(src.pfExperimentType),
                 Name(src.Name),
                 SegmentId(src.SegmentId),
@@ -339,7 +413,9 @@ namespace PlayFab
             {
                 FromJsonUtilS(input["CustomTags"], CustomTags);
                 FromJsonUtilS(input["Description"], Description);
-                FromJsonUtilP(input["Duration"], Duration);
+                FromJsonUtilT(input["EndDate"], EndDate);
+                FromJsonUtilS(input["ExclusionGroupId"], ExclusionGroupId);
+                FromJsonUtilP(input["ExclusionGroupTrafficAllocation"], ExclusionGroupTrafficAllocation);
                 FromJsonUtilE(input["ExperimentType"], pfExperimentType);
                 FromJsonUtilS(input["Name"], Name);
                 FromJsonUtilS(input["SegmentId"], SegmentId);
@@ -353,7 +429,9 @@ namespace PlayFab
                 Json::Value output;
                 Json::Value each_CustomTags; ToJsonUtilS(CustomTags, each_CustomTags); output["CustomTags"] = each_CustomTags;
                 Json::Value each_Description; ToJsonUtilS(Description, each_Description); output["Description"] = each_Description;
-                Json::Value each_Duration; ToJsonUtilP(Duration, each_Duration); output["Duration"] = each_Duration;
+                Json::Value each_EndDate; ToJsonUtilT(EndDate, each_EndDate); output["EndDate"] = each_EndDate;
+                Json::Value each_ExclusionGroupId; ToJsonUtilS(ExclusionGroupId, each_ExclusionGroupId); output["ExclusionGroupId"] = each_ExclusionGroupId;
+                Json::Value each_ExclusionGroupTrafficAllocation; ToJsonUtilP(ExclusionGroupTrafficAllocation, each_ExclusionGroupTrafficAllocation); output["ExclusionGroupTrafficAllocation"] = each_ExclusionGroupTrafficAllocation;
                 Json::Value each_pfExperimentType; ToJsonUtilE(pfExperimentType, each_pfExperimentType); output["ExperimentType"] = each_pfExperimentType;
                 Json::Value each_Name; ToJsonUtilS(Name, each_Name); output["Name"] = each_Name;
                 Json::Value each_SegmentId; ToJsonUtilS(SegmentId, each_SegmentId); output["SegmentId"] = each_SegmentId;
@@ -389,6 +467,40 @@ namespace PlayFab
             {
                 Json::Value output;
                 Json::Value each_ExperimentId; ToJsonUtilS(ExperimentId, each_ExperimentId); output["ExperimentId"] = each_ExperimentId;
+                return output;
+            }
+        };
+
+        struct DeleteExclusionGroupRequest : public PlayFabRequestCommon
+        {
+            std::map<std::string, std::string> CustomTags;
+            std::string ExclusionGroupId;
+
+            DeleteExclusionGroupRequest() :
+                PlayFabRequestCommon(),
+                CustomTags(),
+                ExclusionGroupId()
+            {}
+
+            DeleteExclusionGroupRequest(const DeleteExclusionGroupRequest& src) :
+                PlayFabRequestCommon(),
+                CustomTags(src.CustomTags),
+                ExclusionGroupId(src.ExclusionGroupId)
+            {}
+
+            ~DeleteExclusionGroupRequest() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["CustomTags"], CustomTags);
+                FromJsonUtilS(input["ExclusionGroupId"], ExclusionGroupId);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_CustomTags; ToJsonUtilS(CustomTags, each_CustomTags); output["CustomTags"] = each_CustomTags;
+                Json::Value each_ExclusionGroupId; ToJsonUtilS(ExclusionGroupId, each_ExclusionGroupId); output["ExclusionGroupId"] = each_ExclusionGroupId;
                 return output;
             }
         };
@@ -485,10 +597,46 @@ namespace PlayFab
             }
         };
 
+        struct ExclusionGroupTrafficAllocation : public PlayFabBaseModel
+        {
+            std::string ExperimentId;
+            Uint32 TrafficAllocation;
+
+            ExclusionGroupTrafficAllocation() :
+                PlayFabBaseModel(),
+                ExperimentId(),
+                TrafficAllocation()
+            {}
+
+            ExclusionGroupTrafficAllocation(const ExclusionGroupTrafficAllocation& src) :
+                PlayFabBaseModel(),
+                ExperimentId(src.ExperimentId),
+                TrafficAllocation(src.TrafficAllocation)
+            {}
+
+            ~ExclusionGroupTrafficAllocation() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["ExperimentId"], ExperimentId);
+                FromJsonUtilP(input["TrafficAllocation"], TrafficAllocation);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_ExperimentId; ToJsonUtilS(ExperimentId, each_ExperimentId); output["ExperimentId"] = each_ExperimentId;
+                Json::Value each_TrafficAllocation; ToJsonUtilP(TrafficAllocation, each_TrafficAllocation); output["TrafficAllocation"] = each_TrafficAllocation;
+                return output;
+            }
+        };
+
         struct Experiment : public PlayFabBaseModel
         {
             std::string Description;
-            Uint32 Duration;
+            Boxed<time_t> EndDate;
+            std::string ExclusionGroupId;
+            Boxed<Uint32> ExclusionGroupTrafficAllocation;
             Boxed<ExperimentType> pfExperimentType;
             std::string Id;
             std::string Name;
@@ -501,7 +649,9 @@ namespace PlayFab
             Experiment() :
                 PlayFabBaseModel(),
                 Description(),
-                Duration(),
+                EndDate(),
+                ExclusionGroupId(),
+                ExclusionGroupTrafficAllocation(),
                 pfExperimentType(),
                 Id(),
                 Name(),
@@ -515,7 +665,9 @@ namespace PlayFab
             Experiment(const Experiment& src) :
                 PlayFabBaseModel(),
                 Description(src.Description),
-                Duration(src.Duration),
+                EndDate(src.EndDate),
+                ExclusionGroupId(src.ExclusionGroupId),
+                ExclusionGroupTrafficAllocation(src.ExclusionGroupTrafficAllocation),
                 pfExperimentType(src.pfExperimentType),
                 Id(src.Id),
                 Name(src.Name),
@@ -531,7 +683,9 @@ namespace PlayFab
             void FromJson(const Json::Value& input) override
             {
                 FromJsonUtilS(input["Description"], Description);
-                FromJsonUtilP(input["Duration"], Duration);
+                FromJsonUtilT(input["EndDate"], EndDate);
+                FromJsonUtilS(input["ExclusionGroupId"], ExclusionGroupId);
+                FromJsonUtilP(input["ExclusionGroupTrafficAllocation"], ExclusionGroupTrafficAllocation);
                 FromJsonUtilE(input["ExperimentType"], pfExperimentType);
                 FromJsonUtilS(input["Id"], Id);
                 FromJsonUtilS(input["Name"], Name);
@@ -546,7 +700,9 @@ namespace PlayFab
             {
                 Json::Value output;
                 Json::Value each_Description; ToJsonUtilS(Description, each_Description); output["Description"] = each_Description;
-                Json::Value each_Duration; ToJsonUtilP(Duration, each_Duration); output["Duration"] = each_Duration;
+                Json::Value each_EndDate; ToJsonUtilT(EndDate, each_EndDate); output["EndDate"] = each_EndDate;
+                Json::Value each_ExclusionGroupId; ToJsonUtilS(ExclusionGroupId, each_ExclusionGroupId); output["ExclusionGroupId"] = each_ExclusionGroupId;
+                Json::Value each_ExclusionGroupTrafficAllocation; ToJsonUtilP(ExclusionGroupTrafficAllocation, each_ExclusionGroupTrafficAllocation); output["ExclusionGroupTrafficAllocation"] = each_ExclusionGroupTrafficAllocation;
                 Json::Value each_pfExperimentType; ToJsonUtilE(pfExperimentType, each_pfExperimentType); output["ExperimentType"] = each_pfExperimentType;
                 Json::Value each_Id; ToJsonUtilS(Id, each_Id); output["Id"] = each_Id;
                 Json::Value each_Name; ToJsonUtilS(Name, each_Name); output["Name"] = each_Name;
@@ -555,6 +711,166 @@ namespace PlayFab
                 Json::Value each_State; ToJsonUtilE(State, each_State); output["State"] = each_State;
                 Json::Value each_TitlePlayerAccountTestIds; ToJsonUtilS(TitlePlayerAccountTestIds, each_TitlePlayerAccountTestIds); output["TitlePlayerAccountTestIds"] = each_TitlePlayerAccountTestIds;
                 Json::Value each_Variants; ToJsonUtilO(Variants, each_Variants); output["Variants"] = each_Variants;
+                return output;
+            }
+        };
+
+        struct ExperimentExclusionGroup : public PlayFabBaseModel
+        {
+            std::string Description;
+            std::string ExclusionGroupId;
+            std::string Name;
+
+            ExperimentExclusionGroup() :
+                PlayFabBaseModel(),
+                Description(),
+                ExclusionGroupId(),
+                Name()
+            {}
+
+            ExperimentExclusionGroup(const ExperimentExclusionGroup& src) :
+                PlayFabBaseModel(),
+                Description(src.Description),
+                ExclusionGroupId(src.ExclusionGroupId),
+                Name(src.Name)
+            {}
+
+            ~ExperimentExclusionGroup() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["Description"], Description);
+                FromJsonUtilS(input["ExclusionGroupId"], ExclusionGroupId);
+                FromJsonUtilS(input["Name"], Name);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_Description; ToJsonUtilS(Description, each_Description); output["Description"] = each_Description;
+                Json::Value each_ExclusionGroupId; ToJsonUtilS(ExclusionGroupId, each_ExclusionGroupId); output["ExclusionGroupId"] = each_ExclusionGroupId;
+                Json::Value each_Name; ToJsonUtilS(Name, each_Name); output["Name"] = each_Name;
+                return output;
+            }
+        };
+
+        struct GetExclusionGroupsRequest : public PlayFabRequestCommon
+        {
+            std::map<std::string, std::string> CustomTags;
+
+            GetExclusionGroupsRequest() :
+                PlayFabRequestCommon(),
+                CustomTags()
+            {}
+
+            GetExclusionGroupsRequest(const GetExclusionGroupsRequest& src) :
+                PlayFabRequestCommon(),
+                CustomTags(src.CustomTags)
+            {}
+
+            ~GetExclusionGroupsRequest() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["CustomTags"], CustomTags);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_CustomTags; ToJsonUtilS(CustomTags, each_CustomTags); output["CustomTags"] = each_CustomTags;
+                return output;
+            }
+        };
+
+        struct GetExclusionGroupsResult : public PlayFabResultCommon
+        {
+            std::list<ExperimentExclusionGroup> ExclusionGroups;
+
+            GetExclusionGroupsResult() :
+                PlayFabResultCommon(),
+                ExclusionGroups()
+            {}
+
+            GetExclusionGroupsResult(const GetExclusionGroupsResult& src) :
+                PlayFabResultCommon(),
+                ExclusionGroups(src.ExclusionGroups)
+            {}
+
+            ~GetExclusionGroupsResult() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilO(input["ExclusionGroups"], ExclusionGroups);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_ExclusionGroups; ToJsonUtilO(ExclusionGroups, each_ExclusionGroups); output["ExclusionGroups"] = each_ExclusionGroups;
+                return output;
+            }
+        };
+
+        struct GetExclusionGroupTrafficRequest : public PlayFabRequestCommon
+        {
+            std::map<std::string, std::string> CustomTags;
+            std::string ExclusionGroupId;
+
+            GetExclusionGroupTrafficRequest() :
+                PlayFabRequestCommon(),
+                CustomTags(),
+                ExclusionGroupId()
+            {}
+
+            GetExclusionGroupTrafficRequest(const GetExclusionGroupTrafficRequest& src) :
+                PlayFabRequestCommon(),
+                CustomTags(src.CustomTags),
+                ExclusionGroupId(src.ExclusionGroupId)
+            {}
+
+            ~GetExclusionGroupTrafficRequest() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["CustomTags"], CustomTags);
+                FromJsonUtilS(input["ExclusionGroupId"], ExclusionGroupId);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_CustomTags; ToJsonUtilS(CustomTags, each_CustomTags); output["CustomTags"] = each_CustomTags;
+                Json::Value each_ExclusionGroupId; ToJsonUtilS(ExclusionGroupId, each_ExclusionGroupId); output["ExclusionGroupId"] = each_ExclusionGroupId;
+                return output;
+            }
+        };
+
+        struct GetExclusionGroupTrafficResult : public PlayFabResultCommon
+        {
+            std::list<ExclusionGroupTrafficAllocation> TrafficAllocations;
+
+            GetExclusionGroupTrafficResult() :
+                PlayFabResultCommon(),
+                TrafficAllocations()
+            {}
+
+            GetExclusionGroupTrafficResult(const GetExclusionGroupTrafficResult& src) :
+                PlayFabResultCommon(),
+                TrafficAllocations(src.TrafficAllocations)
+            {}
+
+            ~GetExclusionGroupTrafficResult() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilO(input["TrafficAllocations"], TrafficAllocations);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_TrafficAllocations; ToJsonUtilO(TrafficAllocations, each_TrafficAllocations); output["TrafficAllocations"] = each_TrafficAllocations;
                 return output;
             }
         };
@@ -1042,11 +1358,57 @@ namespace PlayFab
             }
         };
 
+        struct UpdateExclusionGroupRequest : public PlayFabRequestCommon
+        {
+            std::map<std::string, std::string> CustomTags;
+            std::string Description;
+            std::string ExclusionGroupId;
+            std::string Name;
+
+            UpdateExclusionGroupRequest() :
+                PlayFabRequestCommon(),
+                CustomTags(),
+                Description(),
+                ExclusionGroupId(),
+                Name()
+            {}
+
+            UpdateExclusionGroupRequest(const UpdateExclusionGroupRequest& src) :
+                PlayFabRequestCommon(),
+                CustomTags(src.CustomTags),
+                Description(src.Description),
+                ExclusionGroupId(src.ExclusionGroupId),
+                Name(src.Name)
+            {}
+
+            ~UpdateExclusionGroupRequest() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["CustomTags"], CustomTags);
+                FromJsonUtilS(input["Description"], Description);
+                FromJsonUtilS(input["ExclusionGroupId"], ExclusionGroupId);
+                FromJsonUtilS(input["Name"], Name);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_CustomTags; ToJsonUtilS(CustomTags, each_CustomTags); output["CustomTags"] = each_CustomTags;
+                Json::Value each_Description; ToJsonUtilS(Description, each_Description); output["Description"] = each_Description;
+                Json::Value each_ExclusionGroupId; ToJsonUtilS(ExclusionGroupId, each_ExclusionGroupId); output["ExclusionGroupId"] = each_ExclusionGroupId;
+                Json::Value each_Name; ToJsonUtilS(Name, each_Name); output["Name"] = each_Name;
+                return output;
+            }
+        };
+
         struct UpdateExperimentRequest : public PlayFabRequestCommon
         {
             std::map<std::string, std::string> CustomTags;
             std::string Description;
-            Uint32 Duration;
+            Boxed<time_t> EndDate;
+            std::string ExclusionGroupId;
+            Boxed<Uint32> ExclusionGroupTrafficAllocation;
             Boxed<ExperimentType> pfExperimentType;
             std::string Id;
             std::string Name;
@@ -1059,7 +1421,9 @@ namespace PlayFab
                 PlayFabRequestCommon(),
                 CustomTags(),
                 Description(),
-                Duration(),
+                EndDate(),
+                ExclusionGroupId(),
+                ExclusionGroupTrafficAllocation(),
                 pfExperimentType(),
                 Id(),
                 Name(),
@@ -1073,7 +1437,9 @@ namespace PlayFab
                 PlayFabRequestCommon(),
                 CustomTags(src.CustomTags),
                 Description(src.Description),
-                Duration(src.Duration),
+                EndDate(src.EndDate),
+                ExclusionGroupId(src.ExclusionGroupId),
+                ExclusionGroupTrafficAllocation(src.ExclusionGroupTrafficAllocation),
                 pfExperimentType(src.pfExperimentType),
                 Id(src.Id),
                 Name(src.Name),
@@ -1089,7 +1455,9 @@ namespace PlayFab
             {
                 FromJsonUtilS(input["CustomTags"], CustomTags);
                 FromJsonUtilS(input["Description"], Description);
-                FromJsonUtilP(input["Duration"], Duration);
+                FromJsonUtilT(input["EndDate"], EndDate);
+                FromJsonUtilS(input["ExclusionGroupId"], ExclusionGroupId);
+                FromJsonUtilP(input["ExclusionGroupTrafficAllocation"], ExclusionGroupTrafficAllocation);
                 FromJsonUtilE(input["ExperimentType"], pfExperimentType);
                 FromJsonUtilS(input["Id"], Id);
                 FromJsonUtilS(input["Name"], Name);
@@ -1104,7 +1472,9 @@ namespace PlayFab
                 Json::Value output;
                 Json::Value each_CustomTags; ToJsonUtilS(CustomTags, each_CustomTags); output["CustomTags"] = each_CustomTags;
                 Json::Value each_Description; ToJsonUtilS(Description, each_Description); output["Description"] = each_Description;
-                Json::Value each_Duration; ToJsonUtilP(Duration, each_Duration); output["Duration"] = each_Duration;
+                Json::Value each_EndDate; ToJsonUtilT(EndDate, each_EndDate); output["EndDate"] = each_EndDate;
+                Json::Value each_ExclusionGroupId; ToJsonUtilS(ExclusionGroupId, each_ExclusionGroupId); output["ExclusionGroupId"] = each_ExclusionGroupId;
+                Json::Value each_ExclusionGroupTrafficAllocation; ToJsonUtilP(ExclusionGroupTrafficAllocation, each_ExclusionGroupTrafficAllocation); output["ExclusionGroupTrafficAllocation"] = each_ExclusionGroupTrafficAllocation;
                 Json::Value each_pfExperimentType; ToJsonUtilE(pfExperimentType, each_pfExperimentType); output["ExperimentType"] = each_pfExperimentType;
                 Json::Value each_Id; ToJsonUtilS(Id, each_Id); output["Id"] = each_Id;
                 Json::Value each_Name; ToJsonUtilS(Name, each_Name); output["Name"] = each_Name;

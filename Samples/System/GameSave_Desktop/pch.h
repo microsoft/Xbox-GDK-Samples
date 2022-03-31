@@ -61,6 +61,7 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
+#include <tuple>
 
 #ifdef _DEBUG
 #include <dxgidebug.h>

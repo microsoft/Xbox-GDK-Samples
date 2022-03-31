@@ -43,14 +43,14 @@ SkyboxEffect::SkyboxEffect(
         m_dirtyFlags(uint32_t(-1))
 {
     // Create root signature
-    D3D12_ROOT_SIGNATURE_FLAGS rootSignatureFlags =
-        D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT |
-        D3D12_ROOT_SIGNATURE_FLAG_DENY_DOMAIN_SHADER_ROOT_ACCESS |
-        D3D12_ROOT_SIGNATURE_FLAG_DENY_GEOMETRY_SHADER_ROOT_ACCESS |
-        D3D12_ROOT_SIGNATURE_FLAG_DENY_HULL_SHADER_ROOT_ACCESS;
+    constexpr D3D12_ROOT_SIGNATURE_FLAGS rootSignatureFlags =
+        D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT
+        | D3D12_ROOT_SIGNATURE_FLAG_DENY_DOMAIN_SHADER_ROOT_ACCESS
+        | D3D12_ROOT_SIGNATURE_FLAG_DENY_GEOMETRY_SHADER_ROOT_ACCESS
+        | D3D12_ROOT_SIGNATURE_FLAG_DENY_HULL_SHADER_ROOT_ACCESS;
 
-    CD3DX12_DESCRIPTOR_RANGE textureSRVs(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
-    CD3DX12_DESCRIPTOR_RANGE textureSamplers(D3D12_DESCRIPTOR_RANGE_TYPE_SAMPLER, 1, 0);
+    const CD3DX12_DESCRIPTOR_RANGE textureSRVs(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
+    const CD3DX12_DESCRIPTOR_RANGE textureSamplers(D3D12_DESCRIPTOR_RANGE_TYPE_SAMPLER, 1, 0);
 
     CD3DX12_ROOT_PARAMETER rootParameters[Count] = {};
     rootParameters[InputSRV].InitAsDescriptorTable(1, &textureSRVs);
@@ -95,7 +95,7 @@ void SkyboxEffect::Apply(_In_ ID3D12GraphicsCommandList* commandList)
     {
         auto cb = GraphicsMemory::Get(m_device.Get()).AllocateConstant<SkyboxEffectConstants>();
 
-        XMMATRIX transpose = XMMatrixTranspose(m_worldViewProj);
+        const XMMATRIX transpose = XMMatrixTranspose(m_worldViewProj);
         memcpy(cb.Memory(), &transpose, cb.Size());
         std::swap(m_constantBuffer, cb);
 

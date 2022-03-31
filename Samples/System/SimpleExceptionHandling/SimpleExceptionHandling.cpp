@@ -82,9 +82,7 @@ void Sample::Initialize(HWND window, int width, int height)
     m_keyboard = std::make_unique<Keyboard>();
 
     m_mouse = std::make_unique<Mouse>();
-#ifdef _GAMING_DESKTOP
     m_mouse->SetWindow(window);
-#endif
 
     m_deviceResources->SetWindow(window, width, height);
 
@@ -454,7 +452,12 @@ void Sample::CreateWindowSizeDependentResources()
 
 void Sample::OnDeviceLost()
 {
-    // TODO: Add Direct3D resource cleanup here.
+    m_resourceDescriptors.reset();
+    m_spriteBatch.reset();
+    m_background.Reset();
+    m_regularFont.reset();
+    m_largeFont.reset();
+    m_ctrlFont.reset();
     m_graphicsMemory.reset();
 }
 

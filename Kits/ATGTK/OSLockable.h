@@ -160,7 +160,7 @@ namespace ATG
             if (!m_mutex)
                 throw std::exception("CreateMutex failed");
         }
-        MutexLockable(MutexLockable&& rhs) { m_mutex = rhs.m_mutex; rhs.m_mutex = INVALID_HANDLE_VALUE; }
+        MutexLockable(MutexLockable&& rhs) noexcept { m_mutex = rhs.m_mutex; rhs.m_mutex = INVALID_HANDLE_VALUE; }
         ~MutexLockable() { CloseHandle(m_mutex); }
 
         void lock()

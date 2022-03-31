@@ -67,7 +67,7 @@ namespace GameSaveSample
         //	directory and so we do the following to set the working
         //	directory to what we want.
         char dir[_MAX_PATH] = {};
-        (void)GetModuleFileNameA(nullptr, dir, _MAX_PATH);
+        std::ignore = GetModuleFileNameA(nullptr, dir, _MAX_PATH);
         std::string exePath = dir;
         exePath = exePath.substr(0, exePath.find_last_of("\\"));
         SetCurrentDirectoryA(exePath.c_str());
@@ -242,6 +242,18 @@ namespace GameSaveSample
     void Sample::CreateDeviceDependentResources()
     {
         auto device = m_deviceResources->GetD3DDevice();
+
+#ifdef _GAMING_DESKTOP
+        D3D12_FEATURE_DATA_SHADER_MODEL shaderModel = { D3D_SHADER_MODEL_6_0 };
+        if (FAILED(device->CheckFeatureSupport(D3D12_FEATURE_SHADER_MODEL, &shaderModel, sizeof(shaderModel)))
+            || (shaderModel.HighestShaderModel < D3D_SHADER_MODEL_6_0))
+        {
+#ifdef _DEBUG
+            OutputDebugStringA("ERROR: Shader Model 6.0 is not supported!\n");
+#endif
+            throw std::runtime_error("Shader Model 6.0 is not supported!");
+        }
+#endif
 
         m_graphicsMemory = std::make_unique<GraphicsMemory>(device);
 

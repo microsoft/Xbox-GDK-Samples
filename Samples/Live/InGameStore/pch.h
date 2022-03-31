@@ -114,7 +114,7 @@
 #include "SpriteBatch.h"
 #include "SpriteFont.h"
 
-#include "uitk.h"
+#include "UITK.h"
 
 namespace DX
 {

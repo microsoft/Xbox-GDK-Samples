@@ -62,7 +62,7 @@ void Sample::Initialize(HWND window)
     SetThreadAffinityMask(GetCurrentThread(), DWORD_PTR(1 << 0));
 
     //  Create a work thread and lock to Core 1
-    m_stressThread = CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)Sample::StressThreadEntry, (LPVOID)this, 0, nullptr);
+    m_stressThread = CreateThread(nullptr, 0, Sample::StressThreadEntry, this, 0, nullptr);
     DX::ThrowIfFailed((m_stressThread == nullptr) ? HRESULT_FROM_WIN32(GetLastError()) : S_OK);
     SetThreadAffinityMask(m_stressThread, DWORD_PTR(1 << 1));
     
@@ -80,6 +80,8 @@ void Sample::Initialize(HWND window)
 
 DWORD WINAPI Sample::StressThreadEntry( LPVOID lpParam )
 {
+    SetThreadDescription(GetCurrentThread(), L"StressThread");
+
     assert( lpParam != nullptr );
     ( (Sample*)lpParam )->StressThread();
     return 0;

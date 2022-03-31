@@ -58,6 +58,10 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
         return 1;
     }
 
+    // Initialize COM for WIC usage
+    if (FAILED(CoInitializeEx(nullptr, COINITBASE_MULTITHREADED)))
+        return 1;
+
 #ifdef _GAMING_DESKTOP
     // NOTE: When running the app from the Start Menu (required for
     //    Store API's to work) the Current Working Directory will be
@@ -66,10 +70,12 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
     //    directory and so we do the following to set the working
     //    directory to what we want.
     char dir[1024] = {};
-    GetModuleFileNameA(nullptr, dir, 1024);
-    std::string exe = dir;
-    exe = exe.substr(0, exe.find_last_of("\\"));
-    SetCurrentDirectoryA(exe.c_str());
+    if (GetModuleFileNameA(nullptr, dir, 1024) > 0)
+    {
+        std::string exe = dir;
+        exe = exe.substr(0, exe.find_last_of("\\"));
+        std::ignore = SetCurrentDirectoryA(exe.c_str());
+    }
 #endif
 
     HRESULT hr = XGameRuntimeInitialize();
@@ -78,7 +84,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
         if (hr == E_GAMERUNTIME_DLL_NOT_FOUND || hr == E_GAMERUNTIME_VERSION_MISMATCH)
         {
 #ifdef _GAMING_DESKTOP
-            (void)MessageBoxW(nullptr, L"Game Runtime is not installed on this system or needs updating.", g_szAppName, MB_ICONERROR | MB_OK);
+            std::ignore = MessageBoxW(nullptr, L"Game Runtime is not installed on this system or needs updating.", g_szAppName, MB_ICONERROR | MB_OK);
 #endif
         }
         return 1;
@@ -188,7 +194,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
                 PostMessage(reinterpret_cast<HWND>(context), WM_USER, 0, 0);
 
                 // To defer suspend, you must wait to exit this callback
-                (void)WaitForSingleObject(g_plmSuspendComplete, INFINITE);
+                std::ignore = WaitForSingleObject(g_plmSuspendComplete, INFINITE);
             }
             else
             {
@@ -225,6 +231,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
 
     XGameRuntimeUninitialize();
 
+    CoUninitialize();
+
     return static_cast<int>(msg.wParam);
 }
 
@@ -245,6 +253,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_ACTIVATEAPP:
         if (sample)
         {
+            Keyboard::ProcessMessage(message, wParam, lParam);
             Mouse::ProcessMessage(message, wParam, lParam);
 
             if (wParam)
@@ -256,6 +265,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 sample->OnDeactivated();
             }
         }
+        break;
+
+    case WM_ACTIVATE:
+        Keyboard::ProcessMessage(message, wParam, lParam);
+        Mouse::ProcessMessage(message, wParam, lParam);
         break;
 
     case WM_MOUSEMOVE:
@@ -280,7 +294,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // Complete deferral
             SetEvent(g_plmSuspendComplete);
 
-            (void)WaitForSingleObject(g_plmSignalResume, INFINITE);
+            std::ignore = WaitForSingleObject(g_plmSignalResume, INFINITE);
 
             sample->OnResuming();
         }
@@ -294,7 +308,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         else
         {
             PAINTSTRUCT ps;
-            (void)BeginPaint(hWnd, &ps);
+            std::ignore = BeginPaint(hWnd, &ps);
             EndPaint(hWnd, &ps);
         }
         break;
@@ -421,6 +435,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         Keyboard::ProcessMessage(message, wParam, lParam);
         break;
+
+    case WM_MOUSEACTIVATE:
+        // When you click activate the window, we want Mouse to ignore that event.
+        return MA_ACTIVATEANDEAT;
 
     case WM_MENUCHAR:
         // A menu is active and the user presses a key that does not correspond

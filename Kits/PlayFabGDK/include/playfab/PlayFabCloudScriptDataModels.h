@@ -3917,6 +3917,89 @@ namespace PlayFab
             }
         };
 
+        struct GetFunctionRequest : public PlayFabRequestCommon
+        {
+            std::map<std::string, std::string> CustomTags;
+            std::string FunctionName;
+            std::string TitleId;
+
+            GetFunctionRequest() :
+                PlayFabRequestCommon(),
+                CustomTags(),
+                FunctionName(),
+                TitleId()
+            {}
+
+            GetFunctionRequest(const GetFunctionRequest& src) :
+                PlayFabRequestCommon(),
+                CustomTags(src.CustomTags),
+                FunctionName(src.FunctionName),
+                TitleId(src.TitleId)
+            {}
+
+            ~GetFunctionRequest() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["CustomTags"], CustomTags);
+                FromJsonUtilS(input["FunctionName"], FunctionName);
+                FromJsonUtilS(input["TitleId"], TitleId);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_CustomTags; ToJsonUtilS(CustomTags, each_CustomTags); output["CustomTags"] = each_CustomTags;
+                Json::Value each_FunctionName; ToJsonUtilS(FunctionName, each_FunctionName); output["FunctionName"] = each_FunctionName;
+                Json::Value each_TitleId; ToJsonUtilS(TitleId, each_TitleId); output["TitleId"] = each_TitleId;
+                return output;
+            }
+        };
+
+        struct GetFunctionResult : public PlayFabResultCommon
+        {
+            std::string ConnectionString;
+            std::string FunctionUrl;
+            std::string QueueName;
+            std::string TriggerType;
+
+            GetFunctionResult() :
+                PlayFabResultCommon(),
+                ConnectionString(),
+                FunctionUrl(),
+                QueueName(),
+                TriggerType()
+            {}
+
+            GetFunctionResult(const GetFunctionResult& src) :
+                PlayFabResultCommon(),
+                ConnectionString(src.ConnectionString),
+                FunctionUrl(src.FunctionUrl),
+                QueueName(src.QueueName),
+                TriggerType(src.TriggerType)
+            {}
+
+            ~GetFunctionResult() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["ConnectionString"], ConnectionString);
+                FromJsonUtilS(input["FunctionUrl"], FunctionUrl);
+                FromJsonUtilS(input["QueueName"], QueueName);
+                FromJsonUtilS(input["TriggerType"], TriggerType);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_ConnectionString; ToJsonUtilS(ConnectionString, each_ConnectionString); output["ConnectionString"] = each_ConnectionString;
+                Json::Value each_FunctionUrl; ToJsonUtilS(FunctionUrl, each_FunctionUrl); output["FunctionUrl"] = each_FunctionUrl;
+                Json::Value each_QueueName; ToJsonUtilS(QueueName, each_QueueName); output["QueueName"] = each_QueueName;
+                Json::Value each_TriggerType; ToJsonUtilS(TriggerType, each_TriggerType); output["TriggerType"] = each_TriggerType;
+                return output;
+            }
+        };
+
         struct HttpFunctionModel : public PlayFabBaseModel
         {
             std::string FunctionName;
@@ -4833,83 +4916,103 @@ namespace PlayFab
 
         struct RegisterHttpFunctionRequest : public PlayFabRequestCommon
         {
+            std::string AzureResourceId;
             std::map<std::string, std::string> CustomTags;
             std::string FunctionName;
             std::string FunctionUrl;
+            std::string TitleId;
 
             RegisterHttpFunctionRequest() :
                 PlayFabRequestCommon(),
+                AzureResourceId(),
                 CustomTags(),
                 FunctionName(),
-                FunctionUrl()
+                FunctionUrl(),
+                TitleId()
             {}
 
             RegisterHttpFunctionRequest(const RegisterHttpFunctionRequest& src) :
                 PlayFabRequestCommon(),
+                AzureResourceId(src.AzureResourceId),
                 CustomTags(src.CustomTags),
                 FunctionName(src.FunctionName),
-                FunctionUrl(src.FunctionUrl)
+                FunctionUrl(src.FunctionUrl),
+                TitleId(src.TitleId)
             {}
 
             ~RegisterHttpFunctionRequest() = default;
 
             void FromJson(const Json::Value& input) override
             {
+                FromJsonUtilS(input["AzureResourceId"], AzureResourceId);
                 FromJsonUtilS(input["CustomTags"], CustomTags);
                 FromJsonUtilS(input["FunctionName"], FunctionName);
                 FromJsonUtilS(input["FunctionUrl"], FunctionUrl);
+                FromJsonUtilS(input["TitleId"], TitleId);
             }
 
             Json::Value ToJson() const override
             {
                 Json::Value output;
+                Json::Value each_AzureResourceId; ToJsonUtilS(AzureResourceId, each_AzureResourceId); output["AzureResourceId"] = each_AzureResourceId;
                 Json::Value each_CustomTags; ToJsonUtilS(CustomTags, each_CustomTags); output["CustomTags"] = each_CustomTags;
                 Json::Value each_FunctionName; ToJsonUtilS(FunctionName, each_FunctionName); output["FunctionName"] = each_FunctionName;
                 Json::Value each_FunctionUrl; ToJsonUtilS(FunctionUrl, each_FunctionUrl); output["FunctionUrl"] = each_FunctionUrl;
+                Json::Value each_TitleId; ToJsonUtilS(TitleId, each_TitleId); output["TitleId"] = each_TitleId;
                 return output;
             }
         };
 
         struct RegisterQueuedFunctionRequest : public PlayFabRequestCommon
         {
+            std::string AzureResourceId;
             std::string ConnectionString;
             std::map<std::string, std::string> CustomTags;
             std::string FunctionName;
             std::string QueueName;
+            std::string TitleId;
 
             RegisterQueuedFunctionRequest() :
                 PlayFabRequestCommon(),
+                AzureResourceId(),
                 ConnectionString(),
                 CustomTags(),
                 FunctionName(),
-                QueueName()
+                QueueName(),
+                TitleId()
             {}
 
             RegisterQueuedFunctionRequest(const RegisterQueuedFunctionRequest& src) :
                 PlayFabRequestCommon(),
+                AzureResourceId(src.AzureResourceId),
                 ConnectionString(src.ConnectionString),
                 CustomTags(src.CustomTags),
                 FunctionName(src.FunctionName),
-                QueueName(src.QueueName)
+                QueueName(src.QueueName),
+                TitleId(src.TitleId)
             {}
 
             ~RegisterQueuedFunctionRequest() = default;
 
             void FromJson(const Json::Value& input) override
             {
+                FromJsonUtilS(input["AzureResourceId"], AzureResourceId);
                 FromJsonUtilS(input["ConnectionString"], ConnectionString);
                 FromJsonUtilS(input["CustomTags"], CustomTags);
                 FromJsonUtilS(input["FunctionName"], FunctionName);
                 FromJsonUtilS(input["QueueName"], QueueName);
+                FromJsonUtilS(input["TitleId"], TitleId);
             }
 
             Json::Value ToJson() const override
             {
                 Json::Value output;
+                Json::Value each_AzureResourceId; ToJsonUtilS(AzureResourceId, each_AzureResourceId); output["AzureResourceId"] = each_AzureResourceId;
                 Json::Value each_ConnectionString; ToJsonUtilS(ConnectionString, each_ConnectionString); output["ConnectionString"] = each_ConnectionString;
                 Json::Value each_CustomTags; ToJsonUtilS(CustomTags, each_CustomTags); output["CustomTags"] = each_CustomTags;
                 Json::Value each_FunctionName; ToJsonUtilS(FunctionName, each_FunctionName); output["FunctionName"] = each_FunctionName;
                 Json::Value each_QueueName; ToJsonUtilS(QueueName, each_QueueName); output["QueueName"] = each_QueueName;
+                Json::Value each_TitleId; ToJsonUtilS(TitleId, each_TitleId); output["TitleId"] = each_TitleId;
                 return output;
             }
         };
@@ -4918,17 +5021,20 @@ namespace PlayFab
         {
             std::map<std::string, std::string> CustomTags;
             std::string FunctionName;
+            std::string TitleId;
 
             UnregisterFunctionRequest() :
                 PlayFabRequestCommon(),
                 CustomTags(),
-                FunctionName()
+                FunctionName(),
+                TitleId()
             {}
 
             UnregisterFunctionRequest(const UnregisterFunctionRequest& src) :
                 PlayFabRequestCommon(),
                 CustomTags(src.CustomTags),
-                FunctionName(src.FunctionName)
+                FunctionName(src.FunctionName),
+                TitleId(src.TitleId)
             {}
 
             ~UnregisterFunctionRequest() = default;
@@ -4937,6 +5043,7 @@ namespace PlayFab
             {
                 FromJsonUtilS(input["CustomTags"], CustomTags);
                 FromJsonUtilS(input["FunctionName"], FunctionName);
+                FromJsonUtilS(input["TitleId"], TitleId);
             }
 
             Json::Value ToJson() const override
@@ -4944,6 +5051,7 @@ namespace PlayFab
                 Json::Value output;
                 Json::Value each_CustomTags; ToJsonUtilS(CustomTags, each_CustomTags); output["CustomTags"] = each_CustomTags;
                 Json::Value each_FunctionName; ToJsonUtilS(FunctionName, each_FunctionName); output["FunctionName"] = each_FunctionName;
+                Json::Value each_TitleId; ToJsonUtilS(TitleId, each_TitleId); output["TitleId"] = each_TitleId;
                 return output;
             }
         };

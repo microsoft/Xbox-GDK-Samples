@@ -108,6 +108,7 @@ namespace PlayFab
         std::shared_ptr<PlayFabEventsInstanceAPI> eventsApi;
 
         std::atomic_uintptr_t batchCounter;
+        std::vector<std::shared_ptr<const IPlayFabEmitEventRequest>> batch;
         std::chrono::steady_clock::time_point momentBatchStarted;
         std::shared_ptr<PlayFabEventPipelineSettings> settings;
         PlayFabEventBuffer buffer;

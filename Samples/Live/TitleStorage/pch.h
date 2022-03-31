@@ -56,15 +56,16 @@
 
 #include <algorithm>
 #include <atomic>
+#include <cassert>
 #include <cmath>
 #include <cstdint>
+#include <cstdio>
 #include <exception>
 #include <memory>
 #include <stdexcept>
+#include <string>
 #include <vector>
 
-#include <assert.h>
-#include <stdio.h>
 #include <pix3.h>
 #include "xal\xal.h"
 #include "xsapi-c\services_c.h"

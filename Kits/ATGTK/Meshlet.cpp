@@ -26,7 +26,7 @@ namespace
     template <typename T>
     size_t GetAlignedSize(T size)
     {
-        const size_t alignment = D3D12_CONSTANT_BUFFER_DATA_PLACEMENT_ALIGNMENT;
+        constexpr size_t alignment = D3D12_CONSTANT_BUFFER_DATA_PLACEMENT_ALIGNMENT;
         const size_t alignedSize = (size + alignment - 1) & ~(alignment - 1);
         return alignedSize;
     }
@@ -102,9 +102,9 @@ uint32_t MeshletSet::GetLastMeshletSize(uint32_t submeshIndex) const
 
 uint32_t MeshletSet::CalcThreadGroupCount(uint32_t submeshIndex, uint32_t groupSize, uint32_t instanceCount) const
 {
-    auto unpackedCount = (GetMeshletCount(submeshIndex) - 1) * instanceCount;
+    auto const unpackedCount = (GetMeshletCount(submeshIndex) - 1) * instanceCount;
     auto packedCount = RoundUpDiv(GetLastMeshletSize(submeshIndex) * instanceCount, groupSize);
-    auto totalCount = unpackedCount + packedCount;
+    auto const totalCount = unpackedCount + packedCount;
 
     assert(totalCount < 64 * 1024);
     return totalCount;
@@ -126,9 +126,9 @@ uint32_t MeshletSet::GetLastMeshletSize() const
 
 uint32_t MeshletSet::CalcThreadGroupCount(uint32_t groupSize, uint32_t instanceCount) const
 {
-    auto unpackedCount = (GetMeshletCount() - 1) * instanceCount;
+    auto const unpackedCount = (GetMeshletCount() - 1) * instanceCount;
     auto packedCount = RoundUpDiv(GetLastMeshletSize() * instanceCount, groupSize);
-    auto totalCount = unpackedCount + packedCount;
+    auto const totalCount = unpackedCount + packedCount;
 
     assert(totalCount < 64 * 1024);
     return totalCount;
@@ -144,13 +144,13 @@ uint32_t MeshletSet::InstancesPerDispatch(uint32_t groupSize) const
 void MeshletSet::CreateResources(ID3D12Device* device, DirectX::ResourceUploadBatch& resourceUpload)
 {
     // Create committed D3D resources of proper sizes
-    auto meshletDesc    = CD3DX12_RESOURCE_DESC::Buffer(m_meshletData.size() * sizeof(m_meshletData[0]));
-    auto cullDataDesc   = CD3DX12_RESOURCE_DESC::Buffer(m_cullData.size() * sizeof(m_cullData[0]));
-    auto indexDesc      = CD3DX12_RESOURCE_DESC::Buffer(RoundUpDiv(m_uniqueIndexData.size(), 4) * 4);
-    auto primitiveDesc  = CD3DX12_RESOURCE_DESC::Buffer(m_primitiveData.size() * sizeof(m_primitiveData[0]));
-    auto meshInfoDesc   = CD3DX12_RESOURCE_DESC::Buffer(GetAlignedSize(sizeof(MeshInfo)));
+    auto const meshletDesc    = CD3DX12_RESOURCE_DESC::Buffer(m_meshletData.size() * sizeof(m_meshletData[0]));
+    auto const cullDataDesc   = CD3DX12_RESOURCE_DESC::Buffer(m_cullData.size() * sizeof(m_cullData[0]));
+    auto const indexDesc      = CD3DX12_RESOURCE_DESC::Buffer(RoundUpDiv(m_uniqueIndexData.size(), 4) * 4);
+    auto const primitiveDesc  = CD3DX12_RESOURCE_DESC::Buffer(m_primitiveData.size() * sizeof(m_primitiveData[0]));
+    auto const meshInfoDesc   = CD3DX12_RESOURCE_DESC::Buffer(GetAlignedSize(sizeof(MeshInfo)));
 
-    auto heapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
+    auto const heapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
     device->CreateCommittedResource(&heapProps, D3D12_HEAP_FLAG_NONE, &meshletDesc, D3D12_RESOURCE_STATE_COPY_DEST, nullptr, IID_GRAPHICS_PPV_ARGS(m_meshletResource.ReleaseAndGetAddressOf()));
     device->CreateCommittedResource(&heapProps, D3D12_HEAP_FLAG_NONE, &cullDataDesc, D3D12_RESOURCE_STATE_COPY_DEST, nullptr, IID_GRAPHICS_PPV_ARGS(m_cullDataResource.ReleaseAndGetAddressOf()));
     device->CreateCommittedResource(&heapProps, D3D12_HEAP_FLAG_NONE, &indexDesc, D3D12_RESOURCE_STATE_COPY_DEST, nullptr, IID_GRAPHICS_PPV_ARGS(m_uniqueIndexResource.ReleaseAndGetAddressOf()));

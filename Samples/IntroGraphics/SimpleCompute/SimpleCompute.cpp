@@ -20,7 +20,7 @@ using Microsoft::WRL::ComPtr;
 
 namespace
 {
-    const uint32_t s_numShaderThreads = 8;		// make sure to update value in shader if this changes
+    constexpr uint32_t s_numShaderThreads = 8;		// make sure to update value in shader if this changes
 
     const wchar_t* g_SampleTitle = L"SimpleCompute12";
     const wchar_t* g_SampleDescription = L"Demonstrates how to use the D3D12_COMMAND_LIST_TYPE_COMPUTE interface to submit asynchronous compute shader workloads";
@@ -115,7 +115,7 @@ void Sample::Initialize(HWND window)
 
     m_deviceResources->SetWindow(window);
 
-    m_deviceResources->CreateDeviceResources();  	
+    m_deviceResources->CreateDeviceResources();
     CreateDeviceDependentResources();
 
     m_deviceResources->CreateWindowSizeDependentResources();
@@ -124,7 +124,7 @@ void Sample::Initialize(HWND window)
     m_computeResumeSignal.Attach(CreateEventEx(nullptr, nullptr, 0, EVENT_MODIFY_STATE | SYNCHRONIZE));
     if (!m_computeResumeSignal.IsValid())
     {
-        throw std::exception("CreateEvent");
+        throw std::system_error(std::error_code(static_cast<int>(GetLastError()), std::system_category()), "CreateEventEx");
     }
 
     m_computeThread = new std::thread(&Sample::AsyncComputeThreadProc, this);
@@ -288,7 +288,7 @@ void Sample::Render()
         }
         {
             assert((m_resourceState[RenderIndex()] == ResourceState_Computed) || (m_resourceState[RenderIndex()] == ResourceState_Rendered));
-            RECT outputSize = m_deviceResources->GetOutputSize();
+            auto const outputSize = m_deviceResources->GetOutputSize();
 
             m_resourceState[RenderIndex()] = ResourceState_Rendering;
             EnsureResourceState(RenderIndex(), D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
@@ -309,7 +309,7 @@ void Sample::Render()
             m_spriteBatch->Begin(commandList);
 
             {
-                RECT safeRect = SimpleMath::Viewport::ComputeTitleSafeArea(UINT(outputSize.right), UINT(outputSize.bottom));
+                auto const safeRect = SimpleMath::Viewport::ComputeTitleSafeArea(UINT(outputSize.right), UINT(outputSize.bottom));
                 XMFLOAT2 pos(float(safeRect.left), float(safeRect.top));
 
                 wchar_t outputString[256] = {};
@@ -358,14 +358,14 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, nullptr);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -413,7 +413,7 @@ void Sample::CreateDeviceDependentResources()
     m_computeFenceEvent.Attach(CreateEventEx(nullptr, nullptr, 0, EVENT_MODIFY_STATE | SYNCHRONIZE));
     if (!m_computeFenceEvent.IsValid())
     {
-        throw std::exception("CreateEvent");
+        throw std::system_error(std::error_code(static_cast<int>(GetLastError()), std::system_category()), "CreateEventEx");
     }
 
     DX::ThrowIfFailed(
@@ -495,7 +495,7 @@ void Sample::CreateDeviceDependentResources()
             IID_GRAPHICS_PPV_ARGS(m_fractalColorMap[1].ReleaseAndGetAddressOf())));
     m_fractalColorMap[1]->SetName(L"Fractal Color Map 1");
 
-    Microsoft::WRL::ComPtr<ID3D12Resource> colorMapIntermediate[2];
+    ComPtr<ID3D12Resource> colorMapIntermediate[2];
     {
         CD3DX12_HEAP_PROPERTIES heapProps(D3D12_HEAP_TYPE_UPLOAD);
 
@@ -549,7 +549,7 @@ void Sample::CreateDeviceDependentResources()
     device->CreateShaderResourceView(m_fractalColorMap[1].Get(), nullptr, m_SRVDescriptorHeap->GetCpuHandle(e_iSRV + 3));
 
     // load fractal shader
-    auto computeShaderBlob = DX::ReadData(L"Fractal.cso");
+    auto const computeShaderBlob = DX::ReadData(L"Fractal.cso");
 
     // Create a root signature
 
@@ -628,10 +628,10 @@ void Sample::CreateDeviceDependentResources()
 // Allocate all memory resources that change on a window SizeChanged event.
 void Sample::CreateWindowSizeDependentResources()
 {
-    auto size = m_deviceResources->GetOutputSize();
+    auto const size = m_deviceResources->GetOutputSize();
     m_help->SetWindow(size);
 
-    auto viewport = m_deviceResources->GetScreenViewport();
+    auto const viewport = m_deviceResources->GetScreenViewport();
     m_spriteBatch->SetViewport(viewport);
 }
 #pragma endregion
@@ -678,8 +678,11 @@ bool Sample::EnsureResourceState(uint32_t index, D3D12_RESOURCE_STATES afterStat
 
 void Sample::AsyncComputeThreadProc()
 {
+    auto threadHandle = GetCurrentThread();
+    SetThreadDescription(threadHandle, L"Async Compute Thread");
+
     // Set helper thread to CPU 1
-    SetThreadAffinityMask(GetCurrentThread(), 0x2);
+    SetThreadAffinityMask(threadHandle, 0x2);
 
     LARGE_INTEGER PerfFreq;
     QueryPerformanceFrequency(&PerfFreq);
@@ -691,7 +694,7 @@ void Sample::AsyncComputeThreadProc()
     {
         if (m_suspendThread)
         {
-            (void)WaitForSingleObject(m_computeResumeSignal.Get(), INFINITE);
+            std::ignore = WaitForSingleObject(m_computeResumeSignal.Get(), INFINITE);
         }
 
         LARGE_INTEGER CurrentFrameTime;
@@ -729,7 +732,7 @@ void Sample::AsyncComputeThreadProc()
 
                 if (m_suspendThread)
                 {
-                    (void)WaitForSingleObject(m_computeResumeSignal.Get(), INFINITE);
+                    std::ignore = WaitForSingleObject(m_computeResumeSignal.Get(), INFINITE);
                 }
 
                 m_computeFPS.Tick(static_cast<FLOAT>(DeltaTime));

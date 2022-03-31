@@ -50,8 +50,8 @@ namespace ATG
         virtual void ShutdownLogger();
         virtual void StartupLogger();
 
-        void SaveLogThread(void);
-        void CreateSaveLogThread(void);
+        void SaveLogThread();
+        void CreateSaveLogThread();
 
         virtual void DumpQueue(uint32_t queueIndex);
         virtual bool CanDumpQueue(uint32_t /*queueIndex*/) { return !m_delayFlush; }

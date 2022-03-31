@@ -23,12 +23,12 @@ namespace
     //--------------------------------------------------------------------------------------
     // Constants
     //--------------------------------------------------------------------------------------
-    const uint32_t  c_maxInstances = 20000;
-    const uint32_t  c_startInstanceCount = 5000;
-    const uint32_t  c_minInstanceCount = 1000;
-    const float     c_boxBounds = 60.0f;
-    const size_t    c_cubeIndexCount = 36;
-    const float     c_velocityMultiplier = 500.0f;
+    constexpr uint32_t c_maxInstances = 20000;
+    constexpr uint32_t c_startInstanceCount = 5000;
+    constexpr uint32_t c_minInstanceCount = 1000;
+    constexpr float    c_boxBounds = 60.0f;
+    constexpr size_t   c_cubeIndexCount = 36;
+    constexpr float    c_velocityMultiplier = 500.0f;
 
     //--------------------------------------------------------------------------------------
     // Cube vertex definition
@@ -232,9 +232,9 @@ void Sample::Render()
     }
 
     // Check to see if the GPU is keeping up
-    auto frameIdx = m_deviceResources->GetCurrentFrameIndex();
-    auto numBackBuffers = m_deviceResources->GetBackBufferCount();
-    uint64_t completedValue = m_fence->GetCompletedValue();
+    auto const frameIdx = m_deviceResources->GetCurrentFrameIndex();
+    auto const numBackBuffers = m_deviceResources->GetBackBufferCount();
+    const uint64_t completedValue = m_fence->GetCompletedValue();
     if ((frameIdx > completedValue) // if frame index is reset to zero it may temporarily be smaller than the last GPU signal
         && (frameIdx - completedValue > numBackBuffers))
     {
@@ -328,16 +328,16 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
-    auto dsvDescriptor = m_deviceResources->GetDepthStencilView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::ColorsLinear::Background, 0, nullptr);
     commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -383,16 +383,16 @@ void Sample::CreateDeviceDependentResources()
     }
 
     // Create a root signature.
-    auto vertexShaderBlob = DX::ReadData(L"VertexShader.cso");
+    auto const vertexShaderBlob = DX::ReadData(L"VertexShader.cso");
 
-    // Xbox One best practice is to use HLSL-based root signatures to support shader precompilation.
+    // Xbox best practice is to use HLSL-based root signatures to support shader precompilation.
 
     DX::ThrowIfFailed(
         device->CreateRootSignature(0, vertexShaderBlob.data(), vertexShaderBlob.size(),
             IID_GRAPHICS_PPV_ARGS(m_rootSignature.ReleaseAndGetAddressOf())));
 
     // Create the pipeline state, which includes loading shaders.
-    auto pixelShaderBlob = DX::ReadData(L"PixelShader.cso");
+    auto const pixelShaderBlob = DX::ReadData(L"PixelShader.cso");
 
     static const D3D12_INPUT_ELEMENT_DESC s_inputElementDesc[] =
     {
@@ -424,7 +424,7 @@ void Sample::CreateDeviceDependentResources()
         device->CreateGraphicsPipelineState(&psoDesc,
             IID_GRAPHICS_PPV_ARGS(m_pipelineState.ReleaseAndGetAddressOf())));
 
-    CD3DX12_HEAP_PROPERTIES heapUpload(D3D12_HEAP_TYPE_UPLOAD);
+    const CD3DX12_HEAP_PROPERTIES heapUpload(D3D12_HEAP_TYPE_UPLOAD);
 
     // Create and initialize the vertex buffer defining a cube.
     {
@@ -465,7 +465,7 @@ void Sample::CreateDeviceDependentResources()
         // recommended. Every time the GPU needs it, the upload heap will be marshalled
         // over. Please read up on Default Heap usage. An upload heap is used here for
         // code simplicity and because there are very few verts to actually transfer.
-        auto resDesc = CD3DX12_RESOURCE_DESC::Buffer(sizeof(s_vertexData));
+        auto const resDesc = CD3DX12_RESOURCE_DESC::Buffer(sizeof(s_vertexData));
 
         DX::ThrowIfFailed(
             device->CreateCommittedResource(&heapUpload,
@@ -526,7 +526,7 @@ void Sample::CreateDeviceDependentResources()
             }
         }
 
-        auto resDesc = CD3DX12_RESOURCE_DESC::Buffer(sizeof(uint32_t) * c_maxInstances);
+        auto const resDesc = CD3DX12_RESOURCE_DESC::Buffer(sizeof(uint32_t) * c_maxInstances);
 
         DX::ThrowIfFailed(
             device->CreateCommittedResource(&heapUpload,
@@ -568,7 +568,7 @@ void Sample::CreateDeviceDependentResources()
             20, 23, 22,
         };
 
-        auto resDesc = CD3DX12_RESOURCE_DESC::Buffer(sizeof(s_indexData));
+        auto const resDesc = CD3DX12_RESOURCE_DESC::Buffer(sizeof(s_indexData));
 
         // See note above
         DX::ThrowIfFailed(
@@ -618,7 +618,7 @@ void Sample::CreateDeviceDependentResources()
         IID_GRAPHICS_PPV_ARGS(m_fence.ReleaseAndGetAddressOf())));
 
     // Start off the fence with the current frame index
-    uint64_t currentIdx = m_deviceResources->GetCurrentFrameIndex();
+    const uint64_t currentIdx = m_deviceResources->GetCurrentFrameIndex();
     m_deviceResources->GetCommandQueue()->Signal(m_fence.Get(), currentIdx);
 }
 
@@ -626,7 +626,7 @@ void Sample::CreateDeviceDependentResources()
 void Sample::CreateWindowSizeDependentResources()
 {
     // Initialize the projection matrix.
-    auto size = m_deviceResources->GetOutputSize();
+    auto const size = m_deviceResources->GetOutputSize();
 
     auto device = m_deviceResources->GetD3DDevice();
 

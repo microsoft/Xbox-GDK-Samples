@@ -19,12 +19,74 @@ using namespace DirectX::SimpleMath;
 
 using Microsoft::WRL::ComPtr;
 
+static void CALLBACK ClientPropertiesChangedCallback(
+    void* context,
+    XGameStreamingClientId clientId,
+    uint32_t updatedPropertiesCount,
+    XGameStreamingClientProperty* updatedProperties)
+{
+    Sample* sample = reinterpret_cast<Sample*>(context);
+    assert(sample != nullptr);
+
+    ClientDevice* client = sample->GetClientById(clientId);
+    if (client == nullptr)
+    {
+        return;
+    }
+
+    for (uint32_t i = 0; i < updatedPropertiesCount; ++i)
+    {
+        // Only properties that the sample cares about are checked for - all others are intentionally ignored
+#pragma warning (push)
+#pragma warning (disable: 4061)
+        switch (updatedProperties[i])
+        {
+        case XGameStreamingClientProperty::StreamPhysicalDimensions:
+        {
+            //Check to see if this client has a small display
+            uint32_t clientWidthMm = 0;
+            uint32_t clientHeightMm = 0;
+            if (SUCCEEDED(XGameStreamingGetStreamPhysicalDimensions(client->id, &clientWidthMm, &clientHeightMm)))
+            {
+                if (clientWidthMm * clientHeightMm < 13000)
+                {
+                    client->smallScreen = true;
+                }
+            }
+        }
+        break;
+
+        case XGameStreamingClientProperty::TouchBundleVersion:
+        {
+            //The sample TAK is 1.0, so ensure that the client has the overlay
+            XVersion overlayVersion;
+            auto hr = XGameStreamingGetTouchBundleVersion(client->id, &overlayVersion, 0, nullptr);
+            if (SUCCEEDED(hr))
+            {
+                if (overlayVersion.major == 1 && overlayVersion.minor == 0)
+                {
+                    client->validOverlay = true;
+                }
+            }
+        }
+        break;
+
+        default:
+            break;
+        }
+    }
+#pragma warning (pop)
+
+    sample->UpdateClientState();
+}
+
 static void CALLBACK ConnectionStateChangedCallback(
     void* context,
-    XGameStreamingClientId client,
+    XGameStreamingClientId clientId,
     XGameStreamingConnectionState state) noexcept
 {
     auto sample = reinterpret_cast<Sample*>(context);
+    assert(sample != nullptr);
 
     if (state == XGameStreamingConnectionState::Connected)
     {
@@ -32,45 +94,22 @@ static void CALLBACK ConnectionStateChangedCallback(
         {
             if (sample->m_clients[i].id == XGameStreamingNullClientId)
             {
-                sample->m_clients[i].id = client;
+                sample->m_clients[i].id = clientId;
 
-                //Check to see if this client has a small display
-                uint32_t clientWidthMm = 0;
-                uint32_t clientHeightMm = 0;
-                if (SUCCEEDED(XGameStreamingGetStreamPhysicalDimensions(sample->m_clients[i].id, &clientWidthMm, &clientHeightMm)))
-                {
-                    if (clientWidthMm * clientHeightMm < 13000)
-                    {
-                        sample->m_clients[i].smallScreen = true;
-                    }
-                }
-
-                //The sample TAK is 1.0, so ensure that the client has the overlay
-                XVersion overlayVersion;
-                if (SUCCEEDED(XGameStreamingGetTouchBundleVersion(sample->m_clients[i].id, &overlayVersion, 0, nullptr)))
-                {
-                    if (overlayVersion.major == 1 && overlayVersion.minor == 0)
-                    {
-                        sample->m_clients[i].validOverlay = true;
-                    }
-                }
-
+                DX::ThrowIfFailed(XGameStreamingRegisterClientPropertiesChanged(clientId, sample->GetTaskQueue(), sample, ClientPropertiesChangedCallback, &sample->m_clients[i].propertiesChangedRegistration));
                 break;
             }
         }
     }
     else
     {
-        for (size_t i = 0; i < c_maxClients; ++i)
+        ClientDevice* client = sample->GetClientById(clientId);
+        if (client != nullptr)
         {
-            if (sample->m_clients[i].id == client)
-            {
-                sample->m_clients[i] = ClientDevice();
-            }
+            XGameStreamingUnregisterClientPropertiesChanged(clientId, client->propertiesChangedRegistration, true);
+            *client = ClientDevice{};
         }
     }
-
-    sample->UpdateClientState();
 }
 
 Sample::Sample() noexcept(false) :
@@ -573,6 +612,24 @@ void Sample::CreateWindowSizeDependentResources()
 {
     auto vp = m_deviceResources->GetScreenViewport();
     m_batch->SetViewport(vp);
+}
+
+//--------------------------------------------------------------------------------------
+// Name: GetClientById()
+// Desc: Return the ClientDevice object which matches the clientId, nullptr if no device matches
+//--------------------------------------------------------------------------------------
+
+ClientDevice* Sample::GetClientById(XGameStreamingClientId clientId)
+{
+    for (int i = 0; i < c_maxClients; i++)
+    {
+        if (m_clients[i].id == clientId)
+        {
+            return &m_clients[i];
+        }
+    }
+
+    return nullptr;
 }
 
 //--------------------------------------------------------------------------------------

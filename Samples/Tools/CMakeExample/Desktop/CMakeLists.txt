@@ -36,7 +36,7 @@ if(BUILD_USING_ONECORE)
     set(CMAKE_CXX_STANDARD_LIBRARIES_INIT "onecore.lib")
 endif()
 
-# WARNING: Only ever use _one_ of: kernel32.lib, onecore.lib, onecoreuap.lib, WindowsApp.lib, xgameplatform.lib
+# WARNING: Only ever use _one_ of: kernel32.lib, onecore*.lib, onecoreuap*.lib, WindowsApp.lib, xgameplatform.lib
 
 add_executable(${PROJECT_NAME} WIN32
     ../Game.cpp
@@ -70,13 +70,16 @@ foreach(FILE ../VertexShader.hlsl ../PixelShader.hlsl)
 endforeach(FILE)
 
 # Microsoft Config File
+set(TDF_NAME "PC")
+configure_file(../MicrosoftGameConfig.mgc MicrosoftGame.config @ONLY)
+
 add_custom_target(mgccompile)
 
 add_custom_command(TARGET mgccompile
-                   COMMAND ${MGCToolPath}/makepkg.exe localize /d "${CMAKE_CURRENT_SOURCE_DIR}" /pd "${CMAKE_BINARY_DIR}/bin/Gaming.Desktop.x64"
+                   COMMAND ${MGCToolPath}/makepkg.exe localize /d "${CMAKE_BINARY_DIR}" /pd "${CMAKE_BINARY_DIR}/bin/Gaming.Desktop.x64"
                    MAIN_DEPENDENCY MicrosoftGame.config
                    COMMENT "makepkg localize MicrosoftGame.config"
-                   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+                   WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
                    VERBATIM)
 
 add_dependencies(${PROJECT_NAME} mgccompile shaders)
@@ -117,9 +120,7 @@ endif()
 target_link_options(${PROJECT_NAME} PRIVATE ${Console_LinkOptions})
 
 if(BUILD_USING_ONECORE)
-    target_link_options(${PROJECT_NAME} PRIVATE "/NODEFAULTLIB:kernel32.lib")
-else()
-# Could add /NODEFAULTLIB:onecore.lib for this case, but only if you use #pragma comment(lib,"onecore.lib") in your code
+    target_link_options(${PROJECT_NAME} PRIVATE "/SUBSYSTEM:WINDOWS,10.0" "/NODEFAULTLIB:kernel32.lib")
 endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
@@ -132,9 +133,20 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
       target_compile_options(${PROJECT_NAME} PRIVATE /analyze)
    endif()
 
+   # /ZH:SHA_256 (secure source hashing)
+   if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.24)
+      target_compile_options(${PROJECT_NAME} PRIVATE /ZH:SHA_256)
+   endif()
+
    # /Zc:preprocessor (C99 conformant preprocessor)
    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.26)
       target_compile_options(${PROJECT_NAME} PRIVATE /Zc:preprocessor /wd5105)
+   endif()
+
+   # /CETCOMPAT (CET Shadow Stack compatible)
+   # Note: Make sure any middleware libraries you use support CET
+   if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.27)
+      target_link_options(${PROJECT_NAME} PRIVATE /CETCOMPAT)
    endif()
 
    if(CMAKE_BUILD_TYPE MATCHES "Debug")
@@ -172,7 +184,7 @@ endif()
 add_custom_command(
   TARGET ${PROJECT_NAME} POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy
-    ${CMAKE_CURRENT_SOURCE_DIR}/MicrosoftGame.Config
+    ${CMAKE_BINARY_DIR}/MicrosoftGame.Config
     $<TARGET_FILE_DIR:${PROJECT_NAME}>
   COMMAND ${CMAKE_COMMAND} -E copy
     ${CMAKE_BINARY_DIR}/VertexShader.cso

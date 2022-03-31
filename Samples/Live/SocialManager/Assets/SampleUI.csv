@@ -1,0 +1,20 @@
+#ITEM,ID,X,Y,DX,DY,PARAMETERS
+OVERLAY,200,0,0,1920,1080
+
+LABEL,201,150,130,610,72,Not Loaded,CENTER
+
+LEGEND,202,140,880,1700,136,[LB][RB] or Left/Right Arrows - Change Social Group|[DPad] or Up/Down Arrows - Select user|[A] or Enter - View profile,SMALL
+LEGEND,205,840,880,1700,136,[X] or F5 - Refresh|[MENU] or Tab - Sign in|[VIEW] or Esc - Close Sample,SMALL
+
+IMAGE,203,180,140,50,50,Icon_LB.DDS
+IMAGE,204,680,140,50,50,Icon_RB.DDS
+
+IMAGE,300,406,120,20,20,Unselected.DDS
+IMAGE,301,436,120,20,20,Unselected.DDS
+IMAGE,302,466,120,20,20,Unselected.DDS
+IMAGE,303,496,120,20,20,Unselected.DDS
+
+IMAGE,310,406,120,20,20,Selected.DDS
+IMAGE,311,436,120,20,20,Selected.DDS
+IMAGE,312,466,120,20,20,Selected.DDS
+IMAGE,313,496,120,20,20,Selected.DDS

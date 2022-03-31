@@ -49,7 +49,7 @@ namespace
         if (!inFile)
             throw std::exception("ReadData");
 
-        std::streampos len = inFile.tellg();
+        const std::streampos len = inFile.tellg();
         if (!inFile)
             throw std::exception("ReadData");
 
@@ -167,16 +167,16 @@ void Game::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
-    auto dsvDescriptor = m_deviceResources->GetDepthStencilView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
     commandList->ClearRenderTargetView(rtvDescriptor, c_Background, 0, nullptr);
     commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -209,7 +209,7 @@ void Game::OnResuming()
 
 void Game::OnWindowMoved()
 {
-    auto r = m_deviceResources->GetOutputSize();
+    auto const r = m_deviceResources->GetOutputSize();
     m_deviceResources->WindowSizeChanged(r.right, r.bottom);
 }
 
@@ -236,17 +236,29 @@ void Game::CreateDeviceDependentResources()
 {
     auto device = m_deviceResources->GetD3DDevice();
 
-    // Create root signature.
-    auto vertexShaderBlob = ReadData(L"VertexShader.cso");
+#ifdef _GAMING_DESKTOP
+    D3D12_FEATURE_DATA_SHADER_MODEL shaderModel = { D3D_SHADER_MODEL_6_0 };
+    if (FAILED(device->CheckFeatureSupport(D3D12_FEATURE_SHADER_MODEL, &shaderModel, sizeof(shaderModel)))
+        || (shaderModel.HighestShaderModel < D3D_SHADER_MODEL_6_0))
+    {
+#ifdef _DEBUG
+        OutputDebugStringA("ERROR: Shader Model 6.0 is not supported!\n");
+#endif
+        throw std::runtime_error("Shader Model 6.0 is not supported!");
+    }
+#endif
 
-    // Xbox One best practice is to use HLSL-based root signatures to support shader precompilation.
+    // Create root signature.
+    auto const vertexShaderBlob = ReadData(L"VertexShader.cso");
+
+    // Xbox best practice is to use HLSL-based root signatures to support shader precompilation.
 
     DX::ThrowIfFailed(
         device->CreateRootSignature(0, vertexShaderBlob.data(), vertexShaderBlob.size(),
             IID_GRAPHICS_PPV_ARGS(m_rootSignature.ReleaseAndGetAddressOf())));
 
     // Create the pipeline state, which includes loading shaders.
-    auto pixelShaderBlob = ReadData(L"PixelShader.cso");
+    auto const pixelShaderBlob = ReadData(L"PixelShader.cso");
 
     static const D3D12_INPUT_ELEMENT_DESC s_inputElementDesc[2] =
     {
@@ -287,8 +299,8 @@ void Game::CreateDeviceDependentResources()
         // recommended. Every time the GPU needs it, the upload heap will be marshalled 
         // over. Please read up on Default Heap usage. An upload heap is used here for 
         // code simplicity and because there are very few verts to actually transfer.
-        CD3DX12_HEAP_PROPERTIES heapProps(D3D12_HEAP_TYPE_UPLOAD);
-        auto resDesc = CD3DX12_RESOURCE_DESC::Buffer(sizeof(s_vertexData));
+        const CD3DX12_HEAP_PROPERTIES heapProps(D3D12_HEAP_TYPE_UPLOAD);
+        auto const resDesc = CD3DX12_RESOURCE_DESC::Buffer(sizeof(s_vertexData));
 
         DX::ThrowIfFailed(
             device->CreateCommittedResource(&heapProps,
@@ -300,7 +312,7 @@ void Game::CreateDeviceDependentResources()
 
         // Copy the triangle data to the vertex buffer.
         UINT8* pVertexDataBegin;
-        CD3DX12_RANGE readRange(0, 0);		// We do not intend to read from this resource on the CPU.
+        const CD3DX12_RANGE readRange(0, 0); // We do not intend to read from this resource on the CPU.
         DX::ThrowIfFailed(
             m_vertexBuffer->Map(0, &readRange, reinterpret_cast<void**>(&pVertexDataBegin)));
         memcpy(pVertexDataBegin, s_vertexData, sizeof(s_vertexData));

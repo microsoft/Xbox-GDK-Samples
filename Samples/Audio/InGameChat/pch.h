@@ -40,6 +40,12 @@
 #include <wrl/client.h>
 #include <wrl/event.h>
 
+#include <grdk.h>
+
+#if _GRDK_VER < 0x4A610D2B /* GXDK Edition 200600 */
+#error This sample requires the June 2020 GDK or later
+#endif
+
 #ifdef _GAMING_XBOX_SCARLETT
 #include <d3d12_xs.h>
 #include <d3dx12_xs.h>
@@ -67,8 +73,10 @@
 
 #include <algorithm>
 #include <atomic>
+#include <cassert>
 #include <cmath>
 #include <cstdint>
+#include <cstdio>
 #include <exception>
 #include <memory>
 #include <stdexcept>
@@ -77,10 +85,8 @@
 #include <mutex>
 #include <list>
 #include <queue>
+#include <string>
 #include <string_view>
-
-#include <assert.h>
-#include <stdio.h>
 
 #ifdef _GAMING_XBOX
 #include <pix3.h>

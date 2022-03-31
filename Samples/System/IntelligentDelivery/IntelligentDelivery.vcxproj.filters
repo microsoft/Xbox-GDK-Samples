@@ -52,6 +52,9 @@
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
     <ClInclude Include="IntelligentDelivery.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -78,23 +81,6 @@
     <ClCompile Include="IntelligentDelivery.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\LargeLogo.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\Logo.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\SmallLogo.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\SplashScreen.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\StoreLogo.png">
-      <Filter>Assets</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="readme.docx" />
     <None Include="CreateInstallPackage_XboxOne.bat">
       <Filter>Misc</Filter>
@@ -108,11 +94,15 @@
     <None Include="CreateInstallPackage_Scarlett.bat">
       <Filter>Misc</Filter>
     </None>
-    <None Include="MicrosoftGame_Scarlett.Config" />
-    <None Include="MicrosoftGame_XboxOne.Config" />
-    <None Include="StreamingInstall_ko-kr.docx" />
-    <None Include="StreamingInstall_zh-cn.docx" />
-    <None Include="StreamingInstall_ja-jp.docx" />
+    <None Include="CreateInstallPackage_PC.bat">
+      <Filter>Misc</Filter>
+    </None>
+    <None Include="CreateMSIXVC_PC.bat">
+      <Filter>Misc</Filter>
+    </None>
+    <None Include="readme_ja-JP.docx" />
+    <None Include="readme_ko-KR.docx" />
+    <None Include="readme_zh-CN.docx" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Chunks_Scarlett.xml">
@@ -121,8 +111,26 @@
     <Xml Include="Chunks_XboxOne.xml">
       <Filter>Misc</Filter>
     </Xml>
+    <Xml Include="Chunks_PC.xml">
+      <Filter>Misc</Filter>
+    </Xml>
   </ItemGroup>
   <ItemGroup>
+    <CopyFileToFolders Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Kits\UITK\doc\example_assets\textures\roundy-border.png">
       <Filter>Assets</Filter>
     </CopyFileToFolders>
@@ -130,15 +138,6 @@
       <Filter>Assets</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\Courier_16.spritefont">
-      <Filter>Assets\Fonts</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="..\..\..\Kits\UITK\doc\example_assets\fonts\SegoeUI_18.spritefont">
-      <Filter>Assets\Fonts</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="..\..\..\Kits\UITK\doc\example_assets\fonts\SegoeUI_18_Bold.spritefont">
-      <Filter>Assets\Fonts</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="..\..\..\Kits\UITK\doc\example_assets\fonts\SegoeUI_18_Italic.spritefont">
       <Filter>Assets\Fonts</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_24.spritefont">
@@ -174,5 +173,23 @@
     <CopyFileToFolders Include="Assets\logo_atg.png">
       <Filter>Assets</Filter>
     </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18_Bold.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18_Italic.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGame_Scarlett.Config" />
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGame_XboxOne.Config" />
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGame_PC.Config" />
   </ItemGroup>
 </Project>

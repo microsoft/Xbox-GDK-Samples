@@ -115,7 +115,7 @@ Texture::Texture(_In_ ID3D12Device* device,
         m_array = texDesc.DepthOrArraySize;
     }
 
-    CD3DX12_HEAP_PROPERTIES defaultHeapProperties(D3D12_HEAP_TYPE_DEFAULT);
+    const CD3DX12_HEAP_PROPERTIES defaultHeapProperties(D3D12_HEAP_TYPE_DEFAULT);
 
     DX::ThrowIfFailed(
         device->CreateCommittedResource(
@@ -149,7 +149,7 @@ std::unique_ptr<Texture> Texture::CreateDefaultTexture(ID3D12Device* device,
     texDesc.SampleDesc.Count = 1;
     texDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
 
-    uint32_t white = 0xFFFFFFFF;
+    const uint32_t white = 0xFFFFFFFF;
     D3D12_SUBRESOURCE_DATA initData = { &white, sizeof(uint32_t), 0 };
 
     return std::unique_ptr<Texture>(new Texture(device, resourceUpload, srvDescriptor, texDesc, &initData));

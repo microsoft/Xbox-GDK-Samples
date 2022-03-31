@@ -20,14 +20,14 @@ using Microsoft::WRL::ComPtr;
 
 namespace
 {
-    const DXGI_FORMAT c_backBufferFormat = DXGI_FORMAT_B8G8R8A8_UNORM_SRGB;
-    const DXGI_FORMAT c_depthBufferFormat = DXGI_FORMAT_D32_FLOAT;
+    constexpr DXGI_FORMAT c_backBufferFormat = DXGI_FORMAT_B8G8R8A8_UNORM_SRGB;
+    constexpr DXGI_FORMAT c_depthBufferFormat = DXGI_FORMAT_D32_FLOAT;
 
-    const DXGI_FORMAT c_msaaFormat = DXGI_FORMAT_B8G8R8A8_UNORM_SRGB;
-    const DXGI_FORMAT c_resolveFormat = DXGI_FORMAT_B8G8R8A8_UNORM_SRGB;
+    constexpr DXGI_FORMAT c_msaaFormat = DXGI_FORMAT_B8G8R8A8_UNORM_SRGB;
+    constexpr DXGI_FORMAT c_resolveFormat = DXGI_FORMAT_B8G8R8A8_UNORM_SRGB;
 
-    // Xbox One supports 2x, 4x, or 8x MSAA
-    const unsigned int c_sampleCount = 4;
+    // Xbox supports 2x, 4x, or 8x MSAA
+    constexpr unsigned int c_sampleCount = 4;
 }
 
 Sample::Sample() noexcept(false) :
@@ -164,7 +164,7 @@ void Sample::Render()
         auto backBuffer = m_deviceResources->GetRenderTarget();
 
         {
-            D3D12_RESOURCE_BARRIER barriers[2] =
+            const D3D12_RESOURCE_BARRIER barriers[2] =
             {
                 CD3DX12_RESOURCE_BARRIER::Transition(
                     m_msaaRenderTarget.Get(),
@@ -183,7 +183,7 @@ void Sample::Render()
 
         // Set render target for UI which is typically rendered without MSAA.
         {
-            D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
+            const D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
                 backBuffer,
                 D3D12_RESOURCE_STATE_RESOLVE_DEST,
                 D3D12_RESOURCE_STATE_RENDER_TARGET);
@@ -192,12 +192,12 @@ void Sample::Render()
     }
 
     // Unbind depth/stencil for UI.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, nullptr);
 
     // Draw UI.
-    auto size = m_deviceResources->GetOutputSize();
-    auto safe = SimpleMath::Viewport::ComputeTitleSafeArea(UINT(size.right), UINT(size.bottom));
+    auto const size = m_deviceResources->GetOutputSize();
+    auto const safe = SimpleMath::Viewport::ComputeTitleSafeArea(UINT(size.right), UINT(size.bottom));
 
     heaps[0] = m_resourceDescriptors->Heap();
     commandList->SetDescriptorHeaps(1, heaps);
@@ -235,7 +235,7 @@ void Sample::Clear()
     // Clear the views.
     if (m_msaa)
     {
-        D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
+        const D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
             m_msaaRenderTarget.Get(),
             D3D12_RESOURCE_STATE_RESOLVE_SOURCE,
             D3D12_RESOURCE_STATE_RENDER_TARGET);
@@ -245,8 +245,8 @@ void Sample::Clear()
         // Rather than operate on the swapchain render target, we set up to render the scene to our MSAA resources instead.
         //
 
-        auto rtvDescriptor = m_msaaRTVDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
-        auto dsvDescriptor = m_msaaDSVDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+        auto const rtvDescriptor = m_msaaRTVDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+        auto const dsvDescriptor = m_msaaDSVDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
 
         commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
 
@@ -255,8 +255,8 @@ void Sample::Clear()
     }
     else
     {
-        auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
-        auto dsvDescriptor = m_deviceResources->GetDepthStencilView();
+        auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
+        auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
 
         commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
 
@@ -265,8 +265,8 @@ void Sample::Clear()
     }
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
     PIXEndEvent(commandList);
@@ -359,7 +359,7 @@ void Sample::CreateDeviceDependentResources()
     }
 
     {
-        RenderTargetState rtState(c_backBufferFormat, c_depthBufferFormat);
+        const RenderTargetState rtState(c_backBufferFormat, c_depthBufferFormat);
 
         EffectPipelineStateDescription pd(
             nullptr,
@@ -382,13 +382,13 @@ void Sample::CreateDeviceDependentResources()
 // Allocate all memory resources that change on a window SizeChanged event.
 void Sample::CreateWindowSizeDependentResources()
 {
-    auto output = m_deviceResources->GetOutputSize();
+    auto const output = m_deviceResources->GetOutputSize();
 
     // Determine the render target size in pixels.
-    auto backBufferWidth = static_cast<UINT>(std::max<LONG>(output.right - output.left, 1));
-    auto backBufferHeight = static_cast<UINT>(std::max<LONG>(output.bottom - output.top, 1));
+    auto const backBufferWidth = static_cast<UINT>(std::max<LONG>(output.right - output.left, 1));
+    auto const backBufferHeight = static_cast<UINT>(std::max<LONG>(output.bottom - output.top, 1));
 
-    CD3DX12_HEAP_PROPERTIES heapProperties(D3D12_HEAP_TYPE_DEFAULT);
+    const CD3DX12_HEAP_PROPERTIES heapProperties(D3D12_HEAP_TYPE_DEFAULT);
 
     // Create an MSAA render target.
     D3D12_RESOURCE_DESC msaaRTDesc = CD3DX12_RESOURCE_DESC::Tex2D(
@@ -481,7 +481,7 @@ void Sample::CreateWindowSizeDependentResources()
     m_proj = Matrix::CreatePerspectiveFieldOfView(XM_PI / 4.f,
         float(backBufferWidth) / float(backBufferHeight), 0.1f, 1000.f);
 
-    auto viewport = m_deviceResources->GetScreenViewport();
+    auto const viewport = m_deviceResources->GetScreenViewport();
     m_batch->SetViewport(viewport);
 }
 #pragma endregion

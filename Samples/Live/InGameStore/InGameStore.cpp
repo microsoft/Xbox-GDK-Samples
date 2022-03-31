@@ -129,6 +129,8 @@ namespace
         }
 
         copy.isInUserCollection = sku.isInUserCollection;
+        copy.isSubscription = sku.isSubscription;
+
         copy.quantity = sku.collectionData.quantity;
 
         return copy;
@@ -213,6 +215,8 @@ Sample::~Sample()
 
     XStoreCloseContextHandle(m_xStoreContext);
 
+    m_xStoreContext = nullptr;
+
     if (m_asyncQueue)
     {
         XTaskQueueCloseHandle(m_asyncQueue);
@@ -237,9 +241,7 @@ void Sample::Initialize(HWND window, int width, int height)
     m_keyboardButtons = std::make_unique<Keyboard::KeyboardStateTracker>();
     m_mouse = std::make_unique<Mouse>();
     m_mouseButtons = std::make_unique<Mouse::ButtonStateTracker>();
-#ifdef _GAMING_DESKTOP
     m_mouse->SetWindow(window);
-#endif
 
     m_deviceResources->SetWindow(window, width, height);
 
@@ -947,7 +949,7 @@ void Sample::AcquireLicense(const char* storeId)
 
     auto isDlc = product.hasDigitalDownload;
 
-    const char* apiName = isDlc? "XStoreAcquireLicenseForPackageAsync" : "XStoreAcquireLicenseForDurablesAsync";
+    const char* apiName = isDlc ? "XStoreAcquireLicenseForPackageAsync" : "XStoreAcquireLicenseForDurablesAsync";
 
     ConsoleWriteLine("Calling %s for %s", apiName, storeId);
 
@@ -964,7 +966,7 @@ void Sample::AcquireLicense(const char* storeId)
 
         auto&[isDlc] = *reinterpret_cast<Ctx*>(async->context);
 
-        HRESULT hr = (isDlc)?
+        HRESULT hr = (isDlc) ?
             XStoreAcquireLicenseForPackageResult(async, &result) :
             XStoreAcquireLicenseForDurablesResult(async, &result);
 
@@ -1016,7 +1018,7 @@ void Sample::AcquireLicense(const char* storeId)
     {
         XStoreQueryPackageIdentifier(storeId, XPACKAGE_IDENTIFIER_MAX_LENGTH, packageId);
     }
-    
+
     async->context = new Ctx{ isDlc };
 
     HRESULT hr = isDlc ?
@@ -1493,6 +1495,18 @@ void Sample::GetDefaultSize(int& width, int& height) const
 void Sample::CreateDeviceDependentResources()
 {
     auto device = m_deviceResources->GetD3DDevice();
+	
+#ifdef _GAMING_DESKTOP
+    D3D12_FEATURE_DATA_SHADER_MODEL shaderModel = { D3D_SHADER_MODEL_6_0 };
+    if (FAILED(device->CheckFeatureSupport(D3D12_FEATURE_SHADER_MODEL, &shaderModel, sizeof(shaderModel)))
+        || (shaderModel.HighestShaderModel < D3D_SHADER_MODEL_6_0))
+    {
+#ifdef _DEBUG
+        OutputDebugStringA("ERROR: Shader Model 6.0 is not supported!\n");
+#endif
+        throw std::runtime_error("Shader Model 6.0 is not supported!");
+    }
+#endif
 
     m_graphicsMemory = std::make_unique<GraphicsMemory>(device);
 
@@ -1738,7 +1752,7 @@ void Sample::ShowItemMenu(UIProductDetails item, long y)
 
     if (item.productKind == XStoreProductKind::Durable)
     {
-        if (item.hasDigitalDownload )
+        if (item.hasDigitalDownload)
         {
             // Add download button
             auto button = CastPtr<UIButton>(m_itemMenu->AddChildFromPrefab("#menu_item_prefab"));

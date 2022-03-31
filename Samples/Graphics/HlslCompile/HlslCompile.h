@@ -1,5 +1,5 @@
 //--------------------------------------------------------------------------------------
-// SimpleTriangle.h
+// HlslCompile.h
 //
 // Advanced Technology Group (ATG)
 // Copyright (C) Microsoft Corporation. All rights reserved.
@@ -59,7 +59,6 @@ private:
     // Direct3D 12 objects
     Microsoft::WRL::ComPtr<ID3D12RootSignature> m_rootSignature;
     Microsoft::WRL::ComPtr<ID3D12Resource>      m_vertexBuffer;
-    D3D12_VERTEX_BUFFER_VIEW                    m_vertexBufferView;
 
 	// Pipeline states for each version of the pixel shader.
 	// These differ only in compiler arguments pertaining to symbols.
