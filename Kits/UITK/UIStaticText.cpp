@@ -37,9 +37,7 @@ ENUM_LOOKUP_TABLE(VerticalTextTruncation,
 {
     auto sizeInRefUnits = availableSize;
     auto rectWidth = long(sizeInRefUnits.x);
-    auto lineHeight = textStyle->GetUnscaledLineHeight();
 
-    auto lineStartOffset = long(0);
     auto lineStartingCharIndex = size_t(0);
 
     // iterate through the display text line by line
@@ -58,7 +56,6 @@ ENUM_LOOKUP_TABLE(VerticalTextTruncation,
         auto nextLineNewlineIndex = textToModify.find_first_of('\n', lineStartingCharIndex);
         if (nextLineNewlineIndex != std::string::npos && wrapping == HorizontalTextWrapping::Overflow)
         {
-            lineStartOffset += lineHeight;
             lineStartingCharIndex = nextLineNewlineIndex + 1;
             continue;
         }
@@ -74,7 +71,6 @@ ENUM_LOOKUP_TABLE(VerticalTextTruncation,
         // legitimate word
         if (nextLineNewlineIndex < nextLineWordStart)
         {
-            lineStartOffset += lineHeight;
             lineStartingCharIndex = nextLineNewlineIndex + 1;
             continue;
         }

@@ -400,7 +400,9 @@
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <FXCompile>
-      <ShaderModel>5.1</ShaderModel>
+      <ShaderModel>6.0</ShaderModel>
+      <EnableDebuggingInformation>true</EnableDebuggingInformation>
+      <AdditionalOptions>/Fd "$(OutDir)%(Filename).pdb" %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>..\..\..\Kits\ATGTK\Skybox;%AdditionalIncludeDirectories%</AdditionalIncludeDirectories>
     </FXCompile>
     <PostBuildEvent>
@@ -431,7 +433,9 @@
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <FXCompile>
-      <ShaderModel>5.1</ShaderModel>
+      <ShaderModel>6.0</ShaderModel>
+      <EnableDebuggingInformation>true</EnableDebuggingInformation>
+      <AdditionalOptions>/Fd "$(OutDir)%(Filename).pdb" %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>..\..\..\Kits\ATGTK\Skybox;%AdditionalIncludeDirectories%</AdditionalIncludeDirectories>
     </FXCompile>
     <PostBuildEvent>
@@ -459,7 +463,9 @@
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <FXCompile>
-      <ShaderModel>5.1</ShaderModel>
+      <ShaderModel>6.0</ShaderModel>
+      <EnableDebuggingInformation>true</EnableDebuggingInformation>
+      <AdditionalOptions>/Fd "$(OutDir)%(Filename).pdb" %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>..\..\..\Kits\ATGTK\Skybox;%AdditionalIncludeDirectories%</AdditionalIncludeDirectories>
     </FXCompile>
     <PostBuildEvent>

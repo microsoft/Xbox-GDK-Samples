@@ -37,8 +37,8 @@
 
 #include <gxdk.h>
 
-#if _GXDK_VER < 0x4A610D2B /* GXDK Edition 200600 */
-#error This sample requires the June 2020 GDK or later
+#if _GXDK_VER < 0x4A610F3C /* GDK Edition 200800 */
+#error This sample requires the August 2020 GDK or later
 #endif
 
 #ifdef _GAMING_XBOX_SCARLETT

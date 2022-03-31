@@ -41,8 +41,8 @@ namespace
         WICPixelFormatGUID pixelFormat;
         DX::ThrowIfFailed(frame->GetPixelFormat(&pixelFormat));
 
-        uint32_t rowPitch = width * sizeof(uint32_t);
-        uint32_t imageSize = rowPitch * height;
+        const uint32_t rowPitch = width * sizeof(uint32_t);
+        const uint32_t imageSize = rowPitch * height;
 
         std::vector<uint8_t> image;
         image.resize(size_t(imageSize));
@@ -60,7 +60,7 @@ namespace
             DX::ThrowIfFailed(formatConverter->CanConvert(pixelFormat, GUID_WICPixelFormat32bppBGRA, &canConvert));
             if (!canConvert)
             {
-                throw std::exception("CanConvert");
+                throw std::exception();
             }
 
             DX::ThrowIfFailed(formatConverter->Initialize(frame.Get(), GUID_WICPixelFormat32bppBGRA,
@@ -177,8 +177,8 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
-    auto dsvDescriptor = m_deviceResources->GetDepthStencilView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
 
@@ -188,8 +188,8 @@ void Sample::Clear()
     commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -231,16 +231,16 @@ void Sample::CreateDeviceDependentResources()
     }
 
     // Create root signature.
-    auto vertexShaderBlob = DX::ReadData(L"VertexShader.cso");
+    auto const vertexShaderBlob = DX::ReadData(L"VertexShader.cso");
 
-    // Xbox One best practice is to use HLSL-based root signatures to support shader precompilation.
+    // Xbox best practice is to use HLSL-based root signatures to support shader precompilation.
 
     DX::ThrowIfFailed(
         device->CreateRootSignature(0, vertexShaderBlob.data(), vertexShaderBlob.size(),
             IID_GRAPHICS_PPV_ARGS(m_rootSignature.ReleaseAndGetAddressOf())));
 
     // Create the pipeline state, which includes loading shaders.
-    auto pixelShaderBlob = DX::ReadData(L"PixelShader.cso");
+    auto const pixelShaderBlob = DX::ReadData(L"PixelShader.cso");
 
     static const D3D12_INPUT_ELEMENT_DESC s_inputElementDesc[2] =
     {
@@ -282,8 +282,8 @@ void Sample::CreateDeviceDependentResources()
         // recommended. Every time the GPU needs it, the upload heap will be marshalled 
         // over. Please read up on Default Heap usage. An upload heap is used here for 
         // code simplicity and because there are very few verts to actually transfer.
-        CD3DX12_HEAP_PROPERTIES heapProps(D3D12_HEAP_TYPE_UPLOAD);
-        auto resData = CD3DX12_RESOURCE_DESC::Buffer(sizeof(s_vertexData));
+        const CD3DX12_HEAP_PROPERTIES heapProps(D3D12_HEAP_TYPE_UPLOAD);
+        auto const resData = CD3DX12_RESOURCE_DESC::Buffer(sizeof(s_vertexData));
 
         DX::ThrowIfFailed(
             device->CreateCommittedResource(&heapProps,
@@ -293,7 +293,7 @@ void Sample::CreateDeviceDependentResources()
             nullptr,
             IID_GRAPHICS_PPV_ARGS(m_vertexBuffer.ReleaseAndGetAddressOf())));
 
-    // Copy the quad data to the vertex buffer.
+        // Copy the quad data to the vertex buffer.
         UINT8* pVertexDataBegin;
         CD3DX12_RANGE readRange(0, 0);		// We do not intend to read from this resource on the CPU.
         DX::ThrowIfFailed(
@@ -316,8 +316,8 @@ void Sample::CreateDeviceDependentResources()
         };
 
         // See note above
-        CD3DX12_HEAP_PROPERTIES heapProps(D3D12_HEAP_TYPE_UPLOAD);
-        auto resData = CD3DX12_RESOURCE_DESC::Buffer(sizeof(s_indexData));
+        const CD3DX12_HEAP_PROPERTIES heapProps(D3D12_HEAP_TYPE_UPLOAD);
+        auto const resData = CD3DX12_RESOURCE_DESC::Buffer(sizeof(s_indexData));
 
         DX::ThrowIfFailed(
             device->CreateCommittedResource(&heapProps,
@@ -327,7 +327,7 @@ void Sample::CreateDeviceDependentResources()
             nullptr,
             IID_GRAPHICS_PPV_ARGS(m_indexBuffer.ReleaseAndGetAddressOf())));
 
-    // Copy the data to the index buffer.
+        // Copy the data to the index buffer.
         UINT8* pVertexDataBegin;
         CD3DX12_RANGE readRange(0, 0);		// We do not intend to read from this resource on the CPU.
         DX::ThrowIfFailed(
@@ -358,7 +358,7 @@ void Sample::CreateDeviceDependentResources()
         txtDesc.Width = width;
         txtDesc.Height = height;
 
-        CD3DX12_HEAP_PROPERTIES heapPropsDefault(D3D12_HEAP_TYPE_DEFAULT);
+        const CD3DX12_HEAP_PROPERTIES heapPropsDefault(D3D12_HEAP_TYPE_DEFAULT);
         DX::ThrowIfFailed(
             device->CreateCommittedResource(
             &heapPropsDefault,
@@ -371,8 +371,8 @@ void Sample::CreateDeviceDependentResources()
         const UINT64 uploadBufferSize = GetRequiredIntermediateSize(m_texture.Get(), 0, 1);
 
         // Create the GPU upload buffer.
-        CD3DX12_HEAP_PROPERTIES heapPropsUpload(D3D12_HEAP_TYPE_UPLOAD);
-        auto uploadDesc = CD3DX12_RESOURCE_DESC::Buffer(uploadBufferSize);
+        const CD3DX12_HEAP_PROPERTIES heapPropsUpload(D3D12_HEAP_TYPE_UPLOAD);
+        auto const uploadDesc = CD3DX12_RESOURCE_DESC::Buffer(uploadBufferSize);
 
         DX::ThrowIfFailed(
             device->CreateCommittedResource(
@@ -390,7 +390,8 @@ void Sample::CreateDeviceDependentResources()
 
         UpdateSubresources(commandList, m_texture.Get(), textureUploadHeap.Get(), 0, 0, 1, &textureData);
 
-        auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(m_texture.Get(), D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
+        auto const barrier = CD3DX12_RESOURCE_BARRIER::Transition(m_texture.Get(),
+            D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
         commandList->ResourceBarrier(1, &barrier);
 
         // Describe and create a SRV for the texture.

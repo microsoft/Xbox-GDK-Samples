@@ -55,13 +55,16 @@ foreach(FILE ../VertexShader.hlsl ../PixelShader.hlsl)
 endforeach(FILE)
 
 # Microsoft Config File
+set(TDF_NAME "Scarlett")
+configure_file(../MicrosoftGameConfig.mgc MicrosoftGame.config @ONLY)
+
 add_custom_target(mgccompile)
 
 add_custom_command(TARGET mgccompile
-                   COMMAND ${MGCToolPath}/makepkg.exe localize /d "${CMAKE_CURRENT_SOURCE_DIR}" /pd "${CMAKE_BINARY_DIR}/bin/Gaming.Desktop.x64"
+                   COMMAND ${MGCToolPath}/makepkg.exe localize /d "${CMAKE_BINARY_DIR}" /pd "${CMAKE_BINARY_DIR}/bin/Gaming.Xbox.Scarlett.x64"
                    MAIN_DEPENDENCY MicrosoftGame.config
                    COMMENT "makepkg localize MicrosoftGame.config"
-                   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+                   WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
                    VERBATIM)
 
 add_dependencies(${PROJECT_NAME} mgccompile shaders)
@@ -113,6 +116,11 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
       target_compile_options(${PROJECT_NAME} PRIVATE /analyze)
    endif()
 
+   # /ZH:SHA_256 (secure source hashing)
+   if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.24)
+      target_compile_options(${PROJECT_NAME} PRIVATE /ZH:SHA_256)
+   endif()
+
    # /Zc:preprocessor (C99 conformant preprocessor)
    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.26)
       target_compile_options(${PROJECT_NAME} PRIVATE /Zc:preprocessor /wd5105)
@@ -153,7 +161,7 @@ endif()
 add_custom_command(
   TARGET ${PROJECT_NAME} POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy
-    ${CMAKE_CURRENT_SOURCE_DIR}/MicrosoftGame.Config
+    ${CMAKE_BINARY_DIR}/MicrosoftGame.Config
     $<TARGET_FILE_DIR:${PROJECT_NAME}>
       COMMAND ${CMAKE_COMMAND} -E copy
     ${CMAKE_BINARY_DIR}/VertexShader.cso

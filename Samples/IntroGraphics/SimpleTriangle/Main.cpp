@@ -1,7 +1,7 @@
 //--------------------------------------------------------------------------------------
 // Main.cpp
 //
-// Entry point for Microsoft GDK with Xbox extensions.
+// Entry point for Microsoft GDK with Xbox extensions
 //
 // Advanced Technology Group (ATG)
 // Copyright (C) Microsoft Corporation. All rights reserved.
@@ -63,6 +63,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
 
     // Register class and create window
     PAPPSTATE_REGISTRATION hPLM = {};
+    PAPPCONSTRAIN_REGISTRATION hPLM2 = {};
+
     {
         // Register class
         WNDCLASSEXA wcex = {};
@@ -109,13 +111,20 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
                 PostMessage(reinterpret_cast<HWND>(context), WM_USER, 0, 0);
 
                 // To defer suspend, you must wait to exit this callback
-                (void)WaitForSingleObject(g_plmSuspendComplete, INFINITE);
+                std::ignore = WaitForSingleObject(g_plmSuspendComplete, INFINITE);
             }
             else
             {
                 SetEvent(g_plmSignalResume);
             }
         }, hwnd, &hPLM))
+            return 1;
+
+        if (RegisterAppConstrainedChangeNotification([](BOOLEAN constrained, PVOID context)
+        {
+            // To ensure we use the main UI thread to process the notification, we self-post a message
+            SendMessage(reinterpret_cast<HWND>(context), WM_USER + 1, (constrained) ? 1u : 0u, 0);
+        }, hwnd, &hPLM2))
             return 1;
     }
 
@@ -137,6 +146,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
     g_sample.reset();
 
     UnregisterAppStateChangeNotification(hPLM);
+    UnregisterAppConstrainedChangeNotification(hPLM2);
 
     CloseHandle(g_plmSuspendComplete);
     CloseHandle(g_plmSignalResume);
@@ -149,24 +159,38 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
 // Windows procedure
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-   auto sample = reinterpret_cast<Sample*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
+    auto sample = reinterpret_cast<Sample*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
 
-   switch (message)
-   {
-   case WM_USER:
-       if (sample)
-       {
-           sample->OnSuspending();
+    switch (message)
+    {
+    case WM_USER:
+        if (sample)
+        {
+            sample->OnSuspending();
 
-           // Complete deferral
-           SetEvent(g_plmSuspendComplete);
+            // Complete deferral
+            SetEvent(g_plmSuspendComplete);
 
-           (void)WaitForSingleObject(g_plmSignalResume, INFINITE);
+            std::ignore = WaitForSingleObject(g_plmSignalResume, INFINITE);
 
-           sample->OnResuming();
-       }
-       break;
-   }
+            sample->OnResuming();
+        }
+        break;
+
+    case WM_USER + 1:
+        if (sample)
+        {
+            if (wParam)
+            {
+                sample->OnConstrained();
+            }
+            else
+            {
+                sample->OnUnConstrained();
+            }
+        }
+        break;
+    }
 
     return DefWindowProc(hWnd, message, wParam, lParam);
 }

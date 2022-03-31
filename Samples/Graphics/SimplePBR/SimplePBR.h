@@ -51,6 +51,7 @@ public:
     void OnConstrained() {}
     void OnUnConstrained() {}
     void OnWindowMoved();
+    void OnDisplayChange();
     void OnWindowSizeChanged(int width, int height);
 
     // Properties

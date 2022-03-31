@@ -303,6 +303,6 @@ void SingleCoreAsyncTaskQueue::Wait()
 #ifdef _DEBUG
     assert(result >= WAIT_OBJECT_0 && result <= (WAIT_OBJECT_0 + 1) && "Unexpected result from WaitForMultipleObjectsEx");
 #else
-    (void)result;
+    std::ignore = result;
 #endif
 }

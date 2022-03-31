@@ -61,7 +61,7 @@ void Sample::Initialize(HWND window)
     m_fenceEvent.Attach(CreateEvent(nullptr, FALSE, FALSE, nullptr));
     if (!m_fenceEvent.IsValid())
     {
-        throw std::exception("CreateEvent");
+        throw std::system_error(std::error_code(static_cast<int>(GetLastError()), std::system_category()), "CreateEventEx");
     }
 }
 
@@ -107,7 +107,7 @@ void Sample::Update(DX::StepTimer const& timer)
     m_lightColors[1] = XMFLOAT4(0.5f, 0.0f, 0.0f, 1.0f);
 
     // Rotate the second light around the origin
-    XMMATRIX rotate = XMMatrixRotationY(-2.0f * m_curRotationAngleRad);
+    const XMMATRIX rotate = XMMatrixRotationY(-2.0f * m_curRotationAngleRad);
     XMVECTOR lightDir = XMLoadFloat4(&m_lightDirs[1]);
     lightDir = XMVector3Transform(lightDir, rotate);
     XMStoreFloat4(&m_lightDirs[1], lightDir);
@@ -141,8 +141,8 @@ void Sample::Render()
     }
 
     // Check to see if the GPU is keeping up
-    auto frameIdx = m_deviceResources->GetCurrentFrameIndex();
-    auto numBackBuffers = m_deviceResources->GetBackBufferCount();
+    auto const frameIdx = m_deviceResources->GetCurrentFrameIndex();
+    auto const numBackBuffers = m_deviceResources->GetBackBufferCount();
     uint64_t completedValue = m_fence->GetCompletedValue();
     if ((frameIdx > completedValue) // if frame index is reset to zero it may temporarily be smaller than the last GPU signal
         && (frameIdx - completedValue > numBackBuffers))
@@ -202,7 +202,7 @@ void Sample::Render()
     // Render each light
     commandList->SetPipelineState(m_solidColorPipelineState.Get());
 
-    for (int m = 0; m < 2; ++m)
+    for (size_t m = 0; m < 2; ++m)
     {
         XMMATRIX lightMatrix = XMMatrixTranslationFromVector(XMVectorScale(sceneParameters.lightDir[m], 5.0f));
         XMMATRIX lightScaleMatrix = XMMatrixScaling(0.2f, 0.2f, 0.2f);
@@ -242,16 +242,16 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
-    auto dsvDescriptor = m_deviceResources->GetDepthStencilView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::ColorsLinear::Background, 0, nullptr);
     commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -281,7 +281,7 @@ void Sample::CreateDeviceDependentResources()
     auto device = m_deviceResources->GetD3DDevice();
 
     // Create a root signature.
-    auto triangleVSBlob = DX::ReadData(L"TriangleVS.cso");
+    auto const triangleVSBlob = DX::ReadData(L"TriangleVS.cso");
 
     // Xbox One best practice is to use HLSL-based root signatures to support shader precompilation.
 
@@ -319,7 +319,7 @@ void Sample::CreateDeviceDependentResources()
 
         // Create the Pipelline State Object for the Lambert pixel shader
         {
-            auto lambertPSBlob = DX::ReadData(L"LambertPS.cso");
+            auto const lambertPSBlob = DX::ReadData(L"LambertPS.cso");
 
             D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc = {};
             psoDesc.InputLayout = { s_inputElementDesc, _countof(s_inputElementDesc) };
@@ -342,7 +342,7 @@ void Sample::CreateDeviceDependentResources()
 
         // Create the Pipeline State Object for the solid color pixel shader
         {
-            auto solidColorPSBlob = DX::ReadData(L"SolidColorPS.cso");
+            auto const solidColorPSBlob = DX::ReadData(L"SolidColorPS.cso");
 
             D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc = {};
             psoDesc.InputLayout = { s_inputElementDesc, _countof(s_inputElementDesc) };
@@ -510,7 +510,7 @@ void Sample::CreateDeviceDependentResources()
 void Sample::CreateWindowSizeDependentResources()
 {
     // Initialize the projection matrix
-    auto size = m_deviceResources->GetOutputSize();
+    auto const size = m_deviceResources->GetOutputSize();
     m_projectionMatrix = XMMatrixPerspectiveFovLH(XM_PIDIV4, float(size.right) / float(size.bottom), 0.01f, 100.0f);
 }
 #pragma endregion

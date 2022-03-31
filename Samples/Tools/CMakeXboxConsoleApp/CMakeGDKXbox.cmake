@@ -14,7 +14,7 @@ if(_GDK_XBOX_TOOLCHAIN_)
 endif()
 
 # Microsoft Game Development Kit
-set(XdkEditionTarget "200600" CACHE STRING "Microsoft GDK Edition")
+set(XdkEditionTarget "220300" CACHE STRING "Microsoft GDK Edition")
 
 message("XdkEditionTarget = ${XdkEditionTarget}")
 
@@ -33,23 +33,34 @@ if(CMAKE_SIZEOF_VOID_P EQUAL 4)
 endif()
 
 # Locate Visual Studio (needed for VC Runtime DLLs)
-set(VCInstallDir "$ENV{ProgramFiles\(x86\)}/Microsoft Visual Studio/2019/Community/VC")
-if(NOT EXISTS ${VCInstallDir})
-    set(VCInstallDir "$ENV{ProgramFiles\(x86\)}/Microsoft Visual Studio/2019/Professional/VC")
+
+if (NOT DEFINED VCInstallDir AND DEFINED ENV{VCINSTALLDIR})
+    set(VCInstallDir $ENV{VCINSTALLDIR})
 endif()
-if(NOT EXISTS ${VCInstallDir})
-    set(VCInstallDir "$ENV{ProgramFiles\(x86\)}/Microsoft Visual Studio/2019/Enterprise/VC")
+
+if (NOT DEFINED VCInstallDir)
+    set(GDK_VS_EDITIONS "Community" "Professional" "Enterprise" "Preview" "BuildTools")
+    foreach(vsedition IN LISTS GDK_VS_EDITIONS)
+        set(VCInstallDir "$ENV{ProgramFiles\(x86\)}/Microsoft Visual Studio/2019/${vsedition}/VC")
+        if(EXISTS ${VCInstallDir})
+            break()
+        endif()
+    endforeach()
+
+    if (NOT EXISTS ${VCInstallDir})
+        foreach(vsedition IN LISTS GDK_VS_EDITIONS)
+            set(VCInstallDir "$ENV{ProgramFiles}/Microsoft Visual Studio/2022/${vsedition}/VC")
+            if(EXISTS ${VCInstallDir})
+                break()
+            endif()
+        endforeach()
+    endif()
 endif()
-if(NOT EXISTS ${VCInstallDir})
-    set(VCInstallDir "$ENV{ProgramFiles\(x86\)}/Microsoft Visual Studio/2019/Preview/VC")
-endif()
-if(NOT EXISTS ${VCInstallDir})
-    set(VCInstallDir "$ENV{ProgramFiles\(x86\)}/Microsoft Visual Studio/2019/BuildTools/VC")
-endif()
+
 if(EXISTS ${VCInstallDir})
     message("VCInstallDir = ${VCInstallDir}")
 else()
-    message(FATAL_ERROR "ERROR: Failed to locate Visual Studio 2019 install")
+    message(FATAL_ERROR "ERROR: Failed to locate Visual Studio 2019 or 2022 install")
 endif()
 
 # Find VC toolset/runtime versions
@@ -101,13 +112,9 @@ endif()
 
 message("Gaming Windows 10 SDK = ${GamingWindowsSDKDir}")
 
-if (MSVC_TOOLSET_VERSION)
-    set(ExtensionPlatformToolset ${MSVC_TOOLSET_VERSION})
-else()
-    set(ExtensionPlatformToolset 142)
-endif()
+set(ExtensionPlatformToolset 142)
 
-message("Platform Toolset = ${ExtensionPlatformToolset}")
+message("Extension Platform Toolset = ${ExtensionPlatformToolset}")
 
 # Headers
 set(Console_EndpointIncludeRoot
@@ -163,11 +170,18 @@ if(NOT EXISTS ${Console_UCRTRedistDebug}/ucrtbased.dll)
     message(FATAL_ERROR "ERROR: Cannot locate ucrtbased.dll in the Windows 10 SDK (${SDKVersion})")
 endif()
 
-set(CppRuntimeFilesPath "${VCInstallDir}/redist/MSVC/${VCToolsRedistVersion}/onecore/x64/Microsoft.VC${ExtensionPlatformToolset}.CRT")
-set(OpenMPRuntimeFilesPath "${VCInstallDir}/redist/MSVC/${VCToolsRedistVersion}/onecore/x64/Microsoft.VC${ExtensionPlatformToolset}.OpenMP")
+set(CRTPlatformToolset 143)
+if (NOT EXISTS "${VCInstallDir}/redist/MSVC/${VCToolsRedistVersion}/onecore/x64/Microsoft.VC${CRTPlatformToolset}.CRT")
+    set(CRTPlatformToolset 142)
+endif()
+
+message("CRT Platform Toolset = ${CRTPlatformToolset}")
+
+set(CppRuntimeFilesPath "${VCInstallDir}/redist/MSVC/${VCToolsRedistVersion}/onecore/x64/Microsoft.VC${CRTPlatformToolset}.CRT")
+set(OpenMPRuntimeFilesPath "${VCInstallDir}/redist/MSVC/${VCToolsRedistVersion}/onecore/x64/Microsoft.VC${CRTPlatformToolset}.OpenMP")
 if(CMAKE_BUILD_TYPE MATCHES "Debug")
-    set(DebugCppRuntimeFilesPath "${VCInstallDir}/redist/MSVC/${VCToolsRedistVersion}/onecore/Debug_NonRedist/x64/Microsoft.VC${ExtensionPlatformToolset}.DebugCRT")
-    set(DebugOpenMPRuntimeFilesPath "${VCInstallDir}/redist/MSVC/${VCToolsRedistVersion}/onecore/Debug_NonRedist/x64/Microsoft.VC${ExtensionPlatformToolset}.DebugOpenMP")
+    set(DebugCppRuntimeFilesPath "${VCInstallDir}/redist/MSVC/${VCToolsRedistVersion}/onecore/Debug_NonRedist/x64/Microsoft.VC${CRTPlatformToolset}.DebugCRT")
+    set(DebugOpenMPRuntimeFilesPath "${VCInstallDir}/redist/MSVC/${VCToolsRedistVersion}/onecore/Debug_NonRedist/x64/Microsoft.VC${CRTPlatformToolset}.DebugOpenMP")
 endif()
 
 # Required preprocessor defines
@@ -204,7 +218,7 @@ set(UnsupportedLibs advapi32.lib comctl32.lib comsupp.lib dbghelp.lib gdi32.lib 
 # /MACHINE:X64 /SUBSYSTEM:CONSOLE
 # /DYNAMICBASE
 # /NXCOMPAT
-set(Console_LinkOptions /DYNAMICBASE /NXCOMPAT)
+set(Console_LinkOptions "/SUBSYSTEM:CONSOLE,10.0" "/DYNAMICBASE" "/NXCOMPAT")
 
 # Prevent accidental use of libraries that are not supported by Game Core on Xbox
 foreach(arg ${UnsupportedLibs})
@@ -212,7 +226,7 @@ foreach(arg ${UnsupportedLibs})
 endforeach()
 
 if (OPTIMIZE_FOR_SCARLETT)
-    message("Optimizing code for Xbox Series X/S (won't run on Xbox One)")
+    message("Optimizing code for Xbox Series X|S (won't run on Xbox One)")
 endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")

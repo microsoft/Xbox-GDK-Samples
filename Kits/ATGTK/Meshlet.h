@@ -56,6 +56,10 @@ namespace ATG
     class MeshletSet
     {
     public:
+        MeshletSet() :
+            m_maxVerts(0),
+            m_maxPrims(0),
+            m_indexFormat(DXGI_FORMAT_UNKNOWN) {}
         // Accessors for vertex index & primitive data
         uint32_t        GetVertexIndex(uint32_t index);
         void            GetPrimitive(uint32_t index, uint32_t& v0, uint32_t& v1, uint32_t& v2);

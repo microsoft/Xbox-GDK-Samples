@@ -248,9 +248,6 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
-    <FXCompile>
-      <ShaderModel>5.1</ShaderModel>
-    </FXCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">
     <Link>
@@ -276,9 +273,6 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
-    <FXCompile>
-      <ShaderModel>5.1</ShaderModel>
-    </FXCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">
     <Link>
@@ -302,9 +296,6 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
-    <FXCompile>
-      <ShaderModel>5.1</ShaderModel>
-    </FXCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">
     <Link>
@@ -330,9 +321,6 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
-    <FXCompile>
-      <ShaderModel>5.1</ShaderModel>
-    </FXCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">
     <Link>
@@ -353,9 +341,6 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
-    <FXCompile>
-      <ShaderModel>5.1</ShaderModel>
-    </FXCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">
     <Link>
@@ -378,9 +363,6 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
-    <FXCompile>
-      <ShaderModel>5.1</ShaderModel>
-    </FXCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">
     <Link>
@@ -406,7 +388,9 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <FXCompile>
-      <ShaderModel>5.1</ShaderModel>
+      <ShaderModel>6.0</ShaderModel>
+      <EnableDebuggingInformation>true</EnableDebuggingInformation>
+      <AdditionalOptions>/Fd "$(OutDir)%(Filename).pdb" %(AdditionalOptions)</AdditionalOptions>
     </FXCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">
@@ -433,7 +417,9 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <FXCompile>
-      <ShaderModel>5.1</ShaderModel>
+      <ShaderModel>6.0</ShaderModel>
+      <EnableDebuggingInformation>true</EnableDebuggingInformation>
+      <AdditionalOptions>/Fd "$(OutDir)%(Filename).pdb" %(AdditionalOptions)</AdditionalOptions>
     </FXCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">
@@ -457,7 +443,9 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <FXCompile>
-      <ShaderModel>5.1</ShaderModel>
+      <ShaderModel>6.0</ShaderModel>
+      <EnableDebuggingInformation>true</EnableDebuggingInformation>
+      <AdditionalOptions>/Fd "$(OutDir)%(Filename).pdb" %(AdditionalOptions)</AdditionalOptions>
     </FXCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -497,8 +485,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="DLCPackagePC\makedlcpkg.cmd" />
     <None Include="DLCPackage\Package_Scarlett\MicrosoftGame.config" />
     <None Include="DLCPackage\Package_XboxOne\MicrosoftGame.config" />
+    <None Include="DLCPackagePC\Package\MicrosoftGame.config">
+      <FileType>Document</FileType>
+    </None>
     <MGCCompile Include="MicrosoftGame.Config">
       <SubType>Designer</SubType>
     </MGCCompile>
@@ -656,6 +648,15 @@
     <None Include="DLCPackage\Package_XDK\Assets\SplashScreen.png" />
     <None Include="DLCPackage\Package_XDK\Assets\StoreLogo.png" />
     <None Include="DLCPackage\Package_XDK\Image.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DLCPackagePC\chunks.xml" />
+    <None Include="DLCPackagePC\Package\Assets\LargeLogo.png" />
+    <None Include="DLCPackagePC\Package\Assets\Logo.png" />
+    <None Include="DLCPackagePC\Package\Assets\SmallLogo.png" />
+    <None Include="DLCPackagePC\Package\Assets\SplashScreen.png" />
+    <None Include="DLCPackagePC\Package\Assets\StoreLogo.png" />
+    <None Include="DLCPackagePC\Package\Image.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

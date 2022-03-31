@@ -181,13 +181,11 @@ namespace GameSaveSample {
    //
    void StateManager::Update()
    {
-      auto priorState = GameState::Reset;
       auto state = GameState::Reset;
       auto pendingState = GameState::Reset;
 
       {
          std::lock_guard<std::recursive_mutex> lock( m_lock );
-         priorState = m_priorState;
          state = m_state;
          pendingState = m_pendingState;
       }

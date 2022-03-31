@@ -1,0 +1,224 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>a32b725a-e4ef-41e8-ad90-b71486384819</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>ed29cefb-7adf-4b36-a976-7dc6e1127ad2</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>57f430f6-a51d-486a-8c09-5e8b5c3b37e4</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SampleImplementations">
+      <UniqueIdentifier>{57d0a32b-2dbd-455e-988e-e1c790908f5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="zlib">
+      <UniqueIdentifier>{de2109b4-a073-430d-8241-c1a602858903}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="zlib\include">
+      <UniqueIdentifier>{325880ea-8420-435e-a15a-f41b28898d12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="zlib\lib">
+      <UniqueIdentifier>{43740583-fdcc-4606-a5d5-fa7b1428d463}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="zlib\lib\Debug">
+      <UniqueIdentifier>{6cebfef7-3510-4c54-82a8-7ab722c94840}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="zlib\lib\Release">
+      <UniqueIdentifier>{fed4af16-75e0-49c5-b7f8-5fb4b1bbd9b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DirectStorageWin32">
+      <UniqueIdentifier>{2be32ed6-9e5b-4813-bdd7-8c27b2a52fc6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="SimpleDirectStorageCombo.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleImplementations\Cancellation.h">
+      <Filter>SampleImplementations</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleImplementations\MultipleQueues.h">
+      <Filter>SampleImplementations</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleImplementations\SimpleLoad.h">
+      <Filter>SampleImplementations</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleImplementations\StatusBatch.h">
+      <Filter>SampleImplementations</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleImplementations\StatusFence.h">
+      <Filter>SampleImplementations</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleImplementations\ImplementationBase.h">
+      <Filter>SampleImplementations</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleImplementations\RecommendedPattern.h">
+      <Filter>SampleImplementations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleImplementations\ZLibDecompression.h">
+      <Filter>SampleImplementations</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h" />
+    <ClInclude Include="SampleImplementations\InMemoryZLibDecompression.h">
+      <Filter>SampleImplementations</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectStorageWin32\dstorage_win32.h">
+      <Filter>DirectStorageWin32</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectStorageWin32\dstorageerr_win32.h">
+      <Filter>DirectStorageWin32</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectStorageWin32\DirectStorageCrossPlatform.h">
+      <Filter>DirectStorageWin32</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectStorageWin32\DirectStorageWin32Wrapper.h">
+      <Filter>DirectStorageWin32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\inflate.h">
+      <Filter>zlib\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\inftrees.h">
+      <Filter>zlib\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\trees.h">
+      <Filter>zlib\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\zconf.h">
+      <Filter>zlib\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\zlib.h">
+      <Filter>zlib\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\zutil.h">
+      <Filter>zlib\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\crc32.h">
+      <Filter>zlib\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\deflate.h">
+      <Filter>zlib\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\gzguts.h">
+      <Filter>zlib\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\inffast.h">
+      <Filter>zlib\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\inffixed.h">
+      <Filter>zlib\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\RDTSCPStopWatch.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\OSLockable.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="SimpleDirectStorageCombo.cpp" />
+    <ClCompile Include="SampleImplementations\Cancellation.cpp">
+      <Filter>SampleImplementations</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleImplementations\MultipleQueues.cpp">
+      <Filter>SampleImplementations</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleImplementations\SimpleLoad.cpp">
+      <Filter>SampleImplementations</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleImplementations\StatusBatch.cpp">
+      <Filter>SampleImplementations</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleImplementations\StatusFence.cpp">
+      <Filter>SampleImplementations</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleImplementations\ImplementationBase.cpp">
+      <Filter>SampleImplementations</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleImplementations\RecommendedPattern.cpp">
+      <Filter>SampleImplementations</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleImplementations\ZLibDecompression.cpp">
+      <Filter>SampleImplementations</Filter>
+    </ClCompile>
+    <ClCompile Include="DeviceResources.cpp" />
+    <ClCompile Include="SampleImplementations\InMemoryZLibDecompression.cpp">
+      <Filter>SampleImplementations</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectStorageWin32\DirectStorageWin32WrapperQueue.cpp">
+      <Filter>DirectStorageWin32</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectStorageWin32\DirectStorageWin32WrapperStatusArray.cpp">
+      <Filter>DirectStorageWin32</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectStorageWin32\DirectStorageWin32WrapperFactory.cpp">
+      <Filter>DirectStorageWin32</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectStorageWin32\DirectStorageWin32WrapperFile.cpp">
+      <Filter>DirectStorageWin32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\RDTSCPStopwatch.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
+      <Filter>Assets</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Media\Fonts\XboxOneController.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_24.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Readme.docx" />
+    <None Include="..\..\NuGet.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\..\Kits\OpenSource\zlib\lib\Debug\zlibstatic.lib">
+      <Filter>zlib\lib\Debug</Filter>
+    </Library>
+    <Library Include="..\..\..\Kits\OpenSource\zlib\lib\Release\zlibstatic.lib">
+      <Filter>zlib\lib\Release</Filter>
+    </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGame.config" />
+  </ItemGroup>
+</Project>

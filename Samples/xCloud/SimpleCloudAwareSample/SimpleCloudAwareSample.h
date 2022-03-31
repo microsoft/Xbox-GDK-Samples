@@ -29,16 +29,10 @@ enum CurrentOverlay
 
 struct ClientDevice
 {
-    XGameStreamingClientId id;
-    bool validOverlay;
-    bool smallScreen;
-
-    ClientDevice()
-    {
-        id = XGameStreamingNullClientId;
-        validOverlay = false;
-        smallScreen = false;
-    }
+    XGameStreamingClientId id = XGameStreamingNullClientId;
+    XTaskQueueRegistrationToken propertiesChangedRegistration = {};
+    bool validOverlay = false;
+    bool smallScreen = false;
 };
 
 // A basic sample implementation that creates a D3D12 device and
@@ -70,7 +64,9 @@ public:
 
     // Properties
     bool RequestHDRMode() const noexcept { return m_deviceResources ? (m_deviceResources->GetDeviceOptions() & DX::DeviceResources::c_EnableHDR) != 0 : false; }
+    XTaskQueueHandle GetTaskQueue() const noexcept { return m_queue; };
 
+    ClientDevice* GetClientById(XGameStreamingClientId clientId);
     void UpdateClientState();
 
     ClientDevice m_clients[c_maxClients];

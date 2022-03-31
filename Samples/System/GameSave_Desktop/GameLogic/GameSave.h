@@ -27,7 +27,7 @@ constexpr uint32_t DEFAULT_MINIMUM_SAVE_SIZE = 0;
 
 constexpr size_t CalculateMaxBlobReadTransferBufferSize( size_t blobCount )
 {
-   return GS_MAX_BLOB_SIZE + ( GS_MAX_BLOB_NAME_SIZE + sizeof( XGameSaveBlob ) ) * blobCount;
+   return ( GS_MAX_BLOB_SIZE + GS_MAX_BLOB_NAME_SIZE + sizeof( XGameSaveBlob ) ) * blobCount;
 }
 
 // The type of operation we can perform on a blob - basically write/update it, or delete it.

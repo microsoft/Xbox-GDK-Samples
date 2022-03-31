@@ -61,10 +61,12 @@ For more ATG samples, see [DirectML-Samples](https://github.com/microsoft/Direct
 |                       DeferredParticles|             [Xbox](Samples/Graphics/DeferredParticles)|                                                       |                                                       |
 |                         ExecuteIndirect|               [Xbox](Samples/Graphics/ExecuteIndirect)|                                                       |                                                       |
 |                       FastBlockCompress|             [Xbox](Samples/Graphics/FastBlockCompress)|                                                       |                                                       |
+|                                   HDR10|                         [Xbox](Samples/Graphics/HDR10)|                                                       |                                                       |
 |                             HistogramCS|                   [Xbox](Samples/Graphics/HistogramCS)|                                                       |                                                       |
 |                             HlslCompile|                   [Xbox](Samples/Graphics/HlslCompile)|                                                       |                   [Tool](Samples/Graphics/HlslCompile)|
 |                       MeshletInstancing|             [Xbox](Samples/Graphics/MeshletInstancing)|               [PC](Samples/Graphics/MeshletInstancing)|                                                       |
 |                            PointSprites|                  [Xbox](Samples/Graphics/PointSprites)|                                                       |                                                       |
+|                               SimpleHDR|                     [Xbox](Samples/Graphics/SimpleHDR)|                                                       |                                                       |
 |                               SimplePBR|                     [Xbox](Samples/Graphics/SimplePBR)|                       [PC](Samples/Graphics/SimplePBR)|                                                       |
 |                         SmokeSimulation|               [Xbox](Samples/Graphics/SmokeSimulation)|                                                       |                                                       |
 |                        VisibilityBuffer|[Xbox](Samples/Graphics/VisibilityBuffer/VisibilityBuffer)|[PC](Samples/Graphics/VisibilityBuffer/VisibilityBuffer)|                                                       |
@@ -89,7 +91,7 @@ For more ATG samples, see [DirectML-Samples](https://github.com/microsoft/Direct
 
 |                                    Path|                                                   Xbox|                                                     PC|                                                   Tool|
 |----------------------------------------|                                                 ------|                                                 ------|                                                 ------|
-|                        Achievements2017|                  [Xbox](Samples/Live/Achievements2017)|            [PC](Samples/Live/Achievements2017_desktop)|                                                       |
+|                            Achievements|                      [Xbox](Samples/Live/Achievements)|                        [PC](Samples/Live/Achievements)|                                                       |
 |                     DownloadableContent|               [Xbox](Samples/Live/DownloadableContent)|                 [PC](Samples/Live/DownloadableContent)|                                                       |
 |                            Fundamentals|                                                       |                [PC](Samples/Live/Fundamentals_Desktop)|                                                       |
 |                             InGameStore|                       [Xbox](Samples/Live/InGameStore)|                         [PC](Samples/Live/InGameStore)|                                                       |
@@ -101,7 +103,7 @@ For more ATG samples, see [DirectML-Samples](https://github.com/microsoft/Direct
 |                      SimpleCrossGenMPSD|                [Xbox](Samples/Live/SimpleCrossGenMPSD)|                  [PC](Samples/Live/SimpleCrossGenMPSD)|                                                       |
 |                              SimpleHttp|                        [Xbox](Samples/Live/SimpleHttp)|                          [PC](Samples/Live/SimpleHttp)|                                                       |
 |                        SimpleWebSockets|                  [Xbox](Samples/Live/SimpleWebSockets)|                    [PC](Samples/Live/SimpleWebSockets)|                                                       |
-|                                  Social|                            [Xbox](Samples/Live/Social)|                      [PC](Samples/Live/Social_Desktop)|                                                       |
+|                           SocialManager|                     [Xbox](Samples/Live/SocialManager)|                       [PC](Samples/Live/SocialManager)|                                                       |
 |                            TitleStorage|                      [Xbox](Samples/Live/TitleStorage)|                                                       |                                                       |
 
 ### System
@@ -128,6 +130,8 @@ For more ATG samples, see [DirectML-Samples](https://github.com/microsoft/Direct
 |                            LocalStorage|                    [Xbox](Samples/System/LocalStorage)|                      [PC](Samples/System/LocalStorage)|                                                       |
 |                              MouseInput|                      [Xbox](Samples/System/MouseInput)|                                                       |                                                       |
 |                      NLSAndLocalization|              [Xbox](Samples/System/NLSAndLocalization)|                [PC](Samples/System/NLSAndLocalization)|                                                       |
+|                     SimpleDirectStorage|             [Xbox](Samples/System/SimpleDirectStorage)|                                                       |                                                       |
+|                SimpleDirectStorageCombo|        [Xbox](Samples/System/SimpleDirectStorageCombo)|          [PC](Samples/System/SimpleDirectStorageCombo)|                                                       |
 |                 SimpleExceptionHandling|         [Xbox](Samples/System/SimpleExceptionHandling)|           [PC](Samples/System/SimpleExceptionHandling)|                                                       |
 |                          SimpleFFBWheel|                  [Xbox](Samples/System/SimpleFFBWheel)|                                                       |                                                       |
 |                        SimpleFrontPanel|                [Xbox](Samples/System/SimpleFrontPanel)|                                                       |                                                       |

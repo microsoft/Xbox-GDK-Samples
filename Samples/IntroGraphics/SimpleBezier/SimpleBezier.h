@@ -36,6 +36,8 @@ public:
     // Messages
     void OnSuspending();
     void OnResuming();
+    void OnConstrained() {}
+    void OnUnConstrained() {}
 
 private:
 
@@ -77,8 +79,8 @@ private:
         PartitionFractionalOdd
     };
 
-    static constexpr size_t  c_numPixelShaders = 2;
-    static constexpr size_t  c_numHullShaders = 3;
+    static constexpr size_t c_numPixelShaders = 2;
+    static constexpr size_t c_numHullShaders = 3;
 
     Microsoft::WRL::ComPtr<ID3D12RootSignature>     m_rootSignature;
     Microsoft::WRL::ComPtr<ID3D12PipelineState>     m_PSOs[c_numPixelShaders][c_numHullShaders];

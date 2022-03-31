@@ -11,7 +11,7 @@ if(_GXDK_XS_TOOLCHAIN_)
 endif()
 
 # Microsoft Game Development Kit
-set(XdkEditionTarget "200600" CACHE STRING "Microsoft GDK Edition")
+set(XdkEditionTarget "220300" CACHE STRING "Microsoft GDK Edition")
 
 message("XdkEditionTarget = ${XdkEditionTarget}")
 

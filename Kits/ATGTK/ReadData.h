@@ -57,7 +57,7 @@ namespace DX
         if (!inFile)
             throw std::runtime_error("ReadData");
 
-        std::streampos len = inFile.tellg();
+        const std::streampos len = inFile.tellg();
         if (!inFile)
             throw std::runtime_error("ReadData");
 

@@ -167,10 +167,10 @@ namespace ATG
             // need to loop until the interlock CAS operation is successful
             for (;;)
             {
-                uint32_t currentValue = *((volatile uint32_t*)&m_semaphore);   // this needs to be forced copy, don't want the compiler to optimize it away
-                if (currentValue == 0)                                          // another thread count have grabbed the event
+                const uint32_t currentValue = *((volatile uint32_t*)&m_semaphore);  // this needs to be forced copy, don't want the compiler to optimize it away
+                if (currentValue == 0)                                              // another thread count have grabbed the event
                     return false;
-                uint32_t newValue = currentValue - 1;                           // locking only reduces the count by 1
+                const uint32_t newValue = currentValue - 1;                         // locking only reduces the count by 1
                 if (InterlockedCompareExchange(&m_semaphore, newValue, currentValue) == currentValue)
                     return true;
             }
@@ -181,8 +181,8 @@ namespace ATG
             // need to loop until the interlock CAS operation is successful
             for (;;)
             {
-                uint32_t currentValue = *((volatile uint32_t*)&m_semaphore);    // this needs to be forced copy, don't want the compiler to optimize it away
-                uint32_t newValue = currentValue + releaseCount;
+                const uint32_t currentValue = *((volatile uint32_t*)&m_semaphore);  // this needs to be forced copy, don't want the compiler to optimize it away
+                const uint32_t newValue = currentValue + releaseCount;
                 if (InterlockedCompareExchange(&m_semaphore, newValue, currentValue) == currentValue)
                     break;
             }

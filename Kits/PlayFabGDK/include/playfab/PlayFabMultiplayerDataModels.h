@@ -27,11 +27,14 @@ namespace PlayFab
             AzureRegionSoutheastAsia,
             AzureRegionWestEurope,
             AzureRegionWestUs,
-            AzureRegionChinaEast2,
-            AzureRegionChinaNorth2,
             AzureRegionSouthAfricaNorth,
-            AzureRegionCentralUsEuap,
-            AzureRegionWestCentralUs
+            AzureRegionWestCentralUs,
+            AzureRegionKoreaCentral,
+            AzureRegionFranceCentral,
+            AzureRegionWestUs2,
+            AzureRegionCentralIndia,
+            AzureRegionUaeNorth,
+            AzureRegionUkSouth
         };
 
         inline void ToJsonEnum(const AzureRegion input, Json::Value& output)
@@ -111,29 +114,44 @@ namespace PlayFab
                 output = Json::Value("WestUs");
                 return;
             }
-            if (input == AzureRegion::AzureRegionChinaEast2)
-            {
-                output = Json::Value("ChinaEast2");
-                return;
-            }
-            if (input == AzureRegion::AzureRegionChinaNorth2)
-            {
-                output = Json::Value("ChinaNorth2");
-                return;
-            }
             if (input == AzureRegion::AzureRegionSouthAfricaNorth)
             {
                 output = Json::Value("SouthAfricaNorth");
                 return;
             }
-            if (input == AzureRegion::AzureRegionCentralUsEuap)
-            {
-                output = Json::Value("CentralUsEuap");
-                return;
-            }
             if (input == AzureRegion::AzureRegionWestCentralUs)
             {
                 output = Json::Value("WestCentralUs");
+                return;
+            }
+            if (input == AzureRegion::AzureRegionKoreaCentral)
+            {
+                output = Json::Value("KoreaCentral");
+                return;
+            }
+            if (input == AzureRegion::AzureRegionFranceCentral)
+            {
+                output = Json::Value("FranceCentral");
+                return;
+            }
+            if (input == AzureRegion::AzureRegionWestUs2)
+            {
+                output = Json::Value("WestUs2");
+                return;
+            }
+            if (input == AzureRegion::AzureRegionCentralIndia)
+            {
+                output = Json::Value("CentralIndia");
+                return;
+            }
+            if (input == AzureRegion::AzureRegionUaeNorth)
+            {
+                output = Json::Value("UaeNorth");
+                return;
+            }
+            if (input == AzureRegion::AzureRegionUkSouth)
+            {
+                output = Json::Value("UkSouth");
                 return;
             }
         }
@@ -219,29 +237,44 @@ namespace PlayFab
                 output = AzureRegion::AzureRegionWestUs;
                 return;
             }
-            if (inputStr == "ChinaEast2")
-            {
-                output = AzureRegion::AzureRegionChinaEast2;
-                return;
-            }
-            if (inputStr == "ChinaNorth2")
-            {
-                output = AzureRegion::AzureRegionChinaNorth2;
-                return;
-            }
             if (inputStr == "SouthAfricaNorth")
             {
                 output = AzureRegion::AzureRegionSouthAfricaNorth;
                 return;
             }
-            if (inputStr == "CentralUsEuap")
-            {
-                output = AzureRegion::AzureRegionCentralUsEuap;
-                return;
-            }
             if (inputStr == "WestCentralUs")
             {
                 output = AzureRegion::AzureRegionWestCentralUs;
+                return;
+            }
+            if (inputStr == "KoreaCentral")
+            {
+                output = AzureRegion::AzureRegionKoreaCentral;
+                return;
+            }
+            if (inputStr == "FranceCentral")
+            {
+                output = AzureRegion::AzureRegionFranceCentral;
+                return;
+            }
+            if (inputStr == "WestUs2")
+            {
+                output = AzureRegion::AzureRegionWestUs2;
+                return;
+            }
+            if (inputStr == "CentralIndia")
+            {
+                output = AzureRegion::AzureRegionCentralIndia;
+                return;
+            }
+            if (inputStr == "UaeNorth")
+            {
+                output = AzureRegion::AzureRegionUaeNorth;
+                return;
+            }
+            if (inputStr == "UkSouth")
+            {
+                output = AzureRegion::AzureRegionUkSouth;
                 return;
             }
         }
@@ -254,7 +287,18 @@ namespace PlayFab
             AzureVmFamilyDv3,
             AzureVmFamilyF,
             AzureVmFamilyFsv2,
-            AzureVmFamilyDasv4
+            AzureVmFamilyDasv4,
+            AzureVmFamilyDav4,
+            AzureVmFamilyEav4,
+            AzureVmFamilyEasv4,
+            AzureVmFamilyEv4,
+            AzureVmFamilyEsv4,
+            AzureVmFamilyDsv3,
+            AzureVmFamilyDsv2,
+            AzureVmFamilyNCasT4_v3,
+            AzureVmFamilyDdv4,
+            AzureVmFamilyDdsv4,
+            AzureVmFamilyHBv3
         };
 
         inline void ToJsonEnum(const AzureVmFamily input, Json::Value& output)
@@ -292,6 +336,61 @@ namespace PlayFab
             if (input == AzureVmFamily::AzureVmFamilyDasv4)
             {
                 output = Json::Value("Dasv4");
+                return;
+            }
+            if (input == AzureVmFamily::AzureVmFamilyDav4)
+            {
+                output = Json::Value("Dav4");
+                return;
+            }
+            if (input == AzureVmFamily::AzureVmFamilyEav4)
+            {
+                output = Json::Value("Eav4");
+                return;
+            }
+            if (input == AzureVmFamily::AzureVmFamilyEasv4)
+            {
+                output = Json::Value("Easv4");
+                return;
+            }
+            if (input == AzureVmFamily::AzureVmFamilyEv4)
+            {
+                output = Json::Value("Ev4");
+                return;
+            }
+            if (input == AzureVmFamily::AzureVmFamilyEsv4)
+            {
+                output = Json::Value("Esv4");
+                return;
+            }
+            if (input == AzureVmFamily::AzureVmFamilyDsv3)
+            {
+                output = Json::Value("Dsv3");
+                return;
+            }
+            if (input == AzureVmFamily::AzureVmFamilyDsv2)
+            {
+                output = Json::Value("Dsv2");
+                return;
+            }
+            if (input == AzureVmFamily::AzureVmFamilyNCasT4_v3)
+            {
+                output = Json::Value("NCasT4_v3");
+                return;
+            }
+            if (input == AzureVmFamily::AzureVmFamilyDdv4)
+            {
+                output = Json::Value("Ddv4");
+                return;
+            }
+            if (input == AzureVmFamily::AzureVmFamilyDdsv4)
+            {
+                output = Json::Value("Ddsv4");
+                return;
+            }
+            if (input == AzureVmFamily::AzureVmFamilyHBv3)
+            {
+                output = Json::Value("HBv3");
                 return;
             }
         }
@@ -337,6 +436,61 @@ namespace PlayFab
                 output = AzureVmFamily::AzureVmFamilyDasv4;
                 return;
             }
+            if (inputStr == "Dav4")
+            {
+                output = AzureVmFamily::AzureVmFamilyDav4;
+                return;
+            }
+            if (inputStr == "Eav4")
+            {
+                output = AzureVmFamily::AzureVmFamilyEav4;
+                return;
+            }
+            if (inputStr == "Easv4")
+            {
+                output = AzureVmFamily::AzureVmFamilyEasv4;
+                return;
+            }
+            if (inputStr == "Ev4")
+            {
+                output = AzureVmFamily::AzureVmFamilyEv4;
+                return;
+            }
+            if (inputStr == "Esv4")
+            {
+                output = AzureVmFamily::AzureVmFamilyEsv4;
+                return;
+            }
+            if (inputStr == "Dsv3")
+            {
+                output = AzureVmFamily::AzureVmFamilyDsv3;
+                return;
+            }
+            if (inputStr == "Dsv2")
+            {
+                output = AzureVmFamily::AzureVmFamilyDsv2;
+                return;
+            }
+            if (inputStr == "NCasT4_v3")
+            {
+                output = AzureVmFamily::AzureVmFamilyNCasT4_v3;
+                return;
+            }
+            if (inputStr == "Ddv4")
+            {
+                output = AzureVmFamily::AzureVmFamilyDdv4;
+                return;
+            }
+            if (inputStr == "Ddsv4")
+            {
+                output = AzureVmFamily::AzureVmFamilyDdsv4;
+                return;
+            }
+            if (inputStr == "HBv3")
+            {
+                output = AzureVmFamily::AzureVmFamilyHBv3;
+                return;
+            }
         }
 
         enum class AzureVmSize
@@ -370,7 +524,42 @@ namespace PlayFab
             AzureVmSizeStandard_D2as_v4,
             AzureVmSizeStandard_D4as_v4,
             AzureVmSizeStandard_D8as_v4,
-            AzureVmSizeStandard_D16as_v4
+            AzureVmSizeStandard_D16as_v4,
+            AzureVmSizeStandard_D2a_v4,
+            AzureVmSizeStandard_D4a_v4,
+            AzureVmSizeStandard_D8a_v4,
+            AzureVmSizeStandard_D16a_v4,
+            AzureVmSizeStandard_E2a_v4,
+            AzureVmSizeStandard_E4a_v4,
+            AzureVmSizeStandard_E8a_v4,
+            AzureVmSizeStandard_E16a_v4,
+            AzureVmSizeStandard_E2as_v4,
+            AzureVmSizeStandard_E4as_v4,
+            AzureVmSizeStandard_E8as_v4,
+            AzureVmSizeStandard_E16as_v4,
+            AzureVmSizeStandard_D2s_v3,
+            AzureVmSizeStandard_D4s_v3,
+            AzureVmSizeStandard_D8s_v3,
+            AzureVmSizeStandard_D16s_v3,
+            AzureVmSizeStandard_DS1_v2,
+            AzureVmSizeStandard_DS2_v2,
+            AzureVmSizeStandard_DS3_v2,
+            AzureVmSizeStandard_DS4_v2,
+            AzureVmSizeStandard_DS5_v2,
+            AzureVmSizeStandard_NC4as_T4_v3,
+            AzureVmSizeStandard_D2d_v4,
+            AzureVmSizeStandard_D4d_v4,
+            AzureVmSizeStandard_D8d_v4,
+            AzureVmSizeStandard_D16d_v4,
+            AzureVmSizeStandard_D2ds_v4,
+            AzureVmSizeStandard_D4ds_v4,
+            AzureVmSizeStandard_D8ds_v4,
+            AzureVmSizeStandard_D16ds_v4,
+            AzureVmSizeStandard_HB120_16rs_v3,
+            AzureVmSizeStandard_HB120_32rs_v3,
+            AzureVmSizeStandard_HB120_64rs_v3,
+            AzureVmSizeStandard_HB120_96rs_v3,
+            AzureVmSizeStandard_HB120rs_v3
         };
 
         inline void ToJsonEnum(const AzureVmSize input, Json::Value& output)
@@ -523,6 +712,181 @@ namespace PlayFab
             if (input == AzureVmSize::AzureVmSizeStandard_D16as_v4)
             {
                 output = Json::Value("Standard_D16as_v4");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_D2a_v4)
+            {
+                output = Json::Value("Standard_D2a_v4");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_D4a_v4)
+            {
+                output = Json::Value("Standard_D4a_v4");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_D8a_v4)
+            {
+                output = Json::Value("Standard_D8a_v4");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_D16a_v4)
+            {
+                output = Json::Value("Standard_D16a_v4");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_E2a_v4)
+            {
+                output = Json::Value("Standard_E2a_v4");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_E4a_v4)
+            {
+                output = Json::Value("Standard_E4a_v4");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_E8a_v4)
+            {
+                output = Json::Value("Standard_E8a_v4");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_E16a_v4)
+            {
+                output = Json::Value("Standard_E16a_v4");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_E2as_v4)
+            {
+                output = Json::Value("Standard_E2as_v4");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_E4as_v4)
+            {
+                output = Json::Value("Standard_E4as_v4");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_E8as_v4)
+            {
+                output = Json::Value("Standard_E8as_v4");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_E16as_v4)
+            {
+                output = Json::Value("Standard_E16as_v4");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_D2s_v3)
+            {
+                output = Json::Value("Standard_D2s_v3");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_D4s_v3)
+            {
+                output = Json::Value("Standard_D4s_v3");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_D8s_v3)
+            {
+                output = Json::Value("Standard_D8s_v3");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_D16s_v3)
+            {
+                output = Json::Value("Standard_D16s_v3");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_DS1_v2)
+            {
+                output = Json::Value("Standard_DS1_v2");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_DS2_v2)
+            {
+                output = Json::Value("Standard_DS2_v2");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_DS3_v2)
+            {
+                output = Json::Value("Standard_DS3_v2");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_DS4_v2)
+            {
+                output = Json::Value("Standard_DS4_v2");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_DS5_v2)
+            {
+                output = Json::Value("Standard_DS5_v2");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_NC4as_T4_v3)
+            {
+                output = Json::Value("Standard_NC4as_T4_v3");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_D2d_v4)
+            {
+                output = Json::Value("Standard_D2d_v4");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_D4d_v4)
+            {
+                output = Json::Value("Standard_D4d_v4");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_D8d_v4)
+            {
+                output = Json::Value("Standard_D8d_v4");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_D16d_v4)
+            {
+                output = Json::Value("Standard_D16d_v4");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_D2ds_v4)
+            {
+                output = Json::Value("Standard_D2ds_v4");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_D4ds_v4)
+            {
+                output = Json::Value("Standard_D4ds_v4");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_D8ds_v4)
+            {
+                output = Json::Value("Standard_D8ds_v4");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_D16ds_v4)
+            {
+                output = Json::Value("Standard_D16ds_v4");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_HB120_16rs_v3)
+            {
+                output = Json::Value("Standard_HB120_16rs_v3");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_HB120_32rs_v3)
+            {
+                output = Json::Value("Standard_HB120_32rs_v3");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_HB120_64rs_v3)
+            {
+                output = Json::Value("Standard_HB120_64rs_v3");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_HB120_96rs_v3)
+            {
+                output = Json::Value("Standard_HB120_96rs_v3");
+                return;
+            }
+            if (input == AzureVmSize::AzureVmSizeStandard_HB120rs_v3)
+            {
+                output = Json::Value("Standard_HB120rs_v3");
                 return;
             }
         }
@@ -681,6 +1045,181 @@ namespace PlayFab
             if (inputStr == "Standard_D16as_v4")
             {
                 output = AzureVmSize::AzureVmSizeStandard_D16as_v4;
+                return;
+            }
+            if (inputStr == "Standard_D2a_v4")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_D2a_v4;
+                return;
+            }
+            if (inputStr == "Standard_D4a_v4")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_D4a_v4;
+                return;
+            }
+            if (inputStr == "Standard_D8a_v4")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_D8a_v4;
+                return;
+            }
+            if (inputStr == "Standard_D16a_v4")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_D16a_v4;
+                return;
+            }
+            if (inputStr == "Standard_E2a_v4")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_E2a_v4;
+                return;
+            }
+            if (inputStr == "Standard_E4a_v4")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_E4a_v4;
+                return;
+            }
+            if (inputStr == "Standard_E8a_v4")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_E8a_v4;
+                return;
+            }
+            if (inputStr == "Standard_E16a_v4")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_E16a_v4;
+                return;
+            }
+            if (inputStr == "Standard_E2as_v4")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_E2as_v4;
+                return;
+            }
+            if (inputStr == "Standard_E4as_v4")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_E4as_v4;
+                return;
+            }
+            if (inputStr == "Standard_E8as_v4")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_E8as_v4;
+                return;
+            }
+            if (inputStr == "Standard_E16as_v4")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_E16as_v4;
+                return;
+            }
+            if (inputStr == "Standard_D2s_v3")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_D2s_v3;
+                return;
+            }
+            if (inputStr == "Standard_D4s_v3")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_D4s_v3;
+                return;
+            }
+            if (inputStr == "Standard_D8s_v3")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_D8s_v3;
+                return;
+            }
+            if (inputStr == "Standard_D16s_v3")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_D16s_v3;
+                return;
+            }
+            if (inputStr == "Standard_DS1_v2")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_DS1_v2;
+                return;
+            }
+            if (inputStr == "Standard_DS2_v2")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_DS2_v2;
+                return;
+            }
+            if (inputStr == "Standard_DS3_v2")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_DS3_v2;
+                return;
+            }
+            if (inputStr == "Standard_DS4_v2")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_DS4_v2;
+                return;
+            }
+            if (inputStr == "Standard_DS5_v2")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_DS5_v2;
+                return;
+            }
+            if (inputStr == "Standard_NC4as_T4_v3")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_NC4as_T4_v3;
+                return;
+            }
+            if (inputStr == "Standard_D2d_v4")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_D2d_v4;
+                return;
+            }
+            if (inputStr == "Standard_D4d_v4")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_D4d_v4;
+                return;
+            }
+            if (inputStr == "Standard_D8d_v4")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_D8d_v4;
+                return;
+            }
+            if (inputStr == "Standard_D16d_v4")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_D16d_v4;
+                return;
+            }
+            if (inputStr == "Standard_D2ds_v4")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_D2ds_v4;
+                return;
+            }
+            if (inputStr == "Standard_D4ds_v4")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_D4ds_v4;
+                return;
+            }
+            if (inputStr == "Standard_D8ds_v4")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_D8ds_v4;
+                return;
+            }
+            if (inputStr == "Standard_D16ds_v4")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_D16ds_v4;
+                return;
+            }
+            if (inputStr == "Standard_HB120_16rs_v3")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_HB120_16rs_v3;
+                return;
+            }
+            if (inputStr == "Standard_HB120_32rs_v3")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_HB120_32rs_v3;
+                return;
+            }
+            if (inputStr == "Standard_HB120_64rs_v3")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_HB120_64rs_v3;
+                return;
+            }
+            if (inputStr == "Standard_HB120_96rs_v3")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_HB120_96rs_v3;
+                return;
+            }
+            if (inputStr == "Standard_HB120rs_v3")
+            {
+                output = AzureVmSize::AzureVmSizeStandard_HB120rs_v3;
                 return;
             }
         }
@@ -1094,25 +1633,19 @@ namespace PlayFab
             std::string AliasId;
             std::string AliasName;
             std::list<BuildSelectionCriterion> BuildSelectionCriteria;
-            Int32 PageSize;
-            std::string SkipToken;
 
             BuildAliasDetailsResponse() :
                 PlayFabResultCommon(),
                 AliasId(),
                 AliasName(),
-                BuildSelectionCriteria(),
-                PageSize(),
-                SkipToken()
+                BuildSelectionCriteria()
             {}
 
             BuildAliasDetailsResponse(const BuildAliasDetailsResponse& src) :
                 PlayFabResultCommon(),
                 AliasId(src.AliasId),
                 AliasName(src.AliasName),
-                BuildSelectionCriteria(src.BuildSelectionCriteria),
-                PageSize(src.PageSize),
-                SkipToken(src.SkipToken)
+                BuildSelectionCriteria(src.BuildSelectionCriteria)
             {}
 
             ~BuildAliasDetailsResponse() = default;
@@ -1122,8 +1655,6 @@ namespace PlayFab
                 FromJsonUtilS(input["AliasId"], AliasId);
                 FromJsonUtilS(input["AliasName"], AliasName);
                 FromJsonUtilO(input["BuildSelectionCriteria"], BuildSelectionCriteria);
-                FromJsonUtilP(input["PageSize"], PageSize);
-                FromJsonUtilS(input["SkipToken"], SkipToken);
             }
 
             Json::Value ToJson() const override
@@ -1132,8 +1663,6 @@ namespace PlayFab
                 Json::Value each_AliasId; ToJsonUtilS(AliasId, each_AliasId); output["AliasId"] = each_AliasId;
                 Json::Value each_AliasName; ToJsonUtilS(AliasName, each_AliasName); output["AliasName"] = each_AliasName;
                 Json::Value each_BuildSelectionCriteria; ToJsonUtilO(BuildSelectionCriteria, each_BuildSelectionCriteria); output["BuildSelectionCriteria"] = each_BuildSelectionCriteria;
-                Json::Value each_PageSize; ToJsonUtilP(PageSize, each_PageSize); output["PageSize"] = each_PageSize;
-                Json::Value each_SkipToken; ToJsonUtilS(SkipToken, each_SkipToken); output["SkipToken"] = each_SkipToken;
                 return output;
             }
         };
@@ -1284,23 +1813,117 @@ namespace PlayFab
             }
         };
 
+        struct Schedule : public PlayFabBaseModel
+        {
+            std::string Description;
+            time_t EndTime;
+            bool IsDisabled;
+            bool IsRecurringWeekly;
+            time_t StartTime;
+            Int32 TargetStandby;
+
+            Schedule() :
+                PlayFabBaseModel(),
+                Description(),
+                EndTime(),
+                IsDisabled(),
+                IsRecurringWeekly(),
+                StartTime(),
+                TargetStandby()
+            {}
+
+            Schedule(const Schedule& src) :
+                PlayFabBaseModel(),
+                Description(src.Description),
+                EndTime(src.EndTime),
+                IsDisabled(src.IsDisabled),
+                IsRecurringWeekly(src.IsRecurringWeekly),
+                StartTime(src.StartTime),
+                TargetStandby(src.TargetStandby)
+            {}
+
+            ~Schedule() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["Description"], Description);
+                FromJsonUtilT(input["EndTime"], EndTime);
+                FromJsonUtilP(input["IsDisabled"], IsDisabled);
+                FromJsonUtilP(input["IsRecurringWeekly"], IsRecurringWeekly);
+                FromJsonUtilT(input["StartTime"], StartTime);
+                FromJsonUtilP(input["TargetStandby"], TargetStandby);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_Description; ToJsonUtilS(Description, each_Description); output["Description"] = each_Description;
+                Json::Value each_EndTime; ToJsonUtilT(EndTime, each_EndTime); output["EndTime"] = each_EndTime;
+                Json::Value each_IsDisabled; ToJsonUtilP(IsDisabled, each_IsDisabled); output["IsDisabled"] = each_IsDisabled;
+                Json::Value each_IsRecurringWeekly; ToJsonUtilP(IsRecurringWeekly, each_IsRecurringWeekly); output["IsRecurringWeekly"] = each_IsRecurringWeekly;
+                Json::Value each_StartTime; ToJsonUtilT(StartTime, each_StartTime); output["StartTime"] = each_StartTime;
+                Json::Value each_TargetStandby; ToJsonUtilP(TargetStandby, each_TargetStandby); output["TargetStandby"] = each_TargetStandby;
+                return output;
+            }
+        };
+
+        struct ScheduledStandbySettings : public PlayFabBaseModel
+        {
+            bool IsEnabled;
+            std::list<Schedule> ScheduleList;
+
+            ScheduledStandbySettings() :
+                PlayFabBaseModel(),
+                IsEnabled(),
+                ScheduleList()
+            {}
+
+            ScheduledStandbySettings(const ScheduledStandbySettings& src) :
+                PlayFabBaseModel(),
+                IsEnabled(src.IsEnabled),
+                ScheduleList(src.ScheduleList)
+            {}
+
+            ~ScheduledStandbySettings() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilP(input["IsEnabled"], IsEnabled);
+                FromJsonUtilO(input["ScheduleList"], ScheduleList);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_IsEnabled; ToJsonUtilP(IsEnabled, each_IsEnabled); output["IsEnabled"] = each_IsEnabled;
+                Json::Value each_ScheduleList; ToJsonUtilO(ScheduleList, each_ScheduleList); output["ScheduleList"] = each_ScheduleList;
+                return output;
+            }
+        };
+
         struct BuildRegion : public PlayFabBaseModel
         {
             Boxed<CurrentServerStats> pfCurrentServerStats;
             Boxed<DynamicStandbySettings> pfDynamicStandbySettings;
             Int32 MaxServers;
+            Boxed<Int32> MultiplayerServerCountPerVm;
             std::string Region;
+            Boxed<ScheduledStandbySettings> pfScheduledStandbySettings;
             Int32 StandbyServers;
             std::string Status;
+            Boxed<AzureVmSize> VmSize;
 
             BuildRegion() :
                 PlayFabBaseModel(),
                 pfCurrentServerStats(),
                 pfDynamicStandbySettings(),
                 MaxServers(),
+                MultiplayerServerCountPerVm(),
                 Region(),
+                pfScheduledStandbySettings(),
                 StandbyServers(),
-                Status()
+                Status(),
+                VmSize()
             {}
 
             BuildRegion(const BuildRegion& src) :
@@ -1308,9 +1931,12 @@ namespace PlayFab
                 pfCurrentServerStats(src.pfCurrentServerStats),
                 pfDynamicStandbySettings(src.pfDynamicStandbySettings),
                 MaxServers(src.MaxServers),
+                MultiplayerServerCountPerVm(src.MultiplayerServerCountPerVm),
                 Region(src.Region),
+                pfScheduledStandbySettings(src.pfScheduledStandbySettings),
                 StandbyServers(src.StandbyServers),
-                Status(src.Status)
+                Status(src.Status),
+                VmSize(src.VmSize)
             {}
 
             ~BuildRegion() = default;
@@ -1320,9 +1946,12 @@ namespace PlayFab
                 FromJsonUtilO(input["CurrentServerStats"], pfCurrentServerStats);
                 FromJsonUtilO(input["DynamicStandbySettings"], pfDynamicStandbySettings);
                 FromJsonUtilP(input["MaxServers"], MaxServers);
+                FromJsonUtilP(input["MultiplayerServerCountPerVm"], MultiplayerServerCountPerVm);
                 FromJsonUtilS(input["Region"], Region);
+                FromJsonUtilO(input["ScheduledStandbySettings"], pfScheduledStandbySettings);
                 FromJsonUtilP(input["StandbyServers"], StandbyServers);
                 FromJsonUtilS(input["Status"], Status);
+                FromJsonUtilE(input["VmSize"], VmSize);
             }
 
             Json::Value ToJson() const override
@@ -1331,9 +1960,12 @@ namespace PlayFab
                 Json::Value each_pfCurrentServerStats; ToJsonUtilO(pfCurrentServerStats, each_pfCurrentServerStats); output["CurrentServerStats"] = each_pfCurrentServerStats;
                 Json::Value each_pfDynamicStandbySettings; ToJsonUtilO(pfDynamicStandbySettings, each_pfDynamicStandbySettings); output["DynamicStandbySettings"] = each_pfDynamicStandbySettings;
                 Json::Value each_MaxServers; ToJsonUtilP(MaxServers, each_MaxServers); output["MaxServers"] = each_MaxServers;
+                Json::Value each_MultiplayerServerCountPerVm; ToJsonUtilP(MultiplayerServerCountPerVm, each_MultiplayerServerCountPerVm); output["MultiplayerServerCountPerVm"] = each_MultiplayerServerCountPerVm;
                 Json::Value each_Region; ToJsonUtilS(Region, each_Region); output["Region"] = each_Region;
+                Json::Value each_pfScheduledStandbySettings; ToJsonUtilO(pfScheduledStandbySettings, each_pfScheduledStandbySettings); output["ScheduledStandbySettings"] = each_pfScheduledStandbySettings;
                 Json::Value each_StandbyServers; ToJsonUtilP(StandbyServers, each_StandbyServers); output["StandbyServers"] = each_StandbyServers;
                 Json::Value each_Status; ToJsonUtilS(Status, each_Status); output["Status"] = each_Status;
+                Json::Value each_VmSize; ToJsonUtilE(VmSize, each_VmSize); output["VmSize"] = each_VmSize;
                 return output;
             }
         };
@@ -1342,23 +1974,32 @@ namespace PlayFab
         {
             Boxed<DynamicStandbySettings> pfDynamicStandbySettings;
             Int32 MaxServers;
+            Boxed<Int32> MultiplayerServerCountPerVm;
             std::string Region;
+            Boxed<ScheduledStandbySettings> pfScheduledStandbySettings;
             Int32 StandbyServers;
+            Boxed<AzureVmSize> VmSize;
 
             BuildRegionParams() :
                 PlayFabBaseModel(),
                 pfDynamicStandbySettings(),
                 MaxServers(),
+                MultiplayerServerCountPerVm(),
                 Region(),
-                StandbyServers()
+                pfScheduledStandbySettings(),
+                StandbyServers(),
+                VmSize()
             {}
 
             BuildRegionParams(const BuildRegionParams& src) :
                 PlayFabBaseModel(),
                 pfDynamicStandbySettings(src.pfDynamicStandbySettings),
                 MaxServers(src.MaxServers),
+                MultiplayerServerCountPerVm(src.MultiplayerServerCountPerVm),
                 Region(src.Region),
-                StandbyServers(src.StandbyServers)
+                pfScheduledStandbySettings(src.pfScheduledStandbySettings),
+                StandbyServers(src.StandbyServers),
+                VmSize(src.VmSize)
             {}
 
             ~BuildRegionParams() = default;
@@ -1367,8 +2008,11 @@ namespace PlayFab
             {
                 FromJsonUtilO(input["DynamicStandbySettings"], pfDynamicStandbySettings);
                 FromJsonUtilP(input["MaxServers"], MaxServers);
+                FromJsonUtilP(input["MultiplayerServerCountPerVm"], MultiplayerServerCountPerVm);
                 FromJsonUtilS(input["Region"], Region);
+                FromJsonUtilO(input["ScheduledStandbySettings"], pfScheduledStandbySettings);
                 FromJsonUtilP(input["StandbyServers"], StandbyServers);
+                FromJsonUtilE(input["VmSize"], VmSize);
             }
 
             Json::Value ToJson() const override
@@ -1376,8 +2020,11 @@ namespace PlayFab
                 Json::Value output;
                 Json::Value each_pfDynamicStandbySettings; ToJsonUtilO(pfDynamicStandbySettings, each_pfDynamicStandbySettings); output["DynamicStandbySettings"] = each_pfDynamicStandbySettings;
                 Json::Value each_MaxServers; ToJsonUtilP(MaxServers, each_MaxServers); output["MaxServers"] = each_MaxServers;
+                Json::Value each_MultiplayerServerCountPerVm; ToJsonUtilP(MultiplayerServerCountPerVm, each_MultiplayerServerCountPerVm); output["MultiplayerServerCountPerVm"] = each_MultiplayerServerCountPerVm;
                 Json::Value each_Region; ToJsonUtilS(Region, each_Region); output["Region"] = each_Region;
+                Json::Value each_pfScheduledStandbySettings; ToJsonUtilO(pfScheduledStandbySettings, each_pfScheduledStandbySettings); output["ScheduledStandbySettings"] = each_pfScheduledStandbySettings;
                 Json::Value each_StandbyServers; ToJsonUtilP(StandbyServers, each_StandbyServers); output["StandbyServers"] = each_StandbyServers;
+                Json::Value each_VmSize; ToJsonUtilE(VmSize, each_VmSize); output["VmSize"] = each_VmSize;
                 return output;
             }
         };
@@ -1897,6 +2544,45 @@ namespace PlayFab
             }
         };
 
+        struct CoreCapacityChange : public PlayFabBaseModel
+        {
+            Int32 NewCoreLimit;
+            std::string Region;
+            AzureVmFamily VmFamily;
+
+            CoreCapacityChange() :
+                PlayFabBaseModel(),
+                NewCoreLimit(),
+                Region(),
+                VmFamily()
+            {}
+
+            CoreCapacityChange(const CoreCapacityChange& src) :
+                PlayFabBaseModel(),
+                NewCoreLimit(src.NewCoreLimit),
+                Region(src.Region),
+                VmFamily(src.VmFamily)
+            {}
+
+            ~CoreCapacityChange() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilP(input["NewCoreLimit"], NewCoreLimit);
+                FromJsonUtilS(input["Region"], Region);
+                FromJsonEnum(input["VmFamily"], VmFamily);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_NewCoreLimit; ToJsonUtilP(NewCoreLimit, each_NewCoreLimit); output["NewCoreLimit"] = each_NewCoreLimit;
+                Json::Value each_Region; ToJsonUtilS(Region, each_Region); output["Region"] = each_Region;
+                Json::Value each_VmFamily; ToJsonEnum(VmFamily, each_VmFamily); output["VmFamily"] = each_VmFamily;
+                return output;
+            }
+        };
+
         struct CreateBuildAliasRequest : public PlayFabRequestCommon
         {
             std::string AliasName;
@@ -2287,15 +2973,18 @@ namespace PlayFab
 
         struct InstrumentationConfiguration : public PlayFabBaseModel
         {
+            Boxed<bool> IsEnabled;
             std::list<std::string> ProcessesToMonitor;
 
             InstrumentationConfiguration() :
                 PlayFabBaseModel(),
+                IsEnabled(),
                 ProcessesToMonitor()
             {}
 
             InstrumentationConfiguration(const InstrumentationConfiguration& src) :
                 PlayFabBaseModel(),
+                IsEnabled(src.IsEnabled),
                 ProcessesToMonitor(src.ProcessesToMonitor)
             {}
 
@@ -2303,12 +2992,14 @@ namespace PlayFab
 
             void FromJson(const Json::Value& input) override
             {
+                FromJsonUtilP(input["IsEnabled"], IsEnabled);
                 FromJsonUtilS(input["ProcessesToMonitor"], ProcessesToMonitor);
             }
 
             Json::Value ToJson() const override
             {
                 Json::Value output;
+                Json::Value each_IsEnabled; ToJsonUtilP(IsEnabled, each_IsEnabled); output["IsEnabled"] = each_IsEnabled;
                 Json::Value each_ProcessesToMonitor; ToJsonUtilS(ProcessesToMonitor, each_ProcessesToMonitor); output["ProcessesToMonitor"] = each_ProcessesToMonitor;
                 return output;
             }
@@ -2536,6 +3227,7 @@ namespace PlayFab
             std::list<GameCertificateReferenceParams> GameCertificateReferences;
             std::string GameWorkingDirectory;
             Boxed<InstrumentationConfiguration> pfInstrumentationConfiguration;
+            Boxed<bool> IsOSPreview;
             std::map<std::string, std::string> Metadata;
             Int32 MultiplayerServerCountPerVm;
             std::string OsPlatform;
@@ -2554,6 +3246,7 @@ namespace PlayFab
                 GameCertificateReferences(),
                 GameWorkingDirectory(),
                 pfInstrumentationConfiguration(),
+                IsOSPreview(),
                 Metadata(),
                 MultiplayerServerCountPerVm(),
                 OsPlatform(),
@@ -2573,6 +3266,7 @@ namespace PlayFab
                 GameCertificateReferences(src.GameCertificateReferences),
                 GameWorkingDirectory(src.GameWorkingDirectory),
                 pfInstrumentationConfiguration(src.pfInstrumentationConfiguration),
+                IsOSPreview(src.IsOSPreview),
                 Metadata(src.Metadata),
                 MultiplayerServerCountPerVm(src.MultiplayerServerCountPerVm),
                 OsPlatform(src.OsPlatform),
@@ -2594,6 +3288,7 @@ namespace PlayFab
                 FromJsonUtilO(input["GameCertificateReferences"], GameCertificateReferences);
                 FromJsonUtilS(input["GameWorkingDirectory"], GameWorkingDirectory);
                 FromJsonUtilO(input["InstrumentationConfiguration"], pfInstrumentationConfiguration);
+                FromJsonUtilP(input["IsOSPreview"], IsOSPreview);
                 FromJsonUtilS(input["Metadata"], Metadata);
                 FromJsonUtilP(input["MultiplayerServerCountPerVm"], MultiplayerServerCountPerVm);
                 FromJsonUtilS(input["OsPlatform"], OsPlatform);
@@ -2614,6 +3309,7 @@ namespace PlayFab
                 Json::Value each_GameCertificateReferences; ToJsonUtilO(GameCertificateReferences, each_GameCertificateReferences); output["GameCertificateReferences"] = each_GameCertificateReferences;
                 Json::Value each_GameWorkingDirectory; ToJsonUtilS(GameWorkingDirectory, each_GameWorkingDirectory); output["GameWorkingDirectory"] = each_GameWorkingDirectory;
                 Json::Value each_pfInstrumentationConfiguration; ToJsonUtilO(pfInstrumentationConfiguration, each_pfInstrumentationConfiguration); output["InstrumentationConfiguration"] = each_pfInstrumentationConfiguration;
+                Json::Value each_IsOSPreview; ToJsonUtilP(IsOSPreview, each_IsOSPreview); output["IsOSPreview"] = each_IsOSPreview;
                 Json::Value each_Metadata; ToJsonUtilS(Metadata, each_Metadata); output["Metadata"] = each_Metadata;
                 Json::Value each_MultiplayerServerCountPerVm; ToJsonUtilP(MultiplayerServerCountPerVm, each_MultiplayerServerCountPerVm); output["MultiplayerServerCountPerVm"] = each_MultiplayerServerCountPerVm;
                 Json::Value each_OsPlatform; ToJsonUtilS(OsPlatform, each_OsPlatform); output["OsPlatform"] = each_OsPlatform;
@@ -2637,6 +3333,7 @@ namespace PlayFab
             std::list<GameCertificateReference> GameCertificateReferences;
             std::string GameWorkingDirectory;
             Boxed<InstrumentationConfiguration> pfInstrumentationConfiguration;
+            Boxed<bool> IsOSPreview;
             std::map<std::string, std::string> Metadata;
             Int32 MultiplayerServerCountPerVm;
             std::string OsPlatform;
@@ -2658,6 +3355,7 @@ namespace PlayFab
                 GameCertificateReferences(),
                 GameWorkingDirectory(),
                 pfInstrumentationConfiguration(),
+                IsOSPreview(),
                 Metadata(),
                 MultiplayerServerCountPerVm(),
                 OsPlatform(),
@@ -2680,6 +3378,7 @@ namespace PlayFab
                 GameCertificateReferences(src.GameCertificateReferences),
                 GameWorkingDirectory(src.GameWorkingDirectory),
                 pfInstrumentationConfiguration(src.pfInstrumentationConfiguration),
+                IsOSPreview(src.IsOSPreview),
                 Metadata(src.Metadata),
                 MultiplayerServerCountPerVm(src.MultiplayerServerCountPerVm),
                 OsPlatform(src.OsPlatform),
@@ -2704,6 +3403,7 @@ namespace PlayFab
                 FromJsonUtilO(input["GameCertificateReferences"], GameCertificateReferences);
                 FromJsonUtilS(input["GameWorkingDirectory"], GameWorkingDirectory);
                 FromJsonUtilO(input["InstrumentationConfiguration"], pfInstrumentationConfiguration);
+                FromJsonUtilP(input["IsOSPreview"], IsOSPreview);
                 FromJsonUtilS(input["Metadata"], Metadata);
                 FromJsonUtilP(input["MultiplayerServerCountPerVm"], MultiplayerServerCountPerVm);
                 FromJsonUtilS(input["OsPlatform"], OsPlatform);
@@ -2727,6 +3427,7 @@ namespace PlayFab
                 Json::Value each_GameCertificateReferences; ToJsonUtilO(GameCertificateReferences, each_GameCertificateReferences); output["GameCertificateReferences"] = each_GameCertificateReferences;
                 Json::Value each_GameWorkingDirectory; ToJsonUtilS(GameWorkingDirectory, each_GameWorkingDirectory); output["GameWorkingDirectory"] = each_GameWorkingDirectory;
                 Json::Value each_pfInstrumentationConfiguration; ToJsonUtilO(pfInstrumentationConfiguration, each_pfInstrumentationConfiguration); output["InstrumentationConfiguration"] = each_pfInstrumentationConfiguration;
+                Json::Value each_IsOSPreview; ToJsonUtilP(IsOSPreview, each_IsOSPreview); output["IsOSPreview"] = each_IsOSPreview;
                 Json::Value each_Metadata; ToJsonUtilS(Metadata, each_Metadata); output["Metadata"] = each_Metadata;
                 Json::Value each_MultiplayerServerCountPerVm; ToJsonUtilP(MultiplayerServerCountPerVm, each_MultiplayerServerCountPerVm); output["MultiplayerServerCountPerVm"] = each_MultiplayerServerCountPerVm;
                 Json::Value each_OsPlatform; ToJsonUtilS(OsPlatform, each_OsPlatform); output["OsPlatform"] = each_OsPlatform;
@@ -3020,12 +3721,14 @@ namespace PlayFab
 
         struct ServerDetails : public PlayFabBaseModel
         {
+            std::string Fqdn;
             std::string IPV4Address;
             std::list<Port> Ports;
             std::string Region;
 
             ServerDetails() :
                 PlayFabBaseModel(),
+                Fqdn(),
                 IPV4Address(),
                 Ports(),
                 Region()
@@ -3033,6 +3736,7 @@ namespace PlayFab
 
             ServerDetails(const ServerDetails& src) :
                 PlayFabBaseModel(),
+                Fqdn(src.Fqdn),
                 IPV4Address(src.IPV4Address),
                 Ports(src.Ports),
                 Region(src.Region)
@@ -3042,6 +3746,7 @@ namespace PlayFab
 
             void FromJson(const Json::Value& input) override
             {
+                FromJsonUtilS(input["Fqdn"], Fqdn);
                 FromJsonUtilS(input["IPV4Address"], IPV4Address);
                 FromJsonUtilO(input["Ports"], Ports);
                 FromJsonUtilS(input["Region"], Region);
@@ -3050,6 +3755,7 @@ namespace PlayFab
             Json::Value ToJson() const override
             {
                 Json::Value output;
+                Json::Value each_Fqdn; ToJsonUtilS(Fqdn, each_Fqdn); output["Fqdn"] = each_Fqdn;
                 Json::Value each_IPV4Address; ToJsonUtilS(IPV4Address, each_IPV4Address); output["IPV4Address"] = each_IPV4Address;
                 Json::Value each_Ports; ToJsonUtilO(Ports, each_Ports); output["Ports"] = each_Ports;
                 Json::Value each_Region; ToJsonUtilS(Region, each_Region); output["Region"] = each_Region;
@@ -3175,6 +3881,94 @@ namespace PlayFab
                 Json::Value each_GiveUpAfterSeconds; ToJsonUtilP(GiveUpAfterSeconds, each_GiveUpAfterSeconds); output["GiveUpAfterSeconds"] = each_GiveUpAfterSeconds;
                 Json::Value each_Members; ToJsonUtilO(Members, each_Members); output["Members"] = each_Members;
                 Json::Value each_QueueName; ToJsonUtilS(QueueName, each_QueueName); output["QueueName"] = each_QueueName;
+                return output;
+            }
+        };
+
+        struct CreateTitleMultiplayerServersQuotaChangeRequest : public PlayFabRequestCommon
+        {
+            std::string ChangeDescription;
+            std::list<CoreCapacityChange> Changes;
+            std::string ContactEmail;
+            std::map<std::string, std::string> CustomTags;
+            std::string Notes;
+            Boxed<time_t> StartDate;
+
+            CreateTitleMultiplayerServersQuotaChangeRequest() :
+                PlayFabRequestCommon(),
+                ChangeDescription(),
+                Changes(),
+                ContactEmail(),
+                CustomTags(),
+                Notes(),
+                StartDate()
+            {}
+
+            CreateTitleMultiplayerServersQuotaChangeRequest(const CreateTitleMultiplayerServersQuotaChangeRequest& src) :
+                PlayFabRequestCommon(),
+                ChangeDescription(src.ChangeDescription),
+                Changes(src.Changes),
+                ContactEmail(src.ContactEmail),
+                CustomTags(src.CustomTags),
+                Notes(src.Notes),
+                StartDate(src.StartDate)
+            {}
+
+            ~CreateTitleMultiplayerServersQuotaChangeRequest() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["ChangeDescription"], ChangeDescription);
+                FromJsonUtilO(input["Changes"], Changes);
+                FromJsonUtilS(input["ContactEmail"], ContactEmail);
+                FromJsonUtilS(input["CustomTags"], CustomTags);
+                FromJsonUtilS(input["Notes"], Notes);
+                FromJsonUtilT(input["StartDate"], StartDate);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_ChangeDescription; ToJsonUtilS(ChangeDescription, each_ChangeDescription); output["ChangeDescription"] = each_ChangeDescription;
+                Json::Value each_Changes; ToJsonUtilO(Changes, each_Changes); output["Changes"] = each_Changes;
+                Json::Value each_ContactEmail; ToJsonUtilS(ContactEmail, each_ContactEmail); output["ContactEmail"] = each_ContactEmail;
+                Json::Value each_CustomTags; ToJsonUtilS(CustomTags, each_CustomTags); output["CustomTags"] = each_CustomTags;
+                Json::Value each_Notes; ToJsonUtilS(Notes, each_Notes); output["Notes"] = each_Notes;
+                Json::Value each_StartDate; ToJsonUtilT(StartDate, each_StartDate); output["StartDate"] = each_StartDate;
+                return output;
+            }
+        };
+
+        struct CreateTitleMultiplayerServersQuotaChangeResponse : public PlayFabResultCommon
+        {
+            std::string RequestId;
+            bool WasApproved;
+
+            CreateTitleMultiplayerServersQuotaChangeResponse() :
+                PlayFabResultCommon(),
+                RequestId(),
+                WasApproved()
+            {}
+
+            CreateTitleMultiplayerServersQuotaChangeResponse(const CreateTitleMultiplayerServersQuotaChangeResponse& src) :
+                PlayFabResultCommon(),
+                RequestId(src.RequestId),
+                WasApproved(src.WasApproved)
+            {}
+
+            ~CreateTitleMultiplayerServersQuotaChangeResponse() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["RequestId"], RequestId);
+                FromJsonUtilP(input["WasApproved"], WasApproved);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_RequestId; ToJsonUtilS(RequestId, each_RequestId); output["RequestId"] = each_RequestId;
+                Json::Value each_WasApproved; ToJsonUtilP(WasApproved, each_WasApproved); output["WasApproved"] = each_WasApproved;
                 return output;
             }
         };
@@ -3515,6 +4309,74 @@ namespace PlayFab
             {
                 Json::Value output;
                 Json::Value each_Status; ToJsonUtilE(Status, each_Status); output["Status"] = each_Status;
+                return output;
+            }
+        };
+
+        struct GetAssetDownloadUrlRequest : public PlayFabRequestCommon
+        {
+            std::map<std::string, std::string> CustomTags;
+            std::string FileName;
+
+            GetAssetDownloadUrlRequest() :
+                PlayFabRequestCommon(),
+                CustomTags(),
+                FileName()
+            {}
+
+            GetAssetDownloadUrlRequest(const GetAssetDownloadUrlRequest& src) :
+                PlayFabRequestCommon(),
+                CustomTags(src.CustomTags),
+                FileName(src.FileName)
+            {}
+
+            ~GetAssetDownloadUrlRequest() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["CustomTags"], CustomTags);
+                FromJsonUtilS(input["FileName"], FileName);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_CustomTags; ToJsonUtilS(CustomTags, each_CustomTags); output["CustomTags"] = each_CustomTags;
+                Json::Value each_FileName; ToJsonUtilS(FileName, each_FileName); output["FileName"] = each_FileName;
+                return output;
+            }
+        };
+
+        struct GetAssetDownloadUrlResponse : public PlayFabResultCommon
+        {
+            std::string AssetDownloadUrl;
+            std::string FileName;
+
+            GetAssetDownloadUrlResponse() :
+                PlayFabResultCommon(),
+                AssetDownloadUrl(),
+                FileName()
+            {}
+
+            GetAssetDownloadUrlResponse(const GetAssetDownloadUrlResponse& src) :
+                PlayFabResultCommon(),
+                AssetDownloadUrl(src.AssetDownloadUrl),
+                FileName(src.FileName)
+            {}
+
+            ~GetAssetDownloadUrlResponse() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["AssetDownloadUrl"], AssetDownloadUrl);
+                FromJsonUtilS(input["FileName"], FileName);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_AssetDownloadUrl; ToJsonUtilS(AssetDownloadUrl, each_AssetDownloadUrl); output["AssetDownloadUrl"] = each_AssetDownloadUrl;
+                Json::Value each_FileName; ToJsonUtilS(FileName, each_FileName); output["FileName"] = each_FileName;
                 return output;
             }
         };
@@ -4104,6 +4966,7 @@ namespace PlayFab
 
         struct GetMultiplayerServerDetailsResponse : public PlayFabResultCommon
         {
+            std::string BuildId;
             std::list<ConnectedPlayer> ConnectedPlayers;
             std::string FQDN;
             std::string IPV4Address;
@@ -4117,6 +4980,7 @@ namespace PlayFab
 
             GetMultiplayerServerDetailsResponse() :
                 PlayFabResultCommon(),
+                BuildId(),
                 ConnectedPlayers(),
                 FQDN(),
                 IPV4Address(),
@@ -4131,6 +4995,7 @@ namespace PlayFab
 
             GetMultiplayerServerDetailsResponse(const GetMultiplayerServerDetailsResponse& src) :
                 PlayFabResultCommon(),
+                BuildId(src.BuildId),
                 ConnectedPlayers(src.ConnectedPlayers),
                 FQDN(src.FQDN),
                 IPV4Address(src.IPV4Address),
@@ -4147,6 +5012,7 @@ namespace PlayFab
 
             void FromJson(const Json::Value& input) override
             {
+                FromJsonUtilS(input["BuildId"], BuildId);
                 FromJsonUtilO(input["ConnectedPlayers"], ConnectedPlayers);
                 FromJsonUtilS(input["FQDN"], FQDN);
                 FromJsonUtilS(input["IPV4Address"], IPV4Address);
@@ -4162,6 +5028,7 @@ namespace PlayFab
             Json::Value ToJson() const override
             {
                 Json::Value output;
+                Json::Value each_BuildId; ToJsonUtilS(BuildId, each_BuildId); output["BuildId"] = each_BuildId;
                 Json::Value each_ConnectedPlayers; ToJsonUtilO(ConnectedPlayers, each_ConnectedPlayers); output["ConnectedPlayers"] = each_ConnectedPlayers;
                 Json::Value each_FQDN; ToJsonUtilS(FQDN, each_FQDN); output["FQDN"] = each_FQDN;
                 Json::Value each_IPV4Address; ToJsonUtilS(IPV4Address, each_IPV4Address); output["IPV4Address"] = each_IPV4Address;
@@ -4634,6 +5501,128 @@ namespace PlayFab
             }
         };
 
+        struct GetTitleMultiplayerServersQuotaChangeRequest : public PlayFabRequestCommon
+        {
+            std::map<std::string, std::string> CustomTags;
+            std::string RequestId;
+
+            GetTitleMultiplayerServersQuotaChangeRequest() :
+                PlayFabRequestCommon(),
+                CustomTags(),
+                RequestId()
+            {}
+
+            GetTitleMultiplayerServersQuotaChangeRequest(const GetTitleMultiplayerServersQuotaChangeRequest& src) :
+                PlayFabRequestCommon(),
+                CustomTags(src.CustomTags),
+                RequestId(src.RequestId)
+            {}
+
+            ~GetTitleMultiplayerServersQuotaChangeRequest() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["CustomTags"], CustomTags);
+                FromJsonUtilS(input["RequestId"], RequestId);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_CustomTags; ToJsonUtilS(CustomTags, each_CustomTags); output["CustomTags"] = each_CustomTags;
+                Json::Value each_RequestId; ToJsonUtilS(RequestId, each_RequestId); output["RequestId"] = each_RequestId;
+                return output;
+            }
+        };
+
+        struct QuotaChange : public PlayFabBaseModel
+        {
+            std::string ChangeDescription;
+            std::list<CoreCapacityChange> Changes;
+            bool IsPendingReview;
+            std::string Notes;
+            std::string RequestId;
+            std::string ReviewComments;
+            bool WasApproved;
+
+            QuotaChange() :
+                PlayFabBaseModel(),
+                ChangeDescription(),
+                Changes(),
+                IsPendingReview(),
+                Notes(),
+                RequestId(),
+                ReviewComments(),
+                WasApproved()
+            {}
+
+            QuotaChange(const QuotaChange& src) :
+                PlayFabBaseModel(),
+                ChangeDescription(src.ChangeDescription),
+                Changes(src.Changes),
+                IsPendingReview(src.IsPendingReview),
+                Notes(src.Notes),
+                RequestId(src.RequestId),
+                ReviewComments(src.ReviewComments),
+                WasApproved(src.WasApproved)
+            {}
+
+            ~QuotaChange() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["ChangeDescription"], ChangeDescription);
+                FromJsonUtilO(input["Changes"], Changes);
+                FromJsonUtilP(input["IsPendingReview"], IsPendingReview);
+                FromJsonUtilS(input["Notes"], Notes);
+                FromJsonUtilS(input["RequestId"], RequestId);
+                FromJsonUtilS(input["ReviewComments"], ReviewComments);
+                FromJsonUtilP(input["WasApproved"], WasApproved);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_ChangeDescription; ToJsonUtilS(ChangeDescription, each_ChangeDescription); output["ChangeDescription"] = each_ChangeDescription;
+                Json::Value each_Changes; ToJsonUtilO(Changes, each_Changes); output["Changes"] = each_Changes;
+                Json::Value each_IsPendingReview; ToJsonUtilP(IsPendingReview, each_IsPendingReview); output["IsPendingReview"] = each_IsPendingReview;
+                Json::Value each_Notes; ToJsonUtilS(Notes, each_Notes); output["Notes"] = each_Notes;
+                Json::Value each_RequestId; ToJsonUtilS(RequestId, each_RequestId); output["RequestId"] = each_RequestId;
+                Json::Value each_ReviewComments; ToJsonUtilS(ReviewComments, each_ReviewComments); output["ReviewComments"] = each_ReviewComments;
+                Json::Value each_WasApproved; ToJsonUtilP(WasApproved, each_WasApproved); output["WasApproved"] = each_WasApproved;
+                return output;
+            }
+        };
+
+        struct GetTitleMultiplayerServersQuotaChangeResponse : public PlayFabResultCommon
+        {
+            Boxed<QuotaChange> Change;
+
+            GetTitleMultiplayerServersQuotaChangeResponse() :
+                PlayFabResultCommon(),
+                Change()
+            {}
+
+            GetTitleMultiplayerServersQuotaChangeResponse(const GetTitleMultiplayerServersQuotaChangeResponse& src) :
+                PlayFabResultCommon(),
+                Change(src.Change)
+            {}
+
+            ~GetTitleMultiplayerServersQuotaChangeResponse() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilO(input["Change"], Change);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_Change; ToJsonUtilO(Change, each_Change); output["Change"] = each_Change;
+                return output;
+            }
+        };
+
         struct GetTitleMultiplayerServersQuotasRequest : public PlayFabRequestCommon
         {
             std::map<std::string, std::string> CustomTags;
@@ -4867,31 +5856,80 @@ namespace PlayFab
             }
         };
 
-        struct ListBuildAliasesForTitleResponse : public PlayFabResultCommon
+        struct ListBuildAliasesRequest : public PlayFabRequestCommon
+        {
+            std::map<std::string, std::string> CustomTags;
+            Boxed<Int32> PageSize;
+            std::string SkipToken;
+
+            ListBuildAliasesRequest() :
+                PlayFabRequestCommon(),
+                CustomTags(),
+                PageSize(),
+                SkipToken()
+            {}
+
+            ListBuildAliasesRequest(const ListBuildAliasesRequest& src) :
+                PlayFabRequestCommon(),
+                CustomTags(src.CustomTags),
+                PageSize(src.PageSize),
+                SkipToken(src.SkipToken)
+            {}
+
+            ~ListBuildAliasesRequest() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["CustomTags"], CustomTags);
+                FromJsonUtilP(input["PageSize"], PageSize);
+                FromJsonUtilS(input["SkipToken"], SkipToken);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_CustomTags; ToJsonUtilS(CustomTags, each_CustomTags); output["CustomTags"] = each_CustomTags;
+                Json::Value each_PageSize; ToJsonUtilP(PageSize, each_PageSize); output["PageSize"] = each_PageSize;
+                Json::Value each_SkipToken; ToJsonUtilS(SkipToken, each_SkipToken); output["SkipToken"] = each_SkipToken;
+                return output;
+            }
+        };
+
+        struct ListBuildAliasesResponse : public PlayFabResultCommon
         {
             std::list<BuildAliasDetailsResponse> BuildAliases;
+            Int32 PageSize;
+            std::string SkipToken;
 
-            ListBuildAliasesForTitleResponse() :
+            ListBuildAliasesResponse() :
                 PlayFabResultCommon(),
-                BuildAliases()
+                BuildAliases(),
+                PageSize(),
+                SkipToken()
             {}
 
-            ListBuildAliasesForTitleResponse(const ListBuildAliasesForTitleResponse& src) :
+            ListBuildAliasesResponse(const ListBuildAliasesResponse& src) :
                 PlayFabResultCommon(),
-                BuildAliases(src.BuildAliases)
+                BuildAliases(src.BuildAliases),
+                PageSize(src.PageSize),
+                SkipToken(src.SkipToken)
             {}
 
-            ~ListBuildAliasesForTitleResponse() = default;
+            ~ListBuildAliasesResponse() = default;
 
             void FromJson(const Json::Value& input) override
             {
                 FromJsonUtilO(input["BuildAliases"], BuildAliases);
+                FromJsonUtilP(input["PageSize"], PageSize);
+                FromJsonUtilS(input["SkipToken"], SkipToken);
             }
 
             Json::Value ToJson() const override
             {
                 Json::Value output;
                 Json::Value each_BuildAliases; ToJsonUtilO(BuildAliases, each_BuildAliases); output["BuildAliases"] = each_BuildAliases;
+                Json::Value each_PageSize; ToJsonUtilP(PageSize, each_PageSize); output["PageSize"] = each_PageSize;
+                Json::Value each_SkipToken; ToJsonUtilS(SkipToken, each_SkipToken); output["SkipToken"] = each_SkipToken;
                 return output;
             }
         };
@@ -5513,7 +6551,7 @@ namespace PlayFab
         struct ListQosServersForTitleRequest : public PlayFabRequestCommon
         {
             std::map<std::string, std::string> CustomTags;
-            bool IncludeAllRegions;
+            Boxed<bool> IncludeAllRegions;
 
             ListQosServersForTitleRequest() :
                 PlayFabRequestCommon(),
@@ -5651,6 +6689,64 @@ namespace PlayFab
             }
         };
 
+        struct ListTitleMultiplayerServersQuotaChangesRequest : public PlayFabRequestCommon
+        {
+            std::map<std::string, std::string> CustomTags;
+
+            ListTitleMultiplayerServersQuotaChangesRequest() :
+                PlayFabRequestCommon(),
+                CustomTags()
+            {}
+
+            ListTitleMultiplayerServersQuotaChangesRequest(const ListTitleMultiplayerServersQuotaChangesRequest& src) :
+                PlayFabRequestCommon(),
+                CustomTags(src.CustomTags)
+            {}
+
+            ~ListTitleMultiplayerServersQuotaChangesRequest() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["CustomTags"], CustomTags);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_CustomTags; ToJsonUtilS(CustomTags, each_CustomTags); output["CustomTags"] = each_CustomTags;
+                return output;
+            }
+        };
+
+        struct ListTitleMultiplayerServersQuotaChangesResponse : public PlayFabResultCommon
+        {
+            std::list<QuotaChange> Changes;
+
+            ListTitleMultiplayerServersQuotaChangesResponse() :
+                PlayFabResultCommon(),
+                Changes()
+            {}
+
+            ListTitleMultiplayerServersQuotaChangesResponse(const ListTitleMultiplayerServersQuotaChangesResponse& src) :
+                PlayFabResultCommon(),
+                Changes(src.Changes)
+            {}
+
+            ~ListTitleMultiplayerServersQuotaChangesResponse() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilO(input["Changes"], Changes);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_Changes; ToJsonUtilO(Changes, each_Changes); output["Changes"] = each_Changes;
+                return output;
+            }
+        };
+
         struct ListVirtualMachineSummariesRequest : public PlayFabRequestCommon
         {
             std::string BuildId;
@@ -5778,35 +6874,6 @@ namespace PlayFab
             }
         };
 
-        struct MultiplayerEmptyRequest : public PlayFabRequestCommon
-        {
-            std::map<std::string, std::string> CustomTags;
-
-            MultiplayerEmptyRequest() :
-                PlayFabRequestCommon(),
-                CustomTags()
-            {}
-
-            MultiplayerEmptyRequest(const MultiplayerEmptyRequest& src) :
-                PlayFabRequestCommon(),
-                CustomTags(src.CustomTags)
-            {}
-
-            ~MultiplayerEmptyRequest() = default;
-
-            void FromJson(const Json::Value& input) override
-            {
-                FromJsonUtilS(input["CustomTags"], CustomTags);
-            }
-
-            Json::Value ToJson() const override
-            {
-                Json::Value output;
-                Json::Value each_CustomTags; ToJsonUtilS(CustomTags, each_CustomTags); output["CustomTags"] = each_CustomTags;
-                return output;
-            }
-        };
-
         struct RequestMultiplayerServerRequest : public PlayFabRequestCommon
         {
             Boxed<BuildAliasParams> pfBuildAliasParams;
@@ -5868,6 +6935,7 @@ namespace PlayFab
 
         struct RequestMultiplayerServerResponse : public PlayFabResultCommon
         {
+            std::string BuildId;
             std::list<ConnectedPlayer> ConnectedPlayers;
             std::string FQDN;
             std::string IPV4Address;
@@ -5881,6 +6949,7 @@ namespace PlayFab
 
             RequestMultiplayerServerResponse() :
                 PlayFabResultCommon(),
+                BuildId(),
                 ConnectedPlayers(),
                 FQDN(),
                 IPV4Address(),
@@ -5895,6 +6964,7 @@ namespace PlayFab
 
             RequestMultiplayerServerResponse(const RequestMultiplayerServerResponse& src) :
                 PlayFabResultCommon(),
+                BuildId(src.BuildId),
                 ConnectedPlayers(src.ConnectedPlayers),
                 FQDN(src.FQDN),
                 IPV4Address(src.IPV4Address),
@@ -5911,6 +6981,7 @@ namespace PlayFab
 
             void FromJson(const Json::Value& input) override
             {
+                FromJsonUtilS(input["BuildId"], BuildId);
                 FromJsonUtilO(input["ConnectedPlayers"], ConnectedPlayers);
                 FromJsonUtilS(input["FQDN"], FQDN);
                 FromJsonUtilS(input["IPV4Address"], IPV4Address);
@@ -5926,6 +6997,7 @@ namespace PlayFab
             Json::Value ToJson() const override
             {
                 Json::Value output;
+                Json::Value each_BuildId; ToJsonUtilS(BuildId, each_BuildId); output["BuildId"] = each_BuildId;
                 Json::Value each_ConnectedPlayers; ToJsonUtilO(ConnectedPlayers, each_ConnectedPlayers); output["ConnectedPlayers"] = each_ConnectedPlayers;
                 Json::Value each_FQDN; ToJsonUtilS(FQDN, each_FQDN); output["FQDN"] = each_FQDN;
                 Json::Value each_IPV4Address; ToJsonUtilS(IPV4Address, each_IPV4Address); output["IPV4Address"] = each_IPV4Address;
@@ -6010,24 +7082,18 @@ namespace PlayFab
 
         struct ShutdownMultiplayerServerRequest : public PlayFabRequestCommon
         {
-            std::string BuildId;
             std::map<std::string, std::string> CustomTags;
-            std::string Region;
             std::string SessionId;
 
             ShutdownMultiplayerServerRequest() :
                 PlayFabRequestCommon(),
-                BuildId(),
                 CustomTags(),
-                Region(),
                 SessionId()
             {}
 
             ShutdownMultiplayerServerRequest(const ShutdownMultiplayerServerRequest& src) :
                 PlayFabRequestCommon(),
-                BuildId(src.BuildId),
                 CustomTags(src.CustomTags),
-                Region(src.Region),
                 SessionId(src.SessionId)
             {}
 
@@ -6035,18 +7101,14 @@ namespace PlayFab
 
             void FromJson(const Json::Value& input) override
             {
-                FromJsonUtilS(input["BuildId"], BuildId);
                 FromJsonUtilS(input["CustomTags"], CustomTags);
-                FromJsonUtilS(input["Region"], Region);
                 FromJsonUtilS(input["SessionId"], SessionId);
             }
 
             Json::Value ToJson() const override
             {
                 Json::Value output;
-                Json::Value each_BuildId; ToJsonUtilS(BuildId, each_BuildId); output["BuildId"] = each_BuildId;
                 Json::Value each_CustomTags; ToJsonUtilS(CustomTags, each_CustomTags); output["CustomTags"] = each_CustomTags;
-                Json::Value each_Region; ToJsonUtilS(Region, each_Region); output["Region"] = each_Region;
                 Json::Value each_SessionId; ToJsonUtilS(SessionId, each_SessionId); output["SessionId"] = each_SessionId;
                 return output;
             }
@@ -6130,6 +7192,45 @@ namespace PlayFab
                 Json::Value each_AliasId; ToJsonUtilS(AliasId, each_AliasId); output["AliasId"] = each_AliasId;
                 Json::Value each_AliasName; ToJsonUtilS(AliasName, each_AliasName); output["AliasName"] = each_AliasName;
                 Json::Value each_BuildSelectionCriteria; ToJsonUtilO(BuildSelectionCriteria, each_BuildSelectionCriteria); output["BuildSelectionCriteria"] = each_BuildSelectionCriteria;
+                Json::Value each_CustomTags; ToJsonUtilS(CustomTags, each_CustomTags); output["CustomTags"] = each_CustomTags;
+                return output;
+            }
+        };
+
+        struct UpdateBuildNameRequest : public PlayFabRequestCommon
+        {
+            std::string BuildId;
+            std::string BuildName;
+            std::map<std::string, std::string> CustomTags;
+
+            UpdateBuildNameRequest() :
+                PlayFabRequestCommon(),
+                BuildId(),
+                BuildName(),
+                CustomTags()
+            {}
+
+            UpdateBuildNameRequest(const UpdateBuildNameRequest& src) :
+                PlayFabRequestCommon(),
+                BuildId(src.BuildId),
+                BuildName(src.BuildName),
+                CustomTags(src.CustomTags)
+            {}
+
+            ~UpdateBuildNameRequest() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilS(input["BuildId"], BuildId);
+                FromJsonUtilS(input["BuildName"], BuildName);
+                FromJsonUtilS(input["CustomTags"], CustomTags);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_BuildId; ToJsonUtilS(BuildId, each_BuildId); output["BuildId"] = each_BuildId;
+                Json::Value each_BuildName; ToJsonUtilS(BuildName, each_BuildName); output["BuildName"] = each_BuildName;
                 Json::Value each_CustomTags; ToJsonUtilS(CustomTags, each_CustomTags); output["CustomTags"] = each_CustomTags;
                 return output;
             }

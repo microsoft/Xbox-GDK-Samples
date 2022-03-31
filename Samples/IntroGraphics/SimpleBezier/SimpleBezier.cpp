@@ -46,12 +46,12 @@ namespace
     };
 
     // Min and max divisions of the patch per side for the slider control.
-    const float c_minDivs = 4.0f;
-    const float c_maxDivs = 16.0f;
+    constexpr float c_minDivs = 4.0f;
+    constexpr float c_maxDivs = 16.0f;
     // Startup subdivisions per side.
-    const float c_defaultSubdivs = 8.0f;
+    constexpr float c_defaultSubdivs = 8.0f;
     // Camera's rotation angle per step.
-    const float c_rotationAnglePerStep = XM_2PI / 360.0f;
+    constexpr float c_rotationAnglePerStep = XM_2PI / 360.0f;
 
     // Initial camera setup
     const XMVECTORF32 c_cameraEye = { 0.0f, 0.45f, 2.7f, 0.0f };
@@ -155,7 +155,7 @@ void Sample::Initialize(HWND window)
 
     m_deviceResources->SetWindow(window);
 
-    m_deviceResources->CreateDeviceResources();  	
+    m_deviceResources->CreateDeviceResources();
     CreateDeviceDependentResources();
 
     m_deviceResources->CreateWindowSizeDependentResources();
@@ -307,8 +307,8 @@ void Sample::Render()
         ID3D12DescriptorHeap* fontHeaps[] = { m_fontDescriptors->Heap() };
         commandList->SetDescriptorHeaps(_countof(fontHeaps), fontHeaps);
 
-        auto size = m_deviceResources->GetOutputSize();
-        auto safe = SimpleMath::Viewport::ComputeTitleSafeArea(UINT(size.right), UINT(size.bottom));
+        auto const size = m_deviceResources->GetOutputSize();
+        auto const safe = SimpleMath::Viewport::ComputeTitleSafeArea(UINT(size.right), UINT(size.bottom));
 
         m_batch->Begin(commandList);
 
@@ -343,8 +343,8 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
-    auto dsvDescriptor = m_deviceResources->GetDepthStencilView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
     // Use linear clear color for gamma-correct rendering.
@@ -352,8 +352,8 @@ void Sample::Clear()
     commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -396,7 +396,8 @@ void Sample::CreateDeviceDependentResources()
     // UI resources
     m_fontDescriptors = std::make_unique<DescriptorHeap>(device, Descriptors::Count);
 
-    RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
+    const RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(),
+        m_deviceResources->GetDepthBufferFormat());
     SpriteBatchPipelineStateDescription pd(rtState, &CommonStates::AlphaBlend);
 
     ResourceUploadBatch uploadBatch(device);
@@ -416,9 +417,9 @@ void Sample::CreateShaders()
     auto device = m_deviceResources->GetD3DDevice();
 
     // Create root signature.
-    auto vertexShaderBlob = DX::ReadData(L"BezierVS.cso");
+    auto const vertexShaderBlob = DX::ReadData(L"BezierVS.cso");
 
-    // Xbox One best practice is to use HLSL-based root signatures to support shader precompilation.
+    // Xbox best practice is to use HLSL-based root signatures to support shader precompilation.
 
     DX::ThrowIfFailed(
         device->CreateRootSignature(0, vertexShaderBlob.data(), vertexShaderBlob.size(),
@@ -436,7 +437,7 @@ void Sample::CreateShaders()
     hullShaderBlobs[(int)PartitionMode::PartitionFractionalEven] = DX::ReadData(L"BezierHS_fracEven.cso");
     hullShaderBlobs[(int)PartitionMode::PartitionFractionalOdd] = DX::ReadData(L"BezierHS_fracOdd.cso");
 
-    auto domainShaderBlob = DX::ReadData(L"BezierDS.cso");
+    auto const domainShaderBlob = DX::ReadData(L"BezierDS.cso");
 
     std::vector<uint8_t> pixelShaderBlobs[c_numPixelShaders];
     pixelShaderBlobs[0] = DX::ReadData(L"BezierPS.cso");
@@ -466,7 +467,7 @@ void Sample::CreateShaders()
 
     // Enumerate PSOs.
     D3D12_FILL_MODE fillModes[] = { D3D12_FILL_MODE_SOLID, D3D12_FILL_MODE_WIREFRAME };
-    for (uint8_t i = 0; i < c_numPixelShaders; i++)
+    for (size_t i = 0; i < c_numPixelShaders; i++)
     {
         psoDesc.RasterizerState.FillMode = fillModes[i];
         psoDesc.PS = { pixelShaderBlobs[i].data(), pixelShaderBlobs[i].size() };
@@ -493,7 +494,7 @@ void Sample::CreateShaders()
         DX::ThrowIfFailed(m_cbPerFrame->Map(0, nullptr, reinterpret_cast<void**>(&m_mappedConstantData)));
 
         // Create constant buffer view.
-        const uint32_t c_cbCount = 1;
+        constexpr uint32_t c_cbCount = 1;
         m_resourceDescriptors = std::make_unique<DescriptorHeap>(device, c_cbCount);
 
         D3D12_CONSTANT_BUFFER_VIEW_DESC cbvDesc = {};
@@ -533,7 +534,7 @@ void Sample::CreateShaders()
 // Allocate all memory resources that change on a window SizeChanged event.
 void Sample::CreateWindowSizeDependentResources()
 {
-    auto size = m_deviceResources->GetOutputSize();
+    auto const size = m_deviceResources->GetOutputSize();
     auto device = m_deviceResources->GetD3DDevice();
 
     XMMATRIX projection = XMMatrixPerspectiveFovLH(XM_PIDIV4, float(size.right) / float(size.bottom), 0.01f, 100.0f);

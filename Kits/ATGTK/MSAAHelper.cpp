@@ -90,7 +90,9 @@ void MSAAHelper::SetDevice(_In_ ID3D12Device* device)
             throw std::exception();
         }
 
-        UINT required = D3D12_FORMAT_SUPPORT1_RENDER_TARGET | D3D12_FORMAT_SUPPORT1_MULTISAMPLE_RESOLVE | D3D12_FORMAT_SUPPORT1_MULTISAMPLE_RENDERTARGET;
+        constexpr UINT required = D3D12_FORMAT_SUPPORT1_RENDER_TARGET
+            | D3D12_FORMAT_SUPPORT1_MULTISAMPLE_RESOLVE
+            | D3D12_FORMAT_SUPPORT1_MULTISAMPLE_RENDERTARGET;
         if ((formatSupport.Support1 & required) != required)
         {
 #ifdef _DEBUG
@@ -109,7 +111,8 @@ void MSAAHelper::SetDevice(_In_ ID3D12Device* device)
             throw std::exception();
         }
 
-        UINT required = D3D12_FORMAT_SUPPORT1_DEPTH_STENCIL | D3D12_FORMAT_SUPPORT1_MULTISAMPLE_RENDERTARGET;
+        constexpr UINT required = D3D12_FORMAT_SUPPORT1_DEPTH_STENCIL
+            | D3D12_FORMAT_SUPPORT1_MULTISAMPLE_RENDERTARGET;
         if ((formatSupport.Support1 & required) != required)
         {
 #ifdef _DEBUG
@@ -180,7 +183,7 @@ void MSAAHelper::SizeResources(size_t width, size_t height)
 
     m_width = m_height = 0;
 
-    CD3DX12_HEAP_PROPERTIES heapProperties(D3D12_HEAP_TYPE_DEFAULT);
+    const CD3DX12_HEAP_PROPERTIES heapProperties(D3D12_HEAP_TYPE_DEFAULT);
 
     DXGI_FORMAT msaaFormat = m_backBufferFormat;
 
@@ -302,7 +305,7 @@ void MSAAHelper::ReleaseDevice()
 void MSAAHelper::Prepare(_In_ ID3D12GraphicsCommandList* commandList,
     D3D12_RESOURCE_STATES beforeState)
 {
-    D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
+    const D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
         m_msaaRenderTarget.Get(),
         beforeState,
         D3D12_RESOURCE_STATE_RENDER_TARGET);
@@ -315,7 +318,7 @@ void MSAAHelper::Resolve(_In_ ID3D12GraphicsCommandList* commandList,
     D3D12_RESOURCE_STATES beforeState,
     D3D12_RESOURCE_STATES afterState)
 {
-    D3D12_RESOURCE_BARRIER barriers[2] =
+    const D3D12_RESOURCE_BARRIER barriers[2] =
     {
         CD3DX12_RESOURCE_BARRIER::Transition(m_msaaRenderTarget.Get(),
             D3D12_RESOURCE_STATE_RENDER_TARGET,
@@ -335,7 +338,7 @@ void MSAAHelper::Resolve(_In_ ID3D12GraphicsCommandList* commandList,
 
     if (afterState != D3D12_RESOURCE_STATE_RESOLVE_DEST)
     {
-        D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
+        const D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
             backBuffer,
             D3D12_RESOURCE_STATE_RESOLVE_DEST,
             afterState);
@@ -360,7 +363,7 @@ void MSAAHelper::ResolveDepth(_In_ ID3D12GraphicsCommandList* commandList,
 
     commandList->ResourceBarrier((beforeState != D3D12_RESOURCE_STATE_RESOLVE_DEST) ? 2u : 1u, barriers);
 
-    auto desc = depthBuffer->GetDesc();
+    auto const desc = depthBuffer->GetDesc();
     commandList->ResolveSubresource(depthBuffer, 0, m_msaaDepthStencil.Get(), 0, desc.Format);
 
     std::swap(barriers[0].Transition.StateBefore, barriers[0].Transition.StateAfter);
@@ -414,7 +417,9 @@ void MSAAHelper::SetDevice(_In_ ID3D11Device* device)
             throw std::exception();
         }
 
-        UINT32 required = D3D11_FORMAT_SUPPORT_RENDER_TARGET | D3D11_FORMAT_SUPPORT_MULTISAMPLE_RESOLVE | D3D11_FORMAT_SUPPORT_MULTISAMPLE_RENDERTARGET;
+        constexpr UINT32 required = D3D11_FORMAT_SUPPORT_RENDER_TARGET
+            | D3D11_FORMAT_SUPPORT_MULTISAMPLE_RESOLVE
+            | D3D11_FORMAT_SUPPORT_MULTISAMPLE_RENDERTARGET;
         if ((formatSupport & required) != required)
         {
 #ifdef _DEBUG
@@ -433,7 +438,8 @@ void MSAAHelper::SetDevice(_In_ ID3D11Device* device)
             throw std::exception();
         }
 
-        UINT32 required = D3D11_FORMAT_SUPPORT_DEPTH_STENCIL | D3D11_FORMAT_SUPPORT_MULTISAMPLE_RENDERTARGET;
+        constexpr UINT32 required = D3D11_FORMAT_SUPPORT_DEPTH_STENCIL
+            | D3D11_FORMAT_SUPPORT_MULTISAMPLE_RENDERTARGET;
         if ((formatSupport & required) != required)
         {
 #ifdef _DEBUG
@@ -614,8 +620,8 @@ void MSAAHelper::ResolveDepth(_In_ ID3D11DeviceContext* context, _In_ ID3D11Text
 void MSAAHelper::SetWindow(const RECT& output)
 {
     // Determine the render target size in pixels.
-    auto width = size_t(std::max<LONG>(output.right - output.left, 1));
-    auto height = size_t(std::max<LONG>(output.bottom - output.top, 1));
+    auto const width = size_t(std::max<LONG>(output.right - output.left, 1));
+    auto const height = size_t(std::max<LONG>(output.bottom - output.top, 1));
 
     SizeResources(width, height);
 }

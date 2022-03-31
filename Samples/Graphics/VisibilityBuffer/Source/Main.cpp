@@ -233,6 +233,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_ACTIVATEAPP:
         if (sample)
         {
+            Keyboard::ProcessMessage(message, wParam, lParam);
             Mouse::ProcessMessage(message, wParam, lParam);
 
             if (wParam)
@@ -244,6 +245,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 sample->OnDeactivated();
             }
         }
+        break;
+
+    case WM_ACTIVATE:
+        Keyboard::ProcessMessage(message, wParam, lParam);
+        Mouse::ProcessMessage(message, wParam, lParam);
         break;
 
     case WM_MOUSEMOVE:
@@ -409,6 +415,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         Keyboard::ProcessMessage(message, wParam, lParam);
         break;
+
+    case WM_MOUSEACTIVATE:
+        // When you click activate the window, we want Mouse to ignore that event.
+        return MA_ACTIVATEANDEAT;
 
     case WM_MENUCHAR:
         // A menu is active and the user presses a key that does not correspond

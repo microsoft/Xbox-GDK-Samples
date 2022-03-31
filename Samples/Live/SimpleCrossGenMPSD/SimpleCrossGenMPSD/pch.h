@@ -108,11 +108,8 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "RenderTargetState.h"
-#include "UITK.h"
 
-#if !defined(PIXScopedEvent)
-#define PIXScopedEvent
-#endif
+#include "UITK.h"
 
 
 namespace DX

@@ -64,6 +64,10 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
       target_compile_options(${PROJECT_NAME} PRIVATE /analyze)
    endif()
 
+   if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.24)
+      target_compile_options(${PROJECT_NAME} PRIVATE /ZH:SHA_256)
+   endif()
+
    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.26)
       target_compile_options(${PROJECT_NAME} PRIVATE /Zc:preprocessor)
    endif()

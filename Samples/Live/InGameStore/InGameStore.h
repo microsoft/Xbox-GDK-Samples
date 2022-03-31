@@ -83,6 +83,8 @@ struct UIProductSku
     std::vector<UIProductAvailability> availabilities;
 
     bool isInUserCollection;
+    bool isSubscription;
+
     uint32_t quantity;
 };
 

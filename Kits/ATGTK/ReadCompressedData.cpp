@@ -107,7 +107,7 @@ namespace
 
         // Query decompressed buffer size.
         auto payload = reinterpret_cast<const void*>(reinterpret_cast<const uint8_t*>(data) + sizeof(CFileHeader));
-        size_t payloadLen = dataLen - sizeof(CFileHeader);
+        const size_t payloadLen = dataLen - sizeof(CFileHeader);
 
         SIZE_T bufferSize;
         if (!Decompress(
@@ -118,7 +118,7 @@ namespace
             0,
             &bufferSize))
         {
-            DWORD errorCode = GetLastError();
+            const DWORD errorCode = GetLastError();
             if (errorCode != ERROR_INSUFFICIENT_BUFFER)
             {
                 return HRESULT_FROM_WIN32(GetLastError());
@@ -159,7 +159,7 @@ std::vector<uint8_t> DX::ReadCompressedData(_In_z_ const wchar_t* name)
     if (!inFile)
         throw std::runtime_error("ReadCompressedData");
 
-    std::streampos compressedLen = inFile.tellg();
+    const std::streampos compressedLen = inFile.tellg();
     if (!inFile)
         throw std::runtime_error("ReadCompressedData");
 

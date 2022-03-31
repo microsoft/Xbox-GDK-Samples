@@ -5276,7 +5276,7 @@ namespace PlayFab
             GenericErrorCodesEvaluationModePlayerCountExceeded,
             GenericErrorCodesGetPlayersInSegmentRateLimitExceeded,
             GenericErrorCodesCloudScriptFunctionNameSizeExceeded,
-            GenericErrorCodesInsightsManagementTitleInEvaluationMode,
+            GenericErrorCodesPaidInsightsFeaturesNotEnabled,
             GenericErrorCodesCloudScriptAzureFunctionsQueueRequestError,
             GenericErrorCodesEvaluationModeTitleCountExceeded,
             GenericErrorCodesInsightsManagementTitleNotInFlight,
@@ -5295,6 +5295,22 @@ namespace PlayFab
             GenericErrorCodesDuplicateKeys,
             GenericErrorCodesWasNotCreatedWithCloudRoot,
             GenericErrorCodesLegacyMultiplayerServersDeprecated,
+            GenericErrorCodesVirtualCurrencyCurrentlyUnavailable,
+            GenericErrorCodesSteamUserNotFound,
+            GenericErrorCodesElasticSearchOperationFailed,
+            GenericErrorCodesNotImplemented,
+            GenericErrorCodesPublisherNotFound,
+            GenericErrorCodesPublisherDeleted,
+            GenericErrorCodesApiDisabledForMigration,
+            GenericErrorCodesResourceNameUpdateNotAllowed,
+            GenericErrorCodesApiNotEnabledForTitle,
+            GenericErrorCodesDuplicateTitleNameForPublisher,
+            GenericErrorCodesAzureTitleCreationInProgress,
+            GenericErrorCodesDuplicateAzureResourceId,
+            GenericErrorCodesTitleConstraintsPublisherDeletion,
+            GenericErrorCodesInvalidPlayerAccountPoolId,
+            GenericErrorCodesPlayerAccountPoolNotFound,
+            GenericErrorCodesPlayerAccountPoolDeleted,
             GenericErrorCodesMatchmakingEntityInvalid,
             GenericErrorCodesMatchmakingPlayerAttributesInvalid,
             GenericErrorCodesMatchmakingQueueNotFound,
@@ -5316,9 +5332,15 @@ namespace PlayFab
             GenericErrorCodesMatchmakingQueueLimitExceeded,
             GenericErrorCodesMatchmakingRequestTypeMismatch,
             GenericErrorCodesMatchmakingBadRequest,
+            GenericErrorCodesPubSubFeatureNotEnabledForTitle,
+            GenericErrorCodesPubSubTooManyRequests,
+            GenericErrorCodesPubSubConnectionHandleAccessDenied,
+            GenericErrorCodesPubSubConnectionHandleInvalid,
+            GenericErrorCodesPubSubSubscriptionLimitExceeded,
             GenericErrorCodesTitleConfigNotFound,
             GenericErrorCodesTitleConfigUpdateConflict,
             GenericErrorCodesTitleConfigSerializationError,
+            GenericErrorCodesCatalogApiNotImplemented,
             GenericErrorCodesCatalogEntityInvalid,
             GenericErrorCodesCatalogTitleIdMissing,
             GenericErrorCodesCatalogPlayerIdMissing,
@@ -5329,7 +5351,6 @@ namespace PlayFab
             GenericErrorCodesCatalogSearchParameterInvalid,
             GenericErrorCodesCatalogFeatureDisabled,
             GenericErrorCodesCatalogConfigInvalid,
-            GenericErrorCodesCatalogUnauthorized,
             GenericErrorCodesCatalogItemTypeInvalid,
             GenericErrorCodesCatalogBadRequest,
             GenericErrorCodesCatalogTooManyRequests,
@@ -5357,9 +5378,26 @@ namespace PlayFab
             GenericErrorCodesExportCannotParseQuery,
             GenericErrorCodesExportControlCommandsNotAllowed,
             GenericErrorCodesExportQueryMissingTableReference,
+            GenericErrorCodesExplorerBasicInvalidQueryName,
+            GenericErrorCodesExplorerBasicInvalidQueryDescription,
+            GenericErrorCodesExplorerBasicInvalidQueryConditions,
+            GenericErrorCodesExplorerBasicInvalidQueryStartDate,
+            GenericErrorCodesExplorerBasicInvalidQueryEndDate,
+            GenericErrorCodesExplorerBasicInvalidQueryGroupBy,
+            GenericErrorCodesExplorerBasicInvalidQueryAggregateType,
+            GenericErrorCodesExplorerBasicInvalidQueryAggregateProperty,
+            GenericErrorCodesExplorerBasicLoadQueriesError,
+            GenericErrorCodesExplorerBasicLoadQueryError,
+            GenericErrorCodesExplorerBasicCreateQueryError,
+            GenericErrorCodesExplorerBasicDeleteQueryError,
+            GenericErrorCodesExplorerBasicUpdateQueryError,
+            GenericErrorCodesExplorerBasicSavedQueriesLimit,
+            GenericErrorCodesExplorerBasicSavedQueryNotFound,
+            GenericErrorCodesTenantShardMapperShardNotFound,
             GenericErrorCodesTitleNotEnabledForParty,
             GenericErrorCodesPartyVersionNotFound,
             GenericErrorCodesMultiplayerServerBuildReferencedByMatchmakingQueue,
+            GenericErrorCodesMultiplayerServerBuildReferencedByBuildAlias,
             GenericErrorCodesExperimentationExperimentStopped,
             GenericErrorCodesExperimentationExperimentRunning,
             GenericErrorCodesExperimentationExperimentNotFound,
@@ -5375,9 +5413,52 @@ namespace PlayFab
             GenericErrorCodesExperimentationInvalidDuration,
             GenericErrorCodesExperimentationMaxExperimentsReached,
             GenericErrorCodesExperimentationExperimentSchedulingInProgress,
+            GenericErrorCodesExperimentationInvalidEndDate,
+            GenericErrorCodesExperimentationInvalidStartDate,
+            GenericErrorCodesExperimentationMaxDurationExceeded,
+            GenericErrorCodesExperimentationExclusionGroupNotFound,
+            GenericErrorCodesExperimentationExclusionGroupInsufficientCapacity,
+            GenericErrorCodesExperimentationExclusionGroupCannotDelete,
+            GenericErrorCodesExperimentationExclusionGroupInvalidTrafficAllocation,
+            GenericErrorCodesExperimentationExclusionGroupInvalidName,
             GenericErrorCodesMaxActionDepthExceeded,
             GenericErrorCodesTitleNotOnUpdatedPricingPlan,
-            GenericErrorCodesSnapshotNotFound
+            GenericErrorCodesSegmentManagementTitleNotInFlight,
+            GenericErrorCodesSegmentManagementNoExpressionTree,
+            GenericErrorCodesSegmentManagementTriggerActionCountOverLimit,
+            GenericErrorCodesSegmentManagementSegmentCountOverLimit,
+            GenericErrorCodesSegmentManagementInvalidSegmentId,
+            GenericErrorCodesSegmentManagementInvalidInput,
+            GenericErrorCodesSegmentManagementInvalidSegmentName,
+            GenericErrorCodesDeleteSegmentRateLimitExceeded,
+            GenericErrorCodesCreateSegmentRateLimitExceeded,
+            GenericErrorCodesUpdateSegmentRateLimitExceeded,
+            GenericErrorCodesGetSegmentsRateLimitExceeded,
+            GenericErrorCodesAsyncExportNotInFlight,
+            GenericErrorCodesAsyncExportNotFound,
+            GenericErrorCodesAsyncExportRateLimitExceeded,
+            GenericErrorCodesSnapshotNotFound,
+            GenericErrorCodesInventoryApiNotImplemented,
+            GenericErrorCodesLobbyDoesNotExist,
+            GenericErrorCodesLobbyRateLimitExceeded,
+            GenericErrorCodesLobbyPlayerAlreadyJoined,
+            GenericErrorCodesLobbyNotJoinable,
+            GenericErrorCodesLobbyMemberCannotRejoin,
+            GenericErrorCodesLobbyCurrentPlayersMoreThanMaxPlayers,
+            GenericErrorCodesLobbyPlayerNotPresent,
+            GenericErrorCodesLobbyBadRequest,
+            GenericErrorCodesLobbyPlayerMaxLobbyLimitExceeded,
+            GenericErrorCodesLobbyNewOwnerMustBeConnected,
+            GenericErrorCodesLobbyCurrentOwnerStillConnected,
+            GenericErrorCodesLobbyMemberIsNotOwner,
+            GenericErrorCodesEventSamplingInvalidRatio,
+            GenericErrorCodesEventSamplingInvalidEventNamespace,
+            GenericErrorCodesEventSamplingInvalidEventName,
+            GenericErrorCodesEventSamplingRatioNotFound,
+            GenericErrorCodesEventSinkConnectionInvalid,
+            GenericErrorCodesEventSinkConnectionUnauthorized,
+            GenericErrorCodesEventSinkRegionInvalid,
+            GenericErrorCodesOperationCanceled
         };
 
         inline void ToJsonEnum(const GenericErrorCodes input, Json::Value& output)
@@ -7792,9 +7873,9 @@ namespace PlayFab
                 output = Json::Value("CloudScriptFunctionNameSizeExceeded");
                 return;
             }
-            if (input == GenericErrorCodes::GenericErrorCodesInsightsManagementTitleInEvaluationMode)
+            if (input == GenericErrorCodes::GenericErrorCodesPaidInsightsFeaturesNotEnabled)
             {
-                output = Json::Value("InsightsManagementTitleInEvaluationMode");
+                output = Json::Value("PaidInsightsFeaturesNotEnabled");
                 return;
             }
             if (input == GenericErrorCodes::GenericErrorCodesCloudScriptAzureFunctionsQueueRequestError)
@@ -7885,6 +7966,86 @@ namespace PlayFab
             if (input == GenericErrorCodes::GenericErrorCodesLegacyMultiplayerServersDeprecated)
             {
                 output = Json::Value("LegacyMultiplayerServersDeprecated");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesVirtualCurrencyCurrentlyUnavailable)
+            {
+                output = Json::Value("VirtualCurrencyCurrentlyUnavailable");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesSteamUserNotFound)
+            {
+                output = Json::Value("SteamUserNotFound");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesElasticSearchOperationFailed)
+            {
+                output = Json::Value("ElasticSearchOperationFailed");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesNotImplemented)
+            {
+                output = Json::Value("NotImplemented");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesPublisherNotFound)
+            {
+                output = Json::Value("PublisherNotFound");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesPublisherDeleted)
+            {
+                output = Json::Value("PublisherDeleted");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesApiDisabledForMigration)
+            {
+                output = Json::Value("ApiDisabledForMigration");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesResourceNameUpdateNotAllowed)
+            {
+                output = Json::Value("ResourceNameUpdateNotAllowed");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesApiNotEnabledForTitle)
+            {
+                output = Json::Value("ApiNotEnabledForTitle");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesDuplicateTitleNameForPublisher)
+            {
+                output = Json::Value("DuplicateTitleNameForPublisher");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesAzureTitleCreationInProgress)
+            {
+                output = Json::Value("AzureTitleCreationInProgress");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesDuplicateAzureResourceId)
+            {
+                output = Json::Value("DuplicateAzureResourceId");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesTitleConstraintsPublisherDeletion)
+            {
+                output = Json::Value("TitleConstraintsPublisherDeletion");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesInvalidPlayerAccountPoolId)
+            {
+                output = Json::Value("InvalidPlayerAccountPoolId");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesPlayerAccountPoolNotFound)
+            {
+                output = Json::Value("PlayerAccountPoolNotFound");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesPlayerAccountPoolDeleted)
+            {
+                output = Json::Value("PlayerAccountPoolDeleted");
                 return;
             }
             if (input == GenericErrorCodes::GenericErrorCodesMatchmakingEntityInvalid)
@@ -7992,6 +8153,31 @@ namespace PlayFab
                 output = Json::Value("MatchmakingBadRequest");
                 return;
             }
+            if (input == GenericErrorCodes::GenericErrorCodesPubSubFeatureNotEnabledForTitle)
+            {
+                output = Json::Value("PubSubFeatureNotEnabledForTitle");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesPubSubTooManyRequests)
+            {
+                output = Json::Value("PubSubTooManyRequests");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesPubSubConnectionHandleAccessDenied)
+            {
+                output = Json::Value("PubSubConnectionHandleAccessDenied");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesPubSubConnectionHandleInvalid)
+            {
+                output = Json::Value("PubSubConnectionHandleInvalid");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesPubSubSubscriptionLimitExceeded)
+            {
+                output = Json::Value("PubSubSubscriptionLimitExceeded");
+                return;
+            }
             if (input == GenericErrorCodes::GenericErrorCodesTitleConfigNotFound)
             {
                 output = Json::Value("TitleConfigNotFound");
@@ -8005,6 +8191,11 @@ namespace PlayFab
             if (input == GenericErrorCodes::GenericErrorCodesTitleConfigSerializationError)
             {
                 output = Json::Value("TitleConfigSerializationError");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesCatalogApiNotImplemented)
+            {
+                output = Json::Value("CatalogApiNotImplemented");
                 return;
             }
             if (input == GenericErrorCodes::GenericErrorCodesCatalogEntityInvalid)
@@ -8055,11 +8246,6 @@ namespace PlayFab
             if (input == GenericErrorCodes::GenericErrorCodesCatalogConfigInvalid)
             {
                 output = Json::Value("CatalogConfigInvalid");
-                return;
-            }
-            if (input == GenericErrorCodes::GenericErrorCodesCatalogUnauthorized)
-            {
-                output = Json::Value("CatalogUnauthorized");
                 return;
             }
             if (input == GenericErrorCodes::GenericErrorCodesCatalogItemTypeInvalid)
@@ -8197,6 +8383,86 @@ namespace PlayFab
                 output = Json::Value("ExportQueryMissingTableReference");
                 return;
             }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryName)
+            {
+                output = Json::Value("ExplorerBasicInvalidQueryName");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryDescription)
+            {
+                output = Json::Value("ExplorerBasicInvalidQueryDescription");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryConditions)
+            {
+                output = Json::Value("ExplorerBasicInvalidQueryConditions");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryStartDate)
+            {
+                output = Json::Value("ExplorerBasicInvalidQueryStartDate");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryEndDate)
+            {
+                output = Json::Value("ExplorerBasicInvalidQueryEndDate");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryGroupBy)
+            {
+                output = Json::Value("ExplorerBasicInvalidQueryGroupBy");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryAggregateType)
+            {
+                output = Json::Value("ExplorerBasicInvalidQueryAggregateType");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryAggregateProperty)
+            {
+                output = Json::Value("ExplorerBasicInvalidQueryAggregateProperty");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicLoadQueriesError)
+            {
+                output = Json::Value("ExplorerBasicLoadQueriesError");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicLoadQueryError)
+            {
+                output = Json::Value("ExplorerBasicLoadQueryError");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicCreateQueryError)
+            {
+                output = Json::Value("ExplorerBasicCreateQueryError");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicDeleteQueryError)
+            {
+                output = Json::Value("ExplorerBasicDeleteQueryError");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicUpdateQueryError)
+            {
+                output = Json::Value("ExplorerBasicUpdateQueryError");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicSavedQueriesLimit)
+            {
+                output = Json::Value("ExplorerBasicSavedQueriesLimit");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExplorerBasicSavedQueryNotFound)
+            {
+                output = Json::Value("ExplorerBasicSavedQueryNotFound");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesTenantShardMapperShardNotFound)
+            {
+                output = Json::Value("TenantShardMapperShardNotFound");
+                return;
+            }
             if (input == GenericErrorCodes::GenericErrorCodesTitleNotEnabledForParty)
             {
                 output = Json::Value("TitleNotEnabledForParty");
@@ -8210,6 +8476,11 @@ namespace PlayFab
             if (input == GenericErrorCodes::GenericErrorCodesMultiplayerServerBuildReferencedByMatchmakingQueue)
             {
                 output = Json::Value("MultiplayerServerBuildReferencedByMatchmakingQueue");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesMultiplayerServerBuildReferencedByBuildAlias)
+            {
+                output = Json::Value("MultiplayerServerBuildReferencedByBuildAlias");
                 return;
             }
             if (input == GenericErrorCodes::GenericErrorCodesExperimentationExperimentStopped)
@@ -8287,6 +8558,46 @@ namespace PlayFab
                 output = Json::Value("ExperimentationExperimentSchedulingInProgress");
                 return;
             }
+            if (input == GenericErrorCodes::GenericErrorCodesExperimentationInvalidEndDate)
+            {
+                output = Json::Value("ExperimentationInvalidEndDate");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExperimentationInvalidStartDate)
+            {
+                output = Json::Value("ExperimentationInvalidStartDate");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExperimentationMaxDurationExceeded)
+            {
+                output = Json::Value("ExperimentationMaxDurationExceeded");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExperimentationExclusionGroupNotFound)
+            {
+                output = Json::Value("ExperimentationExclusionGroupNotFound");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExperimentationExclusionGroupInsufficientCapacity)
+            {
+                output = Json::Value("ExperimentationExclusionGroupInsufficientCapacity");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExperimentationExclusionGroupCannotDelete)
+            {
+                output = Json::Value("ExperimentationExclusionGroupCannotDelete");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExperimentationExclusionGroupInvalidTrafficAllocation)
+            {
+                output = Json::Value("ExperimentationExclusionGroupInvalidTrafficAllocation");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesExperimentationExclusionGroupInvalidName)
+            {
+                output = Json::Value("ExperimentationExclusionGroupInvalidName");
+                return;
+            }
             if (input == GenericErrorCodes::GenericErrorCodesMaxActionDepthExceeded)
             {
                 output = Json::Value("MaxActionDepthExceeded");
@@ -8297,9 +8608,184 @@ namespace PlayFab
                 output = Json::Value("TitleNotOnUpdatedPricingPlan");
                 return;
             }
+            if (input == GenericErrorCodes::GenericErrorCodesSegmentManagementTitleNotInFlight)
+            {
+                output = Json::Value("SegmentManagementTitleNotInFlight");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesSegmentManagementNoExpressionTree)
+            {
+                output = Json::Value("SegmentManagementNoExpressionTree");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesSegmentManagementTriggerActionCountOverLimit)
+            {
+                output = Json::Value("SegmentManagementTriggerActionCountOverLimit");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesSegmentManagementSegmentCountOverLimit)
+            {
+                output = Json::Value("SegmentManagementSegmentCountOverLimit");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesSegmentManagementInvalidSegmentId)
+            {
+                output = Json::Value("SegmentManagementInvalidSegmentId");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesSegmentManagementInvalidInput)
+            {
+                output = Json::Value("SegmentManagementInvalidInput");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesSegmentManagementInvalidSegmentName)
+            {
+                output = Json::Value("SegmentManagementInvalidSegmentName");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesDeleteSegmentRateLimitExceeded)
+            {
+                output = Json::Value("DeleteSegmentRateLimitExceeded");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesCreateSegmentRateLimitExceeded)
+            {
+                output = Json::Value("CreateSegmentRateLimitExceeded");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesUpdateSegmentRateLimitExceeded)
+            {
+                output = Json::Value("UpdateSegmentRateLimitExceeded");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesGetSegmentsRateLimitExceeded)
+            {
+                output = Json::Value("GetSegmentsRateLimitExceeded");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesAsyncExportNotInFlight)
+            {
+                output = Json::Value("AsyncExportNotInFlight");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesAsyncExportNotFound)
+            {
+                output = Json::Value("AsyncExportNotFound");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesAsyncExportRateLimitExceeded)
+            {
+                output = Json::Value("AsyncExportRateLimitExceeded");
+                return;
+            }
             if (input == GenericErrorCodes::GenericErrorCodesSnapshotNotFound)
             {
                 output = Json::Value("SnapshotNotFound");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesInventoryApiNotImplemented)
+            {
+                output = Json::Value("InventoryApiNotImplemented");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesLobbyDoesNotExist)
+            {
+                output = Json::Value("LobbyDoesNotExist");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesLobbyRateLimitExceeded)
+            {
+                output = Json::Value("LobbyRateLimitExceeded");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesLobbyPlayerAlreadyJoined)
+            {
+                output = Json::Value("LobbyPlayerAlreadyJoined");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesLobbyNotJoinable)
+            {
+                output = Json::Value("LobbyNotJoinable");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesLobbyMemberCannotRejoin)
+            {
+                output = Json::Value("LobbyMemberCannotRejoin");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesLobbyCurrentPlayersMoreThanMaxPlayers)
+            {
+                output = Json::Value("LobbyCurrentPlayersMoreThanMaxPlayers");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesLobbyPlayerNotPresent)
+            {
+                output = Json::Value("LobbyPlayerNotPresent");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesLobbyBadRequest)
+            {
+                output = Json::Value("LobbyBadRequest");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesLobbyPlayerMaxLobbyLimitExceeded)
+            {
+                output = Json::Value("LobbyPlayerMaxLobbyLimitExceeded");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesLobbyNewOwnerMustBeConnected)
+            {
+                output = Json::Value("LobbyNewOwnerMustBeConnected");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesLobbyCurrentOwnerStillConnected)
+            {
+                output = Json::Value("LobbyCurrentOwnerStillConnected");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesLobbyMemberIsNotOwner)
+            {
+                output = Json::Value("LobbyMemberIsNotOwner");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesEventSamplingInvalidRatio)
+            {
+                output = Json::Value("EventSamplingInvalidRatio");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesEventSamplingInvalidEventNamespace)
+            {
+                output = Json::Value("EventSamplingInvalidEventNamespace");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesEventSamplingInvalidEventName)
+            {
+                output = Json::Value("EventSamplingInvalidEventName");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesEventSamplingRatioNotFound)
+            {
+                output = Json::Value("EventSamplingRatioNotFound");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesEventSinkConnectionInvalid)
+            {
+                output = Json::Value("EventSinkConnectionInvalid");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesEventSinkConnectionUnauthorized)
+            {
+                output = Json::Value("EventSinkConnectionUnauthorized");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesEventSinkRegionInvalid)
+            {
+                output = Json::Value("EventSinkRegionInvalid");
+                return;
+            }
+            if (input == GenericErrorCodes::GenericErrorCodesOperationCanceled)
+            {
+                output = Json::Value("OperationCanceled");
                 return;
             }
         }
@@ -10720,9 +11206,9 @@ namespace PlayFab
                 output = GenericErrorCodes::GenericErrorCodesCloudScriptFunctionNameSizeExceeded;
                 return;
             }
-            if (inputStr == "InsightsManagementTitleInEvaluationMode")
+            if (inputStr == "PaidInsightsFeaturesNotEnabled")
             {
-                output = GenericErrorCodes::GenericErrorCodesInsightsManagementTitleInEvaluationMode;
+                output = GenericErrorCodes::GenericErrorCodesPaidInsightsFeaturesNotEnabled;
                 return;
             }
             if (inputStr == "CloudScriptAzureFunctionsQueueRequestError")
@@ -10813,6 +11299,86 @@ namespace PlayFab
             if (inputStr == "LegacyMultiplayerServersDeprecated")
             {
                 output = GenericErrorCodes::GenericErrorCodesLegacyMultiplayerServersDeprecated;
+                return;
+            }
+            if (inputStr == "VirtualCurrencyCurrentlyUnavailable")
+            {
+                output = GenericErrorCodes::GenericErrorCodesVirtualCurrencyCurrentlyUnavailable;
+                return;
+            }
+            if (inputStr == "SteamUserNotFound")
+            {
+                output = GenericErrorCodes::GenericErrorCodesSteamUserNotFound;
+                return;
+            }
+            if (inputStr == "ElasticSearchOperationFailed")
+            {
+                output = GenericErrorCodes::GenericErrorCodesElasticSearchOperationFailed;
+                return;
+            }
+            if (inputStr == "NotImplemented")
+            {
+                output = GenericErrorCodes::GenericErrorCodesNotImplemented;
+                return;
+            }
+            if (inputStr == "PublisherNotFound")
+            {
+                output = GenericErrorCodes::GenericErrorCodesPublisherNotFound;
+                return;
+            }
+            if (inputStr == "PublisherDeleted")
+            {
+                output = GenericErrorCodes::GenericErrorCodesPublisherDeleted;
+                return;
+            }
+            if (inputStr == "ApiDisabledForMigration")
+            {
+                output = GenericErrorCodes::GenericErrorCodesApiDisabledForMigration;
+                return;
+            }
+            if (inputStr == "ResourceNameUpdateNotAllowed")
+            {
+                output = GenericErrorCodes::GenericErrorCodesResourceNameUpdateNotAllowed;
+                return;
+            }
+            if (inputStr == "ApiNotEnabledForTitle")
+            {
+                output = GenericErrorCodes::GenericErrorCodesApiNotEnabledForTitle;
+                return;
+            }
+            if (inputStr == "DuplicateTitleNameForPublisher")
+            {
+                output = GenericErrorCodes::GenericErrorCodesDuplicateTitleNameForPublisher;
+                return;
+            }
+            if (inputStr == "AzureTitleCreationInProgress")
+            {
+                output = GenericErrorCodes::GenericErrorCodesAzureTitleCreationInProgress;
+                return;
+            }
+            if (inputStr == "DuplicateAzureResourceId")
+            {
+                output = GenericErrorCodes::GenericErrorCodesDuplicateAzureResourceId;
+                return;
+            }
+            if (inputStr == "TitleConstraintsPublisherDeletion")
+            {
+                output = GenericErrorCodes::GenericErrorCodesTitleConstraintsPublisherDeletion;
+                return;
+            }
+            if (inputStr == "InvalidPlayerAccountPoolId")
+            {
+                output = GenericErrorCodes::GenericErrorCodesInvalidPlayerAccountPoolId;
+                return;
+            }
+            if (inputStr == "PlayerAccountPoolNotFound")
+            {
+                output = GenericErrorCodes::GenericErrorCodesPlayerAccountPoolNotFound;
+                return;
+            }
+            if (inputStr == "PlayerAccountPoolDeleted")
+            {
+                output = GenericErrorCodes::GenericErrorCodesPlayerAccountPoolDeleted;
                 return;
             }
             if (inputStr == "MatchmakingEntityInvalid")
@@ -10920,6 +11486,31 @@ namespace PlayFab
                 output = GenericErrorCodes::GenericErrorCodesMatchmakingBadRequest;
                 return;
             }
+            if (inputStr == "PubSubFeatureNotEnabledForTitle")
+            {
+                output = GenericErrorCodes::GenericErrorCodesPubSubFeatureNotEnabledForTitle;
+                return;
+            }
+            if (inputStr == "PubSubTooManyRequests")
+            {
+                output = GenericErrorCodes::GenericErrorCodesPubSubTooManyRequests;
+                return;
+            }
+            if (inputStr == "PubSubConnectionHandleAccessDenied")
+            {
+                output = GenericErrorCodes::GenericErrorCodesPubSubConnectionHandleAccessDenied;
+                return;
+            }
+            if (inputStr == "PubSubConnectionHandleInvalid")
+            {
+                output = GenericErrorCodes::GenericErrorCodesPubSubConnectionHandleInvalid;
+                return;
+            }
+            if (inputStr == "PubSubSubscriptionLimitExceeded")
+            {
+                output = GenericErrorCodes::GenericErrorCodesPubSubSubscriptionLimitExceeded;
+                return;
+            }
             if (inputStr == "TitleConfigNotFound")
             {
                 output = GenericErrorCodes::GenericErrorCodesTitleConfigNotFound;
@@ -10933,6 +11524,11 @@ namespace PlayFab
             if (inputStr == "TitleConfigSerializationError")
             {
                 output = GenericErrorCodes::GenericErrorCodesTitleConfigSerializationError;
+                return;
+            }
+            if (inputStr == "CatalogApiNotImplemented")
+            {
+                output = GenericErrorCodes::GenericErrorCodesCatalogApiNotImplemented;
                 return;
             }
             if (inputStr == "CatalogEntityInvalid")
@@ -10983,11 +11579,6 @@ namespace PlayFab
             if (inputStr == "CatalogConfigInvalid")
             {
                 output = GenericErrorCodes::GenericErrorCodesCatalogConfigInvalid;
-                return;
-            }
-            if (inputStr == "CatalogUnauthorized")
-            {
-                output = GenericErrorCodes::GenericErrorCodesCatalogUnauthorized;
                 return;
             }
             if (inputStr == "CatalogItemTypeInvalid")
@@ -11125,6 +11716,86 @@ namespace PlayFab
                 output = GenericErrorCodes::GenericErrorCodesExportQueryMissingTableReference;
                 return;
             }
+            if (inputStr == "ExplorerBasicInvalidQueryName")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryName;
+                return;
+            }
+            if (inputStr == "ExplorerBasicInvalidQueryDescription")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryDescription;
+                return;
+            }
+            if (inputStr == "ExplorerBasicInvalidQueryConditions")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryConditions;
+                return;
+            }
+            if (inputStr == "ExplorerBasicInvalidQueryStartDate")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryStartDate;
+                return;
+            }
+            if (inputStr == "ExplorerBasicInvalidQueryEndDate")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryEndDate;
+                return;
+            }
+            if (inputStr == "ExplorerBasicInvalidQueryGroupBy")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryGroupBy;
+                return;
+            }
+            if (inputStr == "ExplorerBasicInvalidQueryAggregateType")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryAggregateType;
+                return;
+            }
+            if (inputStr == "ExplorerBasicInvalidQueryAggregateProperty")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicInvalidQueryAggregateProperty;
+                return;
+            }
+            if (inputStr == "ExplorerBasicLoadQueriesError")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicLoadQueriesError;
+                return;
+            }
+            if (inputStr == "ExplorerBasicLoadQueryError")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicLoadQueryError;
+                return;
+            }
+            if (inputStr == "ExplorerBasicCreateQueryError")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicCreateQueryError;
+                return;
+            }
+            if (inputStr == "ExplorerBasicDeleteQueryError")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicDeleteQueryError;
+                return;
+            }
+            if (inputStr == "ExplorerBasicUpdateQueryError")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicUpdateQueryError;
+                return;
+            }
+            if (inputStr == "ExplorerBasicSavedQueriesLimit")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicSavedQueriesLimit;
+                return;
+            }
+            if (inputStr == "ExplorerBasicSavedQueryNotFound")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExplorerBasicSavedQueryNotFound;
+                return;
+            }
+            if (inputStr == "TenantShardMapperShardNotFound")
+            {
+                output = GenericErrorCodes::GenericErrorCodesTenantShardMapperShardNotFound;
+                return;
+            }
             if (inputStr == "TitleNotEnabledForParty")
             {
                 output = GenericErrorCodes::GenericErrorCodesTitleNotEnabledForParty;
@@ -11138,6 +11809,11 @@ namespace PlayFab
             if (inputStr == "MultiplayerServerBuildReferencedByMatchmakingQueue")
             {
                 output = GenericErrorCodes::GenericErrorCodesMultiplayerServerBuildReferencedByMatchmakingQueue;
+                return;
+            }
+            if (inputStr == "MultiplayerServerBuildReferencedByBuildAlias")
+            {
+                output = GenericErrorCodes::GenericErrorCodesMultiplayerServerBuildReferencedByBuildAlias;
                 return;
             }
             if (inputStr == "ExperimentationExperimentStopped")
@@ -11215,6 +11891,46 @@ namespace PlayFab
                 output = GenericErrorCodes::GenericErrorCodesExperimentationExperimentSchedulingInProgress;
                 return;
             }
+            if (inputStr == "ExperimentationInvalidEndDate")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExperimentationInvalidEndDate;
+                return;
+            }
+            if (inputStr == "ExperimentationInvalidStartDate")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExperimentationInvalidStartDate;
+                return;
+            }
+            if (inputStr == "ExperimentationMaxDurationExceeded")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExperimentationMaxDurationExceeded;
+                return;
+            }
+            if (inputStr == "ExperimentationExclusionGroupNotFound")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExperimentationExclusionGroupNotFound;
+                return;
+            }
+            if (inputStr == "ExperimentationExclusionGroupInsufficientCapacity")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExperimentationExclusionGroupInsufficientCapacity;
+                return;
+            }
+            if (inputStr == "ExperimentationExclusionGroupCannotDelete")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExperimentationExclusionGroupCannotDelete;
+                return;
+            }
+            if (inputStr == "ExperimentationExclusionGroupInvalidTrafficAllocation")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExperimentationExclusionGroupInvalidTrafficAllocation;
+                return;
+            }
+            if (inputStr == "ExperimentationExclusionGroupInvalidName")
+            {
+                output = GenericErrorCodes::GenericErrorCodesExperimentationExclusionGroupInvalidName;
+                return;
+            }
             if (inputStr == "MaxActionDepthExceeded")
             {
                 output = GenericErrorCodes::GenericErrorCodesMaxActionDepthExceeded;
@@ -11225,9 +11941,184 @@ namespace PlayFab
                 output = GenericErrorCodes::GenericErrorCodesTitleNotOnUpdatedPricingPlan;
                 return;
             }
+            if (inputStr == "SegmentManagementTitleNotInFlight")
+            {
+                output = GenericErrorCodes::GenericErrorCodesSegmentManagementTitleNotInFlight;
+                return;
+            }
+            if (inputStr == "SegmentManagementNoExpressionTree")
+            {
+                output = GenericErrorCodes::GenericErrorCodesSegmentManagementNoExpressionTree;
+                return;
+            }
+            if (inputStr == "SegmentManagementTriggerActionCountOverLimit")
+            {
+                output = GenericErrorCodes::GenericErrorCodesSegmentManagementTriggerActionCountOverLimit;
+                return;
+            }
+            if (inputStr == "SegmentManagementSegmentCountOverLimit")
+            {
+                output = GenericErrorCodes::GenericErrorCodesSegmentManagementSegmentCountOverLimit;
+                return;
+            }
+            if (inputStr == "SegmentManagementInvalidSegmentId")
+            {
+                output = GenericErrorCodes::GenericErrorCodesSegmentManagementInvalidSegmentId;
+                return;
+            }
+            if (inputStr == "SegmentManagementInvalidInput")
+            {
+                output = GenericErrorCodes::GenericErrorCodesSegmentManagementInvalidInput;
+                return;
+            }
+            if (inputStr == "SegmentManagementInvalidSegmentName")
+            {
+                output = GenericErrorCodes::GenericErrorCodesSegmentManagementInvalidSegmentName;
+                return;
+            }
+            if (inputStr == "DeleteSegmentRateLimitExceeded")
+            {
+                output = GenericErrorCodes::GenericErrorCodesDeleteSegmentRateLimitExceeded;
+                return;
+            }
+            if (inputStr == "CreateSegmentRateLimitExceeded")
+            {
+                output = GenericErrorCodes::GenericErrorCodesCreateSegmentRateLimitExceeded;
+                return;
+            }
+            if (inputStr == "UpdateSegmentRateLimitExceeded")
+            {
+                output = GenericErrorCodes::GenericErrorCodesUpdateSegmentRateLimitExceeded;
+                return;
+            }
+            if (inputStr == "GetSegmentsRateLimitExceeded")
+            {
+                output = GenericErrorCodes::GenericErrorCodesGetSegmentsRateLimitExceeded;
+                return;
+            }
+            if (inputStr == "AsyncExportNotInFlight")
+            {
+                output = GenericErrorCodes::GenericErrorCodesAsyncExportNotInFlight;
+                return;
+            }
+            if (inputStr == "AsyncExportNotFound")
+            {
+                output = GenericErrorCodes::GenericErrorCodesAsyncExportNotFound;
+                return;
+            }
+            if (inputStr == "AsyncExportRateLimitExceeded")
+            {
+                output = GenericErrorCodes::GenericErrorCodesAsyncExportRateLimitExceeded;
+                return;
+            }
             if (inputStr == "SnapshotNotFound")
             {
                 output = GenericErrorCodes::GenericErrorCodesSnapshotNotFound;
+                return;
+            }
+            if (inputStr == "InventoryApiNotImplemented")
+            {
+                output = GenericErrorCodes::GenericErrorCodesInventoryApiNotImplemented;
+                return;
+            }
+            if (inputStr == "LobbyDoesNotExist")
+            {
+                output = GenericErrorCodes::GenericErrorCodesLobbyDoesNotExist;
+                return;
+            }
+            if (inputStr == "LobbyRateLimitExceeded")
+            {
+                output = GenericErrorCodes::GenericErrorCodesLobbyRateLimitExceeded;
+                return;
+            }
+            if (inputStr == "LobbyPlayerAlreadyJoined")
+            {
+                output = GenericErrorCodes::GenericErrorCodesLobbyPlayerAlreadyJoined;
+                return;
+            }
+            if (inputStr == "LobbyNotJoinable")
+            {
+                output = GenericErrorCodes::GenericErrorCodesLobbyNotJoinable;
+                return;
+            }
+            if (inputStr == "LobbyMemberCannotRejoin")
+            {
+                output = GenericErrorCodes::GenericErrorCodesLobbyMemberCannotRejoin;
+                return;
+            }
+            if (inputStr == "LobbyCurrentPlayersMoreThanMaxPlayers")
+            {
+                output = GenericErrorCodes::GenericErrorCodesLobbyCurrentPlayersMoreThanMaxPlayers;
+                return;
+            }
+            if (inputStr == "LobbyPlayerNotPresent")
+            {
+                output = GenericErrorCodes::GenericErrorCodesLobbyPlayerNotPresent;
+                return;
+            }
+            if (inputStr == "LobbyBadRequest")
+            {
+                output = GenericErrorCodes::GenericErrorCodesLobbyBadRequest;
+                return;
+            }
+            if (inputStr == "LobbyPlayerMaxLobbyLimitExceeded")
+            {
+                output = GenericErrorCodes::GenericErrorCodesLobbyPlayerMaxLobbyLimitExceeded;
+                return;
+            }
+            if (inputStr == "LobbyNewOwnerMustBeConnected")
+            {
+                output = GenericErrorCodes::GenericErrorCodesLobbyNewOwnerMustBeConnected;
+                return;
+            }
+            if (inputStr == "LobbyCurrentOwnerStillConnected")
+            {
+                output = GenericErrorCodes::GenericErrorCodesLobbyCurrentOwnerStillConnected;
+                return;
+            }
+            if (inputStr == "LobbyMemberIsNotOwner")
+            {
+                output = GenericErrorCodes::GenericErrorCodesLobbyMemberIsNotOwner;
+                return;
+            }
+            if (inputStr == "EventSamplingInvalidRatio")
+            {
+                output = GenericErrorCodes::GenericErrorCodesEventSamplingInvalidRatio;
+                return;
+            }
+            if (inputStr == "EventSamplingInvalidEventNamespace")
+            {
+                output = GenericErrorCodes::GenericErrorCodesEventSamplingInvalidEventNamespace;
+                return;
+            }
+            if (inputStr == "EventSamplingInvalidEventName")
+            {
+                output = GenericErrorCodes::GenericErrorCodesEventSamplingInvalidEventName;
+                return;
+            }
+            if (inputStr == "EventSamplingRatioNotFound")
+            {
+                output = GenericErrorCodes::GenericErrorCodesEventSamplingRatioNotFound;
+                return;
+            }
+            if (inputStr == "EventSinkConnectionInvalid")
+            {
+                output = GenericErrorCodes::GenericErrorCodesEventSinkConnectionInvalid;
+                return;
+            }
+            if (inputStr == "EventSinkConnectionUnauthorized")
+            {
+                output = GenericErrorCodes::GenericErrorCodesEventSinkConnectionUnauthorized;
+                return;
+            }
+            if (inputStr == "EventSinkRegionInvalid")
+            {
+                output = GenericErrorCodes::GenericErrorCodesEventSinkRegionInvalid;
+                return;
+            }
+            if (inputStr == "OperationCanceled")
+            {
+                output = GenericErrorCodes::GenericErrorCodesOperationCanceled;
                 return;
             }
         }
@@ -12033,7 +12924,6 @@ namespace PlayFab
             UserOriginationXboxLive,
             UserOriginationParse,
             UserOriginationTwitch,
-            UserOriginationWindowsHello,
             UserOriginationServerCustomId,
             UserOriginationNintendoSwitchDeviceId,
             UserOriginationFacebookInstantGamesId,
@@ -12127,11 +13017,6 @@ namespace PlayFab
             if (input == UserOrigination::UserOriginationTwitch)
             {
                 output = Json::Value("Twitch");
-                return;
-            }
-            if (input == UserOrigination::UserOriginationWindowsHello)
-            {
-                output = Json::Value("WindowsHello");
                 return;
             }
             if (input == UserOrigination::UserOriginationServerCustomId)
@@ -12255,11 +13140,6 @@ namespace PlayFab
             if (inputStr == "Twitch")
             {
                 output = UserOrigination::UserOriginationTwitch;
-                return;
-            }
-            if (inputStr == "WindowsHello")
-            {
-                output = UserOrigination::UserOriginationWindowsHello;
                 return;
             }
             if (inputStr == "ServerCustomId")
@@ -12706,17 +13586,20 @@ namespace PlayFab
 
         struct AdvancedPushPlatformMsg : public PlayFabBaseModel
         {
+            Boxed<bool> GCMDataOnly;
             std::string Json;
             PushNotificationPlatform Platform;
 
             AdvancedPushPlatformMsg() :
                 PlayFabBaseModel(),
+                GCMDataOnly(),
                 Json(),
                 Platform()
             {}
 
             AdvancedPushPlatformMsg(const AdvancedPushPlatformMsg& src) :
                 PlayFabBaseModel(),
+                GCMDataOnly(src.GCMDataOnly),
                 Json(src.Json),
                 Platform(src.Platform)
             {}
@@ -12725,6 +13608,7 @@ namespace PlayFab
 
             void FromJson(const Json::Value& input) override
             {
+                FromJsonUtilP(input["GCMDataOnly"], GCMDataOnly);
                 FromJsonUtilS(input["Json"], Json);
                 FromJsonEnum(input["Platform"], Platform);
             }
@@ -12732,6 +13616,7 @@ namespace PlayFab
             Json::Value ToJson() const override
             {
                 Json::Value output;
+                Json::Value each_GCMDataOnly; ToJsonUtilP(GCMDataOnly, each_GCMDataOnly); output["GCMDataOnly"] = each_GCMDataOnly;
                 Json::Value each_Json; ToJsonUtilS(Json, each_Json); output["Json"] = each_Json;
                 Json::Value each_Platform; ToJsonEnum(Platform, each_Platform); output["Platform"] = each_Platform;
                 return output;
@@ -13399,40 +14284,6 @@ namespace PlayFab
             }
         };
 
-        struct UserWindowsHelloInfo : public PlayFabBaseModel
-        {
-            std::string WindowsHelloDeviceName;
-            std::string WindowsHelloPublicKeyHash;
-
-            UserWindowsHelloInfo() :
-                PlayFabBaseModel(),
-                WindowsHelloDeviceName(),
-                WindowsHelloPublicKeyHash()
-            {}
-
-            UserWindowsHelloInfo(const UserWindowsHelloInfo& src) :
-                PlayFabBaseModel(),
-                WindowsHelloDeviceName(src.WindowsHelloDeviceName),
-                WindowsHelloPublicKeyHash(src.WindowsHelloPublicKeyHash)
-            {}
-
-            ~UserWindowsHelloInfo() = default;
-
-            void FromJson(const Json::Value& input) override
-            {
-                FromJsonUtilS(input["WindowsHelloDeviceName"], WindowsHelloDeviceName);
-                FromJsonUtilS(input["WindowsHelloPublicKeyHash"], WindowsHelloPublicKeyHash);
-            }
-
-            Json::Value ToJson() const override
-            {
-                Json::Value output;
-                Json::Value each_WindowsHelloDeviceName; ToJsonUtilS(WindowsHelloDeviceName, each_WindowsHelloDeviceName); output["WindowsHelloDeviceName"] = each_WindowsHelloDeviceName;
-                Json::Value each_WindowsHelloPublicKeyHash; ToJsonUtilS(WindowsHelloPublicKeyHash, each_WindowsHelloPublicKeyHash); output["WindowsHelloPublicKeyHash"] = each_WindowsHelloPublicKeyHash;
-                return output;
-            }
-        };
-
         struct UserXboxInfo : public PlayFabBaseModel
         {
             std::string XboxUserId;
@@ -13484,7 +14335,6 @@ namespace PlayFab
             Boxed<UserTitleInfo> TitleInfo;
             Boxed<UserTwitchInfo> TwitchInfo;
             std::string Username;
-            Boxed<UserWindowsHelloInfo> WindowsHelloInfo;
             Boxed<UserXboxInfo> XboxInfo;
 
             UserAccountInfo() :
@@ -13509,7 +14359,6 @@ namespace PlayFab
                 TitleInfo(),
                 TwitchInfo(),
                 Username(),
-                WindowsHelloInfo(),
                 XboxInfo()
             {}
 
@@ -13535,7 +14384,6 @@ namespace PlayFab
                 TitleInfo(src.TitleInfo),
                 TwitchInfo(src.TwitchInfo),
                 Username(src.Username),
-                WindowsHelloInfo(src.WindowsHelloInfo),
                 XboxInfo(src.XboxInfo)
             {}
 
@@ -13563,7 +14411,6 @@ namespace PlayFab
                 FromJsonUtilO(input["TitleInfo"], TitleInfo);
                 FromJsonUtilO(input["TwitchInfo"], TwitchInfo);
                 FromJsonUtilS(input["Username"], Username);
-                FromJsonUtilO(input["WindowsHelloInfo"], WindowsHelloInfo);
                 FromJsonUtilO(input["XboxInfo"], XboxInfo);
             }
 
@@ -13590,7 +14437,6 @@ namespace PlayFab
                 Json::Value each_TitleInfo; ToJsonUtilO(TitleInfo, each_TitleInfo); output["TitleInfo"] = each_TitleInfo;
                 Json::Value each_TwitchInfo; ToJsonUtilO(TwitchInfo, each_TwitchInfo); output["TwitchInfo"] = each_TwitchInfo;
                 Json::Value each_Username; ToJsonUtilS(Username, each_Username); output["Username"] = each_Username;
-                Json::Value each_WindowsHelloInfo; ToJsonUtilO(WindowsHelloInfo, each_WindowsHelloInfo); output["WindowsHelloInfo"] = each_WindowsHelloInfo;
                 Json::Value each_XboxInfo; ToJsonUtilO(XboxInfo, each_XboxInfo); output["XboxInfo"] = each_XboxInfo;
                 return output;
             }
@@ -16974,20 +17820,17 @@ namespace PlayFab
 
         struct GetLeaderboardForUsersCharactersRequest : public PlayFabRequestCommon
         {
-            Int32 MaxResultsCount;
             std::string PlayFabId;
             std::string StatisticName;
 
             GetLeaderboardForUsersCharactersRequest() :
                 PlayFabRequestCommon(),
-                MaxResultsCount(),
                 PlayFabId(),
                 StatisticName()
             {}
 
             GetLeaderboardForUsersCharactersRequest(const GetLeaderboardForUsersCharactersRequest& src) :
                 PlayFabRequestCommon(),
-                MaxResultsCount(src.MaxResultsCount),
                 PlayFabId(src.PlayFabId),
                 StatisticName(src.StatisticName)
             {}
@@ -16996,7 +17839,6 @@ namespace PlayFab
 
             void FromJson(const Json::Value& input) override
             {
-                FromJsonUtilP(input["MaxResultsCount"], MaxResultsCount);
                 FromJsonUtilS(input["PlayFabId"], PlayFabId);
                 FromJsonUtilS(input["StatisticName"], StatisticName);
             }
@@ -17004,7 +17846,6 @@ namespace PlayFab
             Json::Value ToJson() const override
             {
                 Json::Value output;
-                Json::Value each_MaxResultsCount; ToJsonUtilP(MaxResultsCount, each_MaxResultsCount); output["MaxResultsCount"] = each_MaxResultsCount;
                 Json::Value each_PlayFabId; ToJsonUtilS(PlayFabId, each_PlayFabId); output["PlayFabId"] = each_PlayFabId;
                 Json::Value each_StatisticName; ToJsonUtilS(StatisticName, each_StatisticName); output["StatisticName"] = each_StatisticName;
                 return output;
@@ -20710,6 +21551,50 @@ namespace PlayFab
             }
         };
 
+        struct LoginWithSteamIdRequest : public PlayFabRequestCommon
+        {
+            Boxed<bool> CreateAccount;
+            std::map<std::string, std::string> CustomTags;
+            Boxed<GetPlayerCombinedInfoRequestParams> InfoRequestParameters;
+            std::string SteamId;
+
+            LoginWithSteamIdRequest() :
+                PlayFabRequestCommon(),
+                CreateAccount(),
+                CustomTags(),
+                InfoRequestParameters(),
+                SteamId()
+            {}
+
+            LoginWithSteamIdRequest(const LoginWithSteamIdRequest& src) :
+                PlayFabRequestCommon(),
+                CreateAccount(src.CreateAccount),
+                CustomTags(src.CustomTags),
+                InfoRequestParameters(src.InfoRequestParameters),
+                SteamId(src.SteamId)
+            {}
+
+            ~LoginWithSteamIdRequest() = default;
+
+            void FromJson(const Json::Value& input) override
+            {
+                FromJsonUtilP(input["CreateAccount"], CreateAccount);
+                FromJsonUtilS(input["CustomTags"], CustomTags);
+                FromJsonUtilO(input["InfoRequestParameters"], InfoRequestParameters);
+                FromJsonUtilS(input["SteamId"], SteamId);
+            }
+
+            Json::Value ToJson() const override
+            {
+                Json::Value output;
+                Json::Value each_CreateAccount; ToJsonUtilP(CreateAccount, each_CreateAccount); output["CreateAccount"] = each_CreateAccount;
+                Json::Value each_CustomTags; ToJsonUtilS(CustomTags, each_CustomTags); output["CustomTags"] = each_CustomTags;
+                Json::Value each_InfoRequestParameters; ToJsonUtilO(InfoRequestParameters, each_InfoRequestParameters); output["InfoRequestParameters"] = each_InfoRequestParameters;
+                Json::Value each_SteamId; ToJsonUtilS(SteamId, each_SteamId); output["SteamId"] = each_SteamId;
+                return output;
+            }
+        };
+
         struct LoginWithXboxIdRequest : public PlayFabRequestCommon
         {
             Boxed<bool> CreateAccount;
@@ -22992,18 +23877,27 @@ namespace PlayFab
 
         struct SetTitleDataRequest : public PlayFabRequestCommon
         {
+            std::string AzureResourceId;
+            std::map<std::string, std::string> CustomTags;
             std::string Key;
+            std::string TitleId;
             std::string Value;
 
             SetTitleDataRequest() :
                 PlayFabRequestCommon(),
+                AzureResourceId(),
+                CustomTags(),
                 Key(),
+                TitleId(),
                 Value()
             {}
 
             SetTitleDataRequest(const SetTitleDataRequest& src) :
                 PlayFabRequestCommon(),
+                AzureResourceId(src.AzureResourceId),
+                CustomTags(src.CustomTags),
                 Key(src.Key),
+                TitleId(src.TitleId),
                 Value(src.Value)
             {}
 
@@ -23011,14 +23905,20 @@ namespace PlayFab
 
             void FromJson(const Json::Value& input) override
             {
+                FromJsonUtilS(input["AzureResourceId"], AzureResourceId);
+                FromJsonUtilS(input["CustomTags"], CustomTags);
                 FromJsonUtilS(input["Key"], Key);
+                FromJsonUtilS(input["TitleId"], TitleId);
                 FromJsonUtilS(input["Value"], Value);
             }
 
             Json::Value ToJson() const override
             {
                 Json::Value output;
+                Json::Value each_AzureResourceId; ToJsonUtilS(AzureResourceId, each_AzureResourceId); output["AzureResourceId"] = each_AzureResourceId;
+                Json::Value each_CustomTags; ToJsonUtilS(CustomTags, each_CustomTags); output["CustomTags"] = each_CustomTags;
                 Json::Value each_Key; ToJsonUtilS(Key, each_Key); output["Key"] = each_Key;
+                Json::Value each_TitleId; ToJsonUtilS(TitleId, each_TitleId); output["TitleId"] = each_TitleId;
                 Json::Value each_Value; ToJsonUtilS(Value, each_Value); output["Value"] = each_Value;
                 return output;
             }
@@ -23026,24 +23926,29 @@ namespace PlayFab
 
         struct SetTitleDataResult : public PlayFabResultCommon
         {
+            std::string AzureResourceId;
 
             SetTitleDataResult() :
-                PlayFabResultCommon()
+                PlayFabResultCommon(),
+                AzureResourceId()
             {}
 
-            SetTitleDataResult(const SetTitleDataResult&) :
-                PlayFabResultCommon()
+            SetTitleDataResult(const SetTitleDataResult& src) :
+                PlayFabResultCommon(),
+                AzureResourceId(src.AzureResourceId)
             {}
 
             ~SetTitleDataResult() = default;
 
-            void FromJson(const Json::Value&) override
+            void FromJson(const Json::Value& input) override
             {
+                FromJsonUtilS(input["AzureResourceId"], AzureResourceId);
             }
 
             Json::Value ToJson() const override
             {
                 Json::Value output;
+                Json::Value each_AzureResourceId; ToJsonUtilS(AzureResourceId, each_AzureResourceId); output["AzureResourceId"] = each_AzureResourceId;
                 return output;
             }
         };

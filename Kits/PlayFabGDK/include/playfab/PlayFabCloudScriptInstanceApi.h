@@ -47,6 +47,7 @@ namespace PlayFab
         // ------------ Generated API calls
         void ExecuteEntityCloudScript(CloudScriptModels::ExecuteEntityCloudScriptRequest& request, const ProcessApiCallback<CloudScriptModels::ExecuteCloudScriptResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void ExecuteFunction(CloudScriptModels::ExecuteFunctionRequest& request, const ProcessApiCallback<CloudScriptModels::ExecuteFunctionResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
+        void GetFunction(CloudScriptModels::GetFunctionRequest& request, const ProcessApiCallback<CloudScriptModels::GetFunctionResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void ListFunctions(CloudScriptModels::ListFunctionsRequest& request, const ProcessApiCallback<CloudScriptModels::ListFunctionsResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void ListHttpFunctions(CloudScriptModels::ListFunctionsRequest& request, const ProcessApiCallback<CloudScriptModels::ListHttpFunctionsResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void ListQueuedFunctions(CloudScriptModels::ListFunctionsRequest& request, const ProcessApiCallback<CloudScriptModels::ListQueuedFunctionsResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
@@ -61,6 +62,7 @@ namespace PlayFab
         // ------------ Generated result handlers
         void OnExecuteEntityCloudScriptResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnExecuteFunctionResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
+        void OnGetFunctionResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnListFunctionsResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnListHttpFunctionsResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnListQueuedFunctionsResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
@@ -71,6 +73,7 @@ namespace PlayFab
         void OnRegisterHttpFunctionResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnRegisterQueuedFunctionResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnUnregisterFunctionResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
+
         bool ValidateResult(PlayFabResultCommon& resultCommon, const CallRequestContainer& container);
     };
 }

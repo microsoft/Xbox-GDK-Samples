@@ -320,7 +320,7 @@ bool ATG::SetupProcessorData()
 #if !defined(_XBOX_ONE) && !defined(_GAMING_XBOX)			// Xbox doesn't have this registry entry
     g_osProcessorInfo.bufferSize = 0;
     g_osProcessorInfo.rawData = nullptr;
-    wchar_t processorName[256];
+    wchar_t processorName[256] = {};
     DWORD dataSize = sizeof(wchar_t) * 256;
     RegGetValueW(HKEY_LOCAL_MACHINE, L"HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0", L"ProcessorNameString", RRF_RT_REG_SZ, nullptr, processorName, &dataSize);
     g_trueProcessorName = processorName;
@@ -743,7 +743,7 @@ namespace
         uint64_t allCoresMask(0);
         for (const auto& iter : cpuSets)
         {
-            uint64_t curCoreCount = __popcnt64(iter);
+            const uint64_t curCoreCount = __popcnt64(iter);
             if (curCoreCount > maxHighCacheCores)
                 maxHighCacheCores = curCoreCount;
             if (curCoreCount < minLowCacheCores)
@@ -760,7 +760,7 @@ namespace
         {
             for (const auto& iter : cpuSets)
             {
-                uint64_t curCoreCount = __popcnt64(iter);
+                const uint64_t curCoreCount = __popcnt64(iter);
                 if (curCoreCount == minLowCacheCores)
                     cpuLowCacheSets.insert(iter);
                 else if (curCoreCount == maxHighCacheCores)
@@ -781,7 +781,7 @@ namespace
             uint64_t oneLogicalMask = 0;
             for (const auto& iter : cpuSets)
             {
-                uint64_t curCoreCount = __popcnt64(iter);
+                const uint64_t curCoreCount = __popcnt64(iter);
                 if (curCoreCount == 2)
                 {
                     DWORD lowBitIndex;
@@ -798,7 +798,7 @@ namespace
         {
             for (const auto& iter : cpuSets)
             {
-                uint64_t curCoreCount = __popcnt64(iter);
+                const uint64_t curCoreCount = __popcnt64(iter);
                 if (curCoreCount > minLowCacheCores)				// this must be a cluster
                 {
                     DWORD lowBitIndex;
@@ -818,7 +818,7 @@ namespace
         {
             for (const auto& cluster : cpuSets)
             {
-                uint64_t curCoreCount = __popcnt64(cluster);
+                const uint64_t curCoreCount = __popcnt64(cluster);
                 if (curCoreCount > minLowCacheCores)		// this must be a cluster, more than one physical core
                 {
                     for (const auto& group : cpuSets)
@@ -840,13 +840,13 @@ namespace
             // all cores in a single cluster, one logical in each physical
             for (const auto& cluster : cpuSets)
             {
-                uint64_t curCoreCount = __popcnt64(cluster);
+                const uint64_t curCoreCount = __popcnt64(cluster);
                 if (curCoreCount > minLowCacheCores)		// this must be a cluster, more than one physical core
                 {
                     uint64_t coreMask(0);
                     for (const auto& group : cpuSets)
                     {
-                        uint64_t innerCoreCount = __popcnt64(group);
+                        const uint64_t innerCoreCount = __popcnt64(group);
                         if (innerCoreCount > minLowCacheCores)		// this must be a cluster, more than one physical core
                         {
                             if ((cluster & group) != 0)
@@ -871,7 +871,7 @@ namespace
         {
             for (const auto& outerCluster : cpuSets)
             {
-                uint64_t outerCoreCount = __popcnt64(outerCluster);
+                const uint64_t outerCoreCount = __popcnt64(outerCluster);
                 if (outerCoreCount > minLowCacheCores)		// this must be a cluster, more than one physical core
                 {
                     if (configurationDone.find(outerCluster) != configurationDone.end())		// kind of slow, but for this init code who really cares
@@ -888,7 +888,7 @@ namespace
         {
             for (const auto& outerCluster : cpuSets)
             {
-                uint64_t outerCoreCount = __popcnt64(outerCluster);
+                const uint64_t outerCoreCount = __popcnt64(outerCluster);
                 if (outerCoreCount > minLowCacheCores)		// this must be a cluster, more than one physical core
                 {
                     DWORD lowBitIndex, highBitIndex;
@@ -896,7 +896,7 @@ namespace
                     _BitScanReverse64(&highBitIndex, outerCluster);
                     if (lowBitIndex == highBitIndex)
                         continue;
-                    uint64_t coreMask = (1ULL << lowBitIndex) + (1ULL << highBitIndex);
+                    const uint64_t coreMask = (1ULL << lowBitIndex) + (1ULL << highBitIndex);
 
                     if (configurationDone.find(coreMask) != configurationDone.end())		// kind of slow, but for this init code who really cares
                         continue;
@@ -912,17 +912,17 @@ namespace
         {
             for (const auto& outerCluster : cpuSets)
             {
-                uint64_t outerCoreCount = __popcnt64(outerCluster);
+                const uint64_t outerCoreCount = __popcnt64(outerCluster);
                 if (outerCoreCount > minLowCacheCores)		// this must be a cluster, more than one physical core
                 {
                     for (const auto& innerCluster : cpuSets)
                     {
-                        uint64_t innerCoreCount = __popcnt64(innerCluster);
+                        const uint64_t innerCoreCount = __popcnt64(innerCluster);
                         if (innerCoreCount > minLowCacheCores)		// this must be a cluster, more than one physical core
                         {
                             if (innerCluster & outerCluster)
                                 continue;
-                            uint64_t mask = outerCluster | innerCluster;
+                            const uint64_t mask = outerCluster | innerCluster;
                             if (configurationDone.find(mask) != configurationDone.end())		// kind of slow, but for this init code who really cares
                                 continue;
                             configurationDone.insert(mask);
@@ -939,12 +939,12 @@ namespace
         {
             for (const auto& outerCluster : cpuSets)
             {
-                uint64_t outerCoreCount = __popcnt64(outerCluster);
+                const uint64_t outerCoreCount = __popcnt64(outerCluster);
                 if (outerCoreCount > minLowCacheCores)		// this must be a cluster, more than one physical core
                 {
                     for (const auto& innerCluster : cpuSets)
                     {
-                        uint64_t innerCoreCount = __popcnt64(innerCluster);
+                        const uint64_t innerCoreCount = __popcnt64(innerCluster);
                         if (innerCoreCount > minLowCacheCores)		// this must be a cluster, more than one physical core
                         {
                             if (innerCluster & outerCluster)
@@ -975,7 +975,7 @@ namespace
         coreTests.clear();
         testNames.clear();
 
-        uint32_t s_maxSingleCores = 4;
+        constexpr uint32_t s_maxSingleCores = 4u;
         bool hyperThreaded = false;
         uint64_t allCoresMask(0);
         wchar_t tempBuffer[256];
@@ -989,8 +989,8 @@ namespace
         testNames.push_back(L"all_cores");
         // physical cores
         {
-            uint32_t numSingle = std::min(ATG::GetNumPhysicalCores(groupID), s_maxSingleCores);
-            uint32_t coreDelta = std::max<uint32_t>(hyperThreaded ? 2U : 1U, static_cast<uint32_t> ((((float)ATG::GetTotalNumCores(groupID)) / numSingle) + 0.5f));	// assume hyperthreaded are only 2 cores per physical
+            const uint32_t numSingle = std::min(ATG::GetNumPhysicalCores(groupID), s_maxSingleCores);
+            const uint32_t coreDelta = std::max<uint32_t>(hyperThreaded ? 2U : 1U, static_cast<uint32_t> ((((float)ATG::GetTotalNumCores(groupID)) / numSingle) + 0.5f));	// assume hyperthreaded are only 2 cores per physical
             uint64_t curMask = 0;
             for (uint32_t i = 0; i < numSingle; i++, curMask += coreDelta)
             {
@@ -1001,12 +1001,12 @@ namespace
         }
         if (hyperThreaded)
         {
-            uint32_t numSingle = std::min(ATG::GetNumPhysicalCores(groupID), s_maxSingleCores);
-            uint32_t coreDelta = std::max<uint32_t>(2, ATG::GetTotalNumCores(groupID) / numSingle);	// assume hyperthreaded are only 2 cores per physical. Code below will set the mask correctly
+            const uint32_t numSingle = std::min(ATG::GetNumPhysicalCores(groupID), s_maxSingleCores);
+            const uint32_t coreDelta = std::max<uint32_t>(2, ATG::GetTotalNumCores(groupID) / numSingle);	// assume hyperthreaded are only 2 cores per physical. Code below will set the mask correctly
             uint64_t curMask = 0;
             for (uint32_t i = 0; i < numSingle; i++, curMask += coreDelta)
             {
-                uint64_t logicalMask = ATG::GetLogicalProcessorMask(ATG::UniqueProcessorMask(1ULL << curMask, groupID));
+                const uint64_t logicalMask = ATG::GetLogicalProcessorMask(ATG::UniqueProcessorMask(1ULL << curMask, groupID));
                 coreTests.push_back(logicalMask);
                 swprintf_s(tempBuffer, 256, L"logical_0x%llx", logicalMask);
                 testNames.push_back(tempBuffer);
@@ -1089,7 +1089,7 @@ namespace
         else
         {
             // half the cores in a single
-            uint32_t halfLogical = ATG::GetNumLogicalCores(groupID) / 2;
+            const uint32_t halfLogical = ATG::GetNumLogicalCores(groupID) / 2;
             uint64_t lowMask(0), highMask(0);
             for (uint32_t i = 0; i < halfLogical; i += hyperThreaded ? 2 : 1)
             {
@@ -1127,7 +1127,7 @@ namespace
 
     void CalcRDTSCPFrequency()
     {
-        const uint32_t msDuration = 1000;
+        constexpr uint32_t msDuration = 1000u;
 
         LARGE_INTEGER qpcTempRate;
         QueryPerformanceFrequency(&qpcTempRate);
@@ -1136,37 +1136,37 @@ namespace
         double rdtscFrequencyLoad;
         uint32_t tempAux;
 
-        int32_t currentPriority = GetThreadPriority(GetCurrentThread());
+        const int32_t currentPriority = GetThreadPriority(GetCurrentThread());
         ::SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_TIME_CRITICAL);
-        uint64_t oldAffinityMask = ::SetThreadAffinityMask(GetCurrentThread(), 0x04);		// don't use the first core, don't really care if this fails the code still works, this is just here as an extra forcing value just in case
+        const uint64_t oldAffinityMask = ::SetThreadAffinityMask(GetCurrentThread(), 0x04);		// don't use the first core, don't really care if this fails the code still works, this is just here as an extra forcing value just in case
 
         // Measure __rdtscp() when the machine is mostly idle
         {
-            uint64_t rdtscStart = __rdtscp(&tempAux);
+            const uint64_t rdtscStart = __rdtscp(&tempAux);
             QueryPerformanceCounter(&qpcTempRate);
-            int64_t qpcStart = qpcTempRate.QuadPart;
+            const int64_t qpcStart = qpcTempRate.QuadPart;
             Sleep(msDuration);
-            uint64_t rdtscElapsed = __rdtscp(&tempAux) - rdtscStart;
+            const uint64_t rdtscElapsed = __rdtscp(&tempAux) - rdtscStart;
             QueryPerformanceCounter(&qpcTempRate);
-            int64_t qpcElapsed = qpcTempRate.QuadPart - qpcStart;
+            const int64_t qpcElapsed = qpcTempRate.QuadPart - qpcStart;
             rdtscFrequencyIdle = rdtscElapsed / (qpcElapsed / qpcRate);
         }
 
         // Measure __rdtscp() when the machine is busy
         {
-            uint64_t rdtscStart = __rdtscp(&tempAux);
+            const uint64_t rdtscStart = __rdtscp(&tempAux);
             QueryPerformanceCounter(&qpcTempRate);
-            int64_t qpcStart = qpcTempRate.QuadPart;
-            uint32_t startTick = GetTickCount();
+            const int64_t qpcStart = qpcTempRate.QuadPart;
+            const uint64_t startTick = GetTickCount64();
             for (;;)
             {
-                uint32_t tickDuration = GetTickCount() - startTick;
+                const uint64_t tickDuration = GetTickCount64() - startTick;
                 if (tickDuration >= msDuration)
                     break;
             }
-            uint64_t rdtscElapsed = __rdtscp(&tempAux) - rdtscStart;
+            const uint64_t rdtscElapsed = __rdtscp(&tempAux) - rdtscStart;
             QueryPerformanceCounter(&qpcTempRate);
-            int64_t qpcElapsed = qpcTempRate.QuadPart - qpcStart;
+            const int64_t qpcElapsed = qpcTempRate.QuadPart - qpcStart;
             rdtscFrequencyLoad = rdtscElapsed / (qpcElapsed / qpcRate);
         }
         if (oldAffinityMask != 0)

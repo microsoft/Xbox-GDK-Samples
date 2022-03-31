@@ -4,11 +4,11 @@
 
 #pragma once
 
-#if defined (PLAYFAB_PLATFORM_WINDOWS) || defined (PLAYFAB_PLATFORM_XBOX)
-#include <iostream>
-
 // define body for logging or debug output
 #define LOG_QOS(S) /*std::cout << S;*/
+
+#if defined (PLAYFAB_PLATFORM_WINDOWS) || defined (PLAYFAB_PLATFORM_XBOX)
+#include <iostream>
 
 namespace PlayFab
 {

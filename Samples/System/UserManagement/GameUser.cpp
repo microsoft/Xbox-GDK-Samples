@@ -479,12 +479,10 @@ void GameUserManager::HandleUserDeviceAssociationChangedEvent(APP_LOCAL_DEVICE_I
     }
     else if(newUser.value != 0)
     {
-        // TODO: chcoope - Bug opened by feature team to fix this out-of-order issue.
-        //                 https://microsoft.visualstudio.com/Xbox/_workitems/edit/23379915
-
         char logBuffer[512] = {};
         sprintf_s(logBuffer, 512, u8" ->Failed to associate device to user %llu\n", newUser.value);
         OutputDebugStringA(logBuffer);
+        throw std::runtime_error("HandleUserDeviceAssociationChangedEvent() returned unexpected newUserLocalId.");
     }
 }
 

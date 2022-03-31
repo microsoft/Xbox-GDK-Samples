@@ -10,10 +10,16 @@
 
 #pragma once
 
+#if (defined(WINAPI_FAMILY) && (WINAPI_FAMILY == WINAPI_FAMILY_APP)) || (defined(_XBOX_ONE) && defined(_TITLE))
+#ifndef USING_COREWINDOW
+#define USING_COREWINDOW
+#endif
+#endif
+
 #include <cstdint>
 #include <memory>
 
-#if (defined(WINAPI_FAMILY) && (WINAPI_FAMILY == WINAPI_FAMILY_APP)) || (defined(_XBOX_ONE) && defined(_TITLE))
+#ifdef USING_COREWINDOW
 namespace ABI { namespace Windows { namespace UI { namespace Core { struct ICoreWindow; } } } }
 #endif
 
@@ -50,9 +56,11 @@ namespace DirectX
             Pause               = 0x13,
             CapsLock            = 0x14,
             Kana                = 0x15,
+            ImeOn               = 0x16,
 
             Kanji               = 0x19,
 
+            ImeOff              = 0x1a,
             Escape              = 0x1b,
             ImeConvert          = 0x1c,
             ImeNoConvert        = 0x1d,
@@ -230,10 +238,11 @@ namespace DirectX
             bool Pause : 1;             // VK_PAUSE, 0x13
             bool CapsLock : 1;          // VK_CAPITAL, 0x14
             bool Kana : 1;              // VK_KANA, 0x15
-            bool Reserved4 : 2;
+            bool ImeOn : 1;             // VK_IME_ON, 0x16
+            bool Reserved4 : 1;
             bool Reserved5 : 1;
             bool Kanji : 1;             // VK_KANJI, 0x19
-            bool Reserved6 : 1;
+            bool ImeOff : 1;            // VK_IME_OFF, 0X1A
             bool Escape : 1;            // VK_ESCAPE, 0x1B
             bool ImeConvert : 1;        // VK_CONVERT, 0x1C
             bool ImeNoConvert : 1;      // VK_NONCONVERT, 0x1D
@@ -410,7 +419,7 @@ namespace DirectX
                 if (key <= 0xfe)
                 {
                     auto ptr = reinterpret_cast<const uint32_t*>(this);
-                    unsigned int bf = 1u << (key & 0x1f);
+                    const unsigned int bf = 1u << (key & 0x1f);
                     return (ptr[(key >> 5)] & bf) != 0;
                 }
                 return false;
@@ -421,7 +430,7 @@ namespace DirectX
                 if (key <= 0xfe)
                 {
                     auto ptr = reinterpret_cast<const uint32_t*>(this);
-                    unsigned int bf = 1u << (key & 0x1f);
+                    const unsigned int bf = 1u << (key & 0x1f);
                     return (ptr[(key >> 5)] & bf) == 0;
                 }
                 return false;
@@ -459,11 +468,7 @@ namespace DirectX
         // Feature detection
         bool __cdecl IsConnected() const;
 
-    #if (!defined(WINAPI_FAMILY) || (WINAPI_FAMILY == WINAPI_FAMILY_DESKTOP_APP)) && defined(WM_USER)
-        static void __cdecl ProcessMessage(UINT message, WPARAM wParam, LPARAM lParam);
-    #endif
-
-    #if (defined(WINAPI_FAMILY) && (WINAPI_FAMILY == WINAPI_FAMILY_APP)) || (defined(_XBOX_ONE) && defined(_TITLE))
+    #ifdef USING_COREWINDOW
         void __cdecl SetWindow(ABI::Windows::UI::Core::ICoreWindow* window);
     #ifdef __cplusplus_winrt
         void __cdecl SetWindow(Windows::UI::Core::CoreWindow^ window)
@@ -479,7 +484,9 @@ namespace DirectX
             SetWindow(reinterpret_cast<ABI::Windows::UI::Core::ICoreWindow*>(winrt::get_abi(window)));
         }
     #endif
-    #endif // WINAPI_FAMILY == WINAPI_FAMILY_APP
+    #elif defined(WM_USER)
+        static void __cdecl ProcessMessage(UINT message, WPARAM wParam, LPARAM lParam);
+    #endif
 
         // Singleton
         static Keyboard& __cdecl Get();

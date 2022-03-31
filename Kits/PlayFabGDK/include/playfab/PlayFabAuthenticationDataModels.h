@@ -507,6 +507,7 @@ namespace PlayFab
             Boxed<EntityKey> Entity;
             Boxed<IdentifiedDeviceType> pfIdentifiedDeviceType;
             Boxed<LoginIdentityProvider> IdentityProvider;
+            std::string IdentityProviderIssuedId;
             Boxed<EntityLineage> Lineage;
 
             ValidateEntityTokenResponse() :
@@ -514,6 +515,7 @@ namespace PlayFab
                 Entity(),
                 pfIdentifiedDeviceType(),
                 IdentityProvider(),
+                IdentityProviderIssuedId(),
                 Lineage()
             {}
 
@@ -522,6 +524,7 @@ namespace PlayFab
                 Entity(src.Entity),
                 pfIdentifiedDeviceType(src.pfIdentifiedDeviceType),
                 IdentityProvider(src.IdentityProvider),
+                IdentityProviderIssuedId(src.IdentityProviderIssuedId),
                 Lineage(src.Lineage)
             {}
 
@@ -532,6 +535,7 @@ namespace PlayFab
                 FromJsonUtilO(input["Entity"], Entity);
                 FromJsonUtilE(input["IdentifiedDeviceType"], pfIdentifiedDeviceType);
                 FromJsonUtilE(input["IdentityProvider"], IdentityProvider);
+                FromJsonUtilS(input["IdentityProviderIssuedId"], IdentityProviderIssuedId);
                 FromJsonUtilO(input["Lineage"], Lineage);
             }
 
@@ -541,6 +545,7 @@ namespace PlayFab
                 Json::Value each_Entity; ToJsonUtilO(Entity, each_Entity); output["Entity"] = each_Entity;
                 Json::Value each_pfIdentifiedDeviceType; ToJsonUtilE(pfIdentifiedDeviceType, each_pfIdentifiedDeviceType); output["IdentifiedDeviceType"] = each_pfIdentifiedDeviceType;
                 Json::Value each_IdentityProvider; ToJsonUtilE(IdentityProvider, each_IdentityProvider); output["IdentityProvider"] = each_IdentityProvider;
+                Json::Value each_IdentityProviderIssuedId; ToJsonUtilS(IdentityProviderIssuedId, each_IdentityProviderIssuedId); output["IdentityProviderIssuedId"] = each_IdentityProviderIssuedId;
                 Json::Value each_Lineage; ToJsonUtilO(Lineage, each_Lineage); output["Lineage"] = each_Lineage;
                 return output;
             }

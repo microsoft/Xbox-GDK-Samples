@@ -102,7 +102,9 @@
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <FXCompile>
-      <ShaderModel>5.1</ShaderModel>
+      <ShaderModel>6.0</ShaderModel>
+      <EnableDebuggingInformation>true</EnableDebuggingInformation>
+      <AdditionalOptions>/Fd "$(OutDir)%(Filename).pdb" %(AdditionalOptions)</AdditionalOptions>
     </FXCompile>
     <PostBuildEvent>
       <Command>xcopy /Y /I /E "$(ProjectDir)Assets\*.*" "$(TargetDir)Assets"
@@ -137,7 +139,9 @@ xcopy /Y /I /E "..\..\..\Media\Fonts\xboxone*.spritefont" "$(TargetDir)"</Comman
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <FXCompile>
-      <ShaderModel>5.1</ShaderModel>
+      <ShaderModel>6.0</ShaderModel>
+      <EnableDebuggingInformation>true</EnableDebuggingInformation>
+      <AdditionalOptions>/Fd "$(OutDir)%(Filename).pdb" %(AdditionalOptions)</AdditionalOptions>
     </FXCompile>
     <PostBuildEvent>
       <Command>xcopy /Y /I /E "$(ProjectDir)Assets\*.*" "$(TargetDir)Assets"
@@ -169,7 +173,9 @@ xcopy /Y /I /E "..\..\..\Media\Fonts\xboxone*.spritefont" "$(TargetDir)"</Comman
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <FXCompile>
-      <ShaderModel>5.1</ShaderModel>
+      <ShaderModel>6.0</ShaderModel>
+      <EnableDebuggingInformation>true</EnableDebuggingInformation>
+      <AdditionalOptions>/Fd "$(OutDir)%(Filename).pdb" %(AdditionalOptions)</AdditionalOptions>
     </FXCompile>
     <ItemDefinitionGroup>
       <CopyFileToFolders>

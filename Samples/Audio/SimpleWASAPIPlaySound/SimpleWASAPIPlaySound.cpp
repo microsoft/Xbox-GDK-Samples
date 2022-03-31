@@ -159,7 +159,7 @@ void Sample::OnResuming()
 
     if (m_playingWhenSuspended)
     {
-        m_wm->Play();
+        m_wm->PlayPauseToggle();
     }
 }
 #pragma endregion

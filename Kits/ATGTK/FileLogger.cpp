@@ -10,14 +10,21 @@
 
 #include <ctime>
 #include <cstdarg>
-#include <filesystem>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+#include <tuple>
 
 #if __cplusplus >= 201703L
+// Recommended usage is with C++17 and /Zc:__cplusplus
+#include <filesystem>
 #define FILESYSTEM_NAMESPACE(X) std::filesystem::X
+#elif (_MSC_VER < 1923)
+#include <filesystem>
+#define FILESYSTEM_NAMESPACE(X) std::experimental::filesystem::X
 #else
+#define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
+#include <experimental/filesystem>
 #define FILESYSTEM_NAMESPACE(X) std::experimental::filesystem::X
 #endif
 
@@ -67,9 +74,9 @@ FileLogger::FileLogger(const std::wstring& location, bool append, bool includeTi
     StartupLogger();
 }
 
-FileLogger::FileLogger(const Flags& flags) noexcept
+FileLogger::FileLogger(const Flags& flags) noexcept :
+    FileLogger()
 {
-    FileLogger();
     m_baseFileName = flags.m_location;
     m_append = flags.m_appendToFile;
     m_appendTxt = flags.m_appendTxtToName;
@@ -151,7 +158,7 @@ void FileLogger::OpenLogFile()
 #else
     if (m_directoryOverride.size() != 0)
     {
-        _wmkdir(m_directoryOverride.c_str());
+        std::ignore = _wmkdir(m_directoryOverride.c_str());
         fullFileName = m_directoryOverride;
         fullFileName += L"\\";
     }
@@ -163,7 +170,7 @@ void FileLogger::OpenLogFile()
 #else
         fullFileName = L"Logs";
 #endif
-        _mkdir(fullFileName.string().c_str());
+        std::ignore = _mkdir(fullFileName.string().c_str());
         fullFileName += L"\\";
     }
 #endif
@@ -171,7 +178,7 @@ void FileLogger::OpenLogFile()
     fullFileName += baseFilePath;
     {
         std::wstring pathAsString = fullFileName;
-        auto findLoc = pathAsString.find_last_not_of(L' ');
+        auto const findLoc = pathAsString.find_last_not_of(L' ');
         if (findLoc != std::wstring::npos)
             pathAsString = pathAsString.substr(0, findLoc + 1);
         fullFileName = pathAsString;
@@ -246,7 +253,7 @@ void FileLogger::DumpQueue(uint32_t queueIndex)
     m_outputQueue[queueIndex].clear();
 }
 
-void FileLogger::CreateSaveLogThread(void)
+void FileLogger::CreateSaveLogThread()
 {
     assert(!m_outputThread);
     m_outputThread = new std::thread(&FileLogger::SaveLogThread, this);
@@ -254,7 +261,7 @@ void FileLogger::CreateSaveLogThread(void)
 
 void FileLogger::FormattedLog(const wchar_t* logLine, ...)
 {
-    size_t destSize = wcslen(logLine) * 2;
+    const size_t destSize = wcslen(logLine) * 2;
     std::wstring formattedLogLine;
     va_list vaList;
     va_start(vaList, logLine);
@@ -262,7 +269,7 @@ void FileLogger::FormattedLog(const wchar_t* logLine, ...)
         std::unique_ptr<wchar_t> formatted;
 
         formatted.reset(new wchar_t[destSize]);
-        int32_t errorCode = vswprintf(formatted.get(), destSize, logLine, vaList);
+        const int32_t errorCode = vswprintf(formatted.get(), destSize, logLine, vaList);
         if (errorCode < 0 || errorCode >= static_cast<int32_t> (destSize))
             formattedLogLine = logLine;
         else
@@ -292,7 +299,7 @@ void FileLogger::Log(const std::wstring& logLine)
         {
             fullLogString << L"[";
 
-            std::time_t now_c = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+            const std::time_t now_c = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
             std::tm calender;
             localtime_s(&calender, &now_c);
             fullLogString << std::put_time<wchar_t>(&calender, L"%F %T");
@@ -308,13 +315,13 @@ void FileLogger::Log(const std::wstring& logLine)
     }
 }
 
-void FileLogger::SaveLogThread(void)
+void FileLogger::SaveLogThread()
 {
     while (m_killFlag.load() == 0)
     {
         if (!m_delayFlush)
         {
-            uint32_t outputQueue = m_currentOutputQueue;
+            const uint32_t outputQueue = m_currentOutputQueue;
             {
                 std::lock_guard<std::mutex> lg(m_queueCrit);
                 m_currentOutputQueue = !m_currentOutputQueue;

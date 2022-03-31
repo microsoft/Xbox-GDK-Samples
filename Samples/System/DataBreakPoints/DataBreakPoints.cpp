@@ -308,6 +308,19 @@ void Sample::GetDefaultSize(int& width, int& height) const noexcept
 void Sample::CreateDeviceDependentResources()
 {
     auto device = m_deviceResources->GetD3DDevice();
+
+#ifdef _GAMING_DESKTOP
+    D3D12_FEATURE_DATA_SHADER_MODEL shaderModel = { D3D_SHADER_MODEL_6_0 };
+    if (FAILED(device->CheckFeatureSupport(D3D12_FEATURE_SHADER_MODEL, &shaderModel, sizeof(shaderModel)))
+        || (shaderModel.HighestShaderModel < D3D_SHADER_MODEL_6_0))
+    {
+#ifdef _DEBUG
+        OutputDebugStringA("ERROR: Shader Model 6.0 is not supported!\n");
+#endif
+        throw std::runtime_error("Shader Model 6.0 is not supported!");
+    }
+#endif
+
     wchar_t strFilePath[MAX_PATH] = {};
 
     m_graphicsMemory = std::make_unique<GraphicsMemory>(device);

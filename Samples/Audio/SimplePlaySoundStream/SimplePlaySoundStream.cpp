@@ -319,6 +319,8 @@ void Sample::CreateWindowSizeDependentResources()
 //--------------------------------------------------------------------------------------
 DWORD WINAPI Sample::ReadFileThread(LPVOID lpParam)
 {
+    SetThreadDescription(GetCurrentThread(), L"ReadFileThread");
+
     auto sample = static_cast<Sample*>(lpParam);
 
     while (!sample->m_terminateThread && (sample->m_currentPosition < sample->m_waveSize))
@@ -391,6 +393,8 @@ DWORD WINAPI Sample::ReadFileThread(LPVOID lpParam)
 
 DWORD WINAPI Sample::SubmitAudioBufferThread(LPVOID lpParam)
 {
+    SetThreadDescription(GetCurrentThread(), L"SubmitAudioBufferThread");
+
     auto sample = static_cast<Sample*>(lpParam);
     assert(sample != nullptr);
     assert(sample->m_pSourceVoice != nullptr);

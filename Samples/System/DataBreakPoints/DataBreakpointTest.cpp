@@ -31,15 +31,13 @@ LONG WINAPI GenerateDump(EXCEPTION_POINTERS* pExceptionPointers)
 
     std::lock_guard<ATG::CriticalSectionLockable> mutexGuard(mutex);   // MiniDumpWriteDump is single threaded, must synchronize concurrent calls
 
-    BOOL bMiniDumpSuccessful;
-    HANDLE hDumpFile;
-    MINIDUMP_EXCEPTION_INFORMATION ExpParam;
 
     std::string fileName("t:\\dataBreak.dmp");
 
-    hDumpFile = CreateFileA(fileName.c_str(), GENERIC_READ | GENERIC_WRITE,
+    HANDLE hDumpFile = CreateFileA(fileName.c_str(), GENERIC_READ | GENERIC_WRITE,
         FILE_SHARE_WRITE | FILE_SHARE_READ, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
 
+    MINIDUMP_EXCEPTION_INFORMATION ExpParam = {};
     ExpParam.ThreadId = GetCurrentThreadId();
     ExpParam.ExceptionPointers = pExceptionPointers;
     ExpParam.ClientPointers = TRUE;
@@ -48,7 +46,7 @@ LONG WINAPI GenerateDump(EXCEPTION_POINTERS* pExceptionPointers)
     // It will include the stack all the way down to GetThreadContext during the call to MiniDumpWriteDump
     // You will find the offending code in the call stack, but it will be further up.
     // Both SEH and the unhandled exception filter are called in the context of the thread with exception.
-    bMiniDumpSuccessful = MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), hDumpFile, MiniDumpNormal, &ExpParam, NULL, NULL);
+    std::ignore = MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), hDumpFile, MiniDumpNormal, &ExpParam, nullptr, nullptr);
 
     CloseHandle(hDumpFile);
 
@@ -57,6 +55,8 @@ LONG WINAPI GenerateDump(EXCEPTION_POINTERS* pExceptionPointers)
 
 uint32_t DataBreakpointTest::TestThreadFunction()
 {
+    SetThreadDescription(GetCurrentThread(), L"Test thread");
+
     std::atomic<uint32_t> tempVariable(0);
     for (;;)
     {
@@ -73,10 +73,10 @@ uint32_t DataBreakpointTest::TestThreadFunction()
                 tempVariable = ExecuteTestFunction();
                 break;
             case WhichTest::ReadTest:
-                m_writeFailVariable = 5;
+                tempVariable = m_readWriteFailVariable;
                 break;
             case WhichTest::ReadWriteTest:
-                tempVariable = m_readWriteFailVariable;
+                m_writeFailVariable = m_writeFailVariable + 1;
                 break;
             }
         }

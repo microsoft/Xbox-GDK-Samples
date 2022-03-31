@@ -113,7 +113,7 @@ namespace DX
 
             auto blob = ReadCompressedData(fullName);
 
-            bool isdds = _wcsicmp(ext, L".dds") == 0;
+            const bool isdds = _wcsicmp(ext, L".dds") == 0;
 
             using namespace DirectX;
 
@@ -166,10 +166,10 @@ namespace DX
 
             assert(textureEntry.mResource != nullptr);
 
-            size_t slot = EffectTextureFactory::ResourceCount() + m_resources.size();
+            const size_t slot = EffectTextureFactory::ResourceCount() + m_resources.size();
             m_resources.push_back(textureEntry);
 
-            auto textureDescriptor = m_descriptorHeap.GetCpuHandle(static_cast<size_t>(descriptorIndex));
+            auto const textureDescriptor = m_descriptorHeap.GetCpuHandle(static_cast<size_t>(descriptorIndex));
             DirectX::CreateShaderResourceView(m_device.Get(), textureEntry.mResource.Get(), textureDescriptor, textureEntry.mIsCubeMap);
 
             return slot;
@@ -182,7 +182,7 @@ namespace DX
 
         void GetResource(size_t slot, _Out_ ID3D12Resource** resource, _Out_opt_ bool* isCubeMap = nullptr)
         {
-            size_t high = EffectTextureFactory::ResourceCount();
+            const size_t high = EffectTextureFactory::ResourceCount();
             if (slot < high)
             {
                 EffectTextureFactory::GetResource(slot, resource, isCubeMap);
@@ -222,7 +222,7 @@ namespace DX
             if (path && *path != 0)
             {
                 m_path = path;
-                size_t len = m_path.length();
+                const size_t len = m_path.length();
                 if (len > 0)
                 {
                     // Ensure it has a trailing slash

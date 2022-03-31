@@ -165,16 +165,16 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
-    auto dsvDescriptor = m_deviceResources->GetDepthStencilView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
     commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -185,10 +185,10 @@ void Sample::DrawHUD(ID3D12GraphicsCommandList* commandList)
 {
     m_hudBatch->Begin(commandList);
 
-    auto safe = SimpleMath::Viewport::ComputeTitleSafeArea(m_displayWidth, m_displayHeight);
+    auto const safe = SimpleMath::Viewport::ComputeTitleSafeArea(m_displayWidth, m_displayHeight);
 
     XMFLOAT2 textPos = XMFLOAT2(float(safe.left), float(safe.top));
-    XMVECTOR textColor = DirectX::Colors::DarkKhaki;
+    const XMVECTOR textColor = DirectX::Colors::DarkKhaki;
 
     // Draw title.
     m_smallFont->DrawString(m_hudBatch.get(), s_sampleTitle, textPos, textColor);
@@ -223,7 +223,7 @@ void Sample::OnResuming()
 
 void Sample::OnWindowMoved()
 {
-    auto r = m_deviceResources->GetOutputSize();
+    auto const r = m_deviceResources->GetOutputSize();
     m_deviceResources->WindowSizeChanged(r.right, r.bottom);
 }
 
@@ -275,8 +275,8 @@ void Sample::CreateDeviceDependentResources()
         DescriptorHeapIndex::SRV_Count);
 
     // Create Mesh Shader pipeline state object
-    auto simpleTriMS = DX::ReadData(s_meshShaderFilename);
-    auto simpleTriPS = DX::ReadData(s_pixelShaderFilename);
+    auto const simpleTriMS = DX::ReadData(s_meshShaderFilename);
+    auto const simpleTriPS = DX::ReadData(s_pixelShaderFilename);
 
     // Strip the root signature from one of the precompiled shader bytecode.
     DX::ThrowIfFailed(device->CreateRootSignature(0, simpleTriMS.data(), simpleTriMS.size(), IID_GRAPHICS_PPV_ARGS(m_rootSignature.ReleaseAndGetAddressOf())));

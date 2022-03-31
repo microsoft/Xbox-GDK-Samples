@@ -13,6 +13,8 @@ endif()
 set(CMAKE_SYSTEM_NAME WINDOWS)
 set(CMAKE_SYSTEM_VERSION 10.0)
 
+set(XdkEditionTarget "220300" CACHE STRING "Microsoft GDK Edition")
+
 set(CMAKE_GENERATOR_PLATFORM "Gaming.Desktop.x64" CACHE STRING "" FORCE)
 set(CMAKE_VS_PLATFORM_NAME "Gaming.Desktop.x64" CACHE STRING "" FORCE)
 

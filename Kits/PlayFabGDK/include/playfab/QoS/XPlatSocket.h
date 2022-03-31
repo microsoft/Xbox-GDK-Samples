@@ -1,6 +1,5 @@
 #pragma once
 
-#if defined (PLAYFAB_PLATFORM_WINDOWS) || defined (PLAYFAB_PLATFORM_XBOX)
 #if defined(PLAYFAB_PLATFORM_WINDOWS) || defined(PLAYFAB_PLATFORM_XBOX)
 #include <winsock2.h>
 #include <Windows.h>
@@ -13,10 +12,10 @@
 #include <arpa/inet.h>
 #if !defined (PLAYFAB_PLATFORM_PLAYSTATION)
 #include <netdb.h>
-#endif
+#endif // !defined (PLAYFAB_PLATFORM_PLAYSTATION)
 constexpr int SOCKET_ERROR = -1;
 constexpr int WSAEWOULDBLOCK = 10035;
-#endif
+#endif // defined(PLAYFAB_PLATFORM_WINDOWS) || defined(PLAYFAB_PLATFORM_XBOX)
 
 namespace PlayFab
 {
@@ -73,13 +72,12 @@ namespace PlayFab
 #if defined(PLAYFAB_PLATFORM_WINDOWS) || defined(PLAYFAB_PLATFORM_XBOX)
             int s, slen;
             WSADATA wsa;
-#elif defined(PLAYFAB_PLATFORM_ANDROID)
+#elif defined(PLAYFAB_PLATFORM_ANDROID) || defined(PLAYFAB_PLATFORM_LINUX)
             unsigned int s;
             socklen_t slen;
 #else
             unsigned int s, slen;
-#endif
+#endif // defined(PLAYFAB_PLATFORM_WINDOWS) || defined(PLAYFAB_PLATFORM_XBOX)
         };
     }
 }
-#endif // defined (PLAYFAB_PLATFORM_WINDOWS) || defined (PLAYFAB_PLATFORM_XBOX)

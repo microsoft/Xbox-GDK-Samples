@@ -24,12 +24,12 @@ using Microsoft::WRL::ComPtr;
 
 namespace
 {
-    inline float lerp(float a, float b, float f)
+    constexpr float lerp(float a, float b, float f)
     {
         return (1.f - f) * a + f * b;
     }
 
-    inline float UpdateRunningAverage(float avg, float value)
+    constexpr float UpdateRunningAverage(float avg, float value)
     {
         return lerp(value, avg, 0.95f);
     }
@@ -102,12 +102,12 @@ void CPUTimer::Update()
 {
     for (uint32_t j = 0; j < c_maxTimers; ++j)
     {
-        auto start = static_cast<uint64_t>(m_start[j].QuadPart);
-        auto end = static_cast<uint64_t>(m_end[j].QuadPart);
+        auto const start = static_cast<uint64_t>(m_start[j].QuadPart);
+        auto const end = static_cast<uint64_t>(m_end[j].QuadPart);
 
         DebugWarnings(j, start, end);
 
-        float value = float(double(end - start) * m_qpfFreqInv);
+        const float value = float(double(end - start) * m_qpfFreqInv);
         m_avg[j] = UpdateRunningAverage(m_avg[j], value);
     }
 }
@@ -122,8 +122,8 @@ double CPUTimer::GetElapsedMS(uint32_t timerid) const
     if (timerid >= c_maxTimers)
         return 0.0;
 
-    auto start = static_cast<uint64_t>(m_start[timerid].QuadPart);
-    auto end = static_cast<uint64_t>(m_end[timerid].QuadPart);
+    auto const start = static_cast<uint64_t>(m_start[timerid].QuadPart);
+    auto const end = static_cast<uint64_t>(m_end[timerid].QuadPart);
 
     return double(end - start) * m_qpfFreqInv;
 }
@@ -196,12 +196,12 @@ void GPUTimer::EndFrame(_In_ ID3D12GraphicsCommandList* commandList)
 
     for (uint32_t j = 0; j < c_maxTimers; ++j)
     {
-        UINT64 start = m_timing[j * 2];
-        UINT64 end = m_timing[j * 2 + 1];
+        const UINT64 start = m_timing[j * 2];
+        const UINT64 end = m_timing[j * 2 + 1];
 
         DebugWarnings(j, start, end);
 
-        float value = float(double(end - start) * m_gpuFreqInv);
+        const float value = float(double(end - start) * m_gpuFreqInv);
         m_avg[j] = UpdateRunningAverage(m_avg[j], value);
     }
 }
@@ -239,8 +239,8 @@ double GPUTimer::GetElapsedMS(uint32_t timerid) const
     if (timerid >= c_maxTimers)
         return 0.0;
 
-    UINT64 start = m_timing[timerid * 2];
-    UINT64 end = m_timing[timerid * 2 + 1];
+    const UINT64 start = m_timing[timerid * 2];
+    const UINT64 end = m_timing[timerid * 2 + 1];
 
     if (end < start)
         return 0.0;
@@ -275,9 +275,9 @@ void GPUTimer::RestoreDevice(_In_ ID3D12Device* device, _In_ ID3D12CommandQueue*
     ThrowIfFailed(device->CreateQueryHeap(&desc, IID_GRAPHICS_PPV_ARGS(m_heap.ReleaseAndGetAddressOf())));
     m_heap->SetName(L"GPUTimer");
 
-    auto readBack = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_READBACK);
+    auto const readBack = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_READBACK);
 
-    auto bufferDesc = CD3DX12_RESOURCE_DESC::Buffer(c_timerSlots * sizeof(UINT64));
+    auto const bufferDesc = CD3DX12_RESOURCE_DESC::Buffer(c_timerSlots * sizeof(UINT64));
     ThrowIfFailed(device->CreateCommittedResource(
         &readBack,
         D3D12_HEAP_FLAG_NONE,

@@ -43,14 +43,14 @@ using Microsoft::WRL::ComPtr;
 
 namespace
 {
-    const float c_HoldTimeStart = 1.f;
-    const float c_HoldTimeRepeat = .1f;
-    const float c_KeypressRepeatDelay = .05f;
+    constexpr float c_HoldTimeStart = 1.f;
+    constexpr float c_HoldTimeRepeat = .1f;
+    constexpr float c_KeypressRepeatDelay = .05f;
 
-    const long c_ScrollWidth = 16;
-    const long c_MinThumbSize = 8;
-    const long c_BorderSize = 6;
-    const long c_MarginSize = 5;
+    constexpr long c_ScrollWidth = 16;
+    constexpr long c_MinThumbSize = 8;
+    constexpr long c_BorderSize = 6;
+    constexpr long c_MarginSize = 5;
 
 
 
@@ -97,7 +97,7 @@ namespace
         return (defaultCtrl) ? defaultCtrl : firstCtrl;
     }
 
-    IControl* NextFocus(_In_opt_ IControl* currentFocus, std::vector<IControl*>& controls)
+    IControl* NextFocus(_In_opt_ IControl* currentFocus, const std::vector<IControl*>& controls)
     {
         if (!currentFocus)
             return nullptr;
@@ -186,7 +186,7 @@ namespace
             assert(it != nullptr);
             _Analysis_assume_(it != nullptr);
 
-            unsigned hotkey = it->GetHotKey();
+            const unsigned hotkey = it->GetHotKey();
             if (hotkey != 0)
             {
                 if (kbstate.IsKeyPressed(static_cast<Keyboard::Keys>(hotkey)))
@@ -255,7 +255,11 @@ namespace
         }
     }
 
-    std::wstring WordWrap( _In_z_ const wchar_t* text, _In_ SpriteFont* font, const RECT& rect, std::vector<size_t>* lineStarts = nullptr)
+    std::wstring WordWrap(
+        _In_z_ const wchar_t* text,
+        _In_ const SpriteFont* font,
+        const RECT& rect,
+        std::vector<size_t>* lineStarts = nullptr)
     {
         if (lineStarts)
         {
@@ -274,7 +278,7 @@ namespace
 
         const wchar_t *ptr = text;
 
-        XMFLOAT2 pos(float(rect.left), float(rect.top));
+        const XMFLOAT2 pos(float(rect.left), float(rect.top));
 
         wchar_t prevch = 0;
         while (*ptr != L'\0')
@@ -292,7 +296,7 @@ namespace
                 last_word = size_t(ptr - text - 1);
             }
 
-            RECT textrect = font->MeasureDrawBounds(str.c_str() + line_start, pos);
+            const RECT textrect = font->MeasureDrawBounds(str.c_str() + line_start, pos);
 
             if (textrect.right > rect.right)
             {
@@ -339,7 +343,7 @@ namespace
         }
     }
 
-    unsigned HandleVirtualKeys(_Inout_z_ wchar_t* str)
+    unsigned HandleVirtualKeys(_Inout_z_ const wchar_t* str)
     {
         static const struct Map { const wchar_t* first; unsigned second; } s_map[] =
         {
@@ -377,10 +381,10 @@ namespace
         assert(pageSize > 0);
         if (end - start > pageSize)
         {
-            int height = (trackRect.bottom - trackRect.top);
+            const int height = (trackRect.bottom - trackRect.top);
 
-            int thumbHeight = std::max<int>( height * pageSize / (end - start), c_MinThumbSize);
-            int maxPos = end - start - pageSize;
+            const int thumbHeight = std::max<int>( height * pageSize / (end - start), c_MinThumbSize);
+            const int maxPos = end - start - pageSize;
 
             thumbRect.top = trackRect.top + (position - start) * (height - thumbHeight) / maxPos;
             thumbRect.bottom = thumbRect.top + thumbHeight;
@@ -401,12 +405,12 @@ namespace
     }
 
 
-    void MessageYesNoCancel(IPanel* panel, unsigned id)
+    void MessageYesNoCancel(const IPanel* panel, unsigned id)
     {
         assert(panel != 0);
         assert(panel->GetUser() != 0);
 
-        auto cb = reinterpret_cast<std::function<void(bool, bool)>*>(panel->GetUser());
+        auto const *cb = reinterpret_cast<std::function<void(bool, bool)>*>(panel->GetUser());
 
         if (id == 1)
         {
@@ -1413,17 +1417,17 @@ public:
         return result;
     }
 
-    bool Update(float elapsedTime, Mouse& mouse, Keyboard& kb)
+    bool Update(float elapsedTime, const Mouse& mouse, const Keyboard& kb)
     {
         if (m_heldTimer >= 0)
         {
             m_heldTimer -= elapsedTime;
         }
 
-        auto mstate = mouse.GetState();
+        auto const mstate = mouse.GetState();
         m_mouseButtonState.Update(mstate);
 
-        auto kbstate = kb.GetState();
+        auto const kbstate = kb.GetState();
         m_keyboardState.Update(kbstate);
 
         bool result = false;
@@ -1556,7 +1560,7 @@ public:
         texDesc.SampleDesc.Count = 1;
         texDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
 
-        CD3DX12_HEAP_PROPERTIES defaultHeapProperties(D3D12_HEAP_TYPE_DEFAULT);
+        const CD3DX12_HEAP_PROPERTIES defaultHeapProperties(D3D12_HEAP_TYPE_DEFAULT);
 
         DX::ThrowIfFailed(
             device->CreateCommittedResource(
@@ -1650,7 +1654,7 @@ public:
             for (auto& it : m_layoutImages)
             {
                 index = pile.Allocate();
-                size_t slot = m_fxFactory->CreateTexture(it.c_str(), static_cast<int>(index));
+                const size_t slot = m_fxFactory->CreateTexture(it.c_str(), static_cast<int>(index));
 
                 ComPtr<ID3D12Resource> tex;
                 m_fxFactory->GetResource(slot, tex.GetAddressOf());
@@ -2045,7 +2049,7 @@ private:
                 using namespace PackedVector;
 
                 bgra &= 0xFFFFFF;
-                XMVECTOR clr = XMLoadColor(reinterpret_cast<const XMCOLOR*>(&bgra));
+                const XMVECTOR clr = XMLoadColor(reinterpret_cast<const XMCOLOR*>(&bgra));
                 color = XMVectorSelect(g_XMIdentityR3, clr, g_XMSelect1110);
 
                 if (mConfig.forceSRGB)
@@ -2201,7 +2205,7 @@ bool UIManager::Update(float elapsedTime, const GamePad::State& pad)
     return pImpl->Update(elapsedTime, pad);
 }
 
-bool UIManager::Update(float elapsedTime, Mouse& mouse, Keyboard& kb)
+bool UIManager::Update(float elapsedTime, const Mouse& mouse, const Keyboard& kb)
 {
     return pImpl->Update(elapsedTime, mouse, kb);
 }
@@ -2308,7 +2312,7 @@ void UIManager::Reset()
 
 void UIManager::Clear()
 {
-    UIConfig config = pImpl->mConfig;
+    const UIConfig config = pImpl->mConfig;
     pImpl.reset(); // have to release singleton first
     pImpl.reset(new Impl(config));
 }
@@ -2409,7 +2413,7 @@ TextLabel::TextLabel(unsigned id, const wchar_t* text, const RECT& rect, unsigne
     m_style(style),
     m_text(text)
 {
-    auto mgr = UIManager::Impl::s_uiManager;
+    auto const* mgr = UIManager::Impl::s_uiManager;
     if (!mgr)
     {
         throw std::exception("UIManager");
@@ -2428,7 +2432,7 @@ void TextLabel::Render()
     }
 
     // Determine font
-    SpriteFont* font = mgr->SelectFont(m_style);
+    const SpriteFont* font = mgr->SelectFont(m_style);
 
     const wchar_t * text = m_text.c_str();
 
@@ -2449,7 +2453,7 @@ void TextLabel::Render()
     XMFLOAT2 pos(float(m_screenRect.left), float(m_screenRect.top));
     if (m_style & (c_StyleAlignCenter | c_StyleAlignRight | c_StyleAlignMiddle | c_StyleAlignBottom))
     {
-        XMVECTOR fsize = font->MeasureString(text);
+        const XMVECTOR fsize = font->MeasureString(text);
 
         if (m_style & c_StyleAlignCenter)
         {
@@ -2481,14 +2485,14 @@ void TextLabel::Render()
     // Draw
     if (m_bgColor.w != 0.f)
     {
-        XMVECTOR bgColor = m_style & c_StyleTransparent ?
+        const XMVECTOR bgColor = m_style & c_StyleTransparent ?
             XMLoadFloat4(&mgr->mConfig.colorTransparent) :
             XMLoadFloat4(&m_bgColor);
 
         mgr->DrawRect(m_screenRect, bgColor);
     }
     
-    XMVECTOR color = XMLoadFloat4(&m_fgColor);
+    const XMVECTOR color = XMLoadFloat4(&m_fgColor);
 
     font->DrawString(mgr->m_batch.get(), text, pos, color);
 }
@@ -2543,7 +2547,7 @@ Legend::Legend(unsigned id, const wchar_t* text, const RECT& rect, unsigned styl
     m_style(style),
     m_text(text)
 {
-    auto mgr = UIManager::Impl::s_uiManager;
+    auto const* mgr = UIManager::Impl::s_uiManager;
     if (!mgr)
     {
         throw std::exception("UIManager");
@@ -2562,7 +2566,7 @@ void Legend::Render()
     }
 
     // Determine font
-    SpriteFont* font = mgr->SelectFont(m_style);
+    const SpriteFont* font = mgr->SelectFont(m_style);
 
     SpriteFont* ctrlFont = nullptr;
     if (m_style & c_StyleFontLarge)
@@ -2584,7 +2588,7 @@ void Legend::Render()
     XMFLOAT2 pos(float(m_screenRect.left), float(m_screenRect.top));
     if (m_style & (c_StyleAlignCenter | c_StyleAlignRight | c_StyleAlignMiddle | c_StyleAlignBottom))
     {
-        RECT rect = DX::MeasureControllerDrawBounds(font, ctrlFont, m_text.c_str(), pos);
+        const RECT rect = DX::MeasureControllerDrawBounds(font, ctrlFont, m_text.c_str(), pos);
 
         if (m_style & c_StyleAlignCenter)
         {
@@ -2616,7 +2620,7 @@ void Legend::Render()
     // Draw
     if(m_bgColor.w != 0.f)
     {
-        XMVECTOR bgColor = m_style & c_StyleTransparent ?
+        const XMVECTOR bgColor = m_style & c_StyleTransparent ?
             XMLoadFloat4(&mgr->mConfig.colorTransparent) :
             XMLoadFloat4(&m_bgColor);
 
@@ -2624,7 +2628,7 @@ void Legend::Render()
     }
         
 
-    XMVECTOR color = XMLoadFloat4(&m_fgColor);
+    const XMVECTOR color = XMLoadFloat4(&m_fgColor);
     DX::DrawControllerString(mgr->m_batch.get(), font, ctrlFont, m_text.c_str(), pos, color);
 }
 
@@ -2638,6 +2642,7 @@ Button::Button(unsigned id, const wchar_t* text, const RECT& rect) :
     m_enabled(true),
     m_showBorder(false),
     m_noFocusColor(false),
+    m_focusOnText(false),
     m_style(c_StyleFontMid),
     m_text(text)
 {
@@ -2653,10 +2658,10 @@ void Button::Render()
     }
 
     // Determine font
-    SpriteFont* font = mgr->SelectFont(m_style);
+    const SpriteFont* font = mgr->SelectFont(m_style);
 
     // Determine layout
-    XMVECTOR fsize = font->MeasureString(m_text.c_str());
+    const XMVECTOR fsize = font->MeasureString(m_text.c_str());
     XMFLOAT2 pos(float(m_screenRect.left) + float((m_screenRect.right - m_screenRect.left) / 2) - XMVectorGetX(fsize) / 2.f,
                  float(m_screenRect.top) + float((m_screenRect.bottom - m_screenRect.top) / 2) - XMVectorGetY(fsize) / 2.f);
     if (pos.x < float(m_screenRect.left))
@@ -2664,7 +2669,7 @@ void Button::Render()
     if (pos.y < float(m_screenRect.top))
         pos.y = float(m_screenRect.top);
 
-    int borderWidth = 5;
+    constexpr int borderWidth = 5;
     RECT buttonRect = { m_screenRect.left + borderWidth, m_screenRect.top + borderWidth, m_screenRect.right - borderWidth, m_screenRect.bottom - borderWidth };
 
     auto batch = mgr->m_batch.get();
@@ -2711,7 +2716,7 @@ void Button::Render()
 
     if (m_focus)
     {
-        float luminance = 0.2126f * mgr->mConfig.colorFocus.x * mgr->mConfig.colorFocus.x +
+        const float luminance = 0.2126f * mgr->mConfig.colorFocus.x * mgr->mConfig.colorFocus.x +
             0.7152f * mgr->mConfig.colorFocus.y * mgr->mConfig.colorFocus.y +
             0.0722f * mgr->mConfig.colorFocus.z * mgr->mConfig.colorFocus.z;
 
@@ -2727,7 +2732,7 @@ void Button::Render()
     }
     else
     {
-        float luminance = 0.2126f * m_color.x * m_color.x +
+        const float luminance = 0.2126f * m_color.x * m_color.x +
             0.7152f * m_color.y * m_color.y +
             0.0722f * m_color.z * m_color.z;
 
@@ -2842,17 +2847,17 @@ void CheckBox::Render()
     }
 
     // Determine font
-    SpriteFont* font = mgr->SelectFont(m_style);
+    const SpriteFont* font = mgr->SelectFont(m_style);
 
-    float spacing = font->GetLineSpacing();
+    const float spacing = font->GetLineSpacing();
 
-    long boxThickness = std::max<long>(1, long(spacing * 0.1f));
-    long boxOuter = std::max<long>(2, long(spacing) - boxThickness * 2);
+    const long boxThickness = std::max<long>(1, long(spacing * 0.1f));
+    const long boxOuter = std::max<long>(2, long(spacing) - boxThickness * 2);
 
     // Determine layout
     RECT chkrct = { m_screenRect.left + boxThickness, m_screenRect.top + boxThickness, m_screenRect.left + boxOuter, m_screenRect.bottom - boxThickness };
 
-    XMFLOAT2 pos(float(m_screenRect.left) + boxOuter, float(m_screenRect.top));
+    const XMFLOAT2 pos(float(m_screenRect.left) + boxOuter, float(m_screenRect.top));
 
     // Draw
     XMVECTOR bgColor;
@@ -2869,8 +2874,8 @@ void CheckBox::Render()
 
     mgr->DrawRect(m_screenRect, bgColor);
 
-    XMVECTOR fgColor = XMLoadFloat4(m_enabled ? &mgr->mConfig.colorNormal : &mgr->mConfig.colorDisabled);
-    XMVECTOR ckColor = XMLoadFloat4(&mgr->mConfig.colorBackground);
+    const XMVECTOR fgColor = XMLoadFloat4(m_enabled ? &mgr->mConfig.colorNormal : &mgr->mConfig.colorDisabled);
+    const XMVECTOR ckColor = XMLoadFloat4(&mgr->mConfig.colorBackground);
 
     mgr->DrawRect(chkrct, fgColor);
 
@@ -2948,7 +2953,7 @@ void Slider::SetRange(int minValue, int maxValue)
     m_minValue = minValue;
     m_maxValue = maxValue;
 
-    int value = std::max(std::min(m_maxValue, m_value), m_minValue);
+    const int value = std::max(std::min(m_maxValue, m_value), m_minValue);
     if (value == m_value)
         return;
 
@@ -2967,11 +2972,11 @@ void Slider::Render()
     }
 
     // Compute 'thumb' rectangle
-    float dy = float(m_screenRect.right - m_screenRect.left);
+    const float dy = float(m_screenRect.right - m_screenRect.left);
 
-    long boxThickness = std::max<long>(4, long(dy * 0.05f));
+    const long boxThickness = std::max<long>(4, long(dy * 0.05f));
 
-    int thumbX = static_cast<int>( float( m_value - m_minValue ) * dy / float(m_maxValue - m_minValue));
+    const int thumbX = static_cast<int>( float( m_value - m_minValue ) * dy / float(m_maxValue - m_minValue));
 
     m_thumbRect.top = m_screenRect.top + 2;
     m_thumbRect.bottom = m_screenRect.bottom - 2;
@@ -2997,7 +3002,7 @@ void Slider::Render()
 
     mgr->DrawRect(m_screenRect, bgColor);
 
-    XMVECTOR fgColor = XMLoadFloat4(m_enabled ? &mgr->mConfig.colorHighlight : &mgr->mConfig.colorDisabled);
+    const XMVECTOR fgColor = XMLoadFloat4(m_enabled ? &mgr->mConfig.colorHighlight : &mgr->mConfig.colorDisabled);
 
     mgr->DrawRect(m_thumbRect, fgColor);
 }
@@ -3016,7 +3021,7 @@ bool Slider::Update(float elapsedTime, const DirectX::GamePad::State& pad)
 {
     UNREFERENCED_PARAMETER(elapsedTime);
 
-    auto mgr = UIManager::Impl::s_uiManager;
+    auto const* mgr = UIManager::Impl::s_uiManager;
     if (!mgr)
     {
         throw std::exception("UIManager");
@@ -3047,7 +3052,7 @@ bool Slider::Update(float elapsedTime, const DirectX::Mouse::State& mstate, cons
 {
     UNREFERENCED_PARAMETER(elapsedTime);
 
-    auto mgr = UIManager::Impl::s_uiManager;
+    auto const* mgr = UIManager::Impl::s_uiManager;
     if (!mgr)
     {
         throw std::exception("UIManager");
@@ -3062,10 +3067,10 @@ bool Slider::Update(float elapsedTime, const DirectX::Mouse::State& mstate, cons
         }
         else
         {
-            float dy = float(m_screenRect.right - m_screenRect.left);
-            float vpp = float(m_maxValue - m_minValue) / dy;
+            const float dy = float(m_screenRect.right - m_screenRect.left);
+            const float vpp = float(m_maxValue - m_minValue) / dy;
 
-            int x = mstate.x;
+            const int x = mstate.x;
 
             SetValue(int(0.5f + m_minValue + vpp * float(x - m_screenRect.left)));
         }
@@ -3137,7 +3142,7 @@ bool Slider::Update(float elapsedTime, const DirectX::Mouse::State& mstate, cons
     {
         if (mgr->m_keyboardState.IsKeyPressed(Keyboard::PageUp))
         {
-            int tenth = std::min( 10, (m_maxValue - m_minValue) / 10 );
+            const int tenth = std::min( 10, (m_maxValue - m_minValue) / 10 );
             SetValue( m_value - tenth);
         }
 
@@ -3147,7 +3152,7 @@ bool Slider::Update(float elapsedTime, const DirectX::Mouse::State& mstate, cons
     {
         if (mgr->m_keyboardState.IsKeyPressed(Keyboard::PageDown))
         {
-            int tenth = std::min(10, (m_maxValue - m_minValue) / 10);
+            const int tenth = std::min(10, (m_maxValue - m_minValue) / 10);
             SetValue(m_value + tenth);
         }
 
@@ -3186,8 +3191,8 @@ void ProgressBar::Render()
     auto batch = mgr->m_batch.get();
     auto font = mgr->m_smallFont.get();
 
-    int border = 2;
-    long width = m_screenRect.left + long((m_screenRect.right - m_screenRect.left - 2 * border) * m_progress);
+    constexpr int border = 2;
+    const long width = m_screenRect.left + long((m_screenRect.right - m_screenRect.left - 2 * border) * m_progress);
     RECT inner = { m_screenRect.left + border, m_screenRect.top + border, m_screenRect.right - border, m_screenRect.bottom - border };
     RECT bar = { m_screenRect.left + border, m_screenRect.top + border, width, m_screenRect.bottom - border };
 
@@ -3201,7 +3206,7 @@ void ProgressBar::Render()
         pos.x = float(m_screenRect.left + 2);
         pos.y = float(m_screenRect.top + 2);
 
-        wchar_t str[32];
+        wchar_t str[32] = {};
         swprintf_s(str, 32, L"%.1f%%", m_progress * 100.f);
 
         font->DrawString(batch, str, pos, XMLoadFloat4(&mgr->mConfig.colorNormal));
@@ -3225,7 +3230,7 @@ ListBox::ListBox(unsigned id, const RECT& rect, unsigned style, int itemHeight) 
     m_thumbRect{},
     m_lastHeight(0)
 {
-    auto mgr = UIManager::Impl::s_uiManager;
+    auto const* mgr = UIManager::Impl::s_uiManager;
     if (!mgr)
     {
         throw std::exception("UIManager");
@@ -3253,7 +3258,7 @@ void ListBox::InsertItem(int index, const wchar_t* text, void *user)
     item.text = text;
     item.user = user;
 
-    int item_size = static_cast<int>(m_items.size());
+    const int item_size = static_cast<int>(m_items.size());
     if ((item_size != 0) && (index >= item_size))
     {
         m_items[size_t(index)] = item;
@@ -3271,7 +3276,7 @@ void ListBox::RemoveItem(int index)
 
     auto it = m_items.begin() + index;
 
-    bool selected = it->selected;
+    const bool selected = it->selected;
 
     m_items.erase(it);
 
@@ -3399,15 +3404,15 @@ void ListBox::Render()
 
     auto batch = mgr->m_batch.get();
 
-    XMVECTOR bgColor = XMLoadFloat4((m_style & c_StyleTransparent) ? &mgr->mConfig.colorTransparent : &mgr->mConfig.colorBackground);
+    const XMVECTOR bgColor = XMLoadFloat4((m_style & c_StyleTransparent) ? &mgr->mConfig.colorTransparent : &mgr->mConfig.colorBackground);
     mgr->DrawRect(m_screenRect, bgColor);
 
     if (!m_items.empty())
     {
-        SpriteFont* font = mgr->SelectFont(m_style);
+        const SpriteFont* font = mgr->SelectFont(m_style);
 
         m_lastHeight = (m_itemHeight <= 0) ? static_cast<int>(font->GetLineSpacing()) : m_itemHeight;
-        int maxl = static_cast<int>(float(m_itemRect.bottom - m_itemRect.top - c_MarginSize*2) / float(m_lastHeight));
+        const int maxl = static_cast<int>(float(m_itemRect.bottom - m_itemRect.top - c_MarginSize*2) / float(m_lastHeight));
 
         if (m_focusItem < m_topItem)
             m_topItem = m_focusItem;
@@ -3428,19 +3433,19 @@ void ListBox::Render()
 
             if (m_focus && m_focusItem == j)
             {
-                XMVECTOR color = XMLoadFloat4(&mgr->mConfig.colorFocus);
-                XMVECTOR fgColor = XMLoadFloat4((item.selected) ? &mgr->mConfig.colorHighlight : &mgr->mConfig.colorNormal);
+                const XMVECTOR color = XMLoadFloat4(&mgr->mConfig.colorFocus);
+                const XMVECTOR fgColor = XMLoadFloat4((item.selected) ? &mgr->mConfig.colorHighlight : &mgr->mConfig.colorNormal);
 
                 mgr->DrawRect(selectRect, color);
                 font->DrawString(batch, item.text.c_str(), pos, fgColor);
             }
             else
             {
-                XMVECTOR fgColor = XMLoadFloat4(m_enabled ? &mgr->mConfig.colorNormal : &mgr->mConfig.colorDisabled);
+                const XMVECTOR fgColor = XMLoadFloat4(m_enabled ? &mgr->mConfig.colorNormal : &mgr->mConfig.colorDisabled);
 
                 if (item.selected)
                 {
-                    XMVECTOR color = XMLoadFloat4(&mgr->mConfig.colorSelected);
+                    const XMVECTOR color = XMLoadFloat4(&mgr->mConfig.colorSelected);
                     mgr->DrawRect(selectRect, color);
                 }
 
@@ -3455,7 +3460,7 @@ void ListBox::Render()
 
     if (m_style & c_StyleScrollBar)
     {
-        XMVECTOR scrollColor = XMLoadFloat4(&mgr->mConfig.colorNormal);
+        const XMVECTOR scrollColor = XMLoadFloat4(&mgr->mConfig.colorNormal);
 
         mgr->DrawRect(m_scrollRect, scrollColor);
         mgr->DrawRect(m_trackRect, bgColor);
@@ -3562,7 +3567,7 @@ bool ListBox::Update(float elapsedTime, const DirectX::Mouse::State& mstate, con
 {
     UNREFERENCED_PARAMETER(elapsedTime);
 
-    auto mgr = UIManager::Impl::s_uiManager;
+    auto const* mgr = UIManager::Impl::s_uiManager;
     if (!mgr)
     {
         throw std::exception("UIManager");
@@ -3576,7 +3581,7 @@ bool ListBox::Update(float elapsedTime, const DirectX::Mouse::State& mstate, con
     {
         if (m_lastHeight > 0)
         {
-            int maxl = static_cast<int>(float(m_itemRect.bottom - m_itemRect.top - c_MarginSize * 2) / float(m_lastHeight));
+            const int maxl = static_cast<int>(float(m_itemRect.bottom - m_itemRect.top - c_MarginSize * 2) / float(m_lastHeight));
             int item = static_cast<int>(float(mstate.y - m_itemRect.top - c_MarginSize) / float(m_lastHeight));
             if (item >= 0 && item < maxl)
             {
@@ -3606,7 +3611,7 @@ bool ListBox::Update(float elapsedTime, const DirectX::Mouse::State& mstate, con
                 {
                     if (!m_items.empty() && (m_lastHeight > 0))
                     {
-                        int maxl = static_cast<int>(float(m_itemRect.bottom - m_itemRect.top - c_MarginSize * 2) / float(m_lastHeight));
+                        const int maxl = static_cast<int>(float(m_itemRect.bottom - m_itemRect.top - c_MarginSize * 2) / float(m_lastHeight));
                         m_focusItem -= maxl;
                         if (m_focusItem < 0)
                             m_focusItem = 0;
@@ -3616,7 +3621,7 @@ bool ListBox::Update(float elapsedTime, const DirectX::Mouse::State& mstate, con
                 {
                     if (!m_items.empty() && (m_lastHeight > 0))
                     {
-                        int maxl = static_cast<int>(float(m_itemRect.bottom - m_itemRect.top - c_MarginSize * 2) / float(m_lastHeight));
+                        const int maxl = static_cast<int>(float(m_itemRect.bottom - m_itemRect.top - c_MarginSize * 2) / float(m_lastHeight));
                         m_focusItem += maxl;
                         if (m_focusItem >= static_cast<int>(m_items.size()))
                             m_focusItem = static_cast<int>(m_items.size() - 1);
@@ -3697,7 +3702,7 @@ bool ListBox::Update(float elapsedTime, const DirectX::Mouse::State& mstate, con
         {
             if (!m_items.empty() && (m_lastHeight > 0))
             {
-                int maxl = static_cast<int>(float(m_itemRect.bottom - m_itemRect.top - c_MarginSize * 2) / float(m_lastHeight));
+                const int maxl = static_cast<int>(float(m_itemRect.bottom - m_itemRect.top - c_MarginSize * 2) / float(m_lastHeight));
                 m_focusItem -= maxl;
                 if (m_focusItem < 0)
                     m_focusItem = 0;
@@ -3712,7 +3717,7 @@ bool ListBox::Update(float elapsedTime, const DirectX::Mouse::State& mstate, con
         {
             if (!m_items.empty() && (m_lastHeight > 0))
             {
-                int maxl = static_cast<int>(float(m_itemRect.bottom - m_itemRect.top - c_MarginSize * 2) / float(m_lastHeight));
+                const int maxl = static_cast<int>(float(m_itemRect.bottom - m_itemRect.top - c_MarginSize * 2) / float(m_lastHeight));
                 m_focusItem += maxl;
                 if (m_focusItem >= static_cast<int>(m_items.size()))
                     m_focusItem = static_cast<int>(m_items.size() - 1);
@@ -3741,7 +3746,7 @@ void ListBox::UpdateRects()
         return;
     }
 
-    int maxl = static_cast<int>(float(m_itemRect.bottom - m_itemRect.top - c_MarginSize * 2) / float(m_lastHeight));
+    const int maxl = static_cast<int>(float(m_itemRect.bottom - m_itemRect.top - c_MarginSize * 2) / float(m_lastHeight));
 
     UpdateScrollBar(m_thumbRect, m_trackRect, m_topItem, 0, static_cast<int>(m_items.size()), maxl);
 }
@@ -3757,7 +3762,7 @@ TextList::TextList(unsigned id, const RECT& rect, unsigned style, int itemHeight
     m_itemRect{},
     m_lastHeight(0)
 {
-    auto mgr = UIManager::Impl::s_uiManager;
+    auto const* mgr = UIManager::Impl::s_uiManager;
     if (!mgr)
     {
         throw std::exception("UIManager");
@@ -3784,7 +3789,7 @@ void XM_CALLCONV TextList::InsertItem(int index, const wchar_t* text, FXMVECTOR 
     Item item = {};
     item.text = text;
     XMStoreFloat4(&item.color, color);
-    int item_size = static_cast<int>(m_items.size());
+    const int item_size = static_cast<int>(m_items.size());
     if ((item_size != 0) && (index >= item_size))
     {
         m_items[size_t(index)] = item;
@@ -3839,7 +3844,7 @@ void TextList::Render()
 
     if (!m_items.empty())
     {
-        SpriteFont* font = mgr->SelectFont(m_style);
+        const SpriteFont* font = mgr->SelectFont(m_style);
 
         m_lastHeight = (m_itemHeight <= 0) ? static_cast<int>(font->GetLineSpacing()) : m_itemHeight;
                 
@@ -3895,7 +3900,7 @@ TextBox::TextBox(unsigned id, _In_z_ const wchar_t* text, const RECT& rect, unsi
     m_text(text),
     m_lastWheelValue(0)
 {
-    auto mgr = UIManager::Impl::s_uiManager;
+    auto const* mgr = UIManager::Impl::s_uiManager;
     if (!mgr)
     {
         throw std::exception("UIManager");
@@ -3946,7 +3951,7 @@ void TextBox::Render()
     XMVECTOR bgColor;
     if (m_focus)
     {
-        XMVECTOR fgColor = XMLoadFloat4(&mgr->mConfig.colorSelected);
+        const XMVECTOR fgColor = XMLoadFloat4(&mgr->mConfig.colorSelected);
         bgColor = XMLoadFloat4((m_style & c_StyleTransparent) ? &mgr->mConfig.colorTransparent : &mgr->mConfig.colorBackground);
 
         if(!(m_style & c_StyleNoBackground))
@@ -3974,7 +3979,7 @@ void TextBox::Render()
 
     if (!m_text.empty())
     {
-        SpriteFont* font = mgr->SelectFont(m_style);
+        const SpriteFont* font = mgr->SelectFont(m_style);
 
         m_lastHeight = static_cast<int>(font->GetLineSpacing());
 
@@ -3992,16 +3997,16 @@ void TextBox::Render()
             m_topLine = static_cast<int>(m_wordWrapLines.size()) - 1;
         m_topLine = std::max(m_topLine, 0);
 
-        XMFLOAT2 pos = { float(m_itemRect.left), float(m_itemRect.top) };
+        const XMFLOAT2 pos = { float(m_itemRect.left), float(m_itemRect.top) };
 
-        XMVECTOR color = XMLoadFloat4(&m_color);
+        const XMVECTOR color = XMLoadFloat4(&m_color);
 
         font->DrawString(mgr->m_batch.get(), &m_wordWrap.c_str()[m_wordWrapLines[size_t(m_topLine)]], pos, color);
     }
 
     if (m_style & c_StyleScrollBar)
     {
-        XMVECTOR scrollColor = XMLoadFloat4(&mgr->mConfig.colorNormal);
+        const XMVECTOR scrollColor = XMLoadFloat4(&mgr->mConfig.colorNormal);
 
         mgr->DrawRect(m_scrollRect, scrollColor);
         mgr->DrawRect(m_trackRect, bgColor);
@@ -4102,7 +4107,7 @@ bool TextBox::Update(float elapsedTime, const DirectX::Mouse::State& mstate, con
                 {
                     if (!m_wordWrapLines.empty() && (m_lastHeight > 0))
                     {
-                        int maxl = static_cast<int>(float(m_itemRect.bottom - m_itemRect.top - c_MarginSize * 2) / float(m_lastHeight));
+                        const int maxl = static_cast<int>(float(m_itemRect.bottom - m_itemRect.top - c_MarginSize * 2) / float(m_lastHeight));
                         m_topLine -= maxl;
                         if (m_topLine < 0)
                             m_topLine = 0;
@@ -4112,7 +4117,7 @@ bool TextBox::Update(float elapsedTime, const DirectX::Mouse::State& mstate, con
                 {
                     if (!m_wordWrapLines.empty() && (m_lastHeight > 0))
                     {
-                        int maxl = static_cast<int>(float(m_itemRect.bottom - m_itemRect.top - c_MarginSize * 2) / float(m_lastHeight));
+                        const int maxl = static_cast<int>(float(m_itemRect.bottom - m_itemRect.top - c_MarginSize * 2) / float(m_lastHeight));
                         m_topLine += maxl;
                         if (m_topLine >= static_cast<int>(m_wordWrapLines.size()))
                             m_topLine = static_cast<int>(m_wordWrapLines.size() - 1);
@@ -4213,7 +4218,7 @@ bool TextBox::Update(float elapsedTime, const DirectX::Mouse::State& mstate, con
 
         if (!m_wordWrapLines.empty() && (m_lastHeight > 0) && mgr->m_heldTimer <= 0.f)
         {
-            int maxl = static_cast<int>(float(m_itemRect.bottom - m_itemRect.top - c_MarginSize * 2) / float(m_lastHeight));
+            const int maxl = static_cast<int>(float(m_itemRect.bottom - m_itemRect.top - c_MarginSize * 2) / float(m_lastHeight));
             m_topLine -= maxl;
             if (m_topLine < 0)
                 m_topLine = 0;
@@ -4231,7 +4236,7 @@ bool TextBox::Update(float elapsedTime, const DirectX::Mouse::State& mstate, con
 
         if (!m_wordWrapLines.empty() && (m_lastHeight > 0) && mgr->m_heldTimer <= 0.f)
         {
-            int maxl = static_cast<int>(float(m_itemRect.bottom - m_itemRect.top - c_MarginSize * 2) / float(m_lastHeight));
+            const int maxl = static_cast<int>(float(m_itemRect.bottom - m_itemRect.top - c_MarginSize * 2) / float(m_lastHeight));
             m_topLine += maxl;
             if (m_topLine >= static_cast<int>(m_wordWrapLines.size()))
                 m_topLine = static_cast<int>(m_wordWrapLines.size() - 1);
@@ -4283,7 +4288,7 @@ void TextBox::UpdateRects()
         return;
     }
 
-    int maxl = static_cast<int>(float(m_itemRect.bottom - m_itemRect.top - c_MarginSize * 2) / float(m_lastHeight));
+    const int maxl = static_cast<int>(float(m_itemRect.bottom - m_itemRect.top - c_MarginSize * 2) / float(m_lastHeight));
 
     UpdateScrollBar(m_thumbRect, m_trackRect, m_topLine, 0, static_cast<int>(m_wordWrapLines.size()), maxl);
 }
@@ -4374,7 +4379,7 @@ void Popup::Render()
         mgr->DrawRect(mgr->m_fullscreen, XMLoadFloat4(&color));
     }
 
-    XMVECTOR bgColor = XMLoadFloat4(&mgr->mConfig.colorBackground);
+    const XMVECTOR bgColor = XMLoadFloat4(&mgr->mConfig.colorBackground);
     mgr->DrawRect(m_screenRect, bgColor);
 
     batch->End();
@@ -4391,7 +4396,7 @@ void Popup::Render()
 
 bool Popup::Update(float elapsedTime, const GamePad::State& pad)
 {
-    auto mgr = UIManager::Impl::s_uiManager;
+    auto const* mgr = UIManager::Impl::s_uiManager;
     if (!mgr)
     {
         throw std::exception("UIManager");
@@ -4436,7 +4441,10 @@ bool Popup::Update(float elapsedTime, const GamePad::State& pad)
         }
         else if (pad.IsAPressed())
         {
-            m_select = true;
+            if (mgr->m_padButtonState.a == GamePad::ButtonStateTracker::PRESSED)
+            {
+                m_select = true;
+            }
         }
         else if (m_select && !pad.IsAPressed())
         {
@@ -4450,7 +4458,7 @@ bool Popup::Update(float elapsedTime, const GamePad::State& pad)
 
 bool Popup::Update(float elapsedTime, const Mouse::State& mstate, const Keyboard::State& kbstate)
 {
-    auto mgr = UIManager::Impl::s_uiManager;
+    auto const* mgr = UIManager::Impl::s_uiManager;
     if (!mgr)
     {
         throw std::exception("UIManager");
@@ -4641,8 +4649,8 @@ void Popup::SetFocus(_In_ IControl* ctrl)
 void Popup::OnWindowSize(const RECT& layout)
 {
     // Popups should center automatically
-    long dx = (m_layoutRect.right - m_layoutRect.left);
-    long dy = (m_layoutRect.bottom - m_layoutRect.top);
+    const long dx = (m_layoutRect.right - m_layoutRect.left);
+    const long dy = (m_layoutRect.bottom - m_layoutRect.top);
 
     m_screenRect.left = layout.left + (layout.right - layout.left) / 2 - dx / 2;
     m_screenRect.top = layout.top + (layout.bottom - layout.top) / 2 - dy / 2;
@@ -4749,8 +4757,8 @@ IControl* HUD::Find(unsigned id)
 
 void HUD::OnWindowSize(const RECT& layout)
 {
-    float dx = float(layout.right - layout.left) / float(m_screenRect.right - m_screenRect.left);
-    float dy = float(layout.bottom - layout.top) / float(m_screenRect.bottom - m_screenRect.top);
+    const float dx = float(layout.right - layout.left) / float(m_screenRect.right - m_screenRect.left);
+    const float dy = float(layout.bottom - layout.top) / float(m_screenRect.bottom - m_screenRect.top);
 
     for (IControl* it : m_controls)
     {
@@ -4836,7 +4844,7 @@ void Overlay::Render()
 
 bool Overlay::Update(float elapsedTime, const GamePad::State& pad)
 {
-    auto mgr = UIManager::Impl::s_uiManager;
+    auto const* mgr = UIManager::Impl::s_uiManager;
     if (!mgr)
     {
         throw std::exception("UIManager");
@@ -4881,7 +4889,10 @@ bool Overlay::Update(float elapsedTime, const GamePad::State& pad)
         }
         else if (pad.IsAPressed())
         {
-            m_select = true;
+            if (mgr->m_padButtonState.a == GamePad::ButtonStateTracker::PRESSED)
+            {
+                m_select = true;
+            }
         }
         else if (m_select && !pad.IsAPressed())
         {
@@ -4895,7 +4906,7 @@ bool Overlay::Update(float elapsedTime, const GamePad::State& pad)
 
 bool Overlay::Update(float elapsedTime, const Mouse::State& mstate, const Keyboard::State& kbstate)
 {
-    auto mgr = UIManager::Impl::s_uiManager;
+    auto const* mgr = UIManager::Impl::s_uiManager;
     if (!mgr)
     {
         throw std::exception("UIManager");
@@ -5084,8 +5095,8 @@ void Overlay::SetFocus(_In_ IControl* ctrl)
 
 void Overlay::OnWindowSize(const RECT& layout)
 {
-    float dx = float(layout.right - layout.left) / float(m_screenRect.right - m_screenRect.left);
-    float dy = float(layout.bottom - layout.top) / float(m_screenRect.bottom - m_screenRect.top);
+    const float dx = float(layout.right - layout.left) / float(m_screenRect.right - m_screenRect.left);
+    const float dy = float(layout.bottom - layout.top) / float(m_screenRect.bottom - m_screenRect.top);
 
     for (IControl* it : m_controls)
     {

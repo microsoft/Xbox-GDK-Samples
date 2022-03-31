@@ -54,7 +54,7 @@ DeviceResources::~DeviceResources()
     // Ensure we present a blank screen before cleaning up resources.
     if (m_commandQueue)
     {
-        (void)m_commandQueue->PresentX(0, nullptr, nullptr);
+        std::ignore = m_commandQueue->PresentX(0, nullptr, nullptr);
     }
 }
 

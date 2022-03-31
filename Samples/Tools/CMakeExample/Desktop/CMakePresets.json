@@ -1,0 +1,74 @@
+﻿{
+  "version": 2,
+  "configurePresets": [
+    {
+      "name": "base",
+      "displayName": "Basic Config",
+      "description": "Basic build using Ninja generator",
+      "generator": "Ninja",
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      },
+      "hidden": true,
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "cacheVariables": {
+        "SDKVersion": "10.0.19041.0",
+        "XdkEditionTarget": "220300",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}"
+      }
+    },
+
+    {
+      "name": "Debug",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" },
+      "hidden": true
+    },
+    {
+      "name": "Release",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" },
+      "hidden": true
+    },
+
+    {
+      "name": "OneCore",
+      "cacheVariables": { "BUILD_USING_ONECORE": true },
+      "hidden": true
+    },
+
+    {
+      "name": "MSVC",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "cl.exe"
+      },
+      "toolset": {
+        "value": "host=x64",
+        "strategy": "external"
+      }
+    },
+    {
+      "name": "Clang",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "clang-cl.exe"
+      },
+      "toolset": {
+        "value": "host=x64",
+        "strategy": "external"
+      }
+    },
+
+    { "name": "x64-Debug"    , "description": "MSVC for x64 (Debug)", "inherits": [ "base", "Debug", "MSVC" ] },
+    { "name": "x64-Release"  , "description": "MSVC for x64 (Release)", "inherits": [ "base", "Release", "MSVC" ] },
+
+    { "name": "x64-Debug-OneCore"  , "description": "MSVC for x64 (Debug) Windows 10 only", "inherits": [ "base", "Debug", "OneCore", "MSVC" ] },
+    { "name": "x64-Release-OneCore", "description": "MSVC for x64 (Release) Windows 10 only", "inherits": [ "base", "Release", "OneCore", "MSVC" ] },
+
+    { "name": "x64-Debug-Clang"    , "description": "Clang/LLVM for x64 (Debug)", "inherits": [ "base", "Debug", "Clang" ] },
+    { "name": "x64-Release-Clang"  , "description": "Clang/LLVM for x64 (Release)", "inherits": [ "base", "Release", "Clang" ] },
+
+    { "name": "x64-Debug-OneCore-Clang"  , "description": "Clang/LLVM for x64 (Debug) Windows 10 only", "inherits": [ "base", "Debug", "OneCore", "Clang" ] },
+    { "name": "x64-Release-OneCore-Clang", "description": "Clang/LLVM for x64 (Release) Windows 10 only", "inherits": [ "base", "Release", "OneCore", "Clang" ] }
+  ]
+}

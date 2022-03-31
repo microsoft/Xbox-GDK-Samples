@@ -102,7 +102,9 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <FXCompile>
-      <ShaderModel>5.1</ShaderModel>
+      <ShaderModel>6.0</ShaderModel>
+      <EnableDebuggingInformation>true</EnableDebuggingInformation>
+      <AdditionalOptions>/Fd "$(OutDir)%(Filename).pdb" %(AdditionalOptions)</AdditionalOptions>
     </FXCompile>
     <PostBuildEvent>
       <Command>xcopy /Y /I /E "$(ProjectDir)Assets\*.*" "$(TargetDir)Assets"
@@ -133,7 +135,9 @@ xcopy /Y /I /E "..\..\..\Media\Fonts\*.spritefont" "$(TargetDir)"</Command>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <FXCompile>
-      <ShaderModel>5.1</ShaderModel>
+      <ShaderModel>6.0</ShaderModel>
+      <EnableDebuggingInformation>true</EnableDebuggingInformation>
+      <AdditionalOptions>/Fd "$(OutDir)%(Filename).pdb" %(AdditionalOptions)</AdditionalOptions>
     </FXCompile>
     <PostBuildEvent>
       <Command>xcopy /Y /I /E "$(ProjectDir)Assets\*.*" "$(TargetDir)Assets"
@@ -162,7 +166,9 @@ xcopy /Y /I /E "..\..\..\Media\Fonts\*.spritefont" "$(TargetDir)"</Command>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <FXCompile>
-      <ShaderModel>5.1</ShaderModel>
+      <ShaderModel>6.0</ShaderModel>
+      <EnableDebuggingInformation>true</EnableDebuggingInformation>
+      <AdditionalOptions>/Fd "$(OutDir)%(Filename).pdb" %(AdditionalOptions)</AdditionalOptions>
     </FXCompile>
     <PostBuildEvent>
       <Command>xcopy /Y /I /E "$(ProjectDir)Assets\*.*" "$(TargetDir)Assets"

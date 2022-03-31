@@ -266,19 +266,22 @@ namespace PlayFab
             std::map<std::string, std::string> CustomTags;
             EntityKey Entity;
             std::list<std::string> FileNames;
+            Int32 ProfileVersion;
 
             FinalizeFileUploadsRequest() :
                 PlayFabRequestCommon(),
                 CustomTags(),
                 Entity(),
-                FileNames()
+                FileNames(),
+                ProfileVersion()
             {}
 
             FinalizeFileUploadsRequest(const FinalizeFileUploadsRequest& src) :
                 PlayFabRequestCommon(),
                 CustomTags(src.CustomTags),
                 Entity(src.Entity),
-                FileNames(src.FileNames)
+                FileNames(src.FileNames),
+                ProfileVersion(src.ProfileVersion)
             {}
 
             ~FinalizeFileUploadsRequest() = default;
@@ -288,6 +291,7 @@ namespace PlayFab
                 FromJsonUtilS(input["CustomTags"], CustomTags);
                 FromJsonUtilO(input["Entity"], Entity);
                 FromJsonUtilS(input["FileNames"], FileNames);
+                FromJsonUtilP(input["ProfileVersion"], ProfileVersion);
             }
 
             Json::Value ToJson() const override
@@ -296,6 +300,7 @@ namespace PlayFab
                 Json::Value each_CustomTags; ToJsonUtilS(CustomTags, each_CustomTags); output["CustomTags"] = each_CustomTags;
                 Json::Value each_Entity; ToJsonUtilO(Entity, each_Entity); output["Entity"] = each_Entity;
                 Json::Value each_FileNames; ToJsonUtilS(FileNames, each_FileNames); output["FileNames"] = each_FileNames;
+                Json::Value each_ProfileVersion; ToJsonUtilP(ProfileVersion, each_ProfileVersion); output["ProfileVersion"] = each_ProfileVersion;
                 return output;
             }
         };

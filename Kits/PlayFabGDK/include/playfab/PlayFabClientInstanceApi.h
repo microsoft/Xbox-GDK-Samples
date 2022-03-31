@@ -62,6 +62,8 @@ namespace PlayFab
         void CancelTrade(ClientModels::CancelTradeRequest& request, const ProcessApiCallback<ClientModels::CancelTradeResponse> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void ConfirmPurchase(ClientModels::ConfirmPurchaseRequest& request, const ProcessApiCallback<ClientModels::ConfirmPurchaseResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void ConsumeItem(ClientModels::ConsumeItemRequest& request, const ProcessApiCallback<ClientModels::ConsumeItemResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
+        void ConsumeMicrosoftStoreEntitlements(ClientModels::ConsumeMicrosoftStoreEntitlementsRequest& request, const ProcessApiCallback<ClientModels::ConsumeMicrosoftStoreEntitlementsResponse> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
+        void ConsumePS5Entitlements(ClientModels::ConsumePS5EntitlementsRequest& request, const ProcessApiCallback<ClientModels::ConsumePS5EntitlementsResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void ConsumePSNEntitlements(ClientModels::ConsumePSNEntitlementsRequest& request, const ProcessApiCallback<ClientModels::ConsumePSNEntitlementsResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void ConsumeXboxEntitlements(ClientModels::ConsumeXboxEntitlementsRequest& request, const ProcessApiCallback<ClientModels::ConsumeXboxEntitlementsResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void CreateSharedGroup(ClientModels::CreateSharedGroupRequest& request, const ProcessApiCallback<ClientModels::CreateSharedGroupResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
@@ -119,7 +121,6 @@ namespace PlayFab
         void GetUserPublisherData(ClientModels::GetUserDataRequest& request, const ProcessApiCallback<ClientModels::GetUserDataResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void GetUserPublisherReadOnlyData(ClientModels::GetUserDataRequest& request, const ProcessApiCallback<ClientModels::GetUserDataResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void GetUserReadOnlyData(ClientModels::GetUserDataRequest& request, const ProcessApiCallback<ClientModels::GetUserDataResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
-        void GetWindowsHelloChallenge(ClientModels::GetWindowsHelloChallengeRequest& request, const ProcessApiCallback<ClientModels::GetWindowsHelloChallengeResponse> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void GrantCharacterToUser(ClientModels::GrantCharacterToUserRequest& request, const ProcessApiCallback<ClientModels::GrantCharacterToUserResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void LinkAndroidDeviceID(ClientModels::LinkAndroidDeviceIDRequest& request, const ProcessApiCallback<ClientModels::LinkAndroidDeviceIDResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void LinkApple(ClientModels::LinkAppleRequest& request, const ProcessApiCallback<ClientModels::EmptyResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
@@ -136,7 +137,6 @@ namespace PlayFab
         void LinkPSNAccount(ClientModels::LinkPSNAccountRequest& request, const ProcessApiCallback<ClientModels::LinkPSNAccountResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void LinkSteamAccount(ClientModels::LinkSteamAccountRequest& request, const ProcessApiCallback<ClientModels::LinkSteamAccountResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void LinkTwitch(ClientModels::LinkTwitchAccountRequest& request, const ProcessApiCallback<ClientModels::LinkTwitchAccountResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
-        void LinkWindowsHello(ClientModels::LinkWindowsHelloAccountRequest& request, const ProcessApiCallback<ClientModels::LinkWindowsHelloAccountResponse> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void LinkXboxAccount(ClientModels::LinkXboxAccountRequest& request, const ProcessApiCallback<ClientModels::LinkXboxAccountResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void LoginWithAndroidDeviceID(ClientModels::LoginWithAndroidDeviceIDRequest& request, const ProcessApiCallback<ClientModels::LoginResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void LoginWithApple(ClientModels::LoginWithAppleRequest& request, const ProcessApiCallback<ClientModels::LoginResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
@@ -155,7 +155,6 @@ namespace PlayFab
         void LoginWithPSN(ClientModels::LoginWithPSNRequest& request, const ProcessApiCallback<ClientModels::LoginResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void LoginWithSteam(ClientModels::LoginWithSteamRequest& request, const ProcessApiCallback<ClientModels::LoginResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void LoginWithTwitch(ClientModels::LoginWithTwitchRequest& request, const ProcessApiCallback<ClientModels::LoginResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
-        void LoginWithWindowsHello(ClientModels::LoginWithWindowsHelloRequest& request, const ProcessApiCallback<ClientModels::LoginResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void LoginWithXbox(ClientModels::LoginWithXboxRequest& request, const ProcessApiCallback<ClientModels::LoginResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void Matchmake(ClientModels::MatchmakeRequest& request, const ProcessApiCallback<ClientModels::MatchmakeResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void OpenTrade(ClientModels::OpenTradeRequest& request, const ProcessApiCallback<ClientModels::OpenTradeResponse> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
@@ -165,7 +164,6 @@ namespace PlayFab
         void RefreshPSNAuthToken(ClientModels::RefreshPSNAuthTokenRequest& request, const ProcessApiCallback<ClientModels::EmptyResponse> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void RegisterForIOSPushNotification(ClientModels::RegisterForIOSPushNotificationRequest& request, const ProcessApiCallback<ClientModels::RegisterForIOSPushNotificationResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void RegisterPlayFabUser(ClientModels::RegisterPlayFabUserRequest& request, const ProcessApiCallback<ClientModels::RegisterPlayFabUserResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
-        void RegisterWithWindowsHello(ClientModels::RegisterWithWindowsHelloRequest& request, const ProcessApiCallback<ClientModels::LoginResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void RemoveContactEmail(ClientModels::RemoveContactEmailRequest& request, const ProcessApiCallback<ClientModels::RemoveContactEmailResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void RemoveFriend(ClientModels::RemoveFriendRequest& request, const ProcessApiCallback<ClientModels::RemoveFriendResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void RemoveGenericID(ClientModels::RemoveGenericIDRequest& request, const ProcessApiCallback<ClientModels::RemoveGenericIDResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
@@ -196,7 +194,6 @@ namespace PlayFab
         void UnlinkPSNAccount(ClientModels::UnlinkPSNAccountRequest& request, const ProcessApiCallback<ClientModels::UnlinkPSNAccountResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void UnlinkSteamAccount(ClientModels::UnlinkSteamAccountRequest& request, const ProcessApiCallback<ClientModels::UnlinkSteamAccountResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void UnlinkTwitch(ClientModels::UnlinkTwitchAccountRequest& request, const ProcessApiCallback<ClientModels::UnlinkTwitchAccountResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
-        void UnlinkWindowsHello(ClientModels::UnlinkWindowsHelloAccountRequest& request, const ProcessApiCallback<ClientModels::UnlinkWindowsHelloAccountResponse> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void UnlinkXboxAccount(ClientModels::UnlinkXboxAccountRequest& request, const ProcessApiCallback<ClientModels::UnlinkXboxAccountResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void UnlockContainerInstance(ClientModels::UnlockContainerInstanceRequest& request, const ProcessApiCallback<ClientModels::UnlockContainerItemResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
         void UnlockContainerItem(ClientModels::UnlockContainerItemRequest& request, const ProcessApiCallback<ClientModels::UnlockContainerItemResult> callback, const ErrorCallback errorCallback = nullptr, void* customData = nullptr);
@@ -229,6 +226,8 @@ namespace PlayFab
         void OnCancelTradeResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnConfirmPurchaseResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnConsumeItemResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
+        void OnConsumeMicrosoftStoreEntitlementsResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
+        void OnConsumePS5EntitlementsResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnConsumePSNEntitlementsResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnConsumeXboxEntitlementsResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnCreateSharedGroupResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
@@ -286,7 +285,6 @@ namespace PlayFab
         void OnGetUserPublisherDataResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnGetUserPublisherReadOnlyDataResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnGetUserReadOnlyDataResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
-        void OnGetWindowsHelloChallengeResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnGrantCharacterToUserResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnLinkAndroidDeviceIDResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnLinkAppleResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
@@ -303,7 +301,6 @@ namespace PlayFab
         void OnLinkPSNAccountResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnLinkSteamAccountResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnLinkTwitchResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
-        void OnLinkWindowsHelloResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnLinkXboxAccountResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnLoginWithAndroidDeviceIDResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnLoginWithAppleResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
@@ -322,7 +319,6 @@ namespace PlayFab
         void OnLoginWithPSNResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnLoginWithSteamResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnLoginWithTwitchResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
-        void OnLoginWithWindowsHelloResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnLoginWithXboxResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnMatchmakeResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnOpenTradeResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
@@ -332,7 +328,6 @@ namespace PlayFab
         void OnRefreshPSNAuthTokenResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnRegisterForIOSPushNotificationResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnRegisterPlayFabUserResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
-        void OnRegisterWithWindowsHelloResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnRemoveContactEmailResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnRemoveFriendResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnRemoveGenericIDResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
@@ -363,7 +358,6 @@ namespace PlayFab
         void OnUnlinkPSNAccountResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnUnlinkSteamAccountResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnUnlinkTwitchResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
-        void OnUnlinkWindowsHelloResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnUnlinkXboxAccountResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnUnlockContainerInstanceResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnUnlockContainerItemResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
@@ -383,8 +377,6 @@ namespace PlayFab
         void OnWritePlayerEventResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
         void OnWriteTitleEventResult(int httpCode, const std::string& result, const std::shared_ptr<CallRequestContainerBase>& reqContainer);
 
-        // Private, Client-Specific
-        void MultiStepClientLogin(std::shared_ptr<PlayFabAuthenticationContext> context, bool needsAttribution);
         bool ValidateResult(PlayFabResultCommon& resultCommon, const CallRequestContainer& container);
     };
 }

@@ -625,9 +625,9 @@ namespace ATG
     };
 
     // Style flags for Popup and Overlay
-    const unsigned int c_styleCustomPanel = 1;       // Use this if you want a custom panel where you add controls programatically
-    const unsigned int c_stylePopupEmphasis = 2;     // Fades out other UI elements when rendering the popup in order to give it emphasis
-    const unsigned int c_styleSuppressCancel = 4;    // Suppress the default cancel behavior that would normally occur when 'B' is pressed
+    constexpr unsigned int c_styleCustomPanel = 1u;     // Use this if you want a custom panel where you add controls programatically
+    constexpr unsigned int c_stylePopupEmphasis = 2u;   // Fades out other UI elements when rendering the popup in order to give it emphasis
+    constexpr unsigned int c_styleSuppressCancel = 4u;  // Suppress the default cancel behavior that would normally occur when 'B' is pressed
 
     class Popup : public IPanel
     {
@@ -893,7 +893,7 @@ namespace ATG
         bool Update(float elapsedTime, const DirectX::GamePad::State& pad);
 
         // Process user input for keyboard & mouse controls
-        bool Update(float elapsedTime, DirectX::Mouse& mouse, DirectX::Keyboard& kb);
+        bool Update(float elapsedTime, const DirectX::Mouse& mouse, const DirectX::Keyboard& kb);
 
         // Render the visible UI panels
 #if defined(__d3d12_h__) || defined(__d3d12_x_h__) || defined(__XBOX_D3D12_X__)

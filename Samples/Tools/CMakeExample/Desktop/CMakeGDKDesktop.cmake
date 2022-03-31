@@ -11,7 +11,7 @@ if(_GDK_DESKTOP_TOOLCHAIN_)
 endif()
 
 # Microsoft Game Development Kit
-set(XdkEditionTarget "200600" CACHE STRING "Microsoft GDK Edition")
+set(XdkEditionTarget "220300" CACHE STRING "Microsoft GDK Edition")
 
 message("XdkEditionTarget = ${XdkEditionTarget}")
 
@@ -73,13 +73,9 @@ endif()
 
 message("Gaming Windows 10 SDK = ${GamingWindowsSDKDir}")
 
-if (MSVC_TOOLSET_VERSION)
-    set(ExtensionPlatformToolset ${MSVC_TOOLSET_VERSION})
-else()
-    set(ExtensionPlatformToolset 142)
-endif()
+set(ExtensionPlatformToolset 142)
 
-message("Platform Toolset = ${ExtensionPlatformToolset}")
+message("Extension Platform Toolset = ${ExtensionPlatformToolset}")
 
 # Headers
 set(Console_EndpointIncludeRoot
