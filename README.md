@@ -11,6 +11,7 @@ This repo contains game development samples written by the Microsoft Xbox Advanc
   * [Live](#Live)
   * [System](#System)
   * [Tools](#Tools)
+  * [xCloud](#xCloud)
 
 # Requirements
 
@@ -33,7 +34,7 @@ This project may contain trademarks or logos for projects, products, or services
 
 ## Other Samples
 
-For more ATG samples, see [DirectML-Samples](https://github.com/microsoft/DirectML-Samples), [PlayFab-Samples](https://github.com/PlayFab/PlayFab-Samples), [Xbox-ATG-Samples](https://github.com/microsoft/Xbox-ATG-Samples), and [Xbox-LIVE-Samples](https://github.com/microsoft/xbox-live-samples).
+For more ATG samples, see [DirectML Samples](https://github.com/microsoft/DirectML), [PlayFab-Samples](https://github.com/PlayFab/PlayFab-Samples), [Xbox-ATG-Samples](https://github.com/microsoft/Xbox-ATG-Samples), and [Xbox-LIVE-Samples](https://github.com/microsoft/xbox-live-samples).
 
 ## Samples by category
 
