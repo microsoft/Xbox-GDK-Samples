@@ -33,3 +33,4 @@ Kits/DirectXTex/Shaders/Compiled/
 /wiki
 AppPackages
 packages
+!Kits/OpenSource/**/
