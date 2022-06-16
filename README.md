@@ -61,15 +61,19 @@ For more ATG samples, see [DirectML Samples](https://github.com/microsoft/Direct
 |                        ComputeParticles|              [Xbox](Samples/Graphics/ComputeParticles)|                                                       |                                                       |
 |                       DeferredParticles|             [Xbox](Samples/Graphics/DeferredParticles)|                                                       |                                                       |
 |                             DXRTriangle|                   [Xbox](Samples/Graphics/DXRTriangle)|                     [PC](Samples/Graphics/DXRTriangle)|                                                       |
+|                              DynamicLOD|                    [Xbox](Samples/Graphics/DynamicLOD)|                      [PC](Samples/Graphics/DynamicLOD)|                                                       |
 |                         ExecuteIndirect|               [Xbox](Samples/Graphics/ExecuteIndirect)|                                                       |                                                       |
 |                       FastBlockCompress|             [Xbox](Samples/Graphics/FastBlockCompress)|                                                       |                                                       |
+|                      GeometricExpansion|            [Xbox](Samples/Graphics/GeometricExpansion)|              [PC](Samples/Graphics/GeometricExpansion)|                                                       |
 |                                   HDR10|                         [Xbox](Samples/Graphics/HDR10)|                                                       |                                                       |
 |                             HistogramCS|                   [Xbox](Samples/Graphics/HistogramCS)|                                                       |                                                       |
 |                             HlslCompile|                   [Xbox](Samples/Graphics/HlslCompile)|                                                       |                   [Tool](Samples/Graphics/HlslCompile)|
+|                             MeshletCull|                   [Xbox](Samples/Graphics/MeshletCull)|                     [PC](Samples/Graphics/MeshletCull)|                                                       |
 |                       MeshletInstancing|             [Xbox](Samples/Graphics/MeshletInstancing)|               [PC](Samples/Graphics/MeshletInstancing)|                                                       |
 |                            PointSprites|                  [Xbox](Samples/Graphics/PointSprites)|                                                       |                                                       |
 |                               SimpleHDR|                     [Xbox](Samples/Graphics/SimpleHDR)|                                                       |                                                       |
 |                               SimplePBR|                     [Xbox](Samples/Graphics/SimplePBR)|                       [PC](Samples/Graphics/SimplePBR)|                                                       |
+|                           SimpleMeshlet|                 [Xbox](Samples/Graphics/SimpleMeshlet)|                   [PC](Samples/Graphics/SimpleMeshlet)|                                                       |
 |                         SmokeSimulation|               [Xbox](Samples/Graphics/SmokeSimulation)|                                                       |                                                       |
 |                        VisibilityBuffer|[Xbox](Samples/Graphics/VisibilityBuffer/VisibilityBuffer)|[PC](Samples/Graphics/VisibilityBuffer/VisibilityBuffer)|                                                       |
 
