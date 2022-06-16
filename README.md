@@ -60,6 +60,7 @@ For more ATG samples, see [DirectML Samples](https://github.com/microsoft/Direct
 |                            Antialiasing|                  [Xbox](Samples/Graphics/Antialiasing)|                                                       |                                                       |
 |                        ComputeParticles|              [Xbox](Samples/Graphics/ComputeParticles)|                                                       |                                                       |
 |                       DeferredParticles|             [Xbox](Samples/Graphics/DeferredParticles)|                                                       |                                                       |
+|                             DXRTriangle|                   [Xbox](Samples/Graphics/DXRTriangle)|                     [PC](Samples/Graphics/DXRTriangle)|                                                       |
 |                         ExecuteIndirect|               [Xbox](Samples/Graphics/ExecuteIndirect)|                                                       |                                                       |
 |                       FastBlockCompress|             [Xbox](Samples/Graphics/FastBlockCompress)|                                                       |                                                       |
 |                                   HDR10|                         [Xbox](Samples/Graphics/HDR10)|                                                       |                                                       |
