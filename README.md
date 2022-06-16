@@ -100,7 +100,6 @@ For more ATG samples, see [DirectML Samples](https://github.com/microsoft/Direct
 |                LeaderboardsTitleManaged|          [Xbox](Samples/Live/LeaderboardsTitleManaged)|    [PC](Samples/Live/LeaderboardsTitleManaged_Desktop)|                                                       |
 |                                    mDNS|                              [Xbox](Samples/Live/mDNS)|                        [PC](Samples/Live/mDNS_Desktop)|                                                       |
 |            MicrosoftStoreServicesClient|      [Xbox](Samples/Live/MicrosoftStoreServicesClient)|        [PC](Samples/Live/MicrosoftStoreServicesClient)|                                                       |
-|                      PlayFabMatchmaking|           [Xbox](Samples/Live/PlayFabMatchmaking_Xbox)|          [PC](Samples/Live/PlayFabMatchmaking_Desktop)|                                                       |
 |                      SimpleCrossGenMPSD|                [Xbox](Samples/Live/SimpleCrossGenMPSD)|                  [PC](Samples/Live/SimpleCrossGenMPSD)|                                                       |
 |                              SimpleHttp|                        [Xbox](Samples/Live/SimpleHttp)|                          [PC](Samples/Live/SimpleHttp)|                                                       |
 |                        SimpleWebSockets|                  [Xbox](Samples/Live/SimpleWebSockets)|                    [PC](Samples/Live/SimpleWebSockets)|                                                       |
