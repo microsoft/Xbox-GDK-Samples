@@ -5,6 +5,7 @@ cmake_minimum_required (VERSION 3.13)
 
 project(CMakeExampleXboxOne
   DESCRIPTION "CMake example for a Microsoft GDK Gaming.Xbox.XboxOne.x64 project"
+  HOMEPAGE_URL "https://github.com/microsoft/Xbox-GDK-Samples"
   LANGUAGES CXX)
 
 option(BUILD_USING_LTCG "Enable Whole Program Optimization" ON)
@@ -47,7 +48,7 @@ foreach(FILE ../VertexShader.hlsl ../PixelShader.hlsl)
   get_filename_component(FILE_WE ${FILE} NAME_WE)
   get_source_file_property(shadertype ${FILE} ShaderType)
   add_custom_command(TARGET shaders
-                     COMMAND ${DXCToolPath}/dxc.exe /nologo /Emain /T${shadertype}_6_0 $<$<CONFIG:DEBUG>:/Od> /Zi /Fo ${CMAKE_BINARY_DIR}/${FILE_WE}.cso /Fd ${CMAKE_BINARY_DIR}/${FILE_WE}.pdb ${FILE}
+                     COMMAND ${DXCToolPath}/dxc.exe /nologo /Emain /T${shadertype}_6_0 $<IF:$<CONFIG:DEBUG>,/Od,/O3> /Zi /Fo ${CMAKE_BINARY_DIR}/${FILE_WE}.cso /Fd ${CMAKE_BINARY_DIR}/${FILE_WE}.pdb ${FILE}
                      MAIN_DEPENDENCY ${FILE}
                      COMMENT "HLSL ${FILE}"
                      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
