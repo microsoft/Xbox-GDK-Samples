@@ -71,6 +71,7 @@
 #include <stdexcept>
 #include <string>
 #include <system_error>
+#include <tuple>
 
 #include <pix3.h>
 #include <XGame.h>

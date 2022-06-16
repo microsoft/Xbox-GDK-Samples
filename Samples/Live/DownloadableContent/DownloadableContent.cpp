@@ -256,6 +256,13 @@ void Sample::RefreshStoreProducts()
                 storeButton->GetTypedSubElementById<UIPanel>(ID("boxProgressPanel"))->
                     GetTypedSubElementById<UIProgressBar>(ID("boxprogress"))->
                     SetProgressPercentage(1.0f);
+
+                char temp[256];
+                sprintf_s(temp, "%d %%", 100);
+                storeButton->GetTypedSubElementById<UIPanel>(ID("boxProgressPanel"))->
+                    GetTypedSubElementById<UIStaticText>(ID("progressText"))->
+                    SetDisplayText(UIDisplayString(temp));
+
             }
             else
             {
@@ -272,6 +279,12 @@ void Sample::RefreshStoreProducts()
                 {
                     if (!package->isBusy)
                     {
+                        char temp[256];
+                        sprintf_s(temp, "%d %%", 0);
+                        button->GetTypedSubElementById<UIPanel>(ID("boxProgressPanel"))->
+                            GetTypedSubElementById<UIStaticText>(ID("progressText"))->
+                            SetDisplayText(UIDisplayString(temp));
+
                         package->isBusy = true;
                         pThis->DownloadStorePackage(*package);
                     }
@@ -399,6 +412,7 @@ void Sample::DownloadStorePackage(StoreProductDetails &package)
         {
             pThis->ErrorMessage("Failed retrieve the installing packages count : 0x%x\n", hr);
             package.isBusy = false;
+            pThis->ResetStoreButton(package.button);
             delete reinterpret_cast<Context*>(async->context);
             delete async;
             return;
@@ -408,6 +422,7 @@ void Sample::DownloadStorePackage(StoreProductDetails &package)
         {
             pThis->ErrorMessage("There is no package that this app can use.\n");
             package.isBusy = false;
+            pThis->ResetStoreButton(package.button);
             delete reinterpret_cast<Context*>(async->context);
             delete async;
             return;
@@ -424,6 +439,7 @@ void Sample::DownloadStorePackage(StoreProductDetails &package)
         {
             pThis->ErrorMessage("Failed retrieve the installing packages results : 0x%x\n", hr);
             package.isBusy = false;
+            pThis->ResetStoreButton(package.button);
             delete[] packageIdentifiers;
             delete reinterpret_cast<Context*>(async->context);
             delete async;
@@ -499,6 +515,12 @@ void Sample::StartInstallMonitor(const char *identity, StoreProductDetails &pack
                     GetTypedSubElementById<UIProgressBar>(ID("boxprogress"))->
                     SetProgressPercentage(static_cast<float>
                         (static_cast<double>(progress.installedBytes) / static_cast<double>(progress.totalBytes)));
+
+                char temp[256];
+                sprintf_s(temp, "%lld %%", progress.installedBytes * 100 / progress.totalBytes);
+                package.button->GetTypedSubElementById<UIPanel>(ID("boxProgressPanel"))->
+                    GetTypedSubElementById<UIStaticText>(ID("progressText"))->
+                    SetDisplayText(UIDisplayString(temp));
             }
 
             if (progress.completed)
@@ -571,24 +593,8 @@ void Sample::RefreshInstalledPackages()
 
         dlcButton->GetTypedSubElementById<UIStaticText>(ID("DLC_Name"))->SetDisplayText(dlc.displayName);
         dlcButton->GetTypedSubElementById<UIStaticText>(ID("DLC_StoreID"))->SetDisplayText(dlc.storeId);
-
-        if (dlc.isMounted)
-        {
-            dlcButton->GetTypedSubElementById<UIImage>(ID("DLC_Status"))->SetStyleId(ID("Checked"));
-        }
-        else
-        {
-            dlcButton->GetTypedSubElementById<UIImage>(ID("DLC_Status"))->SetStyleId(ID("Unchecked"));
-        }
-
-        if (dlc.isLicense)
-        {
-            dlcButton->GetTypedSubElementById<UIStaticText>(ID("DLC_License"))->SetDisplayText(UIDisplayString("(Licensed)"));
-        }
-        else
-        {
-            dlcButton->GetTypedSubElementById<UIStaticText>(ID("DLC_License"))->SetDisplayText(UIDisplayString("(No License)"));
-        }
+        dlcButton->GetTypedSubElementById<UIImage>(ID("DLC_Status"))->SetStyleId(ID(dlc.isMounted ? "Checked" : "Unchecked"));
+        dlcButton->GetTypedSubElementById<UIStaticText>(ID("DLC_License"))->SetDisplayText(UIDisplayString(dlc.isLicense ? "(Licensed)" : "(No License)"));
 
         dlcButton->ButtonState().AddListenerWhen(UIButton::State::Pressed, [this](UIButton* button)
         {
@@ -900,6 +906,13 @@ void Sample::InitializeUI()
         this->m_selectedEnumFilter = (EnumFilterType)twistMenu->GetCurrentItemIndex();
         this->RefreshInstalledPackages();
     });
+}
+
+void Sample::ResetStoreButton(std::shared_ptr<UIButton> button)
+{
+    button->GetTypedSubElementById<UIPanel>(ID("boxProgressPanel"))->
+        GetTypedSubElementById<UIStaticText>(ID("progressText"))->
+        SetDisplayText(UIDisplayString(""));
 }
 
 void Sample::ErrorMessage(std::string_view format, ...)

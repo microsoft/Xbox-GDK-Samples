@@ -19,95 +19,98 @@ using namespace DirectX::SimpleMath;
 
 using Microsoft::WRL::ComPtr;
 
-static void CALLBACK ClientPropertiesChangedCallback(
-    void* context,
-    XGameStreamingClientId clientId,
-    uint32_t updatedPropertiesCount,
-    XGameStreamingClientProperty* updatedProperties)
+namespace
 {
-    Sample* sample = reinterpret_cast<Sample*>(context);
-    assert(sample != nullptr);
-
-    ClientDevice* client = sample->GetClientById(clientId);
-    if (client == nullptr)
+    void CALLBACK ClientPropertiesChangedCallback(
+        void* context,
+        XGameStreamingClientId clientId,
+        uint32_t updatedPropertiesCount,
+        XGameStreamingClientProperty* updatedProperties)
     {
-        return;
-    }
+        auto sample = reinterpret_cast<Sample*>(context);
+        assert(sample != nullptr);
 
-    for (uint32_t i = 0; i < updatedPropertiesCount; ++i)
-    {
-        // Only properties that the sample cares about are checked for - all others are intentionally ignored
+        ClientDevice* client = sample->GetClientById(clientId);
+        if (client == nullptr)
+        {
+            return;
+        }
+
+        for (uint32_t i = 0; i < updatedPropertiesCount; ++i)
+        {
+            // Only properties that the sample cares about are checked for - all others are intentionally ignored
 #pragma warning (push)
 #pragma warning (disable: 4061)
-        switch (updatedProperties[i])
-        {
-        case XGameStreamingClientProperty::StreamPhysicalDimensions:
-        {
-            //Check to see if this client has a small display
-            uint32_t clientWidthMm = 0;
-            uint32_t clientHeightMm = 0;
-            if (SUCCEEDED(XGameStreamingGetStreamPhysicalDimensions(client->id, &clientWidthMm, &clientHeightMm)))
+            switch (updatedProperties[i])
             {
-                if (clientWidthMm * clientHeightMm < 13000)
+            case XGameStreamingClientProperty::StreamPhysicalDimensions:
+            {
+                //Check to see if this client has a small display
+                uint32_t clientWidthMm = 0;
+                uint32_t clientHeightMm = 0;
+                if (SUCCEEDED(XGameStreamingGetStreamPhysicalDimensions(client->id, &clientWidthMm, &clientHeightMm)))
                 {
-                    client->smallScreen = true;
+                    if (clientWidthMm * clientHeightMm < 13000)
+                    {
+                        client->smallScreen = true;
+                    }
                 }
             }
-        }
-        break;
-
-        case XGameStreamingClientProperty::TouchBundleVersion:
-        {
-            //The sample TAK is 1.0, so ensure that the client has the overlay
-            XVersion overlayVersion;
-            auto hr = XGameStreamingGetTouchBundleVersion(client->id, &overlayVersion, 0, nullptr);
-            if (SUCCEEDED(hr))
-            {
-                if (overlayVersion.major == 1 && overlayVersion.minor == 0)
-                {
-                    client->validOverlay = true;
-                }
-            }
-        }
-        break;
-
-        default:
             break;
-        }
-    }
-#pragma warning (pop)
 
-    sample->UpdateClientState();
-}
-
-static void CALLBACK ConnectionStateChangedCallback(
-    void* context,
-    XGameStreamingClientId clientId,
-    XGameStreamingConnectionState state) noexcept
-{
-    auto sample = reinterpret_cast<Sample*>(context);
-    assert(sample != nullptr);
-
-    if (state == XGameStreamingConnectionState::Connected)
-    {
-        for (size_t i = 0; i < c_maxClients; ++i)
-        {
-            if (sample->m_clients[i].id == XGameStreamingNullClientId)
+            case XGameStreamingClientProperty::TouchBundleVersion:
             {
-                sample->m_clients[i].id = clientId;
+                //The sample TAK is 1.0, so ensure that the client has the overlay
+                XVersion overlayVersion;
+                auto hr = XGameStreamingGetTouchBundleVersion(client->id, &overlayVersion, 0, nullptr);
+                if (SUCCEEDED(hr))
+                {
+                    if (overlayVersion.major == 1 && overlayVersion.minor == 0)
+                    {
+                        client->validOverlay = true;
+                    }
+                }
+            }
+            break;
 
-                DX::ThrowIfFailed(XGameStreamingRegisterClientPropertiesChanged(clientId, sample->GetTaskQueue(), sample, ClientPropertiesChangedCallback, &sample->m_clients[i].propertiesChangedRegistration));
+            default:
                 break;
             }
         }
+#pragma warning (pop)
+
+        sample->UpdateClientState();
     }
-    else
+
+    void CALLBACK ConnectionStateChangedCallback(
+        void* context,
+        XGameStreamingClientId clientId,
+        XGameStreamingConnectionState state) noexcept
     {
-        ClientDevice* client = sample->GetClientById(clientId);
-        if (client != nullptr)
+        auto sample = reinterpret_cast<Sample*>(context);
+        assert(sample != nullptr);
+
+        if (state == XGameStreamingConnectionState::Connected)
         {
-            XGameStreamingUnregisterClientPropertiesChanged(clientId, client->propertiesChangedRegistration, true);
-            *client = ClientDevice{};
+            for (size_t i = 0; i < c_maxClients; ++i)
+            {
+                if (sample->m_clients[i].id == XGameStreamingNullClientId)
+                {
+                    sample->m_clients[i].id = clientId;
+
+                    DX::ThrowIfFailed(XGameStreamingRegisterClientPropertiesChanged(clientId, sample->GetTaskQueue(), sample, ClientPropertiesChangedCallback, &sample->m_clients[i].propertiesChangedRegistration));
+                    break;
+                }
+            }
+        }
+        else
+        {
+            ClientDevice* client = sample->GetClientById(clientId);
+            if (client != nullptr)
+            {
+                XGameStreamingUnregisterClientPropertiesChanged(clientId, client->propertiesChangedRegistration, true);
+                *client = ClientDevice{};
+            }
         }
     }
 }
@@ -192,9 +195,6 @@ void Sample::Update(DX::StepTimer const&)
 
     if (SUCCEEDED(hr))
     {
-        uint32_t inputCount;
-        uint32_t readCount;
-
         GameInputGamepadState gamepadState;
 
         if (m_reading->GetGamepadState(&gamepadState))
@@ -365,11 +365,11 @@ void Sample::Update(DX::StepTimer const&)
         }
 
         m_touchPoints.clear();
-        inputCount = m_reading->GetTouchCount();
+        uint32_t inputCount = m_reading->GetTouchCount();
         if (inputCount > 0)
         {
             auto touchReading = std::make_unique<GameInputTouchState[]>(inputCount);
-            readCount = m_reading->GetTouchState(inputCount, touchReading.get());
+            std::ignore = m_reading->GetTouchState(inputCount, touchReading.get());
 
             {
                 std::lock_guard<std::mutex> lock(m_touchListLock);
@@ -526,14 +526,14 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, nullptr);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -567,13 +567,13 @@ void Sample::CreateDeviceDependentResources()
         D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV,
         D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE, Descriptors::Count);
 
-    RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
+    const RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
 
     ResourceUploadBatch upload(device);
     upload.Begin();
 
     {
-        SpriteBatchPipelineStateDescription pd(
+        const SpriteBatchPipelineStateDescription pd(
             rtState,
             &CommonStates::AlphaBlend);
 
@@ -610,7 +610,7 @@ void Sample::CreateDeviceDependentResources()
 // Allocate all memory resources that change on a window SizeChanged event.
 void Sample::CreateWindowSizeDependentResources()
 {
-    auto vp = m_deviceResources->GetScreenViewport();
+    auto const vp = m_deviceResources->GetScreenViewport();
     m_batch->SetViewport(vp);
 }
 
@@ -621,7 +621,7 @@ void Sample::CreateWindowSizeDependentResources()
 
 ClientDevice* Sample::GetClientById(XGameStreamingClientId clientId)
 {
-    for (int i = 0; i < c_maxClients; i++)
+    for (size_t i = 0; i < c_maxClients; i++)
     {
         if (m_clients[i].id == clientId)
         {
@@ -641,7 +641,7 @@ void Sample::UpdateClientState()
     m_font = m_localFont.get();
     m_validOverlay = true;
 
-    for (int i = 0; i < c_maxClients; i++)
+    for (size_t i = 0; i < c_maxClients; i++)
     {
         if (m_clients[i].id != XGameStreamingNullClientId)
         {
@@ -668,10 +668,10 @@ void XM_CALLCONV Sample::DrawTouch(uint64_t id, float x, float y)
     LONG localY = LONG(y * 1080.f);
 
     RECT drawspace;
-	drawspace.top = localY - TOUCHSIZE;
-	drawspace.bottom = localY + TOUCHSIZE;
-	drawspace.left = localX - TOUCHSIZE;
-	drawspace.right = localX + TOUCHSIZE;
+	drawspace.top = localY - c_TouchSize;
+	drawspace.bottom = localY + c_TouchSize;
+	drawspace.left = localX - c_TouchSize;
+	drawspace.right = localX + c_TouchSize;
     
     auto circleSize = GetTextureSize(m_circleTexture.Get());
     m_batch->Draw(m_resourceDescriptors->GetGpuHandle(Descriptors::Touch), circleSize, drawspace, ATG::Colors::Blue);

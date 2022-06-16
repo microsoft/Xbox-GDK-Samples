@@ -194,6 +194,7 @@ private:
     void CreateWindowSizeDependentResources();
 
     void InitializeUI();
+    void ResetStoreButton(std::shared_ptr<UIButton> button);
     void ErrorMessage(std::string_view format, ...);
 
     // UIStyleManager::D3DResourcesProvider interface methods

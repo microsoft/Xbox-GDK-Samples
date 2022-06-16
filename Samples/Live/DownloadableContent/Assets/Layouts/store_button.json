@@ -29,7 +29,7 @@
       {
         "id": "Store_StoreID",
         "classId": "StaticText",
-        "position": [ -100, 0 ],
+        "position": [ -100, -30 ],
         "positioningAnchor": [ "right", "middle" ],
         "size": [ 200, 30 ],
         "sizingAnchor": [ "right", "middle" ],
@@ -39,7 +39,7 @@
         "id": "boxProgressPanel",
         "classId": "Panel",
         "size": [ 250, 50 ],
-        "position": [ -200, 10 ],
+        "position": [ -200, -20 ],
         "positioningAnchor": [ "right", "middle" ],
         "sizingAnchor": [ "center", "top" ],
         "styleId": "Basic_Panel_Style",
@@ -55,6 +55,16 @@
             "classId": "ProgressBar",
             "styleId": "ProgressBarStyle",
             "progressPercentage": 0.0
+          },
+          {
+            "id": "progressText",
+            "classId": "StaticText",
+            "positioningAnchor": [ "right", "middle" ],
+            "position": [ 0, 30 ],
+            "size": [ 200, 30 ],
+            "sizingAnchor": [ "right", "middle" ],
+            "styleId": "Basic_Store_Style",
+            "text": ""
           }
         ]
       }

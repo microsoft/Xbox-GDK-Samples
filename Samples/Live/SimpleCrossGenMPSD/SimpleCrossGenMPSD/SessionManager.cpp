@@ -594,6 +594,8 @@ void SessionManager::CreateSession(const std::string& sessionTemplatName)
 
     RegisterSessionChangedEvent();
 
+    SetHostDeviceToken();
+
     WriteSession(XblMultiplayerSessionWriteMode::CreateNew, [this](bool success)
     {
         if (success)
@@ -1161,7 +1163,7 @@ void SessionManager::WriteSessionByHandle(XblMultiplayerSessionWriteMode writeMo
 
     if (m_currentSessionHandle == nullptr)
     {
-        DEBUGLOG("SessionManager::WriteSession: m_sessionHandle was null");
+        DEBUGLOG("SessionManager::WriteSessionByHandle: m_sessionHandle was null");
 
         if (inSessionWriteContext->m_onWriteSessionComplete)
         {
@@ -1174,7 +1176,7 @@ void SessionManager::WriteSessionByHandle(XblMultiplayerSessionWriteMode writeMo
 
     if (m_joinSessionHandle.empty() == true)
     {
-        DEBUGLOG("SessionManager::WriteSession: m_joinSessionHandle was empty");
+        DEBUGLOG("SessionManager::WriteSessionByHandle: m_joinSessionHandle was empty");
 
         if (inSessionWriteContext->m_onWriteSessionComplete)
         {
@@ -1214,7 +1216,7 @@ void SessionManager::WriteSessionByHandle(XblMultiplayerSessionWriteMode writeMo
             {
                 //get the updated handle and try again
                 sessionManager->m_currentSessionHandle = createdHandle;
-                sessionManager->WriteSession(pContext->m_writeMode, pContext->m_onWriteSessionComplete);
+                sessionManager->WriteSessionByHandle(pContext->m_writeMode, pContext->m_onWriteSessionComplete);
             }
             else
             {

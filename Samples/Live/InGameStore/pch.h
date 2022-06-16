@@ -70,22 +70,27 @@
 
 #include <algorithm>
 #include <atomic>
+#include <cassert>
+#include <clocale>
+#include <cinttypes>
 #include <cmath>
 #include <codecvt>
+#include <cstddef>
 #include <cstdint>
+#include <cstdio>
+#include <cstring>
+#include <cwchar>
 #include <exception>
 #include <functional>
+#include <iterator>
 #include <map>
 #include <memory>
 #include <stdexcept>
 #include <string>
+#include <system_error>
 #include <unordered_map>
 #include <unordered_set>
-
-#include <assert.h>
-#include <inttypes.h>
-#include <locale.h>
-#include <stdio.h>
+#include <tuple>
 
 #ifdef _GAMING_XBOX
 #include <pix3.h>

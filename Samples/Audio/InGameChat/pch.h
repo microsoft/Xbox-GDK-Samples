@@ -75,9 +75,13 @@
 #include <atomic>
 #include <cassert>
 #include <cmath>
+#include <cstddef>
 #include <cstdint>
 #include <cstdio>
+#include <cstring>
+#include <cwchar>
 #include <exception>
+#include <iterator>
 #include <memory>
 #include <stdexcept>
 #include <vector>
@@ -86,6 +90,8 @@
 #include <list>
 #include <queue>
 #include <string>
+#include <system_error>
+#include <tuple>
 #include <string_view>
 
 #ifdef _GAMING_XBOX
@@ -116,13 +122,13 @@
 
 #include "StringUtil.h"
 #include "Json.h"
+
 #include "DirectXHelpers.h"
 #include "GamePad.h"
 #include "GraphicsMemory.h"
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "RenderTargetState.h"
-
 
 
 namespace DX

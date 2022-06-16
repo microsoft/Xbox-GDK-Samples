@@ -71,17 +71,23 @@
 
 #include <algorithm>
 #include <atomic>
+#include <cassert>
 #include <cmath>
+#include <cstddef>
 #include <cstdint>
+#include <cstdio>
+#include <cstring>
+#include <cwchar>
 #include <exception>
+#include <iterator>
 #include <functional>
+#include <map>
 #include <memory>
 #include <stdexcept>
-#include <map>
+#include <string>
+#include <system_error>
+#include <tuple>
 #include <vector>
-
-#include <assert.h>
-#include <stdio.h>
 
 #ifdef _GAMING_XBOX
 #include <pix3.h>

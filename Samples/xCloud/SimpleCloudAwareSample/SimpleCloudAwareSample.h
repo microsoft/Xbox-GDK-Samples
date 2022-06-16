@@ -12,9 +12,8 @@
 
 #include "xgamestreaming.h"
 
-#define TOUCHSIZE 24
-
-const int c_maxClients = 4;
+constexpr long c_TouchSize = 24;
+constexpr size_t c_maxClients = 4;
 
 enum CurrentOverlay
 {

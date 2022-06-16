@@ -68,18 +68,23 @@
 #include <DirectXColors.h>
 
 #include <algorithm>
+#include <atomic>
+#include <cassert>
+#include <cmath>
+#include <cstddef>
+#include <cstdint>
+#include <cstdio>
+#include <cstring>
+#include <cwchar>
 #include <exception>
 #include <functional>
-#include <atomic>
-#include <cmath>
-#include <cstdint>
-#include <exception>
+#include <iterator>
 #include <map>
 #include <memory>
 #include <stdexcept>
-
-#include <assert.h>
-#include <stdio.h>
+#include <string>
+#include <system_error>
+#include <tuple>
 
 #ifdef _GAMING_XBOX
 #include <pix3.h>

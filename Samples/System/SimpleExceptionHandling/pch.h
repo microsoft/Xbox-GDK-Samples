@@ -82,6 +82,7 @@
 #include <stdexcept>
 #include <string>
 #include <system_error>
+#include <tuple>
 
 #ifdef _GAMING_XBOX
 #include <pix3.h>

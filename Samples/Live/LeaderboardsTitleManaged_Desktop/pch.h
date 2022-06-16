@@ -55,20 +55,26 @@
 #include <algorithm>
 #include <array>
 #include <atomic>
+#include <cassert>
 #include <chrono>
 #include <cmath>
+#include <cstddef>
 #include <cstdint>
+#include <cstdio>
+#include <cstring>
+#include <cwchar>
 #include <exception>
 #include <iomanip>
+#include <iterator>
 #include <map>
 #include <memory>
 #include <random>
-#include <stdexcept>
 #include <sstream>
+#include <stdexcept>
+#include <string>
+#include <system_error>
+#include <tuple>
 #include <vector>
-
-#include <assert.h>
-#include <stdio.h>
 
 #ifdef _DEBUG
 #include <dxgidebug.h>

@@ -72,11 +72,13 @@ void Sample::Initialize(HWND window, int width, int height)
     //	The sample relies on the font and image files in the .exe's
     //	directory and so we do the following to set the working
     //	directory to what we want.
-    char dir[1024];
-    GetModuleFileNameA(nullptr, dir, 1024);
-    m_ExePath = dir;
-    m_ExePath = m_ExePath.substr(0, m_ExePath.find_last_of("\\"));
-    SetCurrentDirectoryA(m_ExePath.c_str());
+    char dir[_MAX_PATH] = {};
+    if (GetModuleFileNameA(nullptr, dir, _MAX_PATH) > 0)
+    {
+        std::string exe = dir;
+        exe = exe.substr(0, exe.find_last_of("\\"));
+        std::ignore = SetCurrentDirectoryA(exe.c_str());
+    }
 
     m_gamePad = std::make_unique<GamePad>();
 
