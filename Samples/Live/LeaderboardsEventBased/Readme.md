@@ -4,7 +4,7 @@ languages:
 - cpp
 products:
 - gdk
-urlFragment: "leaderboards"
+urlFragment: "leaderboardseventbased"
 extendedZipContent:
 - path: LICENSE
   target: LICENSE
@@ -12,12 +12,12 @@ extendedZipContent:
   target: Kits
 - path: Media
   target: Media
-description: "The leaderboards sample demonstrates the usage of Xbox Live Leaderboards with Events-Based stats on Xbox."
+description: "This sample demonstrates the usage of Xbox Live Leaderboards with Events-Based stats."
 ---
 
-# Leaderboards
+# LeaderboardsEventBased
 
-For more information see this [Word document](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Live/Leaderboards/ReadMe.docx).
+For more information see this [Word document](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Live/LeaderboardsEventBased/LeaderboardsEventBased_ReadMe.docx).
 
 ## Privacy statement
 

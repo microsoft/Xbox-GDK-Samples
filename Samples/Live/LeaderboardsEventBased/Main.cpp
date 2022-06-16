@@ -8,9 +8,9 @@
 //--------------------------------------------------------------------------------------
 
 #include "pch.h"
+#include "LeaderboardsEventBased.h"
 
-#include "Leaderboards.h"
-
+#include <appnotify.h>
 #include <XGameRuntimeInit.h>
 #include <XGameErr.h>
 
@@ -20,25 +20,39 @@
 
 using namespace DirectX;
 
+#ifdef __clang__
+#pragma clang diagnostic ignored "-Wcovered-switch-default"
+#pragma clang diagnostic ignored "-Wswitch-enum"
+#endif
+
+#pragma warning(disable : 4061)
+
 namespace
 {
     std::unique_ptr<Sample> g_sample;
-};
+#ifdef _GAMING_XBOX
+    HANDLE g_plmSuspendComplete = nullptr;
+    HANDLE g_plmSignalResume = nullptr;
+#endif
+}
 
-LPCWSTR g_szAppName = L"Leaderboards_Desktop";
+LPCWSTR g_szAppName = L"LeaderboardsEventBased";
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+void ExitSample() noexcept;
 
 // Entry point
-int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
+int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 {
-    UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
     if (!XMVerifyCPUSupport())
     {
 #ifdef _DEBUG
         OutputDebugStringA("ERROR: This hardware does not support the required instruction set.\n");
+#if defined(_GAMING_XBOX) && defined(__AVX2__)
+        OutputDebugStringA("This may indicate a Gaming.Xbox.Scarlett.x64 binary is being run on an Xbox One.\n");
+#endif
 #endif
         return 1;
     }
@@ -47,34 +61,45 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     if (FAILED(CoInitializeEx(nullptr, COINITBASE_MULTITHREADED)))
         return 1;
 
-#if !defined(WINAPI_FAMILY) || (WINAPI_FAMILY == WINAPI_FAMILY_DESKTOP_APP)
+#ifdef _GAMING_DESKTOP
     // NOTE: When running the app from the Start Menu (required for
     //    Store API's to work) the Current Working Directory will be
     //    returned as C:\Windows\system32 unless you overwrite it.
     //    The sample relies on the font and image files in the .exe's
     //    directory and so we do the following to set the working
     //    directory to what we want.
-    char dir[1024];
-    GetModuleFileNameA(NULL, dir, 1024);
-    std::string exe = dir;
-    exe = exe.substr(0, exe.find_last_of("\\"));
-    SetCurrentDirectoryA(exe.c_str());
+    char dir[_MAX_PATH] = {};
+    if (GetModuleFileNameA(nullptr, dir, _MAX_PATH) > 0)
+    {
+        std::string exe = dir;
+        exe = exe.substr(0, exe.find_last_of("\\"));
+        std::ignore = SetCurrentDirectoryA(exe.c_str());
+    }
 #endif
 
-    // Initialize the GameRuntime
     HRESULT hr = XGameRuntimeInitialize();
     if (FAILED(hr))
     {
         if (hr == E_GAMERUNTIME_DLL_NOT_FOUND || hr == E_GAMERUNTIME_VERSION_MISMATCH)
         {
-            (void)MessageBoxW(nullptr, L"Game Runtime is not installed on this system or needs updating.", g_szAppName, MB_ICONERROR | MB_OK);
+#ifdef _GAMING_DESKTOP
+            std::ignore = MessageBoxW(nullptr, L"Game Runtime is not installed on this system or needs updating.", g_szAppName, MB_ICONERROR | MB_OK);
+#endif
         }
         return 1;
     }
 
+#ifdef _GAMING_XBOX
+    // Default main thread to CPU 0
+    SetThreadAffinityMask(GetCurrentThread(), 0x1);
+#endif
+
     g_sample = std::make_unique<Sample>();
 
     // Register class and create window
+#ifdef _GAMING_XBOX
+    PAPPSTATE_REGISTRATION hPLM = {};
+#endif
     {
         // Register class
         WNDCLASSEXW wcex = {};
@@ -82,33 +107,30 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
         wcex.style = CS_HREDRAW | CS_VREDRAW;
         wcex.lpfnWndProc = WndProc;
         wcex.hInstance = hInstance;
-        wcex.hIcon = LoadIconW(hInstance, L"IDI_ICON");
         wcex.hCursor = LoadCursorW(nullptr, IDC_ARROW);
-        wcex.hbrBackground = (HBRUSH) (COLOR_WINDOW + 1);
-        wcex.lpszClassName = L"Leaderboards_DesktopWindowClass";
-        wcex.hIconSm = LoadIconW(wcex.hInstance, L"IDI_ICON");
+        wcex.hbrBackground = reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1);
+        wcex.lpszClassName = L"LeaderboardsEventBasedWindowClass";
         if (!RegisterClassExW(&wcex))
             return 1;
 
         // Create window
+#ifdef _GAMING_XBOX
+        RECT rc = { 0, 0, 1920, 1080 };
+#else
         int w, h;
         g_sample->GetDefaultSize(w, h);
 
         RECT rc = { 0, 0, static_cast<LONG>(w), static_cast<LONG>(h) };
-
         AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
+#endif
 
-        HWND hwnd = CreateWindowExW(0, L"Leaderboards_DesktopWindowClass", g_szAppName, WS_OVERLAPPEDWINDOW,
+        HWND hwnd = CreateWindowExW(0, L"LeaderboardsEventBasedWindowClass", g_szAppName, WS_OVERLAPPEDWINDOW,
             CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, nullptr, nullptr, hInstance,
             nullptr);
-        // Change to CreateWindowExW(WS_EX_TOPMOST, L"Leaderboards_DesktopWindowClass", g_szAppName, WS_POPUP,
-        // to default to fullscreen.
-
         if (!hwnd)
             return 1;
 
         ShowWindow(hwnd, nCmdShow);
-        // Change nCmdShow to SW_SHOWMAXIMIZED to default to fullscreen.
 
         SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(g_sample.get()));
 
@@ -122,6 +144,33 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
         GetClientRect(hwnd, &rc);
 
         g_sample->Initialize(hwnd, rc.right - rc.left, rc.bottom - rc.top);
+
+#ifdef _GAMING_XBOX
+        g_plmSuspendComplete = CreateEventEx(nullptr, nullptr, 0, EVENT_MODIFY_STATE | SYNCHRONIZE);
+        g_plmSignalResume = CreateEventEx(nullptr, nullptr, 0, EVENT_MODIFY_STATE | SYNCHRONIZE);
+        if (!g_plmSuspendComplete || !g_plmSignalResume)
+            return 1;
+
+        if (RegisterAppStateChangeNotification([](BOOLEAN quiesced, PVOID context)
+        {
+            if (quiesced)
+            {
+                ResetEvent(g_plmSuspendComplete);
+                ResetEvent(g_plmSignalResume);
+
+                // To ensure we use the main UI thread to process the notification, we self-post a message
+                PostMessage(reinterpret_cast<HWND>(context), WM_USER, 0, 0);
+
+                // To defer suspend, you must wait to exit this callback
+                std::ignore = WaitForSingleObject(g_plmSuspendComplete, INFINITE);
+            }
+            else
+            {
+                SetEvent(g_plmSignalResume);
+            }
+        }, hwnd, &hPLM))
+            return 1;
+#endif
     }
 
     // Main message loop
@@ -141,26 +190,84 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
     g_sample.reset();
 
+#ifdef _GAMING_XBOX
+    UnregisterAppStateChangeNotification(hPLM);
+
+    CloseHandle(g_plmSuspendComplete);
+    CloseHandle(g_plmSignalResume);
+#endif
+
     XGameRuntimeUninitialize();
 
     CoUninitialize();
 
-    return (int) msg.wParam;
+    return static_cast<int>(msg.wParam);
 }
 
 // Windows procedure
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+#ifdef _GAMING_DESKTOP
     static bool s_in_sizemove = false;
     static bool s_in_suspend = false;
     static bool s_minimized = false;
     static bool s_fullscreen = false;
-    // Set s_fullscreen to true if defaulting to fullscreen.
+#endif
 
     auto sample = reinterpret_cast<Sample*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
 
     switch (message)
     {
+    case WM_ACTIVATEAPP:
+        if (sample)
+        {
+            Keyboard::ProcessMessage(message, wParam, lParam);
+            Mouse::ProcessMessage(message, wParam, lParam);
+
+            if (wParam)
+            {
+                sample->OnActivated();
+            }
+            else
+            {
+                sample->OnDeactivated();
+            }
+        }
+        break;
+
+    case WM_ACTIVATE:
+        Keyboard::ProcessMessage(message, wParam, lParam);
+        Mouse::ProcessMessage(message, wParam, lParam);
+        break;
+
+    case WM_MOUSEMOVE:
+    case WM_LBUTTONDOWN:
+    case WM_LBUTTONUP:
+    case WM_RBUTTONDOWN:
+    case WM_RBUTTONUP:
+    case WM_MBUTTONDOWN:
+    case WM_MBUTTONUP:
+    case WM_MOUSEWHEEL:
+    case WM_XBUTTONDOWN:
+    case WM_XBUTTONUP:
+        Mouse::ProcessMessage(message, wParam, lParam);
+        break;
+
+#ifdef _GAMING_XBOX
+    case WM_USER:
+        if (sample)
+        {
+            sample->OnSuspending();
+
+            // Complete deferral
+            SetEvent(g_plmSuspendComplete);
+
+            std::ignore = WaitForSingleObject(g_plmSignalResume, INFINITE);
+
+            sample->OnResuming();
+        }
+        break;
+#else
     case WM_PAINT:
         if (s_in_sizemove && sample)
         {
@@ -169,7 +276,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         else
         {
             PAINTSTRUCT ps;
-            (void)BeginPaint(hWnd, &ps);
+            std::ignore = BeginPaint(hWnd, &ps);
             EndPaint(hWnd, &ps);
         }
         break;
@@ -221,27 +328,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
 
     case WM_GETMINMAXINFO:
+        if (lParam)
         {
             auto info = reinterpret_cast<MINMAXINFO*>(lParam);
             info->ptMinTrackSize.x = 320;
             info->ptMinTrackSize.y = 200;
-        }
-        break;
-
-    case WM_ACTIVATEAPP:
-        if (sample)
-        {
-            Keyboard::ProcessMessage(message, wParam, lParam);
-            Mouse::ProcessMessage(message, wParam, lParam);
-
-            if (wParam)
-            {
-                sample->OnActivated();
-            }
-            else
-            {
-                sample->OnDeactivated();
-            }
         }
         break;
 
@@ -269,22 +360,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         PostQuitMessage(0);
         break;
 
-    case WM_ACTIVATE:
-        Keyboard::ProcessMessage(message, wParam, lParam);
-        Mouse::ProcessMessage(message, wParam, lParam);
-        break;
-
     case WM_INPUT:
-    case WM_MOUSEMOVE:
-    case WM_LBUTTONDOWN:
-    case WM_LBUTTONUP:
-    case WM_RBUTTONDOWN:
-    case WM_RBUTTONUP:
-    case WM_MBUTTONDOWN:
-    case WM_MBUTTONUP:
-    case WM_MOUSEWHEEL:
-    case WM_XBUTTONDOWN:
-    case WM_XBUTTONUP:
     case WM_MOUSEHOVER:
         Mouse::ProcessMessage(message, wParam, lParam);
         break;
@@ -336,13 +412,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         // A menu is active and the user presses a key that does not correspond
         // to any mnemonic or accelerator key. Ignore so we don't produce an error beep.
         return MAKELRESULT(0, MNC_CLOSE);
+#endif
     }
 
     return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
 // Exit helper
-void ExitSample()
+void ExitSample() noexcept
 {
     PostQuitMessage(0);
 }

@@ -1,5 +1,5 @@
 //--------------------------------------------------------------------------------------
-// Leaderboards.h
+// LeaderboardsEventBased.h
 //
 // Advanced Technology Group (ATG)
 // Copyright (C) Microsoft Corporation. All rights reserved.
@@ -41,7 +41,6 @@ struct LeaderboardsQueryContext
     class Sample *sample;
     int page = 0;
     uint32_t maxItems = 25;
-    std::function<void(HRESULT, LeaderboardsQueryContext *)> onResultsReceived;
 };
 
 enum SamplePage : uint32_t
@@ -51,32 +50,120 @@ enum SamplePage : uint32_t
     PageCount = 2
 };
 
+struct UIPage
+{
+    UIPage() : buttons() {}
+    std::map<int, ATG::Button *> buttons;
+
+    void SetActive(bool enable)
+    {
+        for (auto &item : buttons)
+        {
+            auto button = item.second;
+            button->SetEnabled(enable);
+            button->SetVisible(enable);
+        }
+    }
+};
+
+namespace {
+    uint32_t s_activePage = 0;
+
+    std::vector<UIPage> s_uiPages = { UIPage(), UIPage() };
+    std::map<int, ATG::TextLabel *> s_labels = {};
+    ATG::IPanel *s_mainPanel = nullptr;
+
+    enum StatName : uint32_t
+    {
+        Maze = 0,
+        Cave = 1,
+        Void = 2,
+        Museum = 3,
+        MostFoundItems = 4,
+        AreaExploredLeastTimesLost = 5,
+        StatCount = 6
+    };
+
+    enum LeaderboardName : uint32_t
+    {
+        MostTraveledMaze = 0,
+        MostTraveledCave = 1,
+        MostTraveledVoid = 2,
+        MostTraveledMuseum = 3,
+        MostItemsFound = 4,
+        LeastTimesLost = 5,
+        LeaderboardCount = 6
+    };
+
+    std::map<StatName, const std::string> s_statNames =
+    {
+        { StatName::Maze,           "AreaExplored.Environment.Maze" },
+        { StatName::Cave,           "AreaExplored.Environment.Cave" },
+        { StatName::Void,           "AreaExplored.Environment.Void" },
+        { StatName::Museum,         "AreaExplored.Environment.Museum" },
+        { StatName::MostFoundItems, "AreaExploredMostFoundItems" },
+        { StatName::AreaExploredLeastTimesLost, "AreaExploredLeastTimesLost" },
+    };
+
+    std::map<LeaderboardName, const std::string> s_ldrNames =
+    {
+        { LeaderboardName::MostTraveledMaze,   "MostTraveledMaze" },
+        { LeaderboardName::MostTraveledCave,   "MostTraveledCave" },
+        { LeaderboardName::MostTraveledVoid,   "MostTraveledVoid" },
+        { LeaderboardName::MostTraveledMuseum, "MostTraveledMuseum" },
+        { LeaderboardName::MostItemsFound,     "MostItemsFound" },
+        { LeaderboardName::LeastTimesLost,     "LeastTimesLost" },
+    };
+
+    const char* c_eventName = "AreaExplored";
+    const char* c_additionalColumns[] = { "Environment", "DistanceTraveled" };
+    bool s_isLeaderboardGlobal = true;
+
+    const int c_pageTitleText = 0;
+    const int c_pageDescText = 1;
+
+    const wchar_t *s_labelsText[][2]
+    {
+        { L"Query Leaderboards", L"Query current leaderboards for the given stat."},
+        { L"Query Stats", L"Query a specific stat for the current user." }
+    };
+}
+
 // A basic sample implementation that creates a D3D12 device and
 // provides a render loop.
-class Sample final
+class Sample final : public DX::IDeviceNotify
 {
 public:
+
     Sample() noexcept(false);
     ~Sample();
 
+    Sample(Sample&&) = default;
+    Sample& operator= (Sample&&) = default;
+
+    Sample(Sample const&) = delete;
+    Sample& operator= (Sample const&) = delete;
+
     // Initialization and management
-    void Initialize(HWND window);
+    void Initialize(HWND window, int width, int height);
 
     // Basic render loop
     void Tick();
 
     // IDeviceNotify
-    virtual void OnDeviceLost();
-    virtual void OnDeviceRestored();
+    void OnDeviceLost() override;
+    void OnDeviceRestored() override;
 
     // Messages
     void OnActivated();
     void OnDeactivated();
     void OnSuspending();
     void OnResuming();
+    void OnWindowMoved();
+    void OnWindowSizeChanged(int width, int height);
 
     // Properties
-    void GetDefaultSize(int& width, int& height) const;
+    void GetDefaultSize(int& width, int& height) const noexcept;
 
 private:
     // Sample core methods
@@ -87,15 +174,14 @@ private:
     void QueryLeaderboards(
         const std::string &leaderboardName,
         const std::string &statName,
-        XblSocialGroupType queryGroupType,
+        bool isGlobalLeaderboard,
         const char **additionalColumns = nullptr,
-        size_t additionalColumnsCount = 0,
-        std::function<void(HRESULT, LeaderboardsQueryContext *)> onResultsReceived = {});
+        size_t additionalColumnsCount = 0);
 
     static void ProcessLeaderboardResults(XAsyncBlock * async);
 
+private: //LeaderboardsSetup.cpp
 
-private: // LeaderboardsSetup.cpp
     void Update(DX::StepTimer const& timer);
     void Render();
 
@@ -106,19 +192,10 @@ private: // LeaderboardsSetup.cpp
 
     void SetupUI();
 
-    void WriteToLog(std::string text, bool clearFirst = true);
-    void WriteToLog(std::wstring text, bool clearFirst = true);
-    void WriteToResult(std::string text, bool clearFirst = true);
-    void WriteToResult(std::wstring text, bool clearFirst = true);
-    void WriteTo(std::wstring text, bool clearFirst, DX::TextConsoleImage *console);
-
     void SetPage(SamplePage page);
-    void NextPage();
-    void PrevPage();
     void RenderStatisticsResult(XblUserStatisticsResult *res);
-    void RenderLeaderboardsResults(HRESULT hr, LeaderboardsQueryContext * ctx);
-    
-private:
+    void RenderLeaderboardsResults(LeaderboardsQueryContext * ctx);
+
     // Device resources.
     std::unique_ptr<DX::DeviceResources>        m_deviceResources;
 
@@ -143,7 +220,7 @@ private:
 
     std::unique_ptr<ATG::LiveInfoHUD>           m_liveInfoHUD;
 
-    std::unique_ptr<DX::TextConsoleImage>       m_glbConsole;
+    std::unique_ptr<DX::TextConsoleImage>       m_resultConsole;
     std::unique_ptr<DX::TextConsoleImage>       m_logConsole;
 
     XTaskQueueHandle                            m_mainAsyncQueue;

@@ -96,7 +96,7 @@ For more ATG samples, see [DirectML Samples](https://github.com/microsoft/Direct
 |                     DownloadableContent|               [Xbox](Samples/Live/DownloadableContent)|                 [PC](Samples/Live/DownloadableContent)|                                                       |
 |                            Fundamentals|                                                       |                [PC](Samples/Live/Fundamentals_Desktop)|                                                       |
 |                             InGameStore|                       [Xbox](Samples/Live/InGameStore)|                         [PC](Samples/Live/InGameStore)|                                                       |
-|                            Leaderboards|                      [Xbox](Samples/Live/Leaderboards)|                [PC](Samples/Live/Leaderboards_Desktop)|                                                       |
+|                LeaderboardsEventManaged|          [Xbox](Samples/Live/LeaderboardsEventManaged)|            [PC](Samples/Live/LeaderboardsEventManaged)|                                                       |
 |                LeaderboardsTitleManaged|          [Xbox](Samples/Live/LeaderboardsTitleManaged)|    [PC](Samples/Live/LeaderboardsTitleManaged_Desktop)|                                                       |
 |                                    mDNS|                              [Xbox](Samples/Live/mDNS)|                        [PC](Samples/Live/mDNS_Desktop)|                                                       |
 |            MicrosoftStoreServicesClient|      [Xbox](Samples/Live/MicrosoftStoreServicesClient)|        [PC](Samples/Live/MicrosoftStoreServicesClient)|                                                       |
