@@ -75,11 +75,14 @@
 #include <cstdint>
 #include <cstdio>
 #include <cstring>
+#include <cwchar>
 #include <exception>
 #include <iterator>
 #include <memory>
 #include <stdexcept>
 #include <string>
+#include <system_error>
+#include <tuple>
 
 #ifdef _GAMING_XBOX
 #include <pix3.h>

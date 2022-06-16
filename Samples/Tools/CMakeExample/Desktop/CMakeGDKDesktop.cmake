@@ -99,6 +99,10 @@ set(Console_SdkLibPath
 
 set(Console_Libs dxguid.lib d3d12.lib dxgi.lib xgameruntime.lib)
 
+if (XdkEditionTarget GREATER_EQUAL 220600)
+    string(APPEND Console_Libs " gameinput.lib")
+endif()
+
 # Extension Libraries (using just Xbox.Services.API.C for this example)
 set(Console_GRDKExtLibRoot "${DurangoXdkInstallPath}/GRDK/ExtensionLibraries")
 

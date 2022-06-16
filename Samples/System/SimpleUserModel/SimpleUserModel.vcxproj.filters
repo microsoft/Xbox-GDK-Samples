@@ -460,6 +460,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="readme.docx" />
+    <None Include="Readme_ja-JP.docx" />
+    <None Include="Readme_ko-KR.docx" />
+    <None Include="Readme_zh-CN.docx" />
     <None Include="..\..\..\Kits\OpenSource\FreeType2\lib\x64\ReleaseStatic\freetype.pdb">
       <Filter>OpenSource\FreeType2\lib</Filter>
     </None>

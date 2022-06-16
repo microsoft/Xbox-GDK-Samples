@@ -23,6 +23,9 @@
 #include <d3d12_xs.h>
 #elif (defined(_XBOX_ONE) && defined(_TITLE)) || defined(_GAMING_XBOX)
 #include <d3d12_x.h>
+#elif defined(USING_DIRECTX_HEADERS)
+#include <directx/d3d12.h>
+#include <dxguids/dxguids.h>
 #else
 #include <d3d12.h>
 #endif
@@ -38,14 +41,14 @@ namespace DirectX
 {
     enum WIC_LOADER_FLAGS : uint32_t
     {
-        WIC_LOADER_DEFAULT      = 0,
-        WIC_LOADER_FORCE_SRGB   = 0x1,
-        WIC_LOADER_IGNORE_SRGB  = 0x2,
+        WIC_LOADER_DEFAULT = 0,
+        WIC_LOADER_FORCE_SRGB = 0x1,
+        WIC_LOADER_IGNORE_SRGB = 0x2,
         WIC_LOADER_SRGB_DEFAULT = 0x4,
-        WIC_LOADER_MIP_AUTOGEN  = 0x8,
-        WIC_LOADER_MIP_RESERVE  = 0x10,
-        WIC_LOADER_FIT_POW2     = 0x20,
-        WIC_LOADER_MAKE_SQUARE  = 0x40,
+        WIC_LOADER_MIP_AUTOGEN = 0x8,
+        WIC_LOADER_MIP_RESERVE = 0x10,
+        WIC_LOADER_FIT_POW2 = 0x20,
+        WIC_LOADER_MAKE_SQUARE = 0x40,
         WIC_LOADER_FORCE_RGBA32 = 0x80,
     };
 
@@ -72,7 +75,7 @@ namespace DirectX
     // Standard version with resource upload
     HRESULT __cdecl CreateWICTextureFromMemory(
         _In_ ID3D12Device* d3dDevice,
-         ResourceUploadBatch& resourceUpload,
+        ResourceUploadBatch& resourceUpload,
         _In_reads_bytes_(wicDataSize) const uint8_t* wicData,
         size_t wicDataSize,
         _Outptr_ ID3D12Resource** texture,

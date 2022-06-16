@@ -1,0 +1,28 @@
+#ITEM,ID,X,Y,DX,DY,PARAMETERS
+CUSTOM_OVERLAY,2000,0,0,1920,1080
+LEGEND,2001,35,830,625,350,[DPad] or Up/Down Arrows - Select a scenario|[A] or Enter - Run the query|[X] or 'E' - Send game play event|[Y] or 'T' - Toggle Leaderboard type|[LB][RB] or Left/Right Arrows - Leaderboard / Stats Query|[View] or Esc Exit,SMALL
+
+# Console Labels
+LABEL,2002,525,150,300,50,Log,LEFT;SMALL
+LABEL,2003,525,275,300,50,Results,LEFT;SMALL
+
+# Page Labels
+LABEL,2004,40,150,425,100,Description Text,LEFT;SMALL;WORDWRAP
+LABEL,2005,660,30,600,80,Page Title,CENTER;LARGE;BOLD,Green
+
+# Indicator for which leaderboard query type (global or social)
+LABEL,2006,660,90,600,80,Leader Type,CENTER;SMALL;BOLD,Offwhite
+
+# Query Leaderboard Buttons
+BUTTON,2201,40,300,425,50,Maze
+BUTTON,2202,40,375,425,50,Cave
+BUTTON,2203,40,450,425,50,Void
+BUTTON,2204,40,525,425,50,Museum
+BUTTON,2205,40,600,425,50,Items Found
+BUTTON,2206,40,675,425,50,Times Lost
+
+# Query Events
+BUTTON,2101,40,300,425,50,Maze
+BUTTON,2102,40,375,425,50,Cave
+BUTTON,2103,40,450,425,50,Void
+BUTTON,2104,40,525,425,50,Museum

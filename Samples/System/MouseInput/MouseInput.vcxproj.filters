@@ -149,6 +149,9 @@
     <None Include="..\..\..\Media\Meshes\RTSMap\3DRTSMap.sdkmesh">
       <Filter>Assets</Filter>
     </None>
+    <None Include="Readme_ja-JP.docx" />
+    <None Include="Readme_ko-KR.docx" />
+    <None Include="Readme_zh-CN.docx" />
     <None Include="Readme.docx" />
     <None Include="..\..\..\Media\Meshes\RTSMap\Map3DColor.dd_">
       <Filter>Assets</Filter>

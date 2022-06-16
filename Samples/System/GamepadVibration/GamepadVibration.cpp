@@ -10,8 +10,9 @@
 
 #include "ATGColors.h"
 #include "ControllerFont.h"
+#include "FindMedia.h"
 
-extern void ExitSample();
+extern void ExitSample() noexcept;
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -70,25 +71,16 @@ namespace
     float footstepsLeftTriggerLevels[] = { 0.3f, 0.0f, 0.0f, 0.0f };
     uint32_t footstepsRightTriggerDurations[] = { 25, 600, 25, 600 };
     float footstepsRightTriggerLevels[] = { 0.0f, 0.0f, 0.3f, 0.0f };
-
-    bool IsSameDevice(APP_LOCAL_DEVICE_ID first, APP_LOCAL_DEVICE_ID second)
-    {
-        if (memcmp(&first, &second, APP_LOCAL_DEVICE_ID_SIZE) == 0)
-        {
-            return true;
-        }
-
-        return false;
-    }
 }
 
 Sample::Sample() noexcept(false) :
+    m_frame(0),
     m_connected(false),
+    m_dPadPressed(false),
     m_leftMotorSpeed(0),
     m_rightMotorSpeed(0),
     m_leftTriggerLevel(0),
     m_rightTriggerLevel(0),
-    m_dPadPressed(false),
     m_selectedTriggerEffect(TRIGGEREFFECTS::TRIGGEREFFECTS_IMPULSETEST),
     m_triggerEffectCounter(0),
     m_leftTriggerArraySize(0),
@@ -102,17 +94,24 @@ Sample::Sample() noexcept(false) :
     m_frequency(0),
     m_counter(0),
     m_leftTriggerIndexUpdateTime(0),
-    m_rightTriggerIndexUpdateTime(0),
-    m_frame(0)
+    m_rightTriggerIndexUpdateTime(0)
 {
     // Renders only 2D, so no need for a depth buffer.
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_UNKNOWN);
 }
 
-// Initialize the Direct3D resources required to run.
-void Sample::Initialize(HWND window)
+Sample::~Sample()
 {
-    m_deviceResources->SetWindow(window);
+    if (m_deviceResources)
+    {
+        m_deviceResources->WaitForGpu();
+    }
+}
+
+// Initialize the Direct3D resources required to run.
+void Sample::Initialize(HWND window, int width, int height)
+{
+    m_deviceResources->SetWindow(window, width, height);
 
     m_selectedTriggerEffect = TRIGGEREFFECTS::TRIGGEREFFECTS_IMPULSETEST;
 
@@ -220,13 +219,13 @@ void Sample::Tick()
 // Updates the world.
 void Sample::Update(DX::StepTimer const&)
 {
-    PIXScopedEvent(PIX_COLOR_DEFAULT, L"Update");
+    PIXBeginEvent(PIX_COLOR_DEFAULT, L"Update");
 
     if (SUCCEEDED(m_gameInput->GetCurrentReading(GameInputKindGamepad, nullptr, &m_reading)))
     {
         m_connected = true;
 
-        GameInputGamepadState state;
+        GameInputGamepadState state = {};
 
         if (m_reading->GetGamepadState(&state))
         {
@@ -260,109 +259,74 @@ void Sample::Update(DX::StepTimer const&)
         ComPtr<IGameInputDevice> device;
         m_reading->GetDevice(&device);
 
-        if (device != nullptr)
+        //Set rumble
+
+        switch (m_selectedTriggerEffect)
         {
-            int currentDevice = -1;
-            auto deviceInfo = device->GetDeviceInfo();
+        case TRIGGEREFFECTS::TRIGGEREFFECTS_IMPULSETEST:
+            // This example uses a very simple vibration envelope waveform by setting the vibration
+            // levels to the current trigger values. This means the more you pull the triggers, the more
+            // vibration you will feel.
+            m_leftTriggerLevel = state.leftTrigger;
+            m_rightTriggerLevel = state.rightTrigger;
+            m_leftMotorSpeed = state.leftTrigger;
+            m_rightMotorSpeed = state.rightTrigger;
+            break;
 
-            for (int i = 0; i < int(m_deviceIds.size()); i++)
+        case TRIGGEREFFECTS::TRIGGEREFFECTS_FLATTIRE:
+            m_leftTriggerLevel = m_pLeftTriggerLevels[m_leftTriggerIndex];
+
+            // If we've reached or passed the transition time, update m_leftTriggerIndexUpdateTime
+            // with the next transition time and update the effect index.
+            // This will cause the effect to change in the next loop iteration.
+            QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER *>(&m_counter));
+            if (m_counter > m_leftTriggerIndexUpdateTime)
             {
-                if (IsSameDevice(m_deviceIds[size_t(i)], deviceInfo->deviceId))
-                {
-                    currentDevice = i;
-                    break;
-                }
+                m_leftTriggerIndex = (m_leftTriggerIndex + 1) % m_leftTriggerArraySize;
+                m_leftTriggerIndexUpdateTime = m_counter + (m_frequency * m_pLeftTriggerDurations[m_leftTriggerIndex]) / 1000;
             }
+            break;
 
-            if (currentDevice == -1)
+        case TRIGGEREFFECTS::TRIGGEREFFECTS_GUNWITHRECOIL:
+            switch (m_triggerEffectCounter)
             {
-                currentDevice = int(m_deviceIds.size() - 1);
-                m_deviceIds.emplace_back(deviceInfo->deviceId);
-            }
-
-            //Set rumble
-
-            switch (m_selectedTriggerEffect)
-            {
-            case TRIGGEREFFECTS::TRIGGEREFFECTS_IMPULSETEST:
-                // This example uses a very simple vibration envelope waveform by setting the vibration
-                // levels to the current trigger values. This means the more you pull the triggers, the more
-                // vibration you will feel.
-                m_leftTriggerLevel = state.leftTrigger;
-                m_rightTriggerLevel = state.rightTrigger;
-                m_leftMotorSpeed = state.leftTrigger;
-                m_rightMotorSpeed = state.rightTrigger;
-                break;
-
-            case TRIGGEREFFECTS::TRIGGEREFFECTS_FLATTIRE:
-                m_leftTriggerLevel = m_pLeftTriggerLevels[m_leftTriggerIndex];
-
-                // If we've reached or passed the transition time, update m_leftTriggerIndexUpdateTime
-                // with the next transition time and update the effect index.
-                // This will cause the effect to change in the next loop iteration.
-                QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER *>(&m_counter));
-                if (m_counter > m_leftTriggerIndexUpdateTime)
+            case 0: // Wait for the trigger to be fully released before
+                    // the effect can begin
+                if (state.leftTrigger <= 1.0f / 255.0f)
                 {
-                    m_leftTriggerIndex = (m_leftTriggerIndex + 1) % m_leftTriggerArraySize;
-                    m_leftTriggerIndexUpdateTime = m_counter + (m_frequency * m_pLeftTriggerDurations[m_leftTriggerIndex]) / 1000;
+                    m_triggerEffectCounter = 1;
                 }
                 break;
 
-            case TRIGGEREFFECTS::TRIGGEREFFECTS_GUNWITHRECOIL:
-                switch (m_triggerEffectCounter)
+            case 1: // Wait for the trigger to be depressed enough to cause the gun to fire
+                if (state.leftTrigger >= 32.0f / 255.0f)
                 {
-                case 0: // Wait for the trigger to be fully released before
-                        // the effect can begin
-                    if (state.leftTrigger <= 1.0f / 255.0f)
-                    {
-                        m_triggerEffectCounter = 1;
-                    }
-                    break;
-
-                case 1: // Wait for the trigger to be depressed enough to cause the gun to fire
-                    if (state.leftTrigger >= 32.0f / 255.0f)
-                    {
-                        QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER *>(&m_counter));
-                        m_leftTriggerIndexUpdateTime = m_counter + (m_frequency * m_pLeftTriggerDurations[m_leftTriggerIndex]) / 1000;
-                        m_triggerEffectCounter = 2;
-                    }
-                    break;
-
-                case 2: // Delay recoil a little after the bullet has left the gun
-                    m_leftTriggerLevel = m_pLeftTriggerLevels[m_leftTriggerIndex];
-
-                    if (m_leftTriggerIndex == 2)
-                    {
-                        m_leftMotorSpeed = 1.0f;
-                        m_rightMotorSpeed = 1.0f;
-                    }
-                    else
-                    {
-                        m_leftMotorSpeed = 0.0f;
-                        m_rightMotorSpeed = 0.0f;
-                    }
-
-                    if (m_leftTriggerIndex == 3)
-                    {
-                        m_leftTriggerIndex = 0;
-                        m_triggerEffectCounter = 0;
-                        break;
-                    }
-
                     QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER *>(&m_counter));
-                    if (m_counter > m_leftTriggerIndexUpdateTime)
-                    {
-                        m_leftTriggerIndex = (m_leftTriggerIndex + 1) % m_leftTriggerArraySize;
-                        m_leftTriggerIndexUpdateTime = m_counter + (m_frequency * m_pLeftTriggerDurations[m_leftTriggerIndex]) / 1000;
-                    }
+                    m_leftTriggerIndexUpdateTime = m_counter + (m_frequency * m_pLeftTriggerDurations[m_leftTriggerIndex]) / 1000;
+                    m_triggerEffectCounter = 2;
+                }
+                break;
+
+            case 2: // Delay recoil a little after the bullet has left the gun
+                m_leftTriggerLevel = m_pLeftTriggerLevels[m_leftTriggerIndex];
+
+                if (m_leftTriggerIndex == 2)
+                {
+                    m_leftMotorSpeed = 1.0f;
+                    m_rightMotorSpeed = 1.0f;
+                }
+                else
+                {
+                    m_leftMotorSpeed = 0.0f;
+                    m_rightMotorSpeed = 0.0f;
+                }
+
+                if (m_leftTriggerIndex == 3)
+                {
+                    m_leftTriggerIndex = 0;
+                    m_triggerEffectCounter = 0;
                     break;
                 }
-                break;
-
-            case TRIGGEREFFECTS::TRIGGEREFFECTS_HEARTBEAT:
-                // use the left level/duration for both triggers
-                m_leftTriggerLevel = m_pLeftTriggerLevels[m_leftTriggerIndex];
-                m_rightTriggerLevel = m_pRightTriggerLevels[m_rightTriggerIndex];
 
                 QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER *>(&m_counter));
                 if (m_counter > m_leftTriggerIndexUpdateTime)
@@ -370,46 +334,58 @@ void Sample::Update(DX::StepTimer const&)
                     m_leftTriggerIndex = (m_leftTriggerIndex + 1) % m_leftTriggerArraySize;
                     m_leftTriggerIndexUpdateTime = m_counter + (m_frequency * m_pLeftTriggerDurations[m_leftTriggerIndex]) / 1000;
                 }
-                if (m_counter > m_rightTriggerIndexUpdateTime)
-                {
-                    m_rightTriggerIndex = (m_rightTriggerIndex + 1) % m_rightTriggerArraySize;
-                    m_rightTriggerIndexUpdateTime = m_counter + (m_frequency * m_pRightTriggerDurations[m_rightTriggerIndex]) / 1000;
-                }
                 break;
-
-            case TRIGGEREFFECTS::TRIGGEREFFECTS_FOOTSTEPS:
-                m_leftTriggerLevel = m_pLeftTriggerLevels[m_leftTriggerIndex];
-                m_rightTriggerLevel = m_pRightTriggerLevels[m_rightTriggerIndex];
-
-                QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER *>(&m_counter));
-                if (m_counter > m_leftTriggerIndexUpdateTime)
-                {
-                    m_leftTriggerIndex = (m_leftTriggerIndex + 1) % m_leftTriggerArraySize;
-                    m_leftTriggerIndexUpdateTime = m_counter + (m_frequency * m_pLeftTriggerDurations[m_leftTriggerIndex]) / 1000;
-                }
-                if (m_counter > m_rightTriggerIndexUpdateTime)
-                {
-                    m_rightTriggerIndex = (m_rightTriggerIndex + 1) % m_rightTriggerArraySize;
-                    m_rightTriggerIndexUpdateTime = m_counter + (m_frequency * m_pRightTriggerDurations[m_rightTriggerIndex]) / 1000;
-                }
-                break;
-
-            default:
-                assert(false);
             }
+            break;
 
-            GameInputRumbleParams vibration = {};
-            vibration.lowFrequency = m_leftMotorSpeed;
-            vibration.highFrequency = m_rightMotorSpeed;
-            vibration.leftTrigger = m_leftTriggerLevel;
-            vibration.rightTrigger = m_rightTriggerLevel;
-            device->SetRumbleState(&vibration);
+        case TRIGGEREFFECTS::TRIGGEREFFECTS_HEARTBEAT:
+            // use the left level/duration for both triggers
+            m_leftTriggerLevel = m_pLeftTriggerLevels[m_leftTriggerIndex];
+            m_rightTriggerLevel = m_pRightTriggerLevels[m_rightTriggerIndex];
+
+            QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER *>(&m_counter));
+            if (m_counter > m_leftTriggerIndexUpdateTime)
+            {
+                m_leftTriggerIndex = (m_leftTriggerIndex + 1) % m_leftTriggerArraySize;
+                m_leftTriggerIndexUpdateTime = m_counter + (m_frequency * m_pLeftTriggerDurations[m_leftTriggerIndex]) / 1000;
+            }
+            if (m_counter > m_rightTriggerIndexUpdateTime)
+            {
+                m_rightTriggerIndex = (m_rightTriggerIndex + 1) % m_rightTriggerArraySize;
+                m_rightTriggerIndexUpdateTime = m_counter + (m_frequency * m_pRightTriggerDurations[m_rightTriggerIndex]) / 1000;
+            }
+            break;
+
+        case TRIGGEREFFECTS::TRIGGEREFFECTS_FOOTSTEPS:
+            m_leftTriggerLevel = m_pLeftTriggerLevels[m_leftTriggerIndex];
+            m_rightTriggerLevel = m_pRightTriggerLevels[m_rightTriggerIndex];
+
+            QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER *>(&m_counter));
+            if (m_counter > m_leftTriggerIndexUpdateTime)
+            {
+                m_leftTriggerIndex = (m_leftTriggerIndex + 1) % m_leftTriggerArraySize;
+                m_leftTriggerIndexUpdateTime = m_counter + (m_frequency * m_pLeftTriggerDurations[m_leftTriggerIndex]) / 1000;
+            }
+            if (m_counter > m_rightTriggerIndexUpdateTime)
+            {
+                m_rightTriggerIndex = (m_rightTriggerIndex + 1) % m_rightTriggerArraySize;
+                m_rightTriggerIndexUpdateTime = m_counter + (m_frequency * m_pRightTriggerDurations[m_rightTriggerIndex]) / 1000;
+            }
+            break;
+
+        default:
+            assert(false);
         }
+
+        GameInputRumbleParams vibration = {};
+        vibration.lowFrequency = m_leftMotorSpeed;
+        vibration.highFrequency = m_rightMotorSpeed;
+        vibration.leftTrigger = m_leftTriggerLevel;
+        vibration.rightTrigger = m_rightTriggerLevel;
+        device->SetRumbleState(&vibration);
     }
-    else
-    {
-        m_connected = false;
-    }
+
+    PIXEndEvent();
 }
 #pragma endregion
 
@@ -430,9 +406,9 @@ void Sample::Render()
     auto commandList = m_deviceResources->GetCommandList();
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Render");
 
-    auto fullscreen = m_deviceResources->GetOutputSize();
+    auto const fullscreen = m_deviceResources->GetOutputSize();
 
-    auto safeRect = Viewport::ComputeTitleSafeArea(UINT(fullscreen.right - fullscreen.left), UINT(fullscreen.bottom - fullscreen.top));
+    auto const safeRect = Viewport::ComputeTitleSafeArea(UINT(fullscreen.right - fullscreen.left), UINT(fullscreen.bottom - fullscreen.top));
 
     auto heap = m_resourceDescriptors->Heap();
     commandList->SetDescriptorHeaps(1, &heap);
@@ -459,6 +435,13 @@ void Sample::Render()
         m_font->DrawString(m_batch.get(), L"No controller connected", pos, ATG::Colors::Orange);
     }
 
+    DX::DrawControllerString(m_batch.get(),
+        m_smallFont.get(), m_ctrlFont.get(),
+        L"[View] Exit   [Menu] Help",
+        XMFLOAT2(float(safeRect.left),
+            float(safeRect.bottom) - m_smallFont->GetLineSpacing()),
+        ATG::Colors::LightGrey);
+
     m_batch->End();
 
     PIXEndEvent(commandList);
@@ -477,14 +460,14 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, nullptr);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -494,6 +477,14 @@ void Sample::Clear()
 
 #pragma region Message Handlers
 // Message handlers
+void Sample::OnActivated()
+{
+}
+
+void Sample::OnDeactivated()
+{
+}
+
 void Sample::OnSuspending()
 {
     m_deviceResources->Suspend();
@@ -504,6 +495,27 @@ void Sample::OnResuming()
     m_deviceResources->Resume();
     m_timer.ResetElapsedTime();
 }
+
+void Sample::OnWindowMoved()
+{
+    auto const r = m_deviceResources->GetOutputSize();
+    m_deviceResources->WindowSizeChanged(r.right, r.bottom);
+}
+
+void Sample::OnWindowSizeChanged(int width, int height)
+{
+    if (!m_deviceResources->WindowSizeChanged(width, height))
+        return;
+
+    CreateWindowSizeDependentResources();
+}
+
+// Properties
+void Sample::GetDefaultSize(int& width, int& height) const noexcept
+{
+    width = 1280;
+    height = 720;
+}
 #pragma endregion
 
 #pragma region Direct3D Resources
@@ -512,47 +524,89 @@ void Sample::CreateDeviceDependentResources()
 {
     auto device = m_deviceResources->GetD3DDevice();
 
+#ifdef _GAMING_DESKTOP
+    D3D12_FEATURE_DATA_SHADER_MODEL shaderModel = { D3D_SHADER_MODEL_6_0 };
+    if (FAILED(device->CheckFeatureSupport(D3D12_FEATURE_SHADER_MODEL, &shaderModel, sizeof(shaderModel)))
+        || (shaderModel.HighestShaderModel < D3D_SHADER_MODEL_6_0))
+    {
+#ifdef _DEBUG
+        OutputDebugStringA("ERROR: Shader Model 6.0 is not supported!\n");
+#endif
+        throw std::runtime_error("Shader Model 6.0 is not supported!");
+    }
+#endif
+
     m_graphicsMemory = std::make_unique<GraphicsMemory>(device);
 
     m_resourceDescriptors = std::make_unique<DescriptorHeap>(device, Descriptors::Count);
 
-    RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
+    const RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(),
+        m_deviceResources->GetDepthBufferFormat());
 
     ResourceUploadBatch upload(device);
     upload.Begin();
 
     {
-        SpriteBatchPipelineStateDescription pd(
+        const SpriteBatchPipelineStateDescription pd(
             rtState,
             &CommonStates::AlphaBlend);
 
         m_batch = std::make_unique<SpriteBatch>(device, upload, pd);
     }
 
+    wchar_t strFilePath[MAX_PATH] = {};
+    DX::FindMediaFile(strFilePath, MAX_PATH, L"SegoeUI_24.spritefont");
     m_font = std::make_unique<SpriteFont>(device, upload,
-        L"SegoeUI_24.spritefont",
+        strFilePath,
         m_resourceDescriptors->GetCpuHandle(Descriptors::PrintFont),
         m_resourceDescriptors->GetGpuHandle(Descriptors::PrintFont));
 
+    DX::FindMediaFile(strFilePath, MAX_PATH, L"SegoeUI_18.spritefont");
+    m_smallFont = std::make_unique<SpriteFont>(device, upload,
+        strFilePath,
+        m_resourceDescriptors->GetCpuHandle(Descriptors::TextFont),
+        m_resourceDescriptors->GetGpuHandle(Descriptors::TextFont));
+
+    DX::FindMediaFile(strFilePath, MAX_PATH, L"XboxOneControllerLegendSmall.spritefont");
     m_ctrlFont = std::make_unique<SpriteFont>(device, upload,
-        L"XboxOneControllerLegendSmall.spritefont",
+        strFilePath,
         m_resourceDescriptors->GetCpuHandle(Descriptors::ControllerFont),
         m_resourceDescriptors->GetGpuHandle(Descriptors::ControllerFont));
 
-    DX::ThrowIfFailed(CreateDDSTextureFromFile(device, upload, L"gamepad.dds", m_background.ReleaseAndGetAddressOf()));
+    DX::FindMediaFile(strFilePath, MAX_PATH, L"gamepad.dds");
+    DX::ThrowIfFailed(CreateDDSTextureFromFile(device, upload, strFilePath,
+        m_background.ReleaseAndGetAddressOf()));
 
     auto finish = upload.End(m_deviceResources->GetCommandQueue());
     finish.wait();
 
     m_deviceResources->WaitForGpu();
 
-    CreateShaderResourceView(device, m_background.Get(), m_resourceDescriptors->GetCpuHandle(Descriptors::Background));
+    CreateShaderResourceView(device, m_background.Get(),
+        m_resourceDescriptors->GetCpuHandle(Descriptors::Background));
 }
 
 // Allocate all memory resources that change on a window SizeChanged event.
 void Sample::CreateWindowSizeDependentResources()
 {
-    auto vp = m_deviceResources->GetScreenViewport();
+    auto const vp = m_deviceResources->GetScreenViewport();
     m_batch->SetViewport(vp);
+}
+
+void Sample::OnDeviceLost()
+{
+    m_font.reset();
+    m_smallFont.reset();
+    m_ctrlFont.reset();
+    m_batch.reset();
+    m_resourceDescriptors.reset();
+    m_graphicsMemory.reset();
+}
+
+void Sample::OnDeviceRestored()
+{
+    CreateDeviceDependentResources();
+
+    CreateWindowSizeDependentResources();
 }
 #pragma endregion

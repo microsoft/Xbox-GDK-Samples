@@ -69,8 +69,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
     //    The sample relies on the font and image files in the .exe's
     //    directory and so we do the following to set the working
     //    directory to what we want.
-    char dir[1024] = {};
-    if (GetModuleFileNameA(nullptr, dir, 1024) > 0)
+    char dir[_MAX_PATH] = {};
+    if (GetModuleFileNameA(nullptr, dir, _MAX_PATH) > 0)
     {
         std::string exe = dir;
         exe = exe.substr(0, exe.find_last_of("\\"));

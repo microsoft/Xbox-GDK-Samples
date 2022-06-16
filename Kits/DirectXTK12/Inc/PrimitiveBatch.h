@@ -13,6 +13,9 @@
 #include <d3d12_xs.h>
 #elif (defined(_XBOX_ONE) && defined(_TITLE)) || defined(_GAMING_XBOX)
 #include <d3d12_x.h>
+#elif defined(USING_DIRECTX_HEADERS)
+#include <directx/d3d12.h>
+#include <dxguids/dxguids.h>
 #else
 #include <d3d12.h>
 #endif
@@ -71,7 +74,8 @@ namespace DirectX
             size_t maxIndices = DefaultBatchSize * 3,
             size_t maxVertices = DefaultBatchSize)
             : PrimitiveBatchBase(device, maxIndices, maxVertices, sizeof(TVertex))
-        { }
+        {
+        }
 
         PrimitiveBatch(PrimitiveBatch&&) = default;
         PrimitiveBatch& operator= (PrimitiveBatch&&) = default;

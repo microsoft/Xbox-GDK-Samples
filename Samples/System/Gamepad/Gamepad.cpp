@@ -10,26 +10,14 @@
 
 #include "ATGColors.h"
 #include "ControllerFont.h"
+#include "FindMedia.h"
 
-extern void ExitSample();
+extern void ExitSample() noexcept;
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
 using Microsoft::WRL::ComPtr;
-
-namespace
-{
-    bool IsSameDevice(APP_LOCAL_DEVICE_ID first, APP_LOCAL_DEVICE_ID second)
-    {
-        if (memcmp(&first, &second, APP_LOCAL_DEVICE_ID_SIZE) == 0)
-        {
-            return true;
-        }
-
-        return false;
-    }
-}
 
 Sample::Sample() noexcept(false) :
     m_frame(0),
@@ -39,17 +27,24 @@ Sample::Sample() noexcept(false) :
     m_leftStickX(0),
     m_leftStickY(0),
     m_rightStickX(0),
-    m_rightStickY(0),
-    m_scale(1.25f)
+    m_rightStickY(0)
 {
     // Renders only 2D, so no need for a depth buffer.
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_UNKNOWN);
 }
 
-// Initialize the Direct3D resources required to run.
-void Sample::Initialize(HWND window)
+Sample::~Sample()
 {
-    m_deviceResources->SetWindow(window);
+    if (m_deviceResources)
+    {
+        m_deviceResources->WaitForGpu();
+    }
+}
+
+// Initialize the Direct3D resources required to run.
+void Sample::Initialize(HWND window, int width, int height)
+{
+    m_deviceResources->SetWindow(window, width, height);
 
     m_deviceResources->CreateDeviceResources();  	
     CreateDeviceDependentResources();
@@ -57,7 +52,8 @@ void Sample::Initialize(HWND window)
     m_deviceResources->CreateWindowSizeDependentResources();
     CreateWindowSizeDependentResources();
 
-    DX::ThrowIfFailed(GameInputCreate(&m_gameInput));
+    HRESULT hr = GameInputCreate(&m_gameInput);
+    DX::ThrowIfFailed(hr);
 }
 
 #pragma region Frame Update
@@ -80,7 +76,7 @@ void Sample::Tick()
 // Updates the world.
 void Sample::Update(DX::StepTimer const&)
 {
-    PIXScopedEvent(PIX_COLOR_DEFAULT, L"Update");
+    PIXBeginEvent(PIX_COLOR_DEFAULT, L"Update");
 
     if (FAILED(m_gameInput->GetCurrentReading(GameInputKindGamepad, nullptr, &m_reading)))
     {
@@ -92,34 +88,28 @@ void Sample::Update(DX::StepTimer const&)
         ComPtr<IGameInputDevice> device;
         m_reading->GetDevice(&device);
 
-        if (device != nullptr)
-        {
-            int currentDevice = -1;
-            auto deviceInfo = device->GetDeviceInfo();
+        int currentDevice = -1;
 
-            for (size_t i = 0; i< m_deviceIds.size(); i++)
+        for (size_t i = 0; i< m_devices.size(); i++)
+        {
+            // GameInput device objects are singletons, and their lifetime is the same as the process.
+            // The API guarantees that IGameInputDevice instances can be directly compared for equality.
+            if (m_devices[i].Get() == device.Get())
             {
-                if (IsSameDevice(m_deviceIds[size_t(i)], deviceInfo->deviceId))
-                {
-                    currentDevice = int(i);
-                    break;
-                }
+                currentDevice = static_cast<int>(i);
+                break;
             }
+        }
         
-            if (currentDevice == -1)
-            {
-                currentDevice = (int)m_deviceIds.size() - 1;
-                m_deviceIds.emplace_back(deviceInfo->deviceId);
-            }
-
-            swprintf(m_deviceString, 19, L"Gamepad index: %d", currentDevice);
-        }
-        else
+        if (currentDevice == -1)
         {
-            swprintf(m_deviceString, 19, L"No Device");
+            currentDevice = static_cast<int>(m_devices.size());
+            m_devices.emplace_back(device);
         }
 
-        GameInputGamepadState state;
+        swprintf(m_deviceString, 19, L"Gamepad index: %d", currentDevice);
+
+        GameInputGamepadState state = {};
 
         if (m_reading->GetGamepadState(&state))
         {
@@ -212,6 +202,8 @@ void Sample::Update(DX::StepTimer const&)
                 ExitSample();
         }
     }
+
+    PIXEndEvent();
 }
 #pragma endregion
 
@@ -232,9 +224,9 @@ void Sample::Render()
     auto commandList = m_deviceResources->GetCommandList();
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Render");
 
-    auto fullscreen = m_deviceResources->GetOutputSize();
+    auto const fullscreen = m_deviceResources->GetOutputSize();
 
-    auto safeRect = Viewport::ComputeTitleSafeArea(UINT(fullscreen.right - fullscreen.left), UINT(fullscreen.bottom - fullscreen.top));
+    auto const safeRect = Viewport::ComputeTitleSafeArea(UINT(fullscreen.right - fullscreen.left), UINT(fullscreen.bottom - fullscreen.top));
 
     auto heap = m_resourceDescriptors->Heap();
     commandList->SetDescriptorHeaps(1, &heap);
@@ -276,8 +268,11 @@ void Sample::Render()
         m_font->DrawString(m_batch.get(), L"No controller connected", pos, ATG::Colors::Orange);
     }
 
-    DX::DrawControllerString(m_batch.get(), m_font.get(), m_ctrlFont.get(), L"[RB][LB][View][Menu] Exit",
-        XMFLOAT2(float(safeRect.left), float(safeRect.bottom) - m_font->GetLineSpacing()), ATG::Colors::LightGrey, m_scale);
+    DX::DrawControllerString(m_batch.get(),
+        m_smallFont.get(), m_ctrlFont.get(),
+        L"[RB]+[LB]+[View]+[Menu] Exit",
+        XMFLOAT2(float(safeRect.left), float(safeRect.bottom) - m_font->GetLineSpacing()),
+        ATG::Colors::LightGrey);
     
     m_batch->End();
 
@@ -297,14 +292,14 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, nullptr);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -314,6 +309,14 @@ void Sample::Clear()
 
 #pragma region Message Handlers
 // Message handlers
+void Sample::OnActivated()
+{
+}
+
+void Sample::OnDeactivated()
+{
+}
+
 void Sample::OnSuspending()
 {
     m_deviceResources->Suspend();
@@ -324,6 +327,27 @@ void Sample::OnResuming()
     m_deviceResources->Resume();
     m_timer.ResetElapsedTime();
 }
+
+void Sample::OnWindowMoved()
+{
+    auto const r = m_deviceResources->GetOutputSize();
+    m_deviceResources->WindowSizeChanged(r.right, r.bottom);
+}
+
+void Sample::OnWindowSizeChanged(int width, int height)
+{
+    if (!m_deviceResources->WindowSizeChanged(width, height))
+        return;
+
+    CreateWindowSizeDependentResources();
+}
+
+// Properties
+void Sample::GetDefaultSize(int& width, int& height) const noexcept
+{
+    width = 1280;
+    height = 720;
+}
 #pragma endregion
 
 #pragma region Direct3D Resources
@@ -332,49 +356,89 @@ void Sample::CreateDeviceDependentResources()
 {
     auto device = m_deviceResources->GetD3DDevice();
 
+#ifdef _GAMING_DESKTOP
+    D3D12_FEATURE_DATA_SHADER_MODEL shaderModel = { D3D_SHADER_MODEL_6_0 };
+    if (FAILED(device->CheckFeatureSupport(D3D12_FEATURE_SHADER_MODEL, &shaderModel, sizeof(shaderModel)))
+        || (shaderModel.HighestShaderModel < D3D_SHADER_MODEL_6_0))
+    {
+#ifdef _DEBUG
+        OutputDebugStringA("ERROR: Shader Model 6.0 is not supported!\n");
+#endif
+        throw std::runtime_error("Shader Model 6.0 is not supported!");
+    }
+#endif
+
     m_graphicsMemory = std::make_unique<GraphicsMemory>(device);
 
-    m_resourceDescriptors = std::make_unique<DescriptorHeap>(device,
-        D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV,
-        D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE, Descriptors::Count);
+    m_resourceDescriptors = std::make_unique<DescriptorHeap>(device, Descriptors::Count);
 
-    RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
+    const RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(),
+        m_deviceResources->GetDepthBufferFormat());
 
     ResourceUploadBatch upload(device);
     upload.Begin();
 
     {
-        SpriteBatchPipelineStateDescription pd(
+        const SpriteBatchPipelineStateDescription pd(
             rtState,
             &CommonStates::AlphaBlend);
 
         m_batch = std::make_unique<SpriteBatch>(device, upload, pd);
     }
 
+    wchar_t strFilePath[MAX_PATH] = {};
+    DX::FindMediaFile(strFilePath, MAX_PATH, L"SegoeUI_24.spritefont");
     m_font = std::make_unique<SpriteFont>(device, upload,
-        L"SegoeUI_24.spritefont",
+        strFilePath,
         m_resourceDescriptors->GetCpuHandle(Descriptors::PrintFont),
         m_resourceDescriptors->GetGpuHandle(Descriptors::PrintFont));
 
+    DX::FindMediaFile(strFilePath, MAX_PATH, L"SegoeUI_18.spritefont");
+    m_smallFont = std::make_unique<SpriteFont>(device, upload,
+        strFilePath,
+        m_resourceDescriptors->GetCpuHandle(Descriptors::TextFont),
+        m_resourceDescriptors->GetGpuHandle(Descriptors::TextFont));
+
+    DX::FindMediaFile(strFilePath, MAX_PATH, L"XboxOneControllerLegendSmall.spritefont");
     m_ctrlFont = std::make_unique<SpriteFont>(device, upload,
-        L"XboxOneControllerLegendSmall.spritefont",
+        strFilePath,
         m_resourceDescriptors->GetCpuHandle(Descriptors::ControllerFont),
         m_resourceDescriptors->GetGpuHandle(Descriptors::ControllerFont));
 
-    DX::ThrowIfFailed(CreateDDSTextureFromFile(device, upload, L"gamepad.dds", m_background.ReleaseAndGetAddressOf()));
+    DX::FindMediaFile(strFilePath, MAX_PATH, L"gamepad.dds");
+    DX::ThrowIfFailed(CreateDDSTextureFromFile(device, upload, strFilePath,
+        m_background.ReleaseAndGetAddressOf()));
 
     auto finish = upload.End(m_deviceResources->GetCommandQueue());
     finish.wait();
 
     m_deviceResources->WaitForGpu();
 
-    CreateShaderResourceView(device, m_background.Get(), m_resourceDescriptors->GetCpuHandle(Descriptors::Background));
+    CreateShaderResourceView(device, m_background.Get(),
+        m_resourceDescriptors->GetCpuHandle(Descriptors::Background));
 }
 
 // Allocate all memory resources that change on a window SizeChanged event.
 void Sample::CreateWindowSizeDependentResources()
 {
-    auto vp = m_deviceResources->GetScreenViewport();
+    auto const vp = m_deviceResources->GetScreenViewport();
     m_batch->SetViewport(vp);
+}
+
+void Sample::OnDeviceLost()
+{
+    m_font.reset();
+    m_smallFont.reset();
+    m_ctrlFont.reset();
+    m_batch.reset();
+    m_resourceDescriptors.reset();
+    m_graphicsMemory.reset();
+}
+
+void Sample::OnDeviceRestored()
+{
+    CreateDeviceDependentResources();
+
+    CreateWindowSizeDependentResources();
 }
 #pragma endregion

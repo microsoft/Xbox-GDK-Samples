@@ -101,6 +101,10 @@ target_link_options(${PROJECT_NAME} PRIVATE /DYNAMICBASE /NXCOMPAT)
 # Set link libraries
 target_link_libraries(${PROJECT_NAME} PRIVATE xgameruntime.lib)
 
+if((CMAKE_VS_PLATFORM_NAME STREQUAL "Gaming.Desktop.x64") AND (XdkEditionTarget GREATER_EQUAL 220600))
+    target_link_libraries(${PROJECT_NAME} PRIVATE gameinput.lib)
+endif()
+
 # Add uuid.lib if using Windows Imaging Component (WIC) or other COM objects
 
 # Set the correct graphics link libraries

@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>d14f7cf6-fb37-4154-b9d1-ec13bda54b08</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>126a14a5-eb67-4e18-8bcc-5ae6418065ec</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>d07b29d5-9161-4fe4-a800-556b40a50058</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>66f96dac-07d8-4547-afd2-41f9973e9dd4</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{8ed0e94b-80c2-4d63-827b-339f22761adb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Meshes">
+      <UniqueIdentifier>{aef11b8e-866e-4330-9e0f-887da20e5ca4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effects">
+      <UniqueIdentifier>{11db0080-7641-4c9c-b63f-847a8ae49aa0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Fonts">
+      <UniqueIdentifier>{d3346e42-1106-4139-b3d3-1de1e152e74a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effects\Shaders">
+      <UniqueIdentifier>{0fa2f28b-2352-4e9c-9d1a-0cec31f7bbbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Logos">
+      <UniqueIdentifier>{b519d449-ad11-4ae9-b532-01a45e1be3dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Textures">
+      <UniqueIdentifier>{ea9b4e3b-4921-4276-a504-c1384be229ca}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ReadData.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshletCull.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\OrbitCamera.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\Meshlet.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawFrustum.h">
+      <Filter>Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawCullData.h">
+      <Filter>Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\PerformanceTimers.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\PerformanceTimersXbox.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerHelp.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshletCull.cpp" />
+    <ClCompile Include="..\..\..\Kits\ATGTK\OrbitCamera.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\Meshlet.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="DrawFrustum.cpp">
+      <Filter>Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawCullData.cpp">
+      <Filter>Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\PerformanceTimers.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\PerformanceTimersXbox.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\ControllerHelp.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGame.Config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Media\Textures\gamepad.dds">
+      <Filter>Assets\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
+      <Filter>Assets\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\callout_circle.dds">
+      <Filter>Assets\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\RedCircle.DDS">
+      <Filter>Assets\Textures</Filter>
+    </Image>
+    <Image Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Common.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD0.sdkmesh">
+      <Filter>Assets\Meshes</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD0.sdkmesh.bin">
+      <Filter>Assets\Meshes</Filter>
+    </None>
+    <None Include="CommonMS.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD1.sdkmesh">
+      <Filter>Assets\Meshes</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD1.sdkmesh.bin">
+      <Filter>Assets\Meshes</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD2.sdkmesh">
+      <Filter>Assets\Meshes</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD2.sdkmesh.bin">
+      <Filter>Assets\Meshes</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD3.sdkmesh">
+      <Filter>Assets\Meshes</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD3.sdkmesh.bin">
+      <Filter>Assets\Meshes</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD4.sdkmesh">
+      <Filter>Assets\Meshes</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD4.sdkmesh.bin">
+      <Filter>Assets\Meshes</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD5.sdkmesh">
+      <Filter>Assets\Meshes</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD5.sdkmesh.bin">
+      <Filter>Assets\Meshes</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Camera\camera.sdkmesh">
+      <Filter>Assets\Meshes</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_22.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </None>
+    <None Include="Readme_ja-JP.docx" />
+    <None Include="Readme_ko-KR.docx" />
+    <None Include="Readme_zh-CN.docx" />
+    <None Include="ReadMe.docx" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="BasicMeshletPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="MeshletCullAS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="BasicMeshletMS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="DebugDrawPS.hlsl">
+      <Filter>Effects\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="FrustumMS.hlsl">
+      <Filter>Effects\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="BoundingSphereMS.hlsl">
+      <Filter>Effects\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="NormalConeMS.hlsl">
+      <Filter>Effects\Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+</Project>

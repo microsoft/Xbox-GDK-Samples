@@ -86,6 +86,7 @@
 #include <stdexcept>
 #include <string>
 #include <system_error>
+#include <tuple>
 #include <vector>
 
 #ifdef _GAMING_XBOX

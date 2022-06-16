@@ -69,18 +69,25 @@
 
 #include <algorithm>
 #include <atomic>
+#include <cassert>
+#include <cmath>
+#include <cstddef>
+#include <cstdint>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <cwchar>
 #include <exception>
 #include <functional>
+#include <iterator>
 #include <map>
 #include <memory>
 #include <mutex>
 #include <stdexcept>
 #include <string>
+#include <system_error>
 #include <thread>
-
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <tuple>
 
 #ifdef _GAMING_XBOX
 #include <pix3.h>

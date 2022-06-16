@@ -492,7 +492,7 @@ void Sample::Initialize(HWND window)
     XErrorSetCallback([](HRESULT hr, const char *msg, void *context) -> bool
         {
             UNREFERENCED_PARAMETER(context);
-            char buf[256];
+            char buf[512];
             sprintf_s(buf, 512, "HRESULT: 0x%08X | %s", static_cast<unsigned int>(hr), msg);
             OutputDebugStringA(buf);
             return true;

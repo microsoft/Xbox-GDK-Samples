@@ -54,20 +54,26 @@
 
 #include <algorithm>
 #include <atomic>
+#include <cassert>
+#include <clocale>
 #include <cmath>
 #include <codecvt>
+#include <cstddef>
 #include <cstdint>
+#include <cstdio>
+#include <cstring>
+#include <cwchar>
 #include <exception>
+#include <iterator>
 #include <memory>
 #include <stdexcept>
+#include <string>
+#include <system_error>
+#include <tuple>
 
 #ifdef _DEBUG
 #include <dxgidebug.h>
 #endif
-
-#include <assert.h>
-#include <locale.h>
-#include <stdio.h>
 
 // To use graphics and CPU markup events with the latest version of PIX, change this to include <pix3.h>
 // then add the NuGet package WinPixEventRuntime to the project.

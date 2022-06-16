@@ -79,10 +79,11 @@
 #include <exception>
 #include <iterator>
 #include <memory>
+#include <sstream>
 #include <stdexcept>
 #include <string>
 #include <system_error>
-#include <sstream>
+#include <tuple>
 
 #ifdef _GAMING_XBOX
 #include <pix3.h>

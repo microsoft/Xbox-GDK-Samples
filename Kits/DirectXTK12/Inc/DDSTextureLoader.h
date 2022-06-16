@@ -19,6 +19,9 @@
 #include <d3d12_xs.h>
 #elif (defined(_XBOX_ONE) && defined(_TITLE)) || defined(_GAMING_XBOX)
 #include <d3d12_x.h>
+#elif defined(USING_DIRECTX_HEADERS)
+#include <directx/d3d12.h>
+#include <dxguids/dxguids.h>
 #else
 #include <d3d12.h>
 #endif
@@ -37,20 +40,20 @@ namespace DirectX
 #define DDS_ALPHA_MODE_DEFINED
     enum DDS_ALPHA_MODE : uint32_t
     {
-        DDS_ALPHA_MODE_UNKNOWN       = 0,
-        DDS_ALPHA_MODE_STRAIGHT      = 1,
+        DDS_ALPHA_MODE_UNKNOWN = 0,
+        DDS_ALPHA_MODE_STRAIGHT = 1,
         DDS_ALPHA_MODE_PREMULTIPLIED = 2,
-        DDS_ALPHA_MODE_OPAQUE        = 3,
-        DDS_ALPHA_MODE_CUSTOM        = 4,
+        DDS_ALPHA_MODE_OPAQUE = 3,
+        DDS_ALPHA_MODE_CUSTOM = 4,
     };
 #endif
 
     enum DDS_LOADER_FLAGS : uint32_t
     {
-        DDS_LOADER_DEFAULT      = 0,
-        DDS_LOADER_FORCE_SRGB   = 0x1,
-        DDS_LOADER_MIP_AUTOGEN  = 0x8,
-        DDS_LOADER_MIP_RESERVE  = 0x10,
+        DDS_LOADER_DEFAULT = 0,
+        DDS_LOADER_FORCE_SRGB = 0x1,
+        DDS_LOADER_MIP_AUTOGEN = 0x8,
+        DDS_LOADER_MIP_RESERVE = 0x10,
     };
 
     // Standard version

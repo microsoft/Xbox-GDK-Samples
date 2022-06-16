@@ -197,8 +197,8 @@
     <None Include="..\..\..\Media\Textures\ATGConsoleBlack.DDS">
       <Filter>Assets</Filter>
     </None>
-    <None Include="Leaderboards_ReadMe_ja-jp.docx" />
-    <None Include="Leaderboards_ReadMe_ko-kr.docx" />
-    <None Include="Leaderboards_ReadMe_zh-cn.docx" />
+    <None Include="ReadMe_ja-jp.docx" />
+    <None Include="ReadMe_ko-kr.docx" />
+    <None Include="ReadMe_zh-cn.docx" />
   </ItemGroup>
 </Project>

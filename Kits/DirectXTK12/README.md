@@ -6,11 +6,11 @@ http://go.microsoft.com/fwlink/?LinkID=615561
 
 Copyright (c) Microsoft Corporation.
 
-**March 24, 2022**
+**June 9, 2022**
 
 This package contains the "DirectX Tool Kit", a collection of helper classes for writing Direct3D 12 C++ code for Universal Windows Platform (UWP) apps for Windows 11 / Windows 10, game titles for Xbox Series X\|S / Xbox One, and Win32 desktop applications for Windows 11 / Windows 10.
 
-This code is designed to build with Visual Studio 2017 ([15.9](https://walbourn.github.io/vs-2017-15-9-update/)), Visual Studio 2019, Visual Studio 2022, or clang for Windows v11 or later. Use of the Windows 10 May 2020 Update SDK ([19041](https://walbourn.github.io/windows-10-may-2020-update-sdk/)) or later is required.
+This code is designed to build with Visual Studio 2019 (16.9 or later), Visual Studio 2022, or clang for Windows v11 or later. Use of the Windows 10 May 2020 Update SDK ([19041](https://walbourn.github.io/windows-10-may-2020-update-sdk/)) or later is required.
 
 These components are designed to work without requiring any content from the legacy DirectX SDK. For details, see [Where is the DirectX SDK?](https://aka.ms/dxsdk).
 
@@ -28,7 +28,7 @@ These components are designed to work without requiring any content from the leg
     * DirectXHelpers.h - misc C++ helpers for D3D programming
     * EffectPipelineStateDescription.h - helper for creating PSOs
     * Effects.h - set of built-in shaders for common rendering tasks
-    * GamePad.h - gamepad controller helper using XInput
+    * GamePad.h - gamepad controller helper using Windows.Gaming.Input or GameInput
     * GeometricPrimitive.h - draws basic shapes such as cubes and spheres
     * GraphicsMemory.h - helper for managing dynamic graphics memory allocation
     * Keyboard.h - keyboard state tracking helper
@@ -90,7 +90,9 @@ For the latest version of DirectXTK12, bug reports, etc. please visit the projec
 
   * Use the enum type instead of ``DWORD`` if building up flags values locally with bitmask operations. For example, ```WIC_LOADER_FLAGS flags = WIC_LOADER_DEFAULT; if (...) flags |= WIC_LOADER_FORCE_SRGB;```
 
-* The UWP projects and the Win10 classic desktop project include configurations for the ARM64 platform. These require VS 2017 (15.9 update) or later to build, with the ARM64 toolset installed.
+* The UWP projects and the Win10 classic desktop project include configurations for the ARM64 platform. Building these requires installing the ARM64 toolset.
+
+* When using clang/LLVM for the ARM64 platform, the Windows 11 SDK ([22000](https://walbourn.github.io/windows-sdk-for-windows-11/)) is required.
 
 * The ``CompileShaders.cmd`` script must have Windows-style (CRLF) line-endings. If it is changed to Linux-style (LF) line-endings, it can fail to build all the required shaders.
 

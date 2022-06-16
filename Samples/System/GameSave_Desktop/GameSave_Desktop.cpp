@@ -67,10 +67,12 @@ namespace GameSaveSample
         //	directory and so we do the following to set the working
         //	directory to what we want.
         char dir[_MAX_PATH] = {};
-        std::ignore = GetModuleFileNameA(nullptr, dir, _MAX_PATH);
-        std::string exePath = dir;
-        exePath = exePath.substr(0, exePath.find_last_of("\\"));
-        SetCurrentDirectoryA(exePath.c_str());
+        if (GetModuleFileNameA(nullptr, dir, _MAX_PATH) > 0)
+        {
+            std::string exe = dir;
+            exe = exe.substr(0, exe.find_last_of("\\"));
+            std::ignore = SetCurrentDirectoryA(exe.c_str());
+        }
 
         m_deviceResources->SetWindow(window, width, height);
 

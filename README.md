@@ -15,7 +15,7 @@ This repo contains game development samples written by the Microsoft Xbox Advanc
 
 # Requirements
 
-* Visual Studio 2017 ([15.9](https://walbourn.github.io/vs-2017-15-9-update/) update) or Visual Studio 2019
+* Visual Studio 2019 (16.9 update or later) or Visual Studio 2022
 * Microsoft Game Development Kit (GDK)
 
 ## Privacy Statement
@@ -60,15 +60,20 @@ For more ATG samples, see [DirectML Samples](https://github.com/microsoft/Direct
 |                            Antialiasing|                  [Xbox](Samples/Graphics/Antialiasing)|                                                       |                                                       |
 |                        ComputeParticles|              [Xbox](Samples/Graphics/ComputeParticles)|                                                       |                                                       |
 |                       DeferredParticles|             [Xbox](Samples/Graphics/DeferredParticles)|                                                       |                                                       |
+|                             DXRTriangle|                   [Xbox](Samples/Graphics/DXRTriangle)|                     [PC](Samples/Graphics/DXRTriangle)|                                                       |
+|                              DynamicLOD|                    [Xbox](Samples/Graphics/DynamicLOD)|                      [PC](Samples/Graphics/DynamicLOD)|                                                       |
 |                         ExecuteIndirect|               [Xbox](Samples/Graphics/ExecuteIndirect)|                                                       |                                                       |
 |                       FastBlockCompress|             [Xbox](Samples/Graphics/FastBlockCompress)|                                                       |                                                       |
+|                      GeometricExpansion|            [Xbox](Samples/Graphics/GeometricExpansion)|              [PC](Samples/Graphics/GeometricExpansion)|                                                       |
 |                                   HDR10|                         [Xbox](Samples/Graphics/HDR10)|                                                       |                                                       |
 |                             HistogramCS|                   [Xbox](Samples/Graphics/HistogramCS)|                                                       |                                                       |
 |                             HlslCompile|                   [Xbox](Samples/Graphics/HlslCompile)|                                                       |                   [Tool](Samples/Graphics/HlslCompile)|
+|                             MeshletCull|                   [Xbox](Samples/Graphics/MeshletCull)|                     [PC](Samples/Graphics/MeshletCull)|                                                       |
 |                       MeshletInstancing|             [Xbox](Samples/Graphics/MeshletInstancing)|               [PC](Samples/Graphics/MeshletInstancing)|                                                       |
 |                            PointSprites|                  [Xbox](Samples/Graphics/PointSprites)|                                                       |                                                       |
 |                               SimpleHDR|                     [Xbox](Samples/Graphics/SimpleHDR)|                                                       |                                                       |
 |                               SimplePBR|                     [Xbox](Samples/Graphics/SimplePBR)|                       [PC](Samples/Graphics/SimplePBR)|                                                       |
+|                           SimpleMeshlet|                 [Xbox](Samples/Graphics/SimpleMeshlet)|                   [PC](Samples/Graphics/SimpleMeshlet)|                                                       |
 |                         SmokeSimulation|               [Xbox](Samples/Graphics/SmokeSimulation)|                                                       |                                                       |
 |                        VisibilityBuffer|[Xbox](Samples/Graphics/VisibilityBuffer/VisibilityBuffer)|[PC](Samples/Graphics/VisibilityBuffer/VisibilityBuffer)|                                                       |
 
@@ -96,11 +101,10 @@ For more ATG samples, see [DirectML Samples](https://github.com/microsoft/Direct
 |                     DownloadableContent|               [Xbox](Samples/Live/DownloadableContent)|                 [PC](Samples/Live/DownloadableContent)|                                                       |
 |                            Fundamentals|                                                       |                [PC](Samples/Live/Fundamentals_Desktop)|                                                       |
 |                             InGameStore|                       [Xbox](Samples/Live/InGameStore)|                         [PC](Samples/Live/InGameStore)|                                                       |
-|                            Leaderboards|                      [Xbox](Samples/Live/Leaderboards)|                [PC](Samples/Live/Leaderboards_Desktop)|                                                       |
+|                LeaderboardsEventManaged|          [Xbox](Samples/Live/LeaderboardsEventManaged)|            [PC](Samples/Live/LeaderboardsEventManaged)|                                                       |
 |                LeaderboardsTitleManaged|          [Xbox](Samples/Live/LeaderboardsTitleManaged)|    [PC](Samples/Live/LeaderboardsTitleManaged_Desktop)|                                                       |
 |                                    mDNS|                              [Xbox](Samples/Live/mDNS)|                        [PC](Samples/Live/mDNS_Desktop)|                                                       |
 |            MicrosoftStoreServicesClient|      [Xbox](Samples/Live/MicrosoftStoreServicesClient)|        [PC](Samples/Live/MicrosoftStoreServicesClient)|                                                       |
-|                      PlayFabMatchmaking|           [Xbox](Samples/Live/PlayFabMatchmaking_Xbox)|          [PC](Samples/Live/PlayFabMatchmaking_Desktop)|                                                       |
 |                      SimpleCrossGenMPSD|                [Xbox](Samples/Live/SimpleCrossGenMPSD)|                  [PC](Samples/Live/SimpleCrossGenMPSD)|                                                       |
 |                              SimpleHttp|                        [Xbox](Samples/Live/SimpleHttp)|                          [PC](Samples/Live/SimpleHttp)|                                                       |
 |                        SimpleWebSockets|                  [Xbox](Samples/Live/SimpleWebSockets)|                    [PC](Samples/Live/SimpleWebSockets)|                                                       |
@@ -124,8 +128,8 @@ For more ATG samples, see [DirectML Samples](https://github.com/microsoft/Direct
 |                          FrontPanelText|                  [Xbox](Samples/System/FrontPanelText)|                                                       |                                                       |
 |                    GameInputInterfacing|            [Xbox](Samples/System/GameInputInterfacing)|                                                       |                                                       |
 |                     GameInputSequential|             [Xbox](Samples/System/GameInputSequential)|                                                       |                                                       |
-|                                 Gamepad|                         [Xbox](Samples/System/Gamepad)|                                                       |                                                       |
-|                        GamepadVibration|                [Xbox](Samples/System/GamepadVibration)|                                                       |                                                       |
+|                                 Gamepad|                         [Xbox](Samples/System/Gamepad)|                           [PC](Samples/System/Gamepad |                                                       |
+|                        GamepadVibration|                [Xbox](Samples/System/GamepadVibration)|                  [PC](Samples/System/GamepadVibration)|                                                       |
 |                                GameSave|                        [Xbox](Samples/System/GameSave)|                  [PC](Samples/System/GameSave_Desktop)|                                                       |
 |                     IntelligentDelivery|             [Xbox](Samples/System/IntelligentDelivery)|               [PC](Samples/System/IntelligentDelivery)|                                                       |
 |                            LocalStorage|                    [Xbox](Samples/System/LocalStorage)|                      [PC](Samples/System/LocalStorage)|                                                       |

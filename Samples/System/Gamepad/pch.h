@@ -30,23 +30,42 @@
 // WinHelp is deprecated
 #define NOHELP
 
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+
 #include <Windows.h>
 
 #include <wrl/client.h>
 #include <wrl/event.h>
 
-#include <gxdk.h>
+#include <grdk.h>
 
-#if _GXDK_VER < 0x4A610D2B /* GXDK Edition 200600 */
+#ifdef _GAMING_DESKTOP
+#if _GRDK_EDITION < 220600
+#error The Desktop version of this sample requires the June 2022 GDK or later
+#endif
+#else
+#if _GRDK_VER < 0x4A610D2B /* GDK Edition 200600 */
 #error This sample requires the June 2020 GDK or later
+#endif
 #endif
 
 #ifdef _GAMING_XBOX_SCARLETT
 #include <d3d12_xs.h>
 #include <d3dx12_xs.h>
-#else
+#elif defined(_GAMING_XBOX)
 #include <d3d12_x.h>
 #include <d3dx12_x.h>
+#else
+#include <d3d12.h>
+#include <dxgi1_6.h>
+
+#ifdef _DEBUG
+#include <dxgidebug.h>
+#endif
+
+#include "d3dx12.h"
 #endif
 
 #define _XM_NO_XMVECTOR_OVERLOADS_
@@ -56,15 +75,28 @@
 
 #include <algorithm>
 #include <atomic>
+#include <cassert>
 #include <cmath>
+#include <cstddef>
 #include <cstdint>
+#include <cstdio>
+#include <cstring>
+#include <cwchar>
 #include <exception>
+#include <iterator>
 #include <memory>
 #include <stdexcept>
+#include <string>
+#include <system_error>
+#include <tuple>
 
-#include <assert.h>
-#include <stdio.h>
+#ifdef _GAMING_XBOX
 #include <pix3.h>
+#else
+// To use graphics markup events with the latest version of PIX, change this to include <pix3.h>
+// then add the NuGet package WinPixEventRuntime to the project.
+#include <pix.h>
+#endif
 
 #include <XGame.h>
 #include <XSystem.h>
@@ -87,7 +119,7 @@ namespace DX
     class com_exception : public std::exception
     {
     public:
-        com_exception(HRESULT hr) : result(hr) {}
+        com_exception(HRESULT hr) noexcept : result(hr) {}
 
         const char* what() const override
         {
