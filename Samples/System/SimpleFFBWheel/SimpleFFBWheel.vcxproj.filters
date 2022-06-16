@@ -86,6 +86,9 @@
       <Filter>Assets</Filter>
     </None>
     <None Include="Readme.docx" />
+    <None Include="Readme_ja-JP.docx" />
+    <None Include="Readme_ko-KR.docx" />
+    <None Include="Readme_zh-CN.docx" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">

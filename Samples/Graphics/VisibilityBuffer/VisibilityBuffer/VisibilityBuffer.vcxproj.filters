@@ -132,6 +132,9 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Readme_ja-JP.docx" />
+    <None Include="Readme_ko-KR.docx" />
+    <None Include="Readme_zh-CN.docx" />
     <None Include="Readme.docx" />
     <None Include="..\..\..\..\Media\Meshes\AliasSampleCityBlock\CityBlockConcrete.sdkmesh">
       <Filter>Assets</Filter>

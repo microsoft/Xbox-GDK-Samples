@@ -15,7 +15,7 @@ This repo contains game development samples written by the Microsoft Xbox Advanc
 
 # Requirements
 
-* Visual Studio 2017 ([15.9](https://walbourn.github.io/vs-2017-15-9-update/) update) or Visual Studio 2019
+* Visual Studio 2019 (16.9 update or later) or Visual Studio 2022
 * Microsoft Game Development Kit (GDK)
 
 ## Privacy Statement

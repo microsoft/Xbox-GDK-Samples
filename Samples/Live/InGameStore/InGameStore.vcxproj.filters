@@ -229,5 +229,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.docx" />
+    <None Include="InGameStore_Readme_ja-JP.docx" />
+    <None Include="InGameStore_Readme_ko-KR.docx" />
+    <None Include="InGameStore_Readme_zh-CN.docx" />
   </ItemGroup>
 </Project>

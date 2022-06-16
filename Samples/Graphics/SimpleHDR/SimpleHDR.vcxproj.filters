@@ -113,6 +113,9 @@
     <None Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
       <Filter>Assets\Fonts</Filter>
     </None>
+    <None Include="Readme_ja-JP.docx" />
+    <None Include="Readme_ko-KR.docx" />
+    <None Include="Readme_zh-CN.docx" />
     <None Include="Readme.docx" />
   </ItemGroup>
 </Project>

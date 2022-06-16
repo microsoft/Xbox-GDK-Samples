@@ -113,9 +113,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.docx" />
-    <None Include="DownloadableContent_ReadMe_ja-jp.docx" />
-    <None Include="DownloadableContent_ReadMe_ko-kr.docx" />
-    <None Include="DownloadableContent_ReadMe_zh-cn.docx" />
+    <None Include="Readme_ja-JP.docx" />
+    <None Include="Readme_ko-KR.docx" />
+    <None Include="Readme_zh-CN.docx" />
     <None Include="makescarlettpkg.cmd" />
     <None Include="makexboxonepkg.cmd" />
     <None Include="makepcpkg.cmd" />

@@ -192,4 +192,15 @@
   <ItemGroup>
     <MGCCompile Include="MicrosoftGame_PC.Config" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\feature4.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\feature2.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\feature3.png">
+      <Filter>Assets</Filter>
+    </Image>
+  </ItemGroup>
 </Project>
