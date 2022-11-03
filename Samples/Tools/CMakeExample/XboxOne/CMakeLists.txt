@@ -15,6 +15,8 @@ option(BUILD_USING_BWOI "Enable Build With/Out Install" OFF)
 
 option(ENABLE_CODE_ANALYSIS "Use Static Code Analysis on build" OFF)
 
+set(CMAKE_MAP_IMPORTED_CONFIG_RELWITHDEBINFO Release)
+
 include(CMakeGDKXboxOne.cmake)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -35,8 +37,8 @@ add_executable(${PROJECT_NAME} WIN32
     ../pch.h
 )
 
-target_include_directories(${PROJECT_NAME} PUBLIC ./ ../ ${Console_SdkIncludeRoot} PUBLIC ${Console_ExtIncPath})
-target_link_directories(${PROJECT_NAME} PUBLIC ${VC_OneCore_LibPath} PUBLIC ${Console_SdkLibPath} PUBLIC ${Console_ExtLibPath})
+target_include_directories(${PROJECT_NAME} PUBLIC ./ ../ ${Console_SdkIncludeRoot})
+target_link_directories(${PROJECT_NAME} PUBLIC ${VC_OneCore_LibPath} PUBLIC ${Console_SdkLibPath})
 
 # Build HLSL shaders
 add_custom_target(shaders)
@@ -90,9 +92,10 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE ${Console_Defines})
 # /Zi (Debug Information Format)
 target_compile_options(${PROJECT_NAME} PRIVATE /fp:fast /GS /Gy)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE ${Console_Libs} ${XSAPI_Libs})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${Console_Libs} Xbox::XSAPI Xbox::XCurl)
 # uuid.lib if using Windows Imaging Component (WIC)
 # dloadhelper.lib if using /DELAYLOAD
+# optional additional extension libraries: Xbox::GameChat2 Xbox::PlayFabMultiplayer Xbox::PlayFabParty Xbox::PlayFabPartyLIVE
 
 # Optional precompiled header switches:
 # /Ycpch.h (Create Precompiled Header File)
@@ -158,7 +161,7 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     target_link_options(${PROJECT_NAME} PRIVATE /IGNORE:4078)
 endif()
 
-# Copy config, images, VC Runtime, and Game OS
+# Copy config, images, VC Runtime, Game OS, and Extension Library DLLs
 add_custom_command(
   TARGET ${PROJECT_NAME} POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy
@@ -191,6 +194,14 @@ if(CMAKE_BUILD_TYPE MATCHES "Debug")
         ${DebugCppRuntimeFilesPath}
         $<TARGET_FILE_DIR:${PROJECT_NAME}>
         )
+endif()
+
+if (${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.21")
+   add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+      COMMAND ${CMAKE_COMMAND} -E copy
+      $<TARGET_RUNTIME_DLLS:${PROJECT_NAME}> $<TARGET_FILE_DIR:${PROJECT_NAME}>
+      COMMAND_EXPAND_LISTS
+      )
 endif()
 
 # Use of OpenMP requires also copying the files from Microsoft.VC14?.OpenMP

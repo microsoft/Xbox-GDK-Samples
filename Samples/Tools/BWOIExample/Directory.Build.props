@@ -27,29 +27,6 @@
 
   <!--
   ****************************************************************************************************
-  _PlatformFolder build hack (MSBuild 15 / VS 2017 only)
-  ****************************************************************************************************
-  -->
-  <PropertyGroup Condition="'$(Platform)' == 'Gaming.Xbox.XboxOne.x64' and '$(VisualStudioVersion)' == '15.0'">
-    <_PlatformFolder>$(_ExtractedMicrosoftGDK)$(XDKEditionTarget)\GXDK\VS2017\flatDeployment\Common7\IDE\VC\VCTargets\Platforms\$(Platform)\</_PlatformFolder>
-    <DefaultXdkEditionRootVS2017>$(_PlatformFolder)</DefaultXdkEditionRootVS2017>
-    <XdkEditionRootVS2017>$(_PlatformFolder)</XdkEditionRootVS2017>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Platform)' == 'Gaming.Xbox.Scarlett.x64' and '$(VisualStudioVersion)' == '15.0'">
-    <_PlatformFolder>$(_ExtractedMicrosoftGDK)$(XDKEditionTarget)\GXDK\VS2017\flatDeployment\Common7\IDE\VC\VCTargets\Platforms\$(Platform)\</_PlatformFolder>
-    <DefaultXdkEditionRootVS2017>$(_PlatformFolder)</DefaultXdkEditionRootVS2017>
-    <XdkEditionRootVS2017>$(_PlatformFolder)</XdkEditionRootVS2017>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Platform)' == 'Gaming.Desktop.x64' and '$(VisualStudioVersion)' == '15.0'">
-    <_PlatformFolder>$(_ExtractedMicrosoftGDK)$(XDKEditionTarget)\GRDK\VS2017\flatDeployment\Common7\IDE\VC\VCTargets\Platforms\$(Platform)\</_PlatformFolder>
-    <DefaultXdkEditionRootVS2017>$(_PlatformFolder)</DefaultXdkEditionRootVS2017>
-    <XdkEditionRootVS2017>$(_PlatformFolder)</XdkEditionRootVS2017>
-  </PropertyGroup>
-
-  <!--
-  ****************************************************************************************************
   VCTargetsPath redirection (VS 2019)
   ****************************************************************************************************
   -->

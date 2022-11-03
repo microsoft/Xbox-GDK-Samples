@@ -974,6 +974,8 @@ void ATG::Help::RestoreDevice(ID3D11DeviceContext* context)
             );
     }
 
+    const DDS_LOADER_FLAGS loadFlags = m_linearColors ? DDS_LOADER_FORCE_SRGB : DDS_LOADER_DEFAULT;
+
 #if !defined(WINAPI_FAMILY) || (WINAPI_FAMILY == WINAPI_FAMILY_DESKTOP_APP)
     wchar_t buff[MAX_PATH];
     DX::FindMediaFile(buff, MAX_PATH, L"SegoeUI_18.spritefont");
@@ -986,21 +988,21 @@ void ATG::Help::RestoreDevice(ID3D11DeviceContext* context)
     m_spriteFonts[SEGOE_UI_36PT] = std::make_unique<SpriteFont>(device.Get(), buff);
 
     DX::FindMediaFile(buff, MAX_PATH, L"callout_circle.dds");
-    DX::ThrowIfFailed(CreateDDSTextureFromFileEx(device.Get(), buff, 0, D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0, m_linearColors, nullptr, m_circleTex.ReleaseAndGetAddressOf()));
+    DX::ThrowIfFailed(CreateDDSTextureFromFileEx(device.Get(), buff, 0, D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0, loadFlags, nullptr, m_circleTex.ReleaseAndGetAddressOf()));
 
     DX::FindMediaFile(buff, MAX_PATH, L"gamepad.dds");
-    DX::ThrowIfFailed(CreateDDSTextureFromFileEx(device.Get(), buff, 0, D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0, m_linearColors, nullptr, m_gamepadTex.ReleaseAndGetAddressOf()));
+    DX::ThrowIfFailed(CreateDDSTextureFromFileEx(device.Get(), buff, 0, D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0, loadFlags, nullptr, m_gamepadTex.ReleaseAndGetAddressOf()));
 
     DX::FindMediaFile(buff, MAX_PATH, L"ATGSampleBackground.DDS");
-    DX::ThrowIfFailed(CreateDDSTextureFromFileEx(device.Get(), buff, 0, D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0, m_linearColors, nullptr, m_backgroundTex.ReleaseAndGetAddressOf()));
+    DX::ThrowIfFailed(CreateDDSTextureFromFileEx(device.Get(), buff, 0, D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0, loadFlags, nullptr, m_backgroundTex.ReleaseAndGetAddressOf()));
 #else
     m_spriteFonts[SEGOE_UI_18PT] = std::make_unique<SpriteFont>(device.Get(), L"SegoeUI_18.spritefont");
     m_spriteFonts[SEGOE_UI_22PT] = std::make_unique<SpriteFont>(device.Get(), L"SegoeUI_22.spritefont");
     m_spriteFonts[SEGOE_UI_36PT] = std::make_unique<SpriteFont>(device.Get(), L"SegoeUI_36.spritefont");
 
-    DX::ThrowIfFailed(CreateDDSTextureFromFileEx(device.Get(), L"callout_circle.dds", 0, D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0, m_linearColors, nullptr, m_circleTex.ReleaseAndGetAddressOf()));
-    DX::ThrowIfFailed(CreateDDSTextureFromFileEx(device.Get(), L"gamepad.dds", 0, D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0, m_linearColors, nullptr, m_gamepadTex.ReleaseAndGetAddressOf()));
-    DX::ThrowIfFailed(CreateDDSTextureFromFileEx(device.Get(), L"ATGSampleBackground.DDS", 0, D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0, m_linearColors, nullptr, m_backgroundTex.ReleaseAndGetAddressOf()));
+    DX::ThrowIfFailed(CreateDDSTextureFromFileEx(device.Get(), L"callout_circle.dds", 0, D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0, loadFlags, nullptr, m_circleTex.ReleaseAndGetAddressOf()));
+    DX::ThrowIfFailed(CreateDDSTextureFromFileEx(device.Get(), L"gamepad.dds", 0, D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0, loadFlags, nullptr, m_gamepadTex.ReleaseAndGetAddressOf()));
+    DX::ThrowIfFailed(CreateDDSTextureFromFileEx(device.Get(), L"ATGSampleBackground.DDS", 0, D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0, loadFlags, nullptr, m_backgroundTex.ReleaseAndGetAddressOf()));
 #endif
 }
 #endif

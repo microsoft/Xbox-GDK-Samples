@@ -36,7 +36,7 @@ namespace
 #endif
 }
 
-LPCWSTR g_szAppName = L"LeaderboardsEventBased";
+LPCWSTR g_szAppName = L"Event-based Leaderboards";
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 void ExitSample() noexcept;
@@ -391,7 +391,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
             else
             {
-                SetWindowLongPtr(hWnd, GWL_STYLE, 0);
+                SetWindowLongPtr(hWnd, GWL_STYLE, WS_POPUP);
                 SetWindowLongPtr(hWnd, GWL_EXSTYLE, WS_EX_TOPMOST);
 
                 SetWindowPos(hWnd, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);

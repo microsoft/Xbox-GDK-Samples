@@ -37,8 +37,8 @@
 
 #include <gxdk.h>
 
-#if _GXDK_VER < 0x4A610D2B /* GXDK Edition 200600 */
-#error This sample requires the June 2020 GDK or later
+#if _GXDK_VER < 0x55F007B0 /* GDK Edition 211000 */
+#error This sample requires the October 2021 GDK or later
 #endif
 
 #ifdef _GAMING_XBOX_SCARLETT
@@ -53,19 +53,27 @@
 
 #include <DirectXMath.h>
 #include <DirectXColors.h>
+
 #include <xmem.h>
 
 #include <algorithm>
 #include <atomic>
+#include <cassert>
 #include <cmath>
+#include <cstddef>
 #include <cstdint>
+#include <cstdio>
+#include <cstring>
+#include <cwchar>
 #include <exception>
+#include <iterator>
 #include <memory>
 #include <stdexcept>
+#include <string>
+#include <system_error>
+#include <tuple>
 #include <vector>
 
-#include <assert.h>
-#include <stdio.h>
 #include <pix3.h>
 
 #include <XGame.h>
@@ -73,19 +81,20 @@
 #include <XTaskQueue.h>
 
 #include "CommonStates.h"
-#include "ControllerFont.h"
 #include "DDSTextureLoader.h"
 #include "DescriptorHeap.h"
 #include "DirectXHelpers.h"
 #include "GamePad.h"
 #include "GraphicsMemory.h"
-#include "PerformanceTimersXbox.h"
-#include "ReadData.h"
 #include "RenderTargetState.h"
 #include "ResourceUploadBatch.h"
 #include "SimpleMath.h"
 #include "SpriteBatch.h"
 #include "SpriteFont.h"
+
+#include "ControllerFont.h"
+#include "PerformanceTimersXbox.h"
+#include "ReadData.h"
 
 namespace DX
 {
@@ -93,7 +102,7 @@ namespace DX
     class com_exception : public std::exception
     {
     public:
-        com_exception(HRESULT hr) : result(hr) {}
+        com_exception(HRESULT hr) noexcept : result(hr) {}
 
         const char* what() const override
         {
@@ -111,6 +120,12 @@ namespace DX
     {
         if (FAILED(hr))
         {
+#ifdef _DEBUG
+            char str[64] = {};
+            sprintf_s(str, "**ERROR** Fatal Error with HRESULT of %08X\n", static_cast<unsigned int>(hr));
+            OutputDebugStringA(str);
+            __debugbreak();
+#endif
             throw com_exception(hr);
         }
     }

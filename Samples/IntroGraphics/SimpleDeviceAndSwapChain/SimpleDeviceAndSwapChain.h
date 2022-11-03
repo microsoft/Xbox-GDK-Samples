@@ -48,8 +48,8 @@ private:
     void CreateDevice();
     void CreateResources();
 
-    void WaitForGpu();
-    void MoveToNextFrame();
+    void WaitForGpu() noexcept;
+    void WaitForOrigin();
     void RegisterFrameEvents();
 
     // Application state

@@ -11,6 +11,7 @@
 #include "FindMedia.h"
 #include "StringUtil.h"
 #include "Json.h"
+#include "HttpManager.h"
 
 extern void ExitSample() noexcept;
 
@@ -22,7 +23,7 @@ using Microsoft::WRL::ComPtr;
 #pragma message( __FILE__  ": TODO update SAMPLE_SERVICE_HOST to be your deployed Service Sample" )
 // The host address where you have deployed your version of the Microsoft.StoreServices Sample
 // https://github.com/microsoft/Microsoft-Store-Services-Sample
-#define SAMPLE_SERVICE_HOST "localhost:5001"//"atgstoreservicedev.azurewebsites.net"
+#define SAMPLE_SERVICE_HOST "atgstoreservicedev.azurewebsites.net"
 
 /// <summary>
 /// Built-in URL's and functionality of the Microsoft.StoreServices Sample service.
@@ -87,12 +88,14 @@ Sample::Sample() noexcept(false) :
 
     m_deviceResources = std::make_unique<DX::DeviceResources>();
     m_deviceResources->RegisterDeviceNotify(this);
-    m_liveResources = std::make_shared<ATG::LiveResources>();
-    m_liveInfoHUD = std::make_unique<ATG::LiveInfoHUD>("");
+    m_liveInfoHUD = std::make_unique<ATG::LiveInfoHUD>("Microsoft.Store.Services Client Sample");
 
     //  Create a Lambda that we can pass so that the Sample's log function can be used
     //  to display any information from the HttpManager
     m_httpManager = new HttpManager([&](const std::string& str) { HttpManagerLog(str); });
+
+    //  must be initialized after the httpManager
+    m_liveResources = std::make_shared<ATG::LiveResources>();
 
     m_cachingTokens = false;
     m_waitingForTokens = false;
@@ -1328,6 +1331,7 @@ void Sample::QueryClawbackForUser()
     json jRequest;
     jRequest["UserPurchaseId"] = GetCachedUserPurchaseId(false);
     jRequest["UserId"] = m_gamerTag;
+    jRequest["sbx"] = m_currentSandbox; //  Required when running / testing in a sandbox
     std::string requestBody = jRequest.dump();
 
     std::vector<HttpHeader> headers;
@@ -1425,8 +1429,9 @@ void Sample::RefreshUserStoreIds()
         m_cachedUserPurchaseId = "";
 
         //  Get a new UserCollectionsId and UserPurchaseId
-        m_cachedUserPurchaseId = GetUserPurchaseId(m_cachedPurchaseAccessToken.c_str(), m_cachedUserId.c_str());
         m_cachedUserCollectionsId = GetUserCollectionsId(m_cachedCollectionsAccessToken.c_str(), m_cachedUserId.c_str());
+        m_cachedUserPurchaseId = GetUserPurchaseId(m_cachedPurchaseAccessToken.c_str(), m_cachedUserId.c_str());
+       
 
         m_collectionScreen->SetVisible(false);
         m_subscriptionScreen->SetVisible(false);
@@ -1556,7 +1561,7 @@ std::string Sample::GetUserPurchaseId(const char* serviceTicket, const char* pub
         }
         else
         {
-            printf("Failed retrieve the user collection ID result: 0x%x\r\n", static_cast<unsigned int>(hr));
+            printf("Failed retrieve the user purchase ID result: 0x%x\r\n", static_cast<unsigned int>(hr));
             return "";
         }
     }
@@ -1569,7 +1574,6 @@ std::string Sample::GetUserCollectionsId(const char* serviceTicket, const char* 
 {
     auto async = new XAsyncBlock{};
     async->context = this;
-    //XStoreCreateContext(nullptr, &m_xStoreContext);
 
     HRESULT hr = XStoreGetUserCollectionsIdAsync(
         m_xStoreContext,

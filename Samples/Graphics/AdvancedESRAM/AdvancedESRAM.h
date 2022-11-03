@@ -46,25 +46,33 @@ enum SceneTexture : uint32_t
 class Sample
 {
 public:
-    Sample();
+    Sample() noexcept(false);
     ~Sample();
+
+    Sample(Sample&&) = default;
+    Sample& operator= (Sample&&) = default;
+
+    Sample(Sample const&) = delete;
+    Sample& operator= (Sample const&) = delete;
 
     // Initialization and management
     void Initialize(HWND window);
     void Uninitialize();
 
-    // Basic Sample loop
+    // Basic render loop
     void Tick();
 
     // Messages
     void OnSuspending();
     void OnResuming();
+    void OnConstrained() {}
+    void OnUnConstrained() {}
 
     // Properties
-    bool RequestHDRMode() const { return m_deviceResources ? (m_deviceResources->GetDeviceOptions() & DX::DeviceResources::c_EnableHDR) != 0 : false; }
+    bool RequestHDRMode() const noexcept { return m_deviceResources ? (m_deviceResources->GetDeviceOptions() & DX::DeviceResources::c_EnableHDR) != 0 : false; }
 
 private:
-    void Update(const DX::StepTimer& timer);
+    void Update(DX::StepTimer const& timer);
     void Render();
     void DrawHUD(ID3D12GraphicsCommandList* commandList);
 

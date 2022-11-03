@@ -12,7 +12,7 @@ extendedZipContent:
   target: Kits
 - path: Media
   target: Media
-description: "The leaderboards sample demonstrates the usage of Xbox Live Leaderboards with Title-Managed stats on Xbox."
+description: "The leaderboards sample demonstrates the usage of Xbox Live Leaderboards with Title-Managed stats."
 ---
 
 # LeaderboardsTitleManaged

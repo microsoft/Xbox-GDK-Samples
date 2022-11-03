@@ -72,8 +72,8 @@ For more ATG samples, see [DirectML Samples](https://github.com/microsoft/Direct
 |                       MeshletInstancing|             [Xbox](Samples/Graphics/MeshletInstancing)|               [PC](Samples/Graphics/MeshletInstancing)|                                                       |
 |                            PointSprites|                  [Xbox](Samples/Graphics/PointSprites)|                                                       |                                                       |
 |                               SimpleHDR|                     [Xbox](Samples/Graphics/SimpleHDR)|                                                       |                                                       |
-|                               SimplePBR|                     [Xbox](Samples/Graphics/SimplePBR)|                       [PC](Samples/Graphics/SimplePBR)|                                                       |
 |                           SimpleMeshlet|                 [Xbox](Samples/Graphics/SimpleMeshlet)|                   [PC](Samples/Graphics/SimpleMeshlet)|                                                       |
+|                               SimplePBR|                     [Xbox](Samples/Graphics/SimplePBR)|                       [PC](Samples/Graphics/SimplePBR)|                                                       |
 |                         SmokeSimulation|               [Xbox](Samples/Graphics/SmokeSimulation)|                                                       |                                                       |
 |                        VisibilityBuffer|[Xbox](Samples/Graphics/VisibilityBuffer/VisibilityBuffer)|[PC](Samples/Graphics/VisibilityBuffer/VisibilityBuffer)|                                                       |
 
@@ -101,12 +101,13 @@ For more ATG samples, see [DirectML Samples](https://github.com/microsoft/Direct
 |                     DownloadableContent|               [Xbox](Samples/Live/DownloadableContent)|                 [PC](Samples/Live/DownloadableContent)|                                                       |
 |                            Fundamentals|                                                       |                [PC](Samples/Live/Fundamentals_Desktop)|                                                       |
 |                             InGameStore|                       [Xbox](Samples/Live/InGameStore)|                         [PC](Samples/Live/InGameStore)|                                                       |
-|                LeaderboardsEventManaged|          [Xbox](Samples/Live/LeaderboardsEventManaged)|            [PC](Samples/Live/LeaderboardsEventManaged)|                                                       |
-|                LeaderboardsTitleManaged|          [Xbox](Samples/Live/LeaderboardsTitleManaged)|    [PC](Samples/Live/LeaderboardsTitleManaged_Desktop)|                                                       |
+|                  LeaderboardsEventBased|            [Xbox](Samples/Live/LeaderboardsEventBased)|              [PC](Samples/Live/LeaderboardsEventBased)|                                                       |
+|                LeaderboardsTitleManaged|          [Xbox](Samples/Live/LeaderboardsTitleManaged)|            [PC](Samples/Live/LeaderboardsTitleManaged)|                                                       |
 |                                    mDNS|                              [Xbox](Samples/Live/mDNS)|                        [PC](Samples/Live/mDNS_Desktop)|                                                       |
 |            MicrosoftStoreServicesClient|      [Xbox](Samples/Live/MicrosoftStoreServicesClient)|        [PC](Samples/Live/MicrosoftStoreServicesClient)|                                                       |
 |                      SimpleCrossGenMPSD|                [Xbox](Samples/Live/SimpleCrossGenMPSD)|                  [PC](Samples/Live/SimpleCrossGenMPSD)|                                                       |
 |                              SimpleHttp|                        [Xbox](Samples/Live/SimpleHttp)|                          [PC](Samples/Live/SimpleHttp)|                                                       |
+|                               SimpleMPA|                         [Xbox](Samples/Live/SimpleMPA)|                           [PC](Samples/Live/SimpleMPA)|                                                       |
 |                        SimpleWebSockets|                  [Xbox](Samples/Live/SimpleWebSockets)|                    [PC](Samples/Live/SimpleWebSockets)|                                                       |
 |                           SocialManager|                     [Xbox](Samples/Live/SocialManager)|                       [PC](Samples/Live/SocialManager)|                                                       |
 |                            TitleStorage|                      [Xbox](Samples/Live/TitleStorage)|                                                       |                                                       |
@@ -128,9 +129,11 @@ For more ATG samples, see [DirectML Samples](https://github.com/microsoft/Direct
 |                          FrontPanelText|                  [Xbox](Samples/System/FrontPanelText)|                                                       |                                                       |
 |                    GameInputInterfacing|            [Xbox](Samples/System/GameInputInterfacing)|                                                       |                                                       |
 |                     GameInputSequential|             [Xbox](Samples/System/GameInputSequential)|                                                       |                                                       |
-|                                 Gamepad|                         [Xbox](Samples/System/Gamepad)|                           [PC](Samples/System/Gamepad |                                                       |
+|                                 Gamepad|                         [Xbox](Samples/System/Gamepad)|                           [PC](Samples/System/Gamepad)|                                                       |
 |                        GamepadVibration|                [Xbox](Samples/System/GamepadVibration)|                  [PC](Samples/System/GamepadVibration)|                                                       |
 |                                GameSave|                        [Xbox](Samples/System/GameSave)|                  [PC](Samples/System/GameSave_Desktop)|                                                       |
+|                           GameSaveCombo|                   [Xbox](Samples/System/GameSaveCombo)|                     [PC](Samples/System/GameSaveCombo)|                                                       |
+|                      GameSaveFilesCombo|              [Xbox](Samples/System/GameSaveFilesCombo)|                [PC](Samples/System/GameSaveFilesCombo)|                                                       |
 |                     IntelligentDelivery|             [Xbox](Samples/System/IntelligentDelivery)|               [PC](Samples/System/IntelligentDelivery)|                                                       |
 |                            LocalStorage|                    [Xbox](Samples/System/LocalStorage)|                      [PC](Samples/System/LocalStorage)|                                                       |
 |                              MouseInput|                      [Xbox](Samples/System/MouseInput)|                                                       |                                                       |
@@ -141,7 +144,7 @@ For more ATG samples, see [DirectML Samples](https://github.com/microsoft/Direct
 |                          SimpleFFBWheel|                  [Xbox](Samples/System/SimpleFFBWheel)|                                                       |                                                       |
 |                        SimpleFrontPanel|                [Xbox](Samples/System/SimpleFrontPanel)|                                                       |                                                       |
 |                               SimplePLM|                       [Xbox](Samples/System/SimplePLM)|                                                       |                                                       |
-|                         SimpleUserModel|                 [Xbox](Samples/System/SimpleUserModel)|                                                       |                                                       |
+|                         SimpleUserModel|                 [Xbox](Samples/System/SimpleUserModel)|                   [PC](Samples/System/SimpleUserModel)|                                                       |
 |                              SystemInfo|                      [Xbox](Samples/System/SystemInfo)|                        [PC](Samples/System/SystemInfo)|                                                       |
 |                          UserManagement|                  [Xbox](Samples/System/UserManagement)|                                                       |                                                       |
 
@@ -162,4 +165,6 @@ For more ATG samples, see [DirectML Samples](https://github.com/microsoft/Direct
 
 |                                    Path|                                                   Xbox|                                                     PC|                                                   Tool|
 |----------------------------------------|                                                 ------|                                                 ------|                                                 ------|
+|                CloudVariableReplacement|        [Xbox](Samples/xCloud/CloudVariableReplacement)|                                                       |                                                       |
+|                        CustomResolution|                [Xbox](Samples/xCloud/CustomResolution)|                                                       |                                                       |
 |                  SimpleCloudAwareSample|          [Xbox](Samples/xCloud/SimpleCloudAwareSample)|                                                       |                                                       |

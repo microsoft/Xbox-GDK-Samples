@@ -14,7 +14,6 @@
 #include <sysinfoapi.h>
 #undef max
 #undef min
-#include "intrin.h"
 
 #if defined(_GAMING_XBOX)
 #include <xsystem.h>
@@ -41,7 +40,7 @@ namespace
     std::wstring g_processorName;											// The general processor name. This can be changed by the user to allow easier usage in their code
     std::wstring g_trueProcessorName;										// The actual name of the processor as returned by the OS
     uint64_t g_processMask = 0;												// In general all the cores that exist on the processor, when >64 this will be bound to the group the process is assigned to
-    std::vector<uint32_t> g_numLogicalCores;								// How many logical cores exist, if not hyperthreaded == number of physical cores
+    std::vector<uint32_t> g_numLogicalCores;								// How many logical cores exist, if SMT is not supported == number of physical cores
     std::vector<uint64_t> g_availableCoresMask;								// Which cores are actually available to the caller, for example ERA does not allow the 8th core to be used, index is groupID
 
 #if !defined(_XBOX_ONE) 													// we don't use this on ERA because GetLogicalProcessorInfoEx and GetLogicalProcessorInformation is not supported
@@ -65,7 +64,7 @@ namespace
 
     SYSTEM_INFO										g_systemInfo;				// Cached copy of data from GetSystemInfo
     std::vector<ATG::UniqueProcessorMask>			g_topLevelCacheMask;		// For each top level cache the mask of cores that share id. This tends to be processors that have several internal clusters, for example Durango has two clusters
-    std::map<ATG::ProcessorGroupID, std::vector<std::pair<bool, uint64_t>>>			g_physicalCores;			// For each physical core a mask of the logical cores that map to that physical core and a flag for whether it's hyperthreaded
+    std::map<ATG::ProcessorGroupID, std::vector<std::pair<bool, uint64_t>>>			g_physicalCores;			// For each physical core a mask of the logical cores that map to that physical core and a flag for whether it has support for SMT
     std::vector <ATG::CacheInformation>				g_caches;					// A list of each cache present on the processor, L1, L2, L3, Instruction, Data, and Trace (haven't seen this on any processor yet)
     double											g_rdtscpFrequencySeconds;	// The frequency in seconds of the __rdtscp, measured automatically at startup
 
@@ -315,15 +314,32 @@ void ATG::GetCacheInformation(const UniqueProcessorMask& coreMask, std::vector<C
     }
 }
 
+uint32_t ATG::GetProcessorFamily()
+{
+    int CPUInfo[4] = { -1 };
+#ifdef __clang__
+    __cpuid(1, CPUInfo[0], CPUInfo[1], CPUInfo[2], CPUInfo[3]);
+#else
+    __cpuid(CPUInfo, 1);
+#endif
+
+    return static_cast<uint32_t> (((CPUInfo[0] & 0xf00) >> 8) + ((CPUInfo[0] & 0x0ff00000) >> 20));
+}
+
 bool ATG::SetupProcessorData()
 {
+    if (g_trueProcessorName.size())
+        return true;
+
 #if !defined(_XBOX_ONE) && !defined(_GAMING_XBOX)			// Xbox doesn't have this registry entry
     g_osProcessorInfo.bufferSize = 0;
     g_osProcessorInfo.rawData = nullptr;
-    wchar_t processorName[256] = {};
-    DWORD dataSize = sizeof(wchar_t) * 256;
-    RegGetValueW(HKEY_LOCAL_MACHINE, L"HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0", L"ProcessorNameString", RRF_RT_REG_SZ, nullptr, processorName, &dataSize);
-    g_trueProcessorName = processorName;
+    {
+        wchar_t processorName[256];
+        DWORD dataSize = sizeof(wchar_t) * 256;
+        RegGetValueW(HKEY_LOCAL_MACHINE, L"HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0", L"ProcessorNameString", RRF_RT_REG_SZ, nullptr, processorName, &dataSize);
+        g_trueProcessorName = processorName;
+    }
 #elif defined(_GAMING_XBOX)
     XSystemDeviceType info;
     info = XSystemGetDeviceType();
@@ -410,7 +426,7 @@ bool ATG::SetupProcessorData()
     ParseOSProcessorInfo();
 
 #if defined(_GAMING_XBOX)
-    if (ATG::IsHyperThreaded())
+    if (ATG::IsSMTSupported())
         g_trueProcessorName += L"_SMT";
     g_processorName = g_trueProcessorName;
 #endif
@@ -500,7 +516,7 @@ void ATG::LogProcessorInfo(const std::wstring& logName)
         swprintf_s(buffer, 256, L"%s_procInfo", g_trueProcessorName.c_str());
         fileName = buffer;
     }
-    ATG::FileLogger procLog(fileName, false);
+    ATG::FileLogger procLog(fileName, false, false, false, true, true);
 
 #if !defined(_GAMING_XBOX)
     wchar_t buffer[256];
@@ -531,7 +547,7 @@ void ATG::LogProcessorInfo(const std::wstring& logName)
         case RelationProcessorCore:
             procLog.Log(L"Processor Core");
             if (procInfo->Processor.Flags == LTP_PC_SMT)
-                procLog.Log(L"  Core is hyper threaded");
+                procLog.Log(L"  Core supports SMT");
             if (procInfo->Processor.EfficiencyClass != 0)
                 procLog.Log(L"  Core efficiency class is set");
             for (uint32_t i = 0; i < procInfo->Processor.GroupCount; i++)
@@ -658,7 +674,7 @@ void ATG::LogProcessorInfo(const std::wstring& logName)
         case RelationProcessorCore:
             procLog.Log(L"Processor Core");
             if (procInfo->ProcessorCore.Flags == 1)
-                procLog.Log(L"  Core is hyper threaded");
+                procLog.Log(L"  Core supports SMT");
             swprintf(buffer, 256, L"    CoreMask - %016I64x", procInfo->ProcessorMask);
             procLog.Log(buffer);
             break;
@@ -691,7 +707,7 @@ void ATG::LogCoreTests(const std::wstring& suffix, const std::wstring& logName)
         swprintf_s(buffer, 256, L"%s_coreTests_%s", g_trueProcessorName.c_str(), suffix.c_str());
         fileName = buffer;
     }
-    ATG::FileLogger testLog(fileName, false);
+    ATG::FileLogger testLog(fileName, false, false, false, true, true);
     size_t numTests = g_representativeCoreTests.size();
     for (size_t i = 0; i < numTests; i++)
     {
@@ -776,7 +792,7 @@ namespace
         testNames.push_back(L"all_cores");
 
         // one logical per physical
-        if (ATG::IsHyperThreaded())
+        if (ATG::IsSMTSupported())
         {
             uint64_t oneLogicalMask = 0;
             for (const auto& iter : cpuSets)
@@ -814,7 +830,7 @@ namespace
         }
 
         // single physical core, one per cluster
-        if (minLowCacheCores > 1)		// this means hyperthreaded
+        if (minLowCacheCores > 1)		// this means SMT is supported
         {
             for (const auto& cluster : cpuSets)
             {
@@ -935,7 +951,7 @@ namespace
             }
         }
 
-        // cross cluster tests, pick one physical core even if hyperthreaded
+        // cross cluster tests, pick one physical core even if SMT is supported
         {
             for (const auto& outerCluster : cpuSets)
             {
@@ -976,21 +992,21 @@ namespace
         testNames.clear();
 
         constexpr uint32_t s_maxSingleCores = 4u;
-        bool hyperThreaded = false;
+        bool smtSupported = false;
         uint64_t allCoresMask(0);
         wchar_t tempBuffer[256];
         for (const auto& iter : g_physicalCores[groupID])
         {
             allCoresMask |= iter.second;
             if (iter.first)
-                hyperThreaded = true;
+                smtSupported = true;
         }
         coreTests.push_back(allCoresMask);		// do everything
         testNames.push_back(L"all_cores");
         // physical cores
         {
             const uint32_t numSingle = std::min(ATG::GetNumPhysicalCores(groupID), s_maxSingleCores);
-            const uint32_t coreDelta = std::max<uint32_t>(hyperThreaded ? 2U : 1U, static_cast<uint32_t> ((((float)ATG::GetTotalNumCores(groupID)) / numSingle) + 0.5f));	// assume hyperthreaded are only 2 cores per physical
+            const uint32_t coreDelta = std::max<uint32_t>(smtSupported ? 2U : 1U, static_cast<uint32_t> ((((float)ATG::GetTotalNumCores(groupID)) / numSingle) + 0.5f));	// assume SMT supported are only 2 cores per physical
             uint64_t curMask = 0;
             for (uint32_t i = 0; i < numSingle; i++, curMask += coreDelta)
             {
@@ -999,10 +1015,10 @@ namespace
                 testNames.push_back(tempBuffer);
             }
         }
-        if (hyperThreaded)
+        if (smtSupported)
         {
             const uint32_t numSingle = std::min(ATG::GetNumPhysicalCores(groupID), s_maxSingleCores);
-            const uint32_t coreDelta = std::max<uint32_t>(2, ATG::GetTotalNumCores(groupID) / numSingle);	// assume hyperthreaded are only 2 cores per physical. Code below will set the mask correctly
+            const uint32_t coreDelta = std::max<uint32_t>(2, ATG::GetTotalNumCores(groupID) / numSingle);	// assume SMT supported are only 2 cores per physical. Code below will set the mask correctly
             uint64_t curMask = 0;
             for (uint32_t i = 0; i < numSingle; i++, curMask += coreDelta)
             {
@@ -1015,7 +1031,6 @@ namespace
         if (g_dieMask.size() > 1)		// numa nodes will show up here
         {
             // all cores in a cluster
-            uint32_t curCluster = 0;
             for (const auto& iter : g_dieMask)
             {
                 if (iter.second.groupID != groupID)
@@ -1023,11 +1038,9 @@ namespace
                 coreTests.push_back(iter.second.coreMask);
                 swprintf_s(tempBuffer, 256, L"full_cluster_0x%llx", iter.second.coreMask);
                 testNames.push_back(tempBuffer);
-                curCluster++;
             }
 
             // two cores in a cluster
-            curCluster = 0;
             for (const auto& iter : g_dieMask)
             {
                 if (iter.second.groupID != groupID)
@@ -1040,14 +1053,12 @@ namespace
                 swprintf_s(tempBuffer, 256, L"within_cluster_physical_0x%llx", (1ULL << lowBitIndex) | (1ULL << highBitIndex));
                 testNames.push_back(tempBuffer);
 
-                if (hyperThreaded)
+                if (smtSupported)
                 {
                     coreTests.push_back(ATG::GetLogicalProcessorMask(ATG::UniqueProcessorMask(1ULL << lowBitIndex, groupID)) | ATG::GetLogicalProcessorMask(ATG::UniqueProcessorMask(1ULL << highBitIndex, groupID)));
-                    swprintf_s(tempBuffer, 256, L"within_cluster_hyper_0x%llx", ATG::GetLogicalProcessorMask(ATG::UniqueProcessorMask(1ULL << lowBitIndex, groupID)) | ATG::GetLogicalProcessorMask(ATG::UniqueProcessorMask(1ULL << highBitIndex, groupID)));
+                    swprintf_s(tempBuffer, 256, L"within_cluster_SMT_0x%llx", ATG::GetLogicalProcessorMask(ATG::UniqueProcessorMask(1ULL << lowBitIndex, groupID)) | ATG::GetLogicalProcessorMask(ATG::UniqueProcessorMask(1ULL << highBitIndex, groupID)));
                     testNames.push_back(tempBuffer);
                 }
-
-                curCluster++;
             }
 
             // one physical on all combinations of 2 clusters
@@ -1073,7 +1084,7 @@ namespace
                     _BitScanForward64(&outerBitIndex, outer->second.coreMask);
                     _BitScanForward64(&innerBitIndex, inner->second.coreMask);
 
-                    if (hyperThreaded)
+                    if (smtSupported)
                     {
                         coreTests.push_back(ATG::GetLogicalProcessorMask(ATG::UniqueProcessorMask(1ULL << outerBitIndex, groupID)) | ATG::GetLogicalProcessorMask(ATG::UniqueProcessorMask(1ULL << innerBitIndex, groupID)));
                         swprintf_s(tempBuffer, 256, L"cross_cluster_logical_0x%llx", ATG::GetLogicalProcessorMask(ATG::UniqueProcessorMask(1ULL << outerBitIndex, groupID)) | ATG::GetLogicalProcessorMask(ATG::UniqueProcessorMask(1ULL << innerBitIndex, groupID)));
@@ -1091,7 +1102,7 @@ namespace
             // half the cores in a single
             const uint32_t halfLogical = ATG::GetNumLogicalCores(groupID) / 2;
             uint64_t lowMask(0), highMask(0);
-            for (uint32_t i = 0; i < halfLogical; i += hyperThreaded ? 2 : 1)
+            for (uint32_t i = 0; i < halfLogical; i += smtSupported ? 2 : 1)
             {
                 lowMask |= ATG::GetLogicalProcessorMask(ATG::UniqueProcessorMask(1ULL << i, groupID));
                 highMask |= ATG::GetLogicalProcessorMask(ATG::UniqueProcessorMask(1ULL << (halfLogical + i), groupID));
@@ -1105,7 +1116,7 @@ namespace
             testNames.push_back(tempBuffer);
 
             // two physical cores
-            if (hyperThreaded && (ATG::GetNumPhysicalCores(groupID) >= 4))	// just assume 2 cores in a hyperthread and at least 4 physical cores
+            if (smtSupported && (ATG::GetNumPhysicalCores(groupID) >= 4))	// just assume 2 cores in a SMT supported and at least 4 physical cores
             {
                 coreTests.push_back(0x05);
                 swprintf_s(tempBuffer, 256, L"first two physical 0x05");
@@ -1115,8 +1126,8 @@ namespace
                 swprintf_s(tempBuffer, 256, L"second two physical 0xA0");
                 testNames.push_back(tempBuffer);
             }
-            // handle 2 physical hyperthreaded cores
-            if (hyperThreaded && (ATG::GetNumPhysicalCores(groupID) == 2))
+            // handle 2 physical SMT cores
+            if (smtSupported && (ATG::GetNumPhysicalCores(groupID) == 2))
             {
                 coreTests.push_back(0x05);
                 swprintf_s(tempBuffer, 256, L"Two physical_0x05");
@@ -1309,7 +1320,6 @@ namespace
         g_numLogicalCores.resize(groupCount, 0);
         g_availableCoresMask.resize(groupCount, 0);
 
-        uint32_t entries = 0;
         data = g_osProcessorInfo.rawData;
         dataLeft = g_osProcessorInfo.bufferSize;
         while (dataLeft)
@@ -1367,7 +1377,6 @@ namespace
             }
             dataLeft -= procInfo->Size;
             data = data + procInfo->Size;
-            entries++;
         }
 #endif
 

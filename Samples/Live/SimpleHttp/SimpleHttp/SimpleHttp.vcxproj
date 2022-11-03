@@ -527,7 +527,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config">
+    <MGCCompile Include="MicrosoftGameConfig.mgc">
       <SubType>Designer</SubType>
     </MGCCompile>
   </ItemGroup>

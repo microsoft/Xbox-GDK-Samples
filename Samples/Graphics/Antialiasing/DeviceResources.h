@@ -1,6 +1,8 @@
 //
 // DeviceResources.h - A wrapper for the Direct3D 12.X device and swapchain
 //
+// Modified to use a typeless format for depth
+//
 
 #pragma once
 
@@ -10,7 +12,11 @@ namespace DX
     class DeviceResources
     {
     public:
-        static constexpr unsigned int c_Enable4K_UHD = 0x1;
+        static constexpr unsigned int c_Enable4K_UHD         = 0x1;
+        static constexpr unsigned int c_EnableQHD            = 0x2;
+        static constexpr unsigned int c_EnableHDR            = 0x4;
+        static constexpr unsigned int c_ReverseDepth         = 0x8;
+        static constexpr unsigned int c_AmplificationShaders = 0x10;
 
         DeviceResources(DXGI_FORMAT backBufferFormat = DXGI_FORMAT_B8G8R8A8_UNORM,
                         DXGI_FORMAT depthBufferFormat = DXGI_FORMAT_D32_FLOAT,
@@ -24,15 +30,21 @@ namespace DX
         DeviceResources(DeviceResources const&) = delete;
         DeviceResources& operator= (DeviceResources const&) = delete;
 
+#ifdef _GAMING_XBOX_SCARLETT
+        void CreateDeviceResources(D3D12XBOX_CREATE_DEVICE_FLAGS createDeviceFlags = D3D12XBOX_CREATE_DEVICE_FLAG_NONE);
+#else
         void CreateDeviceResources();
+#endif
         void CreateWindowSizeDependentResources();
         void SetWindow(HWND window) noexcept { m_window = window; }
         void Prepare(D3D12_RESOURCE_STATES beforeState = D3D12_RESOURCE_STATE_PRESENT,
                      D3D12_RESOURCE_STATES afterState = D3D12_RESOURCE_STATE_RENDER_TARGET);
-        void Present(D3D12_RESOURCE_STATES beforeState = D3D12_RESOURCE_STATE_RENDER_TARGET);
+        void Present(D3D12_RESOURCE_STATES beforeState = D3D12_RESOURCE_STATE_RENDER_TARGET,
+                     _In_opt_ const D3D12XBOX_PRESENT_PARAMETERS* params = nullptr);
         void Suspend();
         void Resume();
         void WaitForGpu() noexcept;
+        void WaitForOrigin();
 
         // Device Accessors.
         RECT GetOutputSize() const noexcept { return m_outputSize; }
@@ -66,7 +78,6 @@ namespace DX
         }
 
     private:
-        void MoveToNextFrame();
         void RegisterFrameEvents();
 
         static constexpr size_t MAX_BACK_BUFFER_COUNT = 3;

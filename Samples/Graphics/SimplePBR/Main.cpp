@@ -137,8 +137,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
 #endif
             break;
 
-        case XSystemDeviceType::XboxOneXDevkit:
         case XSystemDeviceType::XboxScarlettAnaconda /* Xbox Series X */:
+        case XSystemDeviceType::XboxOneXDevkit:
         case XSystemDeviceType::XboxScarlettDevkit:
         default:
             rc = { 0, 0, 3840, 2160 };
@@ -163,9 +163,11 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
             return 1;
 
         ShowWindow(hwnd, nCmdShow);
+
 #ifdef _GAMING_XBOX
         SetDisplayMode();
 #endif
+
         SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(g_sample.get()));
 
         // Sample Usage Telemetry
@@ -482,13 +484,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 // HDR helper
 void SetDisplayMode() noexcept
 {
-        // Request HDR mode.
-        auto result = XDisplayTryEnableHdrMode(XDisplayHdrModePreference::PreferHdr, nullptr);
+    // Request HDR mode.
+    auto result = XDisplayTryEnableHdrMode(XDisplayHdrModePreference::PreferHdr, nullptr);
 
-        g_HDRMode = (result == XDisplayHdrModeResult::Enabled);
+    g_HDRMode = (result == XDisplayHdrModeResult::Enabled);
 
 #ifdef _DEBUG
-        OutputDebugStringA((g_HDRMode) ? "INFO: Display in HDR Mode\n" : "INFO: Display in SDR Mode\n");
+    OutputDebugStringA((g_HDRMode) ? "INFO: Display in HDR Mode\n" : "INFO: Display in SDR Mode\n");
 #endif
 }
 #endif

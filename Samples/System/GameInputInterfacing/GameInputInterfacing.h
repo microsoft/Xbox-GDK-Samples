@@ -18,7 +18,7 @@
 
 using namespace ATG::UITK;
 
-const int c_maxDevices = 4;
+constexpr size_t c_maxDevices = 4;
 
 enum InputTypes
 {
@@ -66,6 +66,12 @@ public:
     Sample() noexcept(false);
     ~Sample();
 
+    Sample(Sample&&) = delete;
+    Sample& operator= (Sample&&) = delete;
+
+    Sample(Sample const&) = delete;
+    Sample& operator= (Sample const&) = delete;
+
     // Initialization and management
     void Initialize(HWND window);
 
@@ -75,8 +81,10 @@ public:
     // Messages
     void OnSuspending();
     void OnResuming();
+    void OnConstrained() {}
+    void OnUnConstrained() {}
 
-    // Properties
+    // ATG::UITK::D3DResourcesProvider
     ID3D12Device* GetD3DDevice() override { return m_deviceResources->GetD3DDevice(); }
     ID3D12CommandQueue* GetCommandQueue() const override { return m_deviceResources->GetCommandQueue(); }
     ID3D12GraphicsCommandList* GetCommandList() const override { return m_deviceResources->GetCommandList(); }
@@ -93,19 +101,19 @@ private:
     void CreateDeviceDependentResources();
     void CreateWindowSizeDependentResources();
 
-    UIElementPtr GetArcadeUI(int index);
-    UIElementPtr GetAxisUI(int index);
-    UIElementPtr GetButtonsUI(int index);
-    UIElementPtr GetFlightStickUI(int index);
-    UIElementPtr GetGamepadUI(int index);
-    UIElementPtr GetKeysUI(int index);
-    UIElementPtr GetMotionUI(int index);
-    UIElementPtr GetMouseUI(int index);
-    UIElementPtr GetSwitchesUI(int index);
-    UIElementPtr GetTouchUI(int index);
-    UIElementPtr GetUINavigationUI(int index);
-    UIElementPtr GetWheelUI(int index);
-    void UpdateDeviceUI(int index);
+    UIElementPtr GetArcadeUI(size_t index);
+    UIElementPtr GetAxisUI(size_t index);
+    UIElementPtr GetButtonsUI(size_t index);
+    UIElementPtr GetFlightStickUI(size_t index);
+    UIElementPtr GetGamepadUI(size_t index);
+    UIElementPtr GetKeysUI(size_t index);
+    UIElementPtr GetMotionUI(size_t index);
+    UIElementPtr GetMouseUI(size_t index);
+    UIElementPtr GetSwitchesUI(size_t index);
+    UIElementPtr GetTouchUI(size_t index);
+    UIElementPtr GetUINavigationUI(size_t index);
+    UIElementPtr GetWheelUI(size_t index);
+    void UpdateDeviceUI(size_t index);
 
     // Device resources.
     std::unique_ptr<DX::DeviceResources>        m_deviceResources;

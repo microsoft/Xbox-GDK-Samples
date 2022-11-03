@@ -240,7 +240,7 @@ void PerfRun::RunTests(uint32_t senderCore, uint32_t receiverCore, TestType whic
             m_combinedLogfile = new ATG::FileLogger(releaseName, false);
             {
                 std::wstring textBuffer;
-                if (ATG::IsHyperThreaded())
+                if (ATG::IsSMTSupported())
                     textBuffer = L"Test,Single core,Same Physical,Same Cluster,Cross Cluster";
                 else
                     textBuffer = L"Test,Single core,Same Cluster,Cross Cluster";

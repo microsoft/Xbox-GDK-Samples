@@ -23,7 +23,7 @@ set(GAME_SOURCES
     Main.cpp
     StepTimer.h
     pch.h
-    MicrosoftGame.Config
+    MicrosoftGameConfig.mgc
 )
 
 if(CMAKE_VS_PLATFORM_NAME STREQUAL "Gaming.Desktop.x64")
@@ -39,8 +39,8 @@ set(GAME_ASSETS
 
 source_group("Assets" FILES ${GAME_ASSETS})
 
-# MicrosoftGame.config
-set_source_files_properties(MicrosoftGame.Config PROPERTIES VS_TOOL_OVERRIDE "MGCCompile")
+# MicrosoftGameConfig.mgc
+set_source_files_properties(MicrosoftGameConfig.mgc PROPERTIES VS_TOOL_OVERRIDE "MGCCompile")
 set_source_files_properties(Assets/Logo.png PROPERTIES VS_TOOL_OVERRIDE "CopyFileToFolders")
 set_source_files_properties(Assets/SmallLogo.png PROPERTIES VS_TOOL_OVERRIDE "CopyFileToFolders")
 set_source_files_properties(Assets/SplashScreen.png PROPERTIES VS_TOOL_OVERRIDE "CopyFileToFolders")
@@ -133,7 +133,7 @@ if (${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.18")
 endif()
 
 # Extension libraries
-# Xbox.Services.API.C Xbox.XCurl.API Xbox.Game.Chat.2.Cpp.API PlayFab.Party.Cpp PlayFab.PartyXboxLive.Cpp
+# Xbox.Services.API.C Xbox.XCurl.API Xbox.Game.Chat.2.Cpp.API PlayFab.Multiplayer.Cpp PlayFab.Party.Cpp PlayFab.PartyXboxLive.Cpp
 set_property(TARGET ${PROJECT_NAME} PROPERTY VS_GLOBAL_GDKExtLibNames Xbox.Services.API.C)
 
 # VC++ binary compatibility means we can use the VS 2019 version with VS 2019 or VS 2022

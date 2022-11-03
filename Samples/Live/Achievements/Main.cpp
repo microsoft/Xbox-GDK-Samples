@@ -197,6 +197,9 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
     CloseHandle(g_plmSignalResume);
 #endif
 
+#ifdef ATG_ENABLE_TELEMETRY
+    ATG::CleanupTelemetry();
+#endif
     XGameRuntimeUninitialize();
 
     CoUninitialize();
@@ -391,7 +394,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
             else
             {
-                SetWindowLongPtr(hWnd, GWL_STYLE, 0);
+                SetWindowLongPtr(hWnd, GWL_STYLE, WS_POPUP);
                 SetWindowLongPtr(hWnd, GWL_EXSTYLE, WS_EX_TOPMOST);
 
                 SetWindowPos(hWnd, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);

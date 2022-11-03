@@ -25,8 +25,8 @@ private:
     Microsoft::WRL::ComPtr <DStorageStatusArrayCrossPlatform> m_statusEntries[c_defaultNumQueues];
 
 public:
-    MultipleQueues() {}
-    ~MultipleQueues() {}
+    MultipleQueues() = default;
+    ~MultipleQueues() = default;
 
     bool RunSample(const std::wstring& fileName, uint64_t dataFileSize);
 };

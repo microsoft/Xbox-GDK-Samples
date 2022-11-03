@@ -66,23 +66,27 @@ using DirectX::Colors::White;
 
 namespace
 {
-    inline DirectX::XMVECTOR MakeColor(float value) { DirectX::XMVECTORF32 color = { value, value, value, 1.0f }; return color; }
+    inline XMVECTOR MakeColor(float value) noexcept
+    {
+        XMVECTORF32 color = { value, value, value, 1.0f };
+        return color;
+    }
 
     // Clamp value between 0 and 1
-    inline float Clamp(float value)
+    inline float Clamp(float value) noexcept
     {
         return std::min(std::max(value, 0.0f), 1.0f);
     }
 
     // Applies the sRGB gamma curve to a linear value. This function is only used to output UI values
-    float LinearToSRGB(float hdrSceneValue)
+    float LinearToSRGB(float hdrSceneValue) noexcept
     {
-        const float Cutoff = 0.0031308f;
-        const float Linear = 12.92f;
-        const float Scale = 1.055f;
-        const float Bias = 0.055f;
-        const float Gamma = 2.4f;
-        const float InvGamma = 1.0f / Gamma;
+        constexpr float Cutoff = 0.0031308f;
+        constexpr float Linear = 12.92f;
+        constexpr float Scale = 1.055f;
+        constexpr float Bias = 0.055f;
+        constexpr float Gamma = 2.4f;
+        constexpr float InvGamma = 1.0f / Gamma;
 
         // clamp values [0..1]
         hdrSceneValue = Clamp(hdrSceneValue);
@@ -151,6 +155,8 @@ void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
 
+    m_deviceResources->WaitForOrigin();
+
     m_timer.Tick([&]()
     {
         Update(m_timer);
@@ -210,10 +216,10 @@ void Sample::Update(DX::StepTimer const& timer)
             m_HDR10Data.PaperWhiteNits = std::min(m_HDR10Data.PaperWhiteNits, DX::c_MaxNitsFor2084);
         }
 
-        const float c_fastNitsDelta = 25.0f;
-        const float c_slowNitsDelta = 1.0f;
-        const float c_fastSceneValueDelta = 0.05f;
-        const float c_slowSceneValueDelta = 0.005f;
+        constexpr float c_fastNitsDelta = 25.0f;
+        constexpr float c_slowNitsDelta = 1.0f;
+        constexpr float c_fastSceneValueDelta = 0.05f;
+        constexpr float c_slowSceneValueDelta = 0.005f;
 
         if (gamepad.IsLeftThumbStickDown() || gamepad.IsLeftThumbStickLeft())
         {
@@ -296,7 +302,7 @@ void Sample::Render()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Render");
 
     ID3D12DescriptorHeap* heaps[] = { m_resourceDescriptorHeap->Heap() };
-    commandList->SetDescriptorHeaps(_countof(heaps), heaps);
+    commandList->SetDescriptorHeaps(static_cast<UINT>(std::size(heaps)), heaps);
 
     if (m_bRender2084Curve)
     {
@@ -488,10 +494,10 @@ void Sample::Render2084Curve()
     m_primitiveBatch->DrawLine(VertexPositionColor(Vector3(viewportWidth, 0.5f, 0), White), VertexPositionColor(Vector3(viewportWidth, viewportHeight, 0), White));
 
     // Render horizontal tick marks
-    float numSteps = 16;
-    for (int i = 0; i < numSteps; i++)
+    constexpr int c_numSteps = 16;
+    for (int i = 0; i < c_numSteps; i++)
     {
-        float x = (i * (viewportWidth / numSteps)) + 0.5f;
+        float x = (i * (viewportWidth / float(c_numSteps))) + 0.5f;
         float y = viewportHeight;
         m_primitiveBatch->DrawLine(VertexPositionColor(Vector3(x, y, 0), White), VertexPositionColor(Vector3(x, y - 10, 0), White));
     }
@@ -590,7 +596,7 @@ void Sample::Render2084Curve()
     m_fontBatch->End();
 
     // Render blocks
-    const long size = 150;
+    constexpr long size = 150;
     RECT position = {};
     position.left = 1920 - size * 4;
     position.top = 50;
@@ -701,7 +707,7 @@ void Sample::Clear()
     m_hdrScene->TransitionTo(commandList, D3D12_RESOURCE_STATE_RENDER_TARGET);
 
     // Clear the views.
-    auto rtvDescriptor = m_rtvDescriptorHeap->GetCpuHandle(static_cast<int>(ResourceDescriptors::HDRScene));
+    auto const rtvDescriptor = m_rtvDescriptorHeap->GetCpuHandle(static_cast<int>(ResourceDescriptors::HDRScene));
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, nullptr);
 
@@ -710,8 +716,8 @@ void Sample::Clear()
     commandList->ClearRenderTargetView(rtvDescriptor, Black, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -781,7 +787,7 @@ void Sample::CreateDeviceDependentResources()
         m_resourceDescriptorHeap->GetCpuHandle(static_cast<int>(ResourceDescriptors::HDRScene)),
         m_rtvDescriptorHeap->GetCpuHandle(static_cast<int>(RTVDescriptors::HDRScene)));
 
-    auto size = m_deviceResources->GetOutputSize();
+    auto const size = m_deviceResources->GetOutputSize();
     m_hdrScene->SetWindow(size);
 
     // Init fonts

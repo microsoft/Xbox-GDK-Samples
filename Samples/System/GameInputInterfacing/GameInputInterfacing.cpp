@@ -10,46 +10,55 @@
 
 #include "ATGColors.h"
 
-extern void ExitSample();
+extern void ExitSample() noexcept;
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
 using Microsoft::WRL::ComPtr;
 
-static void CALLBACK OnGameInputDeviceAddedRemoved(
-    _In_ GameInputCallbackToken,
-    _In_ void * context,
-    _In_ IGameInputDevice * device,
-    _In_ uint64_t,
-    _In_ GameInputDeviceStatus currentStatus,
-    _In_ GameInputDeviceStatus) noexcept
+// Get and parse input for almost all supported kinds
+// Note that in a real title, this would be far more narrowly scoped
+static GameInputKind SupportedGameInputKinds = GameInputKindKeyboard | GameInputKindMouse |
+                                               GameInputKindArcadeStick | GameInputKindFlightStick | GameInputKindGamepad | GameInputKindRacingWheel |
+                                               GameInputKindUiNavigation;
+
+namespace
 {
-    auto sample = reinterpret_cast<Sample*>(context);
-
-    if (currentStatus & GameInputDeviceConnected)
+    void CALLBACK OnGameInputDeviceAddedRemoved(
+        _In_ GameInputCallbackToken,
+        _In_ void* context,
+        _In_ IGameInputDevice* device,
+        _In_ uint64_t,
+        _In_ GameInputDeviceStatus currentStatus,
+        _In_ GameInputDeviceStatus) noexcept
     {
-        size_t i = 0;
+        auto sample = reinterpret_cast<Sample*>(context);
 
-        while (i < c_maxDevices)
+        if (currentStatus & GameInputDeviceConnected)
         {
-            if (!sample->m_devices[i].device)
+            size_t i = 0;
+
+            while (i < c_maxDevices)
             {
-                sample->m_devices[i].device = device;
-                break;
+                if (!sample->m_devices[i].device)
+                {
+                    sample->m_devices[i].device = device;
+                    break;
+                }
+
+                i++;
             }
-
-            i++;
         }
-    }
-    else
-    {
-        for (size_t k = 0; k < c_maxDevices; ++k)
+        else
         {
-            if (sample->m_devices[k].device.Get() == device)
+            for (size_t k = 0; k < c_maxDevices; ++k)
             {
-                sample->m_devices[k].needDelete = true;
-                break;
+                if (sample->m_devices[k].device.Get() == device)
+                {
+                    sample->m_devices[k].needDelete = true;
+                    break;
+                }
             }
         }
     }
@@ -75,7 +84,7 @@ void Sample::Initialize(HWND window)
     CreateWindowSizeDependentResources();
 
     DX::ThrowIfFailed(GameInputCreate(&m_gameInput));
-    DX::ThrowIfFailed(m_gameInput->RegisterDeviceCallback(nullptr, GameInputKindAny, GameInputDeviceConnected, GameInputBlockingEnumeration, this, OnGameInputDeviceAddedRemoved, &m_deviceToken));
+    DX::ThrowIfFailed(m_gameInput->RegisterDeviceCallback(nullptr, SupportedGameInputKinds, GameInputDeviceConnected, GameInputBlockingEnumeration, this, OnGameInputDeviceAddedRemoved, &m_deviceToken));
 
     m_uiManager.GetRootElement()->AddChildFromLayout("Assets/layout.json");
 }
@@ -86,7 +95,7 @@ Sample::~Sample()
     {
         if (m_gameInput)
         {
-            (void)m_gameInput->UnregisterCallback(m_deviceToken, UINT64_MAX);
+            std::ignore = m_gameInput->UnregisterCallback(m_deviceToken, UINT64_MAX);
         }
 
         m_deviceToken = 0;
@@ -98,6 +107,10 @@ Sample::~Sample()
 void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
+
+    // For PresentX presentation loops, the wait for the origin event
+    // should be just before input is processed.
+    m_deviceResources->WaitForOrigin();
 
     m_timer.Tick([&]()
     {
@@ -115,7 +128,7 @@ void Sample::Update(DX::StepTimer const& timer)
 {
     PIXScopedEvent(PIX_COLOR_DEFAULT, L"Update");
 
-    for (int i = 0; i < c_maxDevices; i++)
+    for (size_t i = 0; i < c_maxDevices; i++)
     {
         if (m_devices[i].needDelete)
         {
@@ -127,8 +140,8 @@ void Sample::Update(DX::StepTimer const& timer)
         {
             UpdateDeviceUI(i);
 
-            //Get all input types
-            HRESULT hr = m_gameInput->GetCurrentReading(GameInputKindAny, m_devices[i].device.Get(), &m_reading);
+            //Get all input types (normally, this would be far more narrowly scoped for a game)
+            HRESULT hr = m_gameInput->GetCurrentReading(SupportedGameInputKinds, m_devices[i].device.Get(), &m_reading);
 
             if (hr != HRESULT_FROM_WIN32(ERROR_NOT_FOUND))
             {
@@ -361,6 +374,9 @@ void Sample::Update(DX::StepTimer const& timer)
                     currentElement->GetTypedSubElementById<UIStaticText>(ID("WheelY Value"))->SetDisplayText(std::to_string(mouseState.wheelY));
                 }
 
+// Motion state is NOT yet supported in GameInput, however
+// this code demonstrates what will work when it is implemented
+#if 0
                 //Motion states
                 //PC ONLY
                 GameInputMotionState motionState;
@@ -429,6 +445,7 @@ void Sample::Update(DX::StepTimer const& timer)
                         std::to_string(motionState.orientationZ) + "," +
                         std::to_string(motionState.orientationW) + ")");
                 }
+#endif
 
                 //Arcade stick states
                 GameInputArcadeStickState arcadeState;
@@ -864,14 +881,14 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, nullptr);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -910,12 +927,12 @@ void Sample::CreateDeviceDependentResources()
 void Sample::CreateWindowSizeDependentResources()
 {
     // notify the UI manager of the current window size
-    auto os = m_deviceResources->GetOutputSize();
-    m_uiManager.SetWindowSize(os.right, os.bottom);
+    auto const size = m_deviceResources->GetOutputSize();
+    m_uiManager.SetWindowSize(size.right, size.bottom);
 }
 #pragma endregion
 
-UIElementPtr Sample::GetArcadeUI(int index)
+UIElementPtr Sample::GetArcadeUI(size_t index)
 {
     if (!m_devices[index].elements[InputTypes::Arcade])
     {
@@ -926,7 +943,7 @@ UIElementPtr Sample::GetArcadeUI(int index)
     return m_devices[index].elements[InputTypes::Arcade];
 }
 
-UIElementPtr Sample::GetAxisUI(int index)
+UIElementPtr Sample::GetAxisUI(size_t index)
 {
     if (!m_devices[index].elements[InputTypes::Axis])
     {
@@ -937,7 +954,7 @@ UIElementPtr Sample::GetAxisUI(int index)
     return m_devices[index].elements[InputTypes::Axis];
 }
 
-UIElementPtr Sample::GetButtonsUI(int index)
+UIElementPtr Sample::GetButtonsUI(size_t index)
 {
     if (!m_devices[index].elements[InputTypes::Buttons])
     {
@@ -948,7 +965,7 @@ UIElementPtr Sample::GetButtonsUI(int index)
     return m_devices[index].elements[InputTypes::Buttons];
 }
 
-UIElementPtr Sample::GetFlightStickUI(int index)
+UIElementPtr Sample::GetFlightStickUI(size_t index)
 {
     if (!m_devices[index].elements[InputTypes::FlightStick])
     {
@@ -959,7 +976,7 @@ UIElementPtr Sample::GetFlightStickUI(int index)
     return m_devices[index].elements[InputTypes::FlightStick];
 }
 
-UIElementPtr Sample::GetGamepadUI(int index)
+UIElementPtr Sample::GetGamepadUI(size_t index)
 {
     if (!m_devices[index].elements[InputTypes::Gamepad])
     {
@@ -970,7 +987,7 @@ UIElementPtr Sample::GetGamepadUI(int index)
     return m_devices[index].elements[InputTypes::Gamepad];
 }
 
-UIElementPtr Sample::GetKeysUI(int index)
+UIElementPtr Sample::GetKeysUI(size_t index)
 {
     if (!m_devices[index].elements[InputTypes::Keys])
     {
@@ -981,7 +998,7 @@ UIElementPtr Sample::GetKeysUI(int index)
     return m_devices[index].elements[InputTypes::Keys];
 }
 
-UIElementPtr Sample::GetMotionUI(int index)
+UIElementPtr Sample::GetMotionUI(size_t index)
 {
     if (!m_devices[index].elements[InputTypes::Motion])
     {
@@ -992,7 +1009,7 @@ UIElementPtr Sample::GetMotionUI(int index)
     return m_devices[index].elements[InputTypes::Motion];
 }
 
-UIElementPtr Sample::GetMouseUI(int index)
+UIElementPtr Sample::GetMouseUI(size_t index)
 {
     if (!m_devices[index].elements[InputTypes::Mouse])
     {
@@ -1003,7 +1020,7 @@ UIElementPtr Sample::GetMouseUI(int index)
     return m_devices[index].elements[InputTypes::Mouse];
 }
 
-UIElementPtr Sample::GetSwitchesUI(int index)
+UIElementPtr Sample::GetSwitchesUI(size_t index)
 {
     if (!m_devices[index].elements[InputTypes::Switches])
     {
@@ -1014,7 +1031,7 @@ UIElementPtr Sample::GetSwitchesUI(int index)
     return m_devices[index].elements[InputTypes::Switches];
 }
 
-UIElementPtr Sample::GetTouchUI(int index)
+UIElementPtr Sample::GetTouchUI(size_t index)
 {
     if (!m_devices[index].elements[InputTypes::Touch])
     {
@@ -1025,7 +1042,7 @@ UIElementPtr Sample::GetTouchUI(int index)
     return m_devices[index].elements[InputTypes::Touch];
 }
 
-UIElementPtr Sample::GetUINavigationUI(int index)
+UIElementPtr Sample::GetUINavigationUI(size_t index)
 {
     if (!m_devices[index].elements[InputTypes::UINavigation])
     {
@@ -1036,7 +1053,7 @@ UIElementPtr Sample::GetUINavigationUI(int index)
     return m_devices[index].elements[InputTypes::UINavigation];
 }
 
-UIElementPtr Sample::GetWheelUI(int index)
+UIElementPtr Sample::GetWheelUI(size_t index)
 {
     if (!m_devices[index].elements[InputTypes::Wheel])
     {
@@ -1047,7 +1064,7 @@ UIElementPtr Sample::GetWheelUI(int index)
     return m_devices[index].elements[InputTypes::Wheel];
 }
 
-void Sample::UpdateDeviceUI(int index)
+void Sample::UpdateDeviceUI(size_t index)
 {
     if (!m_devices[index].deviceElement)
     {

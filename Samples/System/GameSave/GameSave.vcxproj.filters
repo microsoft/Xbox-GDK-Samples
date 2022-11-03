@@ -279,7 +279,7 @@
     <Image Include="Assets\Store\SmallLogo.png">
       <Filter>Assets</Filter>
     </Image>
-	<Image Include="Assets\Store\LargeLogo.png">
+    <Image Include="Assets\Store\LargeLogo.png">
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\Store\SplashScreen.png">
@@ -483,6 +483,6 @@
     <None Include="GameSave_ja-jp.docx" />
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config" />
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
 </Project>

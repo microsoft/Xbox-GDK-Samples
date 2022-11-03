@@ -1,7 +1,7 @@
 //
 // DeviceResources.h - A wrapper for the Direct3D 12/12.X device and swapchain
 //
-// Modified to use ID3D12Device6/ID3D12GraphicsCommandList5 for DXR access
+// Modified to use ID3D12Device8/ID3D12GraphicsCommandList5 for DXR access
 //
 
 #pragma once
@@ -22,9 +22,13 @@ namespace DX
     class DeviceResources
     {
     public:
+        static constexpr unsigned int c_ReverseDepth         = 0x1;
+        static constexpr unsigned int c_AmplificationShaders = 0x2;
+
         DeviceResources(DXGI_FORMAT backBufferFormat = DXGI_FORMAT_B8G8R8A8_UNORM,
                         DXGI_FORMAT depthBufferFormat = DXGI_FORMAT_D32_FLOAT,
-                        UINT backBufferCount = 2) noexcept(false);
+                        UINT backBufferCount = 2,
+                        unsigned int flags = 0) noexcept(false);
         ~DeviceResources();
 
         DeviceResources(DeviceResources&&) = default;
@@ -45,6 +49,9 @@ namespace DX
         void Suspend();
         void Resume();
         void WaitForGpu() noexcept;
+#ifdef _GAMING_XBOX
+        void WaitForOrigin();
+#endif
 
         // Device Accessors.
         RECT GetOutputSize() const noexcept { return m_outputSize; }
@@ -68,6 +75,7 @@ namespace DX
         D3D12_RECT                  GetScissorRect() const noexcept        { return m_scissorRect; }
         UINT                        GetCurrentFrameIndex() const noexcept  { return m_backBufferIndex; }
         UINT                        GetBackBufferCount() const noexcept    { return m_backBufferCount; }
+        unsigned int                GetDeviceOptions() const noexcept      { return m_options; }
 
         CD3DX12_CPU_DESCRIPTOR_HANDLE GetRenderTargetView() const noexcept
         {
@@ -81,10 +89,10 @@ namespace DX
         }
 
     private:
-        void MoveToNextFrame();
 #ifdef _GAMING_XBOX
         void RegisterFrameEvents();
 #else
+        void MoveToNextFrame();
         void GetAdapter(IDXGIAdapter1** ppAdapter);
 #endif
 
@@ -93,7 +101,7 @@ namespace DX
         UINT                                                m_backBufferIndex;
 
         // Direct3D objects.
-        Microsoft::WRL::ComPtr<ID3D12Device6>               m_d3dDevice;
+        Microsoft::WRL::ComPtr<ID3D12Device8>               m_d3dDevice;
         Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList5>  m_commandList;
         Microsoft::WRL::ComPtr<ID3D12CommandQueue>          m_commandQueue;
         Microsoft::WRL::ComPtr<ID3D12CommandAllocator>      m_commandAllocators[MAX_BACK_BUFFER_COUNT];
@@ -130,6 +138,9 @@ namespace DX
         HWND                                                m_window;
         D3D_FEATURE_LEVEL                                   m_d3dFeatureLevel;
         RECT                                                m_outputSize;
+
+        // DeviceResources options (see flags above)
+        unsigned int                                        m_options;
 
         // The IDeviceNotify can be held directly as it owns the DeviceResources.
         IDeviceNotify*                                      m_deviceNotify;

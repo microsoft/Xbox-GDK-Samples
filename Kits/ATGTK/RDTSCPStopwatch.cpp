@@ -15,6 +15,7 @@ namespace ATG
     double s_rdtscpFrequencySecs = CalcRDTSCPFrequency();	// force init at startup
     double s_rdtscpFrequencyMS;								// CalcRDTSCPFrequency auto sets these
     double s_rdtscpFrequencyUS;								// CalcRDTSCPFrequency auto sets these
+    double s_rdtscpFrequencyNS;								// CalcRDTSCPFrequency auto sets these
 
     double CalcRDTSCPFrequency()
     {
@@ -64,8 +65,9 @@ namespace ATG
 
         SetThreadPriority(GetCurrentThread(), currentPriority);
         s_rdtscpFrequencySecs = (rdtscFrequencyIdle + rdtscFrequencyLoad) / 2.0;		// the numbers should be close to identical so just average
-        s_rdtscpFrequencyMS = s_rdtscpFrequencySecs / 1000;
-        s_rdtscpFrequencyUS = s_rdtscpFrequencySecs / 1000000;
+        s_rdtscpFrequencyMS = s_rdtscpFrequencySecs / 1000.0;
+        s_rdtscpFrequencyUS = s_rdtscpFrequencySecs / 1000000.0;
+        s_rdtscpFrequencyNS = s_rdtscpFrequencySecs / 1000000000.0;
 
         return s_rdtscpFrequencySecs;
     }

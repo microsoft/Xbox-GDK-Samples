@@ -677,7 +677,8 @@ void Sample::QueryCatalog()
         XStoreProductKind::Consumable |
         XStoreProductKind::Durable |
         XStoreProductKind::Game |
-        XStoreProductKind::UnmanagedConsumable;
+        XStoreProductKind::UnmanagedConsumable |
+        XStoreProductKind::Pass;
 
     HRESULT hr = XStoreQueryAssociatedProductsAsync(
         m_xStoreContext,
@@ -762,7 +763,8 @@ void Sample::QueryCollections()
         XStoreProductKind::Consumable |
         XStoreProductKind::Durable |
         XStoreProductKind::Game |
-        XStoreProductKind::UnmanagedConsumable;
+        XStoreProductKind::UnmanagedConsumable |
+        XStoreProductKind::Pass;
 
     HRESULT hr = XStoreQueryEntitledProductsAsync(
         m_xStoreContext,

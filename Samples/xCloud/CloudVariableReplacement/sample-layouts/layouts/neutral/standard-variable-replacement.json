@@ -1,0 +1,116 @@
+﻿{
+  "$schema": "https://raw.githubusercontent.com/microsoft/xbox-game-streaming-tools/master/touch-adaptation-kit/schemas/layout/v3.2/layout.json",
+  "content": {
+    "left": {
+      "inner": [
+        {
+          "type": "joystick",
+          "expand": false,
+          "axis": {
+            "input": "axisXY",
+            "output": "leftJoystick",
+            "deadzone": {
+              "threshold": 0.05,
+              "radial": true
+            }
+          }
+        }
+      ],
+      "outer": [
+        null,
+        null,
+        [
+          {
+            "type": "directionalPad"
+          }
+        ],
+        {
+          "type": "button",
+          "action": "leftThumb"
+        },
+        null,
+        {
+          "type": "button",
+          "action": "leftTrigger"
+        },
+        {
+          "type": "button",
+          "action": "leftBumper"
+        }
+      ]
+    },
+    "right": {
+      "inner": [
+        {
+          "type": "button",
+          "action": "gamepadY",
+          "visible": {
+            "$ref": "../../context.json#/state/Y_Visibility"
+          }
+        },
+        {
+          "type": "button",
+          "action": "gamepadB",
+          "styles": {
+            "default": {
+              "opacity": {
+                "$ref": "../../context.json#/state/B_Opacity"
+              }
+            }
+          }
+        },
+        {
+          "type": "button",
+          "action": "gamepadA",
+          "enabled": {
+            "$ref": "../../context.json#/state/A_Enabled"
+          }
+        },
+        {
+          "type": "button",
+          "action": "gamepadX"
+        }
+      ],
+      "outer": [
+        {
+          "type": "button",
+          "action": "rightBumper"
+        },
+        {
+          "type": "button",
+          "action": "rightTrigger"
+        },
+        null,
+        {
+          "type": "button",
+          "action": "rightThumb"
+        },
+        [
+          {
+            "type": "joystick",
+            "axis": {
+              "input": "axisXY",
+              "output": "rightJoystick",
+              "deadzone": {
+                "threshold": 0.05,
+                "radial": true
+              }
+            }
+          }
+        ]
+      ]
+    },
+    "upper": {
+      "right": [
+        {
+          "type": "button",
+          "action": "menu"
+        },
+        {
+          "type": "button",
+          "action": "view"
+        }
+      ]
+    }
+  }
+}

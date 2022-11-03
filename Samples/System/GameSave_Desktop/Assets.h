@@ -16,8 +16,9 @@
 
 #pragma once
 
-namespace DX { class Texture;  }
-namespace DirectX { class SpriteFont; }
+#include "Texture.h"
+#include "SpriteFont.h"
+
 
 /**
  *	Bring in the asset names/ID values for all assets used by this sample.

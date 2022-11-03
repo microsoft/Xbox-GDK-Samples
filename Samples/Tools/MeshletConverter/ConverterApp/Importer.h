@@ -34,4 +34,5 @@ namespace ATG
 
     // Imports an FBX or OBJ file. Returns whether any meshes were processed.
     bool ImportFile(const char* filename, const ImportOptions& options, std::vector<MeshletSet>& meshlets);
+    bool ImportFileSDKMesh(const char* filename, const ImportOptions& options, std::vector<MeshletSet>& meshlets);
 }

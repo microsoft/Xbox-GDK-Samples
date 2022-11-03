@@ -75,6 +75,13 @@ Sample::Sample() noexcept(false) :
 
 Sample::~Sample()
 {
+    if (m_storeContext)
+    {
+        XStoreCloseContextHandle(m_storeContext);
+    }
+
+    XPackageUnregisterPackageInstalled(m_packageInstallToken, true);
+
     if (m_deviceResources)
     {
         m_deviceResources->WaitForGpu();
@@ -130,17 +137,13 @@ void Sample::Initialize(HWND window, int width, int height)
 
     m_liveResources->SetErrorHandler([this](HRESULT error)
     {
-        if (error == E_GAMEUSER_RESOLVE_USER_ISSUE_REQUIRED)
+        if (error == E_GAMEUSER_RESOLVE_USER_ISSUE_REQUIRED || error == E_GAMEUSER_NO_DEFAULT_USER)
         {
             m_liveResources->SignInWithUI();
         }
         else if (error == E_GAMEUSER_NO_PACKAGE_IDENTITY)
         {
             ErrorMessage("LiveResource error : E_GAMEUSER_NO_PACKAGE_IDENTITY\n");
-        }
-        else if (error == E_GAMEUSER_NO_DEFAULT_USER)
-        {
-            ErrorMessage("LiveResource error : E_GAMEUSER_NO_DEFAULT_USER\n");
         }
         else // Handle other error cases.
         {
@@ -182,13 +185,15 @@ void Sample::RefreshStoreProducts()
 
         XStoreProductQueryHandle queryHandle = nullptr;
 
+        // This call occurs following output, this will be fixed by future update (bug:40153923)
+        // XERROR: HR:80070006 threadID:1060 Handle: already exists (00000000d5d1e1a0:StoreProductQuery)
         HRESULT hr = XStoreQueryAssociatedProductsResult(
             async,
             &queryHandle);
 
         if (static_cast<unsigned int>(hr) == 0x803F6107) /* IAP_E_UNEXPECTED */
         {
-            pThis->ErrorMessage("Config is invalid (Sandbox / ContentIdOverride / EKBIDOverride) : 0x%08X\n", hr);
+            pThis->ErrorMessage("User has no entitlement or configs are invalid (Sandbox / ContentIdOverride / EKBIDOverride) : 0x%08X\n", hr);
             delete async;
             pThis->m_isStoreEnumerating = false;
             return;
@@ -208,8 +213,7 @@ void Sample::RefreshStoreProducts()
             {
                 Sample* pThis = reinterpret_cast<Sample*>(context);
 
-                // BUG 30095480 : Currently hasDigitalDownload doesn't work.
-                //if (product->hasDigitalDownload)
+                if (product->hasDigitalDownload)
                 {
                     StoreProductDetails storeProduct(product);
 
@@ -304,6 +308,7 @@ void Sample::RefreshStoreProducts()
 
         }
 
+        XStoreCloseProductsQueryHandle(queryHandle);
         delete async;
         pThis->m_isStoreEnumerating = false;
     };
@@ -376,7 +381,7 @@ void Sample::PurchaseStoreProduct(StoreProductDetails &package)
 
     if (FAILED(hr))
     {
-        ErrorMessage("Failed to purchase: 0x%x\n", hr);
+        ErrorMessage("Failed to purchase : 0x%x\n", hr);
         delete reinterpret_cast<Context*>(async->context);
         delete async;
         return;
@@ -625,13 +630,16 @@ void Sample::RefreshInstalledPackages()
                 {
                     UnmountSelectedPackage(*package);
                     button->GetTypedSubElementById<UIImage>(ID("DLC_Status"))->SetStyleId(ID("Unchecked"));
+
+                    SetBackgroundImage("Assets\\Unmounted.png");
                 }
             }
         });
 
-        dlcButton->ButtonState().AddListenerWhen(UIButton::State::Focused, [this](UIButton* )
+        dlcButton->ButtonState().AddListenerWhen(UIButton::State::Focused, [this](UIButton* button)
         {
-            m_legendText->SetDisplayText(UIDisplayString("[A] to Mount or Unmount Package, [Y] to Refresh, [LB] + [RB] to Toggle filter, [VIEW] to Close Sample"));
+            m_legendText->SetDisplayText(UIDisplayString("[A] to Mount or Unmount Package, [X] to Uninstall, [Y] to Refresh, [LB] + [RB] to Toggle filter, [VIEW] to Close Sample"));
+            m_currentFocusStoreId = button->GetTypedSubElementById<UIStaticText>(ID("DLC_StoreID"))->GetDisplayText();
         });
     }
 }
@@ -649,91 +657,134 @@ PackageDetails* Sample::GetPackageDetail(const std::string &storeId)
     return nullptr;
 }
 
-void Sample::MountSelectedPackage(PackageDetails &package)
+HRESULT Sample::MountPackage(const char* packageIdentifier, XPackageMountHandle* mountHandle)
 {
-    struct Context
-    {
-        Sample *pThis;
-        PackageDetails *package;
-    };
-
     auto async = new XAsyncBlock{};
-    async->queue = m_asyncQueue;
-    async->context = new Context{ this, &package };
-    async->callback = [](XAsyncBlock *async)
+
+    HRESULT hr = XPackageMountWithUiAsync(packageIdentifier, async);
+
+    if (SUCCEEDED(hr))
     {
-        auto &[pThis, package] = *reinterpret_cast<Context*>(async->context);
+        // Wait for XPackageMountWithUiAsync.
+        hr = XAsyncGetStatus(async, true);
 
-        XStoreLicenseHandle license = {};
-        auto result = XStoreAcquireLicenseForPackageResult(async, &license);
-
-        if (SUCCEEDED(result))
+        if (SUCCEEDED(hr))
         {
-            bool isLicense = XStoreIsLicenseValid(license);
+            hr = XPackageMountWithUiResult(async, mountHandle);
 
-            debugPrint("%s %s\n", package->displayName.data(), isLicense ? "Licensed" : "No license");
-
-            if (isLicense)
+            if (FAILED(hr))
             {
-                PackageEventContext *context = new PackageEventContext{ pThis, package->storeId };
-
-                auto token = pThis->RegisterPackageEvents(license, context);
-
-                XPackageMountHandle mountHandle = {};
-                result = XPackageMount(package->packageIdentifier.data(), &mountHandle);
-
-                if (SUCCEEDED(result))
-                {
-                    package->isMounted = true;
-                    package->button->GetTypedSubElementById<UIImage>(ID("DLC_Status"))->SetStyleId(ID("Checked"));
-
-                    pThis->AddNewMountedPackage(package->storeId, license, token, mountHandle, context);
-                }
-                else if (result == E_ACCESSDENIED)
-                {
-                    XStoreCloseLicenseHandle(license);
-                    pThis->ErrorMessage("Mounting failed. Cannot mount an app (%s): E_ACCESSDENIED\n", package->displayName.data());
-                }
-                else if (result == E_GAMEPACKAGE_DLC_NOT_SUPPORTED)
-                {
-                    XStoreCloseLicenseHandle(license);
-                    pThis->ErrorMessage("Mounting failed. This package may target another device %s: 0x%08X\n", package->displayName.data(), result);
-                }
-                else
-                {
-                    XStoreCloseLicenseHandle(license);
-                    pThis->ErrorMessage("Error mounting package %s: 0x%08X\n", package->displayName.data(), result);
-                }
+                ErrorMessage("Mounting failed : %s : 0x%08X\n", packageIdentifier, hr);
             }
-            else
-            {
-                pThis->ErrorMessage("You don't have a license for %s.\n", package->displayName.data());
-            }
-            pThis->RefreshInstalledPackages();
-            pThis->m_needSetFocus = EnumFocusArea::InstalledPackages;
-        }
-        else if (static_cast<unsigned int>(result) == 0x87E10BC6) /* LM_E_CONTENT_NOT_IN_CATALOG */
-        {
-            pThis->ErrorMessage("XStoreAcquireLicenseForPackageResult failed: %s : LM_E_CONTENT_NOT_IN_CATALOG.\n", package->displayName.data());
         }
         else
         {
-            pThis->ErrorMessage("XStoreAcquireLicenseForPackageResult failed: %s : 0x%08X\n", package->displayName.data(), result);
+            if (hr == E_ACCESSDENIED)
+            {
+                ErrorMessage("Mounting failed. Cannot access package : %s : E_ACCESSDENIED\n", packageIdentifier);
+            }
+            else if (hr == E_GAMEPACKAGE_DLC_NOT_SUPPORTED)
+            {
+                ErrorMessage("Mounting failed. This package may target another device : %s : E_GAMEPACKAGE_DLC_NOT_SUPPORTED\n", packageIdentifier);
+            }
+            else if (hr == E_ABORT)
+            {
+                ErrorMessage("Mounting failed. User canceled : %s : E_ABORT.\n", packageIdentifier);
+            }
+            else if (static_cast<uint32_t>(hr) == 0x87DE2729 /* LM_E_OWNER_NOT_SIGNED_IN */)
+            {
+                ErrorMessage("Mounting failed. User has no entitlement : %s", packageIdentifier);
+            }
+            else
+            {
+                ErrorMessage("Mounting failed : %s : 0x%08X\n", packageIdentifier, hr);
+            }
         }
-
-        package->isBusy = false;
-
-        delete reinterpret_cast<Context*>(async->context);
-        delete async;
-    };
-
-    if (FAILED(XStoreAcquireLicenseForPackageAsync(m_storeContext, package.packageIdentifier.data(), async)))
-    {
-        package.isBusy = false;
-
-        delete reinterpret_cast<Context*>(async->context);
-        delete async;
     }
+
+    delete async;
+
+    return hr;
+}
+
+HRESULT Sample::AcquireLicense(const char* packageIdentifier, XStoreLicenseHandle* licenseHandle)
+{
+    auto async = new XAsyncBlock{};
+
+    HRESULT hr = XStoreAcquireLicenseForPackageAsync(m_storeContext, packageIdentifier, async);
+
+    if (SUCCEEDED(hr))
+    {
+        // Wait for XStoreAcquireLicenseForPackageAsync.
+        hr = XAsyncGetStatus(async, true);
+
+        if (SUCCEEDED(hr))
+        {
+            hr = XStoreAcquireLicenseForPackageResult(async, licenseHandle);
+        }
+        else
+        {
+            if (static_cast<uint32_t>(hr) == 0x87E10BC6) /* LM_E_CONTENT_NOT_IN_CATALOG */
+            {
+                ErrorMessage("AcquireLicense failed: %s : LM_E_CONTENT_NOT_IN_CATALOG.\n", packageIdentifier);
+            }
+            if (static_cast<uint32_t>(hr) == 0x803F9006) /* LM_E_ENTITLED_USER_SIGNED_OUT */
+            {
+                ErrorMessage("AcquireLicense failed: %s : LM_E_ENTITLED_USER_SIGNED_OUT.\n", packageIdentifier);
+            }
+            else
+            {
+                ErrorMessage("AcquireLicense failed: %s : 0x%08X\n", packageIdentifier, hr);
+            }
+        }
+    }
+
+    delete async;
+
+    return hr;
+}
+
+void Sample::MountSelectedPackage(PackageDetails &package)
+{
+    XStoreLicenseHandle license = {};
+
+    HRESULT hr = AcquireLicense(package.packageIdentifier.data(), &license);
+
+    if (SUCCEEDED(hr))
+    {
+        bool isLicense = XStoreIsLicenseValid(license);
+
+        debugPrint("%s %s\n", package.displayName.data(), isLicense ? "Licensed" : "No license");
+
+        if (isLicense)
+        {
+            PackageEventContext* pec = new PackageEventContext{ this, package.storeId };
+
+            auto token = RegisterPackageEvents(license, pec);
+            
+            XPackageMountHandle mountHandle = {};
+
+            hr = MountPackage(package.packageIdentifier.data(), &mountHandle);
+
+            if (SUCCEEDED(hr))
+            {
+                package.isMounted = true;
+                package.button->GetTypedSubElementById<UIImage>(ID("DLC_Status"))->SetStyleId(ID("Checked"));
+
+                AddNewMountedPackage(package.storeId, license, token, mountHandle, pec);
+            }
+            else
+            {
+                delete pec;
+                XStoreCloseLicenseHandle(license);
+            }
+
+            RefreshInstalledPackages();
+            m_needSetFocus = EnumFocusArea::InstalledPackages;
+        }
+    }
+
+    package.isBusy = false;
 }
 
 void Sample::UnmountSelectedPackage(PackageDetails &package)
@@ -833,44 +884,9 @@ void Sample::AddNewMountedPackage(std::string &storeId, XStoreLicenseHandle lice
 
     debugPrint("DLC path : %s\n", path);
 
-    HANDLE hFile = CreateFileA(path, GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN, NULL);
-
-    if (hFile == INVALID_HANDLE_VALUE)
-    {
-        ErrorMessage("Failed to open %s\n", path);
-        delete[] path;
-        return;
-    }
-
-    // Get file size
-    FILE_STANDARD_INFO fileInfo;
-    if (GetFileInformationByHandleEx(hFile, FileStandardInfo, &fileInfo, sizeof(fileInfo)) == FALSE)
-    {
-        ErrorMessage("Failed to get the file size %s\n", path);
-        delete[] path;
-        CloseHandle(hFile);
-        return;
-    }
-
-    LARGE_INTEGER fileSize = fileInfo.EndOfFile;
-
-    // Allocate the buffer
-    std::unique_ptr<uint8_t[]> buffer;
-    buffer.reset(new uint8_t[fileSize.LowPart]);
-
-    DWORD bytesRead;
-    if (ReadFile(hFile, buffer.get(), fileSize.LowPart, &bytesRead, nullptr) == FALSE)
-    {
-        ErrorMessage("ReadFile Failed %s\n", path);
-        delete[] path;
-        CloseHandle(hFile);
-        return;
-    }
+    SetBackgroundImage(path);
 
     delete[] path;
-    CloseHandle(hFile);
-
-    m_backgroundImage->UseTextureData(buffer.get(), fileSize.LowPart);
 }
 
 PackageMountInfo* Sample::GetPackageMountInfo(const std::string &storeId)
@@ -884,6 +900,22 @@ PackageMountInfo* Sample::GetPackageMountInfo(const std::string &storeId)
 
     return nullptr;
 }
+
+void Sample::UninstallPackage(PackageDetails& package)
+{
+    if (XPackageUninstallPackage(package.packageIdentifier.data()))
+    {
+        debugPrint("Package %s uninstalled.\n", package.packageIdentifier.data());
+    }
+    else
+    {
+        ErrorMessage("XPackageUninstallPackage failed : %s\n", package.packageIdentifier.data());
+    }
+
+    RefreshInstalledPackages();
+    RefreshStoreProducts();
+}
+
 #pragma endregion
 
 #pragma region UI Methods
@@ -913,6 +945,44 @@ void Sample::ResetStoreButton(std::shared_ptr<UIButton> button)
     button->GetTypedSubElementById<UIPanel>(ID("boxProgressPanel"))->
         GetTypedSubElementById<UIStaticText>(ID("progressText"))->
         SetDisplayText(UIDisplayString(""));
+}
+
+void Sample::SetBackgroundImage(const char* filename)
+{
+    HANDLE hFile = CreateFileA(filename, GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN, NULL);
+
+    if (hFile == INVALID_HANDLE_VALUE)
+    {
+        ErrorMessage("Failed to open %s\n", filename);
+        return;
+    }
+
+    // Get file size
+    FILE_STANDARD_INFO fileInfo;
+    if (GetFileInformationByHandleEx(hFile, FileStandardInfo, &fileInfo, sizeof(fileInfo)) == FALSE)
+    {
+        ErrorMessage("Failed to get the file size %s\n", filename);
+        CloseHandle(hFile);
+        return;
+    }
+
+    LARGE_INTEGER fileSize = fileInfo.EndOfFile;
+
+    // Allocate the buffer
+    std::unique_ptr<uint8_t[]> buffer;
+    buffer.reset(new uint8_t[fileSize.LowPart]);
+
+    DWORD bytesRead;
+    if (ReadFile(hFile, buffer.get(), fileSize.LowPart, &bytesRead, nullptr) == FALSE)
+    {
+        ErrorMessage("ReadFile Failed %s\n", filename);
+        CloseHandle(hFile);
+        return;
+    }
+
+    CloseHandle(hFile);
+
+    m_backgroundImage->UseTextureData(buffer.get(), fileSize.LowPart);
 }
 
 void Sample::ErrorMessage(std::string_view format, ...)
@@ -992,6 +1062,17 @@ void Sample::Update(DX::StepTimer const& timer)
         keys.IsKeyPressed(DirectX::Keyboard::Keys::PageUp))
     {
         m_twistMenu->DecrementSelectedItem();
+    }
+
+    if (buttons.x == GamePad::ButtonStateTracker::PRESSED ||
+        keys.IsKeyPressed(DirectX::Keyboard::Keys::X))
+    {
+        if (m_currentFocusStoreId != "")
+        {
+            PackageDetails* package = GetPackageDetail(m_currentFocusStoreId);
+            UninstallPackage(*package);
+            m_currentFocusStoreId = "";
+        }
     }
 
     if (buttons.y == GamePad::ButtonStateTracker::PRESSED ||

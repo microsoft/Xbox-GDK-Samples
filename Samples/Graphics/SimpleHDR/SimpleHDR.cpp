@@ -50,7 +50,9 @@ Sample::Sample() noexcept(false) :
     // On Xbox One, 10:10:10:2 is required for HDR
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_R10G10B10A2_UNORM,
 #endif
-            DXGI_FORMAT_UNKNOWN, 2, DX::DeviceResources::c_Enable4K_UHD | DX::DeviceResources::c_EnableQHD | DX::DeviceResources::c_EnableHDR);
+            DXGI_FORMAT_UNKNOWN,
+            2,
+            DX::DeviceResources::c_Enable4K_UHD | DX::DeviceResources::c_EnableQHD | DX::DeviceResources::c_EnableHDR);
 }
 
 // Initialize the Direct3D resources required to run.
@@ -67,7 +69,7 @@ void Sample::Initialize(HWND window)
     CreateWindowSizeDependentResources();
 
     // Try to switch the display into HDR mode
-    TryEnableHDR();
+    SetDisplayMode();
 
     // Render all UI at 1080p so that it's easy to switch between 1080p/1440p/4K
     auto viewportUI = m_deviceResources->GetScreenViewport();
@@ -81,6 +83,8 @@ void Sample::Initialize(HWND window)
 void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
+
+    m_deviceResources->WaitForOrigin();
 
     m_timer.Tick([&]()
     {
@@ -164,12 +168,12 @@ void Sample::Clear()
 
     TransitionResource(commandList, m_hdrScene.Get(), D3D12_RESOURCE_STATE_UNORDERED_ACCESS, D3D12_RESOURCE_STATE_RENDER_TARGET);
 
-    auto rtvDescriptor = m_rtvPile->GetCpuHandle(HDRSceneRTV);
+    auto const rtvDescriptor = m_rtvPile->GetCpuHandle(HDRSceneRTV);
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, nullptr);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
 
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -180,11 +184,11 @@ void Sample::RenderUI(ID3D12GraphicsCommandList* commandList)
 {
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"RenderUI");
 
-    auto rtvDescriptor = m_rtvPile->GetCpuHandle(HDRSceneRTV);
+    auto const rtvDescriptor = m_rtvPile->GetCpuHandle(HDRSceneRTV);
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, nullptr);
 
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -229,7 +233,7 @@ void Sample::FinalHDRShader(ID3D12GraphicsCommandList* commandList)
     PIXEndEvent(commandList);
 }
 
-void Sample::TryEnableHDR()
+void Sample::SetDisplayMode()
 {
     if ((m_deviceResources->GetDeviceOptions() & DX::DeviceResources::c_EnableHDR) != 0 )
     {
@@ -256,7 +260,7 @@ void Sample::OnSuspending()
 void Sample::OnResuming()
 {
     // While a title is suspended, the console TV settings could have changed, so we need to call the display APIs when resuming
-    TryEnableHDR();
+    SetDisplayMode();
 
     m_deviceResources->Resume();
     m_timer.ResetElapsedTime();
@@ -270,7 +274,7 @@ void Sample::OnConstrained()
 void Sample::OnUnConstrained()
 {
     // While a title is constrained, the console TV settings could have changed, so we need to call the display APIs when unconstraining
-    TryEnableHDR();
+    SetDisplayMode();
 }
 
 #pragma endregion
@@ -285,7 +289,7 @@ void Sample::CreateDeviceDependentResources()
 
     // Use a primitive batch to draw a simple triangle
     {
-        RenderTargetState rtState(g_hdrBackBufferFormat, m_deviceResources->GetDepthBufferFormat());
+        const RenderTargetState rtState(g_hdrBackBufferFormat, m_deviceResources->GetDepthBufferFormat());
 
         m_batch = std::make_unique<PrimitiveBatch<VertexPositionColor>>(device);
         EffectPipelineStateDescription pd(&VertexPositionColor::InputLayout, CommonStates::Opaque,

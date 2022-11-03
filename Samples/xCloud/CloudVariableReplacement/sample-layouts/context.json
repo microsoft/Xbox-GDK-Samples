@@ -1,0 +1,9 @@
+﻿{ 
+  "$schema": "https://raw.githubusercontent.com/microsoft/xbox-game-streaming-tools/master/touch-adaptation-kit/schemas/context/v3.2/context.json",
+
+  "state": {
+    "Y_Visibility": true,
+    "B_Opacity": 1.0,
+    "A_Enabled": true
+  }
+}

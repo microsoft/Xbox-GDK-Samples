@@ -21,7 +21,7 @@ using Microsoft::WRL::ComPtr;
 
 namespace
 {
-    static const wchar_t* c_TRIGGER_EFFECT_NAME_TEXT[Sample::TRIGGEREFFECTS_MAX] =
+    const wchar_t* c_TRIGGER_EFFECT_NAME_TEXT[Sample::TRIGGEREFFECTS_MAX] =
     {
         L"<Trigger Test>\n",
         L"<Flat Tire>\n",
@@ -30,7 +30,7 @@ namespace
         L"<Footsteps>\n"
     };
 
-    static const wchar_t* c_TRIGGER_EFFECT_DESC_TEXT[Sample::TRIGGEREFFECTS_MAX] =
+    const wchar_t* c_TRIGGER_EFFECT_DESC_TEXT[Sample::TRIGGEREFFECTS_MAX] =
     {
         L"Use the [LT] and [RT] to test the feedback\n"
         L"function of the gamepad. The envelope is set based on\n"
@@ -204,6 +204,10 @@ void Sample::InitializeImpulseTriggerEffects()
 void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
+
+#ifdef _GAMING_XBOX
+    m_deviceResources->WaitForOrigin();
+#endif
 
     m_timer.Tick([&]()
     {

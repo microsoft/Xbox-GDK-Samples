@@ -29,7 +29,7 @@ Sample::Sample() noexcept(false) :
     m_holeSize(0.1f)
 {
     // Renders only 2D, so no need for a depth buffer.
-    m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_R10G10B10A2_UNORM, DXGI_FORMAT_UNKNOWN, 2);
+    m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_R10G10B10A2_UNORM, DXGI_FORMAT_UNKNOWN);
     m_deviceResources->RegisterDeviceNotify(this);
 }
 
@@ -50,7 +50,7 @@ void Sample::Initialize(HWND window, int width, int height)
 
     m_deviceResources->SetWindow(window, width, height);
 
-    m_deviceResources->CreateDeviceResources();  	
+    m_deviceResources->CreateDeviceResources();
     CreateDeviceDependentResources();
 
     m_deviceResources->CreateWindowSizeDependentResources();
@@ -62,6 +62,10 @@ void Sample::Initialize(HWND window, int width, int height)
 void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
+
+#ifdef _GAMING_XBOX
+    m_deviceResources->WaitForOrigin();
+#endif
 
     m_timer.Tick([&]()
     {
@@ -86,7 +90,7 @@ void Sample::Update(DX::StepTimer const& timer)
     m_keyboardButtons.Update(kb);
 
 
-    const float SPEED_OF_CHANGE = 0.25f;
+    constexpr float SPEED_OF_CHANGE = 0.25f;
 
     if (pad.IsConnected())
     {
@@ -223,8 +227,8 @@ void Sample::RenderHUD(ID3D12GraphicsCommandList* commandList)
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
-    auto size = m_deviceResources->GetOutputSize();
-    auto safe = SimpleMath::Viewport::ComputeTitleSafeArea((UINT)size.right, (UINT)size.bottom);
+    auto const size = m_deviceResources->GetOutputSize();
+    auto const safe = SimpleMath::Viewport::ComputeTitleSafeArea((UINT)size.right, (UINT)size.bottom);
 
     wchar_t textBuffer[128] = {};
     XMFLOAT2 textPos = XMFLOAT2(float(safe.left), float(safe.top));
@@ -265,14 +269,6 @@ void Sample::RenderHUD(ID3D12GraphicsCommandList* commandList)
 
 #pragma region Message Handlers
 // Message handlers
-void Sample::OnActivated()
-{
-}
-
-void Sample::OnDeactivated()
-{
-}
-
 void Sample::OnSuspending()
 {
     m_deviceResources->Suspend();
@@ -288,7 +284,7 @@ void Sample::OnResuming()
 
 void Sample::OnWindowMoved()
 {
-    auto r = m_deviceResources->GetOutputSize();
+    auto const r = m_deviceResources->GetOutputSize();
     m_deviceResources->WindowSizeChanged(r.right, r.bottom);
 }
 
@@ -313,6 +309,11 @@ void Sample::GetDefaultSize(int& width, int& height) const noexcept
 void Sample::CreateRaytracingPipeline()
 {
     auto device = m_deviceResources->GetD3DDevice();
+
+#if defined(_GAMING_XBOX_SCARLETT) && (_GRDK_VER >= 0x55F00C58 /* GDK Edition 220300 */)
+    // Save the RtPso PDB on the scratch drive
+    device->SetCompileTimeShaderPdbPathX(L"D:\\");
+#endif
 
     CD3DX12_STATE_OBJECT_DESC raytracingPipeline{ D3D12_STATE_OBJECT_TYPE_RAYTRACING_PIPELINE };
 
@@ -387,10 +388,10 @@ void Sample::BuildBottomLevelAccelerationStructure(bool buildEveryFrame)
     auto device = m_deviceResources->GetD3DDevice();
     auto commandList = m_deviceResources->GetCommandList();
 
-    const UINT vertexCount = 3;
-    const UINT vertexSize = sizeof(XMFLOAT3);
-    const UINT indexCount = 3;
-    const UINT indexSize = sizeof(UINT);
+    constexpr UINT vertexCount = 3;
+    constexpr UINT vertexSize = sizeof(XMFLOAT3);
+    constexpr UINT indexCount = 3;
+    constexpr UINT indexSize = sizeof(UINT);
 
     // Build a BLAS for one triangle...
     D3D12_RAYTRACING_GEOMETRY_DESC geometryDesc = { D3D12_RAYTRACING_GEOMETRY_TYPE_TRIANGLES, D3D12_RAYTRACING_GEOMETRY_FLAG_NONE, {} };
@@ -556,8 +557,8 @@ void Sample::CreateDeviceDependentResources()
     resourceUpload.Begin();
 
     // HUD
-    auto backBufferRts = RenderTargetState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
-    auto spritePSD = SpriteBatchPipelineStateDescription(backBufferRts, &CommonStates::AlphaBlend);
+    const RenderTargetState backBufferRts(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
+    const SpriteBatchPipelineStateDescription spritePSD(backBufferRts, &CommonStates::AlphaBlend);
     m_hudBatch = std::make_unique<SpriteBatch>(device, resourceUpload, spritePSD);
 
     wchar_t strFilePath[MAX_PATH] = {};
@@ -583,7 +584,7 @@ void Sample::CreateDeviceDependentResources()
 void Sample::CreateWindowSizeDependentResources()
 {
     auto device = m_deviceResources->GetD3DDevice();
-    RECT outputSize = m_deviceResources->GetOutputSize();
+    auto const outputSize = m_deviceResources->GetOutputSize();
 
     D3D12_HEAP_PROPERTIES defaultHeapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
 

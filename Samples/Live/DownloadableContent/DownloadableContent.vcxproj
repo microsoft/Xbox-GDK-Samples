@@ -495,14 +495,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DLCPackagePC\makedlcpkg.cmd" />
-    <None Include="DLCPackage\Package_Scarlett\MicrosoftGame.config" />
-    <None Include="DLCPackage\Package_XboxOne\MicrosoftGame.config" />
-    <None Include="DLCPackagePC\Package\MicrosoftGame.config">
+    <None Include="DLCPackage\Package_Scarlett\MicrosoftGameConfig.mgc" />
+    <None Include="DLCPackage\Package_XboxOne\MicrosoftGameConfig.mgc" />
+    <None Include="DLCPackagePC\Package\MicrosoftGameConfig.mgc">
       <FileType>Document</FileType>
     </None>
-    <MGCCompile Include="MicrosoftGame.Config">
-      <SubType>Designer</SubType>
-    </MGCCompile>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
@@ -579,11 +576,11 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
       <DeploymentContent>false</DeploymentContent>
     </None>
-    <None Include="Readme_ko-KR.docx" >
+    <None Include="Readme_ko-KR.docx">
       <ExcludedFromBuild>true</ExcludedFromBuild>
       <DeploymentContent>false</DeploymentContent>
     </None>
-    <None Include="Readme_zh-CN.docx" >
+    <None Include="Readme_zh-CN.docx">
       <ExcludedFromBuild>true</ExcludedFromBuild>
       <DeploymentContent>false</DeploymentContent>
     </None>
@@ -675,6 +672,32 @@
     <None Include="DLCPackagePC\Package\Assets\SplashScreen.png" />
     <None Include="DLCPackagePC\Package\Assets\StoreLogo.png" />
     <None Include="DLCPackagePC\Package\Image.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig_PC.mgc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
+    </MGCCompile>
+    <MGCCompile Include="MicrosoftGameConfig_Scarlett.mgc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
+    </MGCCompile>
+    <MGCCompile Include="MicrosoftGameConfig_XboxOne.mgc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">true</ExcludedFromBuild>
+    </MGCCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

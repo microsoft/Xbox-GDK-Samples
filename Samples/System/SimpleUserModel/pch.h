@@ -30,23 +30,42 @@
 // WinHelp is deprecated
 #define NOHELP
 
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+
 #include <Windows.h>
 
 #include <wrl/client.h>
 #include <wrl/event.h>
 
-#include <gxdk.h>
+#include <grdk.h>
 
-#if _GXDK_VER < 0x4A6117BE /* GXDK Edition 210400 */
-#error This sample requires the April 2021 GDK or later
+#if (defined(_GAMING_XBOX))
+#include <gxdk.h>
 #endif
+
+
+#if (_GRDK_VER < 0x55F01108 /* GDK Edition 220600 */)
+#error This sample requires the June 2022 GDK or later for PC
+#endif
+
 
 #ifdef _GAMING_XBOX_SCARLETT
 #include <d3d12_xs.h>
 #include <d3dx12_xs.h>
-#else
+#elif defined(_GAMING_XBOX)
 #include <d3d12_x.h>
 #include <d3dx12_x.h>
+#else
+#include <d3d12.h>
+#include <dxgi1_6.h>
+
+#ifdef _DEBUG
+#include <dxgidebug.h>
+#endif
+
+#include "d3dx12.h"
 #endif
 
 #define _XM_NO_XMVECTOR_OVERLOADS_
@@ -69,20 +88,30 @@
 #include <stdexcept>
 #include <string>
 #include <system_error>
+#include <tuple>
 
+#ifdef _GAMING_XBOX
 #include <pix3.h>
-#include <XAsync.h>
+#else
+// To use graphics markup events with the latest version of PIX, change this to include <pix3.h>
+// then add the NuGet package WinPixEventRuntime to the project.
+#include <pix.h>
+#endif
 #include <XGame.h>
 #include <XSystem.h>
 #include <XTaskQueue.h>
 #include <XUser.h>
 
+#include "DirectXHelpers.h"
 #include "GamePad.h"
 #include "GraphicsMemory.h"
+#include "Keyboard.h"
+#include "Mouse.h"
 #include "RenderTargetState.h"
 
 #define UITK_ENABLE_FREETYPE
 #include "UITK.h"
+
 
 namespace DX
 {

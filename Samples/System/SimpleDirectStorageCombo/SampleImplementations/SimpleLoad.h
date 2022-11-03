@@ -15,8 +15,8 @@ private:
     static const uint32_t c_dataReadSize = 65536;
 
 public:
-    SimpleLoad() {}
-    ~SimpleLoad() {}
+    SimpleLoad() = default;
+    ~SimpleLoad() = default;
 
     bool RunSample(const std::wstring& fileName);
 };

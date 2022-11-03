@@ -20,6 +20,13 @@
 
 using namespace DirectX;
 
+#ifdef __clang__
+#pragma clang diagnostic ignored "-Wcovered-switch-default"
+#pragma clang diagnostic ignored "-Wswitch-enum"
+#endif
+
+#pragma warning(disable : 4061)
+
 namespace
 {
     std::unique_ptr<Sample> g_sample;
@@ -27,11 +34,12 @@ namespace
     HANDLE g_plmSuspendComplete = nullptr;
     HANDLE g_plmSignalResume = nullptr;
 #endif
-};
+}
 
 LPCWSTR g_szAppName = L"Meshlet Culling";
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+void ExitSample() noexcept;
 
 // Entry point
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
@@ -55,9 +63,10 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
         if (hr == E_GAMERUNTIME_DLL_NOT_FOUND || hr == E_GAMERUNTIME_VERSION_MISMATCH)
         {
 #ifdef _GAMING_DESKTOP
-            (void)MessageBoxW(nullptr, L"Game Runtime is not installed on this system or needs updating.", g_szAppName, MB_ICONERROR | MB_OK);
+            std::ignore = MessageBoxW(nullptr, L"Game Runtime is not installed on this system or needs updating.", g_szAppName, MB_ICONERROR | MB_OK);
 #endif
         }
+        return 1;
     }
 
 #ifdef _GAMING_XBOX
@@ -79,7 +88,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
         wcex.lpfnWndProc = WndProc;
         wcex.hInstance = hInstance;
         wcex.hCursor = LoadCursorW(nullptr, IDC_ARROW);
-        wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+        wcex.hbrBackground = reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1);
         wcex.lpszClassName = L"SimpleMeshShaderWindowClass";
         if (!RegisterClassExW(&wcex))
             return 1;
@@ -133,7 +142,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
                 PostMessage(reinterpret_cast<HWND>(context), WM_USER, 0, 0);
 
                 // To defer suspend, you must wait to exit this callback
-                (void)WaitForSingleObject(g_plmSuspendComplete, INFINITE);
+                std::ignore = WaitForSingleObject(g_plmSuspendComplete, INFINITE);
             }
             else
             {
@@ -163,20 +172,20 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
 
 #ifdef _GAMING_XBOX
     UnregisterAppStateChangeNotification(hPLM);
-    
+
     CloseHandle(g_plmSuspendComplete);
     CloseHandle(g_plmSignalResume);
 #endif
 
     XGameRuntimeUninitialize();
 
-    return (int) msg.wParam;
+    return static_cast<int>(msg.wParam);
 }
 
 // Windows procedure
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-#ifndef _GAMING_XBOX
+#ifdef _GAMING_DESKTOP
     static bool s_in_sizemove = false;
     static bool s_in_suspend = false;
     static bool s_minimized = false;
@@ -231,7 +240,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // Complete deferral
             SetEvent(g_plmSuspendComplete);
 
-            (void)WaitForSingleObject(g_plmSignalResume, INFINITE);
+            std::ignore = WaitForSingleObject(g_plmSignalResume, INFINITE);
 
             sample->OnResuming();
         }
@@ -245,7 +254,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         else
         {
             PAINTSTRUCT ps;
-            (void)BeginPaint(hWnd, &ps);
+            std::ignore = BeginPaint(hWnd, &ps);
             EndPaint(hWnd, &ps);
         }
         break;
@@ -297,12 +306,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
 
     case WM_GETMINMAXINFO:
-    {
-        auto info = reinterpret_cast<MINMAXINFO*>(lParam);
-        info->ptMinTrackSize.x = 320;
-        info->ptMinTrackSize.y = 200;
-    }
-    break;
+        if (lParam)
+        {
+            auto info = reinterpret_cast<MINMAXINFO*>(lParam);
+            info->ptMinTrackSize.x = 320;
+            info->ptMinTrackSize.y = 200;
+        }
+        break;
 
     case WM_POWERBROADCAST:
         switch (wParam)
@@ -359,7 +369,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
             else
             {
-                SetWindowLongPtr(hWnd, GWL_STYLE, 0);
+                SetWindowLongPtr(hWnd, GWL_STYLE, WS_POPUP);
                 SetWindowLongPtr(hWnd, GWL_EXSTYLE, WS_EX_TOPMOST);
 
                 SetWindowPos(hWnd, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
@@ -387,7 +397,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 }
 
 // Exit helper
-void ExitSample()
+void ExitSample() noexcept
 {
     PostQuitMessage(0);
 }

@@ -1,5 +1,5 @@
 @echo Copying over the MicrosoftGame.config file for the Scarlett device family
-copy /b MicrosoftGame_Scarlett.config .\Gaming.Xbox.Scarlett.x64\Layout\Image\Loose\MicrosoftGame.config
+copy /b MicrosoftGameConfig_Scarlett.mgc .\Gaming.Xbox.Scarlett.x64\Layout\Image\Loose\MicrosoftGame.config
 
 copy /b .\Assets\feature*.png .\Gaming.Xbox.Scarlett.x64\Layout\Image\Loose\Assets\
 

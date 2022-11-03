@@ -161,7 +161,7 @@ void Sample::Initialize(HWND window)
 
     DX::ThrowIfFailed(GameInputCreate(&m_gameInput));
     DX::ThrowIfFailed(m_gameInput->RegisterDeviceCallback(nullptr,
-        GameInputKindAny,
+        GameInputKindRacingWheel,
         GameInputDeviceConnected,
         GameInputBlockingEnumeration,
         this,

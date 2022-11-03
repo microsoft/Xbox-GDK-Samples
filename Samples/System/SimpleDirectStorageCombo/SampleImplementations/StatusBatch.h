@@ -22,8 +22,8 @@ private:
     Microsoft::WRL::ComPtr <DStorageStatusArrayCrossPlatform> m_statusEntries;
 
 public:
-    StatusBatch() {}
-    ~StatusBatch() {}
+    StatusBatch() = default;
+    ~StatusBatch() = default;
 
     bool RunSample(const std::wstring& fileName, uint64_t dataFileSize);
 };

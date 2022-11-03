@@ -1,6 +1,8 @@
 //
 // DeviceResources.h - A wrapper for the Direct3D 12.X device and swapchain
 //
+// Explicit HDR10+GameDVR rendering variant.
+//
 
 #pragma once
 
@@ -10,9 +12,11 @@ namespace DX
     class DeviceResources
     {
     public:
-        static constexpr unsigned int c_Enable4K_UHD = 0x1;
-        static constexpr unsigned int c_EnableQHD    = 0x2;
-        static constexpr unsigned int c_EnableHDR    = 0x4;
+        static constexpr unsigned int c_Enable4K_UHD         = 0x1;
+        static constexpr unsigned int c_EnableQHD            = 0x2;
+        static constexpr unsigned int c_EnableHDR            = 0x4;
+        static constexpr unsigned int c_ReverseDepth         = 0x8;
+        static constexpr unsigned int c_AmplificationShaders = 0x10;
 
         DeviceResources(DXGI_FORMAT backBufferFormat = DXGI_FORMAT_B8G8R8A8_UNORM,
                         DXGI_FORMAT depthBufferFormat = DXGI_FORMAT_D32_FLOAT,
@@ -26,7 +30,11 @@ namespace DX
         DeviceResources(DeviceResources const&) = delete;
         DeviceResources& operator= (DeviceResources const&) = delete;
 
+#ifdef _GAMING_XBOX_SCARLETT
+        void CreateDeviceResources(D3D12XBOX_CREATE_DEVICE_FLAGS createDeviceFlags = D3D12XBOX_CREATE_DEVICE_FLAG_NONE);
+#else
         void CreateDeviceResources();
+#endif
         void CreateWindowSizeDependentResources();
         void SetWindow(HWND window) noexcept { m_window = window; }
         void Prepare(D3D12_RESOURCE_STATES beforeState = D3D12_RESOURCE_STATE_PRESENT,
@@ -36,6 +44,7 @@ namespace DX
         void Suspend();
         void Resume();
         void WaitForGpu() noexcept;
+        void WaitForOrigin();
 
         // Device Accessors.
         RECT GetOutputSize() const noexcept { return m_outputSize; }
@@ -69,8 +78,8 @@ namespace DX
         }
 
         // Direct3D HDR Game DVR support for Xbox One.
-        ID3D12Resource*             GetGameDVRRenderTarget() const noexcept { return m_renderTargetsGameDVR[m_backBufferIndex].Get(); }
-        DXGI_FORMAT                 GetGameDVRFormat() const noexcept { return m_gameDVRFormat; }
+        ID3D12Resource* GetGameDVRRenderTarget() const noexcept { return m_renderTargetsGameDVR[m_backBufferIndex].Get(); }
+        DXGI_FORMAT GetGameDVRFormat() const noexcept { return m_gameDVRFormat; }
 
         CD3DX12_CPU_DESCRIPTOR_HANDLE GetGameDVRRenderTargetView() const noexcept
         {
@@ -80,7 +89,6 @@ namespace DX
         }
 
     private:
-        void MoveToNextFrame();
         void RegisterFrameEvents();
 
         static constexpr size_t MAX_BACK_BUFFER_COUNT = 3;

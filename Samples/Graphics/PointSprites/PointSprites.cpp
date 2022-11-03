@@ -10,7 +10,7 @@
 
 #include "ATGColors.h"
 
-extern void ExitSample();
+extern void ExitSample() noexcept;
 
 using namespace DirectX;
 
@@ -21,23 +21,25 @@ namespace
     //-------------------------------------
     // Sample Constants
 
-    const wchar_t*      g_sampleTitle = L"Point Sprites";
+    const wchar_t*  g_sampleTitle = L"Point Sprites";
 
-    const int    s_vertexStride = (3 + 4) * 4;
-    const int    s_numParticles = 32 * 1024;
-    const float  s_maxParticleColor = 0.2f;
-    const float  s_maxParticleSize = 30.0f;
-    const float  s_defaultParticleSize = 4.0f;
-    const int    s_runsPerTest = 3;
-    const int    s_runsPerSequence = 2;
+    constexpr int   c_vertexStride = (3 + 4) * 4;
+    constexpr int   c_numParticles = 32 * 1024;
+    constexpr float c_maxParticleColor = 0.2f;
+    constexpr float c_maxParticleSize = 30.0f;
+    constexpr float c_defaultParticleSize = 4.0f;
+    constexpr int   c_runsPerTest = 3;
+    constexpr int   c_runsPerSequence = 2;
 
-    const D3D12_INPUT_ELEMENT_DESC s_elementDesc[] =
+    constexpr uint32_t c_elementDescNum = 2;
+
+    const D3D12_INPUT_ELEMENT_DESC s_elementDesc[c_elementDescNum] =
     {
         { "TEXCOORD",   0, DXGI_FORMAT_R32G32B32_FLOAT,     0, 0,  D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
         { "COLOR",      0, DXGI_FORMAT_R32G32B32A32_FLOAT,  0, 12, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
     };
 
-    const D3D12_INPUT_ELEMENT_DESC s_instanceElementDesc[] =
+    const D3D12_INPUT_ELEMENT_DESC s_instanceElementDesc[c_elementDescNum] =
     {
         { "TEXCOORD",   0, DXGI_FORMAT_R32G32B32_FLOAT,     0, 0,  D3D12_INPUT_CLASSIFICATION_PER_INSTANCE_DATA, 1 },
         { "COLOR",      0, DXGI_FORMAT_R32G32B32A32_FLOAT,  0, 12, D3D12_INPUT_CLASSIFICATION_PER_INSTANCE_DATA, 1 },
@@ -50,7 +52,7 @@ Sample::Sample() noexcept(false)
     , m_displayHeight(0)
     , m_frame(0)
     , m_vbView{}
-    , m_particleSize(s_defaultParticleSize)
+    , m_particleSize(c_defaultParticleSize)
     , m_zeroViewport(false)
     , m_refreshParticles(true)
     , m_selectorIdx(0)
@@ -90,6 +92,8 @@ void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
 
+    m_deviceResources->WaitForOrigin();
+
     m_timer.Tick([&]()
     {
         Update(m_timer);
@@ -118,7 +122,7 @@ void Sample::Update(DX::StepTimer const&)
 
         if (pad.IsAPressed())
         {
-            m_particleSize = std::min(m_particleSize + 0.5f, s_maxParticleSize);
+            m_particleSize = std::min(m_particleSize + 0.5f, c_maxParticleSize);
             m_refreshParticles = true;
         }
 
@@ -189,13 +193,13 @@ void Sample::Render()
 
     // Set the common resource state to the pipeline.
     ID3D12DescriptorHeap* heaps[] = { m_srvPile->Heap() };
-    commandList->SetDescriptorHeaps(_countof(heaps), heaps);
+    commandList->SetDescriptorHeaps(static_cast<UINT>(std::size(heaps)), heaps);
 
     commandList->SetGraphicsRootSignature(m_commonRS.Get());
 
     float cbData[] = { 1.f / m_displayWidth, 1.f / m_displayHeight, };
     commandList->SetGraphicsRoot32BitConstants(RS_ConstantBuffer, 2, &cbData, 0);
-    commandList->SetGraphicsRoot32BitConstant(RS_ConstantBuffer, UINT(s_numParticles), 2);
+    commandList->SetGraphicsRoot32BitConstant(RS_ConstantBuffer, UINT(c_numParticles), 2);
     commandList->SetGraphicsRootShaderResourceView(RS_VertexBuffer, m_vertices->GetGPUVirtualAddress());
     commandList->SetGraphicsRootDescriptorTable(RS_ParticleTex, m_srvPile->GetGpuHandle(SRV_ParticleTex));
 
@@ -203,21 +207,21 @@ void Sample::Render()
 
     ClearTestResults();
 
-    // Run the forward sequence test s_runsPerSequence times
-    for (int i = 0; i < s_runsPerSequence; ++i)
+    // Run the forward sequence test c_runsPerSequence times
+    for (int i = 0; i < c_runsPerSequence; ++i)
     {
         RunTests(m_forwardSequence, commandList);
     }
 
-    // Run the random sequence test s_runsPerSequence times
-    for (int i = 0; i < s_runsPerSequence; ++i)
+    // Run the random sequence test c_runsPerSequence times
+    for (int i = 0; i < c_runsPerSequence; ++i)
     {
         CreateRandomTestSequence(m_randomSequence);
         RunTests(m_randomSequence, commandList);
     }
 
-    // Run the reverse sequence test s_runsPerSequence times
-    for (int i = 0; i < s_runsPerSequence; ++i)
+    // Run the reverse sequence test c_runsPerSequence times
+    for (int i = 0; i < c_runsPerSequence; ++i)
     {
         RunTests(m_reverseSequence, commandList);
     }
@@ -239,11 +243,11 @@ void Sample::Render()
 
         m_hudBatch->Begin(commandList);
 
-        const float ParticleCountPerTest = float(s_numParticles * s_runsPerTest) * 0.000001f; // In millions
-        const float TotalParticleCount = float(s_numParticles * s_runsPerTest * s_runsPerSequence * 3 * enabledTestCount) * 0.000001f; // In millions
+        const float ParticleCountPerTest = float(c_numParticles * c_runsPerTest) * 0.000001f; // In millions
+        const float TotalParticleCount = float(c_numParticles * c_runsPerTest * c_runsPerSequence * 3 * enabledTestCount) * 0.000001f; // In millions
 
         wchar_t textBuffer[1024] = {};
-        swprintf_s(textBuffer, _countof(textBuffer),
+        swprintf_s(textBuffer,
             L"Particles per Test: %.2f mln \n"
             "Total Rendered Particles: %.2f mln\n"
             "ParticleSize: %.1f\n"
@@ -288,10 +292,10 @@ void Sample::Render()
             Test& test = *it;
             auto testColor = test.Enabled ? DirectX::Colors::Green : DirectX::Colors::Red;
 
-            swprintf_s(textBuffer, _countof(textBuffer), L"%s", test.Name);
+            swprintf_s(textBuffer, L"%s", test.Name);
             m_smallFont->DrawString(m_hudBatch.get(), textBuffer, XMFLOAT2(xPos - 460, yPos), testColor);
 
-            swprintf_s(textBuffer, _countof(textBuffer), L"%.2f", test.AverageTimeResult);
+            swprintf_s(textBuffer, L"%.2f", test.AverageTimeResult);
             float xOffset = XMVectorGetX(m_smallFont->MeasureString(textBuffer));
             m_smallFont->DrawString(m_hudBatch.get(), textBuffer, XMFLOAT2(xPos - xOffset, yPos), testColor);
 
@@ -322,16 +326,16 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
-    auto dsvDescriptor = m_deviceResources->GetDepthStencilView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
     commandList->ClearRenderTargetView(rtvDescriptor, DirectX::Colors::Black, 0, nullptr);
     commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -364,15 +368,13 @@ void Sample::CreateDeviceDependentResources()
     m_gpuTimer = std::make_unique<DX::GPUTimer>(device, m_deviceResources->GetCommandQueue());
     m_commonStates = std::make_unique<DirectX::CommonStates>(device);
     m_srvPile = std::make_unique<DescriptorPile>(device,
-        D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV,
-        D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE,
         128,
         SRV_Count);
 
     auto resourceUpload = ResourceUploadBatch(device);
     resourceUpload.Begin();
 
-    auto backBufferRts = RenderTargetState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
+    const RenderTargetState backBufferRts(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
     auto spritePSD = SpriteBatchPipelineStateDescription(backBufferRts, &CommonStates::AlphaBlend);
     m_hudBatch = std::make_unique<SpriteBatch>(device, resourceUpload, spritePSD);
 
@@ -383,8 +385,8 @@ void Sample::CreateDeviceDependentResources()
     finished.wait();
 
     // Create our vertex buffer resource.
-    auto defaultHeapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
-    auto desc = CD3DX12_RESOURCE_DESC::Buffer(s_vertexStride * s_numParticles);
+    const CD3DX12_HEAP_PROPERTIES defaultHeapProps(D3D12_HEAP_TYPE_DEFAULT);
+    auto desc = CD3DX12_RESOURCE_DESC::Buffer(c_vertexStride * c_numParticles);
 
     DX::ThrowIfFailed(device->CreateCommittedResource(
         &defaultHeapProps,
@@ -397,8 +399,8 @@ void Sample::CreateDeviceDependentResources()
     m_vertices->SetName(L"Vertex Buffer");
 
     m_vbView.BufferLocation = m_vertices->GetGPUVirtualAddress();
-    m_vbView.SizeInBytes = s_vertexStride * s_numParticles;
-    m_vbView.StrideInBytes = s_vertexStride;
+    m_vbView.SizeInBytes = c_vertexStride * c_numParticles;
+    m_vbView.StrideInBytes = c_vertexStride;
 
     CreateTestPSOs();
 }
@@ -481,7 +483,7 @@ void Sample::CreateTestPSOs()
         auto nativeQuadInstVS = DX::ReadData(L"RenderNativeQuadInstancingVS.cso");
 
         psoDesc.InputLayout.pInputElementDescs = s_instanceElementDesc;
-        psoDesc.InputLayout.NumElements = _countof(s_instanceElementDesc);
+        psoDesc.InputLayout.NumElements = c_elementDescNum;
         psoDesc.VS = { nativeQuadInstVS.data(), nativeQuadInstVS.size() };
         psoDesc.PrimitiveTopologyType = D3D12XBOX_PRIMITIVE_TOPOLOGY_TYPE_QUAD;
 
@@ -493,7 +495,7 @@ void Sample::CreateTestPSOs()
         auto triStripQuadInstVS = DX::ReadData(L"RenderTriangleStripQuadInstancingVS.cso");
 
         psoDesc.InputLayout.pInputElementDescs = s_instanceElementDesc;
-        psoDesc.InputLayout.NumElements = _countof(s_instanceElementDesc);
+        psoDesc.InputLayout.NumElements = c_elementDescNum;
         psoDesc.VS = { triStripQuadInstVS.data(), triStripQuadInstVS.size() };
         psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
 
@@ -538,7 +540,7 @@ void Sample::CreateTestPSOs()
         auto render3InstVS = DX::ReadData(L"Render3InstancingVS.cso");
 
         psoDesc.InputLayout.pInputElementDescs = s_instanceElementDesc;
-        psoDesc.InputLayout.NumElements = _countof(s_instanceElementDesc);
+        psoDesc.InputLayout.NumElements = c_elementDescNum;
         psoDesc.VS = { render3InstVS.data(), render3InstVS.size() };
         psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
 
@@ -550,7 +552,7 @@ void Sample::CreateTestPSOs()
         auto render4InstVS = DX::ReadData(L"Render4InstancingVS.cso");
 
         psoDesc.InputLayout.pInputElementDescs = s_instanceElementDesc;
-        psoDesc.InputLayout.NumElements = _countof(s_instanceElementDesc);
+        psoDesc.InputLayout.NumElements = c_elementDescNum;
         psoDesc.VS = { render4InstVS.data(), render4InstVS.size() };
         psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
 
@@ -563,7 +565,7 @@ void Sample::CreateTestPSOs()
 
         // OffChip
         psoDesc.InputLayout.pInputElementDescs = s_elementDesc;
-        psoDesc.InputLayout.NumElements = _countof(s_elementDesc);
+        psoDesc.InputLayout.NumElements = c_elementDescNum;
         psoDesc.VS = { passVS.data(), passVS.size() };
         psoDesc.GS = { expand3GS.data(), expand3GS.size() };
         psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT;
@@ -571,7 +573,7 @@ void Sample::CreateTestPSOs()
         DX::ThrowIfFailed(device->CreateGraphicsPipelineState(&psoDesc, IID_GRAPHICS_PPV_ARGS(m_triGeoOffChipPSO.ReleaseAndGetAddressOf())));
     }
 
-#ifdef _GAMING_XBOX_XBOXONE // Xbox Scarlett doesn't have on/off-chip specification
+#ifdef _GAMING_XBOX_XBOXONE // Xbox Series X|S doesn't have on/off-chip specification
     {
         auto expand3OnChipGS = DX::ReadData(L"Expand3OnChipGS.cso");
 
@@ -590,7 +592,7 @@ void Sample::CreateTestPSOs()
 
         // OffChip
         psoDesc.InputLayout.pInputElementDescs = s_elementDesc;
-        psoDesc.InputLayout.NumElements = _countof(s_elementDesc);
+        psoDesc.InputLayout.NumElements = c_elementDescNum;
         psoDesc.VS = { passVS.data(), passVS.size() };
         psoDesc.GS = { expand4GS.data(), expand4GS.size() };
         psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT;
@@ -599,7 +601,7 @@ void Sample::CreateTestPSOs()
         DX::ThrowIfFailed(device->CreateGraphicsPipelineState(&psoDesc, IID_GRAPHICS_PPV_ARGS(m_quadGeoOffChipPSO.ReleaseAndGetAddressOf())));
     }
 
-#ifdef _GAMING_XBOX_XBOXONE // Xbox Scarlett doesn't have on/off-chip specification
+#ifdef _GAMING_XBOX_XBOXONE // Xbox Series X|S doesn't have on/off-chip specification
     {
         auto expand4OnChipGS = DX::ReadData(L"Expand4OnChipGS.cso");
 
@@ -626,7 +628,7 @@ void Sample::CreateTestPSOs()
         DX::ThrowIfFailed(device->CreateGraphicsPipelineState(&psoDesc, IID_GRAPHICS_PPV_ARGS(m_onlyTriGeoOffChipPSO.ReleaseAndGetAddressOf())));
     }
 
-#ifdef _GAMING_XBOX_XBOXONE // Xbox Scarlett doesn't have on/off-chip specification
+#ifdef _GAMING_XBOX_XBOXONE // Xbox Series X|S doesn't have on/off-chip specification
     {
         auto onlyExpand3OnChipGS = DX::ReadData(L"OnlyExpand3OnChipGS.cso");
 
@@ -653,7 +655,7 @@ void Sample::CreateTestPSOs()
         DX::ThrowIfFailed(device->CreateGraphicsPipelineState(&psoDesc, IID_GRAPHICS_PPV_ARGS(m_onlyQuadGeoOffChipPSO.ReleaseAndGetAddressOf())));
     }
 
-#ifdef _GAMING_XBOX_XBOXONE // Xbox Scarlett doesn't have on/off-chip specification
+#ifdef _GAMING_XBOX_XBOXONE // Xbox Series X|S doesn't have on/off-chip specification
     {
         auto onlyExpand4OnChipGS = DX::ReadData(L"OnlyExpand4OnChipGS.cso");
 
@@ -672,7 +674,7 @@ void Sample::CreateTestPSOs()
         auto render3DS = DX::ReadData(L"Render3DS.cso");
 
         psoDesc.InputLayout.pInputElementDescs = s_elementDesc;
-        psoDesc.InputLayout.NumElements = _countof(s_elementDesc);
+        psoDesc.InputLayout.NumElements = c_elementDescNum;
         psoDesc.VS = { passVS.data(), passVS.size() };
         psoDesc.HS = { render3HS.data(), render3HS.size() };
         psoDesc.DS = { render3DS.data(), render3DS.size() };
@@ -689,7 +691,7 @@ void Sample::CreateTestPSOs()
         auto render4DS = DX::ReadData(L"Render4DS.cso");
 
         psoDesc.InputLayout.pInputElementDescs = s_elementDesc;
-        psoDesc.InputLayout.NumElements = _countof(s_elementDesc);
+        psoDesc.InputLayout.NumElements = c_elementDescNum;
         psoDesc.VS = { passVS.data(), passVS.size() };
         psoDesc.HS = { render4HS.data(), render4HS.size() };
         psoDesc.DS = { render4DS.data(), render4DS.size() };
@@ -740,8 +742,8 @@ void Sample::UpdateVertexData(ID3D12GraphicsCommandList* commandList)
     srand(0);
 
     // Generate the vertex data
-    static float vbData[7 * s_numParticles];
-    for (int i = 0; i < s_numParticles; ++i)
+    static float vbData[7 * c_numParticles];
+    for (int i = 0; i < c_numParticles; ++i)
     {
         float* p = &vbData[i * 7];
 
@@ -749,9 +751,9 @@ void Sample::UpdateVertexData(ID3D12GraphicsCommandList* commandList)
         p[1] = m_displayHeight * (float)rand() / (float)RAND_MAX;
         p[2] = m_particleSize * (float)rand() / (float)RAND_MAX;
 
-        p[3] = s_maxParticleColor * (float)rand() / (float)RAND_MAX;
-        p[4] = s_maxParticleColor * (float)rand() / (float)RAND_MAX;
-        p[5] = s_maxParticleColor * (float)rand() / (float)RAND_MAX;
+        p[3] = c_maxParticleColor * (float)rand() / (float)RAND_MAX;
+        p[4] = c_maxParticleColor * (float)rand() / (float)RAND_MAX;
+        p[5] = c_maxParticleColor * (float)rand() / (float)RAND_MAX;
         p[6] = (float)rand() / (float)RAND_MAX;
     }
 
@@ -785,7 +787,7 @@ void Sample::RegisterTests()
     RegisterTest(true, L"VS instanced triangles", &Sample::TestVSInstancedTriangles);
     RegisterTest(true, L"VS instanced quads", &Sample::TestVSInstancedQuads);
 
-#ifdef _GAMING_XBOX_XBOXONE // Xbox Scarlett doesn't have on/off-chip specification
+#ifdef _GAMING_XBOX_XBOXONE // Xbox Series X|S doesn't have on/off-chip specification
     RegisterTest(true, L"GS triangles (off chip - default)", &Sample::TestGSTriangles<false>);
     RegisterTest(true, L"GS quads (off chip - default)", &Sample::TestGSQuads<false>);
     RegisterTest(true, L"GS only triangles (off chip - default)", &Sample::TestGSOnlyTriangles<false>);
@@ -934,10 +936,10 @@ void Sample::TestVSNativeQuads(Test& test, ID3D12GraphicsCommandList* commandLis
     commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_QUADLIST);
 
     m_gpuTimer->Start(commandList, test.Id);
-    for (int i = 0; i < s_runsPerTest; ++i)
+    for (int i = 0; i < c_runsPerTest; ++i)
     {
         // multiplying the number of verts by 4 because each 4 verts will make a quad
-        commandList->DrawInstanced(s_numParticles * 4, 1, 0, 0);
+        commandList->DrawInstanced(c_numParticles * 4, 1, 0, 0);
     }
     m_gpuTimer->Stop(commandList, test.Id);
 }
@@ -948,9 +950,9 @@ void Sample::TestVSNativeInstancedQuads(Test& test, ID3D12GraphicsCommandList* c
     commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_QUADLIST);
 
     m_gpuTimer->Start(commandList, test.Id);
-    for (int i = 0; i < s_runsPerTest; ++i)
+    for (int i = 0; i < c_runsPerTest; ++i)
     {
-        commandList->DrawInstanced(4, s_numParticles, 0, 0);
+        commandList->DrawInstanced(4, c_numParticles, 0, 0);
     }
     m_gpuTimer->Stop(commandList, test.Id);
 }
@@ -961,10 +963,10 @@ void Sample::TestVSTriangleStripInstancedQuads(Test& test, ID3D12GraphicsCommand
     commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
     m_gpuTimer->Start(commandList, test.Id);
-    for (int i = 0; i < s_runsPerTest; ++i)
+    for (int i = 0; i < c_runsPerTest; ++i)
     {
         // multiplying the number of verts by 4 because each 4 verts will make a quad
-        commandList->DrawInstanced(4, s_numParticles, 0, 0);
+        commandList->DrawInstanced(4, c_numParticles, 0, 0);
     }
     m_gpuTimer->Stop(commandList, test.Id);
 }
@@ -975,10 +977,10 @@ void Sample::TestVSRectListQuads(Test& test, ID3D12GraphicsCommandList* commandL
     commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_RECTLIST);
 
     m_gpuTimer->Start(commandList, test.Id);
-    for (int i = 0; i < s_runsPerTest; ++i)
+    for (int i = 0; i < c_runsPerTest; ++i)
     {
         // multiplying the number of verts by 3 because each 3 verts will make a quad
-        commandList->DrawInstanced(s_numParticles * 3, 1, 0, 0);
+        commandList->DrawInstanced(c_numParticles * 3, 1, 0, 0);
     }
     m_gpuTimer->Stop(commandList, test.Id);
 }
@@ -989,10 +991,10 @@ void Sample::TestVSTriangles(Test& test, ID3D12GraphicsCommandList* commandList)
     commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
     m_gpuTimer->Start(commandList, test.Id);
-    for (int i = 0; i < s_runsPerTest; ++i)
+    for (int i = 0; i < c_runsPerTest; ++i)
     {
         // multiplying the number of verts by 3 because each 3 verts will make a triangle
-        commandList->DrawInstanced(s_numParticles * 3, 1, 0, 0);
+        commandList->DrawInstanced(c_numParticles * 3, 1, 0, 0);
     }
     m_gpuTimer->Stop(commandList, test.Id);
 }
@@ -1003,10 +1005,10 @@ void Sample::TestVSQuads(Test& test, ID3D12GraphicsCommandList* commandList)
     commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
     m_gpuTimer->Start(commandList, test.Id);
-    for (int i = 0; i < s_runsPerTest; ++i)
+    for (int i = 0; i < c_runsPerTest; ++i)
     {
         // multiplying the number of verts by 6 because each 6 verts will make two triangles
-        commandList->DrawInstanced(s_numParticles * 6, 1, 0, 0);
+        commandList->DrawInstanced(c_numParticles * 6, 1, 0, 0);
     }
     m_gpuTimer->Stop(commandList, test.Id);
 }
@@ -1017,9 +1019,9 @@ void Sample::TestVSInstancedTriangles(Test& test, ID3D12GraphicsCommandList* com
     commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
     m_gpuTimer->Start(commandList, test.Id);
-    for (int i = 0; i < s_runsPerTest; ++i)
+    for (int i = 0; i < c_runsPerTest; ++i)
     {
-        commandList->DrawInstanced(3, s_numParticles, 0, 0);
+        commandList->DrawInstanced(3, c_numParticles, 0, 0);
     }
     m_gpuTimer->Stop(commandList, test.Id);
 }
@@ -1030,9 +1032,9 @@ void Sample::TestVSInstancedQuads(Test& test, ID3D12GraphicsCommandList* command
     commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
     m_gpuTimer->Start(commandList, test.Id);
-    for (int i = 0; i < s_runsPerTest; ++i)
+    for (int i = 0; i < c_runsPerTest; ++i)
     {
-        commandList->DrawInstanced(6, s_numParticles, 0, 0);
+        commandList->DrawInstanced(6, c_numParticles, 0, 0);
     }
     m_gpuTimer->Stop(commandList, test.Id);
 }
@@ -1048,9 +1050,9 @@ void Sample::TestGSTriangles(Test& test, ID3D12GraphicsCommandList* commandList)
     commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
 
     m_gpuTimer->Start(commandList, test.Id);
-    for (int i = 0; i < s_runsPerTest; ++i)
+    for (int i = 0; i < c_runsPerTest; ++i)
     {
-        commandList->DrawInstanced(s_numParticles, 1, 0, 0);
+        commandList->DrawInstanced(c_numParticles, 1, 0, 0);
     }
     m_gpuTimer->Stop(commandList, test.Id);
 }
@@ -1062,9 +1064,9 @@ void Sample::TestGSQuads(Test& test, ID3D12GraphicsCommandList* commandList)
     commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
 
     m_gpuTimer->Start(commandList, test.Id);
-    for (int i = 0; i < s_runsPerTest; ++i)
+    for (int i = 0; i < c_runsPerTest; ++i)
     {
-        commandList->DrawInstanced(s_numParticles, 1, 0, 0);
+        commandList->DrawInstanced(c_numParticles, 1, 0, 0);
     }
     m_gpuTimer->Stop(commandList, test.Id);
 }
@@ -1076,9 +1078,9 @@ void Sample::TestGSOnlyTriangles(Test& test, ID3D12GraphicsCommandList* commandL
     commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
 
     m_gpuTimer->Start(commandList, test.Id);
-    for (int i = 0; i < s_runsPerTest; ++i)
+    for (int i = 0; i < c_runsPerTest; ++i)
     {
-        commandList->DrawInstanced(s_numParticles, 1, 0, 0);
+        commandList->DrawInstanced(c_numParticles, 1, 0, 0);
     }
     m_gpuTimer->Stop(commandList, test.Id);
 }
@@ -1090,9 +1092,9 @@ void Sample::TestGSOnlyQuads(Test& test, ID3D12GraphicsCommandList* commandList)
     commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
 
     m_gpuTimer->Start(commandList, test.Id);
-    for (int i = 0; i < s_runsPerTest; ++i)
+    for (int i = 0; i < c_runsPerTest; ++i)
     {
-        commandList->DrawInstanced(s_numParticles, 1, 0, 0);
+        commandList->DrawInstanced(c_numParticles, 1, 0, 0);
     }
 
     m_gpuTimer->Stop(commandList, test.Id);
@@ -1107,9 +1109,9 @@ void Sample::TestDSTriangles(Test& test, ID3D12GraphicsCommandList* commandList)
     commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_1_CONTROL_POINT_PATCHLIST);
 
     m_gpuTimer->Start(commandList, test.Id);
-    for (int i = 0; i < s_runsPerTest; ++i)
+    for (int i = 0; i < c_runsPerTest; ++i)
     {
-        commandList->DrawInstanced(s_numParticles, 1, 0, 0);
+        commandList->DrawInstanced(c_numParticles, 1, 0, 0);
     }
 
     m_gpuTimer->Stop(commandList, test.Id);
@@ -1121,9 +1123,9 @@ void Sample::TestDSQuads(Test& test, ID3D12GraphicsCommandList* commandList)
     commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_1_CONTROL_POINT_PATCHLIST);
 
     m_gpuTimer->Start(commandList, test.Id);
-    for (int i = 0; i < s_runsPerTest; ++i)
+    for (int i = 0; i < c_runsPerTest; ++i)
     {
-        commandList->DrawInstanced(s_numParticles, 1, 0, 0);
+        commandList->DrawInstanced(c_numParticles, 1, 0, 0);
     }
 
     m_gpuTimer->Stop(commandList, test.Id);
@@ -1140,11 +1142,11 @@ void Sample::TestMSTriangles(Test& test, ID3D12GraphicsCommandList* commandList)
     commandList->SetPipelineState(m_msPSO.Get());
     commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-    uint32_t totalVertCount = (s_numParticles * 4);
+    uint32_t totalVertCount = (c_numParticles * 4);
     uint32_t groupCount = (totalVertCount + 31) / 32;
 
     m_gpuTimer->Start(commandList, test.Id);
-    for (int i = 0; i < s_runsPerTest; ++i)
+    for (int i = 0; i < c_runsPerTest; ++i)
     {
         cmdList->DispatchMesh(groupCount, 1, 1);
     }

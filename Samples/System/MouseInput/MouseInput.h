@@ -39,9 +39,11 @@ public:
     // Messages
     void OnSuspending();
     void OnResuming();
+    void OnConstrained() {}
+    void OnUnConstrained() {}
 
-    bool IsRunning4k() const { return m_deviceResources ? (m_deviceResources->GetDeviceOptions() & DX::DeviceResources::c_Enable4K_UHD) != 0 : false; }
-    bool IsRunning1440p() const { return m_deviceResources ? (m_deviceResources->GetDeviceOptions() & DX::DeviceResources::c_EnableQHD) != 0 : false; }
+    bool IsRunning4k() const noexcept { return m_deviceResources ? (m_deviceResources->GetDeviceOptions() & DX::DeviceResources::c_Enable4K_UHD) != 0 : false; }
+    bool IsRunning1440p() const noexcept { return m_deviceResources ? (m_deviceResources->GetDeviceOptions() & DX::DeviceResources::c_EnableQHD) != 0 : false; }
 
     int m_screenLocation_x;
     int m_screenLocation_y;

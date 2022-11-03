@@ -37,8 +37,8 @@
 
 #include <gxdk.h>
 
-#if _GXDK_VER < 0x4A610F3C /* GDK Edition 200800 */
-#error This sample requires the August 2020 GDK or later
+#if _GXDK_VER < 0x55F007B0 /* GDK Edition 211000 */
+#error This sample requires the October 2021 GDK or later
 #endif
 
 #ifdef _GAMING_XBOX_SCARLETT
@@ -69,6 +69,7 @@
 #include <stdexcept>
 #include <string>
 #include <system_error>
+#include <tuple>
 
 #include <pix3.h>
 

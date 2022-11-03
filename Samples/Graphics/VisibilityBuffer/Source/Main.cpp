@@ -117,9 +117,15 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
         {
         case XSystemDeviceType::XboxOne:
         case XSystemDeviceType::XboxOneS:
-        case XSystemDeviceType::XboxScarlettLockhart /* Xbox Series S */:
 #ifdef _DEBUG
             OutputDebugStringA("INFO: Swapchain using 1080p (1920 x 1080)\n");
+#endif
+            break;
+
+        case XSystemDeviceType::XboxScarlettLockhart /* Xbox Series S */:
+            rc = { 0, 0, 2560, 1440 };
+#ifdef _DEBUG
+            OutputDebugStringA("INFO: Swapchain using 1440p (2560 x 1440)\n");
 #endif
             break;
 
@@ -408,7 +414,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
             else
             {
-                SetWindowLongPtr(hWnd, GWL_STYLE, 0);
+                SetWindowLongPtr(hWnd, GWL_STYLE, WS_POPUP);
                 SetWindowLongPtr(hWnd, GWL_EXSTYLE, WS_EX_TOPMOST);
 
                 SetWindowPos(hWnd, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);

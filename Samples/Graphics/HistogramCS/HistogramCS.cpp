@@ -70,7 +70,10 @@ Sample::Sample() noexcept(false) :
     m_technique(HistTGSM)
 {
     // Use gamma-correct rendering.
-    m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM_SRGB, DXGI_FORMAT_D32_FLOAT, 2,
+    m_deviceResources = std::make_unique<DX::DeviceResources>(
+        DXGI_FORMAT_B8G8R8A8_UNORM_SRGB,
+        DXGI_FORMAT_D32_FLOAT,
+        2,
         DX::DeviceResources::c_Enable4K_UHD | DX::DeviceResources::c_EnableQHD);
 }
 
@@ -101,6 +104,8 @@ void Sample::Initialize(HWND window)
 void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
+
+    m_deviceResources->WaitForOrigin();
 
     m_timer.Tick([&]()
     {
@@ -154,7 +159,7 @@ void Sample::Update(DX::StepTimer const&)
     }
 
     // Limit to avoid looking directly up or down
-    const float limit = XM_PI / 2.0f - 0.01f;
+    constexpr float limit = XM_PI / 2.0f - 0.01f;
     m_pitch = std::max(-limit, std::min(+limit, m_pitch));
 
     if (m_yaw > XM_PI)
@@ -198,7 +203,7 @@ void Sample::Render()
 
     // Compute histogram
     {
-        auto backBuffer = m_deviceResources->GetRenderTarget();
+        auto const backBuffer = m_deviceResources->GetRenderTarget();
 
         ScopedBarrier scopeBarrier(commandList,
             {
@@ -212,9 +217,9 @@ void Sample::Render()
 
         m_gpuTimer.Start(commandList);
 
-        auto vp = m_deviceResources->GetScreenViewport();
+        auto const vp = m_deviceResources->GetScreenViewport();
 
-        uint32_t height = static_cast<uint32_t>(vp.Height);
+        auto height = static_cast<uint32_t>(vp.Height);
 
         CSConstantBuffer cb = { static_cast<uint32_t>(vp.Width), height, 0, 0 };
         auto cbHandle = m_graphicsMemory->AllocateConstant(cb);
@@ -234,7 +239,7 @@ void Sample::Render()
     }
 
     // Visualize the histogram
-    auto vp = m_deviceResources->GetScreenViewport();
+    auto const vp = m_deviceResources->GetScreenViewport();
 
     {
         D3D12_VIEWPORT vizvp =
@@ -281,7 +286,7 @@ void Sample::RenderScene(ID3D12GraphicsCommandList* commandList)
         m_modelResources->Heap(),
         m_states->Heap()
     };
-    commandList->SetDescriptorHeaps(_countof(descriptorHeaps), descriptorHeaps);
+    commandList->SetDescriptorHeaps(static_cast<UINT>(std::size(descriptorHeaps)), descriptorHeaps);
 
     Model::UpdateEffectMatrices(m_modelEffects, SimpleMath::Matrix::Identity, m_view, m_proj);
 
@@ -300,8 +305,8 @@ void Sample::RenderUI(ID3D12GraphicsCommandList* commandList)
     };
     commandList->SetDescriptorHeaps(_countof(descriptorHeaps), descriptorHeaps);
 
-    auto size = m_deviceResources->GetOutputSize();
-    auto safe = SimpleMath::Viewport::ComputeTitleSafeArea(UINT(size.right), UINT(size.bottom));
+    auto const size = m_deviceResources->GetOutputSize();
+    auto const safe = SimpleMath::Viewport::ComputeTitleSafeArea(UINT(size.right), UINT(size.bottom));
 
     m_batch->Begin(commandList);
 
@@ -342,8 +347,8 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
-    auto dsvDescriptor = m_deviceResources->GetDepthStencilView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
     // Use linear clear color for gamma-correct rendering.
@@ -351,8 +356,8 @@ void Sample::Clear()
     commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -419,7 +424,7 @@ void Sample::CreateDeviceDependentResources()
     m_model->LoadStaticBuffers(device, upload);
 
     {
-        RenderTargetState rtStateUI(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
+        const RenderTargetState rtStateUI(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
         SpriteBatchPipelineStateDescription pd(rtStateUI, &CommonStates::AlphaBlend);
         m_batch = std::make_unique<SpriteBatch>(device, upload, pd);
     }
@@ -428,7 +433,7 @@ void Sample::CreateDeviceDependentResources()
     m_deviceResources->WaitForGpu();
     finish.wait();
 
-    RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
+    const RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
 
     // Create scene effects.
     {
@@ -564,7 +569,7 @@ void Sample::CreateWindowSizeDependentResources()
 {
     m_batch->SetViewport(m_deviceResources->GetScreenViewport());
 
-    auto size = m_deviceResources->GetOutputSize();
+    auto const size = m_deviceResources->GetOutputSize();
 
     auto device = m_deviceResources->GetD3DDevice();
 

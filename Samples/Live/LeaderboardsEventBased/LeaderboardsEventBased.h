@@ -36,9 +36,9 @@ const int c_leaderboardType = 2006;
 struct LeaderboardsQueryContext
 {
     XAsyncBlock async;
-    XblLeaderboardResult *result;
+    XblLeaderboardResult* result;
     std::vector<uint8_t> resultData;
-    class Sample *sample;
+    class Sample* sample;
     int page = 0;
     uint32_t maxItems = 25;
 };
@@ -53,11 +53,11 @@ enum SamplePage : uint32_t
 struct UIPage
 {
     UIPage() : buttons() {}
-    std::map<int, ATG::Button *> buttons;
+    std::map<int, ATG::Button*> buttons;
 
     void SetActive(bool enable)
     {
-        for (auto &item : buttons)
+        for (auto& item : buttons)
         {
             auto button = item.second;
             button->SetEnabled(enable);
@@ -70,8 +70,8 @@ namespace {
     uint32_t s_activePage = 0;
 
     std::vector<UIPage> s_uiPages = { UIPage(), UIPage() };
-    std::map<int, ATG::TextLabel *> s_labels = {};
-    ATG::IPanel *s_mainPanel = nullptr;
+    std::map<int, ATG::TextLabel*> s_labels = {};
+    ATG::IPanel* s_mainPanel = nullptr;
 
     enum StatName : uint32_t
     {
@@ -122,7 +122,7 @@ namespace {
     const int c_pageTitleText = 0;
     const int c_pageDescText = 1;
 
-    const wchar_t *s_labelsText[][2]
+    const wchar_t* s_labelsText[][2]
     {
         { L"Query Leaderboards", L"Query current leaderboards for the given stat."},
         { L"Query Stats", L"Query a specific stat for the current user." }
@@ -169,16 +169,16 @@ private:
     // Sample core methods
     void PlayGame();
 
-    void QueryStatistics(const std::string & statName);
+    void QueryStatistics(const std::string& statName);
 
     void QueryLeaderboards(
-        const std::string &leaderboardName,
-        const std::string &statName,
+        const std::string& leaderboardName,
+        const std::string& statName,
         bool isGlobalLeaderboard,
-        const char **additionalColumns = nullptr,
+        const char** additionalColumns = nullptr,
         size_t additionalColumnsCount = 0);
 
-    static void ProcessLeaderboardResults(XAsyncBlock * async);
+    static void ProcessLeaderboardResults(XAsyncBlock* async);
 
 private: //LeaderboardsSetup.cpp
 
@@ -193,8 +193,8 @@ private: //LeaderboardsSetup.cpp
     void SetupUI();
 
     void SetPage(SamplePage page);
-    void RenderStatisticsResult(XblUserStatisticsResult *res);
-    void RenderLeaderboardsResults(LeaderboardsQueryContext * ctx);
+    void RenderStatisticsResult(XblUserStatisticsResult* res);
+    void RenderLeaderboardsResults(LeaderboardsQueryContext* ctx);
 
     // Device resources.
     std::unique_ptr<DX::DeviceResources>        m_deviceResources;
@@ -226,7 +226,7 @@ private: //LeaderboardsSetup.cpp
     XTaskQueueHandle                            m_mainAsyncQueue;
 
     std::unique_ptr<ATG::UIManager>             m_ui;
-    
+
     enum Descriptors
     {
         Font,

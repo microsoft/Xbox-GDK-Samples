@@ -139,7 +139,12 @@ namespace DirectX
     // Helper for obtaining texture size
     inline XMUINT2 GetTextureSize(_In_ ID3D12Resource* tex) noexcept
     {
+#if defined(_MSC_VER) || !defined(_WIN32)
         const auto desc = tex->GetDesc();
+#else
+        D3D12_RESOURCE_DESC tmpDesc;
+        const auto& desc = *tex->GetDesc(&tmpDesc);
+#endif
         return XMUINT2(static_cast<uint32_t>(desc.Width), static_cast<uint32_t>(desc.Height));
     }
 
@@ -281,32 +286,35 @@ namespace DirectX
         std::vector<D3D12_RESOURCE_BARRIER> mBarriers;
     };
 
-    // Helper to check for power-of-2
-    template<typename T>
-    constexpr bool IsPowerOf2(T x) noexcept { return ((x != 0) && !(x & (x - 1))); }
-
-    // Helpers for aligning values by a power of 2
-    template<typename T>
-    inline T AlignDown(T size, size_t alignment) noexcept
+    inline namespace DX12
     {
-        if (alignment > 0)
-        {
-            assert(((alignment - 1) & alignment) == 0);
-            auto mask = static_cast<T>(alignment - 1);
-            return size & ~mask;
-        }
-        return size;
-    }
+        // Helper to check for power-of-2
+        template<typename T>
+        constexpr bool IsPowerOf2(T x) noexcept { return ((x != 0) && !(x & (x - 1))); }
 
-    template<typename T>
-    inline T AlignUp(T size, size_t alignment) noexcept
-    {
-        if (alignment > 0)
+        // Helpers for aligning values by a power of 2
+        template<typename T>
+        inline T AlignDown(T size, size_t alignment) noexcept
         {
-            assert(((alignment - 1) & alignment) == 0);
-            auto mask = static_cast<T>(alignment - 1);
-            return (size + mask) & ~mask;
+            if (alignment > 0)
+            {
+                assert(((alignment - 1) & alignment) == 0);
+                auto mask = static_cast<T>(alignment - 1);
+                return size & ~mask;
+            }
+            return size;
         }
-        return size;
+
+        template<typename T>
+        inline T AlignUp(T size, size_t alignment) noexcept
+        {
+            if (alignment > 0)
+            {
+                assert(((alignment - 1) & alignment) == 0);
+                auto mask = static_cast<T>(alignment - 1);
+                return (size + mask) & ~mask;
+            }
+            return size;
+        }
     }
 }

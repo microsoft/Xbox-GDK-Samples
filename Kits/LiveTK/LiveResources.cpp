@@ -16,6 +16,7 @@
 #include <XGame.h>
 #include <XGameRuntimeFeature.h>
 #include <XGameUI.h>
+#include <XNetworking.h>
 #include <XSystem.h>
 
 #ifdef __clang__
@@ -41,9 +42,7 @@ namespace
 
 _Use_decl_annotations_
 LiveResources::LiveResources(XTaskQueueHandle queue, bool autoManageUser, bool isGuestUserAllowed) noexcept(false):
-#ifdef _GAMING_XBOX
-    m_networkConnectivityChangedHandle{},
-#endif
+    m_networkConnectivityChangedToken{},
     m_isNetworkAvailable(false),
     m_autoManageUser(autoManageUser),
     m_isGuestUserAllowed(isGuestUserAllowed),
@@ -74,59 +73,57 @@ LiveResources::LiveResources(XTaskQueueHandle queue, bool autoManageUser, bool i
 
     char scidBuffer[64] = {};
     sprintf_s(scidBuffer, "00000000-0000-0000-0000-0000%08x", m_titleId);
- 
+
     XblInitArgs xblInit = { m_asyncQueue, scidBuffer };
     hr = XblInitialize(&xblInit);
     DX::ThrowIfFailed(hr);
 
     m_scid = scidBuffer;
 
-#ifdef _GAMING_XBOX
-    if (XGameRuntimeIsFeatureAvailable(XGameRuntimeFeature::XNetworking))
-    {
-        // Listen for network connectivity changes
-        NotifyNetworkConnectivityHintChange(
-            [](void* context, NL_NETWORK_CONNECTIVITY_HINT connectivityHint)
-            {
-                auto liveResources = static_cast<LiveResources*>(context);
-            
-                liveResources->m_isNetworkAvailable =
-                    connectivityHint.ConnectivityLevel != NL_NETWORK_CONNECTIVITY_LEVEL_HINT::NetworkConnectivityLevelHintUnknown;
-            }, // Callback function
-            this,                                   // Context object
-            true,                                   // Notify immediately with the current status
-            &m_networkConnectivityChangedHandle     // Notification handle
-        );
-    }
-    else
-#endif
-    {
-        // Assume network stack is ready on desktop
-        m_isNetworkAvailable = true;
-    }
+    // Listen for network connectivity changes
+    hr = XNetworkingRegisterConnectivityHintChanged(
+        m_asyncQueue,
+        this,
+        [](void* context, const XNetworkingConnectivityHint* connectivityHint)
+        {
+            auto liveResources = static_cast<LiveResources*>(context);
+
+            liveResources->m_isNetworkAvailable =
+                connectivityHint->connectivityLevel != XNetworkingConnectivityLevelHint::Unknown;
+        },
+        &m_networkConnectivityChangedToken);
+    DX::ThrowIfFailed(hr);
+
+    XNetworkingConnectivityHint hint{};
+    XNetworkingGetConnectivityHint(&hint);
+    m_isNetworkAvailable = hint.connectivityLevel != XNetworkingConnectivityLevelHint::Unknown;
 }
 
 LiveResources::~LiveResources()
 {
-#ifdef _GAMING_XBOX
-    if (m_networkConnectivityChangedHandle)
+    if (m_xboxLiveContext)
     {
-        CancelMibChangeNotify2(m_networkConnectivityChangedHandle);
+        XblContextCloseHandle(m_xboxLiveContext);
     }
-#endif
+    if (m_xboxLiveUser)
+    {
+        XUserCloseHandle(m_xboxLiveUser);
+    }
 
-    if (m_asyncQueue)
-    {
-        XTaskQueueCloseHandle(m_asyncQueue);
-        m_asyncQueue = nullptr;
-    }
+    XUserUnregisterForChangeEvent(m_userChangedEventToken, false);
+    XNetworkingUnregisterConnectivityHintChanged(m_networkConnectivityChangedToken, false);
+
+    auto async = new XAsyncBlock{};
+    XblCleanupAsync(async);
+
+    XTaskQueueCloseHandle(m_asyncQueue);
 }
 
 void LiveResources::Initialize()
 {
-    XUserRegisterForChangeEvent(m_asyncQueue, this, [](void *context, const XUserLocalId userLocalId, XUserChangeEvent event) 
+    XUserRegisterForChangeEvent(m_asyncQueue, this, [](void *context, const XUserLocalId userLocalId, XUserChangeEvent event)
     {
-        auto pThis = reinterpret_cast<LiveResources*>(context);
+        auto pThis = static_cast<LiveResources*>(context);
 
         switch (event)
         {
@@ -281,7 +278,7 @@ void LiveResources::SignInSilently()
                 pThis->HandleError(result);
             }
         }
-        
+
         delete async;
     };
 

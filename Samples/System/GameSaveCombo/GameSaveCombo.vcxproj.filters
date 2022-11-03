@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>5b45f56a-b04c-45de-afb4-ee283faf38e4</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>7e778ac1-b7ce-4f92-b63c-9b8d3cc11103</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>667e7ca2-a3a5-4df9-8e66-a476f1da29c3</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>1618c61d-e2a1-4292-99b9-b432c8e24538</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts">
+      <UniqueIdentifier>{843d9e37-3dd6-438d-b0fb-c1457e2a49e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Fonts">
+      <UniqueIdentifier>{3571a2d3-bb91-440d-a8e6-c663dd5f647b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Layouts">
+      <UniqueIdentifier>{5ab621e1-9ac5-411b-9070-fc399ad6b002}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Textures">
+      <UniqueIdentifier>{afd07664-c094-4956-ba3b-4b69d3a77c8c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="GameSaveCombo.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\Texture.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="GameSaveCombo.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\Texture.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Fonts\XboxOneControllerLegendSmall.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </None>
+    <None Include="Assets\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </None>
+    <None Include="Assets\Fonts\segoeui_18pt_sharp_24_Bold.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </None>
+    <None Include="Assets\Fonts\segoeui_24pt_sharp_32.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </None>
+    <None Include="Assets\Fonts\segoeui_24pt_sharp_32_Bold.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </None>
+    <None Include="Assets\Fonts\segoeui_27pt_sharp_36.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </None>
+    <None Include="Assets\Fonts\segoeui_27pt_sharp_36_Bold.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </None>
+    <None Include="Assets\Fonts\segoeui_36pt_sharp_48.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </None>
+    <None Include="Assets\Fonts\segoeui_36pt_sharp_48_Bold.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </None>
+    <None Include="Assets\Fonts\segoeui_72pt_sharp_96.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </None>
+    <None Include="Assets\Fonts\segoeuisb_27pt_sharp_36.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </None>
+    <None Include="Assets\Fonts\segoeuisb_27pt_sharp_36_Bold.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </None>
+    <None Include="Readme.docx" />
+    <None Include="Assets\UILayout.json" />
+    <None Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\layouts\sample_layout.json" />
+    <None Include="Assets\layouts\styles.json" />
+    <None Include="Assets\layouts\defs.json" />
+    <None Include="Assets\Textures\Button_Disabled.png">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Textures\Button_Focused.png">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Textures\Button_Focused_NoShade.png">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Textures\Button_Hovered.png">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Textures\Button_Hovered_NoShade.png">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Textures\Button_Pressed.png">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Textures\Button_Unfocused.png">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Textures\checked.png">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Textures\crown.png">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Textures\divider_line.png">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Textures\FocusBorder.png">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Textures\frame_panel_3.png">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Textures\GFX_Disabled_Button.png">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Textures\Input_Panel_Border.png">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Textures\invis_panel.png">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Textures\LOGO_ATG.png">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Textures\LOGO_ATG_SMALL.png">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Textures\Slider_Disabled.png">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Textures\Slider_Focused.png">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Textures\Slider_Hovered.png">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Textures\Slider_Pressed.png">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Textures\Slider_Unfocused.png">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Textures\unchecked.png">
+      <Filter>Assets</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -38,8 +38,8 @@
 
 #include <grdk.h>
 
-#if _GRDK_VER < 0x47BB2070 /* GDK Edition 191102 */
-#error This sample requires the November 2020 GDK QFE2 or later
+#if _GRDK_VER < 0x55F00C58 /* GDK Edition 220300 */
+#error This sample requires the March 2022 GDK or later
 #endif
 
 #include <d3d12.h>

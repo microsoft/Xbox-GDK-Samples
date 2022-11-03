@@ -1,0 +1,375 @@
+{
+  "includes": [
+    "Assets/Layouts/defs.json",
+    "Assets/Layouts/styles.json"
+  ],
+  "layout": {
+    "classId": "Panel",
+    "id": "menu-screen",
+    "size": [ 1920, 1080 ],
+    "style": {
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#background_color"
+    },
+    "childElements": [
+      {
+        "classId": "HorizontalStackPanel",
+        "id": "Sample_Title_Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "position": [ 50, 25 ],
+        "size": [ 1920, 120 ],
+        "styleId": "Invisible_Panel_Style",
+        "stackingOrientation": "right",
+        "focusable": false,
+        "childElements":
+        [
+          {
+            "classId": "Image",
+            "id": "ATG_Logo_Image",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 90, 40 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 100, 110 ],
+            "focusable": false,
+            "styleId": "ATG_Logo_Style"
+          },
+          {
+            "classId": "StaticText",
+            "id": "Panel_Title_Label",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "text": "Game Save Combo Sample",
+            "size": [ 1550, 120 ],
+            "focusable": false,
+            "styleId": "menu_title_text_style"
+          },
+
+          {
+            "classId": "VerticalStackPanel",
+            "id": "User_Info_Panel",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "styleId": "User_Info_Panel_Style",
+            "stackingOrientation": "down",
+            "focusable": false,
+            "childElements":[
+              {
+                "id": "Gamerpic",
+                "classId": "Image",
+                "styleId": "Gamerpic_Style",
+                "positioningAnchor": [ "left", "top" ],
+                "sizingAnchor": [ "left", "top" ],
+                "focusable": false,
+                "size": [ 160, 160 ]
+              },
+              {
+                "classId": "StaticText",
+                "id": "Gamertag_Label",
+                "positioningAnchor": [ "left", "top" ],
+                "sizingAnchor": [ "left", "top" ],
+                "text": "Gamer Tag:",
+                "focusable": false,
+                "styleId": "Gamer_Tag_Style"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Add_Container_Button",
+        "classId": "Button",
+        "styleId": "button_default_style",
+        "focusedStyleId": "button_focused_style",
+        "pressedStyleId": "button_pressed_style",
+        "hoveredStyleId": "button_focused_style",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 0, 285 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 400, 75 ],
+        "focusable": true,
+        "subElements": [
+          {
+            "id": "button_label",
+            "classId": "StaticText",
+            "styleId": "button_default_text_style",
+            "text": "Add/Modify Container",
+            "size": [ 400, 75 ]
+          }
+        ]
+      },
+      {
+        "id": "Delete_Container_Button",
+        "classId": "Button",
+        "styleId": "button_default_style",
+        "focusedStyleId": "button_focused_style",
+        "pressedStyleId": "button_pressed_style",
+        "hoveredStyleId": "button_focused_style",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 0, 375 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 400, 75 ],
+        "focusable": true,
+        "subElements": [
+          {
+            "id": "button_label",
+            "classId": "StaticText",
+            "styleId": "button_default_text_style",
+            "text": "Delete Container",
+            "size": [ 400, 75 ]
+          }
+        ]
+      },
+      {
+        "id": "Load_Button",
+        "classId": "Button",
+        "styleId": "button_default_style",
+        "focusedStyleId": "button_focused_style",
+        "pressedStyleId": "button_pressed_style",
+        "hoveredStyleId": "button_focused_style",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 0, 465 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 400, 75 ],
+        "focusable": true,
+        "subElements": [
+          {
+            "id": "button_label",
+            "classId": "StaticText",
+            "styleId": "button_default_text_style",
+            "text": "Sync Container",
+            "size": [ 400, 75 ]
+          }
+        ]
+      },
+
+      {
+        "id": "Container_Label",
+        "classId": "StaticText",
+        "styleId": "button_default_text_style",
+        "text": "No Container!",
+        "size": [ 400, 40 ],
+        "position": [ 600, 160 ]
+      },
+
+      {
+        "classId": "StaticText",
+        "id": "Container_Description_Label",
+        "position": [260, 150],
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "text": "Container:",
+        "focusable": false,
+        "styleId": "Small_Text_Style"
+      },
+      {
+        "id": "Switch_User_Button",
+        "classId": "Button",
+        "styleId": "button_default_style",
+        "focusedStyleId": "button_focused_style",
+        "pressedStyleId": "button_pressed_style",
+        "hoveredStyleId": "button_focused_style",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 0, 965 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 400, 75 ],
+        "focusable": true,
+        "subElements": [
+          {
+            "id": "button_label",
+            "classId": "StaticText",
+            "styleId": "button_default_text_style",
+            "text": "Switch User",
+            "size": [ 400, 75 ]
+          }
+        ]
+      },
+
+      {
+        "classId": "Panel",
+        "id": "Output_Console_Window_Outer_Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "position": [ 1200, 295 ],
+        "size": [ 660, 750 ],
+        "styleId": "Dark_Panel_Style",
+        "focusable": false,
+        "childElements":
+        [
+          {
+            "classId": "ConsoleWindow",
+            "id": "Output_Console_Window",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "position": [ 0, 0 ],
+            "size": [ 660, 750 ],
+            "focusable": false,
+            "maxConsoleLines": 200,
+            "styleId": "Sample_Text_Style",
+            "verticalSliderSubElementId": "Output_Console_Window_Slider",
+            "viewportPanelSubElementId": "Output_Console_Window_Panel",
+            "subElements":
+            [
+              {
+                "classId": "Panel",
+                "id": "Output_Console_Window_Panel",
+                "positioningAnchor": [ "left", "top" ],
+                "position": [ 0, 0 ],
+                "sizingAnchor": [ "left", "top" ],
+                "size": [ 660, 750 ],
+                "styleId": "Invisible_Panel_Style"
+              },
+              {
+                "classId": "Slider",
+                "id": "Output_Console_Window_Slider",
+                "size": [35, 750],
+                "style":
+                {
+                  "classId": "NullStyle"
+                },
+                "thumbButtonSubElementId": "Output_Console_Window_Slider_Thumb",
+                "backgroundSubElementId": "Output_Console_Window_Slider_Background",
+                "sliderOrientation": "TopToBottom",
+                "sliderType": "discrete",
+                "numDiscreteSteps": 1,
+                "initialValue": 0,
+                "sizingAnchor": [ "right", "top" ],
+                "positioningAnchor": [ "right", "top" ],
+                "focusable": false,
+                "subElements":
+                [
+                  {
+                    "classId": "Image",
+                    "id": "Output_Console_Window_Slider_Background",
+                    "size": [ 35, 750 ],
+                    "style":
+                    {
+                      "classId": "SpriteStyle",
+                      "color": [ 128, 128, 128, 1.0 ],
+                      "colorUsage": "override"
+                    }
+                  },
+                  {
+                    "classId": "Button",
+                    "id": "Output_Console_Window_Slider_Thumb",
+                    "size": [ 35, 45 ],
+                    "styleId": "Slider_Button_Style",
+                    "focusable": false,
+                    "focusedStyleId": "Slider_Focused_Button_Style",
+                    "hoveredStyleId": "Slider_Hovered_Button_Style",
+                    "pressedStyleId": "Slider_Pressed_Button_Style",
+                    "disabledStyleId": "Slider_Disabled_Button_Style"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+
+
+      {
+        "classId": "Panel",
+        "id": "Input_Panel",
+        "size": [ 735, 780 ],
+        "position": [430, 260],
+        "style": {
+          "classId": "SpriteStyle",
+          "colorUsage": "override",
+          "color": [ 50, 50, 50, 1.0 ]
+        },
+        "childElements": [
+          {
+            "classId": "StaticText",
+            "id": "Character_Data_Label",
+            "position": [40, 20],
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "text": "CharacterStats blob:",
+            "size": [ 695 , 750 ],
+            "focusable": false,
+            "styleId": "Small_Text_Style"
+          },
+          {
+            "classId": "StaticText",
+            "id": "Character_Data_Name",
+            "position": [80, 70],
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "text": "name:",
+            "size": [ 655 , 750 ],
+            "focusable": false,
+            "styleId": "Small_Text_Style"
+          },
+          {
+            "classId": "StaticText",
+            "id": "Character_Data_Level",
+            "position": [80, 120],
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "text": "level:",
+            "size": [ 655 , 750 ],
+            "focusable": false,
+            "styleId": "Small_Text_Style"
+          },
+          {
+            "classId": "StaticText",
+            "id": "Character_Data_CombatClass",
+            "position": [80, 170],
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "text": "combatClass:",
+            "size": [ 695 , 750 ],
+            "focusable": false,
+            "styleId": "Small_Text_Style"
+          },
+          {
+            "classId": "StaticText",
+            "id": "World_Data_Blob_Label",
+            "position": [40, 270],
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "text": "WorldState Blob:",
+            "size": [ 695 , 750 ],
+            "focusable": false,
+            "styleId": "Small_Text_Style"
+          },
+          {
+            "classId": "StaticText",
+            "id": "World_Data_IsDayTime",
+            "position": [80, 320],
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "text": "isDayTime:",
+            "size": [ 695 , 750 ],
+            "focusable": false,
+            "styleId": "Small_Text_Style"
+          },
+          {
+            "classId": "StaticText",
+            "id": "World_Data_XPosition",
+            "position": [80, 370],
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "text": "xPosition:",
+            "size": [ 695 , 750 ],
+            "focusable": false,
+            "styleId": "Small_Text_Style"
+          },
+          {
+            "classId": "StaticText",
+            "id": "World_Data_YPosition",
+            "position": [80, 420],
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "text": "yPosition:",
+            "size": [ 695 , 750 ],
+            "focusable": false,
+            "styleId": "Small_Text_Style"
+          }
+        ]
+      }
+    ]
+  }
+}

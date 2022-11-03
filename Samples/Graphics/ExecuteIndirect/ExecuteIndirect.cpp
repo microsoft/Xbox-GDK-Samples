@@ -10,7 +10,7 @@
 
 #include "ATGColors.h"
 
-extern void ExitSample();
+extern void ExitSample() noexcept;
 
 using namespace DirectX;
 
@@ -68,7 +68,7 @@ void Sample::Initialize(HWND window)
 
     m_deviceResources->SetWindow(window);
 
-    m_deviceResources->CreateDeviceResources();  	
+    m_deviceResources->CreateDeviceResources();
     CreateDeviceDependentResources();
 
     m_deviceResources->CreateWindowSizeDependentResources();
@@ -80,6 +80,8 @@ void Sample::Initialize(HWND window)
 void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
+
+    m_deviceResources->WaitForOrigin();
 
     m_timer.Tick([&]()
     {
@@ -267,16 +269,16 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
-    auto dsvDescriptor = m_deviceResources->GetDepthStencilView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
     commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -499,7 +501,7 @@ void Sample::ComputeCulling()
     m_constantBufferFrustum->Unmap(0, &constantBufferFrustumRange);
 
     // Initialize Count to 0
-    UINT clearValues[4] = {};
+    const UINT clearValues[4] = {};
     commandList->ClearUnorderedAccessViewUint(
         m_countDescriptorGPU,
         m_countDescriptorCPU,
@@ -628,7 +630,7 @@ void Sample::CreateDeviceDependentResources()
         m_resourceDescriptorHeap->GetCpuHandle(ResourceDescriptors::FontController), 
         m_resourceDescriptorHeap->GetGpuHandle(ResourceDescriptors::FontController));
 
-    RenderTargetState renderTargetState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
+    const RenderTargetState renderTargetState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
     SpriteBatchPipelineStateDescription pipelineDescription(renderTargetState);
     m_spriteBatch = std::make_unique<SpriteBatch>(device, resourceUpload, pipelineDescription);
 
@@ -638,7 +640,7 @@ void Sample::CreateDeviceDependentResources()
 // Allocate all memory resources that change on a window SizeChanged event.
 void Sample::CreateWindowSizeDependentResources()
 {
-    auto outputSize = m_deviceResources->GetOutputSize();
+    auto const outputSize = m_deviceResources->GetOutputSize();
 
     // Initial camera values
     m_cameraPosition = XMVectorSet(0.0f, 0.0f, -10.0f, 1.0f);
@@ -732,9 +734,9 @@ void Sample::InitializeMeshes()
             Index faceIndices[faces][indicesPerFace] =
             {
                 { 0, 1, 2, },
-            { 0, 2, 3, },
-            { 0, 3, 1, },
-            { 3, 2, 1, },
+                { 0, 2, 3, },
+                { 0, 3, 1, },
+                { 3, 2, 1, },
             };
             for (uint32_t iFace = 0; iFace < faces; ++iFace)
             {
@@ -767,11 +769,11 @@ void Sample::InitializeMeshes()
             Index faceIndices[faces][indicesPerFace] =
             {
                 { 0, 1, 3, 2, },
-            { 0, 4, 5, 1, },
-            { 0, 2, 6, 4, },
-            { 4, 6, 7, 5, },
-            { 2, 3, 7, 6, },
-            { 1, 5, 7, 3, },
+                { 0, 4, 5, 1, },
+                { 0, 2, 6, 4, },
+                { 4, 6, 7, 5, },
+                { 2, 3, 7, 6, },
+                { 1, 5, 7, 3, },
             };
             for (uint32_t iFace = 0; iFace < faces; ++iFace)
             {
@@ -806,13 +808,13 @@ void Sample::InitializeMeshes()
             Index faceIndices[faces][indicesPerFace] =
             {
                 { 0, 3, 4 },
-            { 3, 1, 4 },
-            { 1, 2, 4 },
-            { 2, 0, 4 },
-            { 3, 0, 5 },
-            { 1, 3, 5 },
-            { 2, 1, 5 },
-            { 0, 2, 5 },
+                { 3, 1, 4 },
+                { 1, 2, 4 },
+                { 2, 0, 4 },
+                { 3, 0, 5 },
+                { 1, 3, 5 },
+                { 2, 1, 5 },
+                { 0, 2, 5 },
             };
             for (uint32_t iFace = 0; iFace < faces; ++iFace)
             {
@@ -860,17 +862,17 @@ void Sample::InitializeMeshes()
             Index faceIndices[faces][indicesPerFace] =
             {
                 {  0, 12, 13,  1,  8, },
-            {  0,  8,  9,  2, 16, },
-            {  0, 16, 17,  4, 12, },
-            {  1, 18,  3,  9,  8, },
-            {  1, 13,  5, 19, 18, },
-            {  2,  9,  3, 15, 14, },
-            {  2, 14,  6, 17, 16, },
-            {  3, 18, 19,  7, 15, },
-            {  4, 10,  5, 13, 12, },
-            {  4, 17,  6, 11, 10, },
-            {  5, 10, 11,  7, 19, },
-            {  6, 14, 15,  7, 11, },
+                {  0,  8,  9,  2, 16, },
+                {  0, 16, 17,  4, 12, },
+                {  1, 18,  3,  9,  8, },
+                {  1, 13,  5, 19, 18, },
+                {  2,  9,  3, 15, 14, },
+                {  2, 14,  6, 17, 16, },
+                {  3, 18, 19,  7, 15, },
+                {  4, 10,  5, 13, 12, },
+                {  4, 17,  6, 11, 10, },
+                {  5, 10, 11,  7, 19, },
+                {  6, 14, 15,  7, 11, },
             };
             for (uint32_t iFace = 0; iFace < faces; ++iFace)
             {
@@ -917,25 +919,25 @@ void Sample::InitializeMeshes()
             Index faceIndices[faces][indicesPerFace] =
             {
                 {  0,  4,  2, },
-            {  0,  2,  5, },
-            {  0,  5, 10, },
-            {  0, 10,  8, },
-            {  0,  8,  4, },
-            {  3,  1,  7, },
-            {  3,  7, 11, },
-            {  3, 11,  9, },
-            {  3,  9,  6, },
-            {  3,  6,  1, },
-            {  4,  9,  2, },
-            {  2,  9, 11, },
-            {  5,  2, 11, },
-            {  5, 11,  7, },
-            {  5,  7, 10, },
-            { 10,  7,  1, },
-            { 10,  1,  8, },
-            {  8,  1,  6, },
-            {  8,  6,  4, },
-            {  4,  6,  9, },
+                {  0,  2,  5, },
+                {  0,  5, 10, },
+                {  0, 10,  8, },
+                {  0,  8,  4, },
+                {  3,  1,  7, },
+                {  3,  7, 11, },
+                {  3, 11,  9, },
+                {  3,  9,  6, },
+                {  3,  6,  1, },
+                {  4,  9,  2, },
+                {  2,  9, 11, },
+                {  5,  2, 11, },
+                {  5, 11,  7, },
+                {  5,  7, 10, },
+                { 10,  7,  1, },
+                { 10,  1,  8, },
+                {  8,  1,  6, },
+                {  8,  6,  4, },
+                {  4,  6,  9, },
             };
             for (uint32_t iFace = 0; iFace < faces; ++iFace)
             {

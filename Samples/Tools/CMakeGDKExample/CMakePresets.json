@@ -13,7 +13,7 @@
       "hidden": true,
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "cacheVariables": {
-        "XdkEditionTarget": "220300",
+        "XdkEditionTarget": "221000",
         "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}"
       }
     },
@@ -62,13 +62,13 @@
       }
     },
 
-    { "name": "x64-Desktop"      , "description": "MSVC for x64  for Gaming.x64.Desktop", "inherits": [ "base", "Desktop" ] },
-    { "name": "x64-Desktop-Clang", "description": "Clang/LLVM for x64 for Gaming.x64.Desktop", "inherits": [ "base", "Desktop", "Clang" ] },
+    { "name": "x64-Desktop"      , "description": "MSVC for x64 for Gaming.Desktop.x64", "inherits": [ "base", "Desktop" ] },
+    { "name": "x64-Desktop-Clang", "description": "Clang/LLVM for x64 for Gaming.Desktop.x64", "inherits": [ "base", "Desktop", "Clang" ] },
 
-    { "name": "x64-Scarlett"      , "description": "MSVC for x64  for Gaming.x64.Desktop", "inherits": [ "base", "Scarlett" ] },
-    { "name": "x64-Scarlett-Clang", "description": "Clang/LLVM for x64 for Gaming.x64.Desktop", "inherits": [ "base", "Desktop", "Scarlett" ] },
+    { "name": "x64-Scarlett"      , "description": "MSVC for x64  for Gaming.Scarlett.x64", "inherits": [ "base", "Scarlett" ] },
+    { "name": "x64-Scarlett-Clang", "description": "Clang/LLVM for x64 for Gaming.Scarlett.x64", "inherits": [ "base", "Scarlett", "Clang" ] },
 
-    { "name": "x64-XboxOne"      , "description": "MSVC for x64  for Gaming.x64.Desktop", "inherits": [ "base", "XboxOne" ] },
-    { "name": "x64-XboxOne-Clang", "description": "Clang/LLVM for x64 for Gaming.x64.Desktop", "inherits": [ "base", "XboxOne", "Clang" ] }
+    { "name": "x64-XboxOne"      , "description": "MSVC for x64 for Gaming.XboxOne.x64", "inherits": [ "base", "XboxOne" ] },
+    { "name": "x64-XboxOne-Clang", "description": "Clang/LLVM for x64 for Gaming.XboxOne.x64", "inherits": [ "base", "XboxOne", "Clang" ] }
   ]
 }

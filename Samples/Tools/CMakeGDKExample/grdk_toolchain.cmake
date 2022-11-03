@@ -47,6 +47,6 @@ if(NOT GDK_DXCTool)
 endif()
 
 # The MicrosoftGame.Config file needs to be in the directory with the project to enable deploy for Gaming.Desktop.x64
-file(GENERATE OUTPUT MicrosoftGame.Config INPUT ${CMAKE_CURRENT_LIST_DIR}/MicrosoftGame.Config)
+file(GENERATE OUTPUT MicrosoftGame.Config INPUT ${CMAKE_CURRENT_LIST_DIR}/MicrosoftGameConfig.mgc)
 
 set(_GRDK_TOOLCHAIN_ ON)

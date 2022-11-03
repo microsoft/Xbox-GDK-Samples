@@ -76,8 +76,9 @@ private:
 
     std::atomic<testStatus> m_simpleLoadStatus;
     std::atomic<testStatus> m_cancellationStatus;
-    std::atomic<testStatus> m_decompressionStatus;
-    std::atomic<testStatus> m_inMemoryDecompressionStatus;
+    std::atomic<testStatus> m_xBoxDecompressionStatus;
+    std::atomic<testStatus> m_xBoxInMemoryDecompressionStatus;
+    std::atomic<testStatus> m_desktopCPUDecompressionStatus;
     std::atomic<testStatus> m_multipleQueuesStatus;
     std::atomic<testStatus> m_statusBatchStatus;
     std::atomic<testStatus> m_statusFenceStatus;

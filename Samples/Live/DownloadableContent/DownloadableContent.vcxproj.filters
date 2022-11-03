@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Common">
@@ -164,7 +164,7 @@
     <None Include="DLCPackage\Package_XboxOne\Image.JPG">
       <Filter>DLCPackage\Package_XboxOne</Filter>
     </None>
-    <None Include="DLCPackage\Package_XboxOne\MicrosoftGame.config">
+    <None Include="DLCPackage\Package_XboxOne\MicrosoftGameConfig.mgc">
       <Filter>DLCPackage\Package_XboxOne</Filter>
     </None>
     <None Include="DLCPackage\Package_Scarlett\Assets\LargeLogo.png">
@@ -185,7 +185,7 @@
     <None Include="DLCPackage\Package_Scarlett\Image.jpg">
       <Filter>DLCPackage\Package_Scarlett</Filter>
     </None>
-    <None Include="DLCPackage\Package_Scarlett\MicrosoftGame.config">
+    <None Include="DLCPackage\Package_Scarlett\MicrosoftGameConfig.mgc">
       <Filter>DLCPackage\Package_Scarlett</Filter>
     </None>
     <None Include="chunks.xml" />
@@ -195,7 +195,7 @@
     <None Include="DLCPackagePC\makedlcpkg.cmd">
       <Filter>DLCPackagePC</Filter>
     </None>
-    <None Include="DLCPackagePC\Package\MicrosoftGame.config">
+    <None Include="DLCPackagePC\Package\MicrosoftGameConfig.mgc">
       <Filter>DLCPackagePC\Package</Filter>
     </None>
     <None Include="DLCPackagePC\chunks.xml">
@@ -219,9 +219,6 @@
     <None Include="DLCPackagePC\Package\Assets\SmallLogo.png">
       <Filter>DLCPackagePC\Package\Assets</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Assets\LargeLogo.png">
@@ -313,5 +310,10 @@
     <CopyFileToFolders Include="Assets\Unmounted.png">
       <Filter>Assets</Filter>
     </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig_Scarlett.mgc" />
+    <MGCCompile Include="MicrosoftGameConfig_XboxOne.mgc" />
+    <MGCCompile Include="MicrosoftGameConfig_PC.mgc" />
   </ItemGroup>
 </Project>

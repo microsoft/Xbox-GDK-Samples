@@ -88,7 +88,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
-    <Import Project="..\..\packages\Microsoft.Direct3D.DirectStorage.1.0.0\build\Microsoft.Direct3D.DirectStorage.targets" Condition="Exists('..\..\packages\Microsoft.Direct3D.DirectStorage.1.0.0\build\Microsoft.Direct3D.DirectStorage.targets')" />
+    <Import Project="..\..\packages\Microsoft.Direct3D.DirectStorage.1.0.2\build\native\targets\Microsoft.Direct3D.DirectStorage.targets" Condition="Exists('..\..\packages\Microsoft.Direct3D.DirectStorage.1.0.2\build\native\targets\Microsoft.Direct3D.DirectStorage.targets')" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'" Label="PropertySheets">
@@ -359,14 +359,15 @@
     <ClInclude Include="DirectStorageWin32\dstorageerr_win32.h" />
     <ClInclude Include="DirectStorageWin32\dstorage_win32.h" />
     <ClInclude Include="SampleImplementations\Cancellation.h" />
-    <ClInclude Include="SampleImplementations\InMemoryZLibDecompression.h" />
+    <ClInclude Include="SampleImplementations\DesktopCPUDecompression.h" />
+    <ClInclude Include="SampleImplementations\XBoxInMemoryZLibDecompression.h" />
     <ClInclude Include="SampleImplementations\MultipleQueues.h" />
     <ClInclude Include="SampleImplementations\ImplementationBase.h" />
     <ClInclude Include="SampleImplementations\RecommendedPattern.h" />
     <ClInclude Include="SampleImplementations\SimpleLoad.h" />
     <ClInclude Include="SampleImplementations\StatusBatch.h" />
     <ClInclude Include="SampleImplementations\StatusFence.h" />
-    <ClInclude Include="SampleImplementations\ZLibDecompression.h" />
+    <ClInclude Include="SampleImplementations\XBoxZLibDecompression.h" />
     <ClInclude Include="SimpleDirectStorageCombo.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="StepTimer.h" />
@@ -425,14 +426,15 @@
     </ClCompile>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="SampleImplementations\Cancellation.cpp" />
-    <ClCompile Include="SampleImplementations\InMemoryZLibDecompression.cpp" />
+    <ClCompile Include="SampleImplementations\DesktopCPUDecompression.cpp" />
+    <ClCompile Include="SampleImplementations\XBoxInMemoryZLibDecompression.cpp" />
     <ClCompile Include="SampleImplementations\MultipleQueues.cpp" />
     <ClCompile Include="SampleImplementations\ImplementationBase.cpp" />
     <ClCompile Include="SampleImplementations\RecommendedPattern.cpp" />
     <ClCompile Include="SampleImplementations\SimpleLoad.cpp" />
     <ClCompile Include="SampleImplementations\StatusBatch.cpp" />
     <ClCompile Include="SampleImplementations\StatusFence.cpp" />
-    <ClCompile Include="SampleImplementations\ZLibDecompression.cpp" />
+    <ClCompile Include="SampleImplementations\XBoxZLibDecompression.cpp" />
     <ClCompile Include="SimpleDirectStorageCombo.cpp" />
     <ClCompile Include="DeviceResources.cpp" />
     <ClCompile Include="pch.cpp">
@@ -526,6 +528,6 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Microsoft.Direct3D.DirectStorage.1.0.0\build\Microsoft.Direct3D.DirectStorage.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Direct3D.DirectStorage.1.0.0\build\Microsoft.Direct3D.DirectStorage.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.Direct3D.DirectStorage.1.0.2\build\native\targets\Microsoft.Direct3D.DirectStorage.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Direct3D.DirectStorage.1.0.2\build\native\targets\Microsoft.Direct3D.DirectStorage.targets'))" />
   </Target>
 </Project>

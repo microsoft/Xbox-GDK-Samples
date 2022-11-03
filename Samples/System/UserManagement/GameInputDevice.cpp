@@ -64,13 +64,15 @@ const APP_LOCAL_DEVICE_ID& GameInputDevice::GetDeviceId() const
 
 void GameInputDevice::UpdateState(IGameInput* gameInput)
 {
-    DirectX::GamePad::State newState;
+    DirectX::GamePad::State newState = {};
     ReadDevice(gameInput, newState);
     m_buttonStateTracker.Update(newState);
 }
 
 bool GameInputDevice::ReadDevice(IGameInput* gameInput, DirectX::GamePad::State& state) const
 {
+    bool success = false;
+
     // Only implementing gamepad input currently
     IGameInputReading* reading = nullptr;
     if (SUCCEEDED(gameInput->GetCurrentReading(GameInputKindGamepad, m_gameInputDevice, &reading)))
@@ -106,11 +108,13 @@ bool GameInputDevice::ReadDevice(IGameInput* gameInput, DirectX::GamePad::State&
             state.triggers.left = pad.leftTrigger;
             state.triggers.right = pad.rightTrigger;
 
-            return true;
+            success = true;
         }
+
+        reading->Release();
     }
 
-    return false;
+    return success;
 }
 
 const DirectX::GamePad::ButtonStateTracker& GameInputDevice::GetCurrentState() const

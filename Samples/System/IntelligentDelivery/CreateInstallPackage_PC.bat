@@ -48,7 +48,7 @@ copy /b filler262144.txt .\Gaming.Desktop.x64\Layout\Image\Loose\filler256mb17.t
 @echo off
 
 echo Copying over the MicrosoftGame.config file for PC
-copy /b MicrosoftGame_PC.config .\Gaming.Desktop.x64\Layout\Image\Loose\MicrosoftGame.config
+copy /b MicrosoftGameConfig_PC.mgc .\Gaming.Desktop.x64\Layout\Image\Loose\MicrosoftGame.config
 
 echo Deleting temporary filler files
 del filler.txt

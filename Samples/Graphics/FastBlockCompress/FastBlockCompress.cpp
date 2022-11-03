@@ -12,7 +12,7 @@
 #include "ControllerFont.h"
 #include "ReadData.h"
 
-extern void ExitSample();
+extern void ExitSample() noexcept;
 
 using namespace DirectX;
 
@@ -20,9 +20,9 @@ using Microsoft::WRL::ComPtr;
 
 namespace
 {
-    const uint32_t MAX_TEXTURE_WIDTH = 2048; // 2048x2048
+    constexpr uint32_t MAX_TEXTURE_WIDTH = 2048; // 2048x2048
 
-    const uint32_t RMS_THREADGROUP_WIDTH = 64;
+    constexpr uint32_t RMS_THREADGROUP_WIDTH = 64;
 
     enum RMSRootParameterIndex
     {
@@ -61,8 +61,8 @@ namespace
 
     static_assert((sizeof(ConstantBufferQuad) % 16) == 0, "CB size not padded correctly");
 
-    const float c_zoomSpeed = 0.5f;
-    const float c_panSpeed = 0.5f;
+    constexpr float c_zoomSpeed = 0.5f;
+    constexpr float c_panSpeed = 0.5f;
 
     inline XMFLOAT2 RMSComputeResult(ID3D12Resource* buffer, float width)
     {
@@ -114,7 +114,7 @@ void Sample::Initialize(HWND window)
 
     m_deviceResources->SetWindow(window);
 
-    m_deviceResources->CreateDeviceResources();  
+    m_deviceResources->CreateDeviceResources();
     CreateDeviceDependentResources();
 
     m_deviceResources->CreateWindowSizeDependentResources();
@@ -126,6 +126,8 @@ void Sample::Initialize(HWND window)
 void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
+
+    m_deviceResources->WaitForOrigin();
 
     m_timer.Tick([&]()
     {
@@ -310,7 +312,7 @@ void Sample::Update(DX::StepTimer const& timer)
         m_gpuTimer.BeginFrame(m_computeCommandList.Get());
 
         ID3D12DescriptorHeap* pHeaps[] = { m_resourceDescriptors->Heap() };
-        m_computeCommandList->SetDescriptorHeaps(_countof(pHeaps), pHeaps);
+        m_computeCommandList->SetDescriptorHeaps(static_cast<UINT>(std::size(pHeaps)), pHeaps);
 
         auto img = m_images[m_currentImage].get();
 
@@ -506,9 +508,9 @@ void Sample::Render()
     m_deviceResources->Prepare();
     Clear();
 
-    auto size = m_deviceResources->GetOutputSize();
+    auto const size = m_deviceResources->GetOutputSize();
 
-    auto safe = SimpleMath::Viewport::ComputeTitleSafeArea(UINT(size.right), UINT(size.bottom));
+    auto const safe = SimpleMath::Viewport::ComputeTitleSafeArea(UINT(size.right), UINT(size.bottom));
 
     auto commandList = m_deviceResources->GetCommandList();
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Render");
@@ -518,7 +520,7 @@ void Sample::Render()
     {
         m_resourceDescriptors->Heap()
     };
-    commandList->SetDescriptorHeaps(_countof(descriptorHeaps), descriptorHeaps);
+    commandList->SetDescriptorHeaps(static_cast<UINT>(std::size(descriptorHeaps)), descriptorHeaps);
 
     // Draw images
     auto img = m_images[m_currentImage].get();
@@ -599,7 +601,7 @@ void Sample::Render()
         viewPort.MaxDepth = 1;
         commandList->RSSetViewports(1, &viewPort);
 
-        RECT rct = { long(viewPort.TopLeftX), long(viewPort.TopLeftY), long(viewPort.TopLeftX + viewPort.Width), long(viewPort.TopLeftY + viewPort.Height) };
+        const RECT rct = { long(viewPort.TopLeftX), long(viewPort.TopLeftY), long(viewPort.TopLeftX + viewPort.Width), long(viewPort.TopLeftY + viewPort.Height) };
         commandList->RSSetScissorRects(1, &rct);
 
         if (m_toggleOriginal)
@@ -770,14 +772,14 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, nullptr);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -809,11 +811,9 @@ void Sample::CreateDeviceDependentResources()
 
     m_graphicsMemory = std::make_unique<GraphicsMemory>(device);
 
-    RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
+    const RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
 
     m_resourceDescriptors = std::make_unique<DescriptorPile>(device,
-        D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV,
-        D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE,
         256,
         Descriptors::Count);
 
