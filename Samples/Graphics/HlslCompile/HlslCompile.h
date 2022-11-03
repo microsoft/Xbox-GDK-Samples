@@ -18,6 +18,13 @@ class Sample
 public:
 
     Sample() noexcept(false);
+    ~Sample() = default;
+
+    Sample(Sample&&) = default;
+    Sample& operator= (Sample&&) = default;
+
+    Sample(Sample const&) = delete;
+    Sample& operator= (Sample const&) = delete;
 
     // Initialization and management
     void Initialize(HWND window);
@@ -28,9 +35,11 @@ public:
     // Messages
     void OnSuspending();
     void OnResuming();
+    void OnConstrained() {}
+    void OnUnConstrained() {}
 
-	// Properties
-	bool RequestHDRMode() const { return m_deviceResources ? (m_deviceResources->GetDeviceOptions() & DX::DeviceResources::c_EnableHDR) != 0 : false; }
+    // Properties
+    bool RequestHDRMode() const noexcept { return m_deviceResources ? (m_deviceResources->GetDeviceOptions() & DX::DeviceResources::c_EnableHDR) != 0 : false; }
 
 private:
 
@@ -54,46 +63,46 @@ private:
 
     // DirectXTK objects.
     std::unique_ptr<DirectX::GraphicsMemory>    m_graphicsMemory;
-	std::unique_ptr<DirectX::DescriptorHeap>    m_resourceDescriptorHeap;
+    std::unique_ptr<DirectX::DescriptorHeap>    m_resourceDescriptorHeap;
 
     // Direct3D 12 objects
     Microsoft::WRL::ComPtr<ID3D12RootSignature> m_rootSignature;
     Microsoft::WRL::ComPtr<ID3D12Resource>      m_vertexBuffer;
 
-	// Pipeline states for each version of the pixel shader.
-	// These differ only in compiler arguments pertaining to symbols.
+    // Pipeline states for each version of the pixel shader.
+    // These differ only in compiler arguments pertaining to symbols.
 
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> m_pipelineStateDxcEmbeddedPdb;
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> m_pipelineStateDxcManualPdb;
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> m_pipelineStateDxcAutoPdb;
+    Microsoft::WRL::ComPtr<ID3D12PipelineState> m_pipelineStateDxcEmbeddedPdb;
+    Microsoft::WRL::ComPtr<ID3D12PipelineState> m_pipelineStateDxcManualPdb;
+    Microsoft::WRL::ComPtr<ID3D12PipelineState> m_pipelineStateDxcAutoPdb;
 
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> m_pipelineStateDxCompilerEmbeddedPdb;
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> m_pipelineStateDxCompilerManualPdb;
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> m_pipelineStateDxCompilerAutoPdb;
+    Microsoft::WRL::ComPtr<ID3D12PipelineState> m_pipelineStateDxCompilerEmbeddedPdb;
+    Microsoft::WRL::ComPtr<ID3D12PipelineState> m_pipelineStateDxCompilerManualPdb;
+    Microsoft::WRL::ComPtr<ID3D12PipelineState> m_pipelineStateDxCompilerAutoPdb;
 
-	// Binary sizes
-	size_t										m_sizeDxcEmbeddedPdb;
-	size_t										m_sizeDxcManualPdb;
-	size_t										m_sizeDxcAutoPdb;
+    // Binary sizes
+    size_t										m_sizeDxcEmbeddedPdb;
+    size_t										m_sizeDxcManualPdb;
+    size_t										m_sizeDxcAutoPdb;
 
-	size_t										m_sizeDxCompilerEmbeddedPdb;
-	size_t										m_sizeDxCompilerManualPdb;
-	size_t										m_sizeDxCompilerAutoPdb;
+    size_t										m_sizeDxCompilerEmbeddedPdb;
+    size_t										m_sizeDxCompilerManualPdb;
+    size_t										m_sizeDxCompilerAutoPdb;
 
-	// Draw helper
-	std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionColor>>  
-												m_primitiveBatch;
+    // Draw helper
+    std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionColor>>  
+                                                m_primitiveBatch;
 
-	// Fonts
-	struct ResourceDescriptors
-	{
-		enum : uint32_t
-		{
-			FontDescription,
-			Count
-		};
-	};
+    // Fonts
+    struct ResourceDescriptors
+    {
+        enum : uint32_t
+        {
+            FontDescription,    
+            Count
+        };
+    };
 
-	std::unique_ptr<DirectX::SpriteBatch>       m_spriteBatch;
-	std::unique_ptr<DirectX::SpriteFont>        m_fontDescription;
+    std::unique_ptr<DirectX::SpriteBatch>       m_spriteBatch;
+    std::unique_ptr<DirectX::SpriteFont>        m_fontDescription;
 };

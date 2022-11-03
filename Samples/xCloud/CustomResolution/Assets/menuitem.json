@@ -1,0 +1,80 @@
+{
+  "styles": [
+    {
+      "id": "MenuDisabledButtonStyle",
+      "inheritsFromId": "BasicButtonStyle",
+      "classId": "SpriteStyle",
+      "color": [ 64, 64, 64, 1.0 ]
+    },
+    {
+      "id": "MenuFocusedButtonStyle",
+      "inheritsFromId": "BasicButtonStyle",
+      "classId": "SpriteStyle",
+      "color": [ 255, 255, 0, 1.0 ]
+    },
+    {
+      "id": "MenuHoveredButtonStyle",
+      "inheritsFromId": "BasicButtonStyle",
+      "classId": "SpriteStyle",
+      "color": [ 128, 128, 128, 1.0 ]
+    },
+    {
+      "id": "MenuPressedButtonStyle",
+      "inheritsFromId": "BasicButtonStyle",
+      "classId": "SpriteStyle",
+      "color": [ 192, 192, 0, 1.0 ]
+    },
+    {
+      "id": "MenuBasicButtonStyle",
+      "classId": "SpriteStyle",
+      "color": [ 0, 0, 0, 1.0 ],
+      "colorUsage": "override",
+      "texture": "Assets/Textures/roundy-border.png",
+      "spriteType": "nineSliced",
+      "innerUVExtents": [ 0.1, 0.1, 0.9, 0.9 ],
+      "padding": [ 0, 0, 0, 0 ]
+    },
+    {
+      "id": "MenuItemTextStyle",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "horizontalAlign": "left",
+      "verticalAlign": "middle",
+      "fontSize": 30
+    },
+    {
+      "id": "MenuItemSelectedTextStyle",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": [ 0, 0, 0, 1.0 ],
+      "horizontalAlign": "left",
+      "verticalAlign": "middle",
+      "fontSize": 30
+    }
+  ],
+
+  "prefab": {
+    "classId": "Button",
+    "positioningAnchor": [ "left", "top" ],
+    "sizingAnchor": [ "left", "top" ],
+    "size": [ 450, 80 ],
+    "styleId": "MenuBasicButtonStyle",
+    "focusable": true,
+    "disabledStyleId": "MenuDisabledButtonStyle",
+    "focusedStyleId": "MenuFocusedButtonStyle",
+    "hoveredStyleId": "MenuHoveredButtonStyle",
+    "pressedStyleId": "MenuPressedButtonStyle",
+    "subElements": [
+      {
+        "id": "MenuItemButtonText",
+        "classId": "StaticText",
+        "styleId": "MenuItemTextStyle",
+        "position": [ 60, 0 ],
+        "size": [ 440, 75 ],
+        "verticalAlign": "left"
+      }
+
+    ]
+  }
+}

@@ -13,6 +13,7 @@
 #include "ATGTelemetry.h"
 
 #include <appnotify.h>
+#include <XDisplay.h>
 #include <XGameRuntimeInit.h>
 
 using namespace DirectX;
@@ -31,7 +32,10 @@ namespace
     HANDLE g_plmSignalResume = nullptr;
 }
 
+bool g_HDRMode = false;
+
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+void SetDisplayMode() noexcept;
 void ExitSample() noexcept;
 
 // Entry point
@@ -85,6 +89,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
             return 1;
 
         ShowWindow(hwnd, nCmdShow);
+
+        SetDisplayMode();
 
         SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(g_sample.get()));
 
@@ -173,6 +179,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             std::ignore = WaitForSingleObject(g_plmSignalResume, INFINITE);
 
+            SetDisplayMode();
+
             sample->OnResuming();
         }
         break;
@@ -186,6 +194,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
             else
             {
+                SetDisplayMode();
+
                 sample->OnUnConstrained();
             }
         }
@@ -193,6 +203,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     }
 
     return DefWindowProc(hWnd, message, wParam, lParam);
+}
+
+// HDR helper
+void SetDisplayMode() noexcept
+{
+    if (g_sample && g_sample->RequestHDRMode())
+    {
+        // Request HDR mode.
+        auto result = XDisplayTryEnableHdrMode(XDisplayHdrModePreference::PreferHdr, nullptr);
+
+        g_HDRMode = (result == XDisplayHdrModeResult::Enabled);
+
+#ifdef _DEBUG
+        OutputDebugStringA((g_HDRMode) ? "INFO: Display in HDR Mode\n" : "INFO: Display in SDR Mode\n");
+#endif
+    }
 }
 
 // Exit helper

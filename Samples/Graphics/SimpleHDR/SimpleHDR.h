@@ -52,7 +52,7 @@ private:
     void CreateDeviceDependentResources();
     void CreateWindowSizeDependentResources();
 
-    void TryEnableHDR();
+    void SetDisplayMode();
 
     // Device resources.
     std::unique_ptr<DX::DeviceResources>        m_deviceResources;

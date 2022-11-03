@@ -55,16 +55,89 @@ bool MeshProcessor::GenerateMeshlets(
     }
 
     Optimize(transformer, force32BitIndices);
+
+    // Create a position-only buffer
+    std::vector<XMFLOAT3> positions;
+    positions.resize(m_vertexBuffer.GetVertexCount());
+
+    for (size_t i = 0; i < positions.size(); ++i)
+    {
+        positions[i] = *reinterpret_cast<XMFLOAT3*>(m_vertexBuffer.GetVertex(i));
+    }
+
     if (m_indexBuffer.GetIndexSize() == 4)
     {
-        Meshletize<uint32_t>(meshletMaxVerts, meshletMaxPrims, meshlet);
+        Meshletize<uint32_t>(
+            meshletMaxVerts,
+            meshletMaxPrims,
+            meshlet,
+            reinterpret_cast<uint32_t*>(m_indexBuffer.GetIndexData()),
+            m_indexBuffer.GetIndexCount() / 3,
+            positions,
+            m_subsets);
     }
     else
     {
-        Meshletize<uint16_t>(meshletMaxVerts, meshletMaxPrims, meshlet);
+        Meshletize<uint16_t>(
+            meshletMaxVerts,
+            meshletMaxPrims,
+            meshlet,
+            reinterpret_cast<uint16_t*>(m_indexBuffer.GetIndexData()),
+            m_indexBuffer.GetIndexCount() / 3,
+            positions,
+            m_subsets);
     }
 
     Reset();
+
+    return true;
+}
+
+bool MeshProcessor::GenerateMeshlets(
+    MeshletSet& meshlet,
+    uint32_t meshletMaxVerts,
+    uint32_t meshletMaxPrims,
+    const uint8_t* verts,
+    size_t numVerts,
+    size_t vertexStride,
+    const uint8_t* indices,
+    size_t nFaces,
+    bool indices32Bit,
+    const std::vector<std::pair<size_t, size_t>>& meshSubsets)
+{
+    // Create a position-only buffer
+    std::vector<XMFLOAT3> positions;
+    positions.resize(numVerts);
+
+    for (size_t i = 0; i < positions.size(); ++i)
+    {
+        positions[i] = *reinterpret_cast<const XMFLOAT3*>(verts + i * vertexStride);
+    }
+
+    if (indices32Bit)
+    {
+        const uint32_t* indexBuffer = reinterpret_cast<const uint32_t*>(indices);
+        Meshletize(
+            meshletMaxVerts,
+            meshletMaxPrims,
+            meshlet,
+            indexBuffer,
+            nFaces,
+            positions,
+            meshSubsets);
+    }
+    else
+    {
+        const uint16_t* indexBuffer = reinterpret_cast<const uint16_t*>(indices);
+        Meshletize(
+            meshletMaxVerts,
+            meshletMaxPrims,
+            meshlet,
+            indexBuffer,
+            nFaces,
+            positions,
+            meshSubsets);
+    }
 
     return true;
 }
@@ -302,29 +375,27 @@ void MeshProcessor::Optimize(const FbxTransformer& transformer, bool force32BitI
 }
 
 template <typename T>
-void MeshProcessor::Meshletize(uint32_t meshletMaxVerts, uint32_t meshletMaxPrims, MeshletSet& m)
+void MeshProcessor::Meshletize(
+    uint32_t meshletMaxVerts,
+    uint32_t meshletMaxPrims,
+    MeshletSet& m,
+    const T* indexBuffer,
+    size_t nFaces,
+    const std::vector<XMFLOAT3>& positions,
+    const std::vector<std::pair<size_t, size_t>>& subsets)
 {
     m.maxVerts = meshletMaxVerts;
     m.maxPrims = meshletMaxPrims;
     m.indexSize = sizeof(T);
 
-    // Create a position-only buffer
-    std::vector<XMFLOAT3> positions;
-    positions.resize(m_vertexBuffer.GetVertexCount());
-
-    for (size_t i = 0; i < positions.size(); ++i)
-    {
-        positions[i] = *reinterpret_cast<XMFLOAT3*>(m_vertexBuffer.GetVertex(i));
-    }
-
     std::vector<std::pair<size_t, size_t>> meshletSubsets;
-    meshletSubsets.resize(m_subsets.size());
+    meshletSubsets.resize(subsets.size());
 
     // Meshletize our mesh and generate per-meshlet culling data
     ThrowIfFailed(ComputeMeshlets(
-        reinterpret_cast<T*>(m_indexBuffer.GetIndexData()), m_indexBuffer.GetIndexCount() / 3,
+        indexBuffer, nFaces,
         positions.data(), positions.size(),
-        m_subsets.data(), m_subsets.size(),
+        subsets.data(), subsets.size(),
         nullptr,
         m.meshlets,
         m.uniqueVertexIndices,

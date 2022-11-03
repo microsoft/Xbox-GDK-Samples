@@ -41,13 +41,32 @@ namespace ATG
             bool force32BitIndices,
             MeshletSet& meshlet);
 
+        static bool GenerateMeshlets(
+            MeshletSet& meshlet,
+            uint32_t meshletMaxVerts,
+            uint32_t meshletMaxPrims,
+            const uint8_t* verts,
+            size_t numVerts,
+            size_t vertexStride,
+            const uint8_t* indices,
+            size_t nFaces,
+            bool indices32Bit,
+            const std::vector<std::pair<size_t, size_t>>& meshSubsets);
+
     private:
         void Reset();
         bool Extract(fbxsdk::FbxNode* node);
         void Optimize(const FbxTransformer& transformer, bool force32BitIndices);
 
         template <typename T>
-        void Meshletize(uint32_t meshletMaxVerts, uint32_t meshletMaxPrims, MeshletSet& set);
+        static void Meshletize(
+            uint32_t meshletMaxVerts,
+            uint32_t meshletMaxPrims,
+            MeshletSet& m,
+            const T* indexBuffer,
+            size_t nFaces,
+            const std::vector<DirectX::XMFLOAT3>& positions,
+            const std::vector<std::pair<size_t, size_t>>& subsets);
 
     private:
         ExportVB                                m_vertexBuffer;

@@ -20,6 +20,8 @@ option(OPTIMIZE_FOR_SCARLETT "Optimize for the AMD Hercules CPU" OFF)
 
 option(ENABLE_CODE_ANALYSIS "Use Static Code Analysis on build" OFF)
 
+set(CMAKE_MAP_IMPORTED_CONFIG_RELWITHDEBINFO Release)
+
 include(CMakeGDKXbox.cmake)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -32,8 +34,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/Console")
 
 add_executable(${PROJECT_NAME} Main.cpp)
 
-target_include_directories(${PROJECT_NAME} PUBLIC ${Console_SdkIncludeRoot} PUBLIC ${Console_ExtIncPath})
-target_link_directories(${PROJECT_NAME} PUBLIC ${VC_OneCore_LibPath} PUBLIC ${Console_SdkLibPath} PUBLIC ${Console_ExtLibPath})
+target_include_directories(${PROJECT_NAME} PUBLIC ${Console_SdkIncludeRoot})
+target_link_directories(${PROJECT_NAME} PUBLIC ${VC_OneCore_LibPath} PUBLIC ${Console_SdkLibPath})
 
 # Use Warning Level 4
 string(REPLACE "/W3 " "/W4 " CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
@@ -53,7 +55,8 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE ${Console_Defines})
 
 target_compile_options(${PROJECT_NAME} PRIVATE /fp:fast /GS /Gy ${Console_ArchOptions})
 
-target_link_libraries(${PROJECT_NAME} PRIVATE ${Console_Libs} ${XSAPI_Libs})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${Console_Libs})
+# optional extension libraries: Xbox::XSAPI Xbox::XCurl Xbox::GameChat2 Xbox::PlayFabMultiplayer Xbox::PlayFabParty Xbox::PlayFabPartyLIVE
 
 target_link_options(${PROJECT_NAME} PRIVATE ${Console_LinkOptions})
 
@@ -90,7 +93,7 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
    target_link_options(${PROJECT_NAME} PRIVATE /IGNORE:4078)
 endif()
 
-# Copy VC Runtime
+# Copy VC Runtime and Extension Library DLLs
 add_custom_command(
   TARGET ${PROJECT_NAME} POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy_directory
@@ -109,6 +112,15 @@ if(CMAKE_BUILD_TYPE MATCHES "Debug")
         $<TARGET_FILE_DIR:${PROJECT_NAME}>
         )
 endif()
+
+# Uncomment if using any extension libraries
+#if (${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.21")
+#   add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+#      COMMAND ${CMAKE_COMMAND} -E copy
+#      $<TARGET_RUNTIME_DLLS:${PROJECT_NAME}> $<TARGET_FILE_DIR:${PROJECT_NAME}>
+#      COMMAND_EXPAND_LISTS
+#      )
+#endif()
 
 # Use of OpenMP requires also copying the files from Microsoft.VC14?.OpenMP
 # See ${OpenMPRuntimeFilesPath}, ${DebugOpenMPRuntimeFilesPath} in CMakeGDKXbox.cmake

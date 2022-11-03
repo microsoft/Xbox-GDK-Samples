@@ -14,7 +14,7 @@
 
 #pragma warning( disable : 4324 4365 )
 
-extern void ExitSample();
+extern void ExitSample() noexcept;
 
 using namespace ATG;
 using namespace DirectX;
@@ -33,9 +33,9 @@ namespace
     const wchar_t* s_meshShaderFilename = L"InstancedMeshletMS.cso";
     const wchar_t* s_pixelShaderFilename = L"BasicMeshletPS.cso";
 
-    static const wchar_t* s_lodFilenames[] =
+    const wchar_t* s_lodFilenames[] =
     {
-#if _GAMING_DESKTOP
+#ifdef _GAMING_DESKTOP
         L"ATGDragon\\Dragon_LOD0.sdkmesh",
         L"ATGDragon\\Dragon_LOD1.sdkmesh",
         L"ATGDragon\\Dragon_LOD2.sdkmesh",
@@ -51,7 +51,7 @@ namespace
         L"Dragon_LOD5.sdkmesh",
 #endif
     };
-    const uint32_t c_lodCount = _countof(s_lodFilenames);
+    constexpr uint32_t c_lodCount = _countof(s_lodFilenames);
 
 #ifdef _GAMING_XBOX_SCARLETT
     const uint32_t c_textureDataPitchAlign = D3D12XBOX_TEXTURE_DATA_PITCH_ALIGNMENT;
@@ -85,7 +85,7 @@ namespace
     template <typename T>
     size_t GetAlignedSize(T size)
     {
-        const size_t alignment = D3D12_CONSTANT_BUFFER_DATA_PLACEMENT_ALIGNMENT;
+        constexpr size_t alignment = D3D12_CONSTANT_BUFFER_DATA_PLACEMENT_ALIGNMENT;
         const size_t alignedSize = (size + alignment - 1) & ~(alignment - 1);
         return alignedSize;
     }
@@ -109,8 +109,7 @@ namespace
 }
 
 Sample::Sample() noexcept(false) 
-    : m_deviceResources(std::make_unique<DX::DeviceResources>())
-    , m_displayWidth(0)
+    : m_displayWidth(0)
     , m_displayHeight(0)
     , m_frame(0)
     , m_instMode(InstanceMode::IM_Line)
@@ -120,6 +119,7 @@ Sample::Sample() noexcept(false)
     , m_updateInstances(false)
     , m_renderHelp(false)
 {
+    m_deviceResources = std::make_unique<DX::DeviceResources>();
     m_deviceResources->RegisterDeviceNotify(this);
 }
 
@@ -135,13 +135,15 @@ Sample::~Sample()
 void Sample::Initialize(HWND window, int width, int height)
 {
     m_gamePad = std::make_unique<GamePad>();
+
     m_keyboard = std::make_unique<Keyboard>();
+
     m_mouse = std::make_unique<Mouse>();
     m_mouse->SetWindow(window);
 
     m_deviceResources->SetWindow(window, width, height);
 
-    m_deviceResources->CreateDeviceResources();  	
+    m_deviceResources->CreateDeviceResources();
     CreateDeviceDependentResources();
 
     m_deviceResources->CreateWindowSizeDependentResources();
@@ -153,6 +155,10 @@ void Sample::Initialize(HWND window, int width, int height)
 void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
+
+#ifdef _GAMING_XBOX
+    m_deviceResources->WaitForOrigin();
+#endif
 
     m_timer.Tick([&]()
     {
@@ -168,7 +174,6 @@ void Sample::Tick()
 // Updates the world.
 void Sample::Update(DX::StepTimer const& timer)
 {
-
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Update");
 
     float elapsedTime = float(timer.GetElapsedSeconds());
@@ -348,16 +353,16 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
-    auto dsvDescriptor = m_deviceResources->GetDepthStencilView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
     commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -397,7 +402,7 @@ void Sample::UpdateConstants(ID3D12GraphicsCommandList* commandList)
 
 void Sample::DrawHUD(ID3D12GraphicsCommandList* commandList)
 {
-    const wchar_t* c_renderModeNames[] =
+    static const wchar_t* c_renderModeNames[] =
     {
         L"Flat",
         L"Meshlets"
@@ -407,7 +412,7 @@ void Sample::DrawHUD(ID3D12GraphicsCommandList* commandList)
 
     m_hudBatch->Begin(commandList);
 
-    auto safe = SimpleMath::Viewport::ComputeTitleSafeArea(m_displayWidth, m_displayHeight);
+    auto const safe = SimpleMath::Viewport::ComputeTitleSafeArea(m_displayWidth, m_displayHeight);
 
     // Draw a text underlay box
     m_hudBatch->Draw(m_srvPile->GetGpuHandle(SRV_WhiteTexture), { 1, 1 }, RECT{ safe.left - 10, safe.top - 10, safe.left + 335, safe.top + 270 });
@@ -508,7 +513,7 @@ void Sample::OnResuming()
 
 void Sample::OnWindowMoved()
 {
-    auto r = m_deviceResources->GetOutputSize();
+    auto const r = m_deviceResources->GetOutputSize();
     m_deviceResources->WindowSizeChanged(r.right, r.bottom);
 }
 
@@ -521,7 +526,7 @@ void Sample::OnWindowSizeChanged(int width, int height)
 }
 
 // Properties
-void Sample::GetDefaultSize(int& width, int& height) const
+void Sample::GetDefaultSize(int& width, int& height) const noexcept
 {
     width = 1280;
     height = 720;
@@ -556,11 +561,9 @@ void Sample::CreateDeviceDependentResources()
     // Instantiate manager objects
     m_graphicsMemory = std::make_unique<GraphicsMemory>(device);
     m_gpuTimer = std::make_unique<DX::GPUTimer>(device, m_deviceResources->GetCommandQueue());
-    m_controlHelp = std::make_unique<Help>(L"Meshlet Instancing", nullptr, c_buttonAssignment, _countof(c_buttonAssignment));
+    m_controlHelp = std::make_unique<Help>(L"Meshlet Instancing", nullptr, c_buttonAssignment, std::size(c_buttonAssignment));
 
     m_srvPile = std::make_unique<DescriptorPile>(device,
-        D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV,
-        D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE,
         128,
         DescriptorHeapIndex::SRV_Count);
 
@@ -599,7 +602,7 @@ void Sample::CreateDeviceDependentResources()
     // Create GPU resources for various purposes
     {
         // Create constant resources
-        auto defaultHeap = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
+        const CD3DX12_HEAP_PROPERTIES defaultHeap(D3D12_HEAP_TYPE_DEFAULT);
         auto cbDesc = CD3DX12_RESOURCE_DESC::Buffer(GetAlignedSize(sizeof(Constants)));
 
         DX::ThrowIfFailed(device->CreateCommittedResource(
@@ -626,13 +629,13 @@ void Sample::CreateDeviceDependentResources()
     }
 
     // Load the model LODs and mesh data
-    m_lods.resize(_countof(s_lodFilenames));
-    m_primCounts.resize(_countof(s_lodFilenames));
+    m_lods.resize(std::size(s_lodFilenames));
+    m_primCounts.resize(std::size(s_lodFilenames));
 
     for (size_t i = 0; i < m_lods.size(); ++i)
     {
-        wchar_t filepath[256];
-        DX::FindMediaFile(filepath, _countof(filepath), s_lodFilenames[i]);
+        wchar_t filepath[_MAX_PATH] = {};
+        DX::FindMediaFile(filepath, _MAX_PATH, s_lodFilenames[i]);
 
         m_lods[i].Model = Model::CreateFromSDKMESH(device, filepath);
 
@@ -675,7 +678,7 @@ void Sample::CreateDeviceDependentResources()
         }
 
         // Create our HUD objects
-        auto backBufferRts = RenderTargetState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
+        const RenderTargetState backBufferRts(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
         m_controlHelp->RestoreDevice(device, resourceUpload, backBufferRts);
 
         auto spritePSD = SpriteBatchPipelineStateDescription(backBufferRts, &CommonStates::AlphaBlend);
@@ -715,7 +718,7 @@ void Sample::CreateDeviceDependentResources()
 // Allocate all memory resources that change on a window SizeChanged event.
 void Sample::CreateWindowSizeDependentResources()
 {
-    RECT size = m_deviceResources->GetOutputSize();
+    auto const size = m_deviceResources->GetOutputSize();
     m_displayWidth = size.right - size.left;
     m_displayHeight = size.bottom - size.top;
 
@@ -766,7 +769,7 @@ void Sample::RegenerateInstances()
     m_updateInstances = true;
 
     const float radius = m_lods[m_lodIndex].Model->meshes[0]->boundingSphere.Radius;
-    const float padding = 0.5f;
+    constexpr float padding = 0.5f;
     const float spacing = (1.0f + padding) * radius;
 
     // Determine our instancing mode

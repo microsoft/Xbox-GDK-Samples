@@ -54,7 +54,7 @@ DeviceResources::~DeviceResources()
     // Ensure we present a blank screen before cleaning up resources.
     if (m_commandQueue)
     {
-        (void)m_commandQueue->PresentX(0, nullptr, nullptr);
+        std::ignore = m_commandQueue->PresentX(0, nullptr, nullptr);
     }
 }
 
@@ -151,30 +151,45 @@ void DeviceResources::CreateDeviceResources()
     m_fenceEvent.Attach(CreateEventEx(nullptr, nullptr, 0, EVENT_MODIFY_STATE | SYNCHRONIZE));
     if (!m_fenceEvent.IsValid())
     {
-        throw std::exception("CreateEvent");
+        throw std::system_error(std::error_code(static_cast<int>(GetLastError()), std::system_category()), "CreateEventEx");
     }
 
-    if (m_options & c_Enable4K_UHD)
+    if (m_options & (c_Enable4K_UHD | c_EnableQHD))
     {
         switch (XSystemGetDeviceType())
         {
         case XSystemDeviceType::XboxOne:
         case XSystemDeviceType::XboxOneS:
-        case XSystemDeviceType::XboxScarlettLockhart /* Xbox Series S */:
-            m_options &= ~c_Enable4K_UHD;
-#ifdef _DEBUG
-            OutputDebugStringA("INFO: Swapchain using 1080p (1920 x 1080)\n");
-#endif
+            m_options &= ~(c_Enable4K_UHD | c_EnableQHD);
             break;
 
+        case XSystemDeviceType::XboxScarlettLockhart /* Xbox Series S */:
+            m_options &= ~c_Enable4K_UHD;
+            if (m_options & c_EnableQHD)
+            {
+                m_outputSize = { 0, 0, 2560, 1440 };
+            }
+            break;
+
+        case XSystemDeviceType::XboxScarlettAnaconda /* Xbox Series X */:
+        case XSystemDeviceType::XboxOneXDevkit:
+        case XSystemDeviceType::XboxScarlettDevkit:
         default:
-            m_outputSize = { 0, 0, 3840, 2160 };
-#ifdef _DEBUG
-            OutputDebugStringA("INFO: Swapchain using 4k (3840 x 2160)\n");
-#endif
+            m_outputSize = (m_options & c_Enable4K_UHD) ? RECT{ 0, 0, 3840, 2160 } : RECT{ 0, 0, 2560, 1440 };
             break;
         }
     }
+
+#ifdef _DEBUG
+    const char* info = nullptr;
+    switch (m_outputSize.bottom)
+    {
+    case 2160:    info = "INFO: Swapchain using 4k (3840 x 2160)\n"; break;
+    case 1440:    info = "INFO: Swapchain using 1440p (2560 x 1440)\n"; break;
+    default:      info = "INFO: Swapchain using 1080p (1920 x 1080)\n"; break;
+    }
+    OutputDebugStringA(info);
+#endif
 
     RegisterFrameEvents();
 }
@@ -184,7 +199,7 @@ void DeviceResources::CreateWindowSizeDependentResources()
 {
     if (!m_window)
     {
-        throw std::exception("Call SetWindow with a valid window handle");
+        throw std::logic_error("Call SetWindow with a valid Win32 window handle");
     }
 
     // Wait until all previous GPU work is complete.
@@ -206,7 +221,7 @@ void DeviceResources::CreateWindowSizeDependentResources()
 
     // Obtain the back buffers for this window which will be the final render targets
     // and create render target views for each of them.
-    CD3DX12_HEAP_PROPERTIES swapChainHeapProperties(D3D12_HEAP_TYPE_DEFAULT);
+    const CD3DX12_HEAP_PROPERTIES swapChainHeapProperties(D3D12_HEAP_TYPE_DEFAULT);
 
     D3D12_RESOURCE_DESC swapChainBufferDesc = CD3DX12_RESOURCE_DESC::Tex2D(
         m_backBufferFormat,
@@ -223,11 +238,11 @@ void DeviceResources::CreateWindowSizeDependentResources()
     for (UINT n = 0; n < m_backBufferCount; n++)
     {
         ThrowIfFailed(m_d3dDevice->CreateCommittedResource(
-            &swapChainHeapProperties, 
+            &swapChainHeapProperties,
             D3D12_HEAP_FLAG_ALLOW_DISPLAY,
-            &swapChainBufferDesc, 
-            D3D12_RESOURCE_STATE_PRESENT,  
-            &swapChainOptimizedClearValue, 
+            &swapChainBufferDesc,
+            D3D12_RESOURCE_STATE_PRESENT,
+            &swapChainOptimizedClearValue,
             IID_GRAPHICS_PPV_ARGS(m_renderTargets[n].GetAddressOf())));
 
         wchar_t name[25] = {};
@@ -238,7 +253,7 @@ void DeviceResources::CreateWindowSizeDependentResources()
         rtvDesc.Format = m_backBufferFormat;
         rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 
-        CD3DX12_CPU_DESCRIPTOR_HANDLE rtvDescriptor(
+        const CD3DX12_CPU_DESCRIPTOR_HANDLE rtvDescriptor(
             m_rtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart(),
             static_cast<INT>(n), m_rtvDescriptorSize);
         m_d3dDevice->CreateRenderTargetView(m_renderTargets[n].Get(), &rtvDesc, rtvDescriptor);
@@ -251,7 +266,7 @@ void DeviceResources::CreateWindowSizeDependentResources()
     {
         // Allocate a 2-D surface as the depth/stencil buffer and create a depth/stencil view
         // on this surface.
-        CD3DX12_HEAP_PROPERTIES depthHeapProperties(D3D12_HEAP_TYPE_DEFAULT);
+        const CD3DX12_HEAP_PROPERTIES depthHeapProperties(D3D12_HEAP_TYPE_DEFAULT);
 
         D3D12_RESOURCE_DESC depthStencilDesc = CD3DX12_RESOURCE_DESC::Tex2D(
             m_depthBufferFormat,
@@ -264,7 +279,7 @@ void DeviceResources::CreateWindowSizeDependentResources()
 
         D3D12_CLEAR_VALUE depthOptimizedClearValue = {};
         depthOptimizedClearValue.Format = m_depthBufferFormat;
-        depthOptimizedClearValue.DepthStencil.Depth = 1.0f;
+        depthOptimizedClearValue.DepthStencil.Depth = (m_options & c_ReverseDepth) ? 0.0f : 1.0f;
         depthOptimizedClearValue.DepthStencil.Stencil = 0;
 
         ThrowIfFailed(m_d3dDevice->CreateCommittedResource(
@@ -300,10 +315,6 @@ void DeviceResources::CreateWindowSizeDependentResources()
 // Prepare the command list and render target for rendering.
 void DeviceResources::Prepare(D3D12_RESOURCE_STATES beforeState, D3D12_RESOURCE_STATES afterState)
 {
-    // Wait until frame start is signaled
-    m_framePipelineToken = D3D12XBOX_FRAME_PIPELINE_TOKEN_NULL;
-    ThrowIfFailed(m_d3dDevice->WaitFrameEventX(D3D12XBOX_FRAME_EVENT_ORIGIN, INFINITE, nullptr, D3D12XBOX_WAIT_FRAME_EVENT_FLAG_NONE, &m_framePipelineToken));
-
     // Reset command list and allocator.
     ThrowIfFailed(m_commandAllocators[m_backBufferIndex]->Reset());
     ThrowIfFailed(m_commandList->Reset(m_commandAllocators[m_backBufferIndex].Get(), nullptr));
@@ -311,7 +322,8 @@ void DeviceResources::Prepare(D3D12_RESOURCE_STATES beforeState, D3D12_RESOURCE_
     if (beforeState != afterState)
     {
         // Transition the render target into the correct state to allow for drawing into it.
-        D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(m_renderTargets[m_backBufferIndex].Get(),
+        const D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
+            m_renderTargets[m_backBufferIndex].Get(),
             beforeState, afterState);
         m_commandList->ResourceBarrier(1, &barrier);
     }
@@ -323,7 +335,9 @@ void DeviceResources::Present(D3D12_RESOURCE_STATES beforeState, _In_opt_ const 
     if (beforeState != D3D12_RESOURCE_STATE_PRESENT)
     {
         // Transition the render target to the state that allows it to be presented to the display.
-        D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(m_renderTargets[m_backBufferIndex].Get(), beforeState, D3D12_RESOURCE_STATE_PRESENT);
+        const D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
+            m_renderTargets[m_backBufferIndex].Get(),
+            beforeState, D3D12_RESOURCE_STATE_PRESENT);
         m_commandList->ResourceBarrier(1, &barrier);
     }
 
@@ -341,9 +355,10 @@ void DeviceResources::Present(D3D12_RESOURCE_STATES beforeState, _In_opt_ const 
         m_commandQueue->PresentX(1, &planeParameters, params)
     );
 
-    // Xbox One apps do not need to handle DXGI_ERROR_DEVICE_REMOVED or DXGI_ERROR_DEVICE_RESET.
+    // Xbox apps do not need to handle DXGI_ERROR_DEVICE_REMOVED or DXGI_ERROR_DEVICE_RESET.
 
-    MoveToNextFrame();
+    // Update the back buffer index.
+    m_backBufferIndex = (m_backBufferIndex + 1) % m_backBufferCount;
 }
 
 // Handle GPU suspend/resume
@@ -365,13 +380,13 @@ void DeviceResources::WaitForGpu() noexcept
     if (m_commandQueue && m_fence && m_fenceEvent.IsValid())
     {
         // Schedule a Signal command in the GPU queue.
-        UINT64 fenceValue = m_fenceValues[m_backBufferIndex];
+        const UINT64 fenceValue = m_fenceValues[m_backBufferIndex];
         if (SUCCEEDED(m_commandQueue->Signal(m_fence.Get(), fenceValue)))
         {
             // Wait until the Signal has been processed.
             if (SUCCEEDED(m_fence->SetEventOnCompletion(fenceValue, m_fenceEvent.Get())))
             {
-                WaitForSingleObjectEx(m_fenceEvent.Get(), INFINITE, FALSE);
+                std::ignore = WaitForSingleObjectEx(m_fenceEvent.Get(), INFINITE, FALSE);
 
                 // Increment the fence value for the current frame.
                 m_fenceValues[m_backBufferIndex]++;
@@ -380,25 +395,17 @@ void DeviceResources::WaitForGpu() noexcept
     }
 }
 
-// Prepare to render the next frame.
-void DeviceResources::MoveToNextFrame()
+// For PresentX rendering, we should wait for the origin event just before processing input.
+void DeviceResources::WaitForOrigin()
 {
-    // Schedule a Signal command in the queue.
-    const UINT64 currentFenceValue = m_fenceValues[m_backBufferIndex];
-    ThrowIfFailed(m_commandQueue->Signal(m_fence.Get(), currentFenceValue));
-
-    // Update the back buffer index.
-    m_backBufferIndex = (m_backBufferIndex + 1) % m_backBufferCount;
-
-    // If the next frame is not ready to be rendered yet, wait until it is ready.
-    if (m_fence->GetCompletedValue() < m_fenceValues[m_backBufferIndex])
-    {
-        ThrowIfFailed(m_fence->SetEventOnCompletion(m_fenceValues[m_backBufferIndex], m_fenceEvent.Get()));
-        WaitForSingleObjectEx(m_fenceEvent.Get(), INFINITE, FALSE);
-    }
-
-    // Set the fence value for the next frame.
-    m_fenceValues[m_backBufferIndex] = currentFenceValue + 1;
+    // Wait until frame start is signaled
+    m_framePipelineToken = D3D12XBOX_FRAME_PIPELINE_TOKEN_NULL;
+    ThrowIfFailed(m_d3dDevice->WaitFrameEventX(
+        D3D12XBOX_FRAME_EVENT_ORIGIN,
+        INFINITE,
+        nullptr,
+        D3D12XBOX_WAIT_FRAME_EVENT_FLAG_NONE,
+        &m_framePipelineToken));
 }
 
 // Set frame interval and register for frame events

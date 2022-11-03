@@ -42,8 +42,8 @@
 
 #include <grdk.h>
 
-#if _GRDK_VER < 0x4A610D2B /* GXDK Edition 200600 */
-#error This sample requires the June 2020 GDK or later
+#if _GRDK_VER < 0x55F00C58 /* GDK Edition 220300 */
+#error This sample requires the March 2022 GDK or later
 #endif
 
 #ifdef _GAMING_XBOX_SCARLETT

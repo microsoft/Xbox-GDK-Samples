@@ -1,7 +1,7 @@
 //--------------------------------------------------------------------------------------
 // SimplePBR.cpp
 //
-// Demonstrates PBRModel and PBREffect in DirectX 12 on Xbox One, Scarlett and PC devices
+// Demonstrates PBRModel and PBREffect in DirectX 12 on Xbox One, Xbox Series X|S, and PC devices
 //
 // Advanced Technology Group (ATG)
 // Copyright (C) Microsoft Corporation. All rights reserved.
@@ -9,7 +9,8 @@
 
 #include "pch.h"
 #include "SimplePBR.h"
-#include <ATGColors.h>
+
+#include "ATGColors.h"
 #include "FindMedia.h"
 #include "ControllerFont.h"
 
@@ -21,6 +22,10 @@ using Microsoft::WRL::ComPtr;
 
 namespace
 {
+    constexpr DXGI_FORMAT c_HDRFormat        = DXGI_FORMAT_R11G11B10_FLOAT;
+    constexpr DXGI_FORMAT c_backBufferFormat = DXGI_FORMAT_R10G10B10A2_UNORM;
+    constexpr DXGI_FORMAT c_depthFormat      = DXGI_FORMAT_D32_FLOAT;
+
     // PBR Assest paths.
     const wchar_t* s_modelPaths[] =
     {
@@ -50,7 +55,7 @@ namespace
             D3D12_GPU_DESCRIPTOR_HANDLE irradianceTex,
             D3D12_GPU_DESCRIPTOR_HANDLE sampler)
         {
-            RenderTargetState hdrBufferRts(Sample::GetHDRRenderFormat(), Sample::GetDepthFormat());
+            const RenderTargetState hdrBufferRts(c_HDRFormat, c_depthFormat);
 
             m_sphere = DirectX::GeometricPrimitive::CreateSphere(1.5);
 
@@ -83,8 +88,8 @@ namespace
 
         void XM_CALLCONV Render(ID3D12GraphicsCommandList* commandList, FXMMATRIX camView, CXMMATRIX camProj)
         {
-            const size_t numSpheres = 3;
-            const float step = 15.f;
+            constexpr size_t numSpheres = 3;
+            constexpr float step = 15.f;
 
             Vector3 modelPos((-step * (numSpheres - 1)) / 2.f, 0, 0);
 
@@ -134,10 +139,10 @@ Sample::Sample() :
     m_gamepadConnected(false)
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>(
-        GetBackBufferFormat(), GetDepthFormat(), 2);
+        c_backBufferFormat, c_depthFormat, 2);
     m_deviceResources->RegisterDeviceNotify(this);
     m_gamePad = std::make_unique<GamePad>();
-    m_hdrScene = std::make_unique<DX::RenderTexture>(Sample::GetHDRRenderFormat());
+    m_hdrScene = std::make_unique<DX::RenderTexture>(c_HDRFormat);
 }
 
 Sample::~Sample()
@@ -151,16 +156,6 @@ Sample::~Sample()
 // Initialize the Direct3D resources required to run.
 void Sample::Initialize(HWND window, int width, int height)
 {
-#ifdef _GAMING_XBOX
-    // Determine if attached display is HDR or SDR, if HDR, also set the TV in HDR mode.
-    auto result = XDisplayTryEnableHdrMode(XDisplayHdrModePreference::PreferHdr, nullptr);
-
-    m_bIsTVInHDRMode = (result == XDisplayHdrModeResult::Enabled);
-#ifdef _DEBUG
-    OutputDebugStringA((m_bIsTVInHDRMode) ? "INFO: Display in HDR Mode\n" : "INFO: Display in SDR Mode\n");
-#endif
-#endif
-
     m_deviceResources->SetWindow(window, width, height);
 
     m_deviceResources->CreateDeviceResources();
@@ -169,7 +164,7 @@ void Sample::Initialize(HWND window, int width, int height)
     // Initialize Camera
     {
         const auto size = m_deviceResources->GetOutputSize();
-        const float fovAngleY = 70.0f * XM_PI / 180.0f;
+        constexpr float fovAngleY = 70.0f * XM_PI / 180.0f;
 
         m_camera = std::make_unique<DX::OrbitCamera>();
         m_camera->SetWindow(size.right, size.bottom);
@@ -195,6 +190,10 @@ void Sample::Initialize(HWND window, int width, int height)
 void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
+
+#ifdef _GAMING_XBOX
+    m_deviceResources->WaitForOrigin();
+#endif
 
     m_timer.Tick([&]()
     {
@@ -268,8 +267,7 @@ void Sample::Update(DX::StepTimer const& timer)
 
 void Sample::RenderHUD(ID3D12GraphicsCommandList* commandList)
 {
-    DX::DeviceResources* deviceResources = m_deviceResources.get();
-    auto size = deviceResources->GetOutputSize();
+    auto const size = m_deviceResources->GetOutputSize();
 
     // Safe area dimensions are in screenspace, with y-axis inverted.
     auto safe = SimpleMath::Viewport::ComputeTitleSafeArea((UINT)size.right, (UINT)size.bottom);
@@ -296,13 +294,13 @@ void Sample::RenderHUD(ID3D12GraphicsCommandList* commandList)
     float padding = 0.02f;
 
     // Convert screenspace coordinates to NDC.
-    float minX = 2.0f * (safe.left / (FLOAT)size.right) - 1.0f - padding;
-    float maxX = 2.0f * ((XMVectorGetX(LegendStringBounds) + (FLOAT)safe.left) / (FLOAT)size.right) - 1.0f + padding;
-    float minYTitle = (2.0f * ((XMVectorGetY(TitleStringBounds) + (FLOAT)safe.top) / (FLOAT)size.bottom) - 1.0f) * -1.0f - padding;
-    float maxYTitle = (2.0f * (safe.top / (FLOAT)size.bottom) - 1.0f) * -1.0f + padding;
+    float minX = 2.0f * (safe.left / (float)size.right) - 1.0f - padding;
+    float maxX = 2.0f * ((XMVectorGetX(LegendStringBounds) + (float)safe.left) / (float)size.right) - 1.0f + padding;
+    float minYTitle = (2.0f * ((XMVectorGetY(TitleStringBounds) + (float)safe.top) / (float)size.bottom) - 1.0f) * -1.0f - padding;
+    float maxYTitle = (2.0f * (safe.top / (float)size.bottom) - 1.0f) * -1.0f + padding;
 
-    float minYControls = (2.0f * (safe.bottom / (FLOAT)size.bottom) - 1.0f) * -1.0f - padding;
-    float maxYControls = (2.0f * (((FLOAT)safe.bottom - XMVectorGetY(LegendStringBounds)) / (FLOAT)size.bottom) - 1.0f) * -1.0f + padding;
+    float minYControls = (2.0f * (safe.bottom / (float)size.bottom) - 1.0f) * -1.0f - padding;
+    float maxYControls = (2.0f * (((float)safe.bottom - XMVectorGetY(LegendStringBounds)) / (float)size.bottom) - 1.0f) * -1.0f + padding;
 
     // Sample Title UI Rectangle
     VertexPositionColor vTitle0(Vector3(minX, maxYTitle, UIRectangleSceneDepth), UIBackground);
@@ -325,9 +323,9 @@ void Sample::RenderHUD(ID3D12GraphicsCommandList* commandList)
     m_hudBatch->Begin(commandList);
 
 #ifdef _GAMING_XBOX
-        auto fontColor = ATG::ColorsHDR::White;
+    auto fontColor = ATG::ColorsHDR::White;
 #else
-        auto fontColor = ATG::ColorsHDR::LightGrey;
+    auto fontColor = ATG::ColorsHDR::LightGrey;
 #endif
 
     m_smallFont->DrawString(m_hudBatch.get(), L"SimplePBR Sample",
@@ -358,12 +356,11 @@ void Sample::Render()
     m_deviceResources->Prepare();
     Clear();
 
-    DX::DeviceResources* deviceResources = m_deviceResources.get();
-    auto commandList = deviceResources->GetCommandList();
+    auto commandList = m_deviceResources->GetCommandList();
 
     // Set descriptor heaps
     ID3D12DescriptorHeap* heaps[] = { m_srvPile->Heap(), m_commonStates->Heap() };
-    commandList->SetDescriptorHeaps(_countof(heaps), heaps);
+    commandList->SetDescriptorHeaps(static_cast<UINT>(std::size(heaps)), heaps);
 
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Render");
 
@@ -372,7 +369,7 @@ void Sample::Render()
 
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Render HDR");
 
-    auto depthStencilDescriptor = deviceResources->GetDepthStencilView();
+    auto depthStencilDescriptor = m_deviceResources->GetDepthStencilView();
     auto toneMapRTVDescriptor = m_rtvHeap->GetFirstCpuHandle();
     commandList->OMSetRenderTargets(1, &toneMapRTVDescriptor, FALSE, &depthStencilDescriptor);
 
@@ -406,7 +403,7 @@ void Sample::Render()
 #if defined(_GAMING_XBOX)
 
     // Generate both HDR10 and tonemapped SDR signal
-    D3D12_CPU_DESCRIPTOR_HANDLE rtvDescriptors[2] = { deviceResources->GetRenderTargetView(), deviceResources->GetGameDVRRenderTargetView() };
+    D3D12_CPU_DESCRIPTOR_HANDLE rtvDescriptors[2] = { m_deviceResources->GetRenderTargetView(), m_deviceResources->GetGameDVRRenderTargetView() };
     commandList->OMSetRenderTargets(2, rtvDescriptors, FALSE, nullptr);
 
     m_HDR10->SetHDRSourceTexture(m_srvPile->GetGpuHandle(static_cast<size_t>(StaticDescriptors::SceneTex)));
@@ -414,10 +411,10 @@ void Sample::Render()
 #else
 
     {
-        auto rtv = static_cast<D3D12_CPU_DESCRIPTOR_HANDLE>(deviceResources->GetRenderTargetView());
+        auto rtv = static_cast<D3D12_CPU_DESCRIPTOR_HANDLE>(m_deviceResources->GetRenderTargetView());
         commandList->OMSetRenderTargets(1, &rtv, FALSE, NULL);
 
-        if (deviceResources->GetColorSpace() == DXGI_COLOR_SPACE_RGB_FULL_G2084_NONE_P2020)
+        if (m_deviceResources->GetColorSpace() == DXGI_COLOR_SPACE_RGB_FULL_G2084_NONE_P2020)
         {
             // HDR10 signal
             m_HDR10->SetHDRSourceTexture(m_srvPile->GetGpuHandle(static_cast<size_t>(StaticDescriptors::SceneTex)));
@@ -470,14 +467,6 @@ void Sample::Clear()
 
 #pragma region Message Handlers
 // Message handlers
-void Sample::OnActivated()
-{
-}
-
-void Sample::OnDeactivated()
-{
-}
-
 void Sample::OnSuspending()
 {
     m_deviceResources->Suspend();
@@ -485,11 +474,6 @@ void Sample::OnSuspending()
 
 void Sample::OnResuming()
 {
-#ifdef _GAMING_XBOX
-    // While a title is suspended, the console TV settings could have changed, so we need to call the display APIs when resuming
-    auto result = XDisplayTryEnableHdrMode(XDisplayHdrModePreference::PreferHdr, nullptr);
-    m_bIsTVInHDRMode = (result == XDisplayHdrModeResult::Enabled);
-#endif
     m_deviceResources->Resume();
     m_timer.ResetElapsedTime();
 #ifdef _GAMING_DESKTOP
@@ -499,7 +483,7 @@ void Sample::OnResuming()
 
 void Sample::OnWindowMoved()
 {
-    auto r = m_deviceResources->GetOutputSize();
+    auto const r = m_deviceResources->GetOutputSize();
     m_deviceResources->WindowSizeChanged(r.right, r.bottom);
 }
 
@@ -562,7 +546,7 @@ void Sample::CreateDeviceDependentResources()
 
     // UI Geometry Setup
     m_vertexBatch = std::make_unique<PrimitiveBatch<VertexType>>(device);
-    RenderTargetState UIRectRtState(GetHDRRenderFormat(), GetDepthFormat());
+    const RenderTargetState UIRectRtState(c_HDRFormat, c_depthFormat);
 
     EffectPipelineStateDescription UIRectPd(
         &VertexType::InputLayout,
@@ -573,7 +557,7 @@ void Sample::CreateDeviceDependentResources()
 
     m_basicEffect = std::make_unique<BasicEffect>(device, EffectFlags::VertexColor, UIRectPd);
 
-    RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(),
+    const RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(),
         m_deviceResources->GetDepthBufferFormat());
 
     // Begin uploading texture resources
@@ -608,7 +592,7 @@ void Sample::CreateDeviceDependentResources()
 
     // Pipeline state - for rendering direct to back buffer
     {
-        RenderTargetState backBufferRts(Sample::GetBackBufferFormat(), Sample::GetDepthFormat());
+        RenderTargetState backBufferRts(c_backBufferFormat, c_depthFormat);
 
         // Create HDR10 color space effect
 #if defined(_GAMING_XBOX)
@@ -630,7 +614,7 @@ void Sample::CreateDeviceDependentResources()
 
     // Pipeline state - for rendering to HDR buffer
     {
-        RenderTargetState hdrBufferRts(Sample::GetHDRRenderFormat(), Sample::GetDepthFormat());
+        const RenderTargetState hdrBufferRts(c_HDRFormat, c_depthFormat);
 
         // HUD
         DirectX::SpriteBatchPipelineStateDescription hudpd(

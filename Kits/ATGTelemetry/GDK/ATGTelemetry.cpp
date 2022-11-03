@@ -45,6 +45,7 @@ using namespace ATG;
 class ATGTelemetry
 {
 public:
+    bool m_bHCInitialized{ false };
     ~ATGTelemetry()
     {
 #if _GAMING_XBOX
@@ -54,6 +55,14 @@ public:
             m_notificationChangedHandle = nullptr;
         }
 #endif
+    }
+
+    void Cleanup()
+    {
+        if (m_bHCInitialized)
+        {
+            HCCleanup();
+        }
     }
 
     void SendTelemetry()
@@ -86,6 +95,7 @@ private:
             {
                 return;
             }
+            m_bHCInitialized = true;
 
             auto *async = new XAsyncBlock{};
             async->queue = nullptr;
@@ -463,5 +473,14 @@ void ATG::SendLaunchTelemetry()
     }
 
     s_atgTelem->SendTelemetry();
+}
+
+void ATG::CleanupTelemetry()
+{
+    if (s_atgTelem)
+    {
+        s_atgTelem->Cleanup();
+    }
+    s_atgTelem = nullptr;
 }
 #endif

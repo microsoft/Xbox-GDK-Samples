@@ -161,9 +161,21 @@ int main(int argc, const char* args[])
     {
         std::cout << std::endl;
 
-        if (ImportFile(filename.c_str(), options, meshlets))
+        auto loc = filename.find_last_of(".");
+        auto fileType = filename.substr(loc + 1);
+        bool success = false;
+        if (fileType.compare("sdkmesh") == 0)
         {
-            auto loc = filename.find_last_of(".");
+            success = ImportFileSDKMesh(filename.c_str(), options, meshlets);
+        }
+        else
+        {
+            success = ImportFile(filename.c_str(), options, meshlets);
+        }
+
+        if (success)
+        {
+            
             auto path = filename.substr(0, loc) + ".bin";
 
             if (MeshletSet::Write(path.c_str(), meshlets))

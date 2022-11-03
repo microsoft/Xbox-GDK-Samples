@@ -55,8 +55,8 @@ private:
     static const uint64_t c_speculativeGroupToCancel = 1ULL << SPECULATIVE_TERRAIN;	// which group to cancel, in this case all speculative terrain loads
 
 public:
-    Cancellation() {}
-    ~Cancellation() {}
+    Cancellation() = default;
+    ~Cancellation() = default;
 
     bool RunSample(const std::wstring& fileName, uint64_t dataFileSize);
 };

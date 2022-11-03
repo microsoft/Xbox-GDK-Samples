@@ -45,7 +45,7 @@ protected:
 
 public:
     ImplementationBase();
-    virtual ~ImplementationBase() {}
+    virtual ~ImplementationBase() = default;
 
     static void SetupDirectStorageObjects();
     static void ShutdownDirectStorageObjects();

@@ -119,7 +119,7 @@ void Sample::Initialize(HWND window, int width, int height)
         }
         else // Handle other error cases
         {
-
+            m_log->Format(DirectX::Colors::Red, L"Xbox Live Error: 0x%08X\n", error);
         }
     });
 

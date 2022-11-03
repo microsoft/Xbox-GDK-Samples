@@ -26,8 +26,8 @@ private:
     Microsoft::WRL::ComPtr <DStorageStatusArrayCrossPlatform> m_statusEntries;
 
 public:
-    RecommendedPattern() {}
-    ~RecommendedPattern() {}
+    RecommendedPattern() = default;
+    ~RecommendedPattern() = default;
 
     bool RunSample(const std::wstring& fileName, uint64_t dataFileSize);
 };

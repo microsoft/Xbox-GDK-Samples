@@ -226,7 +226,7 @@ xcopy /Y /I /E "..\..\..\Media\Fonts\xboxone*.spritefont" "$(TargetDir)"</Comman
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config" />
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Kits\DirectXTK12\DirectXTK12_GRDK_2019.vcxproj">

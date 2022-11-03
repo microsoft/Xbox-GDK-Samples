@@ -14,7 +14,7 @@
 
 #pragma warning( disable : 4324 4365 )
 
-extern void ExitSample();
+extern void ExitSample() noexcept;
 
 using namespace ATG;
 using namespace DirectX;
@@ -27,15 +27,15 @@ namespace
     //--------------------------------------
     // Definitions
 
-    static const wchar_t* s_sampleTitle = L"Dynamic LOD";
+    const wchar_t* s_sampleTitle = L"Dynamic LOD";
 
-    static const wchar_t* s_ampShaderFilename   = L"DynamicLodAS.cso";
-    static const wchar_t* s_meshShaderFilename  = L"InstancedLodMS.cso";
-    static const wchar_t* s_pixelShaderFilename = L"BasicMeshletPS.cso";
+    const wchar_t* s_ampShaderFilename   = L"DynamicLodAS.cso";
+    const wchar_t* s_meshShaderFilename  = L"InstancedLodMS.cso";
+    const wchar_t* s_pixelShaderFilename = L"BasicMeshletPS.cso";
 
-    static const wchar_t* s_lodFilenames[] = 
+    const wchar_t* s_lodFilenames[] =
     {
-#if _GAMING_DESKTOP
+#ifdef _GAMING_DESKTOP
         L"ATGDragon\\Dragon_LOD0.sdkmesh",
         L"ATGDragon\\Dragon_LOD1.sdkmesh",
         L"ATGDragon\\Dragon_LOD2.sdkmesh",
@@ -53,9 +53,9 @@ namespace
     };
 
 #ifdef _GAMING_XBOX_SCARLETT
-    const uint32_t c_textureDataPitchAlign = D3D12XBOX_TEXTURE_DATA_PITCH_ALIGNMENT;
+    constexpr uint32_t c_textureDataPitchAlign = D3D12XBOX_TEXTURE_DATA_PITCH_ALIGNMENT;
 #else
-    const uint32_t c_textureDataPitchAlign = D3D12_TEXTURE_DATA_PITCH_ALIGNMENT;
+    constexpr uint32_t c_textureDataPitchAlign = D3D12_TEXTURE_DATA_PITCH_ALIGNMENT;
 #endif
 
     const HelpButtonAssignment c_buttonAssignment[] =
@@ -72,9 +72,9 @@ namespace
         { HelpID::VIEW_BUTTON, L"Exit Sample" },
     };
 
-    constexpr float s_fovy = XM_PIDIV4;
-    constexpr uint32_t s_maxGroupsPerDispatch = 65536;
-    constexpr uint32_t s_maxInstances = AS_GROUP_SIZE * s_maxGroupsPerDispatch;
+    constexpr float c_fovy = XM_PIDIV4;
+    constexpr uint32_t c_maxGroupsPerDispatch = 65536;
+    constexpr uint32_t c_maxInstances = AS_GROUP_SIZE * c_maxGroupsPerDispatch;
 
     // Resource view offsets into the descriptor heap
     // The mesh & meshlet SRVs are laid out as they are referenced in shader code
@@ -117,8 +117,7 @@ namespace
 }
 
 Sample::Sample() noexcept(false) 
-    : m_deviceResources(std::make_unique<DX::DeviceResources>())
-    , m_displayWidth(0)
+    : m_displayWidth(0)
     , m_displayHeight(0)
     , m_frame(0)
     , m_uploadInstances(false)
@@ -129,6 +128,9 @@ Sample::Sample() noexcept(false)
     , m_forceLod0(false)
     , m_renderHelp(false)
 {
+    m_deviceResources = std::make_unique<DX::DeviceResources>(
+        DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_D32_FLOAT, 2,
+        DX::DeviceResources::c_AmplificationShaders);
     m_deviceResources->RegisterDeviceNotify(this);
 }
 
@@ -162,6 +164,10 @@ void Sample::Initialize(HWND window, int width, int height)
 void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
+
+#ifdef _GAMING_XBOX
+    m_deviceResources->WaitForOrigin();
+#endif
 
     m_timer.Tick([&]()
     {
@@ -348,16 +354,16 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
-    auto dsvDescriptor = m_deviceResources->GetDepthStencilView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
     commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -378,7 +384,7 @@ void Sample::UpdateConstants(ID3D12GraphicsCommandList* commandList)
         XMStoreFloat4x4(&constants.View, XMMatrixTranspose(view));
         XMStoreFloat4x4(&constants.ViewProj, XMMatrixTranspose(viewProj));
         constants.RenderMode = m_renderMode;
-        constants.RecipTanHalfFovy = 1.0f / std::tanf(s_fovy * 0.5f);
+        constants.RecipTanHalfFovy = 1.0f / std::tanf(c_fovy * 0.5f);
         constants.LODCount = static_cast<uint32_t>(m_lods.size());
         constants.ForceLOD0 = m_forceLod0;
         constants.ForceVisible = m_forceVisible;
@@ -568,7 +574,7 @@ void Sample::OnResuming()
 
 void Sample::OnWindowMoved()
 {
-    auto r = m_deviceResources->GetOutputSize();
+    auto const r = m_deviceResources->GetOutputSize();
     m_deviceResources->WindowSizeChanged(r.right, r.bottom);
 }
 
@@ -581,7 +587,7 @@ void Sample::OnWindowSizeChanged(int width, int height)
 }
 
 // Properties
-void Sample::GetDefaultSize(int& width, int& height) const
+void Sample::GetDefaultSize(int& width, int& height) const noexcept
 {
     width = 1280;
     height = 720;
@@ -592,7 +598,7 @@ void Sample::GetDefaultSize(int& width, int& height) const
 // These are the resources that depend on the device.
 void Sample::CreateDeviceDependentResources()
 {
-    auto device = static_cast<ID3D12Device2*>(m_deviceResources->GetD3DDevice());
+    auto device = m_deviceResources->GetD3DDevice();
 
     // Check for Shader Model 6.5 and Mesh Shader feature support
 #ifdef _GAMING_DESKTOP
@@ -722,7 +728,7 @@ void Sample::CreateDeviceDependentResources()
         }
 
         // Create our HUD objects
-        auto backBufferRts = RenderTargetState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
+        const RenderTargetState backBufferRts(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
         m_controlHelp->RestoreDevice(device, resourceUpload, backBufferRts);
 
         auto spritePSD = SpriteBatchPipelineStateDescription(backBufferRts, &CommonStates::AlphaBlend);
@@ -842,7 +848,7 @@ void Sample::CreateWindowSizeDependentResources()
     m_hudBatch->SetViewport(m_deviceResources->GetScreenViewport());
 
     m_camera.SetWindow(m_displayWidth, m_displayHeight);
-    m_camera.SetProjectionParameters(s_fovy, 1.0f, 10000.0f, true);
+    m_camera.SetProjectionParameters(c_fovy, 1.0f, 10000.0f, true);
 
     m_camera.SetLookAt(Vector3(-200.0f, 200.0f, -200.0f), Vector3::Up * 40.0f);
     m_camera.SetSensitivity(500.0f, 100.0f, 1000.0f, 10.0f);
@@ -964,9 +970,9 @@ void Sample::RegenerateInstances()
     }
 
     // Limit instance count to the number of instances
-    if (m_instances.size() > s_maxInstances)
+    if (m_instances.size() > c_maxInstances)
     {
-        m_instances.resize(s_maxInstances);
+        m_instances.resize(c_maxInstances);
     }
 
     // Only recreate instance-sized buffers if necessary.

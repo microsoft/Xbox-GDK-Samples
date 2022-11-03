@@ -13,10 +13,7 @@
 
 struct SimpleTriangleRecord : public ShaderRecord
 {
-    SimpleTriangleRecord() : ShaderRecord()
-    {
-
-    }
+    SimpleTriangleRecord() = default;
 
     SimpleTriangleRecord(ID3D12StateObjectProperties* props, LPCWSTR exportName)
     {
@@ -64,8 +61,8 @@ public:
     void OnDeviceRestored() override;
 
     // Messages
-    void OnActivated();
-    void OnDeactivated();
+    void OnActivated() {}
+    void OnDeactivated() {}
     void OnSuspending();
     void OnResuming();
     void OnWindowMoved();

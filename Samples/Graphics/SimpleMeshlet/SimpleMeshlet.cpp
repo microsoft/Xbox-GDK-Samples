@@ -44,7 +44,7 @@ namespace
 
     const wchar_t* s_meshFilenames[] =
     {
-#if _GAMING_DESKTOP
+#ifdef _GAMING_DESKTOP
         L"ATGDragon\\Dragon_LOD0.sdkmesh",
         L"ATGDragon\\Dragon_LOD1.sdkmesh",
         L"ATGDragon\\Dragon_LOD2.sdkmesh",
@@ -63,8 +63,8 @@ namespace
 #endif
     };
 
-    const uint32_t s_dragonLODStart = 0;
-    const uint32_t s_dragonLODCount = 6;
+    constexpr uint32_t s_dragonLODStart = 0;
+    constexpr uint32_t s_dragonLODCount = 6;
 
     struct ObjectDefinition
     {
@@ -88,8 +88,7 @@ namespace
 }
 
 Sample::Sample() noexcept(false)
-    : m_deviceResources(std::make_unique<DX::DeviceResources>())
-    , m_displayWidth(0)
+    : m_displayWidth(0)
     , m_displayHeight(0)
     , m_frame(0)
     , m_cull(false)
@@ -97,6 +96,7 @@ Sample::Sample() noexcept(false)
     , m_drawMeshlets(true)
     , m_lodIndex(s_dragonLODStart)
 {
+    m_deviceResources = std::make_unique<DX::DeviceResources>();
     m_deviceResources->RegisterDeviceNotify(this);
 }
 
@@ -112,7 +112,9 @@ Sample::~Sample()
 void Sample::Initialize(HWND window, int width, int height)
 {
     m_gamePad = std::make_unique<GamePad>();
+
     m_keyboard = std::make_unique<Keyboard>();
+
     m_mouse = std::make_unique<Mouse>();
     m_mouse->SetWindow(window);
 
@@ -130,6 +132,10 @@ void Sample::Initialize(HWND window, int width, int height)
 void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
+
+#ifdef _GAMING_XBOX
+    m_deviceResources->WaitForOrigin();
+#endif
 
     m_timer.Tick([&]()
     {
@@ -279,8 +285,8 @@ void Sample::Render()
     UpdateConstants(commandList);
 
     // Set up the root signature & pipeline state
-    ID3D12DescriptorHeap* descriptorHeaps[] = { m_srvPile->Heap() };
-    commandList->SetDescriptorHeaps(1, descriptorHeaps);
+    auto descriptorHeaps = m_srvPile->Heap();
+    commandList->SetDescriptorHeaps(1, &descriptorHeaps);
 
     commandList->SetGraphicsRootSignature(m_rootSignature.Get());
     commandList->SetPipelineState(m_cull ? m_cullMeshletPso.Get() : m_basicMeshletPso.Get());
@@ -381,16 +387,16 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
-    auto dsvDescriptor = m_deviceResources->GetDepthStencilView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
     commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -401,7 +407,7 @@ void Sample::DrawHUD(ID3D12GraphicsCommandList* commandList)
 {
     m_hudBatch->Begin(commandList);
 
-    auto safe = SimpleMath::Viewport::ComputeTitleSafeArea(m_displayWidth, m_displayHeight);
+    auto const safe = SimpleMath::Viewport::ComputeTitleSafeArea(m_displayWidth, m_displayHeight);
 
     wchar_t textBuffer[128] = {};
     XMFLOAT2 textPos = XMFLOAT2(float(safe.left), float(safe.top));
@@ -482,14 +488,6 @@ void Sample::DrawHUD(ID3D12GraphicsCommandList* commandList)
 
 #pragma region Message Handlers
 // Message handlers
-void Sample::OnActivated()
-{
-}
-
-void Sample::OnDeactivated()
-{
-}
-
 void Sample::OnSuspending()
 {
     m_deviceResources->Suspend();
@@ -505,7 +503,7 @@ void Sample::OnResuming()
 
 void Sample::OnWindowMoved()
 {
-    auto r = m_deviceResources->GetOutputSize();
+    auto const r = m_deviceResources->GetOutputSize();
     m_deviceResources->WindowSizeChanged(r.right, r.bottom);
 }
 
@@ -554,15 +552,13 @@ void Sample::CreateDeviceDependentResources()
 
     // Create heap
     m_srvPile = std::make_unique<DescriptorPile>(device,
-        D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV,
-        D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE,
         128,
         DescriptorHeapIndex::SRV_Count);
 
     m_frustumDraw.CreateDeviceResources(*m_deviceResources, *m_commonStates);
 
     {
-        auto defaultHeapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
+        const CD3DX12_HEAP_PROPERTIES defaultHeapProps(D3D12_HEAP_TYPE_DEFAULT);
         auto cbDesc = CD3DX12_RESOURCE_DESC::Buffer(GetAlignedSize(sizeof(Constants)));
         
         DX::ThrowIfFailed(device->CreateCommittedResource(
@@ -619,12 +615,12 @@ void Sample::CreateDeviceDependentResources()
 
     for (size_t i = 0; i < m_models.size(); ++i)
     {
-        wchar_t filepath[256];
-        DX::FindMediaFile(filepath, _countof(filepath), s_meshFilenames[i]);
+        wchar_t filepath[_MAX_PATH] = {};
+        DX::FindMediaFile(filepath, _MAX_PATH, s_meshFilenames[i]);
 
         m_models[i].Model = Model::CreateFromSDKMESH(device, filepath);
 
-        wchar_t meshletFilepath[256] = {};
+        wchar_t meshletFilepath[_MAX_PATH] = {};
         swprintf_s(meshletFilepath, L"%s.bin", filepath);
 
         m_models[i].MeshletData = MeshletSet::Read(meshletFilepath);
@@ -661,7 +657,7 @@ void Sample::CreateDeviceDependentResources()
 
     auto effectFactory = EffectFactory(m_srvPile->Heap(), m_commonStates->Heap());
 
-    auto objectRTState = RenderTargetState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
+    const RenderTargetState objectRTState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
     auto objectPSD = EffectPipelineStateDescription(
         nullptr,
         CommonStates::Opaque,
@@ -680,7 +676,7 @@ void Sample::CreateDeviceDependentResources()
         m_scene[i].ModelIndex = index;
         m_scene[i].Effects  = m_models[index].Model->CreateEffects(effectFactory, objectPSD, objectPSD, int(texOffsets[index]));
 
-        auto defaultHeapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
+        const CD3DX12_HEAP_PROPERTIES defaultHeapProps(D3D12_HEAP_TYPE_DEFAULT);
         auto cbDesc = CD3DX12_RESOURCE_DESC::Buffer(GetAlignedSize(sizeof(Instance)));
         DX::ThrowIfFailed(device->CreateCommittedResource(
             &defaultHeapProps,
@@ -693,7 +689,7 @@ void Sample::CreateDeviceDependentResources()
     }
 
     // HUD
-    auto backBufferRts = RenderTargetState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
+    const RenderTargetState backBufferRts(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
     auto spritePSD = SpriteBatchPipelineStateDescription(backBufferRts, &CommonStates::AlphaBlend);
     m_hudBatch = std::make_unique<SpriteBatch>(device, resourceUpload, spritePSD);
 
@@ -716,7 +712,7 @@ void Sample::CreateDeviceDependentResources()
 // Allocate all memory resources that change on a window SizeChanged event.
 void Sample::CreateWindowSizeDependentResources()
 {
-    RECT size = m_deviceResources->GetOutputSize();
+    auto const size = m_deviceResources->GetOutputSize();
     m_displayWidth = size.right - size.left;
     m_displayHeight = size.bottom - size.top;
 
@@ -747,16 +743,19 @@ void Sample::CreateWindowSizeDependentResources()
 
 void Sample::OnDeviceLost()
 {
-    m_graphicsMemory.reset();
+    m_commonStates.reset();
     m_srvPile.reset();
     m_rootSignature.Reset();
     m_basicMeshletPso.Reset();
     m_cullMeshletPso.Reset();
+    m_viewCB.Reset();
     m_hudBatch.reset();
     m_smallFont.reset();
-    m_models.resize(0);
+    m_models.clear();
     m_textureFactory.reset();
-    m_scene.resize(0);
+    m_scene.clear();
+    m_frustumDraw.ReleaseResources();
+    m_graphicsMemory.reset();
 }
 
 void Sample::OnDeviceRestored()

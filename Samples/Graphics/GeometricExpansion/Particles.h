@@ -42,6 +42,17 @@ namespace ATG
             ValueRange size
         );
 
+        ~ParticleSystem()
+        {
+            ReleaseDevice();
+        }
+
+        ParticleSystem(ParticleSystem&&) = default;
+        ParticleSystem& operator= (ParticleSystem&&) = default;
+
+        ParticleSystem(ParticleSystem const&) = delete;
+        ParticleSystem& operator= (ParticleSystem const&) = delete;
+
         void SetSpawnRate(float spawnRate) { m_spawnFrequency = 1.0f / std::max(1e-4f, spawnRate); }
         void SetSpringCoefficent(float coeff) { m_springCoeff = std::max(1e-4f, coeff); }
         void SetDragFactor(float factor) { m_dragFactor = std::max(0.0f, factor); }
@@ -49,6 +60,7 @@ namespace ATG
 
         void CreateResources(DX::DeviceResources& deviceResources);
         void ReloadPipelineState(DX::DeviceResources& deviceResources);
+        void ReleaseDevice();
 
         void Update(float deltaTime, const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& proj);
         void Draw(ID3D12GraphicsCommandList6* commandList, DirectX::GraphicsMemory* graphicsMemory);
@@ -73,7 +85,7 @@ namespace ATG
         std::vector<Particle>   m_particles;
 
         // D3D12 API Objects
-        ID3D12Device*           m_device;
+        Microsoft::WRL::ComPtr<ID3D12Device>        m_device;
 
         Microsoft::WRL::ComPtr<ID3D12RootSignature> m_rootSignature;
         Microsoft::WRL::ComPtr<ID3D12PipelineState> m_particlePSO;

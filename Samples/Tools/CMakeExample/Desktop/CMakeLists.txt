@@ -10,13 +10,15 @@ project(CMakeExampleDesktop
 
 option(BUILD_USING_LTCG "Enable Whole Program Optimization" ON)
 
-# https://docs.microsoft.com/en-us/windows/win32/apiindex/umbrella-lib-onecore
-option(BUILD_USING_ONECORE "Build for Windows 10 only" OFF)
+# https://docs.microsoft.com/windows/win32/apiindex/umbrella-lib-onecore
+option(BUILD_USING_ONECORE "Build for Windows 10/Windows 11 only" OFF)
 
 # See the BWOIExample for more information
 option(BUILD_USING_BWOI "Enable Build With/Out Install" OFF)
 
 option(ENABLE_CODE_ANALYSIS "Use Static Code Analysis on build" OFF)
+
+set(CMAKE_MAP_IMPORTED_CONFIG_RELWITHDEBINFO Release)
 
 include(CMakeGDKDesktop.cmake)
 
@@ -30,7 +32,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/Gaming.Desktop.x64")
 
 # Libraries
 # kernel32.lib user32.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib are the libs for Win32 desktop DirectX apps
-# alternatively you can use onecore.lib for Win32 desktop apps that only support Windows 10
+# alternatively you can use onecore.lib for Win32 desktop apps that only support Windows 10/Windows 11
 
 if(BUILD_USING_ONECORE)
     set(CMAKE_CXX_STANDARD_LIBRARIES "onecore.lib")
@@ -50,8 +52,8 @@ add_executable(${PROJECT_NAME} WIN32
     d3dx12.h
 )
 
-target_include_directories(${PROJECT_NAME} PUBLIC ./ ../ ${Console_SdkIncludeRoot} PUBLIC ${Console_ExtIncPath})
-target_link_directories(${PROJECT_NAME} PUBLIC ${Console_SdkLibPath} PUBLIC ${Console_ExtLibPath})
+target_include_directories(${PROJECT_NAME} PUBLIC ./ ../ ${Console_SdkIncludeRoot})
+target_link_directories(${PROJECT_NAME} PUBLIC ${Console_SdkLibPath})
 
 # Build HLSL shaders
 add_custom_target(shaders)
@@ -105,9 +107,10 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE ${Console_Defines})
 # /Zi (Debug Information Format)
 target_compile_options(${PROJECT_NAME} PRIVATE /fp:fast /GS /Gy)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE ${Console_Libs} ${XSAPI_Libs})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${Console_Libs} Xbox::XSAPI Xbox::XCurl)
 # uuid.lib if using Windows Imaging Component (WIC) or other COM objects
 # delayimp.lib if using /DELAYLOAD (or use dloadhelper.lib if BUILD_USING_ONECORE is ON)
+# optional additional extension libraries: Xbox::GameChat2 Xbox::PlayFabMultiplayer Xbox::PlayFabParty Xbox::PlayFabPartyLIVE
 
 # Optional precompiled header switches:
 # /Ycpch.h (Create Precompiled Header File)
@@ -119,6 +122,10 @@ if (${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.16")
 endif()
 
 target_link_options(${PROJECT_NAME} PRIVATE ${Console_LinkOptions})
+
+# For the Windows platform, Control Flow Guard is recommended but may require updated middleware
+target_compile_options(${PROJECT_NAME} PRIVATE "$<$<NOT:$<CONFIG:DEBUG>>:/guard:cf>")
+target_link_options(${PROJECT_NAME} PRIVATE "$<$<NOT:$<CONFIG:DEBUG>>:/guard:cf>")
 
 if(BUILD_USING_ONECORE)
     target_link_options(${PROJECT_NAME} PRIVATE "/SUBSYSTEM:WINDOWS,10.0" "/NODEFAULTLIB:kernel32.lib")
@@ -143,6 +150,13 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
    # /Zc:preprocessor (C99 conformant preprocessor)
    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.26)
       target_compile_options(${PROJECT_NAME} PRIVATE /Zc:preprocessor /wd5105)
+   endif()
+
+   # For the Windows platform, Enable EH Continuation Metadata is recommended but may require updated middleware
+   if((MSVC_VERSION GREATER_EQUAL 1928) AND (CMAKE_SIZEOF_VOID_P EQUAL 8)
+      AND ((NOT (CMAKE_CXX_COMPILER_ID MATCHES "Clang")) OR (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 13.0)))
+      target_compile_options(${PROJECT_NAME} PRIVATE "$<$<NOT:$<CONFIG:DEBUG>>:/guard:ehcont>")
+      target_link_options(${PROJECT_NAME} PRIVATE "$<$<NOT:$<CONFIG:DEBUG>>:/guard:ehcont>")
    endif()
 
    # /CETCOMPAT (CET Shadow Stack compatible)
@@ -182,7 +196,7 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     target_link_options(${PROJECT_NAME} PRIVATE /IGNORE:4078)
 endif()
 
-# Copy config and images
+# Copy config, images, and Extension Library DLLs
 add_custom_command(
   TARGET ${PROJECT_NAME} POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy
@@ -198,6 +212,14 @@ add_custom_command(
     ${CMAKE_CURRENT_SOURCE_DIR}/../Assets
     $<TARGET_FILE_DIR:${PROJECT_NAME}>
     )
+
+if (${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.21")
+   add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+      COMMAND ${CMAKE_COMMAND} -E copy
+      $<TARGET_RUNTIME_DLLS:${PROJECT_NAME}> $<TARGET_FILE_DIR:${PROJECT_NAME}>
+      COMMAND_EXPAND_LISTS
+      )
+endif()
 
 # MSIXVC Packaging using the makepkg tool in the GDK:
 #    cd CMakeExample\Desktop\out\build\<config>\bin

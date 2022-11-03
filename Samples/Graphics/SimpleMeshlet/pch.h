@@ -41,8 +41,8 @@
 
 #include <grdk.h>
 
-#if _GRDK_VER < 0x4A610D2B /* GXDK Edition 200600 */
-#error This sample requires the June 2020 GDK or later
+#if _GRDK_VER < 0x55F007B0 /* GDK Edition 211000 */
+#error This sample requires the October 2021 GDK or later
 #endif
 
 #ifdef _GAMING_XBOX_SCARLETT
@@ -81,6 +81,7 @@
 #include <stdexcept>
 #include <string>
 #include <system_error>
+#include <tuple>
 
 #ifdef _GAMING_XBOX
 #include <pix3.h>
@@ -93,22 +94,23 @@
 #include <XSystem.h>
 
 #include "CommonStates.h"
-#include "ControllerFont.h"
 #include "DescriptorHeap.h"
 #include "DirectXHelpers.h"
 #include "GamePad.h"
 #include "GraphicsMemory.h"
 #include "Keyboard.h"
-#include "Meshlet.h"
 #include "Model.h"
 #include "Mouse.h"
-#include "OrbitCamera.h"
-#include "ReadData.h"
 #include "RenderTargetState.h"
 #include "ResourceUploadBatch.h"
 #include "SimpleMath.h"
 #include "SpriteBatch.h"
 #include "SpriteFont.h"
+
+#include "ControllerFont.h"
+#include "Meshlet.h"
+#include "OrbitCamera.h"
+#include "ReadData.h"
 
 namespace DX
 {

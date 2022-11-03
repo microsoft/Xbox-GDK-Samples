@@ -1,7 +1,8 @@
 //--------------------------------------------------------------------------------------
 // SimpleDeviceAndSwapChain.cpp
 //
-// Setting up a Direct3D 12.X device and swapchain for Microsoft GDK on Xbox
+// Setting up a Direct3D 12.X device and swapchain for Microsoft GDK on Xbox using the
+// PresentX API.
 //
 // Advanced Technology Group (ATG)
 // Copyright (C) Microsoft Corporation. All rights reserved.
@@ -19,6 +20,7 @@ using namespace DirectX;
 using Microsoft::WRL::ComPtr;
 
 #define ENABLE_4K
+#define ENABLE_AS
 
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wcovered-switch-default"
@@ -30,6 +32,9 @@ namespace
 {
     constexpr DXGI_FORMAT c_backBufferFormat = DXGI_FORMAT_B8G8R8A8_UNORM_SRGB;
     constexpr DXGI_FORMAT c_depthBufferFormat = DXGI_FORMAT_D32_FLOAT;
+
+    // For a "reverse" depth buffer use 0.0f instead of 1.0f for the depth clear value.
+    constexpr float c_depthClearValue = 1.0f;
 }
 
 Sample::Sample() noexcept :
@@ -74,6 +79,8 @@ void Sample::Initialize(HWND window)
 void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
+
+    WaitForOrigin();
 
     m_timer.Tick([&]()
     {
@@ -142,10 +149,6 @@ void Sample::Render()
 // Helper method to clear the back buffers.
 void Sample::Clear()
 {
-    // Wait until frame start is signaled
-    m_framePipelineToken = D3D12XBOX_FRAME_PIPELINE_TOKEN_NULL;
-    DX::ThrowIfFailed(m_d3dDevice->WaitFrameEventX(D3D12XBOX_FRAME_EVENT_ORIGIN, INFINITE, nullptr, D3D12XBOX_WAIT_FRAME_EVENT_FLAG_NONE, &m_framePipelineToken));
-
     // Reset command list and allocator.
     DX::ThrowIfFailed(m_commandAllocators[m_backBufferIndex]->Reset());
     DX::ThrowIfFailed(m_commandList->Reset(m_commandAllocators[m_backBufferIndex].Get(), nullptr));
@@ -162,10 +165,11 @@ void Sample::Clear()
     const CD3DX12_CPU_DESCRIPTOR_HANDLE rtvDescriptor(
         m_rtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart(),
         static_cast<INT>(m_backBufferIndex), m_rtvDescriptorSize);
+
     CD3DX12_CPU_DESCRIPTOR_HANDLE dsvDescriptor(m_dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart());
     m_commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
     m_commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
-    m_commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+    m_commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, c_depthClearValue, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
     const D3D12_VIEWPORT viewport = { 0.0f, 0.0f, static_cast<float>(m_outputWidth), static_cast<float>(m_outputHeight), D3D12_MIN_DEPTH, D3D12_MAX_DEPTH };
@@ -205,7 +209,8 @@ void Sample::Present()
 
     // Xbox apps do not need to handle DXGI_ERROR_DEVICE_REMOVED or DXGI_ERROR_DEVICE_RESET.
 
-    MoveToNextFrame();
+    // Update the back buffer index.
+    m_backBufferIndex = (m_backBufferIndex + 1) % c_swapBufferCount;
 
     PIXEndEvent();
 }
@@ -254,6 +259,21 @@ void Sample::CreateDevice()
     params.GraphicsCommandQueueRingSizeBytes = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
     params.GraphicsScratchMemorySizeBytes = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
     params.ComputeScratchMemorySizeBytes = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
+
+#ifdef _GAMING_XBOX_SCARLETT
+
+#if (_GXDK_VER >= 0x4A6110CC /* GDK Edition 201100 */)
+    // Additional creation parameters for Xbox Series X|S.
+    params.CreateDeviceFlags = D3D12XBOX_CREATE_DEVICE_FLAG_NONE;
+#endif
+
+#if defined(ENABLE_AS) && (_GXDK_VER >= 0x585D070E /* GDK Edition 221000 */)
+    // Use of Amplification Shaders (AS) requires explicit enabling on Xbox Series X|S
+    // as of the October 2022 GDK.
+    params.AmplificationShaderIndirectArgsBufferSize = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
+    params.AmplificationShaderPayloadBufferSize = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
+#endif
+#endif
 
     HRESULT hr = D3D12XboxCreateDevice(
         nullptr,
@@ -432,7 +452,7 @@ void Sample::CreateResources()
     );
     depthStencilDesc.Flags |= D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
 
-    CD3DX12_CLEAR_VALUE depthOptimizedClearValue(c_depthBufferFormat, 1.0f, 0);
+    CD3DX12_CLEAR_VALUE depthOptimizedClearValue(c_depthBufferFormat, c_depthClearValue, 0);
 
     DX::ThrowIfFailed(m_d3dDevice->CreateCommittedResource(
         &depthHeapProperties,
@@ -483,37 +503,38 @@ void Sample::CreateResources()
     uploadResourcesFinished.wait();
 }
 
-void Sample::WaitForGpu()
+void Sample::WaitForGpu() noexcept
 {
-    // Schedule a Signal command in the GPU queue.
-    DX::ThrowIfFailed(m_commandQueue->Signal(m_fence.Get(), m_fenceValues[m_backBufferIndex]));
+    // Since we call this method from the destructor, we want to make sure it doesn't throw C++ exceptions.
+    if (m_commandQueue && m_fence && m_fenceEvent.IsValid())
+    {
+        // Schedule a Signal command in the GPU queue.
+        const UINT64 fenceValue = m_fenceValues[m_backBufferIndex];
+        if (SUCCEEDED(m_commandQueue->Signal(m_fence.Get(), fenceValue)))
+        {
+            // Wait until the Signal has been processed.
+            if (SUCCEEDED(m_fence->SetEventOnCompletion(fenceValue, m_fenceEvent.Get())))
+            {
+                std::ignore = WaitForSingleObjectEx(m_fenceEvent.Get(), INFINITE, FALSE);
 
-    // Wait until the Signal has been processed.
-    DX::ThrowIfFailed(m_fence->SetEventOnCompletion(m_fenceValues[m_backBufferIndex], m_fenceEvent.Get()));
-    std::ignore = WaitForSingleObjectEx(m_fenceEvent.Get(), INFINITE, FALSE);
-
-    // Increment the fence value for the current frame.
-    m_fenceValues[m_backBufferIndex]++;
+                // Increment the fence value for the current frame.
+                m_fenceValues[m_backBufferIndex]++;
+            }
+        }
+    }
 }
 
-void Sample::MoveToNextFrame()
+// For PresentX rendering, we should wait for the origin event just before processing input.
+void Sample::WaitForOrigin()
 {
-    // Schedule a Signal command in the queue.
-    const UINT64 currentFenceValue = m_fenceValues[m_backBufferIndex];
-    DX::ThrowIfFailed(m_commandQueue->Signal(m_fence.Get(), currentFenceValue));
-
-    // Update the back buffer index.
-    m_backBufferIndex = (m_backBufferIndex + 1) % c_swapBufferCount;
-
-    // If the next frame is not ready to be rendered yet, wait until it is ready.
-    if (m_fence->GetCompletedValue() < m_fenceValues[m_backBufferIndex])
-    {
-        DX::ThrowIfFailed(m_fence->SetEventOnCompletion(m_fenceValues[m_backBufferIndex], m_fenceEvent.Get()));
-        WaitForSingleObjectEx(m_fenceEvent.Get(), INFINITE, FALSE);
-    }
-
-    // Set the fence value for the next frame.
-    m_fenceValues[m_backBufferIndex] = currentFenceValue + 1;
+    // Wait until frame start is signaled.
+    m_framePipelineToken = D3D12XBOX_FRAME_PIPELINE_TOKEN_NULL;
+    DX::ThrowIfFailed(m_d3dDevice->WaitFrameEventX(
+        D3D12XBOX_FRAME_EVENT_ORIGIN,
+        INFINITE,
+        nullptr,
+        D3D12XBOX_WAIT_FRAME_EVENT_FLAG_NONE,
+        &m_framePipelineToken));
 }
 
 void Sample::RegisterFrameEvents()

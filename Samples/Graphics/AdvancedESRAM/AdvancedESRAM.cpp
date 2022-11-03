@@ -8,7 +8,7 @@
 #include "pch.h"
 #include "AdvancedESRAM.h"
 
-extern void ExitSample();
+extern void ExitSample() noexcept;
 
 using namespace DirectX;
 using namespace ATG;
@@ -107,36 +107,37 @@ namespace
     const std::vector<uint16_t> s_triIndex = { 0, 1, 2 };
 
     // Sample Constants
-    const DXGI_FORMAT c_colorFormat = DXGI_FORMAT_R11G11B10_FLOAT;
-    const DXGI_FORMAT c_depthFormat = DXGI_FORMAT_D32_FLOAT;
+    constexpr DXGI_FORMAT c_colorFormat = DXGI_FORMAT_R11G11B10_FLOAT;
+    constexpr DXGI_FORMAT c_depthFormat = DXGI_FORMAT_D32_FLOAT;
 
-    const float c_defaultPhi = XM_2PI / 6.0f;
-    const float c_defaultRadius = 3.3f;
+    constexpr float c_defaultPhi = XM_2PI / 6.0f;
+    constexpr float c_defaultRadius = 3.3f;
 
 
     //-----------------------------------
     // Helper Functions
 
     template <typename T>
-    void IncrMod(T& value, T mod) {
+    void IncrMod(T& value, T mod) noexcept
+    {
         T res = (value + 1) % mod;
         value = res < 0 ? mod - 1 : res;
     }
 
     template <typename T>
-    void DecrMod(T& value, T mod) {
+    void DecrMod(T& value, T mod) noexcept
+    {
         int res = int(value) - 1;
         value = res < 0 ? mod - 1 : res;
     }
 
-    void Saturate(float& value) { value = std::max(0.0f, std::min(1.0f, value)); }
+    void Saturate(float& value) noexcept { value = std::max(0.0f, std::min(1.0f, value)); }
 }
 #pragma endregion
 
 #pragma region Construction
-Sample::Sample() 
-    : m_deviceResources(new DX::DeviceResources(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
-    , m_displayWidth(0)
+Sample::Sample() noexcept(false)
+    : m_displayWidth(0)
     , m_displayHeight(0)
     , m_frame(0)
     , m_theta(0.0f)
@@ -148,7 +149,9 @@ Sample::Sample()
     , m_updateStats(true)
     , m_visData{}
 {
-    std::fill_n(m_esramRatios, _countof(m_esramRatios), 1.0f);
+    m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN);
+
+    std::fill_n(m_esramRatios, std::size(m_esramRatios), 1.0f);
 }
 
 Sample::~Sample()
@@ -188,6 +191,8 @@ void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
 
+    m_deviceResources->WaitForOrigin();
+
     m_timer.Tick([&]()
     {
         Update(m_timer);
@@ -196,10 +201,11 @@ void Sample::Tick()
     Render();
 
     PIXEndEvent();
-    ++m_frame;
+    m_frame++;
 }
 
-void Sample::Update(const DX::StepTimer& timer)
+// Updates the world.
+void Sample::Update(DX::StepTimer const& timer)
 {
     using ButtonState = DirectX::GamePad::ButtonStateTracker::ButtonState;
 
@@ -326,6 +332,7 @@ void Sample::Update(const DX::StepTimer& timer)
 
 
 #pragma region Frame Render
+// Draws the scene.
 void Sample::Render()
 {
     // Don't try to render anything before the first Update.
@@ -360,14 +367,14 @@ void Sample::Render()
 
     // Set descriptor heaps
     ID3D12DescriptorHeap* heaps[] = { m_srvPile->Heap(), m_commonStates->Heap() };
-    commandList->SetDescriptorHeaps(UINT(_countof(heaps)), heaps);
+    commandList->SetDescriptorHeaps(static_cast<UINT>(std::size(heaps)), heaps);
 
     {
         ScopedPixEvent Clear(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
         // Set the viewport and scissor rect.
-        auto viewport = m_deviceResources->GetScreenViewport();
-        auto scissorRect = m_deviceResources->GetScissorRect();
+        auto const viewport = m_deviceResources->GetScreenViewport();
+        auto const scissorRect = m_deviceResources->GetScissorRect();
 
         commandList->RSSetViewports(1, &viewport);
         commandList->RSSetScissorRects(1, &scissorRect);
@@ -412,10 +419,11 @@ void Sample::Render()
             TransientResource outlineTex[2];
             D3D12_GPU_DESCRIPTOR_HANDLE srvHandles[2];
 
-            for (uint32_t i = 0; i < _countof(outlineTex); ++i)
+            for (size_t i = 0; i < std::size(outlineTex); ++i)
             {
                 outlineTex[i] = AcquireTransientTexture(commandList, m_outlineDesc, D3D12_RESOURCE_STATE_RENDER_TARGET, SceneTexture(ST_Outline0 + i));
-                srvHandles[i] = m_srvPile->WriteDescriptors(m_deviceResources->GetD3DDevice(), SRV_Outline0 + i, &outlineTex[i].SRV, 1);
+                srvHandles[i] = m_srvPile->WriteDescriptors(m_deviceResources->GetD3DDevice(),
+                    static_cast<uint32_t>(SRV_Outline0 + i), &outlineTex[i].SRV, 1);
 
                 handles[ST_Outline0 + i] = outlineTex[i].handle;
             }
@@ -454,7 +462,7 @@ void Sample::Render()
             obj.model->DrawOpaque(commandList, obj.effects.begin());
 
             // Release the outline textures' memory pages back to the allocator.
-            for (uint32_t i = 0; i < _countof(outlineTex); ++i)
+            for (size_t i = 0; i < std::size(outlineTex); ++i)
             {
                 m_allocator->Release(commandList, outlineTex[i], D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
             }
@@ -476,10 +484,11 @@ void Sample::Render()
             TransientResource bloomTex[2];
             D3D12_GPU_DESCRIPTOR_HANDLE srvHandles[2];
 
-            for (uint32_t i = 0; i < _countof(bloomTex); ++i)
+            for (size_t i = 0; i < std::size(bloomTex); ++i)
             {
                 bloomTex[i] = AcquireTransientTexture(commandList, m_bloomDesc, D3D12_RESOURCE_STATE_RENDER_TARGET, SceneTexture(ST_Bloom0 + i));
-                srvHandles[i] = m_srvPile->WriteDescriptors(m_deviceResources->GetD3DDevice(), SRV_Bloom0 + i, &bloomTex[i].SRV, 1);
+                srvHandles[i] = m_srvPile->WriteDescriptors(m_deviceResources->GetD3DDevice(),
+                    static_cast<uint32_t>(SRV_Bloom0 + i), &bloomTex[i].SRV, 1);
 
                 handles[ST_Bloom0 + i] = bloomTex[i].handle;
             }
@@ -540,7 +549,7 @@ void Sample::Render()
             commandList->CopyResource(colorTex.resource, bloomTex[1].resource);
 
             // We're finished with the bloom textures - release their memory pages back to the allocator.
-            for (uint32_t i = 0; i < _countof(bloomTex); ++i)
+            for (size_t i = 0; i < std::size(bloomTex); ++i)
             {
                 m_allocator->Release(commandList, bloomTex[i], D3D12_RESOURCE_STATE_GENERIC_READ);
             }
@@ -613,7 +622,7 @@ void Sample::DrawHUD(ID3D12GraphicsCommandList* commandList)
 {
     m_hudBatch->Begin(commandList);
 
-    auto safe = SimpleMath::Viewport::ComputeTitleSafeArea(m_displayWidth, m_displayHeight);
+    auto const safe = SimpleMath::Viewport::ComputeTitleSafeArea(m_displayWidth, m_displayHeight);
 
     wchar_t textBuffer[128] = {};
     XMFLOAT2 textPos = XMFLOAT2(float(safe.left), float(safe.top));
@@ -748,13 +757,11 @@ void Sample::CreateDeviceDependentResources()
 
     // Create heap
     m_srvPile = std::make_unique<DescriptorPile>(device,
-        D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV,
-        D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE,
         128,
         DescriptorHeapIndex::SRV_Count);
     
     // Load models from disk.
-    m_models.resize(_countof(s_modelPaths));
+    m_models.resize(std::size(s_modelPaths));
     for (size_t i = 0; i < m_models.size(); ++i)
     {
         m_models[i] = Model::CreateFromSDKMESH(device, s_modelPaths[i]);
@@ -782,8 +789,8 @@ void Sample::CreateDeviceDependentResources()
     }
 
     // HUD
-    auto backBufferRts = RenderTargetState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
-    auto spritePSD = SpriteBatchPipelineStateDescription(backBufferRts, &CommonStates::AlphaBlend);
+    const RenderTargetState backBufferRts(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
+    const SpriteBatchPipelineStateDescription spritePSD(backBufferRts, &CommonStates::AlphaBlend);
     m_hudBatch = std::make_unique<SpriteBatch>(device, resourceUpload, spritePSD);
 
     auto finished = resourceUpload.End(m_deviceResources->GetCommandQueue());
@@ -795,8 +802,8 @@ void Sample::CreateDeviceDependentResources()
 
     auto effectFactory = EffectFactory(m_srvPile->Heap(), m_commonStates->Heap());
 
-    auto objectRTState = RenderTargetState(c_colorFormat, c_depthFormat);
-    auto objectPSD = EffectPipelineStateDescription(
+    const RenderTargetState objectRTState(c_colorFormat, c_depthFormat);
+    const EffectPipelineStateDescription objectPSD(
         nullptr,
         CommonStates::Opaque,
         CommonStates::DepthDefault,
@@ -804,7 +811,7 @@ void Sample::CreateDeviceDependentResources()
         objectRTState,
         D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE);
 
-    m_scene.resize(_countof(s_sceneDefinition));
+    m_scene.resize(std::size(s_sceneDefinition));
     for (size_t i = 0; i < m_scene.size(); i++)
     {
         size_t index = s_sceneDefinition[i].modelIndex;
@@ -825,8 +832,8 @@ void Sample::CreateDeviceDependentResources()
             });
     }
 
-    auto outlineRtState = RenderTargetState(c_colorFormat, DXGI_FORMAT_UNKNOWN);
-    auto outlinePSD = EffectPipelineStateDescription(
+    const RenderTargetState outlineRtState(c_colorFormat, DXGI_FORMAT_UNKNOWN);
+    const EffectPipelineStateDescription outlinePSD(
         &VertexPositionNormalTexture::InputLayout,
         CommonStates::Opaque,
         CommonStates::DepthNone,
@@ -842,11 +849,11 @@ void Sample::CreateDeviceDependentResources()
 
     m_fullScreenTri = GeometricPrimitive::CreateCustom(s_triVertex, s_triIndex);
 
-    auto postRtState = RenderTargetState(c_colorFormat, DXGI_FORMAT_UNKNOWN);
+    const RenderTargetState postRtState(c_colorFormat, DXGI_FORMAT_UNKNOWN);
     m_blurEffect = std::make_unique<BasicPostProcess>(device, postRtState, BasicPostProcess::GaussianBlur_5x5);
     m_blurEffect->SetGaussianParameter(12.0f);
 
-    auto combinePSD = EffectPipelineStateDescription(
+    const EffectPipelineStateDescription combinePSD(
         &VertexPositionNormalTexture::InputLayout,
         CommonStates::NonPremultiplied,
         CommonStates::DepthNone,
@@ -859,7 +866,7 @@ void Sample::CreateDeviceDependentResources()
     m_alphaCompositeEffect->SetDiffuseColor(XMVectorSet(1.0f, 1.0f, 1.0f, 1.0f));
     m_alphaCompositeEffect->SetAlpha(0.6f);
 
-    auto backBufferRtState = RenderTargetState(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN);
+    const RenderTargetState backBufferRtState(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN);
 
     m_bloomExtractEffect = std::make_unique<BasicPostProcess>(device, postRtState, BasicPostProcess::BloomExtract);
     m_bloomExtractEffect->SetBloomExtractParameter(0.9f);
@@ -988,7 +995,7 @@ void Sample::UpdateVisualizerRanges(const ResourceHandle(&resources)[ST_Count])
     // Calculate ESRAM page ranges for each texture
     std::vector<Range> ranges;
 
-    for (size_t i = 0; i < _countof(resources); ++i)
+    for (size_t i = 0; i < std::size(resources); ++i)
     {
 #ifdef _GAMING_XBOX_XBOXONE
         m_allocator->GetEsramRanges(resources[i], ranges);

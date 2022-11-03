@@ -502,7 +502,7 @@
     <ClCompile Include="UserRepeater.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config" />
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="..\..\..\Media\Textures\GamerPic.png">

@@ -234,7 +234,12 @@ HRESULT DirectX::SaveDDSTextureToFile(
     pCommandQ->GetDevice(IID_GRAPHICS_PPV_ARGS(device.GetAddressOf()));
 
     // Get the size of the image
+#if defined(_MSC_VER) || !defined(_WIN32)
     const auto desc = pSource->GetDesc();
+#else
+    D3D12_RESOURCE_DESC tmpDesc;
+    const auto& desc = *pSource->GetDesc(&tmpDesc);
+#endif
 
     if (desc.Width > UINT32_MAX)
         return E_INVALIDARG;
@@ -430,9 +435,12 @@ HRESULT DirectX::SaveDDSTextureToFile(
 //--------------------------------------------------------------------------------------
 namespace DirectX
 {
-    namespace Internal
+    inline namespace DX12
     {
-        extern IWICImagingFactory2* GetWIC() noexcept;
+        namespace Internal
+        {
+            extern IWICImagingFactory2* GetWIC() noexcept;
+        }
     }
 }
 
@@ -448,7 +456,7 @@ HRESULT DirectX::SaveWICTextureToFile(
     std::function<void(IPropertyBag2*)> setCustomProps,
     bool forceSRGB)
 {
-    using namespace DirectX::Internal;
+    using namespace DirectX::DX12::Internal;
 
     if (!fileName)
         return E_INVALIDARG;
@@ -457,7 +465,12 @@ HRESULT DirectX::SaveWICTextureToFile(
     pCommandQ->GetDevice(IID_GRAPHICS_PPV_ARGS(device.GetAddressOf()));
 
     // Get the size of the image
+#if defined(_MSC_VER) || !defined(_WIN32)
     const auto desc = pSource->GetDesc();
+#else
+    D3D12_RESOURCE_DESC tmpDesc;
+    const auto& desc = *pSource->GetDesc(&tmpDesc);
+#endif
 
     if (desc.Width > UINT32_MAX)
         return E_INVALIDARG;

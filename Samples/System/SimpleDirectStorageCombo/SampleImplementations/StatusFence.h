@@ -26,7 +26,7 @@ private:
 
 public:
     StatusFence() : m_fence(nullptr) {}
-    ~StatusFence() {}
+    ~StatusFence() = default;
 
     bool RunSample(const std::wstring& fileName, ID3D12Device* device, uint64_t dataFileSize);
 };

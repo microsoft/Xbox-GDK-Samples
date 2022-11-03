@@ -43,6 +43,9 @@ namespace DX
         void Suspend();
         void Resume();
         void WaitForGpu() noexcept;
+#ifdef _GAMING_XBOX
+        void WaitForOrigin();
+#endif
 
         // Device Accessors.
         RECT GetOutputSize() const noexcept { return m_outputSize; }
@@ -79,10 +82,10 @@ namespace DX
         }
 
     private:
-        void MoveToNextFrame();
 #ifdef _GAMING_XBOX
         void RegisterFrameEvents();
 #else
+        void MoveToNextFrame();
         void GetAdapter(IDXGIAdapter1** ppAdapter);
 #endif
 

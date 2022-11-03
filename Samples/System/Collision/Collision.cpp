@@ -76,7 +76,7 @@ Sample::Sample() noexcept(false) :
         | DX::OrbitCamera::c_FlagsDisableRadiusControl
         | DX::OrbitCamera::c_FlagsDisableSensitivityControl);
 
-    m_help = std::make_unique<ATG::Help>(g_SampleTitle, g_SampleDescription, g_HelpButtons, _countof(g_HelpButtons));
+    m_help = std::make_unique<ATG::Help>(g_SampleTitle, g_SampleDescription, g_HelpButtons, std::size(g_HelpButtons));
 }
 
 Sample::~Sample()
@@ -115,6 +115,10 @@ void Sample::Initialize(HWND window, int width, int height)
 void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
+
+#ifdef _GAMING_XBOX
+    m_deviceResources->WaitForOrigin();
+#endif
 
     m_timer.Tick([&]()
         {
@@ -254,8 +258,8 @@ void Sample::Render()
     }
     else
     {
-        ID3D12DescriptorHeap* heaps[] = { m_resourceDescriptors->Heap() };
-        commandList->SetDescriptorHeaps(_countof(heaps), heaps);
+        auto heaps = m_resourceDescriptors->Heap();
+        commandList->SetDescriptorHeaps(1, &heaps);
 
         m_effect->SetView(m_camera.GetView());
         m_effect->SetProjection(m_camera.GetProjection());
@@ -312,9 +316,9 @@ void Sample::Render()
 
         m_batch->End();
 
-        auto rect = m_deviceResources->GetOutputSize();
+        auto const rect = m_deviceResources->GetOutputSize();
 
-        auto safeRect = Viewport::ComputeTitleSafeArea(UINT(rect.right), UINT(rect.bottom));
+        auto const safeRect = Viewport::ComputeTitleSafeArea(UINT(rect.right), UINT(rect.bottom));
 
         m_sprites->Begin(commandList);
 
@@ -350,16 +354,16 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
-    auto dsvDescriptor = m_deviceResources->GetDepthStencilView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
     commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -369,14 +373,6 @@ void Sample::Clear()
 
 #pragma region Message Handlers
 // Message handlers
-void Sample::OnActivated()
-{
-}
-
-void Sample::OnDeactivated()
-{
-}
-
 void Sample::OnSuspending()
 {
     m_deviceResources->Suspend();
@@ -392,7 +388,7 @@ void Sample::OnResuming()
 
 void Sample::OnWindowMoved()
 {
-    auto r = m_deviceResources->GetOutputSize();
+    auto const r = m_deviceResources->GetOutputSize();
     m_deviceResources->WindowSizeChanged(r.right, r.bottom);
 }
 
@@ -434,7 +430,7 @@ void Sample::CreateDeviceDependentResources()
 
     m_resourceDescriptors = std::make_unique<DescriptorHeap>(device, Descriptors::Count);
 
-    RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
+    const RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
 
     {
         EffectPipelineStateDescription pd(
@@ -484,10 +480,10 @@ void Sample::CreateDeviceDependentResources()
 // Allocate all memory resources that change on a window SizeChanged event.
 void Sample::CreateWindowSizeDependentResources()
 {
-    auto vp = m_deviceResources->GetScreenViewport();
+    auto const vp = m_deviceResources->GetScreenViewport();
     m_sprites->SetViewport(vp);
 
-    auto output = m_deviceResources->GetOutputSize();
+    auto const output = m_deviceResources->GetOutputSize();
     m_camera.SetWindow(output.right - output.left, output.bottom - output.top);
 
     // Set help rendering size.

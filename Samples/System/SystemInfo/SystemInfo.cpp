@@ -63,6 +63,81 @@ namespace
         font->DrawString(batch, text, pos, ATG::Colors::White, 0.f, Vector2::Zero, scale);
         return font->GetLineSpacing()*scale;
     }
+
+#ifdef _GAMING_DESKTOP
+    inline long ComputeIntersectionArea(
+        long ax1, long ay1, long ax2, long ay2,
+        long bx1, long by1, long bx2, long by2) noexcept
+    {
+        return std::max(0l, std::min(ax2, bx2) - std::max(ax1, bx1)) * std::max(0l, std::min(ay2, by2) - std::max(ay1, by1));
+    }
+
+    HRESULT GetContainingOutput(_In_ HWND hWnd, _In_ IDXGIFactory* dxgiFactory, _COM_Outptr_ IDXGIOutput** ppOutput)
+    {
+        if (!ppOutput)
+        {
+            return E_INVALIDARG;
+        }
+
+        *ppOutput = nullptr;
+
+        if (!hWnd || !dxgiFactory)
+        {
+            return E_INVALIDARG;
+        }
+
+        // Get the retangle bounds of the app window.
+        RECT windowBounds;
+        if (!GetWindowRect(hWnd, &windowBounds))
+        {
+            return HRESULT_FROM_WIN32(GetLastError());;
+        }
+
+        const long ax1 = windowBounds.left;
+        const long ay1 = windowBounds.top;
+        const long ax2 = windowBounds.right;
+        const long ay2 = windowBounds.bottom;
+
+        ComPtr<IDXGIOutput> bestOutput;
+        long bestIntersectArea = -1;
+
+        ComPtr<IDXGIAdapter> adapter;
+        for (UINT adapterIndex = 0;
+            SUCCEEDED(dxgiFactory->EnumAdapters(adapterIndex, adapter.ReleaseAndGetAddressOf()));
+            ++adapterIndex)
+        {
+            ComPtr<IDXGIOutput> output;
+            for (UINT outputIndex = 0;
+                SUCCEEDED(adapter->EnumOutputs(outputIndex, output.ReleaseAndGetAddressOf()));
+                ++outputIndex)
+            {
+                // Get the rectangle bounds of current output.
+                DXGI_OUTPUT_DESC desc;
+                HRESULT hr = output->GetDesc(&desc);
+                if (FAILED(hr))
+                    return hr;
+
+                const auto& r = desc.DesktopCoordinates;
+
+                // Compute the intersection
+                const long intersectArea = ComputeIntersectionArea(ax1, ay1, ax2, ay2, r.left, r.top, r.right, r.bottom);
+                if (intersectArea > bestIntersectArea)
+                {
+                    bestOutput.Swap(output);
+                    bestIntersectArea = intersectArea;
+                }
+            }
+        }
+
+        if (bestOutput)
+        {
+            *ppOutput = bestOutput.Detach();
+            return S_OK;
+        }
+
+        return E_FAIL;
+    }
+#endif // _GAMING_DESKTOP
 }
 
 Sample::Sample() noexcept(false) :
@@ -105,6 +180,10 @@ void Sample::Initialize(HWND window, int width, int height)
 void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
+
+#ifdef _GAMING_XBOX
+    m_deviceResources->WaitForOrigin();
+#endif
 
     m_timer.Tick([&]()
         {
@@ -619,7 +698,7 @@ void Sample::Render()
 
 #ifdef _GAMING_XBOX
 
-    case InfoPage::DIRECT3D:
+    case InfoPage::DIRECT3D_XBOX:
     {
         y += DrawStringCenter(m_batch.get(), m_largeFont.get(), L"Direct3D 12", mid, y, ATG::Colors::LightGrey, m_scale);
 
@@ -649,6 +728,97 @@ void Sample::Render()
 
         DrawStringLeft(m_batch.get(), m_smallFont.get(), L"Hardware Version", left, y, m_scale);
         y += DrawStringRight(m_batch.get(), m_smallFont.get(), hwver, right, y, m_scale);
+    }
+    break;
+
+    case InfoPage::DXGI_XBOX:
+    {
+        y += DrawStringCenter(m_batch.get(), m_largeFont.get(), L"DXGI", mid, y, ATG::Colors::LightGrey, m_scale);
+
+        auto device = m_deviceResources->GetD3DDevice();
+
+        ComPtr<IDXGIDevice> dxgiDevice;
+        DX::ThrowIfFailed(device->QueryInterface(IID_GRAPHICS_PPV_ARGS(dxgiDevice.GetAddressOf())));
+
+        ComPtr<IDXGIAdapter> dxgiAdapter;
+        DX::ThrowIfFailed(dxgiDevice->GetAdapter(dxgiAdapter.GetAddressOf()));
+
+        ComPtr<IDXGIOutput> output;
+        DX::ThrowIfFailed(dxgiAdapter->EnumOutputs(0, output.GetAddressOf()));
+
+#ifdef _GAMING_XBOX_SCARLETT
+        bool vrrSupported = false;
+
+        UINT outputModeCount = 0;
+        std::ignore = output->GetDisplayModeListX(m_deviceResources->GetBackBufferFormat(), 0, &outputModeCount, nullptr);
+
+        auto outputModes = std::make_unique<DXGIXBOX_MODE_DESC[]>(outputModeCount);
+
+        DX::ThrowIfFailed(output->GetDisplayModeListX(
+            m_deviceResources->GetBackBufferFormat(),
+            0,
+            &outputModeCount,
+            outputModes.get()));
+
+        for (uint32_t i = 0; i < outputModeCount; ++i)
+        {
+            vrrSupported |= (outputModes[i].Flags & DXGIXBOX_MODE_FLAG_VARIABLE_REFRESH_RATE) != 0;
+        }
+#else
+        UINT outputModeCount = 0;
+        std::ignore = output->GetDisplayModeList(m_deviceResources->GetBackBufferFormat(), 0, &outputModeCount, nullptr);
+
+        auto outputModes = std::make_unique<DXGI_MODE_DESC[]>(outputModeCount);
+
+        DX::ThrowIfFailed(output->GetDisplayModeList(
+            m_deviceResources->GetBackBufferFormat(),
+            0,
+            &outputModeCount,
+            outputModes.get()));
+#endif
+
+        bool supports24Hz = false;
+        bool supports40Hz = false;
+        bool supports120Hz = false;
+
+        // 30Hz and 60Hz are always supported.
+
+        for (uint32_t i = 0; i < outputModeCount; ++i)
+        {
+            switch (outputModes[i].RefreshRate.Numerator)
+            {
+            case 24: supports24Hz = true; break;
+            case 40: supports40Hz = true; break;
+            case 120: supports120Hz = true; break;
+            }
+        }
+
+        // Note that on Xbox, the IDXGIOutput::GetDesc method is not supported.
+
+        DrawStringLeft(m_batch.get(), m_smallFont.get(), L"D3D12XBOX_FRAME_INTERVAL_30_HZ", left, y, m_scale);
+        y += DrawStringRight(m_batch.get(), m_smallFont.get(), L"true", right, y, m_scale);
+
+        DrawStringLeft(m_batch.get(), m_smallFont.get(), L"D3D12XBOX_FRAME_INTERVAL_60_HZ", left, y, m_scale);
+        y += DrawStringRight(m_batch.get(), m_smallFont.get(), L"true", right, y, m_scale);
+
+        y += m_smallFont->GetLineSpacing() * 2;
+
+        // Note use of D3D12XBOX_FRAME_INTERVAL_24_HZ requires March 2022 GDKX or later.
+        DrawStringLeft(m_batch.get(), m_smallFont.get(), L"D3D12XBOX_FRAME_INTERVAL_24_HZ", left, y, m_scale);
+        y += DrawStringRight(m_batch.get(), m_smallFont.get(), supports24Hz ? L"true" : L"false", right, y, m_scale);
+
+        DrawStringLeft(m_batch.get(), m_smallFont.get(), L"D3D12XBOX_FRAME_INTERVAL_40_HZ", left, y, m_scale);
+        y += DrawStringRight(m_batch.get(), m_smallFont.get(), supports40Hz ? L"true" : L"false", right, y, m_scale);
+
+        DrawStringLeft(m_batch.get(), m_smallFont.get(), L"D3D12XBOX_FRAME_INTERVAL_120_HZ", left, y, m_scale);
+        y += DrawStringRight(m_batch.get(), m_smallFont.get(), supports120Hz ? L"true" : L"false", right, y, m_scale);
+
+#ifdef _GAMING_XBOX_SCARLETT
+        y += m_smallFont->GetLineSpacing() * 2;
+
+        DrawStringLeft(m_batch.get(), m_smallFont.get(), L"Variable Refresh Rate Supported", left, y, m_scale);
+        y += DrawStringRight(m_batch.get(), m_smallFont.get(), vrrSupported ? L"true" : L"false", right, y, m_scale);
+#endif
     }
     break;
 
@@ -969,7 +1139,7 @@ void Sample::Render()
 
     case InfoPage::DIRECT3D_OPT1:
     {
-        y += DrawStringCenter(m_batch.get(), m_largeFont.get(), L"Direct3D 12 Optional Features (1 of 4)", mid, y, ATG::Colors::LightGrey, m_scale);
+        y += DrawStringCenter(m_batch.get(), m_largeFont.get(), L"Direct3D 12 Optional Features (1 of 5)", mid, y, ATG::Colors::LightGrey, m_scale);
 
         auto device = m_deviceResources->GetD3DDevice();
 
@@ -1084,7 +1254,7 @@ void Sample::Render()
 
     case InfoPage::DIRECT3D_OPT2:
     {
-        y += DrawStringCenter(m_batch.get(), m_largeFont.get(), L"Direct3D 12 Optional Features (2 of 4)", mid, y, ATG::Colors::LightGrey, m_scale);
+        y += DrawStringCenter(m_batch.get(), m_largeFont.get(), L"Direct3D 12 Optional Features (2 of 5)", mid, y, ATG::Colors::LightGrey, m_scale);
 
         auto device = m_deviceResources->GetD3DDevice();
 
@@ -1205,7 +1375,7 @@ void Sample::Render()
 
     case InfoPage::DIRECT3D_OPT3:
     {
-        y += DrawStringCenter(m_batch.get(), m_largeFont.get(), L"Direct3D 12 Optional Features (3 of 4)", mid, y, ATG::Colors::LightGrey, m_scale);
+        y += DrawStringCenter(m_batch.get(), m_largeFont.get(), L"Direct3D 12 Optional Features (3 of 5)", mid, y, ATG::Colors::LightGrey, m_scale);
 
         auto device = m_deviceResources->GetD3DDevice();
 
@@ -1262,7 +1432,6 @@ void Sample::Render()
                 DrawStringLeft(m_batch.get(), m_smallFont.get(), L"D3D12_HEAP_FLAG_CREATE_NOT_ZEROED", left, y, m_scale);
                 y += DrawStringRight(m_batch.get(), m_smallFont.get(), L"true", right, y, m_scale);
 
-
                 const wchar_t* msTier = L"Unknown";
                 switch (d3d12opts7.MeshShaderTier)
                 {
@@ -1295,7 +1464,7 @@ void Sample::Render()
 
     case InfoPage::DIRECT3D_OPT4:
     {
-        y += DrawStringCenter(m_batch.get(), m_largeFont.get(), L"Direct3D 12 Optional Features (4 of 4)", mid, y, ATG::Colors::LightGrey, m_scale);
+        y += DrawStringCenter(m_batch.get(), m_largeFont.get(), L"Direct3D 12 Optional Features (4 of 5)", mid, y, ATG::Colors::LightGrey, m_scale);
 
         auto device = m_deviceResources->GetD3DDevice();
 
@@ -1382,14 +1551,84 @@ void Sample::Render()
     }
     break;
 
+    case InfoPage::DIRECT3D_OPT5:
+    {
+        y += DrawStringCenter(m_batch.get(), m_largeFont.get(), L"Direct3D 12 Optional Features (5 of 5)", mid, y, ATG::Colors::LightGrey, m_scale);
+
+        auto device = m_deviceResources->GetD3DDevice();
+
+        if (!device)
+        {
+            y += DrawStringCenter(m_batch.get(), m_smallFont.get(), L"Not supported", mid, y, ATG::Colors::Orange, m_scale);
+        }
+        else
+        {
+            bool found = false;
+
+#if defined(NTDDI_WIN10_NI) || defined(USING_D3D12_AGILITY_SDK)
+            // Optional Direct3D 12 features for Agility SDK or Windows 11, Version 22H2
+            D3D12_FEATURE_DATA_D3D12_OPTIONS12 d3d12opts12 = {};
+            if (SUCCEEDED(device->CheckFeatureSupport(D3D12_FEATURE_D3D12_OPTIONS12, &d3d12opts12, sizeof(d3d12opts12))))
+            {
+                found = true;
+
+                DrawStringLeft(m_batch.get(), m_smallFont.get(), L"MS Stats Includes Culled Primitives", left, y, m_scale);
+                y += DrawStringRight(m_batch.get(), m_smallFont.get(), d3d12opts12.MSPrimitivesPipelineStatisticIncludesCulledPrimitives ? L"true" : L"false", right, y, m_scale);
+
+                DrawStringLeft(m_batch.get(), m_smallFont.get(), L"EnhancedBarriersSupported", left, y, m_scale);
+                y += DrawStringRight(m_batch.get(), m_smallFont.get(), d3d12opts12.EnhancedBarriersSupported ? L"true" : L"false", right, y, m_scale);
+
+                DrawStringLeft(m_batch.get(), m_smallFont.get(), L"RelaxedFormatCastingSupported", left, y, m_scale);
+                y += DrawStringRight(m_batch.get(), m_smallFont.get(), d3d12opts12.RelaxedFormatCastingSupported ? L"true" : L"false", right, y, m_scale);
+            }
+
+            D3D12_FEATURE_DATA_D3D12_OPTIONS13 d3d12opts13 = {};
+            if (SUCCEEDED(device->CheckFeatureSupport(D3D12_FEATURE_D3D12_OPTIONS13, &d3d12opts13, sizeof(d3d12opts13))))
+            {
+                found = true;
+
+                DrawStringLeft(m_batch.get(), m_smallFont.get(), L"UnrestrictedBufferTextureCopyPitchSupported", left, y, m_scale);
+                y += DrawStringRight(m_batch.get(), m_smallFont.get(), d3d12opts13.UnrestrictedBufferTextureCopyPitchSupported ? L"true" : L"false", right, y, m_scale);
+
+                DrawStringLeft(m_batch.get(), m_smallFont.get(), L"UnrestrictedVertexElementAlignmentSupported", left, y, m_scale);
+                y += DrawStringRight(m_batch.get(), m_smallFont.get(), d3d12opts13.UnrestrictedVertexElementAlignmentSupported ? L"true" : L"false", right, y, m_scale);
+
+                DrawStringLeft(m_batch.get(), m_smallFont.get(), L"InvertedViewportHeightFlipsYSupported", left, y, m_scale);
+                y += DrawStringRight(m_batch.get(), m_smallFont.get(), d3d12opts13.InvertedViewportHeightFlipsYSupported ? L"true" : L"false", right, y, m_scale);
+
+                DrawStringLeft(m_batch.get(), m_smallFont.get(), L"InvertedViewportDepthFlipsZSupported", left, y, m_scale);
+                y += DrawStringRight(m_batch.get(), m_smallFont.get(), d3d12opts13.InvertedViewportDepthFlipsZSupported ? L"true" : L"false", right, y, m_scale);
+
+                DrawStringLeft(m_batch.get(), m_smallFont.get(), L"TextureCopyBetweenDimensionsSupported", left, y, m_scale);
+                y += DrawStringRight(m_batch.get(), m_smallFont.get(), d3d12opts13.TextureCopyBetweenDimensionsSupported ? L"true" : L"false", right, y, m_scale);
+
+                DrawStringLeft(m_batch.get(), m_smallFont.get(), L"AlphaBlendFactorSupported", left, y, m_scale);
+                y += DrawStringRight(m_batch.get(), m_smallFont.get(), d3d12opts13.AlphaBlendFactorSupported  ? L"true" : L"false", right, y, m_scale);
+            }
+#endif
+
+            if (!found)
+            {
+                y += DrawStringCenter(m_batch.get(), m_smallFont.get(), L"Requires Agilty SDK or Windows 11, Version 22H2", mid, y, ATG::Colors::Orange, m_scale);
+            }
+        }
+    }
+    break;
+
     case InfoPage::DXGI:
     {
         y += DrawStringCenter(m_batch.get(), m_largeFont.get(), L"DXGI", mid, y, ATG::Colors::LightGrey, m_scale);
 
         y += DrawStringCenter(m_batch.get(), m_smallFont.get(), L"DXGI_OUTPUT_DESC", mid, y, ATG::Colors::OffWhite, m_scale);
 
+        // IDXGISwapChain::GetContainingOutput no longer works here, so we
+        // use our own implementation.
+
         ComPtr<IDXGIOutput> output;
-        HRESULT hr = m_deviceResources->GetSwapChain()->GetContainingOutput(output.GetAddressOf());
+        HRESULT hr = GetContainingOutput(
+            m_deviceResources->GetWindow(),
+            m_deviceResources->GetDXGIFactory(),
+            output.GetAddressOf());
         if (SUCCEEDED(hr))
         {
             DXGI_OUTPUT_DESC outputDesc = {};
@@ -1517,14 +1756,14 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, nullptr);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -1534,14 +1773,6 @@ void Sample::Clear()
 
 #pragma region Message Handlers
 // Message handlers
-void Sample::OnActivated()
-{
-}
-
-void Sample::OnDeactivated()
-{
-}
-
 void Sample::OnSuspending()
 {
     m_deviceResources->Suspend();
@@ -1557,7 +1788,7 @@ void Sample::OnResuming()
 
 void Sample::OnWindowMoved()
 {
-    auto r = m_deviceResources->GetOutputSize();
+    auto const r = m_deviceResources->GetOutputSize();
     m_deviceResources->WindowSizeChanged(r.right, r.bottom);
 }
 
@@ -1599,7 +1830,7 @@ void Sample::CreateDeviceDependentResources()
 
     m_resourceDescriptors = std::make_unique<DescriptorHeap>(device, Descriptors::Count);
 
-    RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
+    const RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
 
     ResourceUploadBatch upload(device);
     upload.Begin();
@@ -1645,7 +1876,7 @@ void Sample::CreateDeviceDependentResources()
 // Allocate all memory resources that change on a window SizeChanged event.
 void Sample::CreateWindowSizeDependentResources()
 {
-    auto vp = m_deviceResources->GetScreenViewport();
+    auto const vp = m_deviceResources->GetScreenViewport();
     m_batch->SetViewport(vp);
 
 #ifdef _GAMING_DESKTOP

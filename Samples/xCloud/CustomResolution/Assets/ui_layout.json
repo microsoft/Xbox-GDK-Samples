@@ -1,0 +1,267 @@
+{
+  "definitions": {
+    "#menu_item_prefab": "Assets/menuitem.json"
+  },
+
+  "styles": [
+    {
+      "classId": "SpriteStyle",
+      "id": "background_panel_gray",
+      "colorUsage": "override",
+      "color": [ 25, 25, 25, 0.75 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "info_panel_gray",
+      "colorUsage": "override",
+      "color": [ 25, 25, 25, 0.80 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "legend_panel_gray",
+      "colorUsage": "override",
+      "color": [ 25, 25, 25, 0.85 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "graph_panel_gray",
+      "colorUsage": "override",
+      "color": [ 25, 25, 25, 0.95 ]
+    },
+    {
+      "classId": "TextStyle",
+      "id": "label_text",
+      "colorUsage": "override",
+      "color": [ 140, 198, 199, 1.0 ],
+      "verticalAlign": "center",
+      "fontSize": 24
+
+    },
+    {
+      "classId": "TextStyle",
+      "id": "highlight_label_text",
+      "colorUsage": "override",
+      "color": [ 219, 73, 28, 1.0 ],
+      "verticalAlign": "center"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "button_text",
+      "colorUsage": "override",
+      "color": [ 0, 0, 0, 1.0 ],
+      "verticalAlign": "center"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "legend_text",
+      "colorUsage": "override",
+      "color": [ 140, 198, 199, 1.0 ],
+      "verticalAlign": "center",
+      "horizontalAlign": "left",
+      "legendFont": "Assets/Fonts/XboxOneControllerLegendSmall"
+    },
+    {
+      "id": "DisabledButtonStyle",
+      "inheritsFromId": "BasicButtonStyle",
+      "classId": "SpriteStyle",
+      "color": [ 128, 128, 128, 1.0 ]
+    },
+    {
+      "id": "FocusedButtonStyle",
+      "inheritsFromId": "BasicButtonStyle",
+      "classId": "SpriteStyle",
+      "color": [ 255, 255, 0, 1.0 ]
+    },
+    {
+      "id": "HoveredButtonStyle",
+      "inheritsFromId": "BasicButtonStyle",
+      "classId": "SpriteStyle",
+      "color": [ 128, 255, 128, 1.0 ]
+    },
+    {
+      "id": "PressedButtonStyle",
+      "inheritsFromId": "BasicButtonStyle",
+      "classId": "SpriteStyle",
+      "color": [ 192, 192, 0, 1.0 ]
+    },
+    {
+      "id": "BasicButtonStyle",
+      "classId": "SpriteStyle",
+      "color": [ 192, 192, 192, 1.0 ],
+      "colorUsage": "override",
+      "texture": "Assets/Textures/roundy-border.png",
+      "spriteType": "nineSliced",
+      "innerUVExtents": [ 0.1, 0.1, 0.9, 0.9 ],
+      "padding": [ 0, 0, 0, 0 ]
+    },
+    {
+      "id": "LogoHorizontal",
+      "classId": "spriteStyle",
+      "texture": "Assets/xboxlogohorizontal.png",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ]
+    },
+    {
+      "id": "LogoVertical",
+      "classId": "spriteStyle",
+      "texture": "Assets/xboxlogovertical.png",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ]
+    }
+  ],
+  "layout": {
+    "classId": "Panel",
+    "id": "root",
+    "positioningAnchor": [ "left", "top" ],
+    "position": [ 0, 0 ],
+    "sizingAnchor": [ "left", "top" ],
+    "size": [ 1920, 1080 ],
+    "style": {
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 0, 0, 0, 0.0 ]
+    },
+    "childElements": [
+      {
+        "classId": "Image",
+        "id": "xbox_logo",
+        "visible": true,
+        "styleId": "LogoVertical",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 0, 0 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 1920, 1080 ],
+        "focusable": false
+      },
+      {
+        "classId": "Panel",
+        "id": "info_panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 0, 0 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 580, 1080 ],
+        "style": {
+          "classId": "SpriteStyle",
+          "colorUsage": "override",
+          "color": [ 0, 0, 0, 0.0 ]
+        },
+        "childElements": [
+          {
+            "classId": "Panel",
+            "id": "resolution_panel",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 0, 0 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 1920, 160 ],
+            "styleId": "info_panel_gray",
+            "childElements": [
+              {
+                "classId": "Image",
+                "id": "atg_logo",
+                "positioningAnchor": [ "left", "top" ],
+                "position": [ 40, 25 ],
+                "sizingAnchor": [ "left", "top" ],
+                "size": [ 105, 115 ],
+
+                "focusable": false,
+
+                "style": {
+                  "classId": "spriteStyle",
+                  "texture": "Assets/LOGO_ATG.png",
+                  "colorUsage": "override",
+                  "color": [ 140, 198, 199, 0.75 ]
+                }
+              },
+              {
+                "classId": "StaticText",
+                "id": "text1",
+                "positioningAnchor": [ "left", "top" ],
+                "position": [ 160, 30 ],
+                "sizingAnchor": [ "left", "top" ],
+                "size": [ 1000, 40 ],
+                "text": "-",
+                "styleId": "label_text"
+              },
+              {
+                "classId": "StaticText",
+                "id": "text2",
+                "positioningAnchor": [ "left", "top" ],
+                "position": [ 160, 70 ],
+                "sizingAnchor": [ "left", "top" ],
+                "size": [ 1000, 40 ],
+                "text": "TEXT2",
+                "styleId": "label_text"
+              },
+              {
+                "classId": "StaticText",
+                "id": "text3",
+                "positioningAnchor": [ "left", "top" ],
+                "position": [ 160, 110 ],
+                "sizingAnchor": [ "left", "top" ],
+                "size": [ 1000, 40 ],
+                "text": "-",
+                "styleId": "label_text"
+              },
+              {
+                "classId": "StaticText",
+                "id": "text4",
+                "positioningAnchor": [ "left", "top" ],
+                "position": [ 160, 150 ],
+                "sizingAnchor": [ "left", "top" ],
+                "size": [ 1000, 40 ],
+                "text": "-",
+                "styleId": "label_text"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "classId": "VerticalStackPanel",
+        "id": "ResMenu",
+        "visible": false,
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "position": [ 100, 200 ],
+        "size": [ 600, 700 ],
+        "styleId": "BasicButtonStyle",
+        "stackingOrientation": "down",
+        "stackElementPadding": 0.0
+      },
+      {
+        "classId": "VerticalStackPanel",
+        "id": "StreamMenu",
+        "visible": false,
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "position": [ 550, 200 ],
+        "size": [ 600, 700 ],
+        "styleId": "BasicButtonStyle",
+        "stackingOrientation": "down",
+        "stackElementPadding": 0.0
+      },
+      {
+        "classId": "Panel",
+        "id": "navigate_legend",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 10, 980 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 400, 50 ],
+        "styleId": "legend_panel_gray",
+        "childElements": [
+          {
+            "classId": "StaticText",
+            "id": "navigate_legend_text",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 10, 10 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 400, 50 ],
+            "text": "[LThumb] Navigate  [Menu] Menu  [X] Logo",
+            "isLegend": true,
+            "styleId": "legend_text"
+          }
+        ]
+      }
+    ]
+  }
+  }

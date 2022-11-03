@@ -175,6 +175,8 @@ public:
 
     // DLC Methods
     void RefreshInstalledPackages();
+    HRESULT MountPackage(const char* packageIdentifier, XPackageMountHandle* mountHandle);
+    HRESULT AcquireLicense(const char* packageIdentifier, XStoreLicenseHandle* licenseHandle);
     void MountSelectedPackage(PackageDetails &package);
     void UnmountSelectedPackage(PackageDetails &package);
     XTaskQueueRegistrationToken RegisterPackageEvents(XStoreLicenseHandle license, PackageEventContext *context);
@@ -182,6 +184,7 @@ public:
     void AddNewMountedPackage(std::string &storeId, XStoreLicenseHandle license, XTaskQueueRegistrationToken token, XPackageMountHandle mountHandle, PackageEventContext *context);
     PackageMountInfo* GetPackageMountInfo(const std::string &storeId);
     PackageDetails* GetPackageDetail(const std::string &storeId);
+    void UninstallPackage(PackageDetails& package);
 
 private:
 
@@ -195,6 +198,7 @@ private:
 
     void InitializeUI();
     void ResetStoreButton(std::shared_ptr<UIButton> button);
+    void SetBackgroundImage(const char* filename);
     void ErrorMessage(std::string_view format, ...);
 
     // UIStyleManager::D3DResourcesProvider interface methods
@@ -247,6 +251,7 @@ private:
     std::vector<StoreProductDetails>            m_storeDetailList;
     bool                                        m_isStoreEnumerating;
 
+    std::string                                 m_currentFocusStoreId;
     std::string                                 m_lastSelectStoreId;
     EnumFocusArea                               m_needSetFocus;
     

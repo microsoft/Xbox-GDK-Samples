@@ -66,11 +66,11 @@
     <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
-    <ClInclude Include="SampleImplementations\ZLibDecompression.h">
+    <ClInclude Include="SampleImplementations\XBoxZLibDecompression.h">
       <Filter>SampleImplementations</Filter>
     </ClInclude>
     <ClInclude Include="DeviceResources.h" />
-    <ClInclude Include="SampleImplementations\InMemoryZLibDecompression.h">
+    <ClInclude Include="SampleImplementations\XBoxInMemoryZLibDecompression.h">
       <Filter>SampleImplementations</Filter>
     </ClInclude>
     <ClInclude Include="DirectStorageWin32\dstorage_win32.h">
@@ -127,6 +127,9 @@
     <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
+    <ClInclude Include="SampleImplementations\DesktopCPUDecompression.h">
+      <Filter>SampleImplementations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -152,11 +155,11 @@
     <ClCompile Include="SampleImplementations\RecommendedPattern.cpp">
       <Filter>SampleImplementations</Filter>
     </ClCompile>
-    <ClCompile Include="SampleImplementations\ZLibDecompression.cpp">
+    <ClCompile Include="SampleImplementations\XBoxZLibDecompression.cpp">
       <Filter>SampleImplementations</Filter>
     </ClCompile>
     <ClCompile Include="DeviceResources.cpp" />
-    <ClCompile Include="SampleImplementations\InMemoryZLibDecompression.cpp">
+    <ClCompile Include="SampleImplementations\XBoxInMemoryZLibDecompression.cpp">
       <Filter>SampleImplementations</Filter>
     </ClCompile>
     <ClCompile Include="DirectStorageWin32\DirectStorageWin32WrapperQueue.cpp">
@@ -175,6 +178,9 @@
       <Filter>ATG Tool Kit</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="SampleImplementations\DesktopCPUDecompression.cpp">
+      <Filter>SampleImplementations</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Logo.png">
@@ -206,12 +212,12 @@
     <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
       <Filter>Assets</Filter>
     </None>
-    <None Include="packages.config" />
     <None Include="Readme.docx" />
     <None Include="Readme_ja-JP.docx" />
     <None Include="Readme_ko-KR.docx" />
     <None Include="Readme_zh-CN.docx" />
     <None Include="..\..\NuGet.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\..\..\Kits\OpenSource\zlib\lib\Debug\zlibstatic.lib">

@@ -14,8 +14,9 @@
 #include "SampleImplementations/MultipleQueues.h"
 #include "SampleImplementations/Cancellation.h"
 #include "SampleImplementations/RecommendedPattern.h"
-#include "SampleImplementations/ZLibDecompression.h"
-#include "SampleImplementations/InMemoryZLibDecompression.h"
+#include "SampleImplementations/XBoxZLibDecompression.h"
+#include "SampleImplementations/XBoxInMemoryZLibDecompression.h"
+#include "SampleImplementations/DesktopCPUDecompression.h"
 
 #if defined(_GAMING_DESKTOP) || defined(_GAMING_XBOX)
 #include "xsystem.h"
@@ -104,29 +105,43 @@ void Sample::DSTORAGESampleFunc()
     try
     {
 #ifdef _GAMING_XBOX
-        ZLibDecompression decompressionSample;
-        m_decompressionStatus = decompressionSample.RunSample(c_zipDataFileName, c_zipFileSize) ? e_success : e_failed;
+        XBoxZLibDecompression decompressionSample;
+        m_xBoxDecompressionStatus = decompressionSample.RunSample(c_zipDataFileName, c_zipFileSize) ? e_success : e_failed;
 #else
-        m_decompressionStatus = e_notImplemented;
+        m_xBoxDecompressionStatus = e_notImplemented;
 #endif
     }
     catch (...)
     {
-        m_decompressionStatus = e_exception;
+        m_xBoxDecompressionStatus = e_exception;
     }
 
     try
     {
 #ifdef _GAMING_XBOX_SCARLETT
-        InMemoryZLibDecompression decompressionSample;
-        m_inMemoryDecompressionStatus = decompressionSample.RunSample() ? e_success : e_failed;
+        XBoxInMemoryZLibDecompression decompressionSample;
+        m_xBoxInMemoryDecompressionStatus = decompressionSample.RunSample() ? e_success : e_failed;
 #else
-        m_inMemoryDecompressionStatus = e_notImplemented;
+        m_xBoxDecompressionStatus = e_notImplemented;
 #endif
     }
     catch (...)
     {
-        m_inMemoryDecompressionStatus = e_exception;
+        m_xBoxInMemoryDecompressionStatus = e_exception;
+    }
+
+    try
+    {
+#ifndef _GAMING_XBOX
+        DesktopCPUDecompression decompressionSample;
+        m_desktopCPUDecompressionStatus = decompressionSample.RunSample(c_zipDataFileName, c_zipFileSize) ? e_success : e_failed;
+#else
+        m_desktopCPUDecompressionStatus = e_notImplemented;
+#endif
+    }
+    catch (...)
+    {
+        m_desktopCPUDecompressionStatus = e_exception;
     }
 
     try
@@ -269,8 +284,9 @@ Sample::Sample() noexcept(false) :
     m_dstorageSampleExecution(nullptr)
     , m_simpleLoadStatus(e_pending)
     , m_cancellationStatus(e_pending)
-    , m_decompressionStatus(e_pending)
-    , m_inMemoryDecompressionStatus(e_pending)
+    , m_xBoxDecompressionStatus(e_pending)
+    , m_xBoxInMemoryDecompressionStatus(e_pending)
+    , m_desktopCPUDecompressionStatus(e_pending)
     , m_multipleQueuesStatus(e_pending)
     , m_statusBatchStatus(e_pending)
     , m_statusFenceStatus(e_pending)
@@ -281,6 +297,15 @@ Sample::Sample() noexcept(false) :
     // Renders only 2D, so no need for a depth buffer.
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_UNKNOWN);
     m_deviceResources->RegisterDeviceNotify(this);
+#if defined(_GAMING_XBOX_XBOXONE)
+    m_xBoxInMemoryDecompressionStatus = e_notImplemented;
+    m_desktopCPUDecompressionStatus = e_notImplemented;
+#elif defined (_GAMING_XBOX_SCARLETT)
+    m_desktopCPUDecompressionStatus = e_notImplemented;
+#else
+    m_xBoxDecompressionStatus = e_notImplemented;
+    m_xBoxInMemoryDecompressionStatus = e_notImplemented;
+#endif
 }
 
 Sample::~Sample()
@@ -393,16 +418,17 @@ void Sample::Render()
         DisplayStatusLine(m_simpleLoadStatus, L"Simple Load", pos);
         DisplayStatusLine(m_cancellationStatus, L"Cancellation", pos);
 #ifdef _GAMING_XBOX_XBOXONE
-        DisplayStatusLine(m_decompressionStatus, L"Xbox Software Decompression", pos);
+        DisplayStatusLine(m_xBoxDecompressionStatus, L"Xbox Software Decompression", pos);
 #else
-        DisplayStatusLine(m_decompressionStatus, L"Xbox Hardware Decompression", pos);
+        DisplayStatusLine(m_xBoxDecompressionStatus, L"Xbox Hardware Decompression", pos);
 #endif
-        DisplayStatusLine(m_inMemoryDecompressionStatus, L"Xbox In Memory Hardware Decompression", pos);
+        DisplayStatusLine(m_xBoxInMemoryDecompressionStatus, L"Xbox In Memory Hardware Decompression", pos);
+        DisplayStatusLine(m_desktopCPUDecompressionStatus, L"Desktop CPU Decompression", pos);
         DisplayStatusLine(m_multipleQueuesStatus, L"Multiple Queues", pos);
         DisplayStatusLine(m_statusBatchStatus, L"Status Batch", pos);
         DisplayStatusLine(m_statusFenceStatus, L"Status Fence", pos);
         DisplayStatusLine(m_recommendedPatternStatus, L"Recommended Pattern", pos);
-}
+    }
 
     m_spriteBatch->End();
 

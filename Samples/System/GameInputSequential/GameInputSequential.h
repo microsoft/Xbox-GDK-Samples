@@ -22,9 +22,9 @@ struct InputMove
     int lastIndex;
     uint64_t lastTime;
 
-    InputMove(const std::wstring& name, GameInputGamepadButtons* buttons, uint64_t* timing) : Name(name)
+    InputMove(const std::wstring& name, const GameInputGamepadButtons* buttons, const uint64_t* timing) :
+        Name(name)
     {
-        Name = name;
         Reset();
 
         for (size_t i = 0; i < COMBOCOUNT; i++)
@@ -50,6 +50,12 @@ public:
     Sample() noexcept(false);
     ~Sample();
 
+    Sample(Sample&&) = default;
+    Sample& operator= (Sample&&) = default;
+
+    Sample(Sample const&) = delete;
+    Sample& operator= (Sample const&) = delete;
+
     // Initialization and management
     void Initialize(HWND window);
 
@@ -59,6 +65,8 @@ public:
     // Messages
     void OnSuspending();
     void OnResuming();
+    void OnConstrained() {}
+    void OnUnConstrained() {}
 
     Microsoft::WRL::ComPtr<IGameInputDevice>    m_device;
     Microsoft::WRL::ComPtr<IGameInput>			m_gameInput;

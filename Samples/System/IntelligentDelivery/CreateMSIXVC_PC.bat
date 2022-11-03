@@ -12,7 +12,7 @@ copy /b .\Assets\feature*.png .\Gaming.Desktop.x64\Layout\Image\Loose\Assets\
 xcopy /s /y .\Gaming.Desktop.x64\%CONFIG%\Assets .\Gaming.Desktop.x64\Layout\Image\Loose\Assets\
 
 echo Copying over the MicrosoftGame.config file for PC
-copy /b MicrosoftGame_PC.config .\Gaming.Desktop.x64\Layout\Image\Loose\MicrosoftGame.config
+copy /b MicrosoftGameConfig_PC.mgc .\Gaming.Desktop.x64\Layout\Image\Loose\MicrosoftGame.config
 
 REM It is possible to /lk sign package for PC, but they as of yet cannot be installed
 

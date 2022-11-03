@@ -10,10 +10,7 @@
 #include "pch.h"
 #include "DeferredParticles.h"
 
-// C4238: nonstandard extension used: class rvalue used as lvalue
-#pragma warning(disable : 4238)
-
-extern void ExitSample();
+extern void ExitSample() noexcept;
 
 using namespace DirectX;
 
@@ -98,7 +95,12 @@ void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
 
-    m_timer.Tick([&]() { Update(m_timer); });
+    m_deviceResources->WaitForOrigin();
+
+    m_timer.Tick([&]()
+    {
+        Update(m_timer);
+    });
 
     Render();
 
@@ -196,7 +198,7 @@ void Sample::Render()
         }
 
         // Restore the viewport, as the sky changed the min depth bounds.
-        auto vp = m_deviceResources->GetScreenViewport();
+        auto const  vp = m_deviceResources->GetScreenViewport();
         commandList->RSSetViewports(1, &vp);
 
         // Render the particle systems.
@@ -206,7 +208,7 @@ void Sample::Render()
         {
             ScopedPixEvent hud(commandList, PIX_COLOR_DEFAULT, L"HUD");
 
-            auto safe = DirectX::SimpleMath::Viewport::ComputeTitleSafeArea(UINT(m_displayWidth), UINT(m_displayHeight));
+            auto const safe = DirectX::SimpleMath::Viewport::ComputeTitleSafeArea(UINT(m_displayWidth), UINT(m_displayHeight));
 
             wchar_t textBuffer[1024] = {};
             XMFLOAT2 textPos = XMFLOAT2(float(safe.left), float(safe.top));
@@ -247,16 +249,16 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
-    auto dsvDescriptor = m_deviceResources->GetDepthStencilView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
     commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -289,8 +291,6 @@ void Sample::CreateDeviceDependentResources()
     m_commonStates = std::make_unique<DirectX::CommonStates>(device);
 
     m_srvPile = std::make_unique<DescriptorPile>(device,
-        D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV,
-        D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE,
         128,
         SRV_Count);
 
@@ -305,8 +305,8 @@ void Sample::CreateDeviceDependentResources()
     resourceUpload.Begin();
 
     // HUD
-    auto backBufferRts = RenderTargetState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
-    auto spritePSD = SpriteBatchPipelineStateDescription(backBufferRts, &CommonStates::AlphaBlend);
+    const RenderTargetState backBufferRts(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
+    const SpriteBatchPipelineStateDescription spritePSD(backBufferRts, &CommonStates::AlphaBlend);
     m_hudBatch = std::make_unique<SpriteBatch>(device, resourceUpload, spritePSD);
 
     m_particleWorld.CreateDeviceDependentResources(m_deviceResources.get(), resourceUpload, *m_models[0].get());
@@ -399,7 +399,7 @@ void Sample::CreateDeviceDependentResources()
 void Sample::CreateWindowSizeDependentResources()
 {
     auto device = m_deviceResources->GetD3DDevice();
-    const auto size = m_deviceResources->GetOutputSize();
+    auto const size = m_deviceResources->GetOutputSize();
 
     // Calculate display dimensions.
     m_displayWidth = size.right - size.left;
@@ -468,7 +468,7 @@ void Sample::SetupPipelineSky(ID3D12GraphicsCommandList* commandList, const Mode
 
     SetupPipelineCommon(commandList, part, instIndex, texOffset, skyView);
 
-    D3D12_VIEWPORT vpSky = m_deviceResources->GetScreenViewport();
+    auto vpSky = m_deviceResources->GetScreenViewport();
     vpSky.MinDepth = 0.999f;
     commandList->RSSetViewports(1, &vpSky);
     commandList->SetPipelineState(m_skyPSO.Get());

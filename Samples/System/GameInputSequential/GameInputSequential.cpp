@@ -20,7 +20,7 @@ using Microsoft::WRL::ComPtr;
 
 namespace Moves
 {
-    GameInputGamepadButtons Fireball[] =
+    const GameInputGamepadButtons Fireball[] =
     {
         GameInputGamepadDPadDown,
         GameInputGamepadDPadDown | GameInputGamepadDPadRight,
@@ -28,7 +28,7 @@ namespace Moves
         GameInputGamepadX
     };
 
-    uint64_t FireballTimes[] =
+    const uint64_t FireballTimes[] =
     {
         0,
         500000,
@@ -36,7 +36,7 @@ namespace Moves
         500000
     };
 
-    GameInputGamepadButtons UpperCut[] =
+    const GameInputGamepadButtons UpperCut[] =
     {
         GameInputGamepadDPadRight,
         GameInputGamepadDPadDown,
@@ -44,7 +44,7 @@ namespace Moves
         GameInputGamepadX
     };
 
-    uint64_t UpperCutTimes[] =
+    const uint64_t UpperCutTimes[] =
     {
         0,
         500000,
@@ -52,7 +52,7 @@ namespace Moves
         500000
     };
 
-    GameInputGamepadButtons Torpedo[] =
+    const GameInputGamepadButtons Torpedo[] =
     {
         GameInputGamepadDPadRight,
         GameInputGamepadNone,
@@ -60,7 +60,7 @@ namespace Moves
         GameInputGamepadX
     };
 
-    uint64_t TorpedoTimes[] =
+    const uint64_t TorpedoTimes[] =
     {
         0,
         500000,
@@ -117,7 +117,7 @@ Sample::~Sample()
     {
         if (m_gameInput)
         {
-            (void)m_gameInput->UnregisterCallback(m_deviceToken, UINT64_MAX);
+            std::ignore = m_gameInput->UnregisterCallback(m_deviceToken, UINT64_MAX);
         }
 
         m_deviceToken = 0;
@@ -148,6 +148,10 @@ void Sample::Initialize(HWND window)
 void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
+
+    // For PresentX presentation loops, the wait for the origin event
+    // should be just before input is processed.
+    m_deviceResources->WaitForOrigin();
 
     m_timer.Tick([&]()
     {
@@ -288,7 +292,7 @@ void Sample::Update(DX::StepTimer const&)
 
         if (m_lastReading->GetGamepadState(&currentState))
         {
-            for (uint64_t i = 0; i < m_moves.size(); i++)
+            for (size_t i = 0; i < m_moves.size(); i++)
             {
                 if (m_moves[i].Timing[m_moves[i].lastIndex] > 0 &&
                     newTime - m_moves[i].lastTime >= m_moves[i].Timing[m_moves[i].lastIndex])
@@ -331,9 +335,9 @@ void Sample::Render()
     auto commandList = m_deviceResources->GetCommandList();
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Render");
 
-    auto fullscreen = m_deviceResources->GetOutputSize();
+    auto const fullscreen = m_deviceResources->GetOutputSize();
 
-    auto safeRect = Viewport::ComputeTitleSafeArea(UINT(fullscreen.right - fullscreen.left), UINT(fullscreen.bottom - fullscreen.top));
+    auto const safeRect = Viewport::ComputeTitleSafeArea(UINT(fullscreen.right - fullscreen.left), UINT(fullscreen.bottom - fullscreen.top));
 
     auto heap = m_resourceDescriptors->Heap();
     commandList->SetDescriptorHeaps(1, &heap);
@@ -413,14 +417,14 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, nullptr);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -452,13 +456,13 @@ void Sample::CreateDeviceDependentResources()
 
     m_resourceDescriptors = std::make_unique<DescriptorHeap>(device, Descriptors::Count);
 
-    RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
+    const RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
 
     ResourceUploadBatch upload(device);
     upload.Begin();
 
     {
-        SpriteBatchPipelineStateDescription pd(
+        const SpriteBatchPipelineStateDescription pd(
             rtState,
             &CommonStates::AlphaBlend);
 
@@ -484,7 +488,7 @@ void Sample::CreateDeviceDependentResources()
 // Allocate all memory resources that change on a window SizeChanged event.
 void Sample::CreateWindowSizeDependentResources()
 {
-    auto vp = m_deviceResources->GetScreenViewport();
+    auto const vp = m_deviceResources->GetScreenViewport();
     m_batch->SetViewport(vp);
 }
 #pragma endregion

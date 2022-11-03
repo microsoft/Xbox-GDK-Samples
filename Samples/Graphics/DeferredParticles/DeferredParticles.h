@@ -20,18 +20,26 @@ public:
     Sample() noexcept(false);
     ~Sample();
 
+    Sample(Sample&&) = default;
+    Sample& operator= (Sample&&) = default;
+
+    Sample(Sample const&) = delete;
+    Sample& operator= (Sample const&) = delete;
+
     // Initialization and management
     void Initialize(HWND window);
 
-    // Basic Sample loop
+    // Basic render loop
     void Tick();
 
     // Messages
     void OnSuspending();
     void OnResuming();
+    void OnConstrained() {}
+    void OnUnConstrained() {}
 
     // Properties
-    bool RequestHDRMode() const { return m_deviceResources ? (m_deviceResources->GetDeviceOptions() & DX::DeviceResources::c_EnableHDR) != 0 : false; }
+    bool RequestHDRMode() const noexcept { return m_deviceResources ? (m_deviceResources->GetDeviceOptions() & DX::DeviceResources::c_EnableHDR) != 0 : false; }
 
     // Helper callback functions that setup the pipeline state for the scene & sky mesh types.
     void SetupPipelineScene(ID3D12GraphicsCommandList* commandList, const DirectX::ModelMeshPart& part, int instIndex, int texOffset);

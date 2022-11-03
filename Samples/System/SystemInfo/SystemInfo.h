@@ -37,8 +37,8 @@ public:
     void OnDeviceRestored() override;
 
     // Messages
-    void OnActivated();
-    void OnDeactivated();
+    void OnActivated() {}
+    void OnDeactivated() {}
     void OnSuspending();
     void OnResuming();
     void OnWindowMoved();
@@ -101,9 +101,11 @@ private:
         DIRECT3D_OPT2,
         DIRECT3D_OPT3,
         DIRECT3D_OPT4,
+        DIRECT3D_OPT5,
         DXGI,
 #else
-        DIRECT3D,
+        DIRECT3D_XBOX,
+        DXGI_XBOX,
 #endif
         MAX,
     };

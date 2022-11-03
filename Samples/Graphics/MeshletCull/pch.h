@@ -41,8 +41,8 @@
 
 #include <grdk.h>
 
-#if _GRDK_VER < 0x4A610D2B /* GXDK Edition 200600 */
-#error This sample requires the June 2020 GDK or later
+#if _GRDK_VER < 0x55F007B0 /* GDK Edition 211000 */
+#error This sample requires the October 2021 GDK or later
 #endif
 
 #ifdef _GAMING_XBOX_SCARLETT
@@ -68,14 +68,20 @@
 
 #include <algorithm>
 #include <atomic>
+#include <cassert>
 #include <cmath>
+#include <cstddef>
 #include <cstdint>
+#include <cstdio>
+#include <cstring>
+#include <cwchar>
 #include <exception>
+#include <iterator>
 #include <memory>
 #include <stdexcept>
-
-#include <assert.h>
-#include <stdio.h>
+#include <string>
+#include <system_error>
+#include <tuple>
 
 #ifdef _GAMING_XBOX
 #include <pix3.h>
@@ -159,9 +165,9 @@ namespace DX
     class com_exception : public std::exception
     {
     public:
-        com_exception(HRESULT hr) : result(hr) {}
+        com_exception(HRESULT hr) noexcept : result(hr) {}
 
-        virtual const char* what() const override
+        const char* what() const override
         {
             static char s_str[64] = {};
             sprintf_s(s_str, "Failure with HRESULT of %08X", static_cast<unsigned int>(result));
@@ -177,6 +183,12 @@ namespace DX
     {
         if (FAILED(hr))
         {
+#ifdef _DEBUG
+            char str[64] = {};
+            sprintf_s(str, "**ERROR** Fatal Error with HRESULT of %08X\n", static_cast<unsigned int>(hr));
+            OutputDebugStringA(str);
+            __debugbreak();
+#endif
             throw com_exception(hr);
         }
     }

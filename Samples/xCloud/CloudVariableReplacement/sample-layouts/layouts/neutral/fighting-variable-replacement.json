@@ -1,0 +1,103 @@
+﻿{
+  "$schema": "https://raw.githubusercontent.com/microsoft/xbox-game-streaming-tools/master/touch-adaptation-kit/schemas/layout/v3.2/layout.json",
+  "content": {
+    "left": {
+      "inner": [
+        {
+          "type": "directionalPad",
+          "scale": 2
+        }
+      ]
+    },
+    "right": {
+      "inner": [
+        {
+          "type": "arcadeButtons",
+          "lightPunch": {
+            "action": "gamepadX",
+            "styles": {
+              "default": {
+                "faceImage": {
+                  "type": "icon",
+                  "value": "lightPunch"
+                }
+              }
+            }
+          },
+          "mediumPunch": {
+            "action": "gamepadY",
+            "visible": {
+              "$ref": "../../context.json#/state/Y_Visibility"
+            },
+            "styles": {
+              "default": {
+                "faceImage": {
+                  "type": "icon",
+                  "value": "mediumPunch"
+                }
+              }
+            }
+          },
+          "heavyPunch": {
+            "action": "rightBumper",
+            "styles": {
+              "default": {
+                "faceImage": {
+                  "type": "icon",
+                  "value": "heavyPunch"
+                }
+              }
+            }
+          },
+          "lightKick": {
+            "action": "gamepadA",
+            "enabled": {
+              "$ref": "../../context.json#/state/A_Enabled"
+            },
+            "styles": {
+              "default": {
+                "faceImage": {
+                  "type": "icon",
+                  "value": "lightKick"
+                }
+              }
+            }
+          },
+          "mediumKick": {
+            "action": "gamepadB",
+            "styles": {
+              "default": {
+                "faceImage": {
+                  "type": "icon",
+                  "value": "mediumKick"
+                },
+                "opacity": {
+                  "$ref": "../../context.json#/state/B_Opacity"
+                }
+              }
+            }
+          },
+          "heavyKick": {
+            "action": "leftBumper",
+            "styles": {
+              "default": {
+                "faceImage": {
+                  "type": "icon",
+                  "value": "heavyKick"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "upper": {
+      "right": [
+        {
+          "type": "button",
+          "action": "menu"
+        }
+      ]
+    }
+  }
+}

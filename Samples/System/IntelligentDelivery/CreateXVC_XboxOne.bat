@@ -1,5 +1,5 @@
 @echo Copying over the MicrosoftGame.config file for the Xbox One device family
-copy /b MicrosoftGame_XboxOne.config .\Gaming.Xbox.XboxOne.x64\Layout\Image\Loose\MicrosoftGame.config
+copy /b MicrosoftGameConfig_XboxOne.mgc .\Gaming.Xbox.XboxOne.x64\Layout\Image\Loose\MicrosoftGame.config
 
 copy /b .\Assets\feature*.png .\Gaming.Xbox.XboxOne.x64\Layout\Image\Loose\Assets\
 

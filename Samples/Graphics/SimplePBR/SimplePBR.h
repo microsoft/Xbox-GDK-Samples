@@ -44,8 +44,8 @@ public:
     void OnDeviceRestored() override;
 
     // Messages
-    void OnActivated();
-    void OnDeactivated();
+    void OnActivated() {}
+    void OnDeactivated() {}
     void OnSuspending();
     void OnResuming();
     void OnConstrained() {}
@@ -56,10 +56,6 @@ public:
 
     // Properties
     void GetDefaultSize(int& width, int& height) const noexcept;
-
-    inline static DXGI_FORMAT GetHDRRenderFormat() { return DXGI_FORMAT_R11G11B10_FLOAT; }
-    inline static DXGI_FORMAT GetBackBufferFormat() { return DXGI_FORMAT_R10G10B10A2_UNORM; }
-    inline static DXGI_FORMAT GetDepthFormat() { return DXGI_FORMAT_D32_FLOAT; }
 
 private:
 
@@ -102,9 +98,6 @@ private:
     std::unique_ptr<DirectX::Keyboard>                      m_keyboard;
     DirectX::Keyboard::KeyboardStateTracker                 m_keyboardButtons;
     std::unique_ptr<DirectX::Mouse>                         m_mouse;
-#else
-    // HDR Support
-    bool                                                    m_bIsTVInHDRMode;
 #endif
 
     // Render states

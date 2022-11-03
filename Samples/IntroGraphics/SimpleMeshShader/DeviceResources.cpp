@@ -12,7 +12,6 @@ using namespace DX;
 
 using Microsoft::WRL::ComPtr;
 
-#ifdef _GAMING_DESKTOP
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wcovered-switch-default"
 #pragma clang diagnostic ignored "-Wswitch-enum"
@@ -20,6 +19,7 @@ using Microsoft::WRL::ComPtr;
 
 #pragma warning(disable : 4061)
 
+#ifdef _GAMING_DESKTOP
 namespace
 {
     inline DXGI_FORMAT NoSRGB(DXGI_FORMAT fmt) noexcept
@@ -591,12 +591,6 @@ void DeviceResources::HandleDeviceLost()
 // Prepare the command list and render target for rendering.
 void DeviceResources::Prepare(D3D12_RESOURCE_STATES beforeState, D3D12_RESOURCE_STATES afterState)
 {
-#ifdef _GAMING_XBOX
-    // Wait until frame start is signaled
-    m_framePipelineToken = D3D12XBOX_FRAME_PIPELINE_TOKEN_NULL;
-    ThrowIfFailed(m_d3dDevice->WaitFrameEventX(D3D12XBOX_FRAME_EVENT_ORIGIN, INFINITE, nullptr, D3D12XBOX_WAIT_FRAME_EVENT_FLAG_NONE, &m_framePipelineToken));
-#endif
-
     // Reset command list and allocator.
     ThrowIfFailed(m_commandAllocators[m_backBufferIndex]->Reset());
     ThrowIfFailed(m_commandList->Reset(m_commandAllocators[m_backBufferIndex].Get(), nullptr));
@@ -641,7 +635,10 @@ void DeviceResources::Present(D3D12_RESOURCE_STATES beforeState)
 
     // Xbox apps do not need to handle DXGI_ERROR_DEVICE_REMOVED or DXGI_ERROR_DEVICE_RESET.
 
-#else
+    // Update the back buffer index.
+    m_backBufferIndex = (m_backBufferIndex + 1) % m_backBufferCount;
+
+#else // _GAMING_DESKTOP
 
     // The first argument instructs DXGI to block until VSync, putting the application
     // to sleep until the next VSync. This ensures we don't waste any cycles rendering
@@ -664,9 +661,8 @@ void DeviceResources::Present(D3D12_RESOURCE_STATES beforeState)
         ThrowIfFailed(hr);
     }
 
-#endif
-
     MoveToNextFrame();
+#endif
 }
 
 // Handle GPU suspend/resume
@@ -707,32 +703,20 @@ void DeviceResources::WaitForGpu() noexcept
     }
 }
 
-// Prepare to render the next frame.
-void DeviceResources::MoveToNextFrame()
-{
-    // Schedule a Signal command in the queue.
-    const UINT64 currentFenceValue = m_fenceValues[m_backBufferIndex];
-    ThrowIfFailed(m_commandQueue->Signal(m_fence.Get(), currentFenceValue));
-
-    // Update the back buffer index.
 #ifdef _GAMING_XBOX
-    m_backBufferIndex = (m_backBufferIndex + 1) % m_backBufferCount;
-#else
-    m_backBufferIndex = m_swapChain->GetCurrentBackBufferIndex();
-#endif
-
-    // If the next frame is not ready to be rendered yet, wait until it is ready.
-    if (m_fence->GetCompletedValue() < m_fenceValues[m_backBufferIndex])
-    {
-        ThrowIfFailed(m_fence->SetEventOnCompletion(m_fenceValues[m_backBufferIndex], m_fenceEvent.Get()));
-        std::ignore = WaitForSingleObjectEx(m_fenceEvent.Get(), INFINITE, FALSE);
-    }
-
-    // Set the fence value for the next frame.
-    m_fenceValues[m_backBufferIndex] = currentFenceValue + 1;
+// For PresentX rendering, we should wait for the origin event just before processing input.
+void DeviceResources::WaitForOrigin()
+{
+    // Wait until frame start is signaled
+    m_framePipelineToken = D3D12XBOX_FRAME_PIPELINE_TOKEN_NULL;
+    ThrowIfFailed(m_d3dDevice->WaitFrameEventX(
+        D3D12XBOX_FRAME_EVENT_ORIGIN,
+        INFINITE,
+        nullptr,
+        D3D12XBOX_WAIT_FRAME_EVENT_FLAG_NONE,
+        &m_framePipelineToken));
 }
 
-#ifdef _GAMING_XBOX
 // Set frame interval and register for frame events
 void DeviceResources::RegisterFrameEvents()
 {
@@ -761,7 +745,30 @@ void DeviceResources::RegisterFrameEvents()
         nullptr,
         D3D12XBOX_SCHEDULE_FRAME_EVENT_FLAG_NONE));
 }
-#else
+
+#else // _GAMING_DESKTOP
+
+// Prepare to render the next frame.
+void DeviceResources::MoveToNextFrame()
+{
+    // Schedule a Signal command in the queue.
+    const UINT64 currentFenceValue = m_fenceValues[m_backBufferIndex];
+    ThrowIfFailed(m_commandQueue->Signal(m_fence.Get(), currentFenceValue));
+
+    // Update the back buffer index.
+    m_backBufferIndex = m_swapChain->GetCurrentBackBufferIndex();
+
+    // If the next frame is not ready to be rendered yet, wait until it is ready.
+    if (m_fence->GetCompletedValue() < m_fenceValues[m_backBufferIndex])
+    {
+        ThrowIfFailed(m_fence->SetEventOnCompletion(m_fenceValues[m_backBufferIndex], m_fenceEvent.Get()));
+        std::ignore = WaitForSingleObjectEx(m_fenceEvent.Get(), INFINITE, FALSE);
+    }
+
+    // Set the fence value for the next frame.
+    m_fenceValues[m_backBufferIndex] = currentFenceValue + 1;
+}
+
 // This method acquires the first available hardware adapter that supports Direct3D 12.
 // If no such adapter can be found, try WARP. Otherwise throw an exception.
 void DeviceResources::GetAdapter(IDXGIAdapter1** ppAdapter)

@@ -11,9 +11,13 @@ using namespace DirectX;
 
 using Microsoft::WRL::ComPtr;
 
+#define DRAW_TRIANGLE
+
 namespace
 {
     const DirectX::XMVECTORF32 c_Background = { { { 0.254901975f, 0.254901975f, 0.254901975f, 1.f } } }; // #414141
+
+#ifdef DRAW_TRIANGLE
 
     struct Vertex
     {
@@ -68,10 +72,13 @@ namespace
 
         return blob;
     }
+
+#endif // DRAW_TRIANGLE
 }
 
 Game::Game() noexcept(false) :
-    m_frame(0)
+    m_frame(0),
+    m_vertexBufferView{}
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>();
     m_deviceResources->RegisterDeviceNotify(this);
@@ -102,6 +109,10 @@ void Game::Initialize(HWND window, int width, int height)
 void Game::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
+
+#ifdef _GAMING_XBOX
+    m_deviceResources->WaitForOrigin();
+#endif
 
     m_timer.Tick([&]()
     {
@@ -142,6 +153,8 @@ void Game::Render()
     auto commandList = m_deviceResources->GetCommandList();
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Render");
 
+#ifdef DRAW_TRIANGLE
+
     commandList->SetGraphicsRootSignature(m_rootSignature.Get());
     commandList->SetPipelineState(m_pipelineState.Get());
 
@@ -151,6 +164,8 @@ void Game::Render()
 
     // Draw triangle.
     commandList->DrawInstanced(3, 1, 0, 0);
+
+#endif // DRAW_TRIANGLE
 
     PIXEndEvent(commandList);
 
@@ -248,6 +263,8 @@ void Game::CreateDeviceDependentResources()
     }
 #endif
 
+#ifdef DRAW_TRIANGLE
+
     // Create root signature.
     auto const vertexShaderBlob = ReadData(L"VertexShader.cso");
 
@@ -326,6 +343,8 @@ void Game::CreateDeviceDependentResources()
 
     // Wait until assets have been uploaded to the GPU.
     m_deviceResources->WaitForGpu();
+
+#endif // DRAW_TRIANGLE
 }
 
 // Allocate all memory resources that change on a window SizeChanged event.
@@ -335,7 +354,9 @@ void Game::CreateWindowSizeDependentResources()
 
 void Game::OnDeviceLost()
 {
-    // Add Direct3D resource cleanup here.
+    m_rootSignature.Reset();
+    m_pipelineState.Reset();
+    m_vertexBuffer.Reset();
 }
 
 void Game::OnDeviceRestored()

@@ -112,6 +112,10 @@ void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
 
+#ifdef _GAMING_XBOX
+    m_deviceResources->WaitForOrigin();
+#endif
+
     m_timer.Tick([&]()
     {
         Update(m_timer);
@@ -128,7 +132,7 @@ void Sample::Update(DX::StepTimer const&)
 {
     float elapsed = static_cast<float>(m_timer.GetElapsedSeconds());
 
-#ifdef _GAMING_XBOX
+#ifdef USING_GAMEINPUT
     auto pad = m_gamePad->GetState(GamePad::c_MergedInput);
 #else
     auto pad = m_gamePad->GetState(0);
@@ -226,7 +230,7 @@ void Sample::Render()
         m_gpuTimer->Start(commandList, 0);
 
         ID3D12DescriptorHeap* heaps[] = { m_resourceDescriptors->Heap(), m_samplerDescriptors->Heap() };
-        commandList->SetDescriptorHeaps(_countof(heaps), heaps);
+        commandList->SetDescriptorHeaps(static_cast<UINT>(std::size(heaps)), heaps);
 
         if (m_useVisibility)
         {
@@ -276,8 +280,8 @@ void Sample::RenderVisibilityMode()
             commandList->SetPipelineState(m_visibilityVSPSO.Get());
         }
 
-        auto rtvDescriptor = m_renderDescriptors->GetCpuHandle(RTDescriptors::VisibilityRTV);
-        auto dsvDescriptor = m_deviceResources->GetDepthStencilView();
+        auto const rtvDescriptor = m_renderDescriptors->GetCpuHandle(RTDescriptors::VisibilityRTV);
+        auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
         commandList->ClearRenderTargetView(rtvDescriptor, Colors::Black, 0, nullptr);
         commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
 
@@ -344,7 +348,7 @@ void Sample::RenderVisibilityMode()
     // Run fullscreen reconstruction pass in compute.
     // Performs position and uv reconstruction, then runs pixel shader logic per screen pixel.
     {
-        auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
+        auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
 
         commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, nullptr);
 
@@ -460,7 +464,7 @@ void Sample::RenderForwardMode()
 void Sample::RenderHUD()
 {
     auto commandList = m_deviceResources->GetCommandList();
-    auto size = m_deviceResources->GetOutputSize();
+    auto const size = m_deviceResources->GetOutputSize();
     D3D12_VIEWPORT viewport = { 0, 0, float(size.right), float(size.bottom), 0, 1 };
 
     auto& font = ((size.right - size.left) > 1920) ? m_bigFont : m_smallFont;
@@ -529,8 +533,8 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
-    auto dsvDescriptor = m_deviceResources->GetDepthStencilView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
 
@@ -540,8 +544,8 @@ void Sample::Clear()
     commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -551,14 +555,6 @@ void Sample::Clear()
 
 #pragma region Message Handlers
 // Message handlers
-void Sample::OnActivated()
-{
-}
-
-void Sample::OnDeactivated()
-{
-}
-
 void Sample::OnSuspending()
 {
     m_deviceResources->Suspend();
@@ -671,7 +667,7 @@ void Sample::LoadModels()
 
     // Load sdkmesh models.
     OutputDebugStringA("Loading model...\n");
-#if _GAMING_DESKTOP
+#ifdef _GAMING_DESKTOP
     const wchar_t* dragonPath = L"ATGDragonPosedWithBakedDiffuse\\Dragon_LOD1_993KTri.sdkmes_";
     const wchar_t* cityPath   = L"AliasSampleCityBlock\\CityBlockConcrete.sdkmesh";
 #else
@@ -838,8 +834,8 @@ void Sample::BuildPSOs()
 {
     auto device = m_deviceResources->GetD3DDevice();
 
-    RenderTargetState rtStateUI(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
-    RenderTargetState rtStateVisibilityBuffer(DXGI_FORMAT_R32_UINT, m_deviceResources->GetDepthBufferFormat());
+    const RenderTargetState rtStateUI(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
+    const RenderTargetState rtStateVisibilityBuffer(DXGI_FORMAT_R32_UINT, m_deviceResources->GetDepthBufferFormat());
 
     // Setup PSO for Visibility Buffer Rasterization.
     {
@@ -1043,7 +1039,7 @@ void Sample::BuildObjectBuffer()
 
 void Sample::LoadTextures()
 {
-#if _GAMING_DESKTOP
+#ifdef _GAMING_DESKTOP
     const wchar_t* dragonTexture = L"ATGDragonPosedWithBakedDiffuse\\Dragon_diffuse.DD_";
     const wchar_t* cityTexture = L"AliasSampleCityBlock\\Concrete.DDS";
 #else
@@ -1067,7 +1063,7 @@ void Sample::BuildHUDObjects()
 
     resourceUpload.Begin();
     
-    RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
+    const RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
     SpriteBatchPipelineStateDescription pd(rtState);
 
     m_spriteBatch = std::make_unique<SpriteBatch>(device, resourceUpload, pd);
@@ -1196,7 +1192,7 @@ void Sample::LoadTexture(const wchar_t* path, ComPtr<ID3D12Resource>& texture, u
     auto subresourceSize = static_cast<const uint32_t>(subresources.size());
     const auto uploadBufferSize = GetRequiredIntermediateSize(texture.Get(), 0, subresourceSize);
 
-    auto heapProperties = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
+    auto const heapProperties = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
     auto bufferDesc = CD3DX12_RESOURCE_DESC::Buffer(uploadBufferSize);
 
     // create upload heap to transfer texture data to resource.
@@ -1244,9 +1240,9 @@ void Sample::LoadTexture(const wchar_t* path, ComPtr<ID3D12Resource>& texture, u
 void Sample::CreateWindowSizeDependentResources()
 {
     auto device = m_deviceResources->GetD3DDevice();
-    auto size   = m_deviceResources->GetOutputSize();
-    auto width = static_cast<UINT>(size.right);
-    auto height = static_cast<UINT>(size.bottom);
+    auto const size   = m_deviceResources->GetOutputSize();
+    auto const width = static_cast<UINT>(size.right);
+    auto const height = static_cast<UINT>(size.bottom);
 
     m_visibilityBuffer->SetWindow(size);
     m_help->SetWindow(size);

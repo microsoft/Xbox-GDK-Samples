@@ -35,9 +35,9 @@
 #include <wrl/client.h>
 #include <wrl/event.h>
 
-#include <grdk.h>
+#include <gxdk.h>
 
-#if _GRDK_VER < 0x4A610D2B /* GXDK Edition 200600 */
+#if _GXDK_VER < 0x4A610D2B /* GDK Edition 200600 */
 #error This sample requires the June 2020 GDK or later
 #endif
 
@@ -91,7 +91,7 @@ namespace DX
     class com_exception : public std::exception
     {
     public:
-        com_exception(HRESULT hr) : result(hr) {}
+        com_exception(HRESULT hr) noexcept : result(hr) {}
 
         const char* what() const override
         {

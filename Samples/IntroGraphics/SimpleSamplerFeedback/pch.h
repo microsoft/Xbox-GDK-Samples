@@ -37,7 +37,7 @@
 
 #include <gxdk.h>
 
-#if _GXDK_VER < 0x4A610D2B /* GXDK Edition 200600 */
+#if _GXDK_VER < 0x4A610D2B /* GDK Edition 200600 */
 #error This sample requires the June 2020 GDK or later
 #endif
 
@@ -67,6 +67,7 @@
 #include <stdexcept>
 #include <string>
 #include <system_error>
+#include <tuple>
 
 #include <pix3.h>
 

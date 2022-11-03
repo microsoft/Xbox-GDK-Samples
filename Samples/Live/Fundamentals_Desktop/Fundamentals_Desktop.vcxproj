@@ -213,7 +213,7 @@ xcopy /Y /I /E "..\..\..\Media\Fonts\*.spritefont" "$(TargetDir)"</Command>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config" />
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\Media\Textures\GamerPic.png" />

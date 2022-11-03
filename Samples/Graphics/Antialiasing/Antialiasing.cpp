@@ -137,6 +137,8 @@ void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %I64u", m_frame);
 
+    m_deviceResources->WaitForOrigin();
+
     m_timer.Tick([&]()
     {
         Update(m_timer);
@@ -226,8 +228,8 @@ void Sample::Update(DX::StepTimer const&)
     }
 
     // Limit to avoid looking directly up or down
-    const float limit = XM_PI / 2.0f - 0.01f;
-    m_pitch = std::max(-limit, std::min(+limit, m_pitch));
+    constexpr float c_limit = XM_PI / 2.0f - 0.01f;
+    m_pitch = std::max(-c_limit, std::min(+c_limit, m_pitch));
 
     if (m_yaw > XM_PI)
     {
@@ -386,7 +388,7 @@ void Sample::Render()
     {
     case AntialiasMethods::SMAA2X:
     {
-        auto size = m_deviceResources->GetOutputSize();
+        auto const size = m_deviceResources->GetOutputSize();
         SMAAConstantBuffer cb = { { 1.f, 1.f, 1.f, 0.f }, 1.f / float(size.right), 1.f / float(size.bottom) };
         auto cbHandle = m_graphicsMemory->AllocateConstant(cb);
         RenderSMAA(commandList, Descriptors::SceneTex, Descriptors::DepthTex, 1.f, cbHandle.GpuAddress());
@@ -406,7 +408,7 @@ void Sample::Render()
             commandList->ResourceBarrier(1, &barrier);
         }
 
-        auto size = m_deviceResources->GetOutputSize();
+        auto const size = m_deviceResources->GetOutputSize();
         SMAAConstantBuffer cb = { { 0.f, 0.f, 0.f, 0.f }, 1.f / float(size.right), 1.f / float(size.bottom) };
         auto cbHandle = m_graphicsMemory->AllocateConstant(cb);
         RenderSMAA(commandList, Descriptors::SceneTex, m_hardwareAA ? Descriptors::DepthTex : Descriptors::DepthStencilSRV, 1.f, cbHandle.GpuAddress());
@@ -425,13 +427,13 @@ void Sample::Render()
     {
         PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Render FXAA");
 
-        auto rtvDescriptor = m_renderDescriptors->GetCpuHandle(RTDescriptors::FinalRTV);
+        auto const rtvDescriptor = m_renderDescriptors->GetCpuHandle(RTDescriptors::FinalRTV);
         commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, nullptr);
 
         m_scene->TransitionTo(commandList, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
         m_final->BeginScene(commandList);
 
-        auto size = m_deviceResources->GetOutputSize();
+        auto const size = m_deviceResources->GetOutputSize();
         FXAAConstantBuffer cb = { 1.f / float(size.right), 1.f / float(size.bottom) };
         auto cbHandle = m_graphicsMemory->AllocateConstant(cb);
 
@@ -451,7 +453,7 @@ void Sample::Render()
     }
 
     // Render final scene
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, nullptr);
 
@@ -517,10 +519,10 @@ void Sample::RenderZoom(ID3D12GraphicsCommandList* commandList)
 
     m_fullScreenQuad->Draw(commandList, m_zoomPSO.Get(), m_resourceDescriptors->GetGpuHandle(Descriptors::FinalTex));
 
-    auto vp = m_deviceResources->GetScreenViewport();
+    auto const vp = m_deviceResources->GetScreenViewport();
     commandList->RSSetViewports(1, &vp);
 
-    auto scissors = m_deviceResources->GetScissorRect();
+    auto const scissors = m_deviceResources->GetScissorRect();
     commandList->RSSetScissorRects(1, &scissors);
 
     m_lineEFfect->Apply(commandList);
@@ -554,8 +556,8 @@ void Sample::RenderUI(ID3D12GraphicsCommandList* commandList)
     };
     commandList->SetDescriptorHeaps(_countof(descriptorHeaps), descriptorHeaps);
 
-    auto size = m_deviceResources->GetOutputSize();
-    auto safe = SimpleMath::Viewport::ComputeTitleSafeArea(UINT(size.right), UINT(size.bottom));
+    auto const size = m_deviceResources->GetOutputSize();
+    auto const safe = SimpleMath::Viewport::ComputeTitleSafeArea(UINT(size.right), UINT(size.bottom));
 
     m_batch->Begin(commandList);
 
@@ -683,7 +685,7 @@ void Sample::RenderSMAA(ID3D12GraphicsCommandList* commandList, size_t renderTar
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, nullptr);
 
-    float factor[4] = { blendFactor, blendFactor, blendFactor, blendFactor };
+    const float factor[4] = { blendFactor, blendFactor, blendFactor, blendFactor };
     commandList->OMSetBlendFactor(factor);
 
     m_fullScreenQuad->Draw(commandList, m_neighborBlendPSO.Get(), colorHandle,
@@ -730,8 +732,8 @@ void Sample::Clear()
     commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -789,7 +791,7 @@ void Sample::CreateDeviceDependentResources()
 
     m_model->LoadStaticBuffers(device, upload);
 
-    RenderTargetState rtStateUI(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
+    const RenderTargetState rtStateUI(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
 
     {
         SpriteBatchPipelineStateDescription pd(rtStateUI, &CommonStates::AlphaBlend);
@@ -1111,7 +1113,7 @@ void Sample::CreateWindowSizeDependentResources()
 {
     m_batch->SetViewport(m_deviceResources->GetScreenViewport());
 
-    auto size = m_deviceResources->GetOutputSize();
+    auto const size = m_deviceResources->GetOutputSize();
 
     auto device = m_deviceResources->GetD3DDevice();
     ResourceUploadBatch resourceUpload(device);

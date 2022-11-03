@@ -16,6 +16,7 @@
     <ClInclude Include="FbxTransformer.h" />
     <ClInclude Include="MeshProcessor.h" />
     <ClInclude Include="MeshletSet.h" />
+    <ClInclude Include="SDKMesh.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\ReadMe.docx" />

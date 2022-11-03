@@ -7,11 +7,10 @@ REM This command sets a few specific variables to drive the build
 if DEFINED VSInstallDir (goto :vs_install_dir_defined)
 
 if %1.==vspreview. goto :define_vs2022_preview
-if %1.==vs2017. goto :define_vs2017_install_dir
 if %1.==vs2019. goto :define_vs2019_install_dir
 if %1.==vs2022. goto :define_vs2022_install_dir
 
-echo "Usage: setenv {vs2017 | vs2019 | vs2022 | vspreview} [GDK edition] [extracted GDK path]"
+echo "Usage: setenv {vs2019 | vs2022 | vspreview} [GDK edition] [extracted GDK path]"
 exit /b 0
 
 REM ****************************************************************************************************
@@ -83,32 +82,9 @@ goto :vs_install_dir_defined
 @echo Couldn't figure out your Visual 2022 installation directory (need to use Visual Studio 2022 Enterprise, Professional, or Build Tools)
 exit /b 1
 
-REM ****************************************************************************************************
-REM VSInstallDir for Visual Studio 2017
-REM ****************************************************************************************************
-:define_vs2017_install_dir
-if NOT EXIST "%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Enterprise\" goto :vs2017_install_dir_professional
-SET VSInstallDir=%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Enterprise\
-goto :vs_install_dir_defined
-
-:vs2017_install_dir_professional
-if NOT EXIST "%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Professional\" goto :vs2017_install_dir_buildtools
-SET VSInstallDir=%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Professional\
-goto :vs_install_dir_defined
-
-:vs2017_install_dir_buildtools
-if NOT EXIST "%ProgramFiles(x86)%\Microsoft Visual Studio\2017\BuildTools\" goto :vs2017_install_dir_unknown
-SET VSInstallDir=%ProgramFiles(x86)%\Microsoft Visual Studio\2017\BuildTools\
-goto :vs_install_dir_defined
-
-:vs2017_install_dir_unknown
-@echo Couldn't figure out your Visual 2017 installation directory (need to use Visual Studio 2017 Enterprise, Professional, or Build Tools)
-exit /b 1
-
 :vs_install_dir_defined
 
 if EXIST "%VSInstallDir%MSBuild\Current\Bin\MSBuild.exe" (set "PATH=%VSInstallDir%MSBuild\Current\Bin;%PATH%")
-if EXIST "%VSInstallDir%MSBuild\15.0\Bin\MSBuild.exe" (set "PATH=%VSInstallDir%MSBuild\15.0\Bin;%PATH%")
 
 REM ****************************************************************************************************
 REM Pick a folder for the extracted content (do not use a deep path or you will hit _MAX_PATH issues)

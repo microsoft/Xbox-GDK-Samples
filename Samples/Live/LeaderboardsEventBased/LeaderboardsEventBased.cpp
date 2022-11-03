@@ -31,6 +31,13 @@ void Sample::QueryLeaderboards(
 {
     XblSocialGroupType queryGroupType = isGlobalLeaderboard ? XblSocialGroupType::None : XblSocialGroupType::People;
 
+    if (!m_liveResources->GetLiveContext())
+    {
+        m_resultConsole->Clear();
+        m_resultConsole->WriteLine(L"No user is signed in.");
+        return;
+    }
+
     m_logConsole->Clear();
     m_logConsole->Format(L"** Query Leaderboard: %S / Stat: %S / Global: %lu\n", leaderboardName.c_str(), statName.c_str(), isGlobalLeaderboard);
 
@@ -135,47 +142,6 @@ void Sample::ProcessLeaderboardResults(XAsyncBlock *async)
     }
 }
 
-
-void Sample::RenderLeaderboardsResults(LeaderboardsQueryContext *ctx)
-{
-    std::stringstream ss;
-
-    if (ctx->page == 0)
-    {
-        // render header columns
-        ss << std::setw(8) << "Rank"; ss << std::setw(0) << " |";
-        ss << std::setw(16) << "Gamer Tag";
-
-        for (size_t i = 0; i < ctx->result->columnsCount; i++)
-        {
-            ss << std::setw(0) << " |";
-            ss << std::setw(i == 0 ? 32 : 18) << ctx->result->columns[i].statName;
-        }
-        ss << std::endl;
-    }
-
-    // render all rows
-    for (size_t i = 0; i < ctx->result->rowsCount; i++)
-    {
-        ss << std::setw(8) << ctx->result->rows[i].rank; ss << std::setw(0) << " |";
-        ss << std::setw(16) << ctx->result->rows[i].gamertag;
-        for (size_t j = 0; j < ctx->result->rows[i].columnValuesCount; j++)
-        {
-            ss << std::setw(0) << " |";
-            ss << std::setw(j == 0 ? 32 : 18) << ctx->result->rows[i].columnValues[j];
-        }
-
-        if (i + 1 < ctx->result->rowsCount) { ss << std::endl; }
-    }
-
-    if(ctx->page == 0)
-    {
-        m_resultConsole->Clear();
-    }
-
-    m_resultConsole->WriteLine(DX::Utf8ToWide(ss.str()).c_str());
-}
-
 // Queries an individual statistic for the current user
 void Sample::QueryStatistics(const std::string &statName)
 {
@@ -206,7 +172,7 @@ void Sample::QueryStatistics(const std::string &statName)
         hr = XblUserStatisticsGetSingleUserStatisticResultSize(async, &size);
         if (SUCCEEDED(hr))
         {
-            buffer.reserve(size);
+            buffer.resize(size);
             hr = XblUserStatisticsGetSingleUserStatisticResult(async, size, buffer.data(), &result, &size);
             if (SUCCEEDED(hr))
             {
@@ -239,24 +205,6 @@ void Sample::QueryStatistics(const std::string &statName)
     }
 }
 
-void Sample::RenderStatisticsResult(XblUserStatisticsResult *res)
-{
-    std::stringstream ss;
-
-    for (uint32_t i = 0; i < res->serviceConfigStatisticsCount; i++)
-    {
-        for (uint32_t j = 0; j < res->serviceConfigStatistics[i].statisticsCount; j++)
-        {
-            ss << std::setw(20) << res->serviceConfigStatistics[i].statistics[j].statisticName;
-            ss << std::setw(12) << res->serviceConfigStatistics[i].statistics[j].statisticType;
-            ss << std::setw(12) << res->serviceConfigStatistics[i].statistics[j].value;
-            ss << std::endl;
-        }
-    }
-
-    m_resultConsole->Clear();
-    m_resultConsole->WriteLine(DX::Utf8ToWide(ss.str()).c_str());
-}
 
 // Simulate a play session
 void Sample::PlayGame()
@@ -276,100 +224,7 @@ void Sample::PlayGame()
     }
 }
 
-void Sample::SetupUI()
-{
-    using namespace ATG;
-
-    wchar_t result[MAX_PATH];
-    DX::FindMediaFile(result, MAX_PATH, L".\\Assets\\SampleUI.csv");
-    m_ui->LoadLayout(result, L".\\Assets\\");
-
-    s_mainPanel = m_ui->FindPanel<IPanel>(c_sampleUIPanel);
-
-    s_labels.emplace(c_pageTitleText, m_ui->FindControl<TextLabel>(c_sampleUIPanel, c_pageTitleLabel));
-    s_labels.emplace(c_pageDescText, m_ui->FindControl<TextLabel>(c_sampleUIPanel, c_modeLabel));
-    s_labels.emplace(c_leaderboardType, m_ui->FindControl<TextLabel>(c_sampleUIPanel, c_leaderboardType));
-
-    auto statsMaze = m_ui->FindControl<Button>(c_sampleUIPanel, c_statsMaze);
-    statsMaze->SetCallback([this](IPanel*, IControl*)
-        {
-            QueryStatistics(s_statNames[StatName::Maze]);
-        });
-
-    auto statsCave = m_ui->FindControl<Button>(c_sampleUIPanel, c_statsCave);
-    statsCave->SetCallback([this](IPanel*, IControl*)
-        {
-            QueryStatistics(s_statNames[StatName::Cave]);
-        });
-
-    auto statsVoid = m_ui->FindControl<Button>(c_sampleUIPanel, c_statsVoid);
-    statsVoid->SetCallback([this](IPanel*, IControl*)
-        {
-            QueryStatistics(s_statNames[StatName::Void]);
-        });
-
-    auto statsMuseum = m_ui->FindControl<Button>(c_sampleUIPanel, c_statsMuseum);
-    statsMuseum->SetCallback([this](IPanel*, IControl*)
-        {
-            QueryStatistics(s_statNames[StatName::Museum]);
-        });
-
-    auto & statsPage = s_uiPages[SamplePage::QueryStats];
-    statsPage.buttons.emplace(c_statsMaze, statsMaze);
-    statsPage.buttons.emplace(c_statsCave, statsCave);
-    statsPage.buttons.emplace(c_statsVoid, statsVoid);
-    statsPage.buttons.emplace(c_statsMuseum, statsMuseum);
-
-    // Leaderboards
-
-    auto ldrMaze = m_ui->FindControl<Button>(c_sampleUIPanel, c_ldrMaze);
-    ldrMaze->SetCallback([this](IPanel*, IControl*)
-        {
-            QueryLeaderboards(s_ldrNames[LeaderboardName::MostTraveledMaze], s_statNames[StatName::Maze], s_isLeaderboardGlobal, nullptr, 0);
-        });
-
-    auto ldrCave = m_ui->FindControl<Button>(c_sampleUIPanel, c_ldrCave);
-    ldrCave->SetCallback([this](IPanel*, IControl*)
-        {
-            QueryLeaderboards(s_ldrNames[LeaderboardName::MostTraveledCave], s_statNames[StatName::Cave], s_isLeaderboardGlobal, nullptr, 0);
-        });
-
-    auto ldrVoid = m_ui->FindControl<Button>(c_sampleUIPanel, c_ldrVoid);
-    ldrVoid->SetCallback([this](IPanel*, IControl*)
-        {
-            QueryLeaderboards(s_ldrNames[LeaderboardName::MostTraveledVoid], s_statNames[StatName::Void], s_isLeaderboardGlobal, nullptr, 0);
-        });
-
-    auto ldrMuseum = m_ui->FindControl<Button>(c_sampleUIPanel, c_ldrMuseum);
-    ldrMuseum->SetCallback([this](IPanel*, IControl*)
-        {
-            QueryLeaderboards(s_ldrNames[LeaderboardName::MostTraveledMuseum], s_statNames[StatName::Museum], s_isLeaderboardGlobal, nullptr, 0);
-        });
-
-    auto ldrItems = m_ui->FindControl<Button>(c_sampleUIPanel, c_ldrItems);
-    ldrItems->SetCallback([this](IPanel*, IControl*)
-        {
-            QueryLeaderboards(s_ldrNames[LeaderboardName::MostItemsFound], s_statNames[StatName::MostFoundItems], s_isLeaderboardGlobal, c_additionalColumns, _countof(c_additionalColumns));
-        });
-
-    auto ldrLost = m_ui->FindControl<Button>(c_sampleUIPanel, c_ldrLost);
-    ldrLost->SetCallback([this](IPanel*, IControl*)
-        {
-            QueryLeaderboards(s_ldrNames[LeaderboardName::LeastTimesLost], s_statNames[StatName::AreaExploredLeastTimesLost], s_isLeaderboardGlobal, c_additionalColumns, _countof(c_additionalColumns));
-        });
-
-    auto & ldrPage = s_uiPages[SamplePage::QueryLeaderboards];
-    ldrPage.buttons.emplace(c_ldrMaze, ldrMaze);
-    ldrPage.buttons.emplace(c_ldrCave, ldrCave);
-    ldrPage.buttons.emplace(c_ldrVoid, ldrVoid);
-    ldrPage.buttons.emplace(c_ldrMuseum, ldrMuseum);
-    ldrPage.buttons.emplace(c_ldrItems, ldrItems);
-    ldrPage.buttons.emplace(c_ldrLost, ldrLost);
-
-
-    SetPage(SamplePage::QueryLeaderboards);
-}
-
+#pragma region UI Related Methods
 void Sample::SetPage(SamplePage page)
 {
     assert(page < SamplePage::PageCount);
@@ -396,6 +251,93 @@ void Sample::SetPage(SamplePage page)
     s_mainPanel->Show();
 }
 
+static void FormatLeaderboardHeader(std::stringstream& ss, const XblLeaderboardResult* res)
+{
+    // render header columns
+    uint32_t length = 0;
+    ss << std::setw(8) << "Rank" << " |";
+    ss << std::setw(16) << "Gamer Tag";
+    length += (8 + 2 + 16);
+
+    for (size_t i = 0; i < res->columnsCount; i++)
+    {
+        ss << " |";
+        ss << std::setw(i == 0 ? 32 : 18) << res->columns[i].statName;
+        length += (i == 0 ? 32 : 18) + 2;
+    }
+    ss << std::endl;
+
+    std::string border;
+    border.insert(0, length, '-');
+    ss << border << std::endl;
+}
+
+static void FormatLeaderboardRows(std::stringstream& ss, const XblLeaderboardResult* res)
+{
+    for (size_t i = 0; i < res->rowsCount; i++)
+    {
+        ss << std::setw(8) << res->rows[i].rank; ss << std::setw(0) << " |";
+        ss << std::setw(16) << res->rows[i].gamertag;
+        for (size_t j = 0; j < res->rows[i].columnValuesCount; j++)
+        {
+            ss << std::setw(0) << " |";
+            ss << std::setw(j == 0 ? 32 : 18) << res->rows[i].columnValues[j];
+        }
+
+        if (i + 1 < res->rowsCount) { ss << std::endl; }
+    }
+}
+
+void Sample::RenderStatisticsResult(XblUserStatisticsResult* res)
+{
+    std::stringstream ss;
+
+    // Format stats header
+    ss << std::setw(40) << "Stat Name" << " |";
+    ss << std::setw(12) << "Stat Type" << " |";
+    ss << std::setw(20) << "Stat Value";
+    ss << std::endl;
+    ss << "----------------------------------------------------------------------------";
+    ss << std::endl;
+
+    // Format stats result
+    for (uint32_t i = 0; i < res->serviceConfigStatisticsCount; i++)
+    {
+        for (uint32_t j = 0; j < res->serviceConfigStatistics[i].statisticsCount; j++)
+        {
+            ss << std::setw(40) << res->serviceConfigStatistics[i].statistics[j].statisticName << " |";
+            ss << std::setw(12) << res->serviceConfigStatistics[i].statistics[j].statisticType << " |";
+            ss << std::setw(20) << res->serviceConfigStatistics[i].statistics[j].value;
+            ss << std::endl;
+        }
+    }
+
+    m_resultConsole->Clear();
+    m_resultConsole->WriteLine(DX::Utf8ToWide(ss.str()).c_str());
+}
+
+void Sample::RenderLeaderboardsResults(LeaderboardsQueryContext* ctx)
+{
+    std::stringstream ss;
+
+    if (ctx->page == 0)
+    {
+        // render header columns
+        FormatLeaderboardHeader(ss, ctx->result);
+    }
+
+    // render all rows
+    FormatLeaderboardRows(ss, ctx->result);
+
+    if (ctx->page == 0)
+    {
+        m_resultConsole->Clear();
+    }
+
+    m_resultConsole->WriteLine(DX::Utf8ToWide(ss.str()).c_str());
+}
+#pragma endregion
+
 Sample::Sample() noexcept(false) :
     m_frame(0),
     m_mainAsyncQueue(nullptr)
@@ -404,10 +346,11 @@ Sample::Sample() noexcept(false) :
         XTaskQueueCreate(XTaskQueueDispatchMode::ThreadPool, XTaskQueueDispatchMode::Manual, &m_mainAsyncQueue)
     );
 
+    // Renders only 2D, so no need for a depth buffer.
     m_deviceResources = std::make_unique<DX::DeviceResources>();
     m_deviceResources->RegisterDeviceNotify(this);
     m_liveResources = std::make_shared<ATG::LiveResources>(m_mainAsyncQueue);
-    m_liveInfoHUD = std::make_unique<ATG::LiveInfoHUD>("Event-Based Leaderboards");
+    m_liveInfoHUD = std::make_unique<ATG::LiveInfoHUD>("Event-based Leaderboards");
     m_resultConsole = std::make_unique<DX::TextConsoleImage>();
     m_logConsole = std::make_unique<DX::TextConsoleImage>();
 
@@ -494,6 +437,99 @@ void Sample::Initialize(HWND window, int width, int height)
         }, this);
 }
 
+void Sample::SetupUI()
+{
+    using namespace ATG;
+    m_ui->LoadLayout(L".\\Assets\\SampleUI.csv", L".\\Assets\\");
+
+    s_mainPanel = m_ui->FindPanel<IPanel>(c_sampleUIPanel);
+
+    s_labels.emplace(c_pageTitleText, m_ui->FindControl<TextLabel>(c_sampleUIPanel, c_pageTitleLabel));
+    s_labels.emplace(c_pageDescText, m_ui->FindControl<TextLabel>(c_sampleUIPanel, c_modeLabel));
+    s_labels.emplace(c_leaderboardType, m_ui->FindControl<TextLabel>(c_sampleUIPanel, c_leaderboardType));
+
+    // Stats
+
+    auto statsMaze = m_ui->FindControl<Button>(c_sampleUIPanel, c_statsMaze);
+    statsMaze->SetCallback([this](IPanel*, IControl*)
+        {
+            QueryStatistics(s_statNames[StatName::Maze]);
+        });
+
+    auto statsCave = m_ui->FindControl<Button>(c_sampleUIPanel, c_statsCave);
+    statsCave->SetCallback([this](IPanel*, IControl*)
+        {
+            QueryStatistics(s_statNames[StatName::Cave]);
+        });
+
+    auto statsVoid = m_ui->FindControl<Button>(c_sampleUIPanel, c_statsVoid);
+    statsVoid->SetCallback([this](IPanel*, IControl*)
+        {
+            QueryStatistics(s_statNames[StatName::Void]);
+        });
+
+    auto statsMuseum = m_ui->FindControl<Button>(c_sampleUIPanel, c_statsMuseum);
+    statsMuseum->SetCallback([this](IPanel*, IControl*)
+        {
+            QueryStatistics(s_statNames[StatName::Museum]);
+        });
+
+    auto& statsPage = s_uiPages[SamplePage::QueryStats];
+    statsPage.buttons.emplace(c_statsMaze, statsMaze);
+    statsPage.buttons.emplace(c_statsCave, statsCave);
+    statsPage.buttons.emplace(c_statsVoid, statsVoid);
+    statsPage.buttons.emplace(c_statsMuseum, statsMuseum);
+
+    // Leaderboards
+
+    auto ldrMaze = m_ui->FindControl<Button>(c_sampleUIPanel, c_ldrMaze);
+    ldrMaze->SetCallback([this](IPanel*, IControl*)
+        {
+            QueryLeaderboards(s_ldrNames[LeaderboardName::MostTraveledMaze], s_statNames[StatName::Maze], s_isLeaderboardGlobal, nullptr, 0);
+        });
+
+    auto ldrCave = m_ui->FindControl<Button>(c_sampleUIPanel, c_ldrCave);
+    ldrCave->SetCallback([this](IPanel*, IControl*)
+        {
+            QueryLeaderboards(s_ldrNames[LeaderboardName::MostTraveledCave], s_statNames[StatName::Cave], s_isLeaderboardGlobal, nullptr, 0);
+        });
+
+    auto ldrVoid = m_ui->FindControl<Button>(c_sampleUIPanel, c_ldrVoid);
+    ldrVoid->SetCallback([this](IPanel*, IControl*)
+        {
+            QueryLeaderboards(s_ldrNames[LeaderboardName::MostTraveledVoid], s_statNames[StatName::Void], s_isLeaderboardGlobal, nullptr, 0);
+        });
+
+    auto ldrMuseum = m_ui->FindControl<Button>(c_sampleUIPanel, c_ldrMuseum);
+    ldrMuseum->SetCallback([this](IPanel*, IControl*)
+        {
+            QueryLeaderboards(s_ldrNames[LeaderboardName::MostTraveledMuseum], s_statNames[StatName::Museum], s_isLeaderboardGlobal, nullptr, 0);
+        });
+
+    auto ldrItems = m_ui->FindControl<Button>(c_sampleUIPanel, c_ldrItems);
+    ldrItems->SetCallback([this](IPanel*, IControl*)
+        {
+            QueryLeaderboards(s_ldrNames[LeaderboardName::MostItemsFound], s_statNames[StatName::MostFoundItems], s_isLeaderboardGlobal, c_additionalColumns, _countof(c_additionalColumns));
+        });
+
+    auto ldrLost = m_ui->FindControl<Button>(c_sampleUIPanel, c_ldrLost);
+    ldrLost->SetCallback([this](IPanel*, IControl*)
+        {
+            QueryLeaderboards(s_ldrNames[LeaderboardName::LeastTimesLost], s_statNames[StatName::AreaExploredLeastTimesLost], s_isLeaderboardGlobal, c_additionalColumns, _countof(c_additionalColumns));
+        });
+
+    auto& ldrPage = s_uiPages[SamplePage::QueryLeaderboards];
+    ldrPage.buttons.emplace(c_ldrMaze, ldrMaze);
+    ldrPage.buttons.emplace(c_ldrCave, ldrCave);
+    ldrPage.buttons.emplace(c_ldrVoid, ldrVoid);
+    ldrPage.buttons.emplace(c_ldrMuseum, ldrMuseum);
+    ldrPage.buttons.emplace(c_ldrItems, ldrItems);
+    ldrPage.buttons.emplace(c_ldrLost, ldrLost);
+
+
+    SetPage(SamplePage::QueryLeaderboards);
+}
+
 #pragma region Frame Update
 // Executes basic render loop.
 void Sample::Tick()
@@ -517,6 +553,7 @@ void Sample::Update(DX::StepTimer const& timer)
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Update");
 
     float elapsedTime = float(timer.GetElapsedSeconds());
+    bool updateUIKeyboardState = true;
 
     auto pad = m_gamePad->GetState(0);
     auto kb = m_keyboard->GetState();
@@ -548,25 +585,26 @@ void Sample::Update(DX::StepTimer const& timer)
         }
     }
 
-    if (m_gamePadButtons.x == GamePad::ButtonStateTracker::RELEASED || m_keyboardButtons.IsKeyReleased(Keyboard::Keys::E))
+    if (m_gamePadButtons.x == GamePad::ButtonStateTracker::RELEASED || m_keyboardButtons.IsKeyReleased(Keyboard::Keys::Space))
     {
+        updateUIKeyboardState = false;
         PlayGame();
     }
 
-    if ((m_gamePadButtons.y == GamePad::ButtonStateTracker::RELEASED || m_keyboardButtons.IsKeyReleased(Keyboard::Keys::T)) && s_activePage == SamplePage::QueryLeaderboards)
+    if ((m_gamePadButtons.y == GamePad::ButtonStateTracker::RELEASED || m_keyboardButtons.IsKeyReleased(Keyboard::Keys::F1)) && s_activePage == SamplePage::QueryLeaderboards)
     {
         s_isLeaderboardGlobal = !s_isLeaderboardGlobal;
         SetPage((SamplePage)s_activePage);
     }
 
-    if (m_gamePadButtons.rightShoulder == GamePad::ButtonStateTracker::RELEASED || m_keyboardButtons.IsKeyReleased(Keyboard::Keys::Right))
+    if (m_gamePadButtons.rightShoulder == GamePad::ButtonStateTracker::RELEASED || m_keyboardButtons.IsKeyReleased(Keyboard::Keys::F2))
     {
         // next page
         s_activePage = (++s_activePage) % SamplePage::PageCount;
         SetPage((SamplePage)s_activePage);
     }
 
-    if (m_gamePadButtons.leftShoulder == GamePad::ButtonStateTracker::RELEASED || m_keyboardButtons.IsKeyReleased(Keyboard::Keys::Left))
+    if (m_gamePadButtons.leftShoulder == GamePad::ButtonStateTracker::RELEASED)
     {
         // previous page
         --s_activePage;
@@ -575,7 +613,10 @@ void Sample::Update(DX::StepTimer const& timer)
     }
 
     m_ui->Update(elapsedTime, pad);
-    m_ui->Update(elapsedTime, *m_mouse, *m_keyboard);
+    if (!kb.IsKeyDown(Keyboard::Space) && updateUIKeyboardState) // Space normally also selects buttons, but for this sample, it should just send events
+    {
+        m_ui->Update(elapsedTime, *m_mouse, *m_keyboard);
+    }
     m_liveInfoHUD->Update(m_deviceResources->GetCommandQueue());
 
     // Process any completed tasks
@@ -607,7 +648,6 @@ void Sample::Render()
     ID3D12DescriptorHeap* heap = m_resourceDescriptors->Heap();
     commandList->SetDescriptorHeaps(1, &heap);
 
-    m_liveInfoHUD->Update(m_deviceResources->GetCommandQueue());
     m_liveInfoHUD->Render(commandList);
 
     m_logConsole->Render(commandList);
@@ -630,16 +670,14 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
-    auto dsvDescriptor = m_deviceResources->GetDepthStencilView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
 
-    commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
+    commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, nullptr);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
-    commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -674,7 +712,7 @@ void Sample::OnResuming()
 
 void Sample::OnWindowMoved()
 {
-    auto r = m_deviceResources->GetOutputSize();
+    auto const r = m_deviceResources->GetOutputSize();
     m_deviceResources->WindowSizeChanged(r.right, r.bottom);
 }
 
@@ -790,7 +828,7 @@ void Sample::CreateWindowSizeDependentResources()
     RECT currentScreenRect = m_deviceResources->GetOutputSize();
     auto viewport = m_deviceResources->GetScreenViewport();
 
-    m_liveInfoHUD->SetViewport(m_deviceResources->GetScreenViewport());
+    m_liveInfoHUD->SetViewport(viewport);
 
     RECT scaledGlb = ScaleRect(LAYOUT_SIZE, currentScreenRect, LOG_RECT);
     m_logConsole->SetWindow(scaledGlb, false);
@@ -805,6 +843,9 @@ void Sample::CreateWindowSizeDependentResources()
 
 void Sample::OnDeviceLost()
 {
+    m_resultConsole->ReleaseDevice();
+    m_logConsole->ReleaseDevice();
+    m_ui->ReleaseDevice();
     m_graphicsMemory.reset();
     m_liveInfoHUD->ReleaseDevice();
     m_resourceDescriptors.reset();

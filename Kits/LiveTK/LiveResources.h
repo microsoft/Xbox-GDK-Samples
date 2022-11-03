@@ -74,9 +74,7 @@ namespace ATG
         void HandleError(HRESULT error);
         void InitializeXboxServices();
 
-#ifdef _GAMING_XBOX
-        HANDLE                             m_networkConnectivityChangedHandle;
-#endif
+        XTaskQueueRegistrationToken        m_networkConnectivityChangedToken;
         bool                               m_isNetworkAvailable;
 
         bool                               m_autoManageUser;

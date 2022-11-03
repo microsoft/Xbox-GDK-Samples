@@ -14,7 +14,7 @@
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "cacheVariables": {
         "SDKVersion": "10.0.19041.0",
-        "XdkEditionTarget": "220300",
+        "XdkEditionTarget": "221000",
         "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}"
       }
     },

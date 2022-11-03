@@ -198,7 +198,7 @@ Texture::Texture(ID3D11Device* device, const wchar_t* fileName, bool forceSRGB) 
         ThrowIfFailed(
             CreateDDSTextureFromFileEx( device, fileName, 0,
                 D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0,
-                forceSRGB, 
+                forceSRGB ? DDS_LOADER_FORCE_SRGB : DDS_LOADER_DEFAULT, 
                 resource.GetAddressOf(), resourceView.GetAddressOf(), &m_alphaMode)
         );
     }

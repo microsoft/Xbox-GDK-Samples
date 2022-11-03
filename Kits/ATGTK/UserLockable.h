@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include <cassert>
 #include <chrono>
 
 namespace ATG
@@ -33,7 +32,7 @@ namespace ATG
         UserEventLockable(const UserEventLockable&) = delete;
         UserEventLockable& operator=(const UserEventLockable&) = delete;
 
-        UserEventLockable(bool initialState = true) : m_threadsWaiting(0), m_eventFlag(static_cast<uint32_t> (initialState ? 1 : 0)) {  }
+        UserEventLockable(bool initialState = true) noexcept : m_threadsWaiting(0), m_eventFlag(initialState ? 1 : 0u) {  }
         UserEventLockable(UserEventLockable&& rhs) = default;
         ~UserEventLockable() { }
 
@@ -143,7 +142,7 @@ namespace ATG
         UserSemaphoreLockable(UserSemaphoreLockable&& rhs) = delete;
         UserSemaphoreLockable& operator=(const UserSemaphoreLockable&&) = delete;
 
-        UserSemaphoreLockable(uint32_t intialValue) : m_threadsWaiting(0), m_semaphore(intialValue) {  }
+        UserSemaphoreLockable(uint32_t intialValue) noexcept : m_threadsWaiting(0), m_semaphore(intialValue) {  }
         ~UserSemaphoreLockable() { }
 
         void lock()
@@ -173,6 +172,7 @@ namespace ATG
                 const uint32_t newValue = currentValue - 1;                         // locking only reduces the count by 1
                 if (InterlockedCompareExchange(&m_semaphore, newValue, currentValue) == currentValue)
                     return true;
+                _mm_pause();
             }
         }
 
@@ -185,6 +185,7 @@ namespace ATG
                 const uint32_t newValue = currentValue + releaseCount;
                 if (InterlockedCompareExchange(&m_semaphore, newValue, currentValue) == currentValue)
                     break;
+                _mm_pause();
             }
 
             if (m_threadsWaiting)           // only call WakeByAddress if there is a high probability of a thread actually waiting.
@@ -241,29 +242,100 @@ namespace ATG
 
     //////////////////////////////////////////////////////////////////////////
     ///
-    /// Event object that attempts to stay at user level as much as possible
-    ///   The object will only go to kernel mode if there is actually a thread waiting on the event
-    ///   This allows for the maximum performance.
+    /// UserBarrier object that attempts to stay at user level as much as possible
+    ///   The object will only go to kernel mode if requested and it's waiting for more threads to hit the barrier
+    ///   The enterBarrier call can be set to pure spin to allow all waiting threads to exit as soon as possible
+    ///	  If threads spin care must be taken that no other threads are running on the same core to avoid extremely long waits
+    ///   The threadOwner template parameter provides protection so only a single thread can call reset, the initial thread to enter the barrier
+    ///
+    //////////////////////////////////////////////////////////////////////////
+    template<bool threadOwner>
+    class UserBarrier
+    {
+    private:
+        std::atomic<uint64_t> m_barrierValue;
+        uint64_t m_initialValue;
+        UserEventLockable<true> m_blockEvent;
+        uint32_t m_threadOwnerID;
+
+    public:
+        /// The UserBarrier cannot be copied
+        UserBarrier(const UserBarrier&) = delete;
+        UserBarrier& operator=(const UserBarrier&) = delete;
+
+        UserBarrier(uint64_t initialValue = 1) noexcept : m_barrierValue(initialValue), m_initialValue(initialValue), m_blockEvent(false), m_threadOwnerID(0) { }
+        UserBarrier(UserBarrier&& rhs) = default;
+        ~UserBarrier() { }
+
+        void clearOwner() { m_threadOwnerID = 0; }
+
+        bool enterBarrier(bool block = false)
+        {
+            assert(m_barrierValue != 0);
+            if (threadOwner)
+            {
+                if (m_threadOwnerID == 0)
+                    m_threadOwnerID = GetCurrentThreadId();
+            }
+            uint64_t myValue = m_barrierValue.fetch_sub(1);
+            if (myValue == 1)
+            {
+                m_blockEvent.SetEvent();
+                return true;
+            }
+            else if (block)
+            {
+                m_blockEvent.lock();
+            }
+            else
+            {
+                while (m_barrierValue.load() != 0) { _mm_pause(); }
+            }
+            return false;
+        }
+
+        bool reset() { return reset(m_initialValue); }
+        bool reset(uint64_t newValue)
+        {
+            if (threadOwner)
+            {
+                if (m_threadOwnerID != GetCurrentThreadId())
+                {
+                    if (InterlockedCompareExchange(&m_threadOwnerID, GetCurrentThreadId(), 0) != 0)
+                        return false;
+                }
+            }
+            m_initialValue = newValue;
+            m_barrierValue = newValue;
+            m_blockEvent.SetEvent();
+            m_blockEvent.ResetEvent();
+            return true;
+        }
+    };
+
+    //////////////////////////////////////////////////////////////////////////
+    ///
+    /// MonitorXMwaitXLockable object that attempts to stay at user level as much as possible
+    ///   Spin lock implemented using the monitorx/mwaitx instructions
+    ///   This class will stay in user-mode the entire time
     ///   Interfaces follow the C++11 TimeLockable concept
-    ///   The template parameter on manual reset is used to allow the compiler to optimize out the conditional
     ///
     //////////////////////////////////////////////////////////////////////////
 #if !defined(__clang__) || defined (__MWAITX__)     //NOTE: Clang explictly only includes this intrinsic if __MWAITX__ is defined and it needs to be defined in the pch file before the x86intrin.h is included
 #pragma warning (push)
-#pragma warning (disable: 4324)
+#pragma warning (disable: 4324)         // structure was padded
     class alignas(64) MonitorXMwaitXLockable
     {
     private:
         uint32_t m_eventFlag;                           // the current event flag, interlocks are used on it for thread safety
         uint32_t m_owningThread;
-        char unusedForceSizeBlock[56];                  // force size to be 64 bytes
 
     public:
-        /// The UserSemaphoreLockable cannot be copied
+        /// The MonitorXMwaitXLockable cannot be copied
         MonitorXMwaitXLockable(const MonitorXMwaitXLockable&) = delete;
         MonitorXMwaitXLockable& operator=(const MonitorXMwaitXLockable&) = delete;
 
-        MonitorXMwaitXLockable(bool initialState = false) : m_eventFlag(static_cast<uint32_t> (initialState ? 1 : 0)), m_owningThread(0), unusedForceSizeBlock{ } {  }
+        MonitorXMwaitXLockable(bool initialState = false) noexcept : m_eventFlag(initialState ? 1u : 0), m_owningThread(0) {}
         MonitorXMwaitXLockable(MonitorXMwaitXLockable&& rhs) = default;
         ~MonitorXMwaitXLockable() { }
 
@@ -334,78 +406,5 @@ namespace ATG
         }
     };
 #pragma warning (pop)
-#endif  // !__clang__ || __MWAITX__
-
-    //////////////////////////////////////////////////////////////////////////
-    ///
-    /// Event object that attempts to stay at user level as much as possible
-    ///   The object will only go to kernel mode if there is actually a thread waiting on the event
-    ///   This allows for the maximum performance.
-    ///   Interfaces follow the C++11 TimeLockable concept
-    ///   The template parameter on manual reset is used to allow the compiler to optimize out the conditional
-    ///
-    //////////////////////////////////////////////////////////////////////////
-    template<bool threadOwner>
-    class UserBarrier
-    {
-    private:
-        std::atomic<uint64_t> m_barrierValue;
-        uint64_t m_initialValue;
-        UserEventLockable<true> m_blockEvent;
-        uint32_t m_threadOwnerID;
-
-    public:
-        /// The UserBarrier cannot be copied
-        UserBarrier(const UserBarrier&) = delete;
-        UserBarrier& operator=(const UserBarrier&) = delete;
-
-        UserBarrier(uint64_t initialValue = 1) : m_barrierValue(initialValue), m_initialValue(initialValue), m_blockEvent(false), m_threadOwnerID(0) { }
-        UserBarrier(UserBarrier&& rhs) = default;
-        ~UserBarrier() { }
-
-        void clearOwner() { m_threadOwnerID = 0; }
-
-        bool enterBarrier(bool block = false)
-        {
-            assert(m_barrierValue != 0);
-            if (threadOwner)
-            {
-                if (m_threadOwnerID == 0)
-                    m_threadOwnerID = GetCurrentThreadId();
-            }
-            uint64_t myValue = m_barrierValue.fetch_sub(1);
-            if (myValue == 1)
-            {
-                m_blockEvent.SetEvent();
-                return true;
-            }
-            else if (block)
-            {
-                m_blockEvent.lock();
-            }
-            else
-            {
-                while (m_barrierValue.load() != 0);
-            }
-            return false;
-        }
-
-        bool reset() { return reset(m_initialValue); }
-        bool reset(uint64_t newValue)
-        {
-            if (threadOwner)
-            {
-                if (m_threadOwnerID != GetCurrentThreadId())
-                {
-                    if (InterlockedCompareExchange(&m_threadOwnerID, GetCurrentThreadId(), 0) != 0)
-                        return false;
-                }
-            }
-            m_initialValue = newValue;
-            m_barrierValue = newValue;
-            m_blockEvent.SetEvent();
-            m_blockEvent.ResetEvent();
-            return true;
-        }
-    };
+#endif
 }

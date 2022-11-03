@@ -20,7 +20,7 @@ using Microsoft::WRL::ComPtr;
 
 namespace
 {
-    const float c_RotationGain = 0.004f; // sensitivity adjustment
+    constexpr float c_RotationGain = 0.004f; // sensitivity adjustment
 }
 
 Sample::Sample() noexcept(false) :
@@ -69,6 +69,10 @@ void Sample::Initialize(HWND window)
 void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
+
+    // For PresentX presentation loops, the wait for the origin event
+    // should be just before input is processed.
+    m_deviceResources->WaitForOrigin();
 
     m_timer.Tick([&]()
     {

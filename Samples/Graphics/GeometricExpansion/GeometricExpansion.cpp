@@ -15,7 +15,7 @@
 
 #pragma warning( disable : 4324 4365 )
 
-extern void ExitSample();
+extern void ExitSample() noexcept;
 
 using namespace ATG;
 using namespace DirectX;
@@ -47,20 +47,10 @@ namespace
     constexpr float c_springCoeff = 4.0f;
     constexpr float c_dragFactor = 1.0f;
     constexpr float c_initialSpeed = 3.0f;
-
-#ifdef _GAMING_DESKTOP
-    static const GUID D3D12ExperimentalShaderModelsID = { /* 76f5573e-f13a-40f5-b297-81ce9e18933f */
-        0x76f5573e,
-        0xf13a,
-        0x40f5,
-        { 0xb2, 0x97, 0x81, 0xce, 0x9e, 0x18, 0x93, 0x3f }
-    };
-#endif
 }
 
 Sample::Sample() noexcept(false)
-    : m_deviceResources(std::make_unique<DX::DeviceResources>())
-    , m_displayWidth(0)
+    : m_displayWidth(0)
     , m_displayHeight(0)
     , m_frame(0)
     , m_spawnRate(c_spawnRate)
@@ -76,6 +66,7 @@ Sample::Sample() noexcept(false)
         ValueRange(c_minLifetime, c_maxLifetime), 
         ValueRange(c_minSize, c_maxSize))
 {
+    m_deviceResources = std::make_unique<DX::DeviceResources>();
     m_deviceResources->RegisterDeviceNotify(this);
 }
 
@@ -90,12 +81,10 @@ Sample::~Sample()
 // Initialize the Direct3D resources required to run.
 void Sample::Initialize(HWND window, int width, int height)
 {
-#ifdef _GAMING_DESKTOP
-    D3D12EnableExperimentalFeatures(1, &D3D12ExperimentalShaderModelsID, nullptr, nullptr);
-#endif
-
     m_gamePad = std::make_unique<GamePad>();
+
     m_keyboard = std::make_unique<Keyboard>();
+
     m_mouse = std::make_unique<Mouse>();
     m_mouse->SetWindow(window);
 
@@ -113,6 +102,10 @@ void Sample::Initialize(HWND window, int width, int height)
 void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
+
+#ifdef _GAMING_XBOX
+    m_deviceResources->WaitForOrigin();
+#endif
 
     m_timer.Tick([&]()
     {
@@ -283,8 +276,8 @@ void Sample::Render()
     auto commandList = m_deviceResources->GetCommandList();
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Render");
 
-    ID3D12DescriptorHeap* heaps[] = { m_srvPile->Heap() };
-    commandList->SetDescriptorHeaps(1, heaps);
+    auto heaps = m_srvPile->Heap();
+    commandList->SetDescriptorHeaps(1, &heaps);
     
     m_particleSystem.Draw(commandList, m_graphicsMemory.get());
 
@@ -306,16 +299,16 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
-    auto dsvDescriptor = m_deviceResources->GetDepthStencilView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
     commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -326,7 +319,7 @@ void Sample::DrawHUD(ID3D12GraphicsCommandList* commandList)
 {
     m_hudBatch->Begin(commandList);
 
-    auto safe = SimpleMath::Viewport::ComputeTitleSafeArea(m_displayWidth, m_displayHeight);
+    auto const safe = SimpleMath::Viewport::ComputeTitleSafeArea(m_displayWidth, m_displayHeight);
 
     wchar_t textBuffer[128] = {};
     XMFLOAT2 textPos = XMFLOAT2(float(safe.left), float(safe.top));
@@ -398,14 +391,6 @@ void Sample::DrawHUD(ID3D12GraphicsCommandList* commandList)
 
 #pragma region Message Handlers
 // Message handlers
-void Sample::OnActivated()
-{
-}
-
-void Sample::OnDeactivated()
-{
-}
-
 void Sample::OnSuspending()
 {
     m_deviceResources->Suspend();
@@ -421,7 +406,7 @@ void Sample::OnResuming()
 
 void Sample::OnWindowMoved()
 {
-    auto r = m_deviceResources->GetOutputSize();
+    auto const r = m_deviceResources->GetOutputSize();
     m_deviceResources->WindowSizeChanged(r.right, r.bottom);
 }
 
@@ -434,7 +419,7 @@ void Sample::OnWindowSizeChanged(int width, int height)
 }
 
 // Properties
-void Sample::GetDefaultSize(int& width, int& height) const
+void Sample::GetDefaultSize(int& width, int& height) const noexcept
 {
     width = 1280;
     height = 720;
@@ -469,8 +454,6 @@ void Sample::CreateDeviceDependentResources()
 
     // Create heap
     m_srvPile = std::make_unique<DescriptorPile>(device,
-        D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV,
-        D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE,
         128,
         DescriptorHeapIndex::SRV_Count);
 
@@ -480,7 +463,7 @@ void Sample::CreateDeviceDependentResources()
     resourceUpload.Begin();
 
     // HUD
-    auto backBufferRts = RenderTargetState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
+    const RenderTargetState backBufferRts(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
     auto spritePSD = SpriteBatchPipelineStateDescription(backBufferRts, &CommonStates::AlphaBlend);
     m_hudBatch = std::make_unique<SpriteBatch>(device, resourceUpload, spritePSD);
 
@@ -503,7 +486,7 @@ void Sample::CreateDeviceDependentResources()
 // Allocate all memory resources that change on a window SizeChanged event.
 void Sample::CreateWindowSizeDependentResources()
 {
-    RECT size = m_deviceResources->GetOutputSize();
+    auto const size = m_deviceResources->GetOutputSize();
     m_displayWidth = size.right - size.left;
     m_displayHeight = size.bottom - size.top;
 
@@ -524,6 +507,11 @@ void Sample::CreateWindowSizeDependentResources()
 
 void Sample::OnDeviceLost()
 {
+    m_particleSystem.ReleaseDevice();
+    m_hudBatch.reset();
+    m_smallFont.reset();
+    m_ctrlFont.reset();
+    m_srvPile.reset();
     m_graphicsMemory.reset();
 }
 

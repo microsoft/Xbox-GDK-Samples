@@ -10,103 +10,109 @@
 #include <cassert>
 #include <cstdint>
 
-#include "intrin.h"
+#include <intrin.h>
 
 namespace ATG
 {
-	double CalcRDTSCPFrequency();
-	extern double s_rdtscpFrequencySecs;
-	extern double s_rdtscpFrequencyMS;
-	extern double s_rdtscpFrequencyUS;
+    double CalcRDTSCPFrequency();
+    extern double s_rdtscpFrequencySecs;
+    extern double s_rdtscpFrequencyMS;
+    extern double s_rdtscpFrequencyUS;
+    extern double s_rdtscpFrequencyNS;
 
-	class RDTSCPStopWatch
-	{
-	private:
-		uint64_t m_startTimeRaw;
-		uint64_t m_stopTimeRaw;
-		bool m_running;
+    class RDTSCPStopWatch
+    {
+    private:
+        uint64_t m_startTimeRaw;
+        uint64_t m_stopTimeRaw;
+        bool m_running;
 
-	public:
+    public:
 
-		RDTSCPStopWatch() :m_startTimeRaw(0), m_stopTimeRaw(0), m_running(false) {}
-		void Start()
-		{
-			assert(!m_running);
-			m_running = true;
-			m_stopTimeRaw = 0;
-			uint32_t tempAux;
-			m_startTimeRaw = __rdtscp(&tempAux);
-		}
-		double Stop()
-		{
-			assert(m_running);
-			uint32_t tempAux;
-			m_stopTimeRaw = __rdtscp(&tempAux);
-			m_running = false;
-			return GetTotalSeconds();
-		}
+        RDTSCPStopWatch() :m_startTimeRaw(0), m_stopTimeRaw(0), m_running(false) {}
 
-		void Reset()
-		{
-			m_startTimeRaw = 0;
-			m_stopTimeRaw = 0;
-		}
+        bool IsRunning() const noexcept { return m_running; }
+        void Start()
+        {
+            assert(!m_running);
+            m_running = true;
+            m_stopTimeRaw = 0;
+            uint32_t tempAux;
+            m_startTimeRaw = __rdtscp(&tempAux);
+        }
+        double Stop()
+        {
+            assert(m_running);
+            uint32_t tempAux;
+            m_stopTimeRaw = __rdtscp(&tempAux);
+            m_running = false;
+            return GetTotalSeconds();
+        }
 
-		static double GetFrequencyMilliseconds() { return s_rdtscpFrequencyMS; }
+        void Reset()
+        {
+            uint32_t tempAux;
+            m_startTimeRaw = __rdtscp(&tempAux);
+            m_stopTimeRaw = 0;
+        }
 
-		double GetCurrentSeconds() const
-		{
-			assert(m_running);
-			uint32_t tempAux;
-			uint64_t temp;
-			temp = __rdtscp(&tempAux);
-			return static_cast<double>(temp - m_startTimeRaw) / s_rdtscpFrequencySecs;
-		}
-		double GetCurrentMilliseconds() const
-		{
-			assert(m_running);
-			uint32_t tempAux;
-			uint64_t temp;
-			temp = __rdtscp(&tempAux);
-			return static_cast<double>(temp - m_startTimeRaw) / s_rdtscpFrequencyMS;
-		}
-		double GetCurrentMicroseconds() const
-		{
-			assert(m_running);
-			uint32_t tempAux;
-			uint64_t temp;
-			temp = __rdtscp(&tempAux);
-			return static_cast<double>(temp - m_startTimeRaw) / s_rdtscpFrequencyUS;
-		}
-		uint64_t GetCurrentRaw() const
-		{
-			assert(m_running);
-			uint32_t tempAux;
-			uint64_t temp;
-			temp = __rdtscp(&tempAux);
-			return temp - m_startTimeRaw;
-		}
+        static double GetFrequencyMilliseconds() { return s_rdtscpFrequencyMS; }
+        static double GetFrequencyMicroseconds() { return s_rdtscpFrequencyUS; }
+        static double GetFrequencyNanoseconds() { return s_rdtscpFrequencyNS; }
 
-		double GetTotalSeconds() const
-		{
-			assert(!m_running);
-			return static_cast<double>(m_stopTimeRaw - m_startTimeRaw) / s_rdtscpFrequencySecs;
-		}
-		double GetTotalMilliseconds() const
-		{
-			assert(!m_running);
-			return static_cast<double>(m_stopTimeRaw - m_startTimeRaw) / s_rdtscpFrequencyMS;
-		}
-		double GetTotalMicroseconds() const
-		{
-			assert(!m_running);
-			return static_cast<double>(m_stopTimeRaw - m_startTimeRaw) / s_rdtscpFrequencyUS;
-		}
+        double GetCurrentSeconds() const
+        {
+            assert(m_running);
+            uint32_t tempAux;
+            uint64_t temp;
+            temp = __rdtscp(&tempAux);
+            return static_cast<double>(temp - m_startTimeRaw) / s_rdtscpFrequencySecs;
+        }
+        double GetCurrentMilliseconds() const
+        {
+            assert(m_running);
+            uint32_t tempAux;
+            uint64_t temp;
+            temp = __rdtscp(&tempAux);
+            return static_cast<double>(temp - m_startTimeRaw) / s_rdtscpFrequencyMS;
+        }
+        double GetCurrentMicroseconds() const
+        {
+            assert(m_running);
+            uint32_t tempAux;
+            uint64_t temp;
+            temp = __rdtscp(&tempAux);
+            return static_cast<double>(temp - m_startTimeRaw) / s_rdtscpFrequencyUS;
+        }
+        uint64_t GetCurrentRaw() const
+        {
+            assert(m_running);
+            uint32_t tempAux;
+            uint64_t temp;
+            temp = __rdtscp(&tempAux);
+            return temp - m_startTimeRaw;
+        }
 
-		uint64_t GetTotalRaw() const
-		{
-			assert(!m_running);
-			return m_stopTimeRaw - m_startTimeRaw;
-		}
-	};
+        double GetTotalSeconds() const
+        {
+            assert(!m_running);
+            return static_cast<double>(m_stopTimeRaw - m_startTimeRaw) / s_rdtscpFrequencySecs;
+        }
+        double GetTotalMilliseconds() const
+        {
+            assert(!m_running);
+            return static_cast<double>(m_stopTimeRaw - m_startTimeRaw) / s_rdtscpFrequencyMS;
+        }
+        double GetTotalMicroseconds() const
+        {
+            assert(!m_running);
+            return static_cast<double>(m_stopTimeRaw - m_startTimeRaw) / s_rdtscpFrequencyUS;
+        }
+
+        uint64_t GetTotalRaw() const
+        {
+            assert(!m_running);
+            return m_stopTimeRaw - m_startTimeRaw;
+        }
+    };
 }

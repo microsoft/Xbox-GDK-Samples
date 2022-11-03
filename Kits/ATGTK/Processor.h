@@ -21,6 +21,8 @@ namespace ATG
 
     using ProcessorGroupID = uint16_t;
     using ProcessorNumaNodeID = uint32_t;
+    constexpr uint32_t JAGUAR_PROCESSOR_FAMILY = 0x16;
+    constexpr uint32_t ZEN2_PROCESSOR_FAMILY = 0x17;
 
     struct UniqueProcessorMask
     {
@@ -86,7 +88,7 @@ namespace ATG
     uint32_t GetTotalNumCores(ProcessorGroupID groupID = 0);
     uint64_t GetAvailableCoresMask(ProcessorGroupID groupID = 0);
 
-    inline bool IsHyperThreaded(ProcessorGroupID groupID = 0) { return GetNumPhysicalCores(groupID) < GetNumLogicalCores(groupID); }
+    inline bool IsSMTSupported(ProcessorGroupID groupID = 0) { return GetNumPhysicalCores(groupID) < GetNumLogicalCores(groupID); }
     double GetRDTSCPFrequencySeconds();
     double GetRDTSCPFrequencyMilliseconds();
     double GetRDTSCPFrequencyMicroseconds();
@@ -94,6 +96,7 @@ namespace ATG
     const std::wstring& GetProcessorName();										// will be the override value which is initially the true name
     const std::wstring& GetTrueProcessorName();
     void SetProcessorName(const std::wstring& overrideName);
+    uint32_t GetProcessorFamily();
 
     uint64_t GetLogicalProcessorMask(uint64_t coreMask);						// adjusts the mask to cover all logical processors
 

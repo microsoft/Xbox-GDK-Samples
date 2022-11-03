@@ -32,7 +32,7 @@ void Sample::PerformTests()
         return;
     }
 
-    if (ATG::IsHyperThreaded())
+    if (ATG::IsSMTSupported())
     {
         coreMasks.push_back(0x01);
         coreMasks.push_back(0x03);
@@ -75,7 +75,7 @@ void Sample::PerformTests()
         }
     }
 #else
-    if (ATG::IsHyperThreaded())
+    if (ATG::IsSMTSupported())
     {
         coreMasks.push_back(0x01);
         coreMasks.push_back(0x03);
@@ -177,9 +177,9 @@ void Sample::Tick()
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %I64u", m_frame);
 
     m_timer.Tick([&]()
-    {
-        Update(m_timer);
-    });
+        {
+            Update(m_timer);
+        });
 
     Render();
 

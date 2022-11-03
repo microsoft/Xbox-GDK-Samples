@@ -14,7 +14,7 @@
 
 #include "Shared.h"
 
-extern void ExitSample();
+extern void ExitSample() noexcept;
 
 using namespace ATG;
 using namespace DirectX;
@@ -27,15 +27,15 @@ namespace
     //--------------------------------------
     // Definitions
 
-    static const wchar_t* s_sampleTitle = L"Meshlet Cull";
+    const wchar_t* s_sampleTitle = L"Meshlet Cull";
 
-    static const wchar_t* s_meshletCullAsFilename = L"MeshletCullAS.cso";
-    static const wchar_t* s_meshletDrawMsFilename = L"BasicMeshletMS.cso";
-    static const wchar_t* s_basicdrawPsFilename = L"BasicMeshletPS.cso";
+    const wchar_t* s_meshletCullAsFilename = L"MeshletCullAS.cso";
+    const wchar_t* s_meshletDrawMsFilename = L"BasicMeshletMS.cso";
+    const wchar_t* s_basicdrawPsFilename = L"BasicMeshletPS.cso";
     
-    static const wchar_t* s_meshFilenames[] = 
+    const wchar_t* s_meshFilenames[] =
     {
-#if _GAMING_DESKTOP
+#ifdef _GAMING_DESKTOP
         L"ATGDragon\\Dragon_LOD0.sdkmesh",
         L"ATGDragon\\Dragon_LOD1.sdkmesh",
         L"ATGDragon\\Dragon_LOD2.sdkmesh",
@@ -184,9 +184,8 @@ namespace
 }
 
 
-Sample::Sample() noexcept(false) 
-    : m_deviceResources(std::make_unique<DX::DeviceResources>())
-    , m_displayWidth(0)
+Sample::Sample() noexcept(false)
+    : m_displayWidth(0)
     , m_displayHeight(0)
     , m_frame(0)
     , m_countsData(nullptr)
@@ -198,6 +197,9 @@ Sample::Sample() noexcept(false)
     , m_highlightedIndex(uint32_t(-1))
     , m_selectedIndex(uint32_t(-1))
 {
+    m_deviceResources = std::make_unique<DX::DeviceResources>(
+        DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_D32_FLOAT, 2,
+        DX::DeviceResources::c_AmplificationShaders);
     m_deviceResources->RegisterDeviceNotify(this);
 }
 
@@ -247,6 +249,10 @@ void Sample::Tick()
 void Sample::Update(DX::StepTimer const& timer)
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Update");
+
+#ifdef _GAMING_XBOX
+    m_deviceResources->WaitForOrigin();
+#endif
 
     // Input-agnostic app controls
     struct AppControls
@@ -487,16 +493,16 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
-    auto dsvDescriptor = m_deviceResources->GetDepthStencilView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
     commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -713,7 +719,7 @@ void Sample::OnResuming()
 
 void Sample::OnWindowMoved()
 {
-    auto r = m_deviceResources->GetOutputSize();
+    auto const r = m_deviceResources->GetOutputSize();
     m_deviceResources->WindowSizeChanged(r.right, r.bottom);
 }
 
@@ -737,7 +743,7 @@ void Sample::GetDefaultSize(int& width, int& height) const
 // These are the resources that depend on the device.
 void Sample::CreateDeviceDependentResources()
 {
-    auto device = static_cast<ID3D12Device2*>(m_deviceResources->GetD3DDevice());
+    auto device = m_deviceResources->GetD3DDevice();
 
     // Check for Shader Model 6.5 and Mesh Shader feature support
 #ifdef _GAMING_DESKTOP
@@ -973,7 +979,7 @@ void Sample::CreateDeviceDependentResources()
 // Allocate all memory resources that change on a window SizeChanged event.
 void Sample::CreateWindowSizeDependentResources()
 {
-    RECT size = m_deviceResources->GetOutputSize();
+    auto const size = m_deviceResources->GetOutputSize();
     m_displayWidth = static_cast<uint32_t>(size.right - size.left);
     m_displayHeight = static_cast<uint32_t>(size.bottom - size.top);
 
@@ -1069,7 +1075,7 @@ void Sample::Pick()
     auto& mesh = model.Model->meshes[0]->opaqueMeshParts[0];
     assert(mesh->vbDecl != nullptr);
 
-    uint8_t* vbMem = static_cast<uint8_t*>(mesh->vertexBuffer.Memory());
+    auto vbMem = static_cast<uint8_t*>(mesh->vertexBuffer.Memory());
     uint32_t stride = mesh->vertexStride;
     uint32_t offset = ComputeSemanticByteOffset(*mesh->vbDecl, "SV_Position");
     assert(offset != uint32_t(-1));

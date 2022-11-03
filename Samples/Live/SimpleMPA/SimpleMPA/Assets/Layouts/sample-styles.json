@@ -1,0 +1,110 @@
+{
+  "$schema": "https://atgsamplessa.blob.core.windows.net/uitkschema/latest/layout.schema.json",
+  "styles": [
+    {
+      "classId": "TextStyle",
+      "id": "button_label_style",
+      "verticalAlign": "middle",
+      "horizontalAlign": "center",
+      "colorUsage": "override",
+      "color": [ 0, 0, 0, 1 ]
+    },
+    {
+      "classId": "TextStyle",
+      "id": "panel_label_style",
+      "font": "Assets/Fonts/SegoeUI",
+      "size": 24,
+      "weight": "bold",
+      "verticalAlign": "top",
+      "horizontalAlign": "left",
+      "colorUsage": "override",
+      "color": [ 192, 192, 192, 1 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "background_style",
+      "colorUsage": "override",
+      "color": "#2f2f2f"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Basic_Panel_Style",
+      "colorUsage": "override",
+      "color": [ 0, 0, 192, 1.0 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Basic_Slider_Style",
+      "colorUsage": "override",
+      "color": "#808080"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Selected_Pip",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "texture": "Assets/Textures/Selected.dds"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Unselected_Pip",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "texture": "Assets/Textures/Unselected.dds"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Basic_Twist_Style",
+      "colorUsage": "override",
+      "color": [ 0, 192, 192, 1.0 ],
+      "verticalAlign": "middle",
+      "horizontalAlign": "center"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Basic_Console_Style",
+      "font": "Assets/Fonts/SegoeUI",
+      "size": 24,
+      "weight": "bold",
+      "colorUsage": "override",
+      "color": [ 192, 192, 192, 1.0 ],
+      "verticalAlign": "top",
+      "horizontalAlign": "left"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Basic_Button_Style",
+      "inheritsFromId": "Basic_Panel_Style",
+      "colorUsage": "setExisting",
+      "color": "#E9DDC3",
+      "padding": [ 20, 0, 0, 0 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Focused_Button_Style",
+      "inheritsFromId": "Basic_Button_Style",
+      "color": "#FFFFFF",
+      "texture": "Assets/Textures/focused_button.png",
+      "spriteType": "nineSliced",
+      "innerUVExtents": [ 0.25, 0.25, 0.75, 0.75 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Disabled_Button_Style",
+      "inheritsFromId": "Basic_Button_Style",
+      "color": "#E9DDC340"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Pressed_Button_Style",
+      "inheritsFromId": "Basic_Button_Style",
+      "color": "#B7CDBB"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Hovered_Button_Style",
+      "inheritsFromId": "Basic_Button_Style",
+      "color": "#8CC6C7"
+    }
+  ]
+}

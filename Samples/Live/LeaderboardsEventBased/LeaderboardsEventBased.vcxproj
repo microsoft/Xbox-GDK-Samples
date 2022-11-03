@@ -500,7 +500,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config" />
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="..\..\..\Media\Textures\GamerPic.png" />
@@ -585,9 +585,10 @@
     <None Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="Assets\SampleUI.csv">
+    <CopyFileToFolders Include="Assets\SampleUI.csv">
       <DeploymentContent>true</DeploymentContent>
-    </None>
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
     <None Include="LeaderboardsEventBased_ReadMe.docx" />
     <None Include="LeaderboardsEventBased_ReadMe_ja-jp.docx" />
     <None Include="LeaderboardsEventBased_ReadMe_ko-kr.docx" />

@@ -20,6 +20,12 @@ public:
     Sample() noexcept(false);
     ~Sample();
 
+    Sample(Sample&&) = default;
+    Sample& operator= (Sample&&) = default;
+
+    Sample(Sample const&) = delete;
+    Sample& operator= (Sample const&) = delete;
+
     // Initialization and management
     void Initialize(HWND window, int width, int height);
 
@@ -31,15 +37,15 @@ public:
     void OnDeviceRestored() override;
 
     // Messages
-    void OnActivated();
-    void OnDeactivated();
+    void OnActivated() {}
+    void OnDeactivated() {}
     void OnSuspending();
     void OnResuming();
     void OnWindowMoved();
     void OnWindowSizeChanged(int width, int height);
 
     // Properties
-    void GetDefaultSize(int& width, int& height) const;
+    void GetDefaultSize(int& width, int& height) const noexcept;
 
 private:
     void Update(DX::StepTimer const& timer);

@@ -1,0 +1,155 @@
+{
+  "styles": [
+    {
+      "id": "menu_title_text_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": "#primary_color",
+      "font": "Assets/Fonts/segoeui_36pt_sharp",
+      "size": 48,
+      "horizontalAlign": "left",
+      "verticalAlign": "middle"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "ATG_Logo_Style",
+      "spriteStyle":
+      {
+        "colorUsage": "override",
+        "color": [195, 181, 152, 1.0],
+        "texture": "Assets/Textures/LOGO_ATG_SMALL.png"
+      }
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "User_Info_Panel_Style",
+      "horizontalAlign": "right",
+      "colorUsage": "override",
+      "color": [ 160, 50, 50, 1.0 ]
+    },
+    {
+      "id": "gamerpic_style",
+      "classId": "SpriteStyle"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Gamer_Tag_Style",
+      "colorUsage": "override",
+      "color": [195, 181, 152, 1.0],
+      "verticalAlign": "top",
+      "horizontalAlign": "middle"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Description_Label",
+      "colorUsage": "override",
+      "color": "#primary_color_opaque76",
+      "horizontalAlign": "center",
+      "verticalAlign": "middle"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Sample_Text_Style",
+      "colorUsage": "override",
+      "color": [195, 181, 152, 1.0],
+      "verticalAlign": "bottom",
+      "horizontalAlign": "left"
+    },
+    {
+      "id": "button_default_style",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#primary_color_opaque10"
+    },
+    {
+      "id": "button_focused_style",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#primary_color_opaque30"
+    },
+    {
+      "id": "button_pressed_style",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#primary_color_opaque76"
+    },
+    {
+      "id": "button_default_text_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": "#primary_color_opaque80",
+      "font": "Assets/Fonts/segoeuisb_27pt_sharp",
+      "size": 36,
+      "weight": "bold",
+      "horizontalAlign": "center",
+      "verticalAlign": "middle"
+    },
+    {
+      "id": "button_focused_text_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": "#black",
+      "font": "Assets/Fonts/segoeuisb_27pt_sharp",
+      "size": 36,
+      "weight": "bold",
+      "horizontalAlign": "center",
+      "verticalAlign": "middle"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Dark_Panel_Style",
+      "colorUsage": "override",
+      "color": [ 38, 38, 38, 1.0 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Invisible_Panel_Style",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 0.0 ]
+    },
+
+    {
+      "classId": "SpriteStyle",
+      "id": "Slider_Button_Style",
+      "colorUsage": "setExisting",
+      "color": [ 255, 255, 255, 1.0 ],
+      "texture": "Assets/Textures/Slider_Unfocused.png"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Slider_Focused_Button_Style",
+      "inheritsFromId": "Slider_Button_Style",
+      "texture": "Assets/Textures/Slider_Focused.png"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Slider_Disabled_Button_Style",
+      "inheritsFromId": "Slider_Button_Style",
+      "texture": "Assets/Textures/Slider_Disabled.png"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Slider_Pressed_Button_Style",
+      "inheritsFromId": "Slider_Button_Style",
+      "texture": "Assets/Textures/Slider_Pressed.png"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Slider_Hovered_Button_Style",
+      "inheritsFromId": "Slider_Button_Style",
+      "texture": "Assets/Textures/Slider_Hovered.png"
+    },
+
+    {
+      "classId": "TextStyle",
+      "id": "Small_Text_Style",
+      "colorUsage": "override",
+      "color": [195, 181, 152, 1.0],
+      "font": "Assets/Fonts/segoeui_24pt_sharp",
+      "size": 32,
+      "legendFont": "Assets/Fonts/XboxOneControllerLegendSmall",
+      "verticalAlign": "top",
+      "horizontalAlign": "left"
+    }
+  ]
+}

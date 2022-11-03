@@ -22,11 +22,11 @@ using namespace ATG::UITK;
 using Microsoft::WRL::ComPtr;
 
 // TODO: Replace with your server's host name
-#define MY_HOST "Xsts2018Sample.azurewebsites.net"
+#define MY_HOST "GameServiceSample.azurewebsites.net"
 
 // TODO: Update this if you are using your own consumable
 //       to test b2b consume functionality of the
-//       Xsts 2018 Server Sample.
+//       Game Service Sample.
 #define TEST_CONSUMABLE_STOREID "9NSV8487K9JR"
 
 namespace
@@ -47,8 +47,6 @@ namespace
     L"https://" MY_HOST "/api/collections/RetryPendingConsumes"
     L"https://" MY_HOST "/api/getGDPRList";
     */
-
-
 }
 
 Sample::Sample() noexcept(false) :

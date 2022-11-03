@@ -51,6 +51,13 @@ class Sample
 public:
 
     Sample() noexcept(false);
+    ~Sample() = default;
+
+    Sample(Sample&&) = default;
+    Sample& operator= (Sample&&) = default;
+
+    Sample(Sample const&) = delete;
+    Sample& operator= (Sample const&) = delete;
 
     // Initialization and management
     void Initialize(HWND window);
@@ -61,9 +68,11 @@ public:
     // Messages
     void OnSuspending();
     void OnResuming();
+    void OnConstrained() {}
+    void OnUnConstrained() {}
 
     // Properties
-    bool RequestHDRMode() const { return m_deviceResources ? (m_deviceResources->GetDeviceOptions() & DX::DeviceResources::c_EnableHDR) != 0 : false; }
+    bool RequestHDRMode() const noexcept { return m_deviceResources ? (m_deviceResources->GetDeviceOptions() & DX::DeviceResources::c_EnableHDR) != 0 : false; }
 
 private:
 
@@ -140,10 +149,10 @@ private:
     Microsoft::WRL::ComPtr<ID3D12Resource>      m_fbcTexture;
     void*                                       m_fbcTextureMem;
 
-    std::vector<size_t>							m_srvFBC;
+    std::vector<size_t>                         m_srvFBC;
 
-    DX::GPUComputeTimer							m_gpuTimer;
-    DX::CPUTimer								m_cpuTimer;
+    DX::GPUComputeTimer                         m_gpuTimer;
+    DX::CPUTimer                                m_cpuTimer;
 
     Microsoft::WRL::ComPtr<ID3D12CommandAllocator>      m_computeAllocator;
     Microsoft::WRL::ComPtr<ID3D12CommandQueue>          m_computeCommandQueue;

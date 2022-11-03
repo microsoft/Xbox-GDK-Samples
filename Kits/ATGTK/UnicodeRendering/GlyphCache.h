@@ -11,11 +11,9 @@
 
 #include "ATGColors.h"
 
-namespace DirectX {
-    class SpriteBatch;
-    class DescriptorHeap;
-    enum SpriteEffects : uint32_t;
-}
+#include "DescriptorHeap.h"
+#include "SpriteBatch.h"
+
 
 namespace ATG
 {

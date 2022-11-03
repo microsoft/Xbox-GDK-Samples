@@ -21,9 +21,13 @@ namespace DX
     class DeviceResources
     {
     public:
+        static constexpr unsigned int c_ReverseDepth         = 0x1;
+        static constexpr unsigned int c_AmplificationShaders = 0x2;
+
         DeviceResources(DXGI_FORMAT backBufferFormat = DXGI_FORMAT_B8G8R8A8_UNORM,
                         DXGI_FORMAT depthBufferFormat = DXGI_FORMAT_D32_FLOAT,
-                        UINT backBufferCount = 2) noexcept(false);
+                        UINT backBufferCount = 2,
+                        unsigned int flags = 0) noexcept(false);
         ~DeviceResources();
 
         DeviceResources(DeviceResources&&) = default;
@@ -44,8 +48,9 @@ namespace DX
         void Suspend();
         void Resume();
         void WaitForGpu() noexcept;
-
-#ifdef _GAMING_DESKTOP
+#ifdef _GAMING_XBOX
+        void WaitForOrigin();
+#else
         void UpdateColorSpace();
 #endif
 
@@ -73,6 +78,7 @@ namespace DX
         D3D12_RECT                  GetScissorRect() const noexcept        { return m_scissorRect; }
         UINT                        GetCurrentFrameIndex() const noexcept  { return m_backBufferIndex; }
         UINT                        GetBackBufferCount() const noexcept    { return m_backBufferCount; }
+        unsigned int                GetDeviceOptions() const noexcept      { return m_options; }
 
         CD3DX12_CPU_DESCRIPTOR_HANDLE GetRenderTargetView() const noexcept
         {
@@ -98,12 +104,13 @@ namespace DX
         }
 #endif
     private:
-        void MoveToNextFrame();
 #ifdef _GAMING_XBOX
         void RegisterFrameEvents();
 #else
+        void MoveToNextFrame();
         void GetAdapter(IDXGIAdapter1** ppAdapter);
 #endif
+
         static constexpr size_t MAX_BACK_BUFFER_COUNT = 3;
 
         UINT                                                m_backBufferIndex;
@@ -160,6 +167,9 @@ namespace DX
         HWND                                                m_window;
         D3D_FEATURE_LEVEL                                   m_d3dFeatureLevel;
         RECT                                                m_outputSize;
+
+        // DeviceResources options (see flags above)
+        unsigned int                                        m_options;
 
         // The IDeviceNotify can be held directly as it owns the DeviceResources.
         IDeviceNotify*                                      m_deviceNotify;

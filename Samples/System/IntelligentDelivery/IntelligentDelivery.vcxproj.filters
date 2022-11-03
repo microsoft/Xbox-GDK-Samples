@@ -184,13 +184,13 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame_Scarlett.Config" />
+    <MGCCompile Include="MicrosoftGameConfig_Scarlett.mgc" />
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame_XboxOne.Config" />
+    <MGCCompile Include="MicrosoftGameConfig_XboxOne.mgc" />
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame_PC.Config" />
+    <MGCCompile Include="MicrosoftGameConfig_PC.mgc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\feature4.png">
