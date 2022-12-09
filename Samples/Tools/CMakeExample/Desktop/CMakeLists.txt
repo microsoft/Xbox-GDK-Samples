@@ -1,7 +1,7 @@
 ﻿# Copyright (c) Microsoft Corporation.
 # Licensed under the MIT License.
 
-cmake_minimum_required (VERSION 3.13)
+cmake_minimum_required (VERSION 3.20)
 
 project(CMakeExampleDesktop
   DESCRIPTION "CMake example for a Microsoft GDK Gaming.Desktop.x64 project"
@@ -87,25 +87,16 @@ add_custom_command(TARGET mgccompile
 
 add_dependencies(${PROJECT_NAME} mgccompile shaders)
 
-# Use Warning Level 4
-string(REPLACE "/W3 " "/W4 " CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
-string(REPLACE "/W3 " "/W4 " CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG})
-string(REPLACE "/W3 " "/W4 " CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE})
-
-# If not using typeid or dynamic_cast, we can disable RTTI to save binary size
-string(REPLACE "/GR " "/GR- " CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
-string(REPLACE "/GR " "/GR- " CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG})
-string(REPLACE "/GR " "/GR- " CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE})
-
 target_compile_definitions(${PROJECT_NAME} PRIVATE ${Console_Defines})
 
 # Recommended compiler switches:
 # /EHsc (C++ exception handling)
 # /fp:fast (Fast floating-point optimizations)
+# /GR (RTTI): if not using typeid or dynamic_cast, we can disable RTTI to save binary size using /GR-
 # /GS (buffer security check)
 # /Gy (enable function-level linking)
 # /Zi (Debug Information Format)
-target_compile_options(${PROJECT_NAME} PRIVATE /fp:fast /GS /Gy)
+target_compile_options(${PROJECT_NAME} PRIVATE /W4 /GR- /fp:fast /GS /Gy)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE ${Console_Libs} Xbox::XSAPI Xbox::XCurl)
 # uuid.lib if using Windows Imaging Component (WIC) or other COM objects
@@ -117,9 +108,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE ${Console_Libs} Xbox::XSAPI Xbox::
 # /Yupch.h (Use Precompiled Header File)
 # /Fp (Name .pch file)
 # /FI (Name Force Include File)
-if (${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.16")
-    target_precompile_headers(${PROJECT_NAME} PRIVATE ../pch.h )
-endif()
+target_precompile_headers(${PROJECT_NAME} PRIVATE ../pch.h )
 
 target_link_options(${PROJECT_NAME} PRIVATE ${Console_LinkOptions})
 

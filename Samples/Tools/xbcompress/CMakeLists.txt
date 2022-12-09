@@ -3,10 +3,11 @@
 #
 # This is a development only tool. It is not supported for use on retail kits.
 
-cmake_minimum_required (VERSION 3.15)
+cmake_minimum_required (VERSION 3.20)
 
 project(xbcompress
   DESCRIPTION "Microsoft SZDD/KWAJ-style compression tool for Windows & Xbox"
+  HOMEPAGE_URL "https://github.com/microsoft/DirectXTK12/wiki/Compressing-assets"
   LANGUAGES CXX)
 
 if(NOT WIN32)
@@ -30,19 +31,9 @@ set(CMAKE_MSVC_RUNTIME_LIBRARY MultiThreaded)
 
 add_executable(${PROJECT_NAME} compresstool.cpp)
 
-# Use Warning Level 4
-string(REPLACE "/W3 " "/W4 " CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
-string(REPLACE "/W3 " "/W4 " CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG})
-string(REPLACE "/W3 " "/W4 " CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE})
-
-# Disable RTTI
-string(REPLACE "/GR " "/GR- " CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
-string(REPLACE "/GR " "/GR- " CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG})
-string(REPLACE "/GR " "/GR- " CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE})
-
 target_compile_definitions(${PROJECT_NAME} PRIVATE _CONSOLE _UNICODE UNICODE _WIN32_WINNT=0x0A00)
 
-target_compile_options(${PROJECT_NAME} PRIVATE /fp:fast /GS /Gy)
+target_compile_options(${PROJECT_NAME} PRIVATE /W4 /GR- /fp:fast /GS /Gy)
 
 # Don't link with kernel32.lib, etc.
 set(CMAKE_CXX_STANDARD_LIBRARIES "")
