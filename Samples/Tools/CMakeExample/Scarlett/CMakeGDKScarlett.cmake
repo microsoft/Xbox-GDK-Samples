@@ -249,12 +249,12 @@ set(MGCToolPath "${Console_SdkRoot}/bin")
 # _WINDOWS
 
 # Standard Debug vs. Release preprocessor definitions
+# (automatically defined by MSVC and MSVC-like compilers)
 # _DEBUG (Debug)
 # NDEBUG (Release without asserts)
-set(Console_Defines "$<$<CONFIG:DEBUG>:_DEBUG>" "$<$<CONFIG:RELEASE>:NDEBUG>")
 
 # Build as Unicode (see UTF-8 Everywhere article's Win32 recommendations)
-set(Console_Defines ${Console_Defines} _UNICODE UNICODE)
+set(Console_Defines _UNICODE UNICODE)
 
 # Game Core on Xbox preprocessor definitions
 set(Console_Defines ${Console_Defines} WIN32_LEAN_AND_MEAN _GAMING_XBOX WINAPI_FAMILY=WINAPI_FAMILY_GAMES)

@@ -1,7 +1,7 @@
 ﻿# Copyright (c) Microsoft Corporation.
 # Licensed under the MIT License.
 
-cmake_minimum_required (VERSION 3.13)
+cmake_minimum_required (VERSION 3.20)
 
 project(CMakeGDKExample
   DESCRIPTION "CMake example for a Microsoft GDK Gaming.*.x64 project"
@@ -63,11 +63,6 @@ foreach(FILE VertexShader.hlsl PixelShader.hlsl)
                      VERBATIM)
 endforeach(FILE)
 
-# Use Warning Level 4
-string(REPLACE "/W3 " "/W4 " CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
-string(REPLACE "/W3 " "/W4 " CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG})
-string(REPLACE "/W3 " "/W4 " CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE})
-
 add_executable(${PROJECT_NAME} WIN32 ${GAME_SOURCES} ${GAME_ASSETS})
 
 add_dependencies(${PROJECT_NAME} shaders)
@@ -83,10 +78,11 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE _UNICODE UNICODE)
 # Recommended compiler switches:
 # /EHsc (C++ exception handling)
 # /fp:fast (Fast floating-point optimizations)
+# /GR (RTTI): if not using typeid or dynamic_cast, we can disable RTTI to save binary size using /GR-
 # /GS (buffer security check)
 # /Gy (enable function-level linking)
 # /Zi (Debug Information Format)
-target_compile_options(${PROJECT_NAME} PRIVATE /fp:fast /GS /Gy)
+target_compile_options(${PROJECT_NAME} PRIVATE /W4 /GR- /fp:fast /GS /Gy)
 
 # /permissive- (C++ conformance mode enabled)
 # /Zc:__cplusplus (Enable updated __cplusplus macro)
@@ -118,9 +114,7 @@ elseif(CMAKE_VS_PLATFORM_NAME MATCHES "Gaming.Xbox.*.x64")
     endif()
 endif()
 
-if (${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.16")
-    target_precompile_headers(${PROJECT_NAME} PRIVATE pch.h)
-endif()
+target_precompile_headers(${PROJECT_NAME} PRIVATE pch.h)
 
 add_custom_command(
     TARGET ${PROJECT_NAME} POST_BUILD
@@ -128,9 +122,7 @@ add_custom_command(
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/PixelShader.cso $<TARGET_FILE_DIR:${PROJECT_NAME}>
   )
 
-if (${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.18")
-    set_property(TARGET ${PROJECT_NAME} PROPERTY VS_SOLUTION_DEPLOY ON)
-endif()
+set_property(TARGET ${PROJECT_NAME} PROPERTY VS_SOLUTION_DEPLOY ON)
 
 # Extension libraries
 # Xbox.Services.API.C Xbox.XCurl.API Xbox.Game.Chat.2.Cpp.API PlayFab.Multiplayer.Cpp PlayFab.Party.Cpp PlayFab.PartyXboxLive.Cpp

@@ -343,15 +343,20 @@ namespace
         PrintLogo();
 
         wprintf(L"Usage: %ls%ls <options> <files>\n", fname, ext);
-        wprintf(L"\n");
-        wprintf(L"   -r                  wildcard filename search is recursive\n");
-        wprintf(L"   -u                  uncompress files rather than compress\n");
-        wprintf(L"   -z                  compress with MSZIP rather than LZMS\n");
-        wprintf(L"   -l                  force output filename to lower case\n");
-        wprintf(L"   -y                  overwrite existing output file (if any)\n");
-        wprintf(L"   -nologo             suppress copyright message\n");
-        wprintf(L"   -timing             Display elapsed processing time\n");
-        wprintf(L"   -flist <filename>   use text file with a list of input files (one per line)\n\n");
+
+        static const wchar_t* const s_usage =
+            L"\n"
+            L"   -r                  wildcard filename search is recursive\n"
+            L"   -u                  uncompress files rather than compress\n"
+            L"   -z                  compress with MSZIP rather than LZMS\n"
+            L"   -l                  force output filename to lower case\n"
+            L"   -y                  overwrite existing output file (if any)\n"
+            L"   -nologo             suppress copyright message\n"
+            L"   -timing             Display elapsed processing time\n"
+            L"   -flist <filename>   use text file with a list of input files (one per line)\n"
+            "\n";
+
+        wprintf(L"%ls", s_usage);
     }
 
     const wchar_t* GetErrorDesc(HRESULT hr)
@@ -696,7 +701,7 @@ namespace
         auto_delete_file delonfail(hFile.get());
 
         DWORD bytesWritten;
-        if (!WriteFile(hFile.get(), expandedData.get(), fileSize, &bytesWritten, nullptr))
+        if (!WriteFile(hFile.get(), expandedData.get(), static_cast<DWORD>(fileSize), &bytesWritten, nullptr))
             return HRESULT_FROM_WIN32(GetLastError());
 
         if (bytesWritten != fileSize)

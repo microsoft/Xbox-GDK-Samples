@@ -5,7 +5,7 @@
 # Use of Direct3D is not supported, and the resulting EXE is not supported for retail.
 #
 
-cmake_minimum_required (VERSION 3.13)
+cmake_minimum_required (VERSION 3.20)
 
 project(CMakeXboxConsoleApp
   DESCRIPTION "CMake example for a Microsoft GDK 'console' project"
@@ -37,23 +37,14 @@ add_executable(${PROJECT_NAME} Main.cpp)
 target_include_directories(${PROJECT_NAME} PUBLIC ${Console_SdkIncludeRoot})
 target_link_directories(${PROJECT_NAME} PUBLIC ${VC_OneCore_LibPath} PUBLIC ${Console_SdkLibPath})
 
-# Use Warning Level 4
-string(REPLACE "/W3 " "/W4 " CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
-string(REPLACE "/W3 " "/W4 " CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG})
-string(REPLACE "/W3 " "/W4 " CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE})
-
-# If not using typeid or dynamic_cast, we can disable RTTI to save binary size
-string(REPLACE "/GR " "/GR- " CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
-string(REPLACE "/GR " "/GR- " CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG})
-string(REPLACE "/GR " "/GR- " CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE})
-
 # Visual C++ console projects set this symbol
 target_compile_definitions(${PROJECT_NAME} PRIVATE _CONSOLE)
 
 # See the CMakeExample for more information
 target_compile_definitions(${PROJECT_NAME} PRIVATE ${Console_Defines})
 
-target_compile_options(${PROJECT_NAME} PRIVATE /fp:fast /GS /Gy ${Console_ArchOptions})
+# If not using typeid or dynamic_cast, we can disable RTTI to save binary size
+target_compile_options(${PROJECT_NAME} PRIVATE /fp:fast /W4 /GR- /GS /Gy ${Console_ArchOptions})
 
 target_link_libraries(${PROJECT_NAME} PRIVATE ${Console_Libs})
 # optional extension libraries: Xbox::XSAPI Xbox::XCurl Xbox::GameChat2 Xbox::PlayFabMultiplayer Xbox::PlayFabParty Xbox::PlayFabPartyLIVE
