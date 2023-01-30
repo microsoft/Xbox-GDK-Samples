@@ -4,14 +4,14 @@ This repo contains game development samples written by the Microsoft Xbox Advanc
 
 * [Kits](/Kits) contains support code used by the samples
 * [Media](/Media) contains media files used by the samples
-* [Samples](../../../wiki/SampleList) contains samples
-  * [Audio](../../../wiki/SampleList#Audio)
-  * [IntroGraphics](../../../wiki/SampleList#Intro-Graphics)
-  * [Graphics](../../../wiki/SampleList#Graphics)
-  * [Live](../../../wiki/SampleList#Live)
-  * [System](../../../wiki/SampleList#System)
-  * [Tools](../../../wiki/SampleList#Tools)
-  * [xCloud](../../../wiki/SampleList#xCloud)
+* [Samples](../../wiki/SampleList) contains samples
+  * [Audio](../../wiki/SampleList#Audio)
+  * [IntroGraphics](../../wiki/SampleList#Intro-Graphics)
+  * [Graphics](../../wiki/SampleList#Graphics)
+  * [Live](../../wiki/SampleList#Live)
+  * [System](../../wiki/SampleList#System)
+  * [Tools](../../wiki/SampleList#Tools)
+  * [xCloud](../../wiki/SampleList#xCloud)
 
 # Requirements
 
@@ -38,4 +38,4 @@ For more ATG samples, see [DirectML Samples](https://github.com/microsoft/Direct
 
 ## Samples list by category
 
-[Samples List Wiki](../../../wiki/SampleList)
+[Samples List Wiki](../../wiki/SampleList)
