@@ -13,7 +13,7 @@
 #include "ReadData.h"
 
 // Setup Agility SDK exports: https://devblogs.microsoft.com/directx/gettingstarted-dx12agility/
-extern "C" { __declspec(dllexport) extern const UINT D3D12SDKVersion = 4; }
+extern "C" { __declspec(dllexport) extern const UINT D3D12SDKVersion = D3D12_SDK_VERSION; }
 extern "C" { __declspec(dllexport) extern const char* D3D12SDKPath = u8".\\D3D12\\"; }
 
 extern void ExitSample() noexcept;
@@ -83,6 +83,7 @@ Sample::Sample() noexcept(false) :
 {
     // Use gamma-correct rendering.
     m_deviceResources = std::make_unique<DX::DeviceResources>();
+    m_deviceResources->SetClearColor(ATG::ColorsLinear::Background);
 }
 
 // Initialize the Direct3D resources required to run.

@@ -1,0 +1,24 @@
+{
+  "definitions": {
+    "#console_prefab": "Assets/consolewindow.json",
+    "#slider_prefab": "Assets/slider.json",
+    "#menu_item_prefab": "Assets/menuitem.json",
+    "#primary_color": [ 227, 211, 177, 1.0 ],
+    "#primary_color_opaque80": [ 227, 211, 177, 0.8 ],
+    "#primary_color_opaque76": [ 227, 211, 177, 0.76 ],
+    "#primary_color_opaque30": [ 227, 211, 177, 0.76 ],
+    "#primary_color_opaque10": [ 227, 211, 177, 0.1 ],
+    "#secondary_color": [ 140, 198, 199, 1.0 ],
+    "#secondary_color_opaque80": [ 140, 198, 199, 0.8 ],
+    "#secondary_color_opaque35": [ 140, 198, 199, 0.35 ],
+    "#secondary_color_opaque10": [ 140, 198, 199, 0.1 ],
+    "#secondary_color_opaque5": [ 140, 198, 199, 0.05 ],
+
+    "#background_color": [ 47, 47, 47, 1.0 ],
+    "#panel_background_color": [ 26, 26, 26, 1.0 ],
+
+    "#black": [ 0, 0, 0, 1.0 ],
+    "#selected_color": [ 255, 255, 255, 1.0 ],
+    "#unselected_color": [ 255, 0, 0, 1.0 ]
+  }
+}

@@ -12,9 +12,9 @@ using namespace DirectX;
 
 namespace
 {
-    const XMVECTORF32 DEFAULT_RIGHT_VECTOR = { -1, 0, 0, 0 };
-    const XMVECTORF32 DEFAULT_UP_VECTOR = { 0, 1, 0, 0 };
-    const XMVECTORF32 DEFAULT_FORWARD_VECTOR = { 0, 0, 1, 0 };
+    const XMVECTORF32 DEFAULT_RIGHT_VECTOR = { { { -1, 0, 0, 0 } } };
+    const XMVECTORF32 DEFAULT_UP_VECTOR = { { { 0, 1, 0, 0 } } };
+    const XMVECTORF32 DEFAULT_FORWARD_VECTOR = { { { 0, 0, 1, 0 } } };
 }
 
 FreeCamera::FreeCamera(float nearPlane,

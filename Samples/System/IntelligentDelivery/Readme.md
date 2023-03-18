@@ -17,7 +17,8 @@ description: "This sample demonstrates Intelligent Delivery APIs."
 
 # IntelligentDelivery
 
-For more information see this [Word document](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/IntelligentDelivery/readme.docx).
+For more information see: 
+- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/IntelligentDelivery/readme_en-us.md)
 
 ## Privacy statement
 

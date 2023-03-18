@@ -390,10 +390,7 @@ void DeviceResources::CreateWindowSizeDependentResources()
             );
         depthStencilDesc.Flags |= D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
 
-        D3D12_CLEAR_VALUE depthOptimizedClearValue = {};
-        depthOptimizedClearValue.Format = m_depthBufferFormat;
-        depthOptimizedClearValue.DepthStencil.Depth = (m_options & c_ReverseDepth) ? 0.0f : 1.0f;
-        depthOptimizedClearValue.DepthStencil.Stencil = 0;
+        const CD3DX12_CLEAR_VALUE depthOptimizedClearValue(m_depthBufferFormat, (m_options & c_ReverseDepth) ? 0.0f : 1.0f, 0u);
 
         ThrowIfFailed(m_d3dDevice->CreateCommittedResource(
             &depthHeapProperties,
@@ -431,21 +428,21 @@ void DeviceResources::SetWindow(HWND window, int width, int height) noexcept
     m_window = window;
 
     m_outputSize.left = m_outputSize.top = 0;
-    m_outputSize.right = width;
-    m_outputSize.bottom = height;
+    m_outputSize.right = static_cast<long>(width);
+    m_outputSize.bottom = static_cast<long>(height);
 }
 
 // This method is called when the Win32 window changes size.
 bool DeviceResources::WindowSizeChanged(int width, int height)
 {
+    if (!m_window)
+        return false;
+
     RECT newRc;
     newRc.left = newRc.top = 0;
-    newRc.right = width;
-    newRc.bottom = height;
-    if (newRc.left == m_outputSize.left
-        && newRc.top == m_outputSize.top
-        && newRc.right == m_outputSize.right
-        && newRc.bottom == m_outputSize.bottom)
+    newRc.right = static_cast<long>(width);
+    newRc.bottom = static_cast<long>(height);
+    if (newRc.right == m_outputSize.right && newRc.bottom == m_outputSize.bottom)
     {
         // Handle color space settings for HDR
         UpdateColorSpace();
@@ -639,7 +636,7 @@ void DeviceResources::GetAdapter(IDXGIAdapter1** ppAdapter)
         }
 
         // Check to see if the adapter supports Direct3D 12, but don't create the actual device yet.
-        if (SUCCEEDED(D3D12CreateDevice(adapter.Get(), m_d3dMinFeatureLevel, _uuidof(ID3D12Device), nullptr)))
+        if (SUCCEEDED(D3D12CreateDevice(adapter.Get(), m_d3dMinFeatureLevel, __uuidof(ID3D12Device), nullptr)))
         {
         #ifdef _DEBUG
             wchar_t buff[256] = {};

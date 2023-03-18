@@ -75,13 +75,14 @@
 #include <cstdint>
 #include <cstdio>
 #include <cstring>
+#include <cwchar>
 #include <exception>
 #include <iterator>
 #include <memory>
 #include <stdexcept>
 #include <string>
+#include <system_error>
 #include <tuple>
-
 
 #ifdef _GAMING_XBOX
 #include <pix3.h>
@@ -124,7 +125,7 @@ namespace DX
     public:
         com_exception(HRESULT hr) noexcept : result(hr) {}
 
-        const char* what() const override
+        const char* what() const noexcept override
         {
             static char s_str[64] = {};
             sprintf_s(s_str, "Failure with HRESULT of %08X", static_cast<unsigned int>(result));

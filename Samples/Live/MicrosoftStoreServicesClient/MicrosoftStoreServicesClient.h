@@ -226,6 +226,8 @@ private:
     HttpManager*        m_httpManager = nullptr;
     std::string         m_currentUIPage;
 
+    std::vector<std::string> m_enumeratedProducts;
+
     //----------------------------------------------------
     //  Collections, Consume, and Purchase specific items
     void ShowCollections();
@@ -233,6 +235,7 @@ private:
     void ConsumeOrPurchaseButton(uint8_t);
     void PurchaseItem(std::string ProductId);
     void ConsumeItem(CollectionsItem Item);
+    void QueryCatalog();
 
     std::vector<CollectionsItem> m_collectionsItems;
     uint64_t                     m_CollectionsUIStart;

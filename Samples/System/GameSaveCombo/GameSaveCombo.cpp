@@ -41,6 +41,7 @@ Sample::Sample() noexcept(false) :
     m_isDataDisplayable(false)
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>();
+    m_deviceResources->SetClearColor(ATG::Colors::Background);
     m_deviceResources->RegisterDeviceNotify(this);
     srand(static_cast<unsigned int>(time(0)));
     m_gamerPic = {0};
@@ -400,10 +401,16 @@ void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
 
+#ifdef _GAMING_XBOX
+    m_deviceResources->WaitForOrigin();
+#endif
+
     m_timer.Tick([&]()
         {
             Update(m_timer);
         });
+
+    m_mouse->EndOfInputFrame();
 
     Render();
 

@@ -46,7 +46,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE onecore_apiset.lib)
 target_link_options(${PROJECT_NAME} PRIVATE /SUBSYSTEM:CONSOLE,10.0 /NODEFAULTLIB:kernel32.lib /NODEFAULTLIB:onecore.lib)
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-   target_compile_options(${PROJECT_NAME} PRIVATE /permissive- /Zc:__cplusplus)
+   target_compile_options(${PROJECT_NAME} PRIVATE /permissive- /Zc:__cplusplus /Zc:inline)
 
    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.24)
       target_compile_options(${PROJECT_NAME} PRIVATE /ZH:SHA_256)

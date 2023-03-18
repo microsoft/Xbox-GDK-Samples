@@ -37,6 +37,7 @@ Sample::Sample() noexcept(false) :
 {
     // Renders only 2D, so no need for a depth buffer.
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_UNKNOWN);
+    m_deviceResources->SetClearColor(ATG::Colors::Background);
 }
 
 // Initialize the Direct3D resources required to run.
@@ -61,6 +62,8 @@ void Sample::Initialize(HWND window)
 // Executes basic render loop.
 void Sample::Tick()
 {
+    m_deviceResources->WaitForOrigin();
+
     m_timer.Tick([&]()
     {
         Update(m_timer);

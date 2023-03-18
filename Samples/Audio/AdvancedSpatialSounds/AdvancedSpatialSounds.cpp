@@ -253,6 +253,7 @@ Sample::Sample() noexcept(false) :
 	m_workThread(nullptr)
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>();
+    m_deviceResources->SetClearColor(ATG::Colors::Background);
 }
 
 Sample::~Sample()
@@ -306,6 +307,8 @@ void Sample::Initialize(HWND window)
 void Sample::Tick()
 {
     PIXScopedEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
+
+    m_deviceResources->WaitForOrigin();
 
     m_timer.Tick([&]()
     {

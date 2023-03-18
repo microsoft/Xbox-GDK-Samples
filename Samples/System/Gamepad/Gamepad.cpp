@@ -31,6 +31,7 @@ Sample::Sample() noexcept(false) :
 {
     // Renders only 2D, so no need for a depth buffer.
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_UNKNOWN);
+    m_deviceResources->SetClearColor(ATG::Colors::Background);
 }
 
 Sample::~Sample()
@@ -46,14 +47,31 @@ void Sample::Initialize(HWND window, int width, int height)
 {
     m_deviceResources->SetWindow(window, width, height);
 
-    m_deviceResources->CreateDeviceResources();  	
+    m_deviceResources->CreateDeviceResources();
     CreateDeviceDependentResources();
 
     m_deviceResources->CreateWindowSizeDependentResources();
     CreateWindowSizeDependentResources();
 
     HRESULT hr = GameInputCreate(&m_gameInput);
+#ifdef _GAMING_XBOX
     DX::ThrowIfFailed(hr);
+#else
+    extern LPCWSTR g_szAppName;
+
+    if (FAILED(hr))
+    {
+        // For PC, the only failures are when there are problems with the GameInput service.
+        // The only recourse is to have someone with administrator privs restart the service
+        // or to reboot the machine. Otherwise, no input will be received using the GameInput API.
+        wchar_t buff[128] = {};
+        swprintf_s(buff,
+            L"GameInput creation failed with error: %08X\n\nVerify that the GameInput Service is running on this system.",
+            static_cast<unsigned int>(hr));
+        std::ignore = MessageBoxW(window, buff, g_szAppName, MB_ICONERROR | MB_OK);
+        ExitSample();
+    }
+#endif
 }
 
 #pragma region Frame Update
@@ -104,7 +122,7 @@ void Sample::Update(DX::StepTimer const&)
                 break;
             }
         }
-        
+
         if (currentDevice == -1)
         {
             currentDevice = static_cast<int>(m_devices.size());
@@ -244,7 +262,7 @@ void Sample::Render()
 
     m_font->DrawString(m_batch.get(), m_deviceString, pos, ATG::Colors::OffWhite);
     pos.y += m_font->GetLineSpacing() * 1.5f;
-    
+
     if (!m_buttonString.empty())
     {
         DX::DrawControllerString(m_batch.get(), m_font.get(), m_ctrlFont.get(), m_buttonString.c_str(), pos);
@@ -277,7 +295,7 @@ void Sample::Render()
         L"[RB]+[LB]+[View]+[Menu] Exit",
         XMFLOAT2(float(safeRect.left), float(safeRect.bottom) - m_font->GetLineSpacing()),
         ATG::Colors::LightGrey);
-    
+
     m_batch->End();
 
     PIXEndEvent(commandList);
@@ -313,14 +331,6 @@ void Sample::Clear()
 
 #pragma region Message Handlers
 // Message handlers
-void Sample::OnActivated()
-{
-}
-
-void Sample::OnDeactivated()
-{
-}
-
 void Sample::OnSuspending()
 {
     m_deviceResources->Suspend();

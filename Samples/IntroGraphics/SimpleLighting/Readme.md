@@ -17,7 +17,11 @@ description: "This sample demonstrates how to create a static Direct3D 12 vertex
 
 # SimpleLighting
 
-For more information see this [Word document](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/IntroGraphics/SimpleLighting/Readme.docx).
+For more information see: 
+- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/IntroGraphics/SimpleLighting/readme_en-us.md)
+- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/IntroGraphics/SimpleLighting/readme_ja-jp.md)
+- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/IntroGraphics/SimpleLighting/readme_ko-kr.md)
+- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/IntroGraphics/SimpleLighting/readme_zh-cn.md)
 
 ## Privacy statement
 

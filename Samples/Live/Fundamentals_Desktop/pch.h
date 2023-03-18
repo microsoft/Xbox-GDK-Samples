@@ -10,7 +10,9 @@
 #pragma once
 
 #include <winsdkver.h>
+#ifndef _WIN32_WINNT
 #define _WIN32_WINNT 0x0A00
+#endif
 #include <sdkddkver.h>
 
 // Use the C++ standard templated min/max
@@ -30,7 +32,10 @@
 // WinHelp is deprecated
 #define NOHELP
 
+#ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
+#endif
+
 #include <Windows.h>
 
 #include <Shlwapi.h>
@@ -40,12 +45,20 @@
 
 #include <grdk.h>
 
-#if _GRDK_VER < 0x55F00C58 /* GDK Edition 220300 */
-#error This sample requires the March 2022 GDK or later
+#if _GRDK_VER < 0x55F0110A /* GXDK Edition 220600 */
+#error This sample requires the June 2022 GDK or later
 #endif
 
 #include <d3d12.h>
 #include <dxgi1_6.h>
+
+#ifdef _DEBUG
+#include <dxgidebug.h>
+#endif
+
+#define D3DX12_NO_STATE_OBJECT_HELPERS
+#define D3DX12_NO_CHECK_FEATURE_SUPPORT_CLASS
+#include "d3dx12.h"
 
 #define _XM_NO_XMVECTOR_OVERLOADS_
 
@@ -53,8 +66,6 @@
 #include <DirectXColors.h>
 
 #include <stringapiset.h>
-
-#include "d3dx12.h"
 
 #include <algorithm>
 #include <atomic>
@@ -77,10 +88,6 @@
 #include <unordered_set>
 #include <tuple>
 
-#ifdef _DEBUG
-#include <dxgidebug.h>
-#endif
-
 // To use graphics and CPU markup events with the latest version of PIX, change this to include <pix3.h>
 // then add the NuGet package WinPixEventRuntime to the project.
 #include <pix.h>
@@ -96,6 +103,7 @@
 
 #include <XGameRuntime.h>
 
+#define USING_WINDOWS_GAMING_INPUT
 #include "CommonStates.h"
 #include "DescriptorHeap.h"
 #include "GamePad.h"
@@ -113,9 +121,9 @@ namespace DX
     class com_exception : public std::exception
     {
     public:
-        com_exception(HRESULT hr) : result(hr) {}
+        com_exception(HRESULT hr) noexcept : result(hr) {}
 
-        const char* what() const override
+        const char* what() const noexcept override
         {
             static char s_str[64] = {};
             sprintf_s(s_str, "Failure with HRESULT of %08X", static_cast<unsigned int>(result));

@@ -150,6 +150,7 @@ Sample::Sample() noexcept(false)
     , m_visData{}
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN);
+    m_deviceResources->SetClearColor(ATG::ColorsLinear::Background);
 
     std::fill_n(m_esramRatios, std::size(m_esramRatios), 1.0f);
 }

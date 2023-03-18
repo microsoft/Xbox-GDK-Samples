@@ -125,14 +125,13 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
 #endif
 
         HWND hwnd = CreateWindowExW(0, L"AchievementsWindowClass", g_szAppName, WS_OVERLAPPEDWINDOW,
-            CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, nullptr, nullptr, hInstance,
-            nullptr);
+            CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top,
+            nullptr, nullptr, hInstance,
+            g_sample.get());
         if (!hwnd)
             return 1;
 
         ShowWindow(hwnd, nCmdShow);
-
-        SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(g_sample.get()));
 
         // Sample Usage Telemetry
         //
@@ -197,9 +196,6 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
     CloseHandle(g_plmSignalResume);
 #endif
 
-#ifdef ATG_ENABLE_TELEMETRY
-    ATG::CleanupTelemetry();
-#endif
     XGameRuntimeUninitialize();
 
     CoUninitialize();
@@ -221,6 +217,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     switch (message)
     {
+    case WM_CREATE:
+        if (lParam)
+        {
+            auto params = reinterpret_cast<LPCREATESTRUCTW>(lParam);
+            SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(params->lpCreateParams));
+        }
+        break;
+
     case WM_ACTIVATEAPP:
         if (sample)
         {

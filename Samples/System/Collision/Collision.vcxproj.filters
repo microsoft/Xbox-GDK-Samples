@@ -51,6 +51,9 @@
     <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -76,7 +79,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config" />
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">

@@ -184,7 +184,6 @@ private:
     // Sphere Mesh
     std::unique_ptr<DirectX::GeometricPrimitive>    m_sphereMesh;
     Microsoft::WRL::ComPtr<ID3D12Resource>          m_sphereMeshCBResource;
-    sphereConstantBufferStructPadded*               m_sphereMeshCBMappedMem;
     Microsoft::WRL::ComPtr<ID3D12PipelineState>     m_spherePSO;
     Microsoft::WRL::ComPtr<ID3D12RootSignature>     m_sphereRS;
 

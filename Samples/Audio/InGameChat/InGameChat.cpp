@@ -28,6 +28,7 @@ Sample::Sample() noexcept(false) :
     s_instance = this;
 
     m_deviceResources = std::make_unique<DX::DeviceResources>();
+    m_deviceResources->SetClearColor(ATG::Colors::Background);
     m_deviceResources->RegisterDeviceNotify(this);
 
     ATG::UIConfig uiconfig;
@@ -129,10 +130,16 @@ void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
 
+#ifdef _GAMING_XBOX
+    m_deviceResources->WaitForOrigin();
+#endif
+
     m_timer.Tick([&]()
     {
         Update(m_timer);
     });
+
+    m_mouse->EndOfInputFrame();
 
     Render();
 
@@ -560,16 +567,16 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
-    auto dsvDescriptor = m_deviceResources->GetDepthStencilView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
     commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -694,7 +701,7 @@ void Sample::OnResuming()
 
 void Sample::OnWindowMoved()
 {
-    auto r = m_deviceResources->GetOutputSize();
+    auto const r = m_deviceResources->GetOutputSize();
     m_deviceResources->WindowSizeChanged(r.right, r.bottom);
 }
 
@@ -772,7 +779,7 @@ void Sample::CreateDeviceDependentResources()
 // Allocate all memory resources that change on a window SizeChanged event.
 void Sample::CreateWindowSizeDependentResources()
 {
-    auto viewport = m_deviceResources->GetScreenViewport();
+    auto const viewport = m_deviceResources->GetScreenViewport();
 
     m_ui->SetWindow(m_deviceResources->GetOutputSize());
 

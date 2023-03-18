@@ -581,10 +581,10 @@
     <None Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="Achievements_Readme.docx" />
-    <None Include="Achievements_Readme_ja-jp.docx" />
-    <None Include="Achievements_Readme_ko-kr.docx" />
-    <None Include="Achievements_Readme_zh-cn.docx" />
+    <None Include="readme.md" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
     <None Include="Assets\SampleUI.csv">
       <DeploymentContent>true</DeploymentContent>
     </None>
@@ -627,4 +627,8 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ItemGroup>
+    <None Include="media\image1.png" />
+    <None Include="media\image3.png" />
+  </ItemGroup>
 </Project>

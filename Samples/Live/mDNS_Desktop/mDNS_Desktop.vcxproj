@@ -337,10 +337,10 @@ xcopy /Y /I /E "..\..\..\Media\Fonts\xboxone*.spritefont" "$(TargetDir)"</Comman
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">true</DeploymentContent>
     </None>
     <Image Include="..\..\..\Media\Textures\ATGSampleBackground.DDS" />
-    <None Include="mDNS_Desktop_ReadMe_ja-jp.docx" />
-    <None Include="mDNS_Desktop_ReadMe_ko-kr.docx" />
-    <None Include="mDNS_Desktop_ReadMe_zh-cn.docx" />
-    <None Include="ReadMe.docx" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
+    <None Include="readme.md" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\SampleUI.csv">
@@ -358,4 +358,7 @@ xcopy /Y /I /E "..\..\..\Media\Fonts\xboxone*.spritefont" "$(TargetDir)"</Comman
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ItemGroup>
+    <None Include="media\image1.png" />
+  </ItemGroup>
 </Project>

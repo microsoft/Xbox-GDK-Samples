@@ -69,8 +69,10 @@
     <ClInclude Include="SessionManager.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="AsyncStatusWidget.h" />
-    <ClInclude Include="GuidUtil.h" />
     <ClInclude Include="..\..\..\..\Kits\ATGTK\Texture.h" />
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\GuidUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />

@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>f2191c53-8307-4dda-8f45-cad9cc63c824</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>90221541-d344-40d7-a9ee-d49c9b281ad2</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>48805553-3d46-4ba7-8936-da767726cd53</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>85a19f33-26ac-4b67-aab2-dd1614eeaa91</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts">
+      <UniqueIdentifier>{baf099a1-8e5e-4ec2-a62a-2c1f18e4dfc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{98756ef3-ff63-40d6-8448-73833fae3fd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Models">
+      <UniqueIdentifier>{a6a06008-a1b0-4b4d-ba42-52f0b3e1b787}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Models\Cactus">
+      <UniqueIdentifier>{9e1584a4-a366-412c-ad94-1a14907f7456}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Models\AbstractCathedral">
+      <UniqueIdentifier>{a79ff1e4-3a00-4b57-a899-bc209930748d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="DynamicCubeMap.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h" />
+    <ClInclude Include="ConstantBuffer.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FlyCamera.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ReadData.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\Meshlet.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="DynamicCubeMap.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\FlyCamera.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\Meshlet.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="SceneVertexShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ScenePixelShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="SampleCubeMapVertexShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="SampleCubeMapPixelShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="GenerateCubeMapVertexShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="GenerateCubeMapGeometryShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="GenerateCubeMapPixelShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="GenerateCubeMapInstancedVertexShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="GenerateMipsComputeShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="GenerateCubeMapMeshShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="GenerateCubeMapAmplificationShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Media\Meshes\Cactus\cactus_high_diffuse2_c.dds">
+      <Filter>Assets\Models\Cactus</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cactus\cactus_high_normals2.dds">
+      <Filter>Assets\Models\Cactus</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cactus\spine_cluster_diffuse2_c.dds">
+      <Filter>Assets\Models\Cactus</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cactus\spine_cluster_normals2_n.dds">
+      <Filter>Assets\Models\Cactus</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\CelingCubesLightingMap.dds">
+      <Filter>Assets\Models\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\Cement.dds">
+      <Filter>Assets\Models\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\CenterCubes.dds">
+      <Filter>Assets\Models\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\CenterCubesLightingMap.dds">
+      <Filter>Assets\Models\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\CenterLightingMap.dds">
+      <Filter>Assets\Models\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\CenterPool.dds">
+      <Filter>Assets\Models\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\CenterRimLightingMap.dds">
+      <Filter>Assets\Models\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\EndBoxes2LightingMap.dds">
+      <Filter>Assets\Models\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\EndCubes1LightingMap.dds">
+      <Filter>Assets\Models\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\FloorLightingMap .dds">
+      <Filter>Assets\Models\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\GridLightingMap.dds">
+      <Filter>Assets\Models\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\Light.dds">
+      <Filter>Assets\Models\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\Mosaic3.dds">
+      <Filter>Assets\Models\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\Pillar.dds">
+      <Filter>Assets\Models\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\PillarBase.dds">
+      <Filter>Assets\Models\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\PillarBasesLightingMap.dds">
+      <Filter>Assets\Models\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\PillarsLightingMap.dds">
+      <Filter>Assets\Models\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\Rust.dds">
+      <Filter>Assets\Models\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\Sky.dds">
+      <Filter>Assets\Models\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\StripeConcrete.dds">
+      <Filter>Assets\Models\AbstractCathedral</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Media\Meshes\Cactus\cactus.sdkmesh">
+      <Filter>Assets\Models\Cactus</Filter>
+    </None>
+    <None Include="SampleCubeMapHeader.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="GenerateCubeMap.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Cactus\cactus.sdkmesh.bin">
+      <Filter>Assets\Models\Cactus</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\AbstractCathedral\AbstractCathedral.sdkmes_">
+      <Filter>Assets\Models\AbstractCathedral</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\AbstractCathedral\AbstractCathedral.sdkmesh">
+      <Filter>Assets\Models\AbstractCathedral</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\AbstractCathedral\AbstractCathedral.sdkmesh.bin">
+      <Filter>Assets\Models\AbstractCathedral</Filter>
+    </None>
+    <None Include="Scene.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Readme.docx" />
+  </ItemGroup>
+</Project>

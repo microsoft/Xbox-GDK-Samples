@@ -115,24 +115,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config" />
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\StoreLogo.png">
-      <Filter>Assets\Logos</Filter>
-    </Image>
-    <Image Include="Assets\Logo.png">
-      <Filter>Assets\Logos</Filter>
-    </Image>
-    <Image Include="Assets\LargeLogo.png">
-      <Filter>Assets\Logos</Filter>
-    </Image>
-    <Image Include="Assets\SmallLogo.png">
-      <Filter>Assets\Logos</Filter>
-    </Image>
-    <Image Include="Assets\SplashScreen.png">
-      <Filter>Assets\Logos</Filter>
-    </Image>
     <Image Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
       <Filter>Assets\Textures</Filter>
     </Image>
@@ -199,6 +184,8 @@
     <None Include="MeshletInstancing_ReadMe_ja-jp.docx" />
     <None Include="MeshletInstancing_ReadMe_ko-kr.docx" />
     <None Include="MeshletInstancing_ReadMe_zh-cn.docx" />
+    <None Include="..\..\NuGet.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="BasicMeshletPS.hlsl">
@@ -207,5 +194,22 @@
     <FxCompile Include="InstancedMeshletMS.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Common">
       <UniqueIdentifier>abacedee-aed6-4be3-ad42-38efd0791e52</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assets">
+    <Filter Include="Resource Files">
       <UniqueIdentifier>5f40adfc-7a4b-432f-8d65-16d4d183ac88</UniqueIdentifier>
-      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+      <Extensions>rc;ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="ATG Tool Kit">
       <UniqueIdentifier>00823182-352e-4a90-b41d-f80ae87f6cab</UniqueIdentifier>
@@ -52,9 +52,11 @@
     <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Kits\ATGTK\Json.h" />
     <ClInclude Include="..\..\..\Kits\LiveTK\LiveInfoHUD.h">
       <Filter>Xbox Live Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\Json.h">
+      <Filter>ATG Tool Kit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -73,95 +75,106 @@
     <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
       <Filter>ATG Tool Kit</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
-      <Filter>ATG Tool Kit</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Kits\LiveTK\LiveInfoHUD.cpp">
       <Filter>Xbox Live Tool Kit</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGameConfig.mgc" />
+    <ResourceCompile Include="resource.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <CopyFileToFolders Include="Assets\LargeLogo.png">
-      <Filter>Assets</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="Assets\Logo.png">
-      <Filter>Assets</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="Assets\SmallLogo.png">
-      <Filter>Assets</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="Assets\SplashScreen.png">
-      <Filter>Assets</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="Assets\StoreLogo.png">
-      <Filter>Assets</Filter>
-    </CopyFileToFolders>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\..\..\Media\Textures\GamerPic.png">
-      <Filter>Assets</Filter>
+    <Image Include="xbox.ico">
+      <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\ATGSampleBackground.DDS">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18_Bold.spritefont">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18_Italic.spritefont">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_22.spritefont">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_22_Bold.spritefont">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_22_Italic.spritefont">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_36_Bold.spritefont">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_36_Italic.spritefont">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneController.spritefont">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\Courier_16.spritefont">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\Courier_36.spritefont">
-      <Filter>Assets</Filter>
-    </None>
+    <Manifest Include="settings.manifest">
+      <Filter>Resource Files</Filter>
+    </Manifest>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="ReadMe.docx" />
     <None Include="Fundamentals_Desktop_ReadMe_ja-jp.docx" />
     <None Include="Fundamentals_Desktop_ReadMe_ko-kr.docx" />
     <None Include="Fundamentals_Desktop_ReadMe_zh-cn.docx" />
   </ItemGroup>
   <ItemGroup>
+    <CustomBuild Include="MicrosoftGameConfig.mgc" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\LargeLogo.png">
+      <Filter>Resource Files</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Logo.png">
+      <Filter>Resource Files</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SmallLogo.png">
+      <Filter>Resource Files</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SplashScreen.png">
+      <Filter>Resource Files</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\StoreLogo.png">
+      <Filter>Resource Files</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Textures\gamerpic.png">
+      <Filter>Resource Files</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\ATGSampleBackground.DDS">
+      <Filter>Resource Files</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\Courier_16.spritefont">
+      <Filter>Resource Files</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\Courier_36.spritefont">
+      <Filter>Resource Files</Filter>
+    </CopyFileToFolders>
     <CopyFileToFolders Include="Assets\SampleUI.csv">
-      <Filter>Assets</Filter>
+      <Filter>Resource Files</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Resource Files</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18_Bold.spritefont">
+      <Filter>Resource Files</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18_Italic.spritefont">
+      <Filter>Resource Files</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_22.spritefont">
+      <Filter>Resource Files</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_22_Bold.spritefont">
+      <Filter>Resource Files</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_22_Italic.spritefont">
+      <Filter>Resource Files</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+      <Filter>Resource Files</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_36_Bold.spritefont">
+      <Filter>Resource Files</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_36_Italic.spritefont">
+      <Filter>Resource Files</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneController.spritefont">
+      <Filter>Resource Files</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
+      <Filter>Resource Files</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+      <Filter>Resource Files</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
+      <Filter>Resource Files</Filter>
     </CopyFileToFolders>
   </ItemGroup>
 </Project>

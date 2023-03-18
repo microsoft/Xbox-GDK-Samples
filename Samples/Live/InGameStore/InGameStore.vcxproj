@@ -637,12 +637,22 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ReadMe.docx" />
-    <None Include="InGameStore_Readme_ja-JP.docx" />
-    <None Include="InGameStore_Readme_ko-KR.docx" />
-    <None Include="InGameStore_Readme_zh-CN.docx" />
+    <None Include="readme.md" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ItemGroup>
+    <None Include="media\image1.png" />
+    <None Include="media\image3.png" />
+    <None Include="media\image4.png" />
+    <None Include="media\image5.png" />
+    <None Include="media\image6.png" />
+    <None Include="media\image7.png" />
+    <None Include="media\image8.png" />
+    <None Include="media\image9.png" />
+  </ItemGroup>
 </Project>

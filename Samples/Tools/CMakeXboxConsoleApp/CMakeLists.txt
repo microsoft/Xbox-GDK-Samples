@@ -11,8 +11,6 @@ project(CMakeXboxConsoleApp
   DESCRIPTION "CMake example for a Microsoft GDK 'console' project"
   LANGUAGES CXX)
 
-option(BUILD_USING_LTCG "Enable Whole Program Optimization" ON)
-
 # See the BWOIExample for more information
 option(BUILD_USING_BWOI "Enable Build With/Out Install" OFF)
 
@@ -47,12 +45,12 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE ${Console_Defines})
 target_compile_options(${PROJECT_NAME} PRIVATE /fp:fast /W4 /GR- /GS /Gy ${Console_ArchOptions})
 
 target_link_libraries(${PROJECT_NAME} PRIVATE ${Console_Libs})
-# optional extension libraries: Xbox::XSAPI Xbox::XCurl Xbox::GameChat2 Xbox::PlayFabMultiplayer Xbox::PlayFabParty Xbox::PlayFabPartyLIVE
+# optional extension libraries: Xbox::XSAPI Xbox::XCurl Xbox::GameChat2 Xbox::PlayFabMultiplayer Xbox::PlayFabParty Xbox::PlayFabPartyLIVE Xbox::PlayFabServices
 
 target_link_options(${PROJECT_NAME} PRIVATE ${Console_LinkOptions})
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-   target_compile_options(${PROJECT_NAME} PRIVATE /permissive- /Zc:__cplusplus)
+   target_compile_options(${PROJECT_NAME} PRIVATE /permissive- /Zc:__cplusplus /Zc:inline)
 
    if(ENABLE_CODE_ANALYSIS)
       target_compile_options(${PROJECT_NAME} PRIVATE /analyze)
@@ -66,9 +64,18 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
       target_compile_options(${PROJECT_NAME} PRIVATE /Zc:preprocessor)
    endif()
 
-   if((NOT CMAKE_BUILD_TYPE MATCHES "Debug") AND (BUILD_USING_LTCG))
-      target_compile_options(${PROJECT_NAME} PRIVATE /GL /Gw)
-      target_link_options(${PROJECT_NAME} PRIVATE /IGNORE:4075 /LTCG)
+   if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.28)
+      target_compile_options(${PROJECT_NAME} PRIVATE /Zc:lambda)
+   endif()
+
+   if((NOT (CMAKE_BUILD_TYPE MATCHES "Debug")) AND CMAKE_INTERPROCEDURAL_OPTIMIZATION)
+      target_compile_options(${PROJECT_NAME} PRIVATE /Gw)
+
+       if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.35)
+           target_compile_options(${PROJECT_NAME} PRIVATE /Zc:checkGwOdr)
+       endif()
+
+      target_link_options(${PROJECT_NAME} PRIVATE /IGNORE:4075)
    endif()
 endif()
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")

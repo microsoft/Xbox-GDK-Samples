@@ -485,11 +485,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Kits\ATGTK\Texture.h" />
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\GuidUtil.h" />
     <ClInclude Include="AsyncHelper.h" />
     <ClInclude Include="AsyncStatusWidget.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="FriendsManager.h" />
-    <ClInclude Include="GuidUtil.h" />
     <ClInclude Include="MPAManager.h" />
     <ClInclude Include="SimpleMPA.h" />
     <ClInclude Include="pch.h" />
@@ -613,7 +613,7 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ReadMe.docx" />
+    <None Include="readme.md" />
     <None Include="Scripts\Desktop.PostBuild.bat" />
   </ItemGroup>
   <ItemGroup>
@@ -627,4 +627,8 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ItemGroup>
+    <None Include="media\image1.png" />
+    <None Include="media\image3.png" />
+  </ItemGroup>
 </Project>

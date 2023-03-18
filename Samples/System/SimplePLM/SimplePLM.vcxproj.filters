@@ -84,6 +84,6 @@
     <None Include="SimplePLM_ja-jp.docx" />
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config" />
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
 </Project>

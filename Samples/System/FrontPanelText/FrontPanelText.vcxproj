@@ -354,7 +354,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config" />
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Kits\DirectXTK12\DirectXTK12_GXDK_2019.vcxproj">
@@ -635,12 +635,20 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
     </None>
-    <None Include="FrontPanelText_ja-jp.docx" />
-    <None Include="FrontPanelText_ko-kr.docx" />
-    <None Include="FrontPanelText_zh-cn.docx" />
-    <None Include="readme.docx" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
+    <None Include="readme.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ItemGroup>
+    <None Include="media\image1.png" />
+    <None Include="media\image3.png" />
+    <None Include="media\image5.png" />
+    <None Include="media\image6.png" />
+    <None Include="media\image7.png" />
+    <None Include="media\image8.png" />
+  </ItemGroup>
 </Project>

@@ -41,8 +41,8 @@
 
 #include <grdk.h>
 
-#if _GRDK_VER < 0x55F007B0 /* GDK Edition 211000 */
-#error This sample requires the October 2021 GDK or later
+#if _GRDK_VER < 0x55F00C58 /* GDK Edition 220300 */
+#error This sample requires the March 2022 GDK or later
 #endif
 
 #ifdef _GAMING_XBOX_SCARLETT
@@ -83,13 +83,8 @@
 #include <system_error>
 #include <tuple>
 
-#ifdef _GAMING_XBOX
 #include <pix3.h>
-#else
-// To use graphics markup events with the latest version of PIX, change this to include <pix3.h>
-// then add the NuGet package WinPixEventRuntime to the project.
-#include <pix.h>
-#endif
+
 #include <XGame.h>
 #include <XSystem.h>
 
@@ -114,7 +109,7 @@ namespace DX
     public:
         com_exception(HRESULT hr) noexcept : result(hr) {}
 
-        const char* what() const override
+        const char* what() const noexcept override
         {
             static char s_str[64] = {};
             sprintf_s(s_str, "Failure with HRESULT of %08X", static_cast<unsigned int>(result));

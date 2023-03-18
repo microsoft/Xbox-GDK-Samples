@@ -25,6 +25,10 @@ using Microsoft::WRL::ComPtr;
 // https://github.com/microsoft/Microsoft-Store-Services-Sample
 #define SAMPLE_SERVICE_HOST "atgstoreservicedev.azurewebsites.net"
 
+//  Use the V9 version of the Collections Query, this means we need to provide
+//  the list of Ids for the query to specifically look at.
+#define USE_COLLECTIONS_V9
+
 /// <summary>
 /// Built-in URL's and functionality of the Microsoft.StoreServices Sample service.
 /// Not all of these are used within this client sample.
@@ -32,7 +36,13 @@ using Microsoft::WRL::ComPtr;
 namespace
 {
     constexpr char c_accessTokenURL[] = "https://" SAMPLE_SERVICE_HOST "/collections/RetrieveAccessTokens";
-    constexpr char c_collectionsQueryURL[] = "https://" SAMPLE_SERVICE_HOST "/collections/Query";
+
+#ifdef USE_COLLECTIONS_V9
+    constexpr char c_collectionsQueryURL[] = "https://" SAMPLE_SERVICE_HOST "/collections/QueryV9";
+#else
+    constexpr char c_collectionsQueryURL[] = "https://" SAMPLE_SERVICE_HOST "/collections/QueryV8";
+#endif // USE_COLLECTIONS_V9
+
     constexpr char c_consumeURL[] = "https://" SAMPLE_SERVICE_HOST "/collections/Consume";
     //constexpr char c_addPendingConsumeURL[] = "https://" SAMPLE_SERVICE_HOST "/collections/AddPendingConsume";
     //constexpr char c_retryPendingConsumeURL[] = "https://" SAMPLE_SERVICE_HOST "/collections/RetryPendingConsume";
@@ -87,8 +97,10 @@ Sample::Sample() noexcept(false) :
     );
 
     m_deviceResources = std::make_unique<DX::DeviceResources>();
+    m_deviceResources->SetClearColor(ATG::Colors::Background);
     m_deviceResources->RegisterDeviceNotify(this);
-    m_liveInfoHUD = std::make_unique<ATG::LiveInfoHUD>("Microsoft.Store.Services Client Sample");
+
+    m_liveInfoHUD = std::make_unique<ATG::LiveInfoHUD>("");
 
     //  Create a Lambda that we can pass so that the Sample's log function can be used
     //  to display any information from the HttpManager
@@ -187,6 +199,45 @@ void Sample::Initialize(HWND window, int width, int height)
     InitStore();
     SetUserAndSandboxIdentifiers();
 #endif
+
+#ifdef USE_COLLECTIONS_V9
+
+    auto button_text = m_showCollectionsButton->GetTypedSubElementById<UIStaticText>(ID("button_label"));
+    button_text->SetDisplayText("Collections v9");
+
+    if (m_enumeratedProducts.size() == 0)
+    {
+        OutputDebugStringA("Creating ProductIds list required to use Collections V9 query\n");
+
+        //  Add the Game Pass subscription Ids to reveal those if our service is authorized for them
+        m_enumeratedProducts.push_back("CFQ7TTC0K6L8"); //  Xbox Game Pass
+        m_enumeratedProducts.push_back("CFQ7TTC0KGQ8"); //  PC Game Pass
+        m_enumeratedProducts.push_back("CFQ7TTC0KHS0"); //  Game Pass Ultimate
+
+        //  TODO: Update to include the ProductIds for your Publisher / Title that 
+        //        you want to look for when calling PublisherQuery
+        m_enumeratedProducts.push_back("9NTL0QDWZ4FS"); //  ATG In-Game Store
+        m_enumeratedProducts.push_back("9MXL21XPWWWK"); //  Microsoft.Store.Services Client Sample
+
+        m_enumeratedProducts.push_back("9NMDDZC7ZWRM"); //  ATG Sample Year 1 Pass
+        m_enumeratedProducts.push_back("9NRGW2QG5PCW"); //  ATG Sample Pre-Order 1
+        m_enumeratedProducts.push_back("9PGLXLWS7319"); //  ATG Consumable Only Bundle
+        m_enumeratedProducts.push_back("9PHHWZ12RR23"); //  ATG In-Game Store Deluxe Add-on
+       
+        m_enumeratedProducts.push_back("9MZ0MGGFPLTP"); //  ATG Sample Subscription 1
+        
+        m_enumeratedProducts.push_back("9N30KZZF4BR9"); //  ATG Sample Durable 1
+        m_enumeratedProducts.push_back("9P23V43P0XZZ"); //  ATG Sample Durable 2
+        m_enumeratedProducts.push_back("9P8S15PJTB0P"); //  ATG Sample Durable 3
+        m_enumeratedProducts.push_back("9PLRFWZWWF91"); //  ATG Sample Durable 4
+        m_enumeratedProducts.push_back("9PLNMXRKNM4C"); //  ATG Sample Durable 1 (with package)
+
+        m_enumeratedProducts.push_back("9PFL4RQTB1P6"); //  ATG Sample Consumable 1
+        m_enumeratedProducts.push_back("9NCX1H100M18"); //  ATG Sample Consumable 2
+        m_enumeratedProducts.push_back("9MT5TGW893HV"); //  ATG Sample Consumable 3
+    }
+#endif
+
 }
 
 void Sample::SetUserAndSandboxIdentifiers()
@@ -413,10 +464,16 @@ void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
 
+#ifdef _GAMING_XBOX
+    m_deviceResources->WaitForOrigin();
+#endif
+
     m_timer.Tick([&]()
     {
         Update(m_timer);
     });
+
+    m_mouse->EndOfInputFrame();
 
     Render();
 
@@ -542,16 +599,16 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
-    auto dsvDescriptor = m_deviceResources->GetDepthStencilView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
     commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -586,7 +643,7 @@ void Sample::OnResuming()
 
 void Sample::OnWindowMoved()
 {
-    auto r = m_deviceResources->GetOutputSize();
+    auto const r = m_deviceResources->GetOutputSize();
     m_deviceResources->WindowSizeChanged(r.right, r.bottom);
 }
 
@@ -626,7 +683,7 @@ void Sample::CreateDeviceDependentResources()
 
     m_graphicsMemory = std::make_unique<GraphicsMemory>(device);
 
-    RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
+    const RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
 
     m_resourceDescriptors = std::make_unique<DirectX::DescriptorPile>(device,
         Descriptors::Count,
@@ -683,7 +740,7 @@ void Sample::OnDeviceRestored()
 /// </summary>
 void Sample::ShowCollections()
 {
-    OutputDebugStringA("Show collections button is pressed\n");
+    OutputDebugStringA("Show Collections button is pressed\n");
 
     //  Show the Collections UI and hide the others
     m_subscriptionScreen->SetVisible(false);
@@ -696,6 +753,8 @@ void Sample::ShowCollections()
     jRequest["UserCollectionsId"] = GetCachedUserCollectionsId(false);
     jRequest["UserId"] = m_gamerTag;
     jRequest["sbx"] = m_currentSandbox; //  Required when running / testing in a sandbox
+
+    jRequest["productIds"] = m_enumeratedProducts;
 
     std::string requestBody = jRequest.dump();
     size_t bodySize = requestBody.size();

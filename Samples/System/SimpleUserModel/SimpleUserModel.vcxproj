@@ -230,7 +230,7 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-	  <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -246,7 +246,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
-	  <DisableSpecificWarnings>5204</DisableSpecificWarnings>
+      <DisableSpecificWarnings>5204</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">
@@ -256,7 +256,7 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-	  <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -274,7 +274,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
-	  <DisableSpecificWarnings>5204</DisableSpecificWarnings>
+      <DisableSpecificWarnings>5204</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">
@@ -284,7 +284,7 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-	  <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -300,7 +300,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
-	  <DisableSpecificWarnings>5204</DisableSpecificWarnings>
+      <DisableSpecificWarnings>5204</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">
@@ -310,7 +310,7 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-	  <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -328,7 +328,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
-	  <DisableSpecificWarnings>5204</DisableSpecificWarnings>
+      <DisableSpecificWarnings>5204</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">
@@ -336,7 +336,7 @@
       <AdditionalDependencies>uuid.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-	  <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
       <IgnoreSpecificDefaultLibraries>MSVCRT;$(IgnoreSpecificDefaultLibraries);advapi32.lib;comctl32.lib;comsupp.lib;dbghelp.lib;gdi32.lib;gdiplus.lib;guardcfw.lib;kernel32.lib;mmc.lib;msimg32.lib;msvcole.lib;msvcoled.lib;mswsock.lib;ntstrsafe.lib;ole2.lib;ole2autd.lib;ole2auto.lib;ole2d.lib;ole2ui.lib;ole2uid.lib;ole32.lib;oleacc.lib;oleaut32.lib;oledlg.lib;oledlgd.lib;oldnames.lib;runtimeobject.lib;shell32.lib;shlwapi.lib;strsafe.lib;urlmon.lib;user32.lib;userenv.lib;wlmole.lib;wlmoled.lib;onecore.lib;</IgnoreSpecificDefaultLibraries>
     </Link>
     <ClCompile>
@@ -352,7 +352,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
-	  <DisableSpecificWarnings>5204</DisableSpecificWarnings>
+      <DisableSpecificWarnings>5204</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">
@@ -360,7 +360,7 @@
       <AdditionalDependencies>uuid.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-	  <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
       <IgnoreSpecificDefaultLibraries>MSVCRT;$(IgnoreSpecificDefaultLibraries);advapi32.lib;comctl32.lib;comsupp.lib;dbghelp.lib;gdi32.lib;gdiplus.lib;guardcfw.lib;kernel32.lib;mmc.lib;msimg32.lib;msvcole.lib;msvcoled.lib;mswsock.lib;ntstrsafe.lib;ole2.lib;ole2autd.lib;ole2auto.lib;ole2d.lib;ole2ui.lib;ole2uid.lib;ole32.lib;oleacc.lib;oleaut32.lib;oledlg.lib;oledlgd.lib;oldnames.lib;runtimeobject.lib;shell32.lib;shlwapi.lib;strsafe.lib;urlmon.lib;user32.lib;userenv.lib;wlmole.lib;wlmoled.lib;onecore.lib;</IgnoreSpecificDefaultLibraries>
     </Link>
     <ClCompile>
@@ -378,7 +378,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
-	  <DisableSpecificWarnings>5204</DisableSpecificWarnings>
+      <DisableSpecificWarnings>5204</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">
@@ -388,7 +388,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>uuid.lib;$(Console_Libs);%(AdditionalDependencies)</AdditionalDependencies>
-	  <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
       <IgnoreSpecificDefaultLibraries>$(IgnoreSpecificDefaultLibraries);advapi32.lib;comctl32.lib;comsupp.lib;dbghelp.lib;gdi32.lib;gdiplus.lib;guardcfw.lib;kernel32.lib;mmc.lib;msimg32.lib;msvcole.lib;msvcoled.lib;mswsock.lib;ntstrsafe.lib;ole2.lib;ole2autd.lib;ole2auto.lib;ole2d.lib;ole2ui.lib;ole2uid.lib;ole32.lib;oleacc.lib;oleaut32.lib;oledlg.lib;oledlgd.lib;oldnames.lib;runtimeobject.lib;shell32.lib;shlwapi.lib;strsafe.lib;urlmon.lib;user32.lib;userenv.lib;wlmole.lib;wlmoled.lib;onecore.lib;</IgnoreSpecificDefaultLibraries>
     </Link>
     <Manifest>
@@ -406,7 +406,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
-	  <DisableSpecificWarnings>5204</DisableSpecificWarnings>
+      <DisableSpecificWarnings>5204</DisableSpecificWarnings>
     </ClCompile>
     <FXCompile>
       <ShaderModel>6.0</ShaderModel>
@@ -425,7 +425,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>uuid.lib;$(Console_Libs);%(AdditionalDependencies)</AdditionalDependencies>
-	  <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
       <IgnoreSpecificDefaultLibraries>$(IgnoreSpecificDefaultLibraries);advapi32.lib;comctl32.lib;comsupp.lib;dbghelp.lib;gdi32.lib;gdiplus.lib;guardcfw.lib;kernel32.lib;mmc.lib;msimg32.lib;msvcole.lib;msvcoled.lib;mswsock.lib;ntstrsafe.lib;ole2.lib;ole2autd.lib;ole2auto.lib;ole2d.lib;ole2ui.lib;ole2uid.lib;ole32.lib;oleacc.lib;oleaut32.lib;oledlg.lib;oledlgd.lib;oldnames.lib;runtimeobject.lib;shell32.lib;shlwapi.lib;strsafe.lib;urlmon.lib;user32.lib;userenv.lib;wlmole.lib;wlmoled.lib;onecore.lib;</IgnoreSpecificDefaultLibraries>
     </Link>
     <Manifest>
@@ -443,7 +443,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
-	  <DisableSpecificWarnings>5204</DisableSpecificWarnings>
+      <DisableSpecificWarnings>5204</DisableSpecificWarnings>
     </ClCompile>
     <FXCompile>
       <ShaderModel>6.0</ShaderModel>
@@ -460,7 +460,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>uuid.lib;$(Console_Libs);%(AdditionalDependencies)</AdditionalDependencies>
-	  <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
       <IgnoreSpecificDefaultLibraries>MSVCRT;$(IgnoreSpecificDefaultLibraries);advapi32.lib;comctl32.lib;comsupp.lib;dbghelp.lib;gdi32.lib;gdiplus.lib;guardcfw.lib;kernel32.lib;mmc.lib;msimg32.lib;msvcole.lib;msvcoled.lib;mswsock.lib;ntstrsafe.lib;ole2.lib;ole2autd.lib;ole2auto.lib;ole2d.lib;ole2ui.lib;ole2uid.lib;ole32.lib;oleacc.lib;oleaut32.lib;oledlg.lib;oledlgd.lib;oldnames.lib;runtimeobject.lib;shell32.lib;shlwapi.lib;strsafe.lib;urlmon.lib;user32.lib;userenv.lib;wlmole.lib;wlmoled.lib;onecore.lib;</IgnoreSpecificDefaultLibraries>
     </Link>
     <Manifest>
@@ -477,7 +477,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
-	  <DisableSpecificWarnings>5204</DisableSpecificWarnings>
+      <DisableSpecificWarnings>5204</DisableSpecificWarnings>
     </ClCompile>
     <FXCompile>
       <ShaderModel>6.0</ShaderModel>
@@ -937,10 +937,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\Kits\OpenSource\FreeType2\lib\x64\ReleaseStatic\freetype.pdb" />
-    <None Include="readme.docx" />
-    <None Include="readme_ja-JP.docx" />
-    <None Include="readme_ko-KR.docx" />
-    <None Include="readme_zh-CN.docx" />
+    <None Include="readme.md" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="media\image1.png" />
+    <None Include="media\image3.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

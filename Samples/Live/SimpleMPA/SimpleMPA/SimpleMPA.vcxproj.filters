@@ -67,12 +67,16 @@
     </ClInclude>
     <ClInclude Include="Debug.h" />
     <ClInclude Include="AsyncStatusWidget.h" />
-    <ClInclude Include="GuidUtil.h" />
-    <ClInclude Include="..\..\..\..\Kits\ATGTK\Texture.h" />
     <ClInclude Include="SimpleMPA.h" />
     <ClInclude Include="FriendsManager.h" />
     <ClInclude Include="MPAManager.h" />
     <ClInclude Include="AsyncHelper.h" />
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\Texture.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\GuidUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -92,12 +96,14 @@
     <ClCompile Include="..\..\..\..\Kits\LiveTK\LiveInfoHUD.cpp">
       <Filter>Xbox Live Tool Kit</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Kits\ATGTK\Texture.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="AsyncStatusWidget.cpp" />
     <ClCompile Include="SimpleMPA.cpp" />
     <ClCompile Include="FriendsManager.cpp" />
     <ClCompile Include="MPAManager.cpp" />
+    <ClCompile Include="..\..\..\..\Kits\ATGTK\Texture.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.docx" />

@@ -29,7 +29,9 @@ Sample::Sample() noexcept(false) :
     m_holeSize(0.1f)
 {
     // Renders only 2D, so no need for a depth buffer.
-    m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_R10G10B10A2_UNORM, DXGI_FORMAT_UNKNOWN);
+    m_deviceResources = std::make_unique<DX::DeviceResources>(
+        DXGI_FORMAT_R10G10B10A2_UNORM, DXGI_FORMAT_UNKNOWN,
+        2, DX::DeviceResources::c_EnableDXR);
     m_deviceResources->RegisterDeviceNotify(this);
 }
 

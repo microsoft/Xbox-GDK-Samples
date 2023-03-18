@@ -164,7 +164,7 @@
     <None Include="DLCPackage\Package_XboxOne\Image.JPG">
       <Filter>DLCPackage\Package_XboxOne</Filter>
     </None>
-    <None Include="DLCPackage\Package_XboxOne\MicrosoftGameConfig.mgc">
+    <None Include="DLCPackage\Package_XboxOne\MicrosoftGame.Config">
       <Filter>DLCPackage\Package_XboxOne</Filter>
     </None>
     <None Include="DLCPackage\Package_Scarlett\Assets\LargeLogo.png">
@@ -185,7 +185,7 @@
     <None Include="DLCPackage\Package_Scarlett\Image.jpg">
       <Filter>DLCPackage\Package_Scarlett</Filter>
     </None>
-    <None Include="DLCPackage\Package_Scarlett\MicrosoftGameConfig.mgc">
+    <None Include="DLCPackage\Package_Scarlett\MicrosoftGame.Config">
       <Filter>DLCPackage\Package_Scarlett</Filter>
     </None>
     <None Include="chunks.xml" />
@@ -195,7 +195,7 @@
     <None Include="DLCPackagePC\makedlcpkg.cmd">
       <Filter>DLCPackagePC</Filter>
     </None>
-    <None Include="DLCPackagePC\Package\MicrosoftGameConfig.mgc">
+    <None Include="DLCPackagePC\Package\MicrosoftGame.Config">
       <Filter>DLCPackagePC\Package</Filter>
     </None>
     <None Include="DLCPackagePC\chunks.xml">

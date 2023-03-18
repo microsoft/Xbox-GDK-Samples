@@ -98,6 +98,7 @@ Sample::Sample() noexcept(false) :
 {
     // Renders only 2D, so no need for a depth buffer.
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_UNKNOWN);
+    m_deviceResources->SetClearColor(ATG::Colors::Background);
 }
 
 Sample::~Sample()
@@ -121,14 +122,32 @@ void Sample::Initialize(HWND window, int width, int height)
     m_deviceResources->CreateWindowSizeDependentResources();
     CreateWindowSizeDependentResources();
 
-    DX::ThrowIfFailed(GameInputCreate(&m_gameInput));
+    HRESULT hr = GameInputCreate(&m_gameInput);
+#ifdef _GAMING_XBOX
+    DX::ThrowIfFailed(hr);
+#else
+    extern LPCWSTR g_szAppName;
+
+    if (FAILED(hr))
+    {
+        // For PC, the only failures are when there are problems with the GameInput service.
+        // The only recourse is to have someone with administrator privs restart the service
+        // or to reboot the machine. Otherwise, no input will be received using the GameInput API.
+        wchar_t buff[128] = {};
+        swprintf_s(buff,
+            L"GameInput creation failed with error: %08X\n\nVerify that the GameInput Service is running on this system.",
+            static_cast<unsigned int>(hr));
+        std::ignore = MessageBoxW(window, buff, g_szAppName, MB_ICONERROR | MB_OK);
+        ExitSample();
+    }
+#endif
 
     QueryPerformanceFrequency(reinterpret_cast<LARGE_INTEGER *>(&m_frequency));
 }
 
 //--------------------------------------------------------------------------------------
 // Name: InitializeImpulseTriggerEffects()
-// Desc: Clear variables used by the tigger effects and initialize them as needed for 
+// Desc: Clear variables used by the tigger effects and initialize them as needed for
 //       the currently selected effect.
 //--------------------------------------------------------------------------------------
 void Sample::InitializeImpulseTriggerEffects()
@@ -481,14 +500,6 @@ void Sample::Clear()
 
 #pragma region Message Handlers
 // Message handlers
-void Sample::OnActivated()
-{
-}
-
-void Sample::OnDeactivated()
-{
-}
-
 void Sample::OnSuspending()
 {
     m_deviceResources->Suspend();

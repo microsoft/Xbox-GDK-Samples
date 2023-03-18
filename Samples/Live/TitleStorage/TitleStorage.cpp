@@ -19,7 +19,7 @@ using namespace DirectX;
 
 namespace
 {
-    const wchar_t *BlobTypeStrings[] = {
+    const wchar_t* BlobTypeStrings[] = {
         L"Unknown",
         L"Binary",
         L"JSON",
@@ -39,7 +39,7 @@ namespace
         fun(buffer);
     }
 
-    const char *scid = "00000000-0000-0000-0000-0000610194be"; // This SCID is for TitleStorage Sample
+    const char* scid = "00000000-0000-0000-0000-0000610194be"; // This SCID is for TitleStorage Sample
     constexpr uint32_t preferredUploadBlockSize = (1024 * 256); // default value
 }
 
@@ -55,8 +55,11 @@ Sample::Sample() noexcept(false) :
     );
 
     m_deviceResources = std::make_unique<DX::DeviceResources>();
+    m_deviceResources->SetClearColor(ATG::Colors::Background);
+    m_deviceResources->RegisterDeviceNotify(this);
+
     m_liveResources = std::make_shared<ATG::LiveResources>(m_mainAsyncQueue);
-    m_liveInfoHUD = std::make_unique<ATG::LiveInfoHUD>("Titlestorage Sample");
+    m_liveInfoHUD = std::make_unique<ATG::LiveInfoHUD>("Title Storage Sample");
 
     ATG::UIConfig uiconfig;
 
@@ -80,17 +83,36 @@ Sample::Sample() noexcept(false) :
     m_display = std::make_unique<DX::TextConsoleImage>();
 }
 
+Sample::~Sample()
+{
+    if (m_deviceResources)
+    {
+        m_deviceResources->WaitForGpu();
+    }
+    if (m_mainAsyncQueue)
+    {
+        XTaskQueueCloseHandle(m_mainAsyncQueue);
+        m_mainAsyncQueue = nullptr;
+    }
+}
 
 // Initialize the Direct3D resources required to run.
-void Sample::Initialize(HWND window)
+void Sample::Initialize(HWND window, int width, int height)
 {
     m_gamePad = std::make_unique<GamePad>();
 
+    m_keyboard = std::make_unique<Keyboard>();
+
+    m_mouse = std::make_unique<Mouse>();
+#ifdef _GAMING_DESKTOP
+    m_mouse->SetWindow(window);
+#endif
+
     m_ui->LoadLayout(L".\\Assets\\SampleUI.csv", L".\\Assets\\");
 
-    m_deviceResources->SetWindow(window);
+    m_deviceResources->SetWindow(window, width, height);
 
-    m_deviceResources->CreateDeviceResources();  	
+    m_deviceResources->CreateDeviceResources();
     CreateDeviceDependentResources();
 
     m_deviceResources->CreateWindowSizeDependentResources();
@@ -100,9 +122,6 @@ void Sample::Initialize(HWND window)
     {
         m_liveInfoHUD->SetUser(user, m_mainAsyncQueue);
         m_ui->FindPanel<ATG::IPanel>(c_sampleUIPanel)->Show();
-
-        m_liveInfoHUD->SetUser(user, m_liveResources->GetAsyncQueue());
-
         // Default to show Global Storage
         if (user != nullptr)
         {
@@ -118,7 +137,7 @@ void Sample::Initialize(HWND window)
 
     m_liveResources->SetErrorHandler([this](HRESULT error)
     {
-        if (error == E_GAMEUSER_NO_DEFAULT_USER || error == E_XAL_UIREQUIRED)
+        if (error == E_GAMEUSER_NO_DEFAULT_USER || error == E_GAMEUSER_RESOLVE_USER_ISSUE_REQUIRED)
         {
             m_liveResources->SignInWithUI();
         }
@@ -128,21 +147,20 @@ void Sample::Initialize(HWND window)
         }
     });
 
-    m_liveResources->Initialize();
-    m_liveInfoHUD->Initialize();
-
-    SetupUI();
-
-    // Before we can make an Xbox Live call we need to ensure that the Game OS has intialized the network stack
-    // For sample purposes we block user interaction with the sample.  A game should wait for the network to be
-    // initialized before the main menu appears.  For samples, we will wait at the end of initialization.
+// Before we can make an Xbox Live call we need to ensure that the Game OS has intialized the network stack
+// For sample purposes we block user interaction with the sample.  A game should wait for the network to be
+// initialized before the main menu appears.  For samples, we will wait at the end of initialization.
     while (!m_liveResources->IsNetworkAvailable())
     {
         SwitchToThread();
     }
+
+    m_liveResources->Initialize();
+    m_liveInfoHUD->Initialize();
+
+    SetupUI();
 }
 
-#pragma region UI Methods
 void Sample::SetupUI()
 {
     using namespace ATG;
@@ -150,7 +168,7 @@ void Sample::SetupUI()
     ListViewConfig config = { 10, 3100, 100, c_sampleUIPanel };
     m_listView = std::make_unique<ListView<MetadataBlobDetail, TitleStorageViewRow>>(m_ui, config);
     m_listView->ClearAllRows();
-    m_listView->SetSelectedCallback([this](IPanel *, IControl *control)
+    m_listView->SetSelectedCallback([this](IPanel*, IControl* control)
     {
         auto storageMetadata = reinterpret_cast<MetadataBlobDetail*>(control->GetUser());
         ShowFileOptions(storageMetadata, storageMetadata->storageType != XblTitleStorageType::GlobalStorage);
@@ -158,20 +176,21 @@ void Sample::SetupUI()
     });
 
     // File Option to download selected file
-    m_ui->FindControl<Button>(c_fileOptionsPopUpPanel, 8001)->SetCallback([this](IPanel *, IControl *control)
+    m_ui->FindControl<Button>(c_fileOptionsPopUpPanel, 8001)->SetCallback([this](IPanel*, IControl* control)
     {
         auto storageMetadata = reinterpret_cast<MetadataBlobDetail*>(control->GetUser());
         DownloadBlob(storageMetadata);
     });
+
     // File Option to delete selected file
-    m_ui->FindControl<Button>(c_fileOptionsPopUpPanel, 8002)->SetCallback([this](IPanel *, IControl *control)
+    m_ui->FindControl<Button>(c_fileOptionsPopUpPanel, 8002)->SetCallback([this](IPanel*, IControl* control)
     {
         auto storageMetadata = reinterpret_cast<MetadataBlobDetail*>(control->GetUser());
         DeleteBlob(storageMetadata);
     });
 
     // Upload button selected
-    m_ui->FindControl<Button>(c_sampleUIPanel, 2206)->SetCallback([this](IPanel *, IControl *)
+    m_ui->FindControl<Button>(c_sampleUIPanel, 2206)->SetCallback([this](IPanel*, IControl*)
     {
         bool canUploadBinary = XblTitleStorageType::GlobalStorage != m_selectedStorageType;
         if (canUploadBinary)
@@ -180,21 +199,20 @@ void Sample::SetupUI()
         }
     });
 
-
     // Upload the JSON blob
-    m_ui->FindControl<Button>(c_uploadPopUpPanel, 9001)->SetCallback([this](IPanel *, IControl *)
+    m_ui->FindControl<Button>(c_uploadPopUpPanel, 9001)->SetCallback([this](IPanel*, IControl*)
     {
-        UploadBlob(XblTitleStorageBlobType::Json, (char *)"./blob.json", (char *)"{\n\"isThisJson\": 1,\n\"monstersKilled\": 10,\n\"playerClass\": \"warrior\"\n}");
-    });
-    // Upload the binary blob
-    m_ui->FindControl<Button>(c_uploadPopUpPanel, 9002)->SetCallback([this](IPanel *, IControl *)
-    {
-        UploadBlob(XblTitleStorageBlobType::Binary, (char *)"./blob.dat", (char *)"This is a Test.");
+        UploadBlob(XblTitleStorageBlobType::Json, (char*)"./blob.json", (char*)"{\n\"isThisJson\": 1,\n\"monstersKilled\": 10,\n\"playerClass\": \"warrior\"\n}");
     });
 
+    // Upload the binary blob
+    m_ui->FindControl<Button>(c_uploadPopUpPanel, 9002)->SetCallback([this](IPanel*, IControl*)
+    {
+        UploadBlob(XblTitleStorageBlobType::Binary, (char*)"./blob.dat", (char*)"This is a Test.");
+    });
 
     // Storage Location options
-    m_ui->FindControl<CheckBox>(c_sampleUIPanel, c_globalStorageCheckBox)->SetCallback([this](IPanel *parent, IControl *)
+    m_ui->FindControl<CheckBox>(c_sampleUIPanel, c_globalStorageCheckBox)->SetCallback([this](IPanel* parent, IControl*)
     {
         dynamic_cast<CheckBox*>(parent->Find(c_globalStorageCheckBox))->SetChecked(true);
         dynamic_cast<CheckBox*>(parent->Find(c_jsonStorageCheckBox))->SetChecked(false);
@@ -202,7 +220,7 @@ void Sample::SetupUI()
 
         ChangeStorageType(XblTitleStorageType::GlobalStorage);
     });
-    m_ui->FindControl<CheckBox>(c_sampleUIPanel, c_jsonStorageCheckBox)->SetCallback([this](IPanel *parent, IControl *)
+    m_ui->FindControl<CheckBox>(c_sampleUIPanel, c_jsonStorageCheckBox)->SetCallback([this](IPanel* parent, IControl*)
     {
         dynamic_cast<CheckBox*>(parent->Find(c_globalStorageCheckBox))->SetChecked(false);
         dynamic_cast<CheckBox*>(parent->Find(c_jsonStorageCheckBox))->SetChecked(true);
@@ -210,7 +228,7 @@ void Sample::SetupUI()
 
         ChangeStorageType(XblTitleStorageType::Universal);
     });
-    m_ui->FindControl<CheckBox>(c_sampleUIPanel, c_trustedStorageCheckBox)->SetCallback([this](IPanel *parent, IControl *)
+    m_ui->FindControl<CheckBox>(c_sampleUIPanel, c_trustedStorageCheckBox)->SetCallback([this](IPanel* parent, IControl*)
     {
         dynamic_cast<CheckBox*>(parent->Find(c_globalStorageCheckBox))->SetChecked(false);
         dynamic_cast<CheckBox*>(parent->Find(c_jsonStorageCheckBox))->SetChecked(false);
@@ -220,40 +238,37 @@ void Sample::SetupUI()
     });
 }
 
-
-
 // Pulls data out of the blob metadata for display
-void TitleStorageViewRow::Update(const MetadataBlobDetail *item)
+void TitleStorageViewRow::Update(const MetadataBlobDetail* item)
 {
     // Extract information from the blob metadata for display
-    StringWidenAndUse(item->blobPath, [this](const wchar_t *converted)
+    StringWidenAndUse(item->blobPath, [this](const wchar_t* converted)
     {
         m_blobPath->SetText(converted);
     });
     m_blobType->SetText(BlobTypeStrings[static_cast<int>(item->blobType)]);
 
-    StringWidenAndUse(item->displayName, [this](const wchar_t *converted)
+    StringWidenAndUse(item->displayName, [this](const wchar_t* converted)
     {
         m_displayName->SetText(converted);
     });
-    StringWidenAndUse(std::to_string(item->length), [this](const wchar_t *converted)
+    StringWidenAndUse(std::to_string(item->length), [this](const wchar_t* converted)
     {
         m_length->SetText(converted);
     });
-    StringWidenAndUse(std::to_string(item->xboxUserId), [this](const wchar_t *converted)
+    StringWidenAndUse(std::to_string(item->xboxUserId), [this](const wchar_t* converted)
     {
         m_XUID->SetText(converted);
     });
 
     metadataBlob = *item;
 }
-
 // Download a blob of the selected storage.
-void Sample::DownloadBlob(MetadataBlobDetail *blob)
+void Sample::DownloadBlob(MetadataBlobDetail* blob)
 {
     struct DownloadContext
     {
-        Sample *sample;
+        Sample* sample;
         std::unique_ptr<std::vector<uint8_t>> contextBuffer;
     };
 
@@ -264,10 +279,10 @@ void Sample::DownloadBlob(MetadataBlobDetail *blob)
     auto asyncBlock = new XAsyncBlock{};
     asyncBlock->queue = m_mainAsyncQueue;
     asyncBlock->context = reinterpret_cast<void*>(ctx);
-    asyncBlock->callback = [](XAsyncBlock *asyncBlock)
+    asyncBlock->callback = [](XAsyncBlock* asyncBlock)
     {
-        auto context = reinterpret_cast<DownloadContext *>(asyncBlock->context);
-        auto &[sample, downloadBlobBuffer] = *reinterpret_cast<DownloadContext*>(asyncBlock->context);
+        auto context = reinterpret_cast<DownloadContext*>(asyncBlock->context);
+        auto& [sample, downloadBlobBuffer] = *reinterpret_cast<DownloadContext*>(asyncBlock->context);
 
         XblTitleStorageBlobMetadata blobMetadata;
         HRESULT hr = XblTitleStorageDownloadBlobResult(asyncBlock, &blobMetadata);
@@ -280,7 +295,7 @@ void Sample::DownloadBlob(MetadataBlobDetail *blob)
         }
         else
         {
-            context->sample->ShowNoticePopUp(L"Download Error", (wchar_t *)L"Failed to download the data.");
+            context->sample->ShowNoticePopUp(L"Download Error", (wchar_t*)L"Failed to download the data.");
         }
         delete reinterpret_cast<DownloadContext*>(asyncBlock->context);
         delete asyncBlock;
@@ -312,11 +327,11 @@ void Sample::DownloadBlob(MetadataBlobDetail *blob)
 }
 
 // Delete a blob of the selected storage.
-void Sample::DeleteBlob(MetadataBlobDetail *blob)
+void Sample::DeleteBlob(MetadataBlobDetail* blob)
 {
     struct Deleteontext
     {
-        Sample *sample;
+        Sample* sample;
         XblTitleStorageType storagetype;
     };
     auto ctx = new Deleteontext;
@@ -328,7 +343,7 @@ void Sample::DeleteBlob(MetadataBlobDetail *blob)
     asyncBlock->context = reinterpret_cast<void*>(ctx);
     asyncBlock->callback = [](XAsyncBlock* asyncBlock)
     {
-        auto context = reinterpret_cast<Deleteontext *>(asyncBlock->context);
+        auto context = reinterpret_cast<Deleteontext*>(asyncBlock->context);
         HRESULT hr = XAsyncGetStatus(asyncBlock, false);
 
         if (SUCCEEDED(hr))
@@ -361,11 +376,11 @@ void Sample::DeleteBlob(MetadataBlobDetail *blob)
 
 }
 // Uploads a blob to a specific path in the selected storage type.
-void Sample::UploadBlob(XblTitleStorageBlobType blobType, char *blobpath, char *blobdata)
+void Sample::UploadBlob(XblTitleStorageBlobType blobType, char* blobpath, char* blobdata)
 {
     struct UploadBlobContext
     {
-        Sample *sample;
+        Sample* sample;
         std::unique_ptr<std::vector<uint8_t>> blob;
     };
     auto ctx = new UploadBlobContext();
@@ -377,7 +392,7 @@ void Sample::UploadBlob(XblTitleStorageBlobType blobType, char *blobpath, char *
     asyncBlock->context = reinterpret_cast<void*>(ctx);
     asyncBlock->callback = [](XAsyncBlock* asyncBlock)
     {
-        auto &[sample, blob] = *reinterpret_cast<UploadBlobContext*>(asyncBlock->context);
+        auto& [sample, blob] = *reinterpret_cast<UploadBlobContext*>(asyncBlock->context);
 
         XblTitleStorageBlobMetadata blobMetadata{};
         HRESULT hr = XblTitleStorageUploadBlobResult(asyncBlock, &blobMetadata);
@@ -401,7 +416,7 @@ void Sample::UploadBlob(XblTitleStorageBlobType blobType, char *blobpath, char *
     HRESULT hr = XblTitleStorageUploadBlobAsync(
         GetXblContext(),
         blobMetadata,
-        (uint8_t *)blobdata,
+        (uint8_t*)blobdata,
         std::strlen(blobdata),
         XblTitleStorageETagMatchCondition::NotUsed,
         preferredUploadBlockSize,
@@ -415,7 +430,7 @@ void Sample::UploadBlob(XblTitleStorageBlobType blobType, char *blobpath, char *
     }
 }
 
-void Sample::ShowNoticePopUp(const wchar_t *title, const wchar_t *message)
+void Sample::ShowNoticePopUp(const wchar_t* title, const wchar_t* message)
 {
     std::wstring titleCapture = title, messageCapture = message;
     m_ui->FindControl<ATG::TextLabel>(c_noticePopUpPanel, 7001)->SetText(titleCapture.c_str());
@@ -423,7 +438,7 @@ void Sample::ShowNoticePopUp(const wchar_t *title, const wchar_t *message)
     m_ui->FindPanel<ATG::IPanel>(c_noticePopUpPanel)->Show();
 }
 
-void Sample::ShowFileOptions(void *blob, bool canDelete)
+void Sample::ShowFileOptions(void* blob, bool canDelete)
 {
     m_ui->FindControl<ATG::Button>(c_fileOptionsPopUpPanel, 8001)->SetUser(blob);
 
@@ -439,7 +454,11 @@ void Sample::ShowFileOptions(void *blob, bool canDelete)
 // Executes basic render loop.
 void Sample::Tick()
 {
-    PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %I64u", m_frame);
+    PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
+
+#ifdef _GAMING_XBOX
+    m_deviceResources->WaitForOrigin();
+#endif
 
     m_timer.Tick([&]()
     {
@@ -455,7 +474,7 @@ void Sample::Tick()
 // Updates the world.
 void Sample::Update(DX::StepTimer const& timer)
 {
-    PIXScopedEvent(PIX_COLOR_DEFAULT, L"Update");
+    PIXBeginEvent(PIX_COLOR_DEFAULT, L"Update");
 
     float elapsedTime = float(timer.GetElapsedSeconds());
 
@@ -494,11 +513,32 @@ void Sample::Update(DX::StepTimer const& timer)
         m_gamePadButtons.Reset();
     }
 
+    auto kb = m_keyboard->GetState();
+    m_keyboardButtons.Update(kb);
+
+    if (kb.Escape)
+    {
+        ExitSample();
+    }
+
+    if (m_keyboardButtons.IsKeyReleased(Keyboard::Keys::Tab))
+    {
+        if (!m_liveResources->IsUserSignedIn())
+        {
+            m_liveResources->SignInSilently();
+        }
+        else
+        {
+            m_liveResources->SignInWithUI();
+        }
+    }
+
     // Process any completed tasks
     while (XTaskQueueDispatch(m_mainAsyncQueue, XTaskQueuePort::Completion, 0))
     {
     }
 
+    m_ui->Update(elapsedTime, *m_mouse, *m_keyboard);
     m_liveInfoHUD->Update(m_deviceResources->GetCommandQueue());
 
     PIXEndEvent();
@@ -544,16 +584,16 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
-    auto dsvDescriptor = m_deviceResources->GetDepthStencilView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
     commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -563,6 +603,14 @@ void Sample::Clear()
 
 #pragma region Message Handlers
 // Message handlers
+void Sample::OnActivated()
+{
+}
+
+void Sample::OnDeactivated()
+{
+}
+
 void Sample::OnSuspending()
 {
     m_deviceResources->Suspend();
@@ -573,7 +621,29 @@ void Sample::OnResuming()
     m_deviceResources->Resume();
     m_timer.ResetElapsedTime();
     m_gamePadButtons.Reset();
+    m_keyboardButtons.Reset();
     m_liveResources->Refresh();
+}
+
+void Sample::OnWindowMoved()
+{
+    auto const r = m_deviceResources->GetOutputSize();
+    m_deviceResources->WindowSizeChanged(r.right, r.bottom);
+}
+
+void Sample::OnWindowSizeChanged(int width, int height)
+{
+    if (!m_deviceResources->WindowSizeChanged(width, height))
+        return;
+
+    CreateWindowSizeDependentResources();
+}
+
+// Properties
+void Sample::GetDefaultSize(int& width, int& height) const noexcept
+{
+    width = 1980;
+    height = 1080;
 }
 #pragma endregion
 
@@ -581,11 +651,11 @@ void Sample::OnResuming()
 // These are the resources that depend on the device.
 void Sample::CreateDeviceDependentResources()
 {
-    auto device = m_deviceResources->GetD3DDevice();
+    auto const device = m_deviceResources->GetD3DDevice();
 
     m_graphicsMemory = std::make_unique<GraphicsMemory>(device);
 
-    RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
+    const RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
 
     m_resourceDescriptors = std::make_unique<DirectX::DescriptorPile>(device,
         Descriptors::Count,
@@ -598,11 +668,38 @@ void Sample::CreateDeviceDependentResources()
     m_liveInfoHUD->RestoreDevice(device, rtState, resourceUpload, *m_resourceDescriptors);
 
     m_ui->RestoreDevice(device, rtState, resourceUpload, *m_resourceDescriptors);
-    
+
     auto uploadResourcesFinished = resourceUpload.End(m_deviceResources->GetCommandQueue());
     uploadResourcesFinished.wait();
+
 }
 
+// Allocate all memory resources that change on a window SizeChanged event.
+void Sample::CreateWindowSizeDependentResources()
+{
+    const RECT fullscreen = m_deviceResources->GetOutputSize();
+
+    m_liveInfoHUD->SetViewport(m_deviceResources->GetScreenViewport());
+    m_ui->SetWindow(fullscreen);
+}
+
+void Sample::OnDeviceLost()
+{
+    m_graphicsMemory.reset();
+    m_liveInfoHUD->ReleaseDevice();
+    m_resourceDescriptors.reset();
+}
+
+void Sample::OnDeviceRestored()
+{
+    CreateDeviceDependentResources();
+
+    CreateWindowSizeDependentResources();
+}
+#pragma endregion
+
+
+#pragma region ListViewRow
 
 void Sample::ListViewUpdate(const XblTitleStorageBlobMetadata metadata[], int itemsize)
 {
@@ -628,14 +725,13 @@ void Sample::ListViewUpdate(const XblTitleStorageBlobMetadata metadata[], int it
 
 }
 
-
 void Sample::ChangeStorageType(XblTitleStorageType storage_type)
 {
     m_selectedStorageType = storage_type;
 
     struct ChangeStorageTypeContext
     {
-        Sample *sample;
+        Sample* sample;
     };
     auto ctx = new ChangeStorageTypeContext();
     ctx->sample = this;
@@ -643,9 +739,9 @@ void Sample::ChangeStorageType(XblTitleStorageType storage_type)
     auto asyncBlock = new XAsyncBlock{};
     asyncBlock->queue = m_mainAsyncQueue;
     asyncBlock->context = reinterpret_cast<void*>(ctx);
-    asyncBlock->callback = [](XAsyncBlock *asyncBlock)
+    asyncBlock->callback = [](XAsyncBlock* asyncBlock)
     {
-        auto context = reinterpret_cast<ChangeStorageTypeContext *>(asyncBlock->context);
+        auto context = reinterpret_cast<ChangeStorageTypeContext*>(asyncBlock->context);
 
         size_t usedBytes;
         size_t quotaBytes;
@@ -674,7 +770,7 @@ void Sample::ChangeStorageType(XblTitleStorageType storage_type)
 
     struct GetBlobContext
     {
-        Sample *sample;
+        Sample* sample;
     };
     auto ctx_getblob = new GetBlobContext();
     ctx_getblob->sample = this;
@@ -684,7 +780,7 @@ void Sample::ChangeStorageType(XblTitleStorageType storage_type)
     asyncBlockGetBlob->context = reinterpret_cast<void*>(ctx_getblob);
     asyncBlockGetBlob->callback = [](XAsyncBlock* asyncBlockGetBlob)
     {
-        auto context = reinterpret_cast<GetBlobContext *>(asyncBlockGetBlob->context);
+        auto context = reinterpret_cast<GetBlobContext*>(asyncBlockGetBlob->context);
 
         XblTitleStorageBlobMetadataResultHandle blobMetadataResultHandle;
         HRESULT hr = XblTitleStorageGetBlobMetadataResult(asyncBlockGetBlob, &blobMetadataResultHandle);
@@ -696,7 +792,7 @@ void Sample::ChangeStorageType(XblTitleStorageType storage_type)
                 XblTitleStorageBlobMetadataResultCloseHandle(blobMetadataResultHandle);
             }
 
-            const XblTitleStorageBlobMetadata *items;
+            const XblTitleStorageBlobMetadata* items;
             size_t itemsSize;
 
             HRESULT hr_items = XblTitleStorageBlobMetadataResultGetItems(blobMetadataResultHandle, &items, &itemsSize);
@@ -733,20 +829,6 @@ void Sample::ChangeStorageType(XblTitleStorageType storage_type)
 
 }
 
-// Allocate all memory resources that change on a window SizeChanged event.
-void Sample::CreateWindowSizeDependentResources()
-{
-    RECT fullscreen = m_deviceResources->GetOutputSize();
-
-    m_liveInfoHUD->SetViewport(m_deviceResources->GetScreenViewport());
-    m_ui->SetWindow(fullscreen);
-}
-#pragma endregion
-
-#pragma region ListViewRow
-std::weak_ptr<ATG::UIManager> TitleStorageViewRow::s_ui;
-Sample *TitleStorageViewRow::s_sample;
-
 void TitleStorageViewRow::Show()
 {
     m_selectBtn->SetVisible(true);
@@ -757,6 +839,7 @@ void TitleStorageViewRow::Show()
     m_length->SetVisible(true);
     m_XUID->SetVisible(true);
 }
+
 void TitleStorageViewRow::Hide()
 {
     m_selectBtn->SetVisible(false);
@@ -768,23 +851,24 @@ void TitleStorageViewRow::Hide()
     m_XUID->SetVisible(false);
 }
 
-void TitleStorageViewRow::SetControls(ATG::IPanel *parent, int rowStart)
+void TitleStorageViewRow::SetControls(ATG::IPanel *parent, uint32_t rowStart)
 {
-    m_selectBtn = dynamic_cast<ATG::Button*>(parent->Find(unsigned(rowStart)));
+    m_selectBtn = dynamic_cast<ATG::Button *>(parent->Find(rowStart));
     if (m_selectBtn)
     {
         m_selectBtn->SetUser(reinterpret_cast<void*>(this));
     }
-    m_selectBtn = dynamic_cast<ATG::Button*>(parent->Find((unsigned int)rowStart));
-    m_blobPath = dynamic_cast<ATG::TextLabel*>(parent->Find((unsigned int)rowStart + 1));
-    m_blobType = dynamic_cast<ATG::TextLabel*>(parent->Find((unsigned int)rowStart + 2));
-    m_displayName = dynamic_cast<ATG::TextLabel*>(parent->Find((unsigned int)rowStart + 3));
-    m_length = dynamic_cast<ATG::TextLabel*>(parent->Find((unsigned int)rowStart + 4));
-    m_XUID = dynamic_cast<ATG::TextLabel*>(parent->Find((unsigned int)rowStart + 5));
+    m_selectBtn = dynamic_cast<ATG::Button *>(parent->Find(rowStart));
+    m_blobPath = dynamic_cast<ATG::TextLabel *>(parent->Find(rowStart + 1));
+    m_blobType = dynamic_cast<ATG::TextLabel *>(parent->Find(rowStart + 2));
+    m_displayName = dynamic_cast<ATG::TextLabel *>(parent->Find(rowStart + 3));
+    m_length = dynamic_cast<ATG::TextLabel *>(parent->Find(rowStart + 4));
+    m_XUID = dynamic_cast<ATG::TextLabel *>(parent->Find(rowStart + 5));
 }
 
 void TitleStorageViewRow::SetSelectedCallback(ATG::IControl::callback_t callback)
 {
     m_selectBtn->SetCallback(callback);
 }
+
 #pragma endregion

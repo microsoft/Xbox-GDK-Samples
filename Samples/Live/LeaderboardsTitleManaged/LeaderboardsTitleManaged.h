@@ -68,6 +68,7 @@ namespace {
     ATG::IPanel* s_mainPanel = nullptr;
 
     bool s_isLeaderboardGlobal = true;
+    bool s_skipToUser = false;
 
     const int c_pageTitleText = 0;
     const int c_pageDescText = 1;

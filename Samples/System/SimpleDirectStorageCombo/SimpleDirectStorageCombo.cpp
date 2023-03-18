@@ -10,13 +10,17 @@
 #include "SimpleDirectStorageCombo.h"
 #include "SampleImplementations/SimpleLoad.h"
 #include "SampleImplementations/StatusBatch.h"
-#include "SampleImplementations/StatusFence.h"
+#include "SampleImplementations/FenceBatch.h"
 #include "SampleImplementations/MultipleQueues.h"
 #include "SampleImplementations/Cancellation.h"
 #include "SampleImplementations/RecommendedPattern.h"
 #include "SampleImplementations/XBoxZLibDecompression.h"
 #include "SampleImplementations/XBoxInMemoryZLibDecompression.h"
 #include "SampleImplementations/DesktopCPUDecompression.h"
+#include "SampleImplementations/DesktopGPUDecompression.h"
+#if (_GRDK_VER >= 0x585D073C) || defined(_GAMING_DESKTOP) /* GDK Edition 221000 */
+#include "SampleImplementations/CompletionEvent.h"
+#endif
 
 #if defined(_GAMING_DESKTOP) || defined(_GAMING_XBOX)
 #include "xsystem.h"
@@ -54,8 +58,10 @@ std::wstring GetGamingDesktopRealFileName(const std::wstring& filename)
     }
     return L"";
 }
+
 const std::wstring Sample::c_dataFileName(GetGamingDesktopRealFileName(L"DSTORAGEPreviewDataFile.dat"));
 const std::wstring Sample::c_zipDataFileName(GetGamingDesktopRealFileName(L"DSTORAGEZipDataFile.zip"));
+const std::wstring Sample::c_gDeflateDataFileName(GetGamingDesktopRealFileName(L"DSTORAGEGDeflateDataFile.gdeflate"));
 #else
 const std::wstring Sample::c_dataFileName(L"DSTORAGEPreviewDataFile.dat");
 const std::wstring Sample::c_zipDataFileName(L"DSTORAGEZipDataFile.zip");
@@ -94,12 +100,26 @@ void Sample::DSTORAGESampleFunc()
 
     try
     {
-        StatusFence statusFenceSample;
-        m_statusFenceStatus = statusFenceSample.RunSample(c_dataFileName, m_deviceResources->GetD3DDevice(), c_dataFileSize) ? e_success : e_failed;
+        FenceBatch fenceBatchSample;
+        m_fenceBatchStatus = fenceBatchSample.RunSample(c_dataFileName, m_deviceResources->GetD3DDevice(), c_dataFileSize) ? e_success : e_failed;
     }
     catch (...)
     {
-        m_statusFenceStatus = e_exception;
+        m_fenceBatchStatus = e_exception;
+    }
+
+    try
+    {
+#if ((_GRDK_VER >= 0x585D073C)&&(defined _GAMING_XBOX_SCARLETT)) || defined(_GAMING_DESKTOP) /* GDK Edition 221000 */
+        CompletionEvent completionEventSample;
+        m_completionEventStatus = completionEventSample.RunSample(c_dataFileName, c_dataFileSize) ? e_success : e_failed;
+#else
+        m_completionEventStatus = e_notImplemented;
+#endif
+    }
+    catch (...)
+    {
+        m_completionEventStatus = e_exception;
     }
 
     try
@@ -146,6 +166,20 @@ void Sample::DSTORAGESampleFunc()
 
     try
     {
+#ifndef _GAMING_XBOX
+        DesktopGPUDecompression decompressionSample;
+        m_desktopGPUDecompressionStatus = decompressionSample.RunSample(c_gDeflateDataFileName, m_deviceResources->GetD3DDevice()) ? e_success : e_failed;
+#else
+        m_desktopGPUDecompressionStatus = e_notImplemented;
+#endif
+    }
+    catch (...)
+    {
+        m_desktopGPUDecompressionStatus = e_exception;
+    }
+
+    try
+    {
         MultipleQueues mulitpleQueuesSample;
         m_multipleQueuesStatus = mulitpleQueuesSample.RunSample(c_dataFileName, c_dataFileSize) ? e_success : e_failed;
     }
@@ -177,16 +211,113 @@ void Sample::DSTORAGESampleFunc()
     ImplementationBase::ShutdownDirectStorageObjects();
 }
 
+#ifndef _GAMING_XBOX
+void Sample::CreateGDeflateDataFile()
+{
+    uint32_t* rootBuffer = static_cast<uint32_t*> (VirtualAlloc(nullptr, c_gDeflateFileSize, MEM_COMMIT, PAGE_READWRITE));
+    for (uint32_t j = 0; j < c_gDeflateFileSize / sizeof(uint32_t); j++)
+    {
+        rootBuffer[j] = j;
+    }
+    uint8_t* srcData = reinterpret_cast<uint8_t*>(rootBuffer);
+
+    using Chunk = std::vector<uint8_t>;
+
+    std::vector<Chunk> chunks;
+    chunks.resize(c_gDeflateNumChunks);
+
+    std::atomic<size_t> nextChunk(0);
+
+    std::vector<std::thread> threads;
+    uint32_t numThreads = std::thread::hardware_concurrency();
+    threads.reserve(numThreads);
+
+    for (uint32_t i = 0; i < numThreads; ++i)
+    {
+        threads.emplace_back(
+            [&]()
+            {
+                // Each thread needs its own instance of the codec
+                Microsoft::WRL::ComPtr <IDStorageCompressionCodec> codec;
+                DX::ThrowIfFailed(DStorageCreateCompressionCodec(DSTORAGE_COMPRESSION_FORMAT_GDEFLATE, 1, __uuidof(IDStorageCompressionCodec), (void**)(codec.ReleaseAndGetAddressOf())));
+
+                while (true)
+                {
+                    size_t chunkIndex = nextChunk.fetch_add(1);
+                    if (chunkIndex >= c_gDeflateNumChunks)
+                        return;
+
+                    size_t thisChunkOffset = chunkIndex * c_gDeflateChunkSize;
+                    size_t thisChunkSize = std::min<size_t>(c_gDeflateFileSize - thisChunkOffset, c_gDeflateChunkSize);
+
+                    Chunk chunk(codec->CompressBufferBound(thisChunkSize));
+
+                    uint8_t* uncompressedStart = srcData + thisChunkOffset;
+
+                    size_t compressedSize = 0;
+                    DX::ThrowIfFailed(codec->CompressBuffer(uncompressedStart, thisChunkSize, DSTORAGE_COMPRESSION_BEST_RATIO, chunk.data(), chunk.size(), &compressedSize));
+                    chunk.resize(compressedSize);
+
+                    chunks[chunkIndex] = std::move(chunk);
+                }
+            });
+    }
+
+    for (auto& thread : threads)
+    {
+        thread.join();
+    }
+
+    CREATEFILE2_EXTENDED_PARAMETERS params = {};
+
+    params.dwSize = sizeof(params);
+    params.dwFileAttributes = FILE_ATTRIBUTE_NORMAL;
+    params.dwFileFlags = 0;
+    HANDLE dataFile = CreateFile2(c_gDeflateDataFileName.c_str(), GENERIC_WRITE, 0, CREATE_ALWAYS, &params);
+    if (dataFile == INVALID_HANDLE_VALUE)
+        DX::ThrowIfFailed(static_cast<HRESULT> (GetLastError()));
+
+    DWORD actualWrite;
+    uint64_t toWrite(c_gDeflateNumChunks);
+    WriteFile(dataFile, &toWrite, 8, &actualWrite, nullptr);
+    toWrite = c_gDeflateChunkSize;
+    WriteFile(dataFile, &toWrite, 8, &actualWrite, nullptr);
+
+    uint64_t curChunkOffset(16 * c_gDeflateNumChunks);
+    curChunkOffset += 16;
+    for (uint32_t i = 0; i < c_gDeflateNumChunks; ++i)
+    {
+        uint64_t chunkSize = chunks[i].size();
+        WriteFile(dataFile, &curChunkOffset, 8, &actualWrite, nullptr);
+        WriteFile(dataFile, &chunkSize, 8, &actualWrite, nullptr);
+        curChunkOffset += chunkSize;
+    }
+
+    for (uint32_t i = 0; i < c_gDeflateNumChunks; ++i)
+    {
+        uint32_t chunkSize = static_cast<uint32_t> (chunks[i].size());
+        WriteFile(dataFile, chunks[i].data(), chunkSize, &actualWrite, nullptr);
+    }
+
+    VirtualFree(srcData, 0, MEM_RELEASE);
+    CloseHandle(dataFile);
+}
+#endif
+
 void Sample::CreateDataFiles()
 {
     WIN32_FILE_ATTRIBUTE_DATA dataInfo;
     WIN32_FILE_ATTRIBUTE_DATA zipInfo;
-    bool validDataInfo(false), validZipInfo(false);
+    bool validDataInfo(false), validZipInfo(false), validGDeflateInfo(true);
 
     // If the file already exists and is the correct size then nothing needs to be done
     validDataInfo = GetFileAttributesExW(c_dataFileName.c_str(), GetFileExInfoStandard, &dataInfo);
     validZipInfo = GetFileAttributesExW(c_zipDataFileName.c_str(), GetFileExInfoStandard, &zipInfo);
-    if (validDataInfo && validZipInfo)
+#ifndef _GAMING_XBOX
+    WIN32_FILE_ATTRIBUTE_DATA gDeflateInfo;
+    validGDeflateInfo = GetFileAttributesExW(c_gDeflateDataFileName.c_str(), GetFileExInfoStandard, &gDeflateInfo);
+#endif
+    if (validDataInfo && validZipInfo && validGDeflateInfo)
     {
         uint64_t dataSize;
         dataSize = dataInfo.nFileSizeHigh;
@@ -209,6 +340,8 @@ void Sample::CreateDataFiles()
             params.dwFileAttributes = FILE_ATTRIBUTE_NORMAL;
             params.dwFileFlags = 0;
             HANDLE dataFile = CreateFile2(c_dataFileName.c_str(), GENERIC_WRITE, 0, CREATE_ALWAYS, &params);
+            if (dataFile == INVALID_HANDLE_VALUE)
+                DX::ThrowIfFailed(static_cast<HRESULT> (GetLastError()));
 
             uint32_t currentSeedValue = 0;
 
@@ -270,6 +403,8 @@ void Sample::CreateDataFiles()
         params.dwFileAttributes = FILE_ATTRIBUTE_NORMAL;
         params.dwFileFlags = 0;
         HANDLE dataFile = CreateFile2(c_zipDataFileName.c_str(), GENERIC_WRITE, 0, CREATE_ALWAYS, &params);
+        if (dataFile == INVALID_HANDLE_VALUE)
+            DX::ThrowIfFailed(static_cast<HRESULT> (GetLastError()));
 
         // NOTE: Compressed data must start on a 16 byte aligned offset, in this case it's at offset 0.
         DWORD actualWrite;
@@ -287,24 +422,32 @@ Sample::Sample() noexcept(false) :
     , m_xBoxDecompressionStatus(e_pending)
     , m_xBoxInMemoryDecompressionStatus(e_pending)
     , m_desktopCPUDecompressionStatus(e_pending)
+    , m_desktopGPUDecompressionStatus(e_pending)
     , m_multipleQueuesStatus(e_pending)
     , m_statusBatchStatus(e_pending)
-    , m_statusFenceStatus(e_pending)
+    , m_fenceBatchStatus(e_pending)
+    , m_completionEventStatus(e_pending)
     , m_recommendedPatternStatus(e_pending)
     , m_creatingDataFile(e_pending)
     , m_frame(0)
 {
     // Renders only 2D, so no need for a depth buffer.
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_UNKNOWN);
+    m_deviceResources->SetClearColor(ATG::Colors::Background);
     m_deviceResources->RegisterDeviceNotify(this);
 #if defined(_GAMING_XBOX_XBOXONE)
     m_xBoxInMemoryDecompressionStatus = e_notImplemented;
     m_desktopCPUDecompressionStatus = e_notImplemented;
+    m_desktopGPUDecompressionStatus = e_notImplemented;
 #elif defined (_GAMING_XBOX_SCARLETT)
     m_desktopCPUDecompressionStatus = e_notImplemented;
+    m_desktopGPUDecompressionStatus = e_notImplemented;
 #else
     m_xBoxDecompressionStatus = e_notImplemented;
     m_xBoxInMemoryDecompressionStatus = e_notImplemented;
+#endif
+#if (_GRDK_VER < 0x585D073C) && !defined(_GAMING_DESKTOP) /* GDK Edition 221000 */
+    m_completionEventStatus = e_notImplemented;
 #endif
 }
 
@@ -337,6 +480,10 @@ void Sample::Initialize(HWND window, int width, int height)
 void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
+
+#ifdef _GAMING_XBOX
+    m_deviceResources->WaitForOrigin();
+#endif
 
     m_timer.Tick([&]()
         {
@@ -424,9 +571,20 @@ void Sample::Render()
 #endif
         DisplayStatusLine(m_xBoxInMemoryDecompressionStatus, L"Xbox In Memory Hardware Decompression", pos);
         DisplayStatusLine(m_desktopCPUDecompressionStatus, L"Desktop CPU Decompression", pos);
+        DisplayStatusLine(m_desktopGPUDecompressionStatus, L"Desktop GPU Decompression", pos);
         DisplayStatusLine(m_multipleQueuesStatus, L"Multiple Queues", pos);
         DisplayStatusLine(m_statusBatchStatus, L"Status Batch", pos);
-        DisplayStatusLine(m_statusFenceStatus, L"Status Fence", pos);
+        DisplayStatusLine(m_fenceBatchStatus, L"Fence Batch", pos);
+#if ((_GRDK_VER >= 0x585D073C)&&(defined _GAMING_XBOX_SCARLETT)) || defined(_GAMING_DESKTOP) /* GDK Edition 221000 */
+        DisplayStatusLine(m_completionEventStatus, L"Completion Event", pos);
+#elif defined(_GAMING_XBOX_XBOXONE)
+        pos.y += m_regularFont->GetLineSpacing();
+        m_regularFont->DrawString(m_spriteBatch.get(), L"Completion Event not supported on Xbox One", pos);
+#else
+        pos.y += m_regularFont->GetLineSpacing();
+        m_regularFont->DrawString(m_spriteBatch.get(), L"Completion Event requires PC or at least the October 2022 GXDK", pos);
+#endif
+
         DisplayStatusLine(m_recommendedPatternStatus, L"Recommended Pattern", pos);
     }
 

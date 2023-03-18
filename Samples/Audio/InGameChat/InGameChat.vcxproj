@@ -574,10 +574,10 @@
     <CopyFileToFolders Include="Assets\talking.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="InGameChat_ReadMe_ja-jp.docx" />
-    <None Include="InGameChat_ReadMe_ko-kr.docx" />
-    <None Include="InGameChat_ReadMe_zh-cn.docx" />
-    <None Include="ReadMe.docx" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
+    <None Include="readme.md" />
     <None Include="Scripts\Desktop.PostBuild.bat" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
@@ -588,5 +588,11 @@
     <ReferenceCopyLocalPaths Include="$(GRDKLatest)ExtensionLibraries\Xbox.Game.Chat.2.Cpp.API\Redist\CommonConfiguration\neutral\GameChat2.dll" />
     <ReferenceCopyLocalPaths Include="$(GRDKLatest)ExtensionLibraries\PlayFab.Party.Cpp\Redist\CommonConfiguration\neutral\Party.dll" />
     <ReferenceCopyLocalPaths Include="$(GRDKLatest)ExtensionLibraries\PlayFab.PartyXboxLive.Cpp\Redist\CommonConfiguration\neutral\PartyXboxLive.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="media\image1.png" />
+    <None Include="media\image3.png" />
+    <None Include="media\image4.png" />
+    <None Include="media\image5.png" />
   </ItemGroup>
 </Project>

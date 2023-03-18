@@ -140,6 +140,7 @@ Sample::Sample() :
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>(
         c_backBufferFormat, c_depthFormat, 2);
+    m_deviceResources->SetClearColor(ATG::Colors::Background);
     m_deviceResources->RegisterDeviceNotify(this);
     m_gamePad = std::make_unique<GamePad>();
     m_hdrScene = std::make_unique<DX::RenderTexture>(c_HDRFormat);
@@ -199,6 +200,10 @@ void Sample::Tick()
     {
         Update(m_timer);
     });
+
+#ifdef _GAMING_DESKTOP
+    m_mouse->EndOfInputFrame();
+#endif
 
     Render();
 

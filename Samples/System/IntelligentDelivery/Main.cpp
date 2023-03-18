@@ -27,11 +27,12 @@ namespace
     HANDLE g_plmSuspendComplete = nullptr;
     HANDLE g_plmSignalResume = nullptr;
 #endif
-};
+}
 
 LPCWSTR g_szAppName = L"IntelligentDelivery";
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+void ExitSample() noexcept;
 
 // Entry point
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
@@ -42,7 +43,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
     {
 #ifdef _DEBUG
         OutputDebugStringA("ERROR: This hardware does not support the required instruction set.\n");
-#ifdef __AVX2__
+#if defined(_GAMING_XBOX) && defined(__AVX2__)
         OutputDebugStringA("This may indicate a Gaming.Xbox.Scarlett.x64 binary is being run on an Xbox One.\n");
 #endif
 #endif
@@ -52,6 +53,22 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
     // Initialize COM for WIC usage
     if (FAILED(CoInitializeEx(nullptr, COINITBASE_MULTITHREADED)))
         return 1;
+
+#ifdef _GAMING_DESKTOP
+    // NOTE: When running the app from the Start Menu (required for
+    //    Store API's to work) the Current Working Directory will be
+    //    returned as C:\Windows\system32 unless you overwrite it.
+    //    The sample relies on the font and image files in the .exe's
+    //    directory and so we do the following to set the working
+    //    directory to what we want.
+    char dir[_MAX_PATH] = {};
+    if (GetModuleFileNameA(nullptr, dir, _MAX_PATH) > 0)
+    {
+        std::string exe = dir;
+        exe = exe.substr(0, exe.find_last_of("\\"));
+        std::ignore = SetCurrentDirectoryA(exe.c_str());
+    }
+#endif
 
     HRESULT hr = XGameRuntimeInitialize();
     if (FAILED(hr))
@@ -64,19 +81,6 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
         }
         return 1;
     }
-
-#ifdef _GAMING_DESKTOP
-    // what this chunk of code does is: on Desktop, we establish the correct current working
-    // directory from which the sample executes in order for debugging from within
-    // VS to work properly when running as a registered store app.
-    char dir[_MAX_PATH] = {};
-    if (GetModuleFileNameA(nullptr, dir, _MAX_PATH) > 0)
-    {
-        std::string exe = dir;
-        exe = exe.substr(0, exe.find_last_of("\\"));
-        std::ignore = SetCurrentDirectoryA(exe.c_str());
-    }
-#endif//_GAMING_DESKTOP
 
 #ifdef _GAMING_XBOX
     // Default main thread to CPU 0
@@ -97,7 +101,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
         wcex.lpfnWndProc = WndProc;
         wcex.hInstance = hInstance;
         wcex.hCursor = LoadCursorW(nullptr, IDC_ARROW);
-        wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+        wcex.hbrBackground = reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1);
         wcex.lpszClassName = L"IntelligentDeliveryWindowClass";
         if (!RegisterClassExW(&wcex))
             return 1;
@@ -114,14 +118,13 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
 #endif
 
         HWND hwnd = CreateWindowExW(0, L"IntelligentDeliveryWindowClass", g_szAppName, WS_OVERLAPPEDWINDOW,
-            CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, nullptr, nullptr, hInstance,
-            nullptr);
+            CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top,
+            nullptr, nullptr, hInstance,
+            g_sample.get());
         if (!hwnd)
             return 1;
 
         ShowWindow(hwnd, nCmdShow);
-
-        SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(g_sample.get()));
 
         // Sample Usage Telemetry
         //
@@ -129,8 +132,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
 #ifdef ATG_ENABLE_TELEMETRY
         ATG::SendLaunchTelemetry();
 #endif
-        GetClientRect(hwnd, &rc);
 
+        GetClientRect(hwnd, &rc);
         g_sample->Initialize(hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
 #ifdef _GAMING_XBOX
@@ -180,7 +183,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
 
 #ifdef _GAMING_XBOX
     UnregisterAppStateChangeNotification(hPLM);
-    
+
     CloseHandle(g_plmSuspendComplete);
     CloseHandle(g_plmSignalResume);
 #endif
@@ -189,7 +192,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
 
     CoUninitialize();
 
-    return (int) msg.wParam;
+    return static_cast<int>(msg.wParam);
 }
 
 // Windows procedure
@@ -206,6 +209,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     switch (message)
     {
+    case WM_CREATE:
+        if (lParam)
+        {
+            auto params = reinterpret_cast<LPCREATESTRUCTW>(lParam);
+            SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(params->lpCreateParams));
+        }
+        break;
+
     case WM_ACTIVATEAPP:
         if (sample)
         {
@@ -316,12 +327,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
 
     case WM_GETMINMAXINFO:
-    {
-        auto info = reinterpret_cast<MINMAXINFO*>(lParam);
-        info->ptMinTrackSize.x = 320;
-        info->ptMinTrackSize.y = 200;
-    }
-    break;
+        if (lParam)
+        {
+            auto info = reinterpret_cast<MINMAXINFO*>(lParam);
+            info->ptMinTrackSize.x = 320;
+            info->ptMinTrackSize.y = 200;
+        }
+        break;
 
     case WM_POWERBROADCAST:
         switch (wParam)
@@ -406,7 +418,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 }
 
 // Exit helper
-void ExitSample()
+void ExitSample() noexcept
 {
     PostQuitMessage(0);
 }

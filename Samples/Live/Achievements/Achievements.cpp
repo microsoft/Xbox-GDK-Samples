@@ -35,20 +35,21 @@ namespace
         u8"Challenge"
     };
 
-    const int c_sampleUIPanel = 2000;
-    const int c_getAchievementsBtn = 2101;
-    const int c_getSingleAchievementBtn = 2102;
-    const int c_setSingleAchievementBtn = 2103;
-    const int c_getSingleAchievementBtn2 = 2104;
-    const int c_setSingleAchievement2Btn25 = 2105;
-    const int c_setSingleAchievement2Btn50 = 2106;
-    const int c_setSingleAchievement2Btn100 = 2107;
+    constexpr int c_sampleUIPanel = 2000;
+    constexpr int c_getAchievementsBtn = 2101;
+    constexpr int c_getSingleAchievementBtn = 2102;
+    constexpr int c_setSingleAchievementBtn = 2103;
+    constexpr int c_getSingleAchievementBtn2 = 2104;
+    constexpr int c_setSingleAchievement2Btn25 = 2105;
+    constexpr int c_setSingleAchievement2Btn50 = 2106;
+    constexpr int c_setSingleAchievement2Btn100 = 2107;
 }
 
 Sample::Sample() noexcept(false) :
     m_frame(0)
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>();
+    m_deviceResources->SetClearColor(ATG::Colors::Background);
     m_deviceResources->RegisterDeviceNotify(this);
     m_liveResources = std::make_shared<ATG::LiveResources>();
     m_liveInfoHUD = std::make_unique<ATG::LiveInfoHUD>("Title-managed Achievements Sample");
@@ -435,10 +436,16 @@ void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
 
+#ifdef _GAMING_XBOX
+    m_deviceResources->WaitForOrigin();
+#endif
+
     m_timer.Tick([&]()
     {
         Update(m_timer);
     });
+
+    m_mouse->EndOfInputFrame();
 
     Render();
 
@@ -557,16 +564,16 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
-    auto dsvDescriptor = m_deviceResources->GetDepthStencilView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
     commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -600,7 +607,7 @@ void Sample::OnResuming()
 
 void Sample::OnWindowMoved()
 {
-    auto r = m_deviceResources->GetOutputSize();
+    auto const r = m_deviceResources->GetOutputSize();
     m_deviceResources->WindowSizeChanged(r.right, r.bottom);
 }
 
@@ -702,8 +709,8 @@ void ScaleRect(const RECT &originalDisplayRect, const RECT &displayRect, const R
 // Allocate all memory resources that change on a window SizeChanged event.
 void Sample::CreateWindowSizeDependentResources()
 {
-    RECT fullscreen = m_deviceResources->GetOutputSize();
-    auto viewport = m_deviceResources->GetScreenViewport();
+    auto const fullscreen = m_deviceResources->GetOutputSize();
+    auto const viewport = m_deviceResources->GetScreenViewport();
 
     m_liveInfoHUD->SetViewport(viewport);
 

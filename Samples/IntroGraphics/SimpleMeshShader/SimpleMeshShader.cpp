@@ -43,6 +43,7 @@ Sample::Sample() noexcept(false)
     , m_frame(0)
 {
     m_deviceResources->RegisterDeviceNotify(this);
+    m_deviceResources->SetClearColor(ATG::Colors::Background);
 }
 
 Sample::~Sample()

@@ -81,6 +81,7 @@ Game::Game() noexcept(false) :
     m_vertexBufferView{}
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>();
+    m_deviceResources->SetClearColor(c_Background);
     m_deviceResources->RegisterDeviceNotify(this);
 }
 
@@ -201,16 +202,6 @@ void Game::Clear()
 
 #pragma region Message Handlers
 // Message handlers
-void Game::OnActivated()
-{
-    // Game is becoming active window.
-}
-
-void Game::OnDeactivated()
-{
-    // Game is becoming background window.
-}
-
 void Game::OnSuspending()
 {
     m_deviceResources->Suspend();
@@ -312,9 +303,9 @@ void Game::CreateDeviceDependentResources()
             { { -0.5f, -0.5f,  0.5f, 1.0f },{ 0.0f, 0.0f, 1.0f, 1.0f } }   // Left / Blue
         };
 
-        // Note: using upload heaps to transfer static data like vert buffers is not 
-        // recommended. Every time the GPU needs it, the upload heap will be marshalled 
-        // over. Please read up on Default Heap usage. An upload heap is used here for 
+        // Note: using upload heaps to transfer static data like vert buffers is not
+        // recommended. Every time the GPU needs it, the upload heap will be marshalled
+        // over. Please read up on Default Heap usage. An upload heap is used here for
         // code simplicity and because there are very few verts to actually transfer.
         const CD3DX12_HEAP_PROPERTIES heapProps(D3D12_HEAP_TYPE_UPLOAD);
         auto const resDesc = CD3DX12_RESOURCE_DESC::Buffer(sizeof(s_vertexData));

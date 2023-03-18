@@ -17,7 +17,11 @@ description: "This sample demonstrates how to use custom ETW event providers on 
 
 # CustomEventProvider
 
-For more information see this [Word document](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/CustomEventProvider/ReadMe.docx).
+For more information see: 
+- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/CustomEventProvider/readme_en-us.md)
+- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/CustomEventProvider/readme_ja-jp.md)
+- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/CustomEventProvider/readme_ko-kr.md)
+- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/CustomEventProvider/readme_zh-cn.md)
 
 ## Privacy statement
 

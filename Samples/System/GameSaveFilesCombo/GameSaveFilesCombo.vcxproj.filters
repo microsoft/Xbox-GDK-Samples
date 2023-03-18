@@ -57,7 +57,9 @@
     <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
       <Filter>External</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Kits\ATGTK\Texture.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\Texture.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -89,15 +91,126 @@
     <CopyFileToFolders Include="Assets\SmallLogo.png">
       <Filter>Assets</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="Assets\SplashScreen.png">
-      <Filter>Assets</Filter>
-    </CopyFileToFolders>
     <CopyFileToFolders Include="Assets\StoreLogo.png">
       <Filter>Assets</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="Assets\Layouts\sample_layout.json" />
-    <CopyFileToFolders Include="Assets\Layouts\styles.json" />
-    <CopyFileToFolders Include="Assets\Layouts\defs.json" />
+    <CopyFileToFolders Include="Assets\Fonts\segoeui_18pt_sharp_24_Bold.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\segoeui_24pt_sharp_32.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\segoeui_24pt_sharp_32_Bold.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\segoeui_27pt_sharp_36.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\segoeui_27pt_sharp_36_Bold.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\segoeui_36pt_sharp_48.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\segoeui_36pt_sharp_48_Bold.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\segoeui_72pt_sharp_96.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\segoeuisb_27pt_sharp_36.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\segoeuisb_27pt_sharp_36_Bold.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\XboxOneControllerLegendSmall.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\unchecked.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SplashScreen.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\Slider_Unfocused.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\Slider_Pressed.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\Slider_Hovered.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\Slider_Focused.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\Slider_Disabled.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\LOGO_ATG_SMALL.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\LOGO_ATG.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\invis_panel.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\Input_Panel_Border.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\GFX_Disabled_Button.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\frame_panel_3.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\FocusBorder.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\divider_line.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\crown.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\checked.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\Button_Unfocused.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\Button_Pressed.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\Button_Hovered_NoShade.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\Button_Hovered.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\Button_Focused_NoShade.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\Button_Focused.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\Button_Disabled.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Layouts\styles.json">
+      <Filter>Assets\Layouts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Layouts\sample_layout.json">
+      <Filter>Assets\Layouts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Layouts\defs.json">
+      <Filter>Assets\Layouts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
     <None Include="Readme.docx" />

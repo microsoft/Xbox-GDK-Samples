@@ -42,8 +42,6 @@ private:
     void CreateDeviceDependentResources();
     void CreateWindowSizeDependentResources();
 
-    void SetWaterColor(float red, float green, float blue);
-
     void DrawDolphin(Dolphin &dolphin);
 
     void AddNewDolphins(unsigned count);
@@ -102,9 +100,6 @@ private:
 
     // Water caustics
     unsigned int                                    m_currentCausticTextureView;
-
-    float                                           m_waterColor[4];
-    float                                           m_ambient[4];
 
     // Front Panel Manager
     FrontPanelManager                               m_frontPanelManager;

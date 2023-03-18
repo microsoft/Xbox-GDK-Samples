@@ -58,7 +58,10 @@ int32_t Sample::m_vertexBufferStart[ MESH_SHAPE_COUNT ];
 Sample::Sample() noexcept(false) :
     m_frame(0)
 {
-    m_deviceResources = std::make_unique<DX::DeviceResources>();
+    m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_D32_FLOAT,
+        2,
+        DX::DeviceResources::c_GeometryShaders);
+    m_deviceResources->SetClearColor(ATG::Colors::Background);
 }
 
 // Initialize the Direct3D resources required to run.

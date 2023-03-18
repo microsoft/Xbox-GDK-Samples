@@ -52,6 +52,7 @@ DeviceResources::DeviceResources(
         m_backBufferFormat(backBufferFormat),
         m_depthBufferFormat(depthBufferFormat),
         m_backBufferCount(backBufferCount),
+        m_clearColor{},
         m_window(nullptr),
         m_d3dFeatureLevel(D3D_FEATURE_LEVEL_11_0),
         m_outputSize{ 0, 0, 1, 1 },
@@ -99,8 +100,12 @@ void DeviceResources::CreateDeviceResources()
     params.GraphicsCommandQueueRingSizeBytes = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
     params.GraphicsScratchMemorySizeBytes = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
     params.ComputeScratchMemorySizeBytes = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
+    params.DisableGeometryShaderAllocations = (m_options & c_GeometryShaders) ? FALSE : TRUE;
+    params.DisableTessellationShaderAllocations = (m_options & c_TessellationShaders) ? FALSE : TRUE;
+    params.DisableDXR = TRUE;
+    params.CreateDeviceFlags = D3D12XBOX_CREATE_DEVICE_FLAG_NONE;
 
-#if defined(_GAMING_XBOX_SCARLETT) && (_GRDK_VER >= 0x585D070E /* GXDK Edition 221000 */)
+#if (_GRDK_VER >= 0x585D070E /* GXDK Edition 221000 */)
     if (m_options & c_AmplificationShaders)
     {
         params.AmplificationShaderIndirectArgsBufferSize = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
@@ -115,11 +120,7 @@ void DeviceResources::CreateDeviceResources()
 #ifdef _DEBUG
     if (hr == D3D12_ERROR_DRIVER_VERSION_MISMATCH)
     {
-#ifdef _GAMING_XBOX_SCARLETT
         OutputDebugStringA("ERROR: Running a d3d12_xs.lib (Xbox Series X|S) linked binary on an Xbox One is not supported\n");
-#else
-        OutputDebugStringA("ERROR: Running a d3d12_x.lib (Xbox One) linked binary on a Xbox Series X|S in 'Scarlett' mode is not supported\n");
-#endif
     }
 #endif
     ThrowIfFailed(hr);
@@ -204,8 +205,6 @@ void DeviceResources::CreateDeviceResources()
             // Workarounds for debug layer issues on hybrid-graphics systems
             D3D12_MESSAGE_ID_EXECUTECOMMANDLISTS_WRONGSWAPCHAINBUFFERREFERENCE,
             D3D12_MESSAGE_ID_RESOURCE_BARRIER_MISMATCHING_COMMAND_LIST_TYPE,
-            // Workaround for debug layer issues with mesh shader validation.
-            static_cast<D3D12_MESSAGE_ID>(1323) /* D3D12_MESSAGE_ID_CREATEMESHSHADER_TOPOLOGY_MISMATCH */,
         };
         D3D12_INFO_QUEUE_FILTER filter = {};
         filter.DenyList.NumIDs = static_cast<UINT>(std::size(hide));
@@ -239,6 +238,20 @@ void DeviceResources::CreateDeviceResources()
     else
     {
         m_d3dFeatureLevel = D3D_FEATURE_LEVEL_11_0;
+    }
+
+    // Check device options.
+    if (m_options & c_AmplificationShaders)
+    {
+        D3D12_FEATURE_DATA_D3D12_OPTIONS7 devopt = {};
+        if (FAILED(m_d3dDevice->CheckFeatureSupport(D3D12_FEATURE_D3D12_OPTIONS7, &devopt, sizeof(devopt))))
+        {
+            devopt = {};
+        }
+        if (devopt.MeshShaderTier == D3D12_MESH_SHADER_TIER_NOT_SUPPORTED)
+        {
+            m_options &= ~c_AmplificationShaders;
+        }
     }
 
 #endif
@@ -349,8 +362,7 @@ void DeviceResources::CreateWindowSizeDependentResources()
     );
     swapChainBufferDesc.Flags |= D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET;
 
-    D3D12_CLEAR_VALUE swapChainOptimizedClearValue = {};
-    swapChainOptimizedClearValue.Format = m_backBufferFormat;
+    const CD3DX12_CLEAR_VALUE swapChainOptimizedClearValue(m_backBufferFormat, m_clearColor);
 
     for (UINT n = 0; n < m_backBufferCount; n++)
     {
@@ -490,10 +502,7 @@ void DeviceResources::CreateWindowSizeDependentResources()
             );
         depthStencilDesc.Flags |= D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
 
-        D3D12_CLEAR_VALUE depthOptimizedClearValue = {};
-        depthOptimizedClearValue.Format = m_depthBufferFormat;
-        depthOptimizedClearValue.DepthStencil.Depth = (m_options & c_ReverseDepth) ? 0.0f : 1.0f;
-        depthOptimizedClearValue.DepthStencil.Stencil = 0;
+        const CD3DX12_CLEAR_VALUE depthOptimizedClearValue(m_depthBufferFormat, (m_options & c_ReverseDepth) ? 0.0f : 1.0f, 0u);
 
         ThrowIfFailed(m_d3dDevice->CreateCommittedResource(
             &depthHeapProperties,
@@ -538,14 +547,14 @@ void DeviceResources::SetWindow(HWND window, int width, int height) noexcept
 // This method is called when the Win32 window changes size.
 bool DeviceResources::WindowSizeChanged(int width, int height)
 {
+    if (!m_window)
+        return false;
+
     RECT newRc;
     newRc.left = newRc.top = 0;
     newRc.right = width;
     newRc.bottom = height;
-    if (newRc.left == m_outputSize.left
-        && newRc.top == m_outputSize.top
-        && newRc.right == m_outputSize.right
-        && newRc.bottom == m_outputSize.bottom)
+    if (newRc.right == m_outputSize.right && newRc.bottom == m_outputSize.bottom)
     {
         return false;
     }
@@ -805,7 +814,7 @@ void DeviceResources::GetAdapter(IDXGIAdapter1** ppAdapter)
         }
 
         // Check to see if the adapter supports Direct3D 12, but don't create the actual device yet.
-        if (SUCCEEDED(D3D12CreateDevice(adapter.Get(), D3D_FEATURE_LEVEL_11_0, _uuidof(ID3D12Device), nullptr)))
+        if (SUCCEEDED(D3D12CreateDevice(adapter.Get(), D3D_FEATURE_LEVEL_11_0, __uuidof(ID3D12Device), nullptr)))
         {
 #ifdef _DEBUG
             wchar_t buff[256] = {};

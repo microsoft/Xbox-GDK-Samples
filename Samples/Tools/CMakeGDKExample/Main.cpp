@@ -25,7 +25,7 @@ namespace
 #endif
 }
 
-LPCWSTR g_szAppName = L"CMakeExample";
+LPCWSTR g_szAppName = L"CMakeGDKExample";
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 void ExitSample() noexcept;
@@ -78,7 +78,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
         wcex.hInstance = hInstance;
         wcex.hCursor = LoadCursorW(nullptr, IDC_ARROW);
         wcex.hbrBackground = reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1);
-        wcex.lpszClassName = L"CMakeExampleWindowClass";
+        wcex.lpszClassName = L"CMakeGDKExampleWindowClass";
         if (!RegisterClassExW(&wcex))
             return 1;
 
@@ -119,15 +119,14 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
         AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 #endif
 
-        HWND hwnd = CreateWindowExW(0, L"CMakeExampleWindowClass", g_szAppName, WS_OVERLAPPEDWINDOW,
-            CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, nullptr, nullptr, hInstance,
-            nullptr);
+        HWND hwnd = CreateWindowExW(0, L"CMakeGDKExampleWindowClass", g_szAppName, WS_OVERLAPPEDWINDOW,
+            CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top,
+            nullptr, nullptr, hInstance,
+            g_game.get());
         if (!hwnd)
             return 1;
 
         ShowWindow(hwnd, nCmdShow);
-
-        SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(g_game.get()));
 
         GetClientRect(hwnd, &rc);
 
@@ -204,6 +203,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     switch (message)
     {
+    case WM_CREATE:
+        if (lParam)
+        {
+            auto params = reinterpret_cast<LPCREATESTRUCTW>(lParam);
+            SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(params->lpCreateParams));
+        }
+        break;
+
     case WM_ACTIVATEAPP:
         if (game)
         {

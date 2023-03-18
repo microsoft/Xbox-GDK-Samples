@@ -32,6 +32,12 @@
     <Filter Include="DirectStorageWin32">
       <UniqueIdentifier>{2be32ed6-9e5b-4813-bdd7-8c27b2a52fc6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SampleImplementations\Headers">
+      <UniqueIdentifier>{ccc3cfe7-27d7-4f81-b253-b0b945fed5b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SampleImplementations\Source">
+      <UniqueIdentifier>{45f49edd-b8af-4f22-ab0d-7333190e08c6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -42,37 +48,10 @@
     <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
-    <ClInclude Include="SampleImplementations\Cancellation.h">
-      <Filter>SampleImplementations</Filter>
-    </ClInclude>
-    <ClInclude Include="SampleImplementations\MultipleQueues.h">
-      <Filter>SampleImplementations</Filter>
-    </ClInclude>
-    <ClInclude Include="SampleImplementations\SimpleLoad.h">
-      <Filter>SampleImplementations</Filter>
-    </ClInclude>
-    <ClInclude Include="SampleImplementations\StatusBatch.h">
-      <Filter>SampleImplementations</Filter>
-    </ClInclude>
-    <ClInclude Include="SampleImplementations\StatusFence.h">
-      <Filter>SampleImplementations</Filter>
-    </ClInclude>
-    <ClInclude Include="SampleImplementations\ImplementationBase.h">
-      <Filter>SampleImplementations</Filter>
-    </ClInclude>
-    <ClInclude Include="SampleImplementations\RecommendedPattern.h">
-      <Filter>SampleImplementations</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
-    <ClInclude Include="SampleImplementations\XBoxZLibDecompression.h">
-      <Filter>SampleImplementations</Filter>
-    </ClInclude>
     <ClInclude Include="DeviceResources.h" />
-    <ClInclude Include="SampleImplementations\XBoxInMemoryZLibDecompression.h">
-      <Filter>SampleImplementations</Filter>
-    </ClInclude>
     <ClInclude Include="DirectStorageWin32\dstorage_win32.h">
       <Filter>DirectStorageWin32</Filter>
     </ClInclude>
@@ -127,41 +106,59 @@
     <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
+    <ClInclude Include="SampleImplementations\Cancellation.h">
+      <Filter>SampleImplementations\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleImplementations\CompletionEvent.h">
+      <Filter>SampleImplementations\Headers</Filter>
+    </ClInclude>
     <ClInclude Include="SampleImplementations\DesktopCPUDecompression.h">
-      <Filter>SampleImplementations</Filter>
+      <Filter>SampleImplementations\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleImplementations\DesktopGPUDecompression.h">
+      <Filter>SampleImplementations\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleImplementations\ImplementationBase.h">
+      <Filter>SampleImplementations\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleImplementations\MultipleQueues.h">
+      <Filter>SampleImplementations\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleImplementations\RecommendedPattern.h">
+      <Filter>SampleImplementations\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleImplementations\SimpleLoad.h">
+      <Filter>SampleImplementations\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleImplementations\StatusBatch.h">
+      <Filter>SampleImplementations\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleImplementations\FenceBatch.h">
+      <Filter>SampleImplementations\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleImplementations\XBoxInMemoryZLibDecompression.h">
+      <Filter>SampleImplementations\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleImplementations\XBoxZLibDecompression.h">
+      <Filter>SampleImplementations\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\Json.h">
+      <Filter>ATG Tool Kit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="SimpleDirectStorageCombo.cpp" />
-    <ClCompile Include="SampleImplementations\Cancellation.cpp">
-      <Filter>SampleImplementations</Filter>
-    </ClCompile>
-    <ClCompile Include="SampleImplementations\MultipleQueues.cpp">
-      <Filter>SampleImplementations</Filter>
-    </ClCompile>
-    <ClCompile Include="SampleImplementations\SimpleLoad.cpp">
-      <Filter>SampleImplementations</Filter>
-    </ClCompile>
-    <ClCompile Include="SampleImplementations\StatusBatch.cpp">
-      <Filter>SampleImplementations</Filter>
-    </ClCompile>
-    <ClCompile Include="SampleImplementations\StatusFence.cpp">
-      <Filter>SampleImplementations</Filter>
-    </ClCompile>
-    <ClCompile Include="SampleImplementations\ImplementationBase.cpp">
-      <Filter>SampleImplementations</Filter>
-    </ClCompile>
-    <ClCompile Include="SampleImplementations\RecommendedPattern.cpp">
-      <Filter>SampleImplementations</Filter>
-    </ClCompile>
-    <ClCompile Include="SampleImplementations\XBoxZLibDecompression.cpp">
-      <Filter>SampleImplementations</Filter>
-    </ClCompile>
     <ClCompile Include="DeviceResources.cpp" />
-    <ClCompile Include="SampleImplementations\XBoxInMemoryZLibDecompression.cpp">
-      <Filter>SampleImplementations</Filter>
-    </ClCompile>
     <ClCompile Include="DirectStorageWin32\DirectStorageWin32WrapperQueue.cpp">
       <Filter>DirectStorageWin32</Filter>
     </ClCompile>
@@ -178,8 +175,47 @@
       <Filter>ATG Tool Kit</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="SampleImplementations\Cancellation.cpp">
+      <Filter>SampleImplementations\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleImplementations\CompletionEvent.cpp">
+      <Filter>SampleImplementations\Source</Filter>
+    </ClCompile>
     <ClCompile Include="SampleImplementations\DesktopCPUDecompression.cpp">
-      <Filter>SampleImplementations</Filter>
+      <Filter>SampleImplementations\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleImplementations\DesktopGPUDecompression.cpp">
+      <Filter>SampleImplementations\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleImplementations\ImplementationBase.cpp">
+      <Filter>SampleImplementations\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleImplementations\MultipleQueues.cpp">
+      <Filter>SampleImplementations\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleImplementations\RecommendedPattern.cpp">
+      <Filter>SampleImplementations\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleImplementations\SimpleLoad.cpp">
+      <Filter>SampleImplementations\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleImplementations\StatusBatch.cpp">
+      <Filter>SampleImplementations\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleImplementations\FenceBatch.cpp">
+      <Filter>SampleImplementations\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleImplementations\XBoxInMemoryZLibDecompression.cpp">
+      <Filter>SampleImplementations\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleImplementations\XBoxZLibDecompression.cpp">
+      <Filter>SampleImplementations\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -228,6 +264,6 @@
     </Library>
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.config" />
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
 </Project>

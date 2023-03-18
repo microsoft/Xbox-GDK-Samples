@@ -44,8 +44,6 @@ private:
     void CreateDeviceDependentResources();
     void CreateWindowSizeDependentResources();
 
-    void SetWaterColor(float red, float green, float blue);
-
     void DrawDolphin(Dolphin &dolphin);
 
 private:
@@ -95,9 +93,6 @@ private:
 
     // Water caustics
     unsigned int                                     m_currentCausticTextureView;
-
-    float                                            m_waterColor[4];
-    float                                            m_ambient[4];
 
     // Front Panel Render Target
     // Helper class to convert a GPU resource to grayscale and then render to the Front Panel

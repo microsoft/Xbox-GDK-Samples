@@ -1,0 +1,7 @@
+#ITEM,ID,X,Y,DX,DY,PARAMETERSe
+OVERLAY,2000,0,0,1920,1080
+LEGEND,2001,82,900,525,300,[DPad] Up or Pedal - Accelerate|[DPad] Down or Pedal - Brake|[Menu] - Start "gravel" effect|[View] - Exit
+LABEL,2003,980,100,800,50,Throttle   Brake   Clutch   Handbrake   Wheel,LEFT;BOLD,#00FFFF
+LABEL,2004,980,130,800,50,,LEFT                  # Wheel values
+TEXTBOX,2006,92,100,500,500,,LEFT;NOBACKGROUND   # Description
+LABEL,2007,1400,400,200,200,,CENTER;LARGE        # Speedometer

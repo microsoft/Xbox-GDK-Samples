@@ -73,7 +73,7 @@
     <ClCompile Include="ParticleSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config" />
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">

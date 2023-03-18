@@ -81,7 +81,7 @@
     <None Include="SimpleLighting_ReadMe_zh-cn.docx" />
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config" />
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="LambertPS.hlsl">

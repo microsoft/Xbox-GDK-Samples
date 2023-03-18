@@ -19,6 +19,13 @@ class Sample
 public:
 
     Sample() noexcept(false);
+    ~Sample() = default;
+
+    Sample(Sample&&) = default;
+    Sample& operator= (Sample&&) = default;
+
+    Sample(Sample const&) = delete;
+    Sample& operator= (Sample const&) = delete;
 
     // Initialization and management
     void Initialize(HWND window);
@@ -30,7 +37,7 @@ public:
     void OnSuspending();
     void OnResuming();
     void OnConstrained();
-    void OnResourceFull();
+    void OnUnConstrained();
 
     //SampleFunctions
     void ShowInstructions();
@@ -70,8 +77,8 @@ private:
     };
 
     // Sample Specific
-    std::unique_ptr<DX::TextConsoleImage>	m_console;
-    bool									m_consoleIsValid;
+    std::unique_ptr<DX::TextConsoleImage>   m_console;
+    bool                                    m_consoleIsValid;
     std::vector<std::wstring>               m_logCache;
     XTaskQueueHandle                        m_queue;
 };

@@ -495,9 +495,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DLCPackagePC\makedlcpkg.cmd" />
-    <None Include="DLCPackage\Package_Scarlett\MicrosoftGameConfig.mgc" />
-    <None Include="DLCPackage\Package_XboxOne\MicrosoftGameConfig.mgc" />
-    <None Include="DLCPackagePC\Package\MicrosoftGameConfig.mgc">
+    <None Include="DLCPackage\Package_Scarlett\MicrosoftGame.Config" />
+    <None Include="DLCPackage\Package_XboxOne\MicrosoftGame.Config" />
+    <None Include="DLCPackagePC\Package\MicrosoftGame.Config">
       <FileType>Document</FileType>
     </None>
   </ItemGroup>
@@ -572,19 +572,19 @@
     <None Include="makepcpkg.cmd" />
     <None Include="makescarlettpkg.cmd" />
     <None Include="makexboxonepkg.cmd" />
-    <None Include="Readme_ja-JP.docx">
+    <None Include="readme_ja-jp.md">
       <ExcludedFromBuild>true</ExcludedFromBuild>
       <DeploymentContent>false</DeploymentContent>
     </None>
-    <None Include="Readme_ko-KR.docx">
+    <None Include="readme_ko-kr.md">
       <ExcludedFromBuild>true</ExcludedFromBuild>
       <DeploymentContent>false</DeploymentContent>
     </None>
-    <None Include="Readme_zh-CN.docx">
+    <None Include="readme_zh-cn.md">
       <ExcludedFromBuild>true</ExcludedFromBuild>
       <DeploymentContent>false</DeploymentContent>
     </None>
-    <None Include="ReadMe.docx">
+    <None Include="readme.md">
       <ExcludedFromBuild>true</ExcludedFromBuild>
       <DeploymentContent>false</DeploymentContent>
     </None>
@@ -702,4 +702,9 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ItemGroup>
+    <None Include="media\image1.png" />
+    <None Include="media\image3.png" />
+    <None Include="media\image4.jpeg" />
+  </ItemGroup>
 </Project>

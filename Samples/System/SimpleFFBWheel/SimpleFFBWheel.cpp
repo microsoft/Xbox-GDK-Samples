@@ -9,87 +9,288 @@
 #include "SimpleFFBWheel.h"
 
 #include "ATGColors.h"
+#include "FindMedia.h"
 
 extern void ExitSample() noexcept;
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
-
 using Microsoft::WRL::ComPtr;
+using namespace DirectX;
 
 namespace
 {
-    const GameInputForceFeedbackEnvelope c_envelope =
+    // [SAMPLE] some sane default parameters for the various effects
+    GameInputForceFeedbackMagnitude g_magnitude =
     {
-        1000000,     // uint64_t attackDuration (us)
-        1000000,     // sustainDuration
-        1000000,     // releaseDuration
-        1.0f,   // attackGain
-        1.0f,   // sustainGain
-        1.0f,   // releaseGain
-        3,      // uint32_t playCount
-        0       // uint64_t repeatDelay
+        // [SAMPLE] Starting with the October 2021 GDK, use the angularX value instead the linearX value
+        0.0f, // float linearX
+        0.0f, // float linearY
+        0.0f, // float linearZ
+        1.0f, // float angularX
+        0.0f, // float angularY
+        0.0f, // float angularZ
+        0.0f  // float normal
     };
 
-// NOTE: The behavior of the force feedback API changed in the October 2021 GDK
-// If using October 2021 GDK or newer, the "angular X" value should be provided
-// instead of the "linear X" value used previously.
-    const GameInputForceFeedbackMagnitude c_magnitude =
+    GameInputForceFeedbackConditionParams g_returnToCenterParams =
     {
-#if (_GXDK_EDITION >= 211000)
-        0.0f,   // linear X
-        0.0f,   // Y
-        0.0f,   // Z
-        1.0f,   // angular X
-        0.0f,   // Y
-        0.0f,   // Z
-        0.0f    // normal
-#else
-        1.0f,   // linear X
-        0.0f,   // Y
-        0.0f,   // Z
-        0.0f,   // angular X
-        0.0f,   // Y
-        0.0f,   // Z
-        0.0f    // normal
-#endif
+        g_magnitude, // GameInputForceFeedbackMagnitude magnitude
+        0.0f,        // float positiveCoefficient
+        0.0f,        // float negativeCoefficient
+        0.5f,        // float maxPositiveMagnitude
+       -0.5f,        // float maxNegativeMagnitude
+        0.005f,      // float deadZone
+        0.0f         // float bias
     };
 
-    //const GameInputForceFeedbackConstantParams c_constParams =
-    //{
-    //    c_envelope,
-    //    c_magnitude
-    //};
-
-    //const GameInputForceFeedbackRampParams c_rampParams =
-    //{
-    //    c_envelope,
-    //    { 0, 0, 0, 0, 0, 0, 0 }, // startMagnitude
-    //    c_magnitude               // endMagnitude
-    //};
-
-    const GameInputForceFeedbackPeriodicParams c_periodicParams =
+    GameInputForceFeedbackEnvelope g_gravelEnvelope =
     {
-        c_envelope,
-        c_magnitude,
-        2.0f,   // frequency (Hz). set low for human feel in testing
-        0.0f,   // phase (degrees)
-        0.0f    // bias
+        250000,  // uint64_t attackDuration (us)
+        3000000, // uint64_t sustainDuration (us)
+        250000,  // uint64_t releaseDuration (us)
+        0.5f,    // float attackGain
+        1.0f,    // float sustainGain
+        0.5f,    // float releaseGain
+        1,       // uint32_t playCount
+        0        // uint64_t repeatDelay
     };
 
-    //const GameInputForceFeedbackConditionParams c_conditionParams =
-    //{
-    //    c_magnitude,
-    //    1.0f,   // pos coefficient
-    //    -1.0f,  // neg coefficient
-    //    1.0f,   // max pos magnitude
-    //    1.0f,   // max neg magnitude
-    //    0,      // deadzone
-    //    0       // bias
-    //};
+    GameInputForceFeedbackPeriodicParams g_gravelParams =
+    {
+        g_gravelEnvelope, // GameInputForceFeedbackEnvelope envelope
+        g_magnitude,      // GameInputForceFeedbackMagnitude magnitude
+        15.0f,            // float frequency
+         0.0f,            // float phase
+         0.0f,            // float bias
+    };
+
+    GameInputForceFeedbackConditionParams g_damperParams =
+    {
+        g_magnitude, // GameInputForceFeedbackMagnitude magnitude
+        0.0f,        // float positiveCoefficient
+        0.0f,        // float negativeCoefficient
+        0.25f,       // float maxPositiveMagnitude
+       -0.25f,       // float maxNegativeMagnitude
+        0.0f,        // float deadZone
+        0.0f         // float bias
+    };
 }
 
-static void CALLBACK OnGameInputDeviceAddedRemoved(
+
+void Sample::StartEffect(EffectType type)
+{
+    if (!m_wheelDevice)
+        return;
+
+    auto deviceInfo = m_wheelDevice->GetDeviceInfo();
+    bool foundMotor = false;
+    SampleEffect& sampleEffect = GetSampleEffect(type);
+    uint32_t motorIndex;
+
+    // [SAMPLE] Find a motor that supports the requested effect, and set the default parameters
+    for (motorIndex = 0; motorIndex < deviceInfo->forceFeedbackMotorCount && !foundMotor; motorIndex++)
+    {
+        auto& motorInfo = deviceInfo->forceFeedbackMotorInfo[motorIndex];
+
+        switch(type)
+        {
+            case EffectType::Spring:
+                if (motorInfo.isSpringEffectSupported)
+                {
+                    sampleEffect.params.kind = GameInputForceFeedbackSpring;
+                    sampleEffect.params.data.spring = g_returnToCenterParams;
+                    sampleEffect.name = L"Spring";
+                    foundMotor = true;
+                }
+                else
+                {
+                    m_log->Format(L"Spring effect not supported on motor %d", motorIndex);
+                }
+                break;
+            case EffectType::Damper:
+                if (motorInfo.isDamperEffectSupported)
+                {
+                    sampleEffect.params.kind = GameInputForceFeedbackDamper;
+                    sampleEffect.params.data.damper = g_damperParams;
+                    sampleEffect.name = L"Damper";
+                    foundMotor = true;
+                }
+                else
+                {
+                    m_log->Format(L"Damper effect not supported on motor %d", motorIndex);
+                }
+                break;
+            case EffectType::Gravel:
+                if (motorInfo.isSawtoothUpWaveEffectSupported)
+                {
+                    sampleEffect.params.kind = GameInputForceFeedbackSawtoothUpWave;
+                    sampleEffect.params.data.sawtoothUpWave = g_gravelParams;
+                    sampleEffect.name = L"SawtoothUp";
+                    foundMotor = true;
+                }
+                else
+                {
+                    m_log->Format(L"Sawtooth Up Wave effect not supported on motor %d", motorIndex);
+                }
+                break;
+        }
+
+        if (foundMotor)
+        {
+            break;
+        }
+    }
+
+    if (foundMotor)
+    {
+        // [SAMPLE] A motor was found, now create the force feedback effect with the default parameters
+        HRESULT hr = m_wheelDevice->CreateForceFeedbackEffect(motorIndex, &sampleEffect.params, sampleEffect.effect.GetAddressOf());
+        if (SUCCEEDED(hr))
+        {
+            // [SAMPLE] ...and start the effect immediately
+            m_log->Format(L"Starting %ls effect\n", sampleEffect.name.c_str());
+            sampleEffect.effect->SetState(GameInputFeedbackEffectState::GameInputFeedbackRunning);
+        }
+        else
+        {
+            m_log->Format(Colors::Red, L"Failed to create force feedback effect on motor %d: %08X\n", motorIndex, hr);
+        }
+    }
+    else
+    {
+        m_log->WriteLine(Colors::Red, L"Could not find a motor that supports the requested effect");
+    }
+}
+
+void Sample::UpdateEffect(EffectType type)
+{
+    SampleEffect& sampleEffect = GetSampleEffect(type);
+
+    // [SAMPLE] If an effect is running, update its parameters
+    // Note that the scaling and clamping done below is just an example and isn't intended
+    // to provide an accurate force feedback experience
+    if (sampleEffect.effect && sampleEffect.effect->GetState() == GameInputFeedbackEffectState::GameInputFeedbackRunning)
+    {
+        auto& params = GetSampleEffect(type).params;
+
+        switch(type)
+        {
+            case EffectType::Spring:
+                params.data.spring.negativeCoefficient = std::clamp(m_speed/-50.0f, -1.0f, 0.0f);
+                params.data.spring.positiveCoefficient = std::clamp(m_speed/-50.0f, -1.0f, 0.0f);
+                break;
+            case EffectType::Damper:
+                params.data.damper.negativeCoefficient = std::clamp(-1.0f - (m_speed/-100.0f), -1.0f, -0.05f);
+                params.data.damper.positiveCoefficient = std::clamp(-1.0f - (m_speed/-100.0f), -1.0f, -0.05f);
+                break;
+            case EffectType::Gravel:
+                // [SAMPLE] the SawtoothUp envelope has all the info it needs to run the effect
+                // Note that we do not take speed into account for this effect
+                break;
+        }
+        sampleEffect.effect->SetParams(&params);
+    }
+}
+
+void Sample::StopEffect(EffectType type)
+{
+    SampleEffect& sampleEffect = GetSampleEffect(type);
+
+    if (sampleEffect.effect)
+    {
+        m_log->Format(L"Stopping %ls effect\n", sampleEffect.name.c_str());
+        sampleEffect.effect->SetState(GameInputFeedbackEffectState::GameInputFeedbackStopped);
+        sampleEffect.effect = nullptr;
+    }
+}
+
+void Sample::UpdateForceFeedbackFrame()
+{
+    wchar_t ffbStateText[256]{};
+
+    // [SAMPLE] Request the most recent reading from the wheel
+    HRESULT hr = m_gameInput->GetCurrentReading(GameInputKindRacingWheel, nullptr, &m_reading);
+    if (SUCCEEDED(hr))
+    {
+        // [SAMPLE] From that reading, get the state of thw wheel, pedals, etc.
+        if (m_reading->GetRacingWheelState(&m_wheelState))
+        {
+            swprintf_s(ffbStateText, L"Throttle   Brake   Clutch   Handbrake   Wheel");
+            m_valuesHeader->SetText(ffbStateText);
+
+            // update on-screen stats
+            swprintf_s(ffbStateText, L"%.3f        %.3f    %.3f     %.3f             %.3f",
+                        m_wheelState.throttle, m_wheelState.brake, m_wheelState.clutch, m_wheelState.handbrake, m_wheelState.wheel);
+            m_valuesLabel->SetForegroundColor(Colors::White);
+            m_valuesLabel->SetText(ffbStateText);
+
+            m_inputState.Accelerator = m_wheelState.throttle;
+            m_inputState.Brake = m_wheelState.brake;
+
+            // allow simple accelerator/brake control with dpad
+            if (m_wheelState.buttons & GameInputRacingWheelDpadUp)
+            {
+                m_inputState.Accelerator = 0.5f;
+            }
+            else if (m_wheelState.buttons & GameInputRacingWheelDpadDown)
+            {
+                m_inputState.Brake = 0.3f;
+            }
+
+            m_inputState.Gravel = GetRacingWheelButtonPressed(GameInputRacingWheelMenu);
+            m_inputState.Exit   = GetRacingWheelButtonPressed(GameInputRacingWheelView);
+
+            m_lastRacingWheelButtons = m_wheelState.buttons;
+        }
+        else
+        {
+            m_valuesLabel->SetForegroundColor(Colors::Red);
+            m_valuesLabel->SetText(L"GetRacingWheelState failed");
+        }
+    }
+    else
+    {
+        swprintf_s(ffbStateText, L"Supported racing wheel not connected: %08X", hr);
+        m_valuesLabel->SetForegroundColor(Colors::Red);
+        m_valuesLabel->SetText(ffbStateText);
+    }
+
+    if (m_inputState.Exit)
+    {
+        ExitSample();
+    }
+
+    if (m_inputState.Gravel)
+    {
+        // [SAMPLE] Start the Gravel (SawtoothUp) effect
+        StartEffect(EffectType::Gravel);
+    }
+
+    // [SAMPLE] do some very simple accelerator/brake handling so we can alter effects based on the "speed" of the car
+    if (m_inputState.Accelerator > 0.0f)
+    {
+        m_speed += m_inputState.Accelerator / 2.5f;
+    }
+    else if (m_inputState.Brake > 0.0f)
+    {
+        m_speed -= m_inputState.Brake * 1.5f;
+    }
+    else
+    {
+        m_speed -= 0.1f;
+    }
+
+    m_speed = std::clamp(m_speed, 0.0f, 200.0f);
+
+    wchar_t speedText[16]{};
+    swprintf_s(speedText, L"%d MPH", static_cast<uint32_t>(m_speed));
+    m_speedLabel->SetText(speedText);
+
+    // [SAMPLE] update our effects on a per-frame basis
+    UpdateEffect(EffectType::Spring);
+    UpdateEffect(EffectType::Damper);
+}
+
+void CALLBACK Sample::OnGameInputDeviceAddedRemoved(
     _In_ GameInputCallbackToken,
     _In_ void * context,
     _In_ IGameInputDevice * device,
@@ -101,57 +302,78 @@ static void CALLBACK OnGameInputDeviceAddedRemoved(
 
     if (currentStatus & GameInputDeviceConnected)
     {
-        if (!sample->m_device)
-        {
-            const GameInputDeviceInfo* deviceInfo = device->GetDeviceInfo();
+        const GameInputDeviceInfo* deviceInfo = device->GetDeviceInfo();
 
+        // [SAMPLE] if we aren't already tracking a FFB wheel device
+        if (!sample->m_wheelDevice)
+        {
+            // [SAMPLE] determine if this device has more than zero FFB motors (i.e. it's a device that supports force feedback)
+            // If it does, we'll use it for the sample.
             if (deviceInfo->forceFeedbackMotorCount > 0)
             {
-                //We only want devices with force feedback wheels
-                sample->m_device = device;
+                sample->m_log->Format(L"with %d force feedback motor(s)\n", deviceInfo->forceFeedbackMotorCount);
+                sample->m_wheelDevice = device;
 
-                for (uint32_t i = 0; i < deviceInfo->forceFeedbackMotorCount; i++)
-                {
-                    const GameInputForceFeedbackMotorInfo motorInfo = deviceInfo->forceFeedbackMotorInfo[i];
-
-                    if (motorInfo.isSineWaveEffectSupported)
-                    {
-                        GameInputForceFeedbackParams params;
-                        params.kind = GameInputForceFeedbackSineWave;
-                        params.data.sineWave = c_periodicParams;
-                        device->CreateForceFeedbackEffect(i, &params, sample->m_feedbackEffect.GetAddressOf());
-                    }
-                }
+                sample->StartEffect(EffectType::Spring);
+                sample->StartEffect(EffectType::Damper);
+            }
+            else
+            {
+                sample->m_log->WriteLine(L"with no force feedback motors");
             }
         }
     }
-    else
+    else if (currentStatus == GameInputDeviceNoStatus) // [SAMPLE] Disconnected...
     {
-        if (sample->m_device.Get() == device)
+        if (sample->m_wheelDevice.Get() == device)
         {
-            sample->m_device.Reset();
+            sample->m_log->WriteLine(L"Device disconnected");
+            sample->m_wheelDevice.Reset();
+            sample->m_wheelDevice = nullptr;
         }
     }
 }
 
-Sample::Sample() noexcept(false) :
-    m_frame(0),
-    m_deviceToken(0),
-    m_wheelValue(0.f),
-    m_clutchValue(0.f),
-    m_brakeValue(0.f),
-    m_throttleValue(0.f),
-    m_handbrakeValue(0.f),
-    m_patternShifterGearValue(0)
+Sample::Sample() noexcept(false)
 {
-    // Renders only 2D, so no need for a depth buffer.
-    m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_UNKNOWN);
+    m_deviceResources = std::make_unique<DX::DeviceResources>();
+    m_deviceResources->SetClearColor(ATG::Colors::Background);
+    m_deviceResources->RegisterDeviceNotify(this);
+
+    ATG::UIConfig uiconfig;
+
+    m_ui = std::make_unique<ATG::UIManager>(uiconfig);
+    m_log = std::make_unique<DX::TextConsoleImage>();
+}
+
+Sample::~Sample()
+{
+    // [SAMPLE] Unregister the device callback on exit
+    if (m_callbackToken)
+    {
+        m_gameInput->UnregisterCallback(m_callbackToken, 5000);
+        m_callbackToken = 0;
+    }
+
+    if (m_deviceResources)
+    {
+        m_deviceResources->WaitForGpu();
+    }
 }
 
 // Initialize the Direct3D resources required to run.
-void Sample::Initialize(HWND window)
+void Sample::Initialize(HWND window, int width, int height)
 {
-    m_deviceResources->SetWindow(window);
+    m_deviceResources->SetWindow(window, width, height);
+
+    wchar_t result[MAX_PATH];
+    DX::FindMediaFile(result, MAX_PATH, L".\\Assets\\SampleUI.csv");
+    m_ui->LoadLayout(result, L".\\Assets\\");
+    m_ui->FindPanel<ATG::IPanel>(c_sampleUIPanel)->Show();
+    m_valuesHeader = m_ui->FindControl<ATG::TextLabel>(c_sampleUIPanel, c_valuesHeader);
+    m_valuesLabel = m_ui->FindControl<ATG::TextLabel>(c_sampleUIPanel, c_valuesLabel);
+    m_descBox = m_ui->FindControl<ATG::TextBox>(c_sampleUIPanel, c_descBox);
+    m_speedLabel = m_ui->FindControl<ATG::TextLabel>(c_sampleUIPanel, c_speedLabel);
 
     m_deviceResources->CreateDeviceResources();
     CreateDeviceDependentResources();
@@ -159,27 +381,30 @@ void Sample::Initialize(HWND window)
     m_deviceResources->CreateWindowSizeDependentResources();
     CreateWindowSizeDependentResources();
 
-    DX::ThrowIfFailed(GameInputCreate(&m_gameInput));
-    DX::ThrowIfFailed(m_gameInput->RegisterDeviceCallback(nullptr,
+    m_log->WriteLine(L"Please connect a Racing Wheel...");
+
+    // [SAMPLE] create the GameInput stack
+    HRESULT hr = GameInputCreate(&m_gameInput);
+    DX::ThrowIfFailed(hr);
+
+    // [SAMPLE] setup callback when a Racing Wheel is connected or disconnected
+    // Note: Racing wheels that use HID drivers may not report as a GameInputKindRacingWheel, so
+    // it is best to also check for the base Controller type for mapping later
+    hr = m_gameInput->RegisterDeviceCallback(nullptr,
         GameInputKindRacingWheel,
         GameInputDeviceConnected,
         GameInputBlockingEnumeration,
         this,
         OnGameInputDeviceAddedRemoved,
-        &m_deviceToken));
+        &m_callbackToken);
+    DX::ThrowIfFailed(hr);
+
+    SetupUI();
 }
 
-Sample::~Sample()
+bool Sample::GetRacingWheelButtonPressed(GameInputRacingWheelButtons button)
 {
-    if (m_deviceToken)
-    {
-        if (m_gameInput)
-        {
-            (void)m_gameInput->UnregisterCallback(m_deviceToken, UINT64_MAX);
-        }
-
-        m_deviceToken = 0;
-    }
+    return (m_wheelState.buttons & button && !(m_lastRacingWheelButtons & button));
 }
 
 #pragma region Frame Update
@@ -187,6 +412,10 @@ Sample::~Sample()
 void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
+
+#ifdef _GAMING_XBOX
+    m_deviceResources->WaitForOrigin();
+#endif
 
     m_timer.Tick([&]()
     {
@@ -202,95 +431,11 @@ void Sample::Tick()
 // Updates the world.
 void Sample::Update(DX::StepTimer const&)
 {
-    PIXScopedEvent(PIX_COLOR_DEFAULT, L"Update");
+    PIXBeginEvent(PIX_COLOR_DEFAULT, L"Update");
 
-    if (m_device)
-    {
-        if (FAILED(m_gameInput->GetCurrentReading(GameInputKindRacingWheel | GameInputKindUiNavigation, m_device.Get(), &m_reading)))
-        {
-            m_buttonString.clear();
-        }
-        else
-        {
-            m_buttonString = L"Buttons pressed:  ";
+    UpdateForceFeedbackFrame();
 
-            GameInputRacingWheelState racingWheelState;
-            if (m_reading->GetRacingWheelState(&racingWheelState))
-            {
-                int exitComboPressed = 0;
-
-                if (racingWheelState.buttons & GameInputRacingWheelDpadUp)
-                {
-                    m_buttonString += L"[DPad]Up ";
-                }
-
-                if (racingWheelState.buttons & GameInputRacingWheelDpadDown)
-                {
-                    m_buttonString += L"[DPad]Down ";
-                }
-
-                if (racingWheelState.buttons & GameInputRacingWheelDpadRight)
-                {
-                    m_buttonString += L"[DPad]Right ";
-                }
-
-                if (racingWheelState.buttons & GameInputRacingWheelDpadLeft)
-                {
-                    m_buttonString += L"[DPad]Left ";
-                }
-
-                if (racingWheelState.buttons & GameInputRacingWheelPreviousGear)
-                {
-                    m_buttonString += L"PrevGear ";
-                }
-
-                if (racingWheelState.buttons & GameInputRacingWheelNextGear)
-                {
-                    m_buttonString += L"NextGear ";
-                }
-
-                if (racingWheelState.buttons & GameInputRacingWheelMenu)
-                {
-                    m_buttonString += L"[Menu] ";
-                    exitComboPressed += 1;
-                }
-
-                if (racingWheelState.buttons & GameInputRacingWheelView)
-                {
-                    m_buttonString += L"[View] ";
-                    exitComboPressed += 1;
-                }
-
-                m_wheelValue = racingWheelState.wheel;
-                m_throttleValue = racingWheelState.throttle;
-                m_brakeValue = racingWheelState.brake;
-                m_clutchValue = racingWheelState.clutch;
-                m_handbrakeValue = racingWheelState.handbrake;
-                m_patternShifterGearValue = racingWheelState.patternShifterGear;
-
-                if (exitComboPressed == 2)
-                    ExitSample();
-            }
-
-            GameInputUiNavigationState uiState;
-            if (m_reading->GetUiNavigationState(&uiState))
-            {
-                if (uiState.buttons & GameInputUiNavigationAccept)
-                {
-                    m_buttonString += L"[A] ";
-
-                    m_feedbackEffect->SetState(GameInputFeedbackRunning);
-                }
-
-                if (uiState.buttons & GameInputUiNavigationCancel)
-                {
-                    m_buttonString += L"[B] ";
-
-                    m_feedbackEffect->SetState(GameInputFeedbackStopped);
-                }
-            }
-        }
-    }
+    PIXEndEvent();
 }
 #pragma endregion
 
@@ -311,68 +456,17 @@ void Sample::Render()
     auto commandList = m_deviceResources->GetCommandList();
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Render");
 
-    auto fullscreen = m_deviceResources->GetOutputSize();
+    ID3D12DescriptorHeap* heaps[] = { m_resourceDescriptors->Heap() };
+    commandList->SetDescriptorHeaps(static_cast<UINT>(std::size(heaps)), heaps);
 
-    auto safeRect = Viewport::ComputeTitleSafeArea(UINT(fullscreen.right - fullscreen.left), UINT(fullscreen.bottom - fullscreen.top));
+    // [SAMPLE] Rotate and draw the steering wheel image based on the current state of the wheel
+    // This was tested against a Thrustmaster TS-XW, but may not line up perfectly for other wheels
+    m_spriteBatch->Begin(commandList);
+        m_spriteBatch->Draw(m_resourceDescriptors->GetGpuHandle(Descriptors::SteeringWheel), GetTextureSize(m_wheel.Get()), XMFLOAT2(900, 500), nullptr, Colors::White, m_wheelState.wheel * 10.0f, m_wheelOrigin);
+    m_spriteBatch->End();
 
-    auto heap = m_resourceDescriptors->Heap();
-    commandList->SetDescriptorHeaps(1, &heap);
-
-    wchar_t tempString[256] = {};
-    XMFLOAT2 pos(float(safeRect.left), float(safeRect.top));
-
-    m_batch->Begin(commandList);
-
-    if (!m_buttonString.empty())
-    {
-        DX::DrawControllerString(m_batch.get(), m_font.get(), m_ctrlFont.get(), m_buttonString.c_str(), pos);
-        pos.y += m_font->GetLineSpacing() * 1.5f;
-
-        swprintf(tempString, 255, L"Wheel  %1.3f", m_wheelValue);
-        DX::DrawControllerString(m_batch.get(), m_font.get(), m_ctrlFont.get(), tempString, pos);
-        pos.y += m_font->GetLineSpacing() * 1.5f;
-
-        swprintf(tempString, 255, L"Clutch  %1.3f", m_clutchValue);
-        DX::DrawControllerString(m_batch.get(), m_font.get(), m_ctrlFont.get(), tempString, pos);
-        pos.y += m_font->GetLineSpacing() * 1.5f;
-
-        swprintf(tempString, 255, L"Brake  %1.3f", m_brakeValue);
-        DX::DrawControllerString(m_batch.get(), m_font.get(), m_ctrlFont.get(), tempString, pos);
-        pos.y += m_font->GetLineSpacing() * 1.5f;
-
-        swprintf(tempString, 255, L"Throttle  %1.3f", m_throttleValue);
-        DX::DrawControllerString(m_batch.get(), m_font.get(), m_ctrlFont.get(), tempString, pos);
-        pos.y += m_font->GetLineSpacing() * 1.5f;
-
-        swprintf(tempString, 255, L"Handbrake  %1.3f", m_handbrakeValue);
-        DX::DrawControllerString(m_batch.get(), m_font.get(), m_ctrlFont.get(), tempString, pos);
-        pos.y += m_font->GetLineSpacing() * 1.5f;
-
-        swprintf(tempString, 255, L"Shifter  %d", m_patternShifterGearValue);
-        DX::DrawControllerString(m_batch.get(), m_font.get(), m_ctrlFont.get(), tempString, pos);
-        pos.y += m_font->GetLineSpacing() * 1.5f;
-
-        if (m_feedbackEffect->GetState() == GameInputFeedbackRunning)
-        {
-            swprintf(tempString, 255, L"Feedback On");
-        }
-        else
-        {
-            swprintf(tempString, 255, L"Feedback Off");
-        }
-
-        DX::DrawControllerString(m_batch.get(), m_font.get(), m_ctrlFont.get(), tempString, pos);
-        pos.y += m_font->GetLineSpacing() * 1.5f;
-    }
-    else
-    {
-        m_font->DrawString(m_batch.get(), L"No wheel connected", pos, ATG::Colors::Orange);
-    }
-
-    DX::DrawControllerString(m_batch.get(), m_font.get(), m_ctrlFont.get(), L"[A] Feedback On   [B] Feedback Off   [View][Menu] Exit",
-        XMFLOAT2(float(safeRect.left), float(safeRect.bottom) - m_font->GetLineSpacing()), ATG::Colors::LightGrey);
-
-    m_batch->End();
+    m_log->Render(commandList);
+    m_ui->Render(commandList);
 
     PIXEndEvent(commandList);
 
@@ -383,6 +477,11 @@ void Sample::Render()
     PIXEndEvent();
 }
 
+void Sample::SetupUI()
+{
+    m_descBox->SetText(g_DescText);
+}
+
 // Helper method to clear the back buffers.
 void Sample::Clear()
 {
@@ -390,14 +489,16 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
 
-    commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, nullptr);
+    commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
+    commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -417,6 +518,27 @@ void Sample::OnResuming()
     m_deviceResources->Resume();
     m_timer.ResetElapsedTime();
 }
+
+void Sample::OnWindowMoved()
+{
+    auto const r = m_deviceResources->GetOutputSize();
+    m_deviceResources->WindowSizeChanged(r.right, r.bottom);
+}
+
+void Sample::OnWindowSizeChanged(int width, int height)
+{
+    if (!m_deviceResources->WindowSizeChanged(width, height))
+        return;
+
+    CreateWindowSizeDependentResources();
+}
+
+// Properties
+void Sample::GetDefaultSize(int& width, int& height) const noexcept
+{
+    width = 1920;
+    height = 1080;
+}
 #pragma endregion
 
 #pragma region Direct3D Resources
@@ -425,47 +547,90 @@ void Sample::CreateDeviceDependentResources()
 {
     auto device = m_deviceResources->GetD3DDevice();
 
-    m_graphicsMemory = std::make_unique<GraphicsMemory>(device);
+#ifdef _GAMING_DESKTOP
+    D3D12_FEATURE_DATA_SHADER_MODEL shaderModel = { D3D_SHADER_MODEL_6_0 };
+    if (FAILED(device->CheckFeatureSupport(D3D12_FEATURE_SHADER_MODEL, &shaderModel, sizeof(shaderModel)))
+        || (shaderModel.HighestShaderModel < D3D_SHADER_MODEL_6_0))
+    {
+#ifdef _DEBUG
+        OutputDebugStringA("ERROR: Shader Model 6.0 is not supported!\n");
+#endif
+        throw std::runtime_error("Shader Model 6.0 is not supported!");
+    }
+#endif
 
-    m_resourceDescriptors = std::make_unique<DescriptorHeap>(device, Descriptors::Count);
+    m_graphicsMemory = std::make_unique<GraphicsMemory>(device);
 
     RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
 
-    ResourceUploadBatch upload(device);
-    upload.Begin();
+    m_resourceDescriptors = std::make_unique<DirectX::DescriptorPile>(device,
+        Descriptors::Count,
+        Descriptors::Reserve
+        );
 
-    {
-        SpriteBatchPipelineStateDescription pd(
-            rtState,
-            &CommonStates::AlphaBlend);
+    ResourceUploadBatch resourceUpload(device);
+    resourceUpload.Begin();
 
-        m_batch = std::make_unique<SpriteBatch>(device, upload, pd);
-    }
+    wchar_t font[MAX_PATH];
+    DX::FindMediaFile(font, MAX_PATH, L"courier_16.spritefont");
 
-    m_font = std::make_unique<SpriteFont>(device, upload,
-        L"SegoeUI_24.spritefont",
-        m_resourceDescriptors->GetCpuHandle(Descriptors::PrintFont),
-        m_resourceDescriptors->GetGpuHandle(Descriptors::PrintFont));
+    wchar_t background[MAX_PATH];
+    DX::FindMediaFile(background, MAX_PATH, L"ATGSampleBackground.DDS");
 
-    m_ctrlFont = std::make_unique<SpriteFont>(device, upload,
-        L"XboxOneControllerLegendSmall.spritefont",
-        m_resourceDescriptors->GetCpuHandle(Descriptors::ControllerFont),
-        m_resourceDescriptors->GetGpuHandle(Descriptors::ControllerFont));
+    m_log->RestoreDevice(
+        device,
+        resourceUpload,
+        rtState,
+        font,
+        background,
+        m_resourceDescriptors->GetCpuHandle(Descriptors::Font),
+        m_resourceDescriptors->GetGpuHandle(Descriptors::Font),
+        m_resourceDescriptors->GetCpuHandle(Descriptors::Background),
+        m_resourceDescriptors->GetGpuHandle(Descriptors::Background)
+    );
 
-    DX::ThrowIfFailed(CreateDDSTextureFromFile(device, upload, L"ATGSampleBackground.dds", m_background.ReleaseAndGetAddressOf()));
+    m_ui->RestoreDevice(device, rtState, resourceUpload, *m_resourceDescriptors);
 
-    auto finish = upload.End(m_deviceResources->GetCommandQueue());
-    finish.wait();
+    SpriteBatchPipelineStateDescription pd(rtState, &CommonStates::AlphaBlend);
+    m_spriteBatch = std::make_unique<SpriteBatch>(device, resourceUpload, pd);
 
-    m_deviceResources->WaitForGpu();
+    wchar_t path[MAX_PATH];
+    DX::FindMediaFile(path, MAX_PATH, L".\\Assets\\SteeringWheel.dds");
+    DX::ThrowIfFailed(CreateDDSTextureFromFile(device, resourceUpload, path, m_wheel.ReleaseAndGetAddressOf()));
+    CreateShaderResourceView(device, m_wheel.Get(), m_resourceDescriptors->GetCpuHandle(Descriptors::SteeringWheel));
+    auto size = GetTextureSize(m_wheel.Get());
+    m_wheelOrigin = XMFLOAT2(size.x/2.0f, size.y/2.0f);
 
-    CreateShaderResourceView(device, m_background.Get(), m_resourceDescriptors->GetCpuHandle(Descriptors::Background));
+    auto uploadResourcesFinished = resourceUpload.End(m_deviceResources->GetCommandQueue());
+    uploadResourcesFinished.wait();
 }
 
 // Allocate all memory resources that change on a window SizeChanged event.
 void Sample::CreateWindowSizeDependentResources()
 {
-    auto vp = m_deviceResources->GetScreenViewport();
-    m_batch->SetViewport(vp);
+    RECT fullscreen = m_deviceResources->GetOutputSize();
+    auto viewport = m_deviceResources->GetScreenViewport();
+
+    static const RECT logSize = { 980, 800, 1780, 1050 };
+    m_log->SetWindow(logSize, false);
+    m_log->SetViewport(viewport);
+
+    m_spriteBatch->SetViewport(viewport);
+
+    m_ui->SetWindow(fullscreen);
+}
+
+void Sample::OnDeviceLost()
+{
+    m_ui->ReleaseDevice();
+    m_graphicsMemory.reset();
+    m_resourceDescriptors.reset();
+}
+
+void Sample::OnDeviceRestored()
+{
+    CreateDeviceDependentResources();
+
+    CreateWindowSizeDependentResources();
 }
 #pragma endregion

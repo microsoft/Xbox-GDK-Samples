@@ -19,7 +19,7 @@ extern void ExitSample() noexcept;
 using namespace DirectX;
 using Microsoft::WRL::ComPtr;
 
-constexpr int c_maxItemsPerQuery = 30; // Set large amount to read in one go
+constexpr int c_maxItemsPerQuery = 5; // Deliberately set low in this sample to demonstrate querying multiple pages
 
 // Initiates a leaderboard query
 void Sample::QueryLeaderboards(
@@ -43,11 +43,15 @@ void Sample::QueryLeaderboards(
     query.maxItems = c_maxItemsPerQuery;
     query.statName = statName.c_str();
     query.queryType = XblLeaderboardQueryType::TitleManagedStatBackedGlobal;
+    // Setting skipToXboxUserId as a non-zero value will compare the given user's stored stat against the global leaderboard.
+    // When a player's stored stat and their score on the global leaderboard are not the same, this can result in mismatched outputs.
+    query.skipToXboxUserId = s_skipToUser ? m_liveResources->GetXuid() : 0;
 
     if (queryGroupType != XblSocialGroupType::None)
     {
         // Social queries must include a valid XUID
         // If the user has no friends or favorited people who have played this sample, only this user's results will be returned
+        // Setting socialGroup as People or Favorites will compare the stats of the associated users. It will not use values of the global leaderboard.
         query.socialGroup = XblSocialGroupType::People;
         query.queryType = XblLeaderboardQueryType::TitleManagedStatBackedSocial;
         query.xboxUserId = m_liveResources->GetXuid();
@@ -270,7 +274,13 @@ void Sample::SetPage(SamplePage page)
 
     if (s_activePage == SamplePage::QueryLeaderboards)
     {
-        s_labels[c_leaderboardType]->SetText(s_isLeaderboardGlobal ? L"< GLOBAL >" : L"< SOCIAL >");
+        const size_t bufferSize = 64;
+        wchar_t statusBuffer[bufferSize] = L"";
+
+        wcscat_s(statusBuffer, s_isLeaderboardGlobal ? L"< GLOBAL >" : L"< SOCIAL >");
+        wcscat_s(statusBuffer, s_skipToUser ? L"< SkipToCurrentUser >" : L"");
+
+        s_labels[c_leaderboardType]->SetText(statusBuffer);
     }
     else
     {
@@ -378,7 +388,9 @@ Sample::Sample() noexcept(false) :
 
     // Renders only 2D, so no need for a depth buffer.
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_UNKNOWN);
+    m_deviceResources->SetClearColor(ATG::Colors::Background);
     m_deviceResources->RegisterDeviceNotify(this);
+
     m_liveResources = std::make_shared<ATG::LiveResources>(m_mainAsyncQueue);
     m_liveInfoHUD = std::make_unique<ATG::LiveInfoHUD>("Title-managed Leaderboards");
     m_glbConsole = std::make_unique<DX::TextConsoleImage>();
@@ -527,10 +539,16 @@ void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
 
+#ifdef _GAMING_XBOX
+    m_deviceResources->WaitForOrigin();
+#endif
+
     m_timer.Tick([&]()
     {
         Update(m_timer);
     });
+
+    m_mouse->EndOfInputFrame();
 
     Render();
 
@@ -588,7 +606,13 @@ void Sample::Update(DX::StepTimer const& timer)
         SetPage((SamplePage)s_activePage);
     }
 
-    if (m_gamePadButtons.rightShoulder == GamePad::ButtonStateTracker::RELEASED || m_keyboardButtons.IsKeyReleased(Keyboard::Keys::F2))
+    if ((m_gamePadButtons.b == GamePad::ButtonStateTracker::RELEASED || m_keyboardButtons.IsKeyReleased(Keyboard::Keys::F2)) && s_activePage == SamplePage::QueryLeaderboards)
+    {
+        s_skipToUser = !s_skipToUser;
+        SetPage((SamplePage)s_activePage);
+    }
+
+    if (m_gamePadButtons.rightShoulder == GamePad::ButtonStateTracker::RELEASED || m_keyboardButtons.IsKeyReleased(Keyboard::Keys::F3))
     {
         // next page
         s_activePage = (++s_activePage) % SamplePage::PageCount;
@@ -743,7 +767,7 @@ void Sample::CreateDeviceDependentResources()
 
     m_graphicsMemory = std::make_unique<GraphicsMemory>(device);
 
-    RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
+    const RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
 
     m_resourceDescriptors = std::make_unique<DirectX::DescriptorPile>(device,
         Descriptors::Count,
@@ -816,8 +840,8 @@ void Sample::CreateWindowSizeDependentResources()
     static const RECT LOG_RECT = { 525, 200, 1880, 275 };
     static const RECT RESULT_RECT = { 525, 325, 1880, 950 };
 
-    RECT currentScreenRect = m_deviceResources->GetOutputSize();
-    auto viewport = m_deviceResources->GetScreenViewport();
+    const RECT currentScreenRect = m_deviceResources->GetOutputSize();
+    auto const viewport = m_deviceResources->GetScreenViewport();
 
     m_liveInfoHUD->SetViewport(viewport);
 

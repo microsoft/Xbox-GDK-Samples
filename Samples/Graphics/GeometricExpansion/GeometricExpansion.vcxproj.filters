@@ -87,7 +87,7 @@
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config" />
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Common.hlsli">
@@ -103,6 +103,8 @@
     <None Include="GeometricExpansion_ReadMe_ja-jp.docx" />
     <None Include="GeometricExpansion_ReadMe_ko-kr.docx" />
     <None Include="GeometricExpansion_ReadMe_zh-cn.docx" />
+    <None Include="..\..\NuGet.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="BasicPS.hlsl">

@@ -36,6 +36,7 @@ DeviceResources::DeviceResources(
         m_backBufferFormat((flags & c_EnableHDR) ? DXGI_FORMAT_R10G10B10A2_UNORM : backBufferFormat),
         m_depthBufferFormat(depthBufferFormat),
         m_backBufferCount(backBufferCount),
+        m_clearColor{},
         m_window(nullptr),
         m_d3dFeatureLevel(D3D_FEATURE_LEVEL_12_0),
         m_outputSize{0, 0, 1920, 1080},
@@ -83,7 +84,11 @@ void DeviceResources::CreateDeviceResources()
     params.GraphicsCommandQueueRingSizeBytes = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
     params.GraphicsScratchMemorySizeBytes = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
     params.ComputeScratchMemorySizeBytes = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
+    params.DisableGeometryShaderAllocations = (m_options & c_GeometryShaders) ? FALSE : TRUE;
+    params.DisableTessellationShaderAllocations = (m_options & c_TessellationShaders) ? FALSE : TRUE;
+
 #ifdef _GAMING_XBOX_SCARLETT
+    params.DisableDXR = (m_options & c_EnableDXR) ? FALSE : TRUE;
     params.CreateDeviceFlags = createDeviceFlags;
 
 #if (_GXDK_VER >= 0x585D070E /* GXDK Edition 221000 */)
@@ -93,6 +98,8 @@ void DeviceResources::CreateDeviceResources()
         params.AmplificationShaderPayloadBufferSize = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
     }
 #endif
+#else // _GAMING_XBOX_XBOXONE
+    m_options &= ~(c_AmplificationShaders | c_EnableDXR);
 #endif
 
     HRESULT hr = D3D12XboxCreateDevice(
@@ -251,8 +258,7 @@ void DeviceResources::CreateWindowSizeDependentResources()
     );
     swapChainBufferDesc.Flags |= D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET;
 
-    D3D12_CLEAR_VALUE swapChainOptimizedClearValue = {};
-    swapChainOptimizedClearValue.Format = m_backBufferFormat;
+    CD3DX12_CLEAR_VALUE swapChainOptimizedClearValue(m_backBufferFormat, m_clearColor);
 
     for (UINT n = 0; n < m_backBufferCount; n++)
     {
@@ -325,10 +331,7 @@ void DeviceResources::CreateWindowSizeDependentResources()
             );
         depthStencilDesc.Flags |= D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
 
-        D3D12_CLEAR_VALUE depthOptimizedClearValue = {};
-        depthOptimizedClearValue.Format = m_depthBufferFormat;
-        depthOptimizedClearValue.DepthStencil.Depth = (m_options & c_ReverseDepth) ? 0.0f : 1.0f;
-        depthOptimizedClearValue.DepthStencil.Stencil = 0;
+        const CD3DX12_CLEAR_VALUE depthOptimizedClearValue(m_depthBufferFormat, (m_options & c_ReverseDepth) ? 0.0f : 1.0f, 0u);
 
         ThrowIfFailed(m_d3dDevice->CreateCommittedResource(
             &depthHeapProperties,

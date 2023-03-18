@@ -21,10 +21,11 @@ namespace
         L"musicmono_adpcm.wav",
         L"musicmono_xwma.wav",
         L"sine.wav",
+        nullptr,
     };
 }
 
-extern void ExitSample();
+extern void ExitSample() noexcept;
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -41,6 +42,7 @@ Sample::Sample() noexcept(false) :
 {
     // Renders only 2D, so no need for a depth buffer.
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_UNKNOWN);
+    m_deviceResources->SetClearColor(ATG::Colors::Background);
 }
 
 Sample::~Sample()
@@ -121,6 +123,8 @@ void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
 
+    m_deviceResources->WaitForOrigin();
+
     m_timer.Tick([&]()
     {
         Update(m_timer);
@@ -186,9 +190,9 @@ void Sample::Render()
     auto commandList = m_deviceResources->GetCommandList();
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Render");
 
-    auto fullscreen = m_deviceResources->GetOutputSize();
+    auto const fullscreen = m_deviceResources->GetOutputSize();
 
-    auto safeRect = Viewport::ComputeTitleSafeArea(UINT(fullscreen.right - fullscreen.left), UINT(fullscreen.bottom - fullscreen.top));
+    auto const safeRect = Viewport::ComputeTitleSafeArea(UINT(fullscreen.right - fullscreen.left), UINT(fullscreen.bottom - fullscreen.top));
 
     XMFLOAT2 pos(float(safeRect.left), float(safeRect.top));
 
@@ -229,15 +233,15 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, nullptr);
 
     // Don't need to clear color as the sample draws a fullscreen image background
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -306,7 +310,7 @@ void Sample::CreateDeviceDependentResources()
 // Allocate all memory resources that change on a window SizeChanged event.
 void Sample::CreateWindowSizeDependentResources()
 {
-    auto vp = m_deviceResources->GetScreenViewport();
+    auto const vp = m_deviceResources->GetScreenViewport();
     m_spriteBatch->SetViewport(vp);
 }
 #pragma endregion

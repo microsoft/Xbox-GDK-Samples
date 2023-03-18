@@ -64,7 +64,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
         if (hr == E_GAMERUNTIME_DLL_NOT_FOUND || hr == E_GAMERUNTIME_VERSION_MISMATCH)
         {
 #ifdef _GAMING_DESKTOP
-            (void)MessageBoxW(nullptr, L"Game Runtime is not installed on this system or needs updating.", g_szAppName, MB_ICONERROR | MB_OK);
+            std::ignore = MessageBoxW(nullptr, L"Game Runtime is not installed on this system or needs updating.", g_szAppName, MB_ICONERROR | MB_OK);
 #endif
         }
         return 1;
@@ -106,14 +106,13 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
 #endif
 
         HWND hwnd = CreateWindowExW(0, L"CacheTestComboWindowClass", g_szAppName, WS_OVERLAPPEDWINDOW,
-            CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, nullptr, nullptr, hInstance,
-            nullptr);
+            CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top,
+            nullptr, nullptr, hInstance,
+            g_sample.get());
         if (!hwnd)
             return 1;
 
         ShowWindow(hwnd, nCmdShow);
-
-        SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(g_sample.get()));
 
         // Sample Usage Telemetry
         //
@@ -143,7 +142,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
                 PostMessage(reinterpret_cast<HWND>(context), WM_USER, 0, 0);
 
                 // To defer suspend, you must wait to exit this callback
-                (void)WaitForSingleObject(g_plmSuspendComplete, INFINITE);
+                std::ignore = WaitForSingleObject(g_plmSuspendComplete, INFINITE);
             }
             else
             {
@@ -197,6 +196,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     switch (message)
     {
+    case WM_CREATE:
+        if (lParam)
+        {
+            auto params = reinterpret_cast<LPCREATESTRUCTW>(lParam);
+            SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(params->lpCreateParams));
+        }
+        break;
+
     case WM_ACTIVATEAPP:
         if (sample)
         {
@@ -241,7 +248,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // Complete deferral
             SetEvent(g_plmSuspendComplete);
 
-            (void)WaitForSingleObject(g_plmSignalResume, INFINITE);
+            std::ignore = WaitForSingleObject(g_plmSignalResume, INFINITE);
 
             sample->OnResuming();
         }
@@ -255,7 +262,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         else
         {
             PAINTSTRUCT ps;
-            (void)BeginPaint(hWnd, &ps);
+            std::ignore = BeginPaint(hWnd, &ps);
             EndPaint(hWnd, &ps);
         }
         break;

@@ -57,7 +57,9 @@ Sample::Sample() noexcept(false)
     , m_refreshParticles(true)
     , m_selectorIdx(0)
 {
-    m_deviceResources = std::make_unique<DX::DeviceResources>();
+    m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_D32_FLOAT,
+        2,
+        DX::DeviceResources::c_GeometryShaders | DX::DeviceResources::c_TessellationShaders);
 
     RegisterTests();
     CreateForwardTestSequence(m_forwardSequence);

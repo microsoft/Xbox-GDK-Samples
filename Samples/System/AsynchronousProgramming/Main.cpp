@@ -34,11 +34,12 @@ namespace
     HANDLE g_plmSuspendComplete = nullptr;
     HANDLE g_plmSignalResume = nullptr;
 #endif
-};
+}
 
 LPCWSTR g_szAppName = L"AsynchronousProgramming";
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+void ExitSample() noexcept;
 
 // Entry point
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
@@ -60,6 +61,22 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
     if (FAILED(CoInitializeEx(nullptr, COINITBASE_MULTITHREADED)))
         return 1;
 
+#ifdef _GAMING_DESKTOP
+    // NOTE: When running the app from the Start Menu (required for
+    //    Store API's to work) the Current Working Directory will be
+    //    returned as C:\Windows\system32 unless you overwrite it.
+    //    The sample relies on the font and image files in the .exe's
+    //    directory and so we do the following to set the working
+    //    directory to what we want.
+    char dir[_MAX_PATH] = {};
+    if (GetModuleFileNameA(nullptr, dir, _MAX_PATH) > 0)
+    {
+        std::string exe = dir;
+        exe = exe.substr(0, exe.find_last_of("\\"));
+        std::ignore = SetCurrentDirectoryA(exe.c_str());
+    }
+#endif
+
     HRESULT hr = XGameRuntimeInitialize();
     if (FAILED(hr))
     {
@@ -71,19 +88,6 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
         }
         return 1;
     }
-
-#ifdef _GAMING_DESKTOP
-    // what this chunk of code does is: on Desktop, we establish the correct current working
-    // directory from which the sample executes in order for debugging from within
-    // VS to work properly when running as a registered store app.
-    char dir[_MAX_PATH];
-    if (GetModuleFileNameA(nullptr, dir, _MAX_PATH) > 0)
-    {
-        std::string exe = dir;
-        exe = exe.substr(0, exe.find_last_of("\\"));
-        std::ignore = SetCurrentDirectoryA(exe.c_str());
-    }
-#endif//_GAMING_XBOX
 
 #ifdef _GAMING_XBOX
     // Default main thread to CPU 0
@@ -121,14 +125,13 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
 #endif
 
         HWND hwnd = CreateWindowExW(0, L"AsynchronousProgrammingWindowClass", g_szAppName, WS_OVERLAPPEDWINDOW,
-            CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, nullptr, nullptr, hInstance,
-            nullptr);
+            CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top,
+            nullptr, nullptr, hInstance,
+            g_sample.get());
         if (!hwnd)
             return 1;
 
         ShowWindow(hwnd, nCmdShow);
-
-        SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(g_sample.get()));
 
         // Sample Usage Telemetry
         //
@@ -188,7 +191,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
 
 #ifdef _GAMING_XBOX
     UnregisterAppStateChangeNotification(hPLM);
-    
+
     CloseHandle(g_plmSuspendComplete);
     CloseHandle(g_plmSignalResume);
 #endif
@@ -214,6 +217,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     switch (message)
     {
+    case WM_CREATE:
+        if (lParam)
+        {
+            auto params = reinterpret_cast<LPCREATESTRUCTW>(lParam);
+            SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(params->lpCreateParams));
+        }
+        break;
+
     case WM_ACTIVATEAPP:
         if (sample)
         {
@@ -229,6 +240,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 sample->OnDeactivated();
             }
         }
+        break;
+
+    case WM_ACTIVATE:
+        Keyboard::ProcessMessage(message, wParam, lParam);
+        Mouse::ProcessMessage(message, wParam, lParam);
+        break;
+
+    case WM_MOUSEMOVE:
+    case WM_LBUTTONDOWN:
+    case WM_LBUTTONUP:
+    case WM_RBUTTONDOWN:
+    case WM_RBUTTONUP:
+    case WM_MBUTTONDOWN:
+    case WM_MBUTTONUP:
+    case WM_MOUSEWHEEL:
+    case WM_XBUTTONDOWN:
+    case WM_XBUTTONUP:
+        Mouse::ProcessMessage(message, wParam, lParam);
         break;
 
 #ifdef _GAMING_XBOX
@@ -338,22 +367,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         PostQuitMessage(0);
         break;
 
-    case WM_ACTIVATE:
-        Keyboard::ProcessMessage(message, wParam, lParam);
-        Mouse::ProcessMessage(message, wParam, lParam);
-        break;
-
     case WM_INPUT:
-    case WM_MOUSEMOVE:
-    case WM_LBUTTONDOWN:
-    case WM_LBUTTONUP:
-    case WM_RBUTTONDOWN:
-    case WM_RBUTTONUP:
-    case WM_MBUTTONDOWN:
-    case WM_MBUTTONUP:
-    case WM_MOUSEWHEEL:
-    case WM_XBUTTONDOWN:
-    case WM_XBUTTONUP:
     case WM_MOUSEHOVER:
         Mouse::ProcessMessage(message, wParam, lParam);
         break;

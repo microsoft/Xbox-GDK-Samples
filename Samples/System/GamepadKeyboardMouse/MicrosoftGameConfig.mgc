@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Game configVersion="0">
+  <!-- Version "1" is supported by March 2022 GDK or later -->
+
+  <Identity Name="5ddbd6db-df3d-4915-8241-c17ea46a763f"
+            Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+            Version="1.0.0.0"/>
+
+  <ExecutableList>
+    <Executable Name="GamepadKeyboardMouse.exe"
+                Id="Game"/>
+  </ExecutableList>
+
+
+  <ShellVisuals DefaultDisplayName="Gamepad Keyboard Mouse"
+                PublisherDisplayName="Xbox Advanced Technology Group"
+                StoreLogo="Assets\StoreLogo.png"
+                Square480x480Logo="Assets\LargeLogo.png"
+                Square150x150Logo="Assets\Logo.png"
+                Square44x44Logo="Assets\SmallLogo.png"
+                Description="GamepadKeyboardMouse"
+                ForegroundText="dark"
+                BackgroundColor="#000000"
+                SplashScreenImage="Assets\SplashScreen.png"/>
+</Game>

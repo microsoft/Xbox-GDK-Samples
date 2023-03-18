@@ -217,6 +217,7 @@ Sample::Sample() noexcept(false)
 
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM,
         DXGI_FORMAT_D32_FLOAT, c_numBackBuffers, DX::DeviceResources::c_Enable4K_UHD);
+    m_deviceResources->SetClearColor(ATG::ColorsLinear::Background);
 }
 
 Sample::~Sample()
@@ -342,6 +343,8 @@ void Sample::InitializeUI()
 void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
+
+    m_deviceResources->WaitForOrigin();
 
     m_timer.Tick([&]()
     {

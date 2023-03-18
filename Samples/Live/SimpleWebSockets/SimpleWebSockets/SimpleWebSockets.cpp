@@ -30,7 +30,9 @@ Sample::Sample() noexcept(false) :
     m_frame(0)
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>();
+    m_deviceResources->SetClearColor(ATG::Colors::Background);
     m_deviceResources->RegisterDeviceNotify(this);
+
     m_liveInfoHUD = std::make_unique<ATG::LiveInfoHUD>("SimpleWebSockets");
 }
 
@@ -148,7 +150,7 @@ void Sample::CheckForNetworkInitialization()
     Log("CheckForNetworkingInitialization() started.");
     m_asyncOpWidget->Show(u8"Checking for network ready");
 
-    ZeroMemory(&m_connectivityHint, sizeof(m_connectivityHint));
+    m_connectivityHint = {};
     auto hr = XNetworkingGetConnectivityHint(&m_connectivityHint);
 
     if (FAILED(hr))
@@ -278,10 +280,16 @@ void Sample::Tick()
 
     PumpTaskQueue();
 
+#ifdef _GAMING_XBOX
+    m_deviceResources->WaitForOrigin();
+#endif
+
     m_timer.Tick([&]()
     {
         Update(m_timer);
     });
+
+    m_mouse->EndOfInputFrame();
 
     Render();
 
@@ -393,16 +401,16 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
-    auto dsvDescriptor = m_deviceResources->GetDepthStencilView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
     commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -440,7 +448,7 @@ void Sample::OnResuming()
 
 void Sample::OnWindowMoved()
 {
-    auto r = m_deviceResources->GetOutputSize();
+    auto const r = m_deviceResources->GetOutputSize();
     m_deviceResources->WindowSizeChanged(r.right, r.bottom);
 }
 
@@ -468,7 +476,7 @@ void Sample::CreateDeviceDependentResources()
 
     m_graphicsMemory = std::make_unique<GraphicsMemory>(device);
 
-    RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
+    const RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
 
     m_resourceDescriptors = std::make_unique<DirectX::DescriptorPile>(device,
         Descriptors::Count,
@@ -491,7 +499,7 @@ void Sample::CreateDeviceDependentResources()
 void Sample::CreateWindowSizeDependentResources()
 {
     m_liveInfoHUD->SetViewport(m_deviceResources->GetScreenViewport());
-    auto size = m_deviceResources->GetOutputSize();
+    auto const size = m_deviceResources->GetOutputSize();
     m_uiManager.SetWindowSize(size.right, size.bottom);
 }
 
@@ -548,7 +556,7 @@ void Sample::OnConnectButtonPressed()
         {
             std::unique_ptr<XAsyncBlock> asyncBlockPtr{ asyncBlock }; // Take over ownership of the XAsyncBlock*
 
-            Sample* sample = static_cast<Sample*>(asyncBlock->context);
+            auto sample = static_cast<Sample*>(asyncBlock->context);
             assert(sample);
 
             WebSocketCompletionResult result = {};
@@ -602,7 +610,7 @@ void Sample::OnSendMessageButtonPressed()
     {
         std::unique_ptr<XAsyncBlock> asyncBlockPtr{ asyncBlock }; // Take over ownership of the XAsyncBlock*
 
-        Sample* sample = static_cast<Sample*>(asyncBlock->context);
+        auto sample = static_cast<Sample*>(asyncBlock->context);
         assert(sample);
 
         uint32_t size = 0;
@@ -672,7 +680,7 @@ void Sample::SendMessageToWebSocket(const char* buffer, uint32_t length)
     {
         std::unique_ptr<XAsyncBlock> asyncBlockPtr{ asyncBlock }; // Take over ownership of the XAsyncBlock*
 
-        Sample* sample = static_cast<Sample*>(asyncBlock->context);
+        auto sample = static_cast<Sample*>(asyncBlock->context);
         assert(sample);
 
         WebSocketCompletionResult result = {};
@@ -719,7 +727,7 @@ void Sample::SendBinaryMessageToWebSocket(const char* buffer, uint32_t length)
     {
         std::unique_ptr<XAsyncBlock> asyncBlockPtr{ asyncBlock }; // Take over ownership of the XAsyncBlock*
 
-        Sample* sample = static_cast<Sample*>(asyncBlock->context);
+        auto sample = static_cast<Sample*>(asyncBlock->context);
         assert(sample);
 
         WebSocketCompletionResult result = {};
@@ -837,7 +845,7 @@ void Sample::OnCloseButtonPressed()
 
 void websocket_closed(HCWebsocketHandle /*webSocket*/, HCWebSocketCloseStatus /*closeStatus*/, void* functionContext)
 {
-    Sample* sample = static_cast<Sample*>(functionContext);
+    auto sample = static_cast<Sample*>(functionContext);
     assert(sample);
 
     auto callback = [](void* context, bool /*cancel*/)

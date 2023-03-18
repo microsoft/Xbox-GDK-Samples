@@ -65,6 +65,7 @@ Sample::Sample() noexcept(false) :
     m_showHelp(false)
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>();
+    m_deviceResources->SetClearColor(ATG::Colors::Background);
     m_deviceResources->RegisterDeviceNotify(this);
 
     m_camera.SetRadius(25.f);
@@ -124,6 +125,8 @@ void Sample::Tick()
         {
             Update(m_timer);
         });
+
+    m_mouse->EndOfInputFrame();
 
     Render();
 

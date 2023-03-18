@@ -17,7 +17,8 @@ description: "This sample demonstrates the basic use of the DirectX Raytracing A
 
 # DXRTriangle
 
-For more information see this [Word document](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Graphics/DXRTriangle/ReadMe.docx).
+For more information see: 
+- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Graphics/DXRTriangle/readme.md)
 
 ## Privacy statement
 

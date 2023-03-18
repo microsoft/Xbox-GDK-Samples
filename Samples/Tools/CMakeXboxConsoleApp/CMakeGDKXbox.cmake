@@ -27,14 +27,10 @@ set(CMAKE_SYSTEM_NAME WINDOWS)
 set(CMAKE_SYSTEM_VERSION 10.0)
 set(CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION ${SDKVersion})
 
-if(CMAKE_SIZEOF_VOID_P EQUAL 4)
-    message(FATAL_ERROR "ERROR: Xbox OS requires 64-bit")
-endif()
-
 #--- Locate Visual Studio (needed for VC Runtime DLLs)
 
 if (NOT DEFINED VCInstallDir AND DEFINED ENV{VCINSTALLDIR})
-    set(VCInstallDir $ENV{VCINSTALLDIR})
+    cmake_path(SET VCInstallDir "$ENV{VCINSTALLDIR}")
 endif()
 
 if (NOT DEFINED VCInstallDir)
@@ -42,14 +38,14 @@ if (NOT DEFINED VCInstallDir)
 
     if (MSVC_TOOLSET_VERSION MATCHES "143")
         foreach(vsedition IN LISTS GDK_VS_EDITIONS)
-            set(VCInstallDir "$ENV{ProgramFiles}/Microsoft Visual Studio/2022/${vsedition}/VC")
+            cmake_path(SET VCInstallDir "$ENV{ProgramFiles}/Microsoft Visual Studio/2022/${vsedition}/VC")
             if(EXISTS ${VCInstallDir})
                 break()
             endif()
         endforeach()
     else()
         foreach(vsedition IN LISTS GDK_VS_EDITIONS)
-            set(VCInstallDir "$ENV{ProgramFiles\(x86\)}/Microsoft Visual Studio/2019/${vsedition}/VC")
+            cmake_path(SET VCInstallDir "$ENV{ProgramFiles\(x86\)}/Microsoft Visual Studio/2019/${vsedition}/VC")
             if(EXISTS ${VCInstallDir})
                 break()
             endif()
@@ -57,7 +53,7 @@ if (NOT DEFINED VCInstallDir)
 
         if (NOT EXISTS ${VCInstallDir})
             foreach(vsedition IN LISTS GDK_VS_EDITIONS)
-                set(VCInstallDir "$ENV{ProgramFiles}/Microsoft Visual Studio/2022/${vsedition}/VC")
+                cmake_path(SET VCInstallDir "$ENV{ProgramFiles}/Microsoft Visual Studio/2022/${vsedition}/VC")
                 if(EXISTS ${VCInstallDir})
                     break()
                 endif()
@@ -79,10 +75,18 @@ message("VCToolsVersion = ${VCToolsVersion}")
 file(STRINGS "${VCInstallDir}/Auxiliary/Build/Microsoft.VCRedistVersion.default.txt" VCToolsRedistVersion)
 message("VCToolsRedistVersion = ${VCToolsRedistVersion}")
 
-#--- Locate Software Development Kits
+#--- GameRuntime and Extension Libraries
+set(_GDK_XBOX_ ON)
+include(${CMAKE_CURRENT_LIST_DIR}/GDK-targets.cmake)
+
+set(DurangoXdkInstallPath "${Console_SdkRoot}/${XdkEditionTarget}")
+
+message("Microsoft GDK = ${DurangoXdkInstallPath}")
+
+#--- Windows SDK (BWOI or installed)
 if(BUILD_USING_BWOI)
     if (DEFINED ENV{ExtractedFolder})
-        set(ExtractedFolder $ENV{ExtractedFolder})
+        cmake_path(SET ExtractedFolder $ENV{ExtractedFolder})
     else()
         set(ExtractedFolder "d:/xtrctd.sdks/BWOIExample/")
     endif()
@@ -91,24 +95,12 @@ if(BUILD_USING_BWOI)
         message(FATAL_ERROR "ERROR: BWOI requires a valid ExtractedFolder (${ExtractedFolder})")
     endif()
 
-    set(Console_SdkRoot "${ExtractedFolder}/Microsoft GDK")
-    set(DurangoXdkInstallPath "${ExtractedFolder}/Microsoft GDK/${XdkEditionTarget}")
-
     set(WindowsSdkDir "${ExtractedFolder}/Windows Kits/10")
     if (NOT EXISTS ${WindowsSdkDir})
-        set(WindowsSdkDir "$ENV{ProgramFiles\(x86\)}/Windows Kits/10")
+        cmake_path(SET WindowsSdkDir "$ENV{ProgramFiles\(x86\)}/Windows Kits/10")
     endif()
 else()
-    GET_FILENAME_COMPONENT(Console_SdkRoot "[HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432Node\\Microsoft\\GDK;InstallPath]" ABSOLUTE CACHE)
-    set(DurangoXdkInstallPath "${Console_SdkRoot}/${XdkEditionTarget}")
-
-    set(WindowsSdkDir "$ENV{ProgramFiles\(x86\)}/Windows Kits/10")
-endif()
-
-if(EXISTS ${DurangoXdkInstallPath})
-    message("Microsoft GDK = ${DurangoXdkInstallPath}")
-else()
-    message(FATAL_ERROR "ERROR: Cannot locate Microsoft Game Development Kit (GDK) - ${XdkEditionTarget}")
+    cmake_path(SET WindowsSdkDir "$ENV{ProgramFiles\(x86\)}/Windows Kits/10")
 endif()
 
 if(EXISTS "${WindowsSdkDir}/Include/${SDKVersion}" )
@@ -116,10 +108,6 @@ if(EXISTS "${WindowsSdkDir}/Include/${SDKVersion}" )
 else()
     message(FATAL_ERROR "ERROR: Cannot locate Windows SDK (${SDKVersion})")
 endif()
-
-set(ExtensionPlatformToolset 142)
-
-message("Extension Platform Toolset = ${ExtensionPlatformToolset}")
 
 #--- Headers
 set(Console_EndpointIncludeRoot
@@ -155,68 +143,6 @@ set(Console_SdkLibPath
     "${Console_LibRoot}/um/x64")
 
 set(Console_Libs xgameplatform.lib xgameruntime.lib)
-
-#--- Extension Libraries
-set(Console_GRDKExtLibRoot "${DurangoXdkInstallPath}/GRDK/ExtensionLibraries")
-
-# XCurl
-add_library(Xbox::XCurl SHARED IMPORTED)
-set_target_properties(Xbox::XCurl PROPERTIES
-    IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/Xbox.XCurl.API/Redist/CommonConfiguration/neutral/XCurl.dll"
-    IMPORTED_IMPLIB "${Console_GRDKExtLibRoot}/Xbox.XCurl.API/DesignTime/CommonConfiguration/neutral/lib/XCurl.lib"
-    INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/Xbox.XCurl.API/DesignTime/CommonConfiguration/neutral/Include")
-
-# Xbox.Services.API.C (requires XCurl)
-add_library(Xbox::XSAPI STATIC IMPORTED)
-set_target_properties(Xbox::XSAPI PROPERTIES
-    IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/Xbox.Services.API.C/DesignTime/CommonConfiguration/Neutral/Lib/Release/v${ExtensionPlatformToolset}/Microsoft.Xbox.Services.${ExtensionPlatformToolset}.GDK.C.lib"
-    IMPORTED_LOCATION_DEBUG "${Console_GRDKExtLibRoot}/Xbox.Services.API.C/DesignTime/CommonConfiguration/Neutral/Lib/Debug/v${ExtensionPlatformToolset}/Microsoft.Xbox.Services.${ExtensionPlatformToolset}.GDK.C.lib"
-    IMPORTED_CONFIGURATIONS "RELEASE;DEBUG"
-    INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/Xbox.Services.API.C/DesignTime/CommonConfiguration/Neutral/Include"
-    IMPORTED_LINK_INTERFACE_LANGUAGES "CXX")
-
-add_library(Xbox::HTTPClient STATIC IMPORTED)
-set_target_properties(Xbox::HTTPClient PROPERTIES
-    IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/Xbox.Services.API.C/DesignTime/CommonConfiguration/Neutral/Lib/Release/v${ExtensionPlatformToolset}/libHttpClient.${ExtensionPlatformToolset}.GDK.C.lib"
-    IMPORTED_LOCATION_DEBUG "${Console_GRDKExtLibRoot}/Xbox.Services.API.C/DesignTime/CommonConfiguration/Neutral/Lib/Debug/v${ExtensionPlatformToolset}/libHttpClient.${ExtensionPlatformToolset}.GDK.C.lib"
-    IMPORTED_CONFIGURATIONS "RELEASE;DEBUG"
-    IMPORTED_LINK_INTERFACE_LANGUAGES "CXX")
-
-target_link_libraries(Xbox::XSAPI INTERFACE Xbox::HTTPClient Xbox::XCurl appnotify.lib winhttp.lib crypt32.lib)
-
-# GameChat2
-add_library(Xbox::GameChat2 SHARED IMPORTED)
-set_target_properties(Xbox::GameChat2 PROPERTIES
-    IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/Xbox.Game.Chat.2.Cpp.API/Redist/CommonConfiguration/neutral/GameChat2.dll"
-    IMPORTED_IMPLIB "${Console_GRDKExtLibRoot}/Xbox.Game.Chat.2.Cpp.API/DesignTime/CommonConfiguration/neutral/lib/GameChat2.lib"
-    INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/Xbox.Game.Chat.2.Cpp.API/DesignTime/CommonConfiguration/neutral/Include")
-
-# PlayFab Multiplayer (requires XCurl)
-add_library(Xbox::PlayFabMultiplayer SHARED IMPORTED)
-set_target_properties(Xbox::PlayFabMultiplayer PROPERTIES
-    IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/PlayFab.Multiplayer.Cpp/Redist/CommonConfiguration/neutral/PlayFabMultiplayerGDK.dll"
-    IMPORTED_IMPLIB "${Console_GRDKExtLibRoot}/PlayFab.Multiplayer.Cpp/DesignTime/CommonConfiguration/neutral/Lib/PlayFabMultiplayerGDK.lib"
-    IMPORTED_LINK_DEPENDENT_LIBRARIES Xbox::XCurl
-    INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/PlayFab.Multiplayer.Cpp/DesignTime/CommonConfiguration/neutral/Include")
-
-target_link_libraries(Xbox::PlayFabMultiplayer INTERFACE Xbox::XCurl)
-
-# PlayFab Party
-add_library(Xbox::PlayFabParty SHARED IMPORTED)
-set_target_properties(Xbox::PlayFabParty PROPERTIES
-    IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/PlayFab.Party.Cpp/Redist/CommonConfiguration/neutral/Party.dll"
-    IMPORTED_IMPLIB "${Console_GRDKExtLibRoot}/PlayFab.Party.Cpp/DesignTime/CommonConfiguration/neutral/Lib/Party.lib"
-    INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/PlayFab.Party.Cpp/DesignTime/CommonConfiguration/neutral/Include")
-
-# PlayFab Party Xbox LIVE (requires PlayFab Party)
-add_library(Xbox::PlayFabPartyLIVE SHARED IMPORTED)
-set_target_properties(Xbox::PlayFabPartyLIVE PROPERTIES
-    IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/PlayFab.PartyXboxLive.Cpp/Redist/CommonConfiguration/neutral/PartyXboxLive.dll"
-    IMPORTED_IMPLIB "${Console_GRDKExtLibRoot}/PlayFab.PartyXboxLive.Cpp/DesignTime/CommonConfiguration/neutral/Lib/PartyXboxLive.lib"
-    IMPORTED_LINK_DEPENDENT_LIBRARIES Xbox::PlayFabParty
-    INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/PlayFab.PartyXboxLive.Cpp/DesignTime/CommonConfiguration/neutral/Include")
-
-target_link_libraries(Xbox::PlayFabPartyLIVE INTERFACE Xbox::PlayFabParty)
 
 #--- Binaries
 set(Console_UCRTRedistDebug ${WindowsSdkDir}/bin/${SDKVersion}/x64/ucrt)

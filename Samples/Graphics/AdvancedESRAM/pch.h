@@ -37,8 +37,8 @@
 
 #include <gxdk.h>
 
-#if _GXDK_VER < 0x55F007B0 /* GDK Edition 211000 */
-#error This sample requires the October 2021 GDK or later
+#if _GXDK_VER < 0x55F00C58 /* GDK Edition 220300 */
+#error This sample requires the March 2022 GDK or later
 #endif
 
 #ifdef _GAMING_XBOX_SCARLETT
@@ -113,7 +113,7 @@ namespace DX
     public:
         com_exception(HRESULT hr) noexcept : result(hr) {}
 
-        const char* what() const override
+        const char* what() const noexcept override
         {
             static char s_str[64] = {};
             sprintf_s(s_str, "Failure with HRESULT of %08X", static_cast<unsigned int>(result));
@@ -140,9 +140,6 @@ namespace DX
     }
 }
 
-// Enable off by default warnings to improve code conformance
-#pragma warning(default : 4061 4062 4191 4242 4263 4264 4265 4266 4289 4365 4746 4826 4841 4986 4987 5029 5038 5042)
-
 namespace ATG
 {
     inline bool SupportsEsram()
@@ -155,3 +152,6 @@ namespace ATG
 #endif
     }
 }
+
+// Enable off by default warnings to improve code conformance
+#pragma warning(default : 4061 4062 4191 4242 4263 4264 4265 4266 4289 4365 4746 4826 4841 4986 4987 5029 5038 5042)

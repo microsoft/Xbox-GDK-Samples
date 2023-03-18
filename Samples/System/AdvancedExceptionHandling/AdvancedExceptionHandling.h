@@ -38,8 +38,8 @@ public:
     void OnDeviceRestored() override;
 
     // Messages
-    void OnActivated();
-    void OnDeactivated();
+    void OnActivated() {}
+    void OnDeactivated() {}
     void OnSuspending();
     void OnResuming();
     void OnWindowMoved();
@@ -47,7 +47,9 @@ public:
 
     // Properties
     void GetDefaultSize(int& width, int& height) const noexcept;
+
     static std::wstring m_testOutputMessage;
+
     // Flag that signifies if the title is currently suspending
     // Used by the PLMExceptionHandling and FullExceptionSystem examples
     // This needs to be static so the unhandled exception handler can access it
@@ -93,7 +95,6 @@ private:
     // Input device.
     std::unique_ptr<DirectX::GamePad>           m_gamePad;
     std::unique_ptr<DirectX::Keyboard>          m_keyboard;
-    std::unique_ptr<DirectX::Mouse>             m_mouse;
 
     DirectX::GamePad::ButtonStateTracker        m_gamePadButtons;
     DirectX::Keyboard::KeyboardStateTracker     m_keyboardButtons;

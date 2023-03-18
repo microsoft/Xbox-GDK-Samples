@@ -17,7 +17,8 @@ description: "This sample demonstrates how to use MPSD to implement sessions and
 
 # SimpleCrossGenMPSD
 
-For more information see this [Word document](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Live/SimpleCrossGenMPSD/ReadMe.docx).
+For more information see: 
+- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Live/SimpleCrossGenMPSD/readme.md)
 
 ## Privacy statement
 

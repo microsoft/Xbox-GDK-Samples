@@ -376,13 +376,13 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
     </None>
-    <None Include="Readme.docx" />
-    <None Include="SimplePlay3DSound_ReadMe_ja-jp.docx" />
-    <None Include="SimplePlay3DSound_ReadMe_ko-kr.docx" />
-    <None Include="SimplePlay3DSound_ReadMe_zh-cn.docx" />
+    <None Include="readme.md" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config" />
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="..\..\..\Media\Sounds\ATG_SpatialMotion_monoFunkDrums1Loop.wav" />
@@ -390,4 +390,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ItemGroup>
+    <None Include="media\image1.png" />
+  </ItemGroup>
 </Project>

@@ -128,7 +128,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config" />
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Assets\LargeLogo.png">
@@ -182,6 +182,8 @@
     <None Include="Scripts\Desktop.PostBuild.bat">
       <Filter>Scripts</Filter>
     </None>
+    <None Include="..\..\NuGet.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\..\..\Kits\ATGTK\Skybox\SkyboxEffect_PS.hlsl">

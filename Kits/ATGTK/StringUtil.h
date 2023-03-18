@@ -33,4 +33,7 @@ namespace DX
     void ToUpperInPlace(std::string& utf8String);
     std::wstring ToUpper(const std::wstring& wideString);
     void ToUpperInPlace(std::wstring& wideString);
+
+    uint32_t DetermineUtf8CharBytesFromFirstByte(char byte);
+    char32_t Utf8ToUtf32Character(const char* c, int charSize);
 }

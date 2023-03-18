@@ -35,10 +35,10 @@
 #include <wrl/client.h>
 #include <wrl/event.h>
 
-#include <grdk.h>
+#include <gxdk.h>
 
-#if _GRDK_VER < 0x4A610D2B /* GXDK Edition 200600 */
-#error This sample requires the June 2020 GDK or later
+#if _GXDK_VER < 0x55F00C58 /* GDK Edition 220300 */
+#error This sample requires the March 2022 GDK or later
 #endif
 
 #ifdef _GAMING_XBOX_SCARLETT
@@ -88,7 +88,7 @@ namespace DX
     public:
         com_exception(HRESULT hr) noexcept : result(hr) {}
 
-        const char* what() const override
+        const char* what() const noexcept override
         {
             static char s_str[64] = {};
             sprintf_s(s_str, "Failure with HRESULT of %08X", static_cast<unsigned int>(result));

@@ -364,7 +364,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config" />
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Kits\DirectXTK12\DirectXTK12_GDK_2019.vcxproj">
@@ -561,12 +561,14 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">true</DeploymentContent>
     </None>
+    <None Include="..\..\NuGet.config" />
     <None Include="Common.hlsli" />
     <None Include="CommonMS.hlsli" />
-    <None Include="Readme_ja-JP.docx" />
-    <None Include="Readme_ko-KR.docx" />
-    <None Include="Readme_zh-CN.docx" />
-    <None Include="ReadMe.docx" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
+    <None Include="readme.md" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="BasicMeshletPS.hlsl">
@@ -718,5 +720,16 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\..\packages\WinPixEventRuntime.1.0.230302001\build\WinPixEventRuntime.targets" Condition="Exists('..\..\packages\WinPixEventRuntime.1.0.230302001\build\WinPixEventRuntime.targets')" />
   </ImportGroup>
+  <ItemGroup>
+    <None Include="media\image1.png" />
+    <None Include="media\image3.png" />
+  </ItemGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\WinPixEventRuntime.1.0.230302001\build\WinPixEventRuntime.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\WinPixEventRuntime.1.0.230302001\build\WinPixEventRuntime.targets'))" />
+  </Target>
 </Project>

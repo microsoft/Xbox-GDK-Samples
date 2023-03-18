@@ -109,7 +109,7 @@
     <FxCompile Include="VertexShader.hlsl" />
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config">
+    <MGCCompile Include="MicrosoftGameConfig.mgc">
       <Filter>Common</Filter>
     </MGCCompile>
   </ItemGroup>

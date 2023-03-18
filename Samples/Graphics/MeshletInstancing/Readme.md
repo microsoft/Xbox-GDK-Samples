@@ -17,7 +17,11 @@ description: "Demonstrates GPU instancing for DirectX 12 Mesh Shaders."
 
 # MeshletInstancing
 
-For more information see this [Word document](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Graphics/MeshletInstancing/ReadMe.docx).
+For more information see: 
+- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Graphics/MeshletInstancing/readme_en-us.md)
+- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Graphics/MeshletInstancing/readme_ja-jp.md)
+- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Graphics/MeshletInstancing/readme_ko-kr.md)
+- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Graphics/MeshletInstancing/readme_zh-cn.md)
 
 ## Privacy statement
 

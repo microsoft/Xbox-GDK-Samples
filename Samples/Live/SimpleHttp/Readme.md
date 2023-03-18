@@ -17,7 +17,8 @@ description: "This sample demonstrates using XCurl to make HTTP requests includi
 
 # SimpleHttp
 
-For more information see this [Word document](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Live/SimpleHttp/ReadMe.docx).
+For more information see: 
+- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Live/SimpleHttp/readme.md)
 
 ## Privacy statement
 

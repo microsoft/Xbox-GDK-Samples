@@ -17,7 +17,8 @@ description: "The meshlet converter is a command line tool for use on PC."
 
 # MeshletConverter
 
-For more information see this [Word document](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Tools/MeshletConverter/ReadMe.docx).
+For more information see: 
+- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Tools/MeshletConverter/readme.md)
 
 ## Privacy statement
 

@@ -46,6 +46,7 @@ Sample::Sample() noexcept(false)
     , m_frameRate(0)
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>();
+    m_deviceResources->SetClearColor(ATG::Colors::Background);
 }
 
 Sample::~Sample()

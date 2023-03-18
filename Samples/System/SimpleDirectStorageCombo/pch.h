@@ -44,8 +44,8 @@
 
 #include <grdk.h>
 
-#if _GRDK_VER < 0x4A610D2B /* GXDK Edition 200600 */
-#error This sample requires the June 2020 GDK or later
+#if _GRDK_VER < 0x55F00C58 /* GDK Edition 220300 */
+#error This sample requires the March 2022 GDK or later
 #endif
 
 #ifdef _GAMING_XBOX_SCARLETT
@@ -95,6 +95,8 @@
 #include <pix.h>
 #endif
 
+#include "DirectStorageWin32/DirectStorageCrossPlatform.h"
+
 #include "DDSTextureLoader.h"
 #include "DescriptorHeap.h"
 #include "ResourceUploadBatch.h"
@@ -117,7 +119,7 @@ namespace DX
     public:
         com_exception(HRESULT hr) noexcept : result(hr) {}
 
-        const char* what() const override
+        const char* what() const noexcept override
         {
             static char s_str[64] = {};
             sprintf_s(s_str, "Failure with HRESULT of %08X", static_cast<unsigned int>(result));
@@ -143,6 +145,10 @@ namespace DX
         }
     }
 }
+
+struct handle_closer { void operator()(HANDLE h) noexcept { if (h) CloseHandle(h); } };
+using ScopedHandle = std::unique_ptr<void, handle_closer>;
+inline HANDLE safe_handle(HANDLE h) noexcept { return (h == INVALID_HANDLE_VALUE) ? nullptr : h; }
 
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wunknown-warning-option"

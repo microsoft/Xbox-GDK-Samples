@@ -17,7 +17,8 @@ description: "This sample demonstrates how to use the Multiplayer Activity Servi
 
 # SimpleMPA
 
-For more information see this [Word document](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Live/SimpleMPA/ReadMe.docx).
+For more information see: 
+- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Live/SimpleMPA/readme.md)
 
 ## Privacy statement
 

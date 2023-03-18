@@ -27,15 +27,14 @@ using namespace DirectX;
 
 #pragma warning(disable : 4061)
 
-std::unique_ptr<Sample> g_sample;
-
 namespace
-{    
+{
+    std::unique_ptr<Sample> g_sample;
 #ifdef _GAMING_XBOX
     HANDLE g_plmSuspendComplete = nullptr;
     HANDLE g_plmSignalResume = nullptr;
 #endif
-};
+}
 
 LPCWSTR g_szAppName = L"SimpleMPA";
 
@@ -69,8 +68,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
     //    The sample relies on the font and image files in the .exe's
     //    directory and so we do the following to set the working
     //    directory to what we want.
-    char dir[1024] = {};
-    if (GetModuleFileNameA(nullptr, dir, 1024) > 0)
+    char dir[_MAX_PATH] = {};
+    if (GetModuleFileNameA(nullptr, dir, _MAX_PATH) > 0)
     {
         std::string exe = dir;
         exe = exe.substr(0, exe.find_last_of("\\"));
@@ -126,14 +125,13 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
 #endif
 
         HWND hwnd = CreateWindowExW(0, L"SimpleMPAWindowClass", g_szAppName, WS_OVERLAPPEDWINDOW,
-            CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, nullptr, nullptr, hInstance,
-            nullptr);
+            CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top,
+            nullptr, nullptr, hInstance,
+            g_sample.get());
         if (!hwnd)
             return 1;
 
         ShowWindow(hwnd, nCmdShow);
-
-        SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(g_sample.get()));
 
         // Sample Usage Telemetry
         //
@@ -219,6 +217,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     switch (message)
     {
+    case WM_CREATE:
+        if (lParam)
+        {
+            auto params = reinterpret_cast<LPCREATESTRUCTW>(lParam);
+            SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(params->lpCreateParams));
+        }
+        break;
+
     case WM_ACTIVATEAPP:
         if (sample)
         {

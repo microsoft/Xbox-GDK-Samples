@@ -10,7 +10,6 @@ using namespace DX;
 
 using Microsoft::WRL::ComPtr;
 
-#ifdef _GAMING_DESKTOP
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wcovered-switch-default"
 #pragma clang diagnostic ignored "-Wswitch-enum"
@@ -18,6 +17,7 @@ using Microsoft::WRL::ComPtr;
 
 #pragma warning(disable : 4061)
 
+#ifdef _GAMING_DESKTOP
 namespace
 {
     inline DXGI_FORMAT NoSRGB(DXGI_FORMAT fmt) noexcept
@@ -37,22 +37,25 @@ namespace
 DeviceResources::DeviceResources(
     DXGI_FORMAT backBufferFormat,
     DXGI_FORMAT depthBufferFormat,
-    UINT backBufferCount) noexcept(false) :
-    m_backBufferIndex(0),
-    m_fenceValues{},
+    UINT backBufferCount,
+    unsigned int flags) noexcept(false) :
+        m_backBufferIndex(0),
+        m_fenceValues{},
 #ifdef _GAMING_XBOX
-    m_framePipelineToken{},
+        m_framePipelineToken{},
 #endif
-    m_rtvDescriptorSize(0),
-    m_screenViewport{},
-    m_scissorRect{},
-    m_backBufferFormat(backBufferFormat),
-    m_depthBufferFormat(depthBufferFormat),
-    m_backBufferCount(backBufferCount),
-    m_window(nullptr),
-    m_d3dFeatureLevel(D3D_FEATURE_LEVEL_11_0),
-    m_outputSize{ 0, 0, 1, 1 },
-    m_deviceNotify(nullptr)
+        m_rtvDescriptorSize(0),
+        m_screenViewport{},
+        m_scissorRect{},
+        m_backBufferFormat(backBufferFormat),
+        m_depthBufferFormat(depthBufferFormat),
+        m_backBufferCount(backBufferCount),
+        m_clearColor{},
+        m_window(nullptr),
+        m_d3dFeatureLevel(D3D_FEATURE_LEVEL_11_0),
+        m_outputSize{ 0, 0, 1, 1 },
+        m_options(flags),
+        m_deviceNotify(nullptr)
 {
     if (backBufferCount < 2 || backBufferCount > MAX_BACK_BUFFER_COUNT)
     {
@@ -70,7 +73,7 @@ DeviceResources::~DeviceResources()
     // Ensure we present a blank screen before cleaning up resources.
     if (m_commandQueue)
     {
-        (void)m_commandQueue->PresentX(0, nullptr, nullptr);
+        std::ignore = m_commandQueue->PresentX(0, nullptr, nullptr);
     }
 #endif
 }
@@ -95,6 +98,23 @@ void DeviceResources::CreateDeviceResources()
     params.GraphicsCommandQueueRingSizeBytes = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
     params.GraphicsScratchMemorySizeBytes = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
     params.ComputeScratchMemorySizeBytes = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
+    params.DisableGeometryShaderAllocations = (m_options & c_GeometryShaders) ? FALSE : TRUE;
+    params.DisableTessellationShaderAllocations = (m_options & c_TessellationShaders) ? FALSE : TRUE;
+
+#ifdef _GAMING_XBOX_SCARLETT
+    params.DisableDXR = (m_options & c_EnableDXR) ? FALSE : TRUE;
+    params.CreateDeviceFlags = D3D12XBOX_CREATE_DEVICE_FLAG_NONE;
+
+#if (_GRDK_VER >= 0x585D070E /* GXDK Edition 221000 */)
+    if (m_options & c_AmplificationShaders)
+    {
+        params.AmplificationShaderIndirectArgsBufferSize = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
+        params.AmplificationShaderPayloadBufferSize = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
+    }
+#endif
+#else // _GAMING_XBOX_XBOXONE
+    m_options &= ~(c_AmplificationShaders | c_EnableDXR);
+#endif
 
     HRESULT hr = D3D12XboxCreateDevice(
         nullptr,
@@ -165,7 +185,7 @@ void DeviceResources::CreateDeviceResources()
         adapter.Get(),
         D3D_FEATURE_LEVEL_11_0,
         IID_PPV_ARGS(m_d3dDevice.ReleaseAndGetAddressOf())
-    );
+        );
     ThrowIfFailed(hr);
 
     m_d3dDevice->SetName(L"DeviceResources");
@@ -219,6 +239,33 @@ void DeviceResources::CreateDeviceResources()
     else
     {
         m_d3dFeatureLevel = D3D_FEATURE_LEVEL_11_0;
+    }
+
+    // Check device options.
+    if (m_options & c_AmplificationShaders)
+    {
+        D3D12_FEATURE_DATA_D3D12_OPTIONS7 devopt = {};
+        if (FAILED(m_d3dDevice->CheckFeatureSupport(D3D12_FEATURE_D3D12_OPTIONS7, &devopt, sizeof(devopt))))
+        {
+            devopt = {};
+        }
+        if (devopt.MeshShaderTier == D3D12_MESH_SHADER_TIER_NOT_SUPPORTED)
+        {
+            m_options &= ~c_AmplificationShaders;
+        }
+    }
+
+    if (m_options & c_EnableDXR)
+    {
+        D3D12_FEATURE_DATA_D3D12_OPTIONS5 devopt = {};
+        if (FAILED(m_d3dDevice->CheckFeatureSupport(D3D12_FEATURE_D3D12_OPTIONS5, &devopt, sizeof(devopt))))
+        {
+            devopt = {};
+        }
+        if (devopt.RaytracingTier == D3D12_RAYTRACING_TIER_NOT_SUPPORTED)
+        {
+            m_options &= ~c_EnableDXR;
+        }
     }
 
 #endif
@@ -318,7 +365,7 @@ void DeviceResources::CreateWindowSizeDependentResources()
 
     // Obtain the back buffers for this window which will be the final render targets
     // and create render target views for each of them.
-    CD3DX12_HEAP_PROPERTIES swapChainHeapProperties(D3D12_HEAP_TYPE_DEFAULT);
+    const CD3DX12_HEAP_PROPERTIES swapChainHeapProperties(D3D12_HEAP_TYPE_DEFAULT);
 
     D3D12_RESOURCE_DESC swapChainBufferDesc = CD3DX12_RESOURCE_DESC::Tex2D(
         m_backBufferFormat,
@@ -329,8 +376,7 @@ void DeviceResources::CreateWindowSizeDependentResources()
     );
     swapChainBufferDesc.Flags |= D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET;
 
-    D3D12_CLEAR_VALUE swapChainOptimizedClearValue = {};
-    swapChainOptimizedClearValue.Format = m_backBufferFormat;
+    const CD3DX12_CLEAR_VALUE swapChainOptimizedClearValue(m_backBufferFormat, m_clearColor);
 
     for (UINT n = 0; n < m_backBufferCount; n++)
     {
@@ -350,7 +396,7 @@ void DeviceResources::CreateWindowSizeDependentResources()
         rtvDesc.Format = m_backBufferFormat;
         rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 
-        CD3DX12_CPU_DESCRIPTOR_HANDLE rtvDescriptor(
+        const CD3DX12_CPU_DESCRIPTOR_HANDLE rtvDescriptor(
             m_rtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart(),
             static_cast<INT>(n), m_rtvDescriptorSize);
         m_d3dDevice->CreateRenderTargetView(m_renderTargets[n].Get(), &rtvDesc, rtvDescriptor);
@@ -361,7 +407,7 @@ void DeviceResources::CreateWindowSizeDependentResources()
 
 #else // _GAMING_DESKTOP
 
-    DXGI_FORMAT backBufferFormat = NoSRGB(m_backBufferFormat);
+    const DXGI_FORMAT backBufferFormat = NoSRGB(m_backBufferFormat);
 
     // If the swap chain already exists, resize it, otherwise create one.
     if (m_swapChain)
@@ -444,7 +490,7 @@ void DeviceResources::CreateWindowSizeDependentResources()
         rtvDesc.Format = m_backBufferFormat;
         rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 
-        CD3DX12_CPU_DESCRIPTOR_HANDLE rtvDescriptor(
+        const CD3DX12_CPU_DESCRIPTOR_HANDLE rtvDescriptor(
             m_rtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart(),
             static_cast<INT>(n), m_rtvDescriptorSize);
         m_d3dDevice->CreateRenderTargetView(m_renderTargets[n].Get(), &rtvDesc, rtvDescriptor);
@@ -459,7 +505,7 @@ void DeviceResources::CreateWindowSizeDependentResources()
     {
         // Allocate a 2-D surface as the depth/stencil buffer and create a depth/stencil view
         // on this surface.
-        CD3DX12_HEAP_PROPERTIES depthHeapProperties(D3D12_HEAP_TYPE_DEFAULT);
+        const CD3DX12_HEAP_PROPERTIES depthHeapProperties(D3D12_HEAP_TYPE_DEFAULT);
 
         D3D12_RESOURCE_DESC depthStencilDesc = CD3DX12_RESOURCE_DESC::Tex2D(
             m_depthBufferFormat,
@@ -467,13 +513,10 @@ void DeviceResources::CreateWindowSizeDependentResources()
             backBufferHeight,
             1, // This depth stencil view has only one texture.
             1  // Use a single mipmap level.
-        );
+            );
         depthStencilDesc.Flags |= D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
 
-        D3D12_CLEAR_VALUE depthOptimizedClearValue = {};
-        depthOptimizedClearValue.Format = m_depthBufferFormat;
-        depthOptimizedClearValue.DepthStencil.Depth = 1.0f;
-        depthOptimizedClearValue.DepthStencil.Stencil = 0;
+        const CD3DX12_CLEAR_VALUE depthOptimizedClearValue(m_depthBufferFormat, (m_options & c_ReverseDepth) ? 0.0f : 1.0f, 0u);
 
         ThrowIfFailed(m_d3dDevice->CreateCommittedResource(
             &depthHeapProperties,
@@ -482,7 +525,7 @@ void DeviceResources::CreateWindowSizeDependentResources()
             D3D12_RESOURCE_STATE_DEPTH_WRITE,
             &depthOptimizedClearValue,
             IID_GRAPHICS_PPV_ARGS(m_depthStencil.ReleaseAndGetAddressOf())
-        ));
+            ));
 
         m_depthStencil->SetName(L"Depth stencil");
 
@@ -518,14 +561,14 @@ void DeviceResources::SetWindow(HWND window, int width, int height) noexcept
 // This method is called when the Win32 window changes size.
 bool DeviceResources::WindowSizeChanged(int width, int height)
 {
+    if (!m_window)
+        return false;
+
     RECT newRc;
     newRc.left = newRc.top = 0;
     newRc.right = width;
     newRc.bottom = height;
-    if (newRc.left == m_outputSize.left
-        && newRc.top == m_outputSize.top
-        && newRc.right == m_outputSize.right
-        && newRc.bottom == m_outputSize.bottom)
+    if (newRc.right == m_outputSize.right && newRc.bottom == m_outputSize.bottom)
     {
         return false;
     }
@@ -583,12 +626,6 @@ void DeviceResources::HandleDeviceLost()
 // Prepare the command list and render target for rendering.
 void DeviceResources::Prepare(D3D12_RESOURCE_STATES beforeState, D3D12_RESOURCE_STATES afterState)
 {
-#ifdef _GAMING_XBOX
-    // Wait until frame start is signaled
-    m_framePipelineToken = D3D12XBOX_FRAME_PIPELINE_TOKEN_NULL;
-    ThrowIfFailed(m_d3dDevice->WaitFrameEventX(D3D12XBOX_FRAME_EVENT_ORIGIN, INFINITE, nullptr, D3D12XBOX_WAIT_FRAME_EVENT_FLAG_NONE, &m_framePipelineToken));
-#endif
-
     // Reset command list and allocator.
     ThrowIfFailed(m_commandAllocators[m_backBufferIndex]->Reset());
     ThrowIfFailed(m_commandList->Reset(m_commandAllocators[m_backBufferIndex].Get(), nullptr));
@@ -596,7 +633,8 @@ void DeviceResources::Prepare(D3D12_RESOURCE_STATES beforeState, D3D12_RESOURCE_
     if (beforeState != afterState)
     {
         // Transition the render target into the correct state to allow for drawing into it.
-        D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(m_renderTargets[m_backBufferIndex].Get(),
+        const D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
+            m_renderTargets[m_backBufferIndex].Get(),
             beforeState, afterState);
         m_commandList->ResourceBarrier(1, &barrier);
     }
@@ -608,7 +646,9 @@ void DeviceResources::Present(D3D12_RESOURCE_STATES beforeState)
     if (beforeState != D3D12_RESOURCE_STATE_PRESENT)
     {
         // Transition the render target to the state that allows it to be presented to the display.
-        D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(m_renderTargets[m_backBufferIndex].Get(), beforeState, D3D12_RESOURCE_STATE_PRESENT);
+        const D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
+            m_renderTargets[m_backBufferIndex].Get(),
+            beforeState, D3D12_RESOURCE_STATE_PRESENT);
         m_commandList->ResourceBarrier(1, &barrier);
     }
 
@@ -628,9 +668,12 @@ void DeviceResources::Present(D3D12_RESOURCE_STATES beforeState)
         m_commandQueue->PresentX(1, &planeParameters, nullptr)
     );
 
-    // Xbox One apps do not need to handle DXGI_ERROR_DEVICE_REMOVED or DXGI_ERROR_DEVICE_RESET.
+    // Xbox apps do not need to handle DXGI_ERROR_DEVICE_REMOVED or DXGI_ERROR_DEVICE_RESET.
 
-#else
+    // Update the back buffer index.
+    m_backBufferIndex = (m_backBufferIndex + 1) % m_backBufferCount;
+
+#else // _GAMING_DESKTOP
 
     // The first argument instructs DXGI to block until VSync, putting the application
     // to sleep until the next VSync. This ensures we don't waste any cycles rendering
@@ -653,9 +696,8 @@ void DeviceResources::Present(D3D12_RESOURCE_STATES beforeState)
         ThrowIfFailed(hr);
     }
 
-#endif
-
     MoveToNextFrame();
+#endif
 }
 
 // Handle GPU suspend/resume
@@ -681,13 +723,13 @@ void DeviceResources::WaitForGpu() noexcept
     if (m_commandQueue && m_fence && m_fenceEvent.IsValid())
     {
         // Schedule a Signal command in the GPU queue.
-        UINT64 fenceValue = m_fenceValues[m_backBufferIndex];
+        const UINT64 fenceValue = m_fenceValues[m_backBufferIndex];
         if (SUCCEEDED(m_commandQueue->Signal(m_fence.Get(), fenceValue)))
         {
             // Wait until the Signal has been processed.
             if (SUCCEEDED(m_fence->SetEventOnCompletion(fenceValue, m_fenceEvent.Get())))
             {
-                WaitForSingleObjectEx(m_fenceEvent.Get(), INFINITE, FALSE);
+                std::ignore = WaitForSingleObjectEx(m_fenceEvent.Get(), INFINITE, FALSE);
 
                 // Increment the fence value for the current frame.
                 m_fenceValues[m_backBufferIndex]++;
@@ -696,32 +738,20 @@ void DeviceResources::WaitForGpu() noexcept
     }
 }
 
-// Prepare to render the next frame.
-void DeviceResources::MoveToNextFrame()
-{
-    // Schedule a Signal command in the queue.
-    const UINT64 currentFenceValue = m_fenceValues[m_backBufferIndex];
-    ThrowIfFailed(m_commandQueue->Signal(m_fence.Get(), currentFenceValue));
-
-    // Update the back buffer index.
 #ifdef _GAMING_XBOX
-    m_backBufferIndex = (m_backBufferIndex + 1) % m_backBufferCount;
-#else
-    m_backBufferIndex = m_swapChain->GetCurrentBackBufferIndex();
-#endif
-
-    // If the next frame is not ready to be rendered yet, wait until it is ready.
-    if (m_fence->GetCompletedValue() < m_fenceValues[m_backBufferIndex])
-    {
-        ThrowIfFailed(m_fence->SetEventOnCompletion(m_fenceValues[m_backBufferIndex], m_fenceEvent.Get()));
-        WaitForSingleObjectEx(m_fenceEvent.Get(), INFINITE, FALSE);
-    }
-
-    // Set the fence value for the next frame.
-    m_fenceValues[m_backBufferIndex] = currentFenceValue + 1;
+// For PresentX rendering, we should wait for the origin event just before processing input.
+void DeviceResources::WaitForOrigin()
+{
+    // Wait until frame start is signaled
+    m_framePipelineToken = D3D12XBOX_FRAME_PIPELINE_TOKEN_NULL;
+    ThrowIfFailed(m_d3dDevice->WaitFrameEventX(
+        D3D12XBOX_FRAME_EVENT_ORIGIN,
+        INFINITE,
+        nullptr,
+        D3D12XBOX_WAIT_FRAME_EVENT_FLAG_NONE,
+        &m_framePipelineToken));
 }
 
-#ifdef _GAMING_XBOX
 // Set frame interval and register for frame events
 void DeviceResources::RegisterFrameEvents()
 {
@@ -750,7 +780,30 @@ void DeviceResources::RegisterFrameEvents()
         nullptr,
         D3D12XBOX_SCHEDULE_FRAME_EVENT_FLAG_NONE));
 }
-#else
+
+#else // _GAMING_DESKTOP
+
+// Prepare to render the next frame.
+void DeviceResources::MoveToNextFrame()
+{
+    // Schedule a Signal command in the queue.
+    const UINT64 currentFenceValue = m_fenceValues[m_backBufferIndex];
+    ThrowIfFailed(m_commandQueue->Signal(m_fence.Get(), currentFenceValue));
+
+    // Update the back buffer index.
+    m_backBufferIndex = m_swapChain->GetCurrentBackBufferIndex();
+
+    // If the next frame is not ready to be rendered yet, wait until it is ready.
+    if (m_fence->GetCompletedValue() < m_fenceValues[m_backBufferIndex])
+    {
+        ThrowIfFailed(m_fence->SetEventOnCompletion(m_fenceValues[m_backBufferIndex], m_fenceEvent.Get()));
+        std::ignore = WaitForSingleObjectEx(m_fenceEvent.Get(), INFINITE, FALSE);
+    }
+
+    // Set the fence value for the next frame.
+    m_fenceValues[m_backBufferIndex] = currentFenceValue + 1;
+}
+
 // This method acquires the first available hardware adapter that supports Direct3D 12.
 // If no such adapter can be found, try WARP. Otherwise throw an exception.
 void DeviceResources::GetAdapter(IDXGIAdapter1** ppAdapter)
@@ -775,7 +828,7 @@ void DeviceResources::GetAdapter(IDXGIAdapter1** ppAdapter)
         }
 
         // Check to see if the adapter supports Direct3D 12, but don't create the actual device yet.
-        if (SUCCEEDED(D3D12CreateDevice(adapter.Get(), D3D_FEATURE_LEVEL_11_0, _uuidof(ID3D12Device), nullptr)))
+        if (SUCCEEDED(D3D12CreateDevice(adapter.Get(), D3D_FEATURE_LEVEL_11_0, __uuidof(ID3D12Device), nullptr)))
         {
 #ifdef _DEBUG
             wchar_t buff[256] = {};

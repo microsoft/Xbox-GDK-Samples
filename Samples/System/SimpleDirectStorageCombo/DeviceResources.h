@@ -20,9 +20,16 @@ namespace DX
     class DeviceResources
     {
     public:
+        static constexpr unsigned int c_ReverseDepth         = 0x1;
+        static constexpr unsigned int c_GeometryShaders      = 0x2;
+        static constexpr unsigned int c_TessellationShaders  = 0x4;
+        static constexpr unsigned int c_AmplificationShaders = 0x8;
+        static constexpr unsigned int c_EnableDXR            = 0x10;
+
         DeviceResources(DXGI_FORMAT backBufferFormat = DXGI_FORMAT_B8G8R8A8_UNORM,
-            DXGI_FORMAT depthBufferFormat = DXGI_FORMAT_D32_FLOAT,
-            UINT backBufferCount = 2) noexcept(false);
+                        DXGI_FORMAT depthBufferFormat = DXGI_FORMAT_D32_FLOAT,
+                        UINT backBufferCount = 2,
+                        unsigned int flags = 0) noexcept(false);
         ~DeviceResources();
 
         DeviceResources(DeviceResources&&) = default;
@@ -38,34 +45,41 @@ namespace DX
         void HandleDeviceLost();
         void RegisterDeviceNotify(IDeviceNotify* deviceNotify) noexcept { m_deviceNotify = deviceNotify; }
         void Prepare(D3D12_RESOURCE_STATES beforeState = D3D12_RESOURCE_STATE_PRESENT,
-            D3D12_RESOURCE_STATES afterState = D3D12_RESOURCE_STATE_RENDER_TARGET);
+                     D3D12_RESOURCE_STATES afterState = D3D12_RESOURCE_STATE_RENDER_TARGET);
         void Present(D3D12_RESOURCE_STATES beforeState = D3D12_RESOURCE_STATE_RENDER_TARGET);
         void Suspend();
         void Resume();
         void WaitForGpu() noexcept;
+#ifdef _GAMING_XBOX
+        void WaitForOrigin();
+#endif
+
+        // Direct3D Properties.
+        void SetClearColor(_In_reads_(4) const float* rgba) noexcept { memcpy(m_clearColor, rgba, sizeof(m_clearColor)); }
 
         // Device Accessors.
         RECT GetOutputSize() const noexcept { return m_outputSize; }
 
         // Direct3D Accessors.
-        auto                        GetD3DDevice() const noexcept { return m_d3dDevice.Get(); }
+        auto                        GetD3DDevice() const noexcept          { return m_d3dDevice.Get(); }
 #ifdef _GAMING_DESKTOP
-        auto                        GetSwapChain() const noexcept { return m_swapChain.Get(); }
-        auto                        GetDXGIFactory() const noexcept { return m_dxgiFactory.Get(); }
+        auto                        GetSwapChain() const noexcept          { return m_swapChain.Get(); }
+        auto                        GetDXGIFactory() const noexcept        { return m_dxgiFactory.Get(); }
 #endif
-        HWND                        GetWindow() const noexcept { return m_window; }
+        HWND                        GetWindow() const noexcept             { return m_window; }
         D3D_FEATURE_LEVEL           GetDeviceFeatureLevel() const noexcept { return m_d3dFeatureLevel; }
-        ID3D12Resource*             GetRenderTarget() const noexcept { return m_renderTargets[m_backBufferIndex].Get(); }
-        ID3D12Resource*             GetDepthStencil() const noexcept { return m_depthStencil.Get(); }
-        ID3D12CommandQueue*         GetCommandQueue() const noexcept { return m_commandQueue.Get(); }
-        ID3D12CommandAllocator*     GetCommandAllocator() const noexcept { return m_commandAllocators[m_backBufferIndex].Get(); }
-        auto                        GetCommandList() const noexcept { return m_commandList.Get(); }
-        DXGI_FORMAT                 GetBackBufferFormat() const noexcept { return m_backBufferFormat; }
-        DXGI_FORMAT                 GetDepthBufferFormat() const noexcept { return m_depthBufferFormat; }
-        D3D12_VIEWPORT              GetScreenViewport() const noexcept { return m_screenViewport; }
-        D3D12_RECT                  GetScissorRect() const noexcept { return m_scissorRect; }
-        UINT                        GetCurrentFrameIndex() const noexcept { return m_backBufferIndex; }
-        UINT                        GetBackBufferCount() const noexcept { return m_backBufferCount; }
+        ID3D12Resource*             GetRenderTarget() const noexcept       { return m_renderTargets[m_backBufferIndex].Get(); }
+        ID3D12Resource*             GetDepthStencil() const noexcept       { return m_depthStencil.Get(); }
+        ID3D12CommandQueue*         GetCommandQueue() const noexcept       { return m_commandQueue.Get(); }
+        ID3D12CommandAllocator*     GetCommandAllocator() const noexcept   { return m_commandAllocators[m_backBufferIndex].Get(); }
+        auto                        GetCommandList() const noexcept        { return m_commandList.Get(); }
+        DXGI_FORMAT                 GetBackBufferFormat() const noexcept   { return m_backBufferFormat; }
+        DXGI_FORMAT                 GetDepthBufferFormat() const noexcept  { return m_depthBufferFormat; }
+        D3D12_VIEWPORT              GetScreenViewport() const noexcept     { return m_screenViewport; }
+        D3D12_RECT                  GetScissorRect() const noexcept        { return m_scissorRect; }
+        UINT                        GetCurrentFrameIndex() const noexcept  { return m_backBufferIndex; }
+        UINT                        GetBackBufferCount() const noexcept    { return m_backBufferCount; }
+        unsigned int                GetDeviceOptions() const noexcept      { return m_options; }
 
         CD3DX12_CPU_DESCRIPTOR_HANDLE GetRenderTargetView() const noexcept
         {
@@ -79,10 +93,10 @@ namespace DX
         }
 
     private:
-        void MoveToNextFrame();
 #ifdef _GAMING_XBOX
         void RegisterFrameEvents();
 #else
+        void MoveToNextFrame();
         void GetAdapter(IDXGIAdapter1** ppAdapter);
 #endif
 
@@ -123,11 +137,15 @@ namespace DX
         DXGI_FORMAT                                         m_backBufferFormat;
         DXGI_FORMAT                                         m_depthBufferFormat;
         UINT                                                m_backBufferCount;
+        float                                               m_clearColor[4];
 
         // Cached device properties.
         HWND                                                m_window;
         D3D_FEATURE_LEVEL                                   m_d3dFeatureLevel;
         RECT                                                m_outputSize;
+
+        // DeviceResources options (see flags above)
+        unsigned int                                        m_options;
 
         // The IDeviceNotify can be held directly as it owns the DeviceResources.
         IDeviceNotify*                                      m_deviceNotify;

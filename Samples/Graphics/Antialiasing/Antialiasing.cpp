@@ -75,6 +75,7 @@ Sample::Sample() noexcept(false) :
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM_SRGB,
         DXGI_FORMAT_D32_FLOAT, // Single-sample depth buffer needed for some render modes
         2);
+    m_deviceResources->SetClearColor(ATG::ColorsLinear::Background);
 
     // Set up for post-process rendering.
     m_scene = std::make_unique<DX::RenderTexture>(m_deviceResources->GetBackBufferFormat());

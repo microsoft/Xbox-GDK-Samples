@@ -12,7 +12,7 @@
 #include "ATGColors.h"
 #include "Texture.h"
 
-extern void ExitSample();
+extern void ExitSample() noexcept;
 
 using namespace DirectX;
 using namespace ATG::UITK;
@@ -135,6 +135,7 @@ Sample::Sample() noexcept(false) :
 {
     // Renders only 2D, so no need for a depth buffer.
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_UNKNOWN);
+    m_deviceResources->SetClearColor(ATG::Colors::Background);
 
     DX::ThrowIfFailed(
         XTaskQueueCreate(XTaskQueueDispatchMode::ThreadPool, XTaskQueueDispatchMode::Manual, &m_taskQueue)
@@ -422,10 +423,16 @@ void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
 
+#ifdef _GAMING_XBOX
+    m_deviceResources->WaitForOrigin();
+#endif
+
     m_timer.Tick([&]()
     {
         Update(m_timer);
     });
+
+    m_mouse->EndOfInputFrame();
 
     Render();
 
