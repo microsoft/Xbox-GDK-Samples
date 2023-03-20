@@ -21,13 +21,13 @@ using Microsoft::WRL::ComPtr;
 
 namespace
 {
-    const int c_sampleUIPanel = 200;
-    const int c_groupLabel = 201;
+    constexpr int c_sampleUIPanel = 200;
+    constexpr int c_groupLabel = 201;
 
-    const int c_unselected1 = 300;
-    const int c_selected1 = 310;
+    constexpr int c_unselected1 = 300;
+    constexpr int c_selected1 = 310;
 
-    const int c_listSize = 15;
+    constexpr int c_listSize = 15;
 
     std::string friendListTypeStrings[] =
     {
@@ -43,7 +43,9 @@ Sample::Sample() noexcept(false) :
     m_frame(0)
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>();
+    m_deviceResources->SetClearColor(ATG::Colors::Background);
     m_deviceResources->RegisterDeviceNotify(this);
+
     m_liveResources = std::make_shared<ATG::LiveResources>();
     m_liveInfoHUD = std::make_unique<ATG::LiveInfoHUD>("SocialManager Sample");
 
@@ -230,10 +232,16 @@ void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
 
+#ifdef _GAMING_XBOX
+    m_deviceResources->WaitForOrigin();
+#endif
+
     m_timer.Tick([&]()
     {
         Update(m_timer);
     });
+
+    m_mouse->EndOfInputFrame();
 
     Render();
 
@@ -374,16 +382,16 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
-    auto dsvDescriptor = m_deviceResources->GetDepthStencilView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
     commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -417,7 +425,7 @@ void Sample::OnResuming()
 
 void Sample::OnWindowMoved()
 {
-    auto r = m_deviceResources->GetOutputSize();
+    auto const r = m_deviceResources->GetOutputSize();
     m_deviceResources->WindowSizeChanged(r.right, r.bottom);
 }
 
@@ -506,8 +514,8 @@ void ScaleRect(const RECT &originalDisplayRect, const RECT &displayRect, const R
 // Allocate all memory resources that change on a window SizeChanged event.
 void Sample::CreateWindowSizeDependentResources()
 {
-    RECT fullscreen = m_deviceResources->GetOutputSize();
-    auto viewport = m_deviceResources->GetScreenViewport();
+    const RECT fullscreen = m_deviceResources->GetOutputSize();
+    auto const viewport = m_deviceResources->GetScreenViewport();
 
      // Scaled for 1920x1080
     static const RECT originalScale = { 0, 0, 1920, 1080 };

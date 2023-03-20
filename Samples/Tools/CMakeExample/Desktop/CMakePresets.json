@@ -13,8 +13,7 @@
       "hidden": true,
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "cacheVariables": {
-        "SDKVersion": "10.0.19041.0",
-        "XdkEditionTarget": "221000",
+        "XdkEditionTarget": "230300",
         "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}"
       }
     },
@@ -26,7 +25,11 @@
     },
     {
       "name": "Release",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" },
+      "cacheVariables":
+      {
+          "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+          "CMAKE_INTERPROCEDURAL_OPTIMIZATION": true
+      },
       "hidden": true
     },
 

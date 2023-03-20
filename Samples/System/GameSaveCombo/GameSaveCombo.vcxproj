@@ -472,7 +472,7 @@
     </CopyFileToFolders>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="Readme.docx" />
+    <None Include="readme.md" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h" />
@@ -725,4 +725,8 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ItemGroup>
+    <None Include="media\image1.png" />
+    <None Include="media\image3.png" />
+  </ItemGroup>
 </Project>

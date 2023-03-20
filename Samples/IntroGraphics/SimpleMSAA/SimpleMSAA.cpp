@@ -45,6 +45,7 @@ Sample::Sample() noexcept(false) :
         c_depthBufferFormat, /* If we were only doing MSAA rendering, we could skip the non-MSAA depth/stencil buffer with DXGI_FORMAT_UNKNOWN */
         2,
         flags);
+    m_deviceResources->SetClearColor(ATG::ColorsLinear::Background);
 
     //
     // In Win32 'classic' DirectX 11, you can create the 'swapchain' backbuffer as a multisample buffer.  Present took care of the
@@ -441,7 +442,6 @@ void Sample::CreateWindowSizeDependentResources()
     D3D12_CLEAR_VALUE depthOptimizedClearValue = {};
     depthOptimizedClearValue.Format = c_depthBufferFormat;
     depthOptimizedClearValue.DepthStencil.Depth = 1.0f;
-    depthOptimizedClearValue.DepthStencil.Stencil = 0;
 
     DX::ThrowIfFailed(device->CreateCommittedResource(
         &heapProperties,

@@ -17,7 +17,8 @@ description: "This sample demonstrates using LibHttpClient to connect, send, and
 
 # SimpleWebSockets
 
-For more information see this [Word document](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Live/SimpleWebSockets/ReadMe.docx).
+For more information see: 
+- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Live/SimpleWebSockets/readme.md)
 
 ## Privacy statement
 

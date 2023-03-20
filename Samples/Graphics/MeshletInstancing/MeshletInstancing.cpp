@@ -120,6 +120,7 @@ Sample::Sample() noexcept(false)
     , m_renderHelp(false)
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>();
+    m_deviceResources->SetClearColor(ATG::Colors::Background);
     m_deviceResources->RegisterDeviceNotify(this);
 }
 
@@ -164,6 +165,8 @@ void Sample::Tick()
     {
         Update(m_timer);
     });
+
+    m_mouse->EndOfInputFrame();
 
     Render();
 

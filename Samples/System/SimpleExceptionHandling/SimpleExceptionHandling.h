@@ -92,7 +92,6 @@ private:
     // Input device.
     std::unique_ptr<DirectX::GamePad>           m_gamePad;
     std::unique_ptr<DirectX::Keyboard>          m_keyboard;
-    std::unique_ptr<DirectX::Mouse>             m_mouse;
 
     DirectX::GamePad::ButtonStateTracker        m_gamePadButtons;
     DirectX::Keyboard::KeyboardStateTracker     m_keyboardButtons;

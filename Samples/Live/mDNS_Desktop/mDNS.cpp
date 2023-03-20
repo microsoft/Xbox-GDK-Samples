@@ -140,6 +140,8 @@ void Sample::Tick()
         Update(m_timer);
     });
 
+    m_mouse->EndOfInputFrame();
+
     Render();
 }
 

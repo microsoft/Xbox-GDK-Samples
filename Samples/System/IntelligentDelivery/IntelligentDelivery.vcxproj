@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Gaming.Desktop.x64">
@@ -591,10 +591,10 @@
     <None Include="CreateMSIXVC_PC.bat" />
     <None Include="CreateXVC_Scarlett.bat" />
     <None Include="CreateXVC_XboxOne.bat" />
-    <None Include="readme.docx" />
-    <None Include="readme_ja-JP.docx" />
-    <None Include="readme_ko-KR.docx" />
-    <None Include="readme_zh-CN.docx" />
+    <None Include="readme.md" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Chunks_PC.xml">
@@ -636,4 +636,10 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ItemGroup>
+    <None Include="media\image1.png" />
+    <None Include="media\image3.png" />
+    <None Include="media\image4.png" />
+    <None Include="media\image5.png" />
+  </ItemGroup>
 </Project>

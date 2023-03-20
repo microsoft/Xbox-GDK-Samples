@@ -17,7 +17,11 @@ description: "This sample demonstrates how to localize package manifest as well 
 
 # NLSAndLocalization
 
-For more information see this [Word document](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/NLSAndLocalization/readme.docx).
+For more information see: 
+- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/NLSAndLocalization/readme_en-us.md)
+- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/NLSAndLocalization/readme_ja-jp.md)
+- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/NLSAndLocalization/readme_ko-kr.md)
+- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/NLSAndLocalization/readme_zh-cn.md)
 
 ## Privacy statement
 

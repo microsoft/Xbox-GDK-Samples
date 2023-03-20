@@ -75,6 +75,7 @@ Sample::Sample() noexcept(false) :
         DXGI_FORMAT_D32_FLOAT,
         2,
         DX::DeviceResources::c_Enable4K_UHD | DX::DeviceResources::c_EnableQHD);
+    m_deviceResources->SetClearColor(ATG::ColorsLinear::Background);
 }
 
 Sample::~Sample()

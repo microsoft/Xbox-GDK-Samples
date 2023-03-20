@@ -11,7 +11,7 @@
 #include <vector>
 #include "ImplementationBase.h"
 
-// DirectStorage supports two main methods of notification, status block and ID3D12Fence
+// DirectStorage supports three main methods of notification, status block, ID3D12Fence, and Windows Events
 // This sample shows how to use a status block for notification
 class StatusBatch : public ImplementationBase
 {

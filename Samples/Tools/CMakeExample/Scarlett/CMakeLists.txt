@@ -8,8 +8,6 @@ project(CMakeExampleScarlett
   HOMEPAGE_URL "https://github.com/microsoft/Xbox-GDK-Samples"
   LANGUAGES CXX)
 
-option(BUILD_USING_LTCG "Enable Whole Program Optimization" ON)
-
 # See the BWOIExample for more information
 option(BUILD_USING_BWOI "Enable Build With/Out Install" OFF)
 
@@ -17,7 +15,7 @@ option(ENABLE_CODE_ANALYSIS "Use Static Code Analysis on build" OFF)
 
 set(CMAKE_MAP_IMPORTED_CONFIG_RELWITHDEBINFO Release)
 
-include(CMakeGDKScarlett.cmake)
+include(../CMake/CMakeGDKScarlett.cmake)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -50,7 +48,7 @@ foreach(FILE ../VertexShader.hlsl ../PixelShader.hlsl)
   get_filename_component(FILE_WE ${FILE} NAME_WE)
   get_source_file_property(shadertype ${FILE} ShaderType)
   add_custom_command(TARGET shaders
-                     COMMAND ${DXCToolPath}/dxc.exe /nologo /Emain /T${shadertype}_6_0 $<IF:$<CONFIG:DEBUG>,/Od,/O3> /Zi /Fo ${CMAKE_BINARY_DIR}/${FILE_WE}.cso /Fd ${CMAKE_BINARY_DIR}/${FILE_WE}.pdb ${FILE}
+                     COMMAND ${DIRECTX_DXC_TOOL} /nologo /Emain /T${shadertype}_6_0 $<IF:$<CONFIG:DEBUG>,/Od,/O3> /Zi /Fo ${CMAKE_BINARY_DIR}/${FILE_WE}.cso /Fd ${CMAKE_BINARY_DIR}/${FILE_WE}.pdb ${FILE}
                      MAIN_DEPENDENCY ${FILE}
                      COMMENT "HLSL ${FILE}"
                      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
@@ -64,8 +62,8 @@ configure_file(../MicrosoftGameConfig.mgc MicrosoftGame.config @ONLY)
 add_custom_target(mgccompile)
 
 add_custom_command(TARGET mgccompile
-                   COMMAND ${MGCToolPath}/makepkg.exe localize /d "${CMAKE_BINARY_DIR}" /pd "${CMAKE_BINARY_DIR}/bin/Gaming.Xbox.Scarlett.x64"
-                   MAIN_DEPENDENCY MicrosoftGame.config
+                   COMMAND ${MAKEPKG_TOOL} localize /d "${CMAKE_BINARY_DIR}" /pd "${CMAKE_BINARY_DIR}/bin/Gaming.Xbox.Scarlett.x64"
+                   MAIN_DEPENDENCY ../MicrosoftGameConfig.mgc
                    COMMENT "makepkg localize MicrosoftGame.config"
                    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
                    VERBATIM)
@@ -86,14 +84,14 @@ target_compile_options(${PROJECT_NAME} PRIVATE /W4 /GR- /fp:fast /GS /Gy)
 target_link_libraries(${PROJECT_NAME} PRIVATE ${Console_Libs} Xbox::XSAPI Xbox::XCurl)
 # uuid.lib if using Windows Imaging Component (WIC)
 # dloadhelper.lib if using /DELAYLOAD
-# optional additional extension libraries: Xbox::GameChat2 Xbox::PlayFabMultiplayer Xbox::PlayFabParty Xbox::PlayFabPartyLIVE
+# optional additional extension libraries: Xbox::GameChat2 Xbox::PlayFabMultiplayer Xbox::PlayFabParty Xbox::PlayFabPartyLIVE Xbox::PlayFabServices
 
 # Optional precompiled header switches:
 # /Ycpch.h (Create Precompiled Header File)
 # /Yupch.h (Use Precompiled Header File)
 # /Fp (Name .pch file)
 # /FI (Name Force Include File)
-target_precompile_headers(${PROJECT_NAME} PRIVATE ../pch.h )
+target_precompile_headers(${PROJECT_NAME} PRIVATE ../pch.h)
 
 target_link_options(${PROJECT_NAME} PRIVATE ${Console_LinkOptions})
 
@@ -102,7 +100,8 @@ target_compile_options(${PROJECT_NAME} PRIVATE ${Console_ArchOptions})
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
    # /permissive- (C++ conformance mode enabled)
    # /Zc:__cplusplus (Enable updated __cplusplus macro)
-   target_compile_options(${PROJECT_NAME} PRIVATE /permissive- /Zc:__cplusplus)
+   # /Zc:inline (Remove unreferenced COMDAT)
+   target_compile_options(${PROJECT_NAME} PRIVATE /permissive- /Zc:__cplusplus /Zc:inline)
 
    # /analyze (Code analysis)
    if(ENABLE_CODE_ANALYSIS)
@@ -119,6 +118,10 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
       target_compile_options(${PROJECT_NAME} PRIVATE /Zc:preprocessor /wd5105)
    endif()
 
+   if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.28)
+      target_compile_options(${PROJECT_NAME} PRIVATE /Zc:lambda)
+   endif()
+
    if(CMAKE_BUILD_TYPE MATCHES "Debug")
        # Optional debug compiler switches:
        # /RTC (Runtime Checks)
@@ -127,14 +130,18 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
        # Optional debug linker switches:
        # /INCREMENTAL
        # /DEBUG or /DEBUG:fastlink
-   elseif(BUILD_USING_LTCG)
+   elseif(CMAKE_INTERPROCEDURAL_OPTIMIZATION)
        # /GL (Whole Program Optimization)
        # /Gw (Optimize Global Data)
-       target_compile_options(${PROJECT_NAME} PRIVATE /GL /Gw)
+       target_compile_options(${PROJECT_NAME} PRIVATE /Gw)
+
+       if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.35)
+           target_compile_options(${PROJECT_NAME} PRIVATE /Zc:checkGwOdr)
+       endif()
 
        # /LTCG (Link-time Code Generation)
        # Ignores warning from CMake generator use of /INCREMENTAL
-       target_link_options(${PROJECT_NAME} PRIVATE /IGNORE:4075 /LTCG ${Console_ArchOptions_LTCG})
+       target_link_options(${PROJECT_NAME} PRIVATE /IGNORE:4075 ${Console_ArchOptions_LTCG})
    endif()
 endif()
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")

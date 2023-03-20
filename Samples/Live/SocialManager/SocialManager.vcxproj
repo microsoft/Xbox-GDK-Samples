@@ -588,10 +588,10 @@
     <None Include="Assets\SampleUI.csv">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="SocialManager_ReadMe.docx" />
-    <None Include="SocialManager_ReadMe_ja-jp.docx" />
-    <None Include="SocialManager_ReadMe_ko-kr.docx" />
-    <None Include="SocialManager_ReadMe_zh-cn.docx" />
+    <None Include="readme.md" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Kits\DirectXTK12\DirectXTK12_GDK_2019.vcxproj">
@@ -643,4 +643,8 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ItemGroup>
+    <None Include="media\image1.png" />
+    <None Include="media\image3.png" />
+  </ItemGroup>
 </Project>

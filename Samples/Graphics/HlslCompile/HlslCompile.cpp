@@ -11,7 +11,7 @@
 #include "ATGColors.h"
 #include "ReadData.h"
 
-extern void ExitSample();
+extern void ExitSample() noexcept;
 
 using namespace DirectX;
 
@@ -34,6 +34,7 @@ Sample::Sample() noexcept(false) :
         DXGI_FORMAT_B8G8R8A8_UNORM_SRGB, DXGI_FORMAT_D32_FLOAT,
         2,
         DX::DeviceResources::c_Enable4K_UHD);
+    m_deviceResources->SetClearColor(ATG::ColorsLinear::Background);
 }
 
 // Initialize the Direct3D resources required to run.

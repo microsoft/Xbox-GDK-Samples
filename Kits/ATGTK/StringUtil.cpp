@@ -295,7 +295,7 @@ std::string DX::Utf32ToUtf8(const std::u32string& utf32String)
     return utf8String;
 }
 
-std::string DX::ToLower(const std::string & utf8String)
+std::string DX::ToLower(const std::string& utf8String)
 {
     std::string lower = utf8String;
     ToLowerInPlace(lower);
@@ -312,14 +312,14 @@ void DX::ToLowerInPlace(std::string& utf8String)
     );
 }
 
-std::wstring DX::ToLower(const std::wstring & wideString)
+std::wstring DX::ToLower(const std::wstring& wideString)
 {
     std::wstring lower = wideString;
     ToLowerInPlace(lower);
     return lower;
 }
 
-void DX::ToLowerInPlace(std::wstring & wideString)
+void DX::ToLowerInPlace(std::wstring& wideString)
 {
     std::transform(
         wideString.begin(),
@@ -329,7 +329,7 @@ void DX::ToLowerInPlace(std::wstring & wideString)
     );
 }
 
-std::string DX::ToUpper(const std::string & utf8String)
+std::string DX::ToUpper(const std::string& utf8String)
 {
     std::string lower = utf8String;
     ToUpperInPlace(lower);
@@ -346,14 +346,14 @@ void DX::ToUpperInPlace(std::string& utf8String)
     );
 }
 
-std::wstring DX::ToUpper(const std::wstring & wideString)
+std::wstring DX::ToUpper(const std::wstring& wideString)
 {
     std::wstring lower = wideString;
     ToUpperInPlace(lower);
     return lower;
 }
 
-void DX::ToUpperInPlace(std::wstring & wideString)
+void DX::ToUpperInPlace(std::wstring& wideString)
 {
     std::transform(
         wideString.begin(),
@@ -361,4 +361,40 @@ void DX::ToUpperInPlace(std::wstring & wideString)
         wideString.begin(),
         [](wchar_t c) { return static_cast<wchar_t>(std::toupper(static_cast<wchar_t>(c))); }
     );
+}
+
+uint32_t DX::DetermineUtf8CharBytesFromFirstByte(char byte)
+{
+    if ((byte & ONE_BYTE_MASK) == ONE_BYTE_VAL) { return 1; }
+    else if ((byte & TWO_BYTE_MASK) == TWO_BYTE_VAL) { return 2; }
+    else if ((byte & THREE_BYTE_MASK) == THREE_BYTE_VAL) { return 3; }
+    else if ((byte & FOUR_BYTE_MASK) == FOUR_BYTE_VAL) { return 4; }
+    return 0;
+}
+
+char32_t DX::Utf8ToUtf32Character(const char* c, int charSize)
+{
+    switch (charSize)
+    {
+    case 1:
+        return
+            static_cast<char32_t>(*c & ONE_BYTE_CONT);
+    case 2:
+        return
+            static_cast<char32_t>(*c & TWO_BYTE_CONT) << 6 |
+            static_cast<char32_t>(*(c + 1) & MUL_BYTE_CONT);
+    case 3:
+        return
+            static_cast<char32_t>(*c & THREE_BYTE_CONT) << 12 |
+            static_cast<char32_t>(*(c + 1) & MUL_BYTE_CONT) << 6 |
+            static_cast<char32_t>(*(c + 2) & MUL_BYTE_CONT);
+    case 4:
+        return
+            static_cast<char32_t>(*c & FOUR_BYTE_CONT) << 18 |
+            static_cast<char32_t>(*(c + 1) & MUL_BYTE_CONT) << 12 |
+            static_cast<char32_t>(*(c + 2) & MUL_BYTE_CONT) << 6 |
+            static_cast<char32_t>(*(c + 3) & MUL_BYTE_CONT);
+    default:
+        return 0;
+    }
 }

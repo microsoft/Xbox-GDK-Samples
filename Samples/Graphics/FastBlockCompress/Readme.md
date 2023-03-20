@@ -17,7 +17,11 @@ description: "This sample demonstrates how you can use DirectCompute to perform 
 
 # FastBlockCompress
 
-For more information see this [Word document](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Graphics/FastBlockCompress/Readme.docx).
+For more information see: 
+- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Graphics/FastBlockCompress/readme_en-us.md)
+- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Graphics/FastBlockCompress/readme_ja-jp.md)
+- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Graphics/FastBlockCompress/readme_ko-kr.md)
+- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Graphics/FastBlockCompress/readme_zh-cn.md)
 
 ## Privacy statement
 

@@ -11,18 +11,16 @@
 #include "ATGColors.h"
 #include "FindMedia.h"
 #include "SampleGUI.h"
-
 #include "StringUtil.h"
-#include "FindMedia.h"
 
-extern void ExitSample();
+extern void ExitSample() noexcept;
 
 using namespace DirectX;
 
 namespace
 {
-    const int s_itemCheckForUpdates = 2001;
-    const int s_itemDownloadAndInstallUpdates = 2002;
+    constexpr int s_itemCheckForUpdates = 2001;
+    constexpr int s_itemDownloadAndInstallUpdates = 2002;
 }
 
 Sample::Sample() noexcept(false) :
@@ -527,6 +525,8 @@ void Sample::Tick()
         Update(m_timer);
     });
 
+    m_mouse->EndOfInputFrame();
+
     Render();
 }
 
@@ -608,14 +608,14 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, nullptr);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -625,14 +625,6 @@ void Sample::Clear()
 
 #pragma region Message Handlers
 // Message handlers
-void Sample::OnActivated()
-{
-}
-
-void Sample::OnDeactivated()
-{
-}
-
 void Sample::OnSuspending()
 {
 }
@@ -648,8 +640,13 @@ void Sample::OnResuming()
 
 void Sample::OnWindowMoved()
 {
-    auto r = m_deviceResources->GetOutputSize();
+    auto const r = m_deviceResources->GetOutputSize();
     m_deviceResources->WindowSizeChanged(r.right, r.bottom);
+}
+
+void Sample::OnDisplayChange()
+{
+    m_deviceResources->UpdateColorSpace();
 }
 
 void Sample::OnWindowSizeChanged(int width, int height)
@@ -661,7 +658,7 @@ void Sample::OnWindowSizeChanged(int width, int height)
 }
 
 // Properties
-void Sample::GetDefaultSize(int& width, int& height) const
+void Sample::GetDefaultSize(int& width, int& height) const noexcept
 {
     width = 1920;
     height = 1080;
@@ -674,7 +671,6 @@ void Sample::CreateDeviceDependentResources()
 {
     auto device = m_deviceResources->GetD3DDevice();
 
-#ifdef _GAMING_DESKTOP
     D3D12_FEATURE_DATA_SHADER_MODEL shaderModel = { D3D_SHADER_MODEL_6_0 };
     if (FAILED(device->CheckFeatureSupport(D3D12_FEATURE_SHADER_MODEL, &shaderModel, sizeof(shaderModel)))
         || (shaderModel.HighestShaderModel < D3D_SHADER_MODEL_6_0))
@@ -684,7 +680,6 @@ void Sample::CreateDeviceDependentResources()
 #endif
         throw std::runtime_error("Shader Model 6.0 is not supported!");
     }
-#endif
 
     m_graphicsMemory = std::make_unique<GraphicsMemory>(device);
 
@@ -703,12 +698,18 @@ void Sample::CreateDeviceDependentResources()
     auto fonthandle = m_resourceDescriptors->Allocate();
     auto bghandle = m_resourceDescriptors->Allocate();
 
+    wchar_t fontFilePath[MAX_PATH] = {};
+    DX::FindMediaFile(fontFilePath, MAX_PATH, L"courier_16.spritefont");
+
+    wchar_t ddsFilePath[MAX_PATH] = {};
+    DX::FindMediaFile(ddsFilePath, MAX_PATH, L"ATGSampleBackground.DDS");
+
     m_console->RestoreDevice(
         device,
         resourceUpload,
         rtState,
-        L"courier_16.spritefont",
-        L"Assets\\ATGSampleBackground.DDS",
+        fontFilePath,
+        ddsFilePath,
         m_resourceDescriptors->GetCpuHandle(fonthandle),
         m_resourceDescriptors->GetGpuHandle(fonthandle),
         m_resourceDescriptors->GetCpuHandle(bghandle),
@@ -726,7 +727,7 @@ void Sample::CreateDeviceDependentResources()
 // Allocate all memory resources that change on a window SizeChanged event.
 void Sample::CreateWindowSizeDependentResources()
 {
-    auto viewport = m_deviceResources->GetScreenViewport();
+    auto const viewport = m_deviceResources->GetScreenViewport();
 
     m_liveInfoHUD->SetViewport(m_deviceResources->GetScreenViewport());
 

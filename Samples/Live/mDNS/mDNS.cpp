@@ -19,10 +19,10 @@ using Microsoft::WRL::ComPtr;
 
 namespace
 {
-    const int s_button_RegisterLocalDevice = 2001;
-    const int s_button_DeRegisterLocalDevice = 2002;
-    const int s_button_StartBrowse = 2003;
-    const int s_button_StopBrowse = 2004;
+    constexpr int s_button_RegisterLocalDevice = 2001;
+    constexpr int s_button_DeRegisterLocalDevice = 2002;
+    constexpr int s_button_StartBrowse = 2003;
+    constexpr int s_button_StopBrowse = 2004;
 
     // NOTE: Service name must conform to the following format: <ServiceName>._<ServiceType>._<TransportProtocol>.local
     //                                                          e.g. StrategyGame._game._udp.local  
@@ -41,6 +41,7 @@ Sample::Sample() noexcept(false) :
 {
     // Renders only 2D, so no need for a depth buffer.
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_UNKNOWN);
+    m_deviceResources->SetClearColor(ATG::Colors::Background);
 
     ATG::UIConfig uiconfig;
     uiconfig.colorBackground = DirectX::XMFLOAT4(0, 0, 0, 1);
@@ -118,6 +119,8 @@ void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
 
+    m_deviceResources->WaitForOrigin();
+
     m_timer.Tick([&]()
     {
         Update(m_timer);
@@ -193,14 +196,14 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, nullptr);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -269,7 +272,7 @@ void Sample::CreateDeviceDependentResources()
 // Allocate all memory resources that change on a window SizeChanged event.
 void Sample::CreateWindowSizeDependentResources()
 {
-    RECT size = m_deviceResources->GetOutputSize();
+    const RECT size = m_deviceResources->GetOutputSize();
 
     static const RECT screenDisplay = { 640, 32, 1920 - 32, 1080 - 32 };
     m_console->SetWindow(screenDisplay, false);
@@ -282,7 +285,7 @@ void Sample::CreateWindowSizeDependentResources()
 
 void RegisterDNS_Callback(DWORD /*Status*/, PVOID pQueryContext, PDNS_SERVICE_INSTANCE pInstance)
 {
-    Sample* pSample = reinterpret_cast<Sample*>(pQueryContext);
+    auto pSample = reinterpret_cast<Sample*>(pQueryContext);
 
     pSample->SetDNSServiceInstance(pInstance);
     pSample->SetWaitEvent();
@@ -358,7 +361,7 @@ void DeRegisterDNS_Callback(
     _In_ PDNS_SERVICE_INSTANCE /*pInstance*/
 )
 {
-    Sample* pSample = reinterpret_cast<Sample*>(pQueryContext);
+    auto pSample = reinterpret_cast<Sample*>(pQueryContext);
     pSample->m_console->WriteLine(L"DNS entry was de-registered");
 
     pSample->SetWaitEvent();
@@ -401,7 +404,7 @@ void Sample::DeRegisterDNS()
 
 void BrowseDNS_Callback(DWORD /*Status*/, PVOID pQueryContext, PDNS_RECORD pDnsRecord)
 {
-    Sample* pSample = reinterpret_cast<Sample*>(pQueryContext);
+    auto pSample = reinterpret_cast<Sample*>(pQueryContext);
 
     if (pDnsRecord)
     {
@@ -436,7 +439,7 @@ void BrowseDNS_Callback(DWORD /*Status*/, PVOID pQueryContext, PDNS_RECORD pDnsR
 
 void ResolveCallback(DWORD /*Status*/, PVOID pQueryContext, PDNS_SERVICE_INSTANCE pInstance)
 {
-    Sample* pSample = reinterpret_cast<Sample*>(pQueryContext);
+    auto pSample = reinterpret_cast<Sample*>(pQueryContext);
     pSample->SetWaitEvent();
 
     if (pInstance)

@@ -175,7 +175,7 @@ void Fluid::Step(ID3D12GraphicsCommandList* commandList, float elapsedTime)
 	computeCB.Modulate = 1.0f;
 	computeCB.DeltaTime = elapsedTime;
 	XMStoreFloat3(&computeCB.EmitterCenter, XMVectorLerp(g_bottom, g_top, m_emitterCenter));
-	XMStoreFloat3(&computeCB.EmitterDir, XMVector3Rotate(g_forwardVec, m_emitterRot.GetRotationQuaternion()));
+	XMStoreFloat3(&computeCB.EmitterDir, XMVector3Rotate(g_XMIdentityR0, m_emitterRot.GetRotationQuaternion()));
 
 	ID3D12DescriptorHeap* heaps[] = { m_srvPile->Heap() };
 	commandList->SetDescriptorHeaps(_countof(heaps), heaps);

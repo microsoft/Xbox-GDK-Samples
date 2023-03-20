@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Game configVersion="1">
+
+  <Identity Name="5c8a03d5-a91a-4a87-8d16-de37039ae63f"
+            Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+            Version="1.0.0.0"/>
+  
+  <ExecutableList>
+    <Executable Name="DynamicCubeMap.exe"
+                Id="Game"/>
+  </ExecutableList>
+
+  
+  <ShellVisuals DefaultDisplayName="DynamicCubeMap"
+                PublisherDisplayName="Xbox Advanced Technology Group"
+                StoreLogo="Assets\StoreLogo.png"
+                Square480x480Logo="Assets\LargeLogo.png"
+                Square150x150Logo="Assets\Logo.png"
+                Square44x44Logo="Assets\SmallLogo.png"
+                Description="DynamicCubeMap"
+                ForegroundText="dark"
+                BackgroundColor="#000000"
+                SplashScreenImage="Assets\SplashScreen.png"/>
+</Game>

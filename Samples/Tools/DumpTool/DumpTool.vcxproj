@@ -186,13 +186,17 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="DumpTool_ReadMe_ja-jp.docx" />
-    <None Include="DumpTool_ReadMe_ko-kr.docx" />
-    <None Include="DumpTool_ReadMe_zh-cn.docx" />
-    <None Include="Readme.docx" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
+    <None Include="readme.md" />
     <None Include="runCommand.bat" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ItemGroup>
+    <None Include="media\image1.png" />
+    <None Include="media\image3.png" />
+  </ItemGroup>
 </Project>

@@ -17,7 +17,11 @@ description: "This sample demonstrates how to stream a wav file using XAudio2 on
 
 # SimplePlaySoundStream
 
-For more information see this [Word document](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Audio/SimplePlaySoundStream/Readme.docx).
+For more information see: 
+- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Audio/SimplePlaySoundStream/readme_en-us.md)
+- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Audio/SimplePlaySoundStream/readme_ja-jp.md)
+- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Audio/SimplePlaySoundStream/readme_ko-kr.md)
+- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Audio/SimplePlaySoundStream/readme_zh-cn.md)
 
 ## Privacy statement
 

@@ -588,12 +588,18 @@
     <CopyFileToFolders Include="Assets\SampleUI.csv">
       <FileType>Document</FileType>
     </CopyFileToFolders>
-    <None Include="ReadMe.docx" />
-    <None Include="ReadMe_ja-JP.docx" />
-    <None Include="ReadMe_ko-KR.docx" />
-    <None Include="ReadMe_zh-CN.docx" />
+    <None Include="readme.md" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ItemGroup>
+    <None Include="media\image1.png" />
+    <None Include="media\image3.png" />
+    <None Include="media\image4.png" />
+    <None Include="media\image5.png" />
+  </ItemGroup>
 </Project>

@@ -86,7 +86,7 @@
     <None Include="AdvancedSpatialSounds_ReadMe_zh-cn.docx" />
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config" />
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="Assets\Jungle_RainThunder_5.1_mixdown.wav">

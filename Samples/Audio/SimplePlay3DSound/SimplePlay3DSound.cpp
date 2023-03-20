@@ -12,7 +12,7 @@
 #include "ControllerFont.h"
 #include "WAVFileReader.h"
 
-extern void ExitSample();
+extern void ExitSample() noexcept;
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -22,9 +22,9 @@ using Microsoft::WRL::ComPtr;
 namespace
 {
     const wchar_t* c_WaveFile = L"ATG_SpatialMotion_monoFunkDrums1Loop.wav";
-    const float c_RotateScale = 0.1f;
-    const float c_MaxHeight = 100;
-    const float c_MoveScale = 3.0f;
+    constexpr float c_RotateScale = 0.1f;
+    constexpr float c_MaxHeight = 100;
+    constexpr float c_MoveScale = 3.0f;
 
     const XAUDIO2FX_REVERB_I3DL2_PARAMETERS g_ReverbPreset[] =
     {
@@ -107,10 +107,16 @@ Sample::Sample() noexcept(false) :
 {
     // Renders only 2D, so no need for a depth buffer.
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_UNKNOWN);
+    m_deviceResources->SetClearColor(ATG::Colors::Background);
 }
 
 Sample::~Sample()
 {
+    if (m_deviceResources)
+    {
+        m_deviceResources->WaitForGpu();
+    }
+
     if (m_XAudio2)
     {
         m_XAudio2->StopEngine();
@@ -285,7 +291,7 @@ void Sample::SetupEnvironment()
     m_X3DEmitter.CurveDistanceScaler = 300;
 
     //Start the listener and emitter in the middle of the screen
-    auto rect = m_deviceResources->GetOutputSize();
+    auto const rect = m_deviceResources->GetOutputSize();
     m_X3DListener.Position = X3DAUDIO_VECTOR(float(rect.right / 2), float(rect.bottom / 2), 0);
     m_X3DEmitter.Position = X3DAUDIO_VECTOR(float(rect.right / 2), float((rect.bottom / 2) + 100), 0);
 }
@@ -414,7 +420,7 @@ void Sample::DrawCircle(ID3D12GraphicsCommandList* commandList, X3DAUDIO_VECTOR 
     float scale = (radius / 390) + (position.z / 200);
 
     m_spriteBatch->Begin(commandList);
-    auto circleSize = GetTextureSize(m_circleTexture.Get());
+    auto const circleSize = GetTextureSize(m_circleTexture.Get());
     m_spriteBatch->Draw(m_resourceDescriptors->GetGpuHandle(Descriptors::Circle), circleSize, pos, nullptr,
         ATG::Colors::White, 0.f, XMFLOAT2(394.f, 394.f), scale);
     m_spriteBatch->End();
@@ -456,7 +462,7 @@ void XM_CALLCONV Sample::DrawEmitter(ID3D12GraphicsCommandList* commandList, X3D
         vout[i] = XMVector4Transform(v[i], finalTransform);
     }
 
-    auto rect = m_deviceResources->GetOutputSize();
+    auto const rect = m_deviceResources->GetOutputSize();
 
     //Convert to -1,1 space
     XMVECTORF32 vPosition = { (position.x * 2 / rect.right) - 1, (position.y * 2 / rect.bottom) - 1, 0.f };
@@ -509,7 +515,7 @@ void XM_CALLCONV Sample::DrawListener(ID3D12GraphicsCommandList* commandList, X3
 {
     XMVECTOR vout[3];
 
-    auto rect = m_deviceResources->GetOutputSize();
+    auto const rect = m_deviceResources->GetOutputSize();
 
     vout[0] = XMVECTORF32{ position.x, position.y + 15.0f, 0.0f, 1.0f };
     vout[1] = XMVECTORF32{ position.x - 15.0f, position.y - 15.0f, 0.0f, 1.0f };
@@ -544,6 +550,8 @@ void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
 
+    m_deviceResources->WaitForOrigin();
+
     m_timer.Tick([&]()
     {
         Update(m_timer);
@@ -566,7 +574,7 @@ void Sample::Update(DX::StepTimer const&)
         InitializeXAudio();
     }
 
-    auto bounds = m_deviceResources->GetOutputSize();
+    auto const bounds = m_deviceResources->GetOutputSize();
     
     auto pad = m_gamePad->GetState(0);
     if (pad.IsConnected())
@@ -688,9 +696,9 @@ void Sample::Render()
     auto commandList = m_deviceResources->GetCommandList();
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Render");
 
-    auto fullscreen = m_deviceResources->GetOutputSize();
+    auto const fullscreen = m_deviceResources->GetOutputSize();
 
-    auto safeRect = Viewport::ComputeTitleSafeArea(UINT(fullscreen.right - fullscreen.left), UINT(fullscreen.bottom - fullscreen.top));
+    auto const safeRect = Viewport::ComputeTitleSafeArea(UINT(fullscreen.right - fullscreen.left), UINT(fullscreen.bottom - fullscreen.top));
 
     auto heap = m_resourceDescriptors->Heap();
     commandList->SetDescriptorHeaps(1, &heap);
@@ -762,13 +770,13 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, nullptr);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
     
     // Set the viewport and scissor rect.
-    auto viewport = m_deviceResources->GetScreenViewport();
-    auto scissorRect = m_deviceResources->GetScissorRect();
+    auto const viewport = m_deviceResources->GetScreenViewport();
+    auto const scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -859,11 +867,11 @@ void Sample::CreateDeviceDependentResources()
 // Allocate all memory resources that change on a window SizeChanged event.
 void Sample::CreateWindowSizeDependentResources()
 {
-    auto rect = m_deviceResources->GetOutputSize();
+    auto const rect = m_deviceResources->GetOutputSize();
     m_X3DListener.Position = X3DAUDIO_VECTOR(float(rect.right / 2), float(rect.bottom / 2), 0);
     m_X3DEmitter.Position = X3DAUDIO_VECTOR(float(rect.right / 2), float((rect.bottom / 2) - 100), 0);
     
-    auto vp = m_deviceResources->GetScreenViewport();
+    auto const vp = m_deviceResources->GetScreenViewport();
     m_spriteBatch->SetViewport(vp);
 }
 #pragma endregion

@@ -86,7 +86,7 @@
     <None Include="SimplePlaySoundStream_ReadMe_zh-cn.docx" />
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config" />
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="..\..\..\Media\Sounds\71_setup_sweep_xbox.wav">

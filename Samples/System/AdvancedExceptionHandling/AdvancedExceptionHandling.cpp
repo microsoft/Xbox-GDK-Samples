@@ -61,6 +61,7 @@ Sample::Sample() noexcept(false) :
 {
     // Renders only 2D, so no need for a depth buffer.
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_UNKNOWN);
+    m_deviceResources->SetClearColor(ATG::Colors::Background);
     m_deviceResources->RegisterDeviceNotify(this);
 }
 
@@ -79,9 +80,6 @@ void Sample::Initialize(HWND window, int width, int height)
 
     m_keyboard = std::make_unique<Keyboard>();
 
-    m_mouse = std::make_unique<Mouse>();
-    m_mouse->SetWindow(window);
-
     m_deviceResources->SetWindow(window, width, height);
 
     m_deviceResources->CreateDeviceResources();
@@ -96,6 +94,10 @@ void Sample::Initialize(HWND window, int width, int height)
 void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
+
+#ifdef _GAMING_XBOX
+    m_deviceResources->WaitForOrigin();
+#endif
 
     m_timer.Tick([&]()
     {
@@ -154,6 +156,28 @@ void Sample::Update(DX::StepTimer const& /*timer*/)
     {
         ExitSample();
     }
+
+    if (m_keyboardButtons.pressed.A)
+    {
+        FullExceptionSystem();
+    }
+    if (m_keyboardButtons.pressed.B)
+    {
+        OutOfProcHandler();
+    }
+    if (m_keyboardButtons.pressed.X)
+    {
+        AddingDataToWER();
+    }
+    if (m_keyboardButtons.pressed.Y)
+    {
+        UploadingMiniDumps();
+    }
+    if (m_keyboardButtons.pressed.L)
+    {
+        PLMExceptionHandling();
+    }
+
     PIXEndEvent();
 }
 #pragma endregion
@@ -294,14 +318,6 @@ void Sample::Clear()
 
 #pragma region Message Handlers
 // Message handlers
-void Sample::OnActivated()
-{
-}
-
-void Sample::OnDeactivated()
-{
-}
-
 void Sample::OnSuspending()
 {
     s_isSuspending = true;

@@ -10,8 +10,14 @@ namespace DX
     class DeviceResources
     {
     public:
-        static constexpr unsigned int c_Enable4K_UHD = 0x1;
-        static constexpr unsigned int c_EnableHDR    = 0x2;
+        static constexpr unsigned int c_Enable4K_UHD         = 0x1;
+        static constexpr unsigned int c_EnableQHD            = 0x2;
+        static constexpr unsigned int c_EnableHDR            = 0x4;
+        static constexpr unsigned int c_ReverseDepth         = 0x8;
+        static constexpr unsigned int c_GeometryShaders      = 0x10;
+        static constexpr unsigned int c_TessellationShaders  = 0x20;
+        static constexpr unsigned int c_AmplificationShaders = 0x40;
+        static constexpr unsigned int c_EnableDXR            = 0x80;
 
         DeviceResources(DXGI_FORMAT backBufferFormat = DXGI_FORMAT_B8G8R8A8_UNORM,
                         DXGI_FORMAT depthBufferFormat = DXGI_FORMAT_D32_FLOAT,
@@ -25,7 +31,11 @@ namespace DX
         DeviceResources(DeviceResources const&) = delete;
         DeviceResources& operator= (DeviceResources const&) = delete;
 
+#ifdef _GAMING_XBOX_SCARLETT
+        void CreateDeviceResources(D3D12XBOX_CREATE_DEVICE_FLAGS createDeviceFlags = D3D12XBOX_CREATE_DEVICE_FLAG_NONE);
+#else
         void CreateDeviceResources();
+#endif
         void CreateWindowSizeDependentResources();
         void SetWindow(HWND window) noexcept { m_window = window; }
         void Prepare(D3D12_RESOURCE_STATES beforeState = D3D12_RESOURCE_STATE_PRESENT,
@@ -35,6 +45,10 @@ namespace DX
         void Suspend();
         void Resume();
         void WaitForGpu() noexcept;
+        void WaitForOrigin();
+
+        // Direct3D Properties.
+        void SetClearColor(_In_reads_(4) const float* rgba) noexcept { memcpy(m_clearColor, rgba, sizeof(m_clearColor)); }
 
         // Device Accessors.
         RECT GetOutputSize() const noexcept { return m_outputSize; }
@@ -67,19 +81,7 @@ namespace DX
             return CD3DX12_CPU_DESCRIPTOR_HANDLE(m_dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart());
         }
 
-        // Direct3D HDR Game DVR support for Xbox One.
-        ID3D12Resource*             GetGameDVRRenderTarget() const noexcept { return m_renderTargetsGameDVR[m_backBufferIndex].Get(); }
-        DXGI_FORMAT                 GetGameDVRFormat() const noexcept { return m_gameDVRFormat; }
-
-        CD3DX12_CPU_DESCRIPTOR_HANDLE GetGameDVRRenderTargetView() const noexcept
-        {
-            return CD3DX12_CPU_DESCRIPTOR_HANDLE(
-                m_rtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart(),
-                static_cast<INT>(m_backBufferCount + m_backBufferIndex), m_rtvDescriptorSize);
-        }
-
     private:
-        void MoveToNextFrame();
         void RegisterFrameEvents();
 
         static constexpr size_t MAX_BACK_BUFFER_COUNT = 3;
@@ -89,7 +91,7 @@ namespace DX
         // Direct3D objects.
 #ifdef _GAMING_XBOX_SCARLETT
         Microsoft::WRL::ComPtr<ID3D12Device8>               m_d3dDevice;
-        Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList5>  m_commandList;
+        Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList6>  m_commandList;
 #else
         Microsoft::WRL::ComPtr<ID3D12Device2>               m_d3dDevice;
         Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>   m_commandList;
@@ -118,6 +120,7 @@ namespace DX
         DXGI_FORMAT                                         m_backBufferFormat;
         DXGI_FORMAT                                         m_depthBufferFormat;
         UINT                                                m_backBufferCount;
+        float                                               m_clearColor[4];
 
         // Cached device properties.
         HWND                                                m_window;
@@ -126,9 +129,5 @@ namespace DX
 
         // DeviceResources options (see flags above)
         unsigned int                                        m_options;
-
-        // Direct3D HDR Game DVR support for Xbox One.
-        Microsoft::WRL::ComPtr<ID3D12Resource>              m_renderTargetsGameDVR[MAX_BACK_BUFFER_COUNT];
-        DXGI_FORMAT                                         m_gameDVRFormat;
     };
 }

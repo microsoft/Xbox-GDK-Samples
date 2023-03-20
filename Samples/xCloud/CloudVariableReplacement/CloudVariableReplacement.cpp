@@ -19,58 +19,61 @@ using namespace DirectX::SimpleMath;
 
 using Microsoft::WRL::ComPtr;
 
-static void CALLBACK ConnectionStateChangedCallback(
-    void* context,
-    XGameStreamingClientId client,
-    XGameStreamingConnectionState state) noexcept
+namespace
 {
-    auto sample = reinterpret_cast<Sample*>(context);
-
-    if (state == XGameStreamingConnectionState::Connected)
+    void CALLBACK ConnectionStateChangedCallback(
+        void* context,
+        XGameStreamingClientId client,
+        XGameStreamingConnectionState state) noexcept
     {
-        for (size_t i = 0; i < c_maxClients; ++i)
+        auto sample = reinterpret_cast<Sample*>(context);
+
+        if (state == XGameStreamingConnectionState::Connected)
         {
-            if (sample->m_clients[i].id == XGameStreamingNullClientId)
+            for (size_t i = 0; i < c_maxClients; ++i)
             {
-                sample->m_clients[i].id = client;
-
-                //Check to see if this client has a small display
-                uint32_t clientWidthMm = 0;
-                uint32_t clientHeightMm = 0;
-                if (SUCCEEDED(XGameStreamingGetStreamPhysicalDimensions(sample->m_clients[i].id, &clientWidthMm, &clientHeightMm)))
+                if (sample->m_clients[i].id == XGameStreamingNullClientId)
                 {
-                    if (clientWidthMm * clientHeightMm < 13000)
-                    {
-                        sample->m_clients[i].smallScreen = true;
-                    }
-                }
+                    sample->m_clients[i].id = client;
 
-                //The sample TAK is 10.0, so ensure that the client has the overlay
-                XVersion overlayVersion;
-                if (SUCCEEDED(XGameStreamingGetTouchBundleVersion(sample->m_clients[i].id, &overlayVersion, 0, nullptr)))
-                {
-                    if (overlayVersion.major == 10 && overlayVersion.minor == 0)
+                    //Check to see if this client has a small display
+                    uint32_t clientWidthMm = 0;
+                    uint32_t clientHeightMm = 0;
+                    if (SUCCEEDED(XGameStreamingGetStreamPhysicalDimensions(sample->m_clients[i].id, &clientWidthMm, &clientHeightMm)))
                     {
-                        sample->m_clients[i].validOverlay = true;
+                        if (clientWidthMm * clientHeightMm < 13000)
+                        {
+                            sample->m_clients[i].smallScreen = true;
+                        }
                     }
-                }
 
-                break;
+                    //The sample TAK is 10.0, so ensure that the client has the overlay
+                    XVersion overlayVersion;
+                    if (SUCCEEDED(XGameStreamingGetTouchBundleVersion(sample->m_clients[i].id, &overlayVersion, 0, nullptr)))
+                    {
+                        if (overlayVersion.major == 10 && overlayVersion.minor == 0)
+                        {
+                            sample->m_clients[i].validOverlay = true;
+                        }
+                    }
+
+                    break;
+                }
             }
         }
-    }
-    else
-    {
-        for (size_t i = 0; i < c_maxClients; ++i)
+        else
         {
-            if (sample->m_clients[i].id == client)
+            for (size_t i = 0; i < c_maxClients; ++i)
             {
-                sample->m_clients[i] = ClientDevice();
+                if (sample->m_clients[i].id == client)
+                {
+                    sample->m_clients[i] = ClientDevice();
+                }
             }
         }
-    }
 
-    sample->UpdateClientState();
+        sample->UpdateClientState();
+    }
 }
 
 Sample::Sample() noexcept(false) :
@@ -85,6 +88,7 @@ Sample::Sample() noexcept(false) :
 {
     // Renders only 2D, so no need for a depth buffer.
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_UNKNOWN);
+    m_deviceResources->SetClearColor(ATG::Colors::Background);
 }
 
 Sample::~Sample()
@@ -120,6 +124,8 @@ void Sample::Initialize(HWND window)
 void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %I64u", m_frame);
+
+    m_deviceResources->WaitForOrigin();
 
     m_timer.Tick([&]()
     {

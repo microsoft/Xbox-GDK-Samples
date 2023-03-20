@@ -10,6 +10,10 @@
 #include "pch.h"
 #include "SimpleDirectStorageCombo.h"
 
+#ifdef ATG_ENABLE_TELEMETRY
+#include "ATGTelemetry.h"
+#endif
+
 #include <appnotify.h>
 #include <XGameRuntimeInit.h>
 #include <XGameErr.h>
@@ -117,16 +121,22 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
 #endif
 
         HWND hwnd = CreateWindowExW(0, L"SimpleDirectStorageComboWindowClass", g_szAppName, WS_OVERLAPPEDWINDOW,
-            CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, nullptr, nullptr, hInstance,
-            nullptr);
+            CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top,
+            nullptr, nullptr, hInstance,
+            g_sample.get());
         if (!hwnd)
             return 1;
 
         ShowWindow(hwnd, nCmdShow);
 
-        SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(g_sample.get()));
-
         GetClientRect(hwnd, &rc);
+
+        // Sample Usage Telemetry
+        //
+        // Disable or remove this code block to opt-out of sample usage telemetry
+#ifdef ATG_ENABLE_TELEMETRY
+        ATG::SendLaunchTelemetry();
+#endif
 
         g_sample->Initialize(hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
@@ -201,6 +211,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     switch (message)
     {
+    case WM_CREATE:
+        if (lParam)
+        {
+            auto params = reinterpret_cast<LPCREATESTRUCTW>(lParam);
+            SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(params->lpCreateParams));
+        }
+        break;
+
     case WM_ACTIVATEAPP:
         if (sample)
         {
@@ -386,6 +404,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         Keyboard::ProcessMessage(message, wParam, lParam);
         break;
+
+    case WM_MOUSEACTIVATE:
+        // When you click activate the window, we want Mouse to ignore that event.
+        return MA_ACTIVATEANDEAT;
 
     case WM_MENUCHAR:
         // A menu is active and the user presses a key that does not correspond

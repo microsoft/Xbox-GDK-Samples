@@ -119,12 +119,18 @@ struct UIProductDetails
 
 // A basic sample implementation that creates a D3D12 device and
 // provides a render loop.
-class Sample : public ATG::UITK::D3DResourcesProvider
+class Sample : public DX::IDeviceNotify, public ATG::UITK::D3DResourcesProvider
 {
 public:
 
     Sample() noexcept(false);
     ~Sample();
+
+    Sample(Sample&&) = delete;
+    Sample& operator= (Sample&&) = delete;
+
+    Sample(Sample const&) = delete;
+    Sample& operator= (Sample const&) = delete;
 
     // Initialization and management
     void Initialize(HWND window, int width, int height);
@@ -132,9 +138,13 @@ public:
     // Basic render loop
     void Tick();
 
+    // IDeviceNotify
+    void OnDeviceLost() override;
+    void OnDeviceRestored() override;
+
     // Messages
-    void OnActivated();
-    void OnDeactivated();
+    void OnActivated() {}
+    void OnDeactivated() {}
     void OnSuspending();
     void OnResuming();
     void OnConstrained();

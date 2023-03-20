@@ -20,9 +20,16 @@ namespace DX
     class DeviceResources
     {
     public:
+        static constexpr unsigned int c_ReverseDepth         = 0x1;
+        static constexpr unsigned int c_GeometryShaders      = 0x2;
+        static constexpr unsigned int c_TessellationShaders  = 0x4;
+        static constexpr unsigned int c_AmplificationShaders = 0x8;
+        static constexpr unsigned int c_EnableDXR            = 0x10;
+
         DeviceResources(DXGI_FORMAT backBufferFormat = DXGI_FORMAT_B8G8R8A8_UNORM,
                         DXGI_FORMAT depthBufferFormat = DXGI_FORMAT_D32_FLOAT,
-                        UINT backBufferCount = 2) noexcept(false);
+                        UINT backBufferCount = 2,
+                        unsigned int flags = 0) noexcept(false);
         ~DeviceResources();
 
         DeviceResources(DeviceResources&&) = default;
@@ -47,6 +54,9 @@ namespace DX
         void WaitForOrigin();
 #endif
 
+        // Direct3D Properties.
+        void SetClearColor(_In_reads_(4) const float* rgba) noexcept { memcpy(m_clearColor, rgba, sizeof(m_clearColor)); }
+
         // Device Accessors.
         RECT GetOutputSize() const noexcept { return m_outputSize; }
 
@@ -69,6 +79,7 @@ namespace DX
         D3D12_RECT                  GetScissorRect() const noexcept        { return m_scissorRect; }
         UINT                        GetCurrentFrameIndex() const noexcept  { return m_backBufferIndex; }
         UINT                        GetBackBufferCount() const noexcept    { return m_backBufferCount; }
+        unsigned int                GetDeviceOptions() const noexcept      { return m_options; }
 
         CD3DX12_CPU_DESCRIPTOR_HANDLE GetRenderTargetView() const noexcept
         {
@@ -126,11 +137,15 @@ namespace DX
         DXGI_FORMAT                                         m_backBufferFormat;
         DXGI_FORMAT                                         m_depthBufferFormat;
         UINT                                                m_backBufferCount;
+        float                                               m_clearColor[4];
 
         // Cached device properties.
         HWND                                                m_window;
         D3D_FEATURE_LEVEL                                   m_d3dFeatureLevel;
         RECT                                                m_outputSize;
+
+        // DeviceResources options (see flags above)
+        unsigned int                                        m_options;
 
         // The IDeviceNotify can be held directly as it owns the DeviceResources.
         IDeviceNotify*                                      m_deviceNotify;

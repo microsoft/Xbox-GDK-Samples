@@ -17,7 +17,11 @@ description: "FrontPanelGame is the classic 'snake game' implemented completely 
 
 # FrontPanelGame
 
-For more information see this [Word document](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/FrontPanelGame/readme.docx).
+For more information see: 
+- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/FrontPanelGame/readme_en-us.md)
+- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/FrontPanelGame/readme_ja-jp.md)
+- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/FrontPanelGame/readme_ko-kr.md)
+- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/FrontPanelGame/readme_zh-cn.md)
 
 ## Privacy statement
 

@@ -66,7 +66,6 @@
 
 #include <DirectXMath.h>
 #include <DirectXColors.h>
-#include <DirectXHelpers.h>
 
 #include <algorithm>
 #include <atomic>
@@ -95,8 +94,8 @@
 #ifdef _GAMING_XBOX
 #include <pix3.h>
 #else
-// To use graphics and CPU markup events with the latest version of PIX, change this to include <pix3.h> 
-// then add the NuGet package WinPixEventRuntime to the project. 
+// To use graphics markup events with the latest version of PIX, change this to include <pix3.h>
+// then add the NuGet package WinPixEventRuntime to the project.
 #include <pix.h>
 #endif
 
@@ -110,6 +109,7 @@
 
 #include "CommonStates.h"
 #include "DescriptorHeap.h"
+#include "DirectXHelpers.h"
 #include "Effects.h"
 #include "GamePad.h"
 #include "GraphicsMemory.h"
@@ -127,9 +127,9 @@ namespace DX
     class com_exception : public std::exception
     {
     public:
-        com_exception(HRESULT hr) : result(hr) {}
+        com_exception(HRESULT hr) noexcept : result(hr) {}
 
-        const char* what() const override
+        const char* what() const noexcept override
         {
             static char s_str[64] = {};
             sprintf_s(s_str, "Failure with HRESULT of %08X", static_cast<unsigned int>(result));

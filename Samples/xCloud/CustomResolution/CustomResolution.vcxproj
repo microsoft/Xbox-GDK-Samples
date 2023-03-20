@@ -463,7 +463,7 @@
       <DestinationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">Assets/%(Filename)%(Extension)</DestinationFileName>
       <DestinationFileName Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">Assets/%(Filename)%(Extension)</DestinationFileName>
     </CopyFileToFolders>
-    <None Include="ReadMe.docx" />
+    <None Include="readme.md" />
     <None Include="Readme.md" />
     <None Include="Time.hlsli" />
   </ItemGroup>
@@ -535,4 +535,8 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ItemGroup>
+    <None Include="media\rId20.png" />
+    <None Include="media\rId23.png" />
+  </ItemGroup>
 </Project>

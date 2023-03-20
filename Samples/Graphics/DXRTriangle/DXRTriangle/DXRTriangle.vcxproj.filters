@@ -73,7 +73,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config" />
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shaders\RaytracingLibrary.hlsl">
@@ -96,6 +96,8 @@
     <None Include="DXRTriangle_ReadMe_ja-jp.docx" />
     <None Include="DXRTriangle_ReadMe_ko-kr.docx" />
     <None Include="DXRTriangle_ReadMe_zh-cn.docx" />
+    <None Include="..\..\..\NuGet.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Assets\Logo.png">

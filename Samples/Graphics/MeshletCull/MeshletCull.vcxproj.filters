@@ -133,7 +133,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config" />
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\Media\Textures\gamepad.dds">
@@ -147,21 +147,6 @@
     </Image>
     <Image Include="..\..\..\Media\Textures\RedCircle.DDS">
       <Filter>Assets\Textures</Filter>
-    </Image>
-    <Image Include="Assets\LargeLogo.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\Logo.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\SmallLogo.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\SplashScreen.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\StoreLogo.png">
-      <Filter>Assets</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
@@ -226,6 +211,8 @@
     <None Include="Readme_ko-KR.docx" />
     <None Include="Readme_zh-CN.docx" />
     <None Include="ReadMe.docx" />
+    <None Include="..\..\NuGet.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="BasicMeshletPS.hlsl">
@@ -249,5 +236,22 @@
     <FxCompile Include="NormalConeMS.hlsl">
       <Filter>Effects\Shaders</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

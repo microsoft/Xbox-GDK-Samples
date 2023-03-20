@@ -10,12 +10,12 @@
 #include "pch.h"
 #include "SimpleTriangleDesktop.h"
 
+#include <XGameRuntimeInit.h>
+#include <XGameErr.h>
+
 #ifdef ATG_ENABLE_TELEMETRY
 #include "ATGTelemetry.h"
 #endif
-
-#include <XGameRuntimeInit.h>
-#include <XGameErr.h>
 
 using namespace DirectX;
 
@@ -58,7 +58,32 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 #endif
         return 1;
     }
-    
+
+#ifdef USING_WINDOWS_GAMING_INPUT
+    // The following Windows Runtime initialization is only needed for scenarios where DirectX Tool Kit's GamePad is
+    // using Windows.Gaming.Input instead of GameInput or XINPUT. GRTS does not require it.
+    Microsoft::WRL::Wrappers::RoInitializeWrapper initialize(RO_INIT_MULTITHREADED);
+    if (FAILED(initialize))
+        return 1;
+#endif
+
+#ifdef _GAMING_DESKTOP
+    // NOTE: When running the app from the Start Menu (required for
+    //    Store API's to work) the Current Working Directory will be
+    //    returned as C:\Windows\system32 unless you overwrite it.
+    //    The sample relies on the font and image files in the .exe's
+    //    directory and so we do the following to set the working
+    //    directory to what we want.
+    char dir[_MAX_PATH] = {};
+    if (GetModuleFileNameA(nullptr, dir, _MAX_PATH) > 0)
+    {
+        std::string exe = dir;
+        exe = exe.substr(0, exe.find_last_of("\\"));
+        std::ignore = SetCurrentDirectoryA(exe.c_str());
+    }
+#endif
+
+    // Initialize the GameRuntime
     HRESULT hr = XGameRuntimeInitialize();
     if (FAILED(hr))
     {
@@ -96,15 +121,14 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
         AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
         HWND hwnd = CreateWindowExW(0, L"SimpleTriangleDesktopWindowClass", g_szAppName, WS_OVERLAPPEDWINDOW,
-            CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, nullptr, nullptr, hInstance,
-            nullptr);
+            CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top,
+            nullptr, nullptr, hInstance,
+            g_sample.get());
 
         if (!hwnd)
             return 1;
 
         ShowWindow(hwnd, nCmdShow);
-
-        SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(g_sample.get()) );
 
         // Sample Usage Telemetry
         //
@@ -135,6 +159,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
     g_sample.reset();
 
+    XGameRuntimeUninitialize();
+
     return static_cast<int>(msg.wParam);
 }
 
@@ -151,6 +177,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     switch (message)
     {
+    case WM_CREATE:
+        if (lParam)
+        {
+            auto params = reinterpret_cast<LPCREATESTRUCTW>(lParam);
+            SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(params->lpCreateParams));
+        }
+        break;
+
     case WM_PAINT:
         if (s_in_sizemove && sample)
         {
@@ -243,6 +277,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
 
+    case WM_ACTIVATE:
+        Keyboard::ProcessMessage(message, wParam, lParam);
+        Mouse::ProcessMessage(message, wParam, lParam);
+        break;
+
     case WM_POWERBROADCAST:
         switch (wParam)
         {
@@ -265,11 +304,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     case WM_DESTROY:
         PostQuitMessage(0);
-        break;
-
-    case WM_ACTIVATE:
-        Keyboard::ProcessMessage(message, wParam, lParam);
-        Mouse::ProcessMessage(message, wParam, lParam);
         break;
 
     case WM_INPUT:

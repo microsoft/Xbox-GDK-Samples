@@ -37,8 +37,8 @@
 
 #include <gxdk.h>
 
-#if _GXDK_VER < 0x585D071D /* GXDK Edition 221000 */
-#error This sample requires the October 2022 GDK or later
+#if _GXDK_VER < 0x55F00C58 /* GDK Edition 220300 */
+#error This sample requires the March 2022 GDK or later
 #endif
 
 #ifdef _GAMING_XBOX_SCARLETT
@@ -56,18 +56,26 @@
 
 #include <algorithm>
 #include <atomic>
+#include <cassert>
 #include <cmath>
+#include <cstddef>
 #include <cstdint>
+#include <cstdio>
+#include <cstring>
+#include <cwchar>
 #include <deque>
 #include <exception>
+#include <iterator>
 #include <functional>
 #include <memory>
 #include <stdexcept>
+#include <string>
+#include <system_error>
+#include <tuple>
 #include <unordered_map>
 
-#include <assert.h>
-#include <stdio.h>
 #include <pix3.h>
+
 #include <XGame.h>
 #include <XSystem.h>
 #include <XError.h>
@@ -96,7 +104,7 @@ namespace DX
     public:
         com_exception(HRESULT hr) noexcept : result(hr) {}
 
-        const char* what() const override
+        const char* what() const noexcept override
         {
             static char s_str[64] = {};
             sprintf_s(s_str, "Failure with HRESULT of %08X", static_cast<unsigned int>(result));

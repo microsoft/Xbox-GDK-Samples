@@ -86,7 +86,8 @@ target_compile_options(${PROJECT_NAME} PRIVATE /W4 /GR- /fp:fast /GS /Gy)
 
 # /permissive- (C++ conformance mode enabled)
 # /Zc:__cplusplus (Enable updated __cplusplus macro)
-target_compile_options(${PROJECT_NAME} PRIVATE /permissive- /Zc:__cplusplus)
+# /Zc:inline (Remove unreferenced COMDAT)
+target_compile_options(${PROJECT_NAME} PRIVATE /permissive- /Zc:__cplusplus /Zc:inline)
 
 # Required linker switches:
 # /MACHINE:X64 /SUBSYSTEM:WINDOWS
@@ -125,7 +126,7 @@ add_custom_command(
 set_property(TARGET ${PROJECT_NAME} PROPERTY VS_SOLUTION_DEPLOY ON)
 
 # Extension libraries
-# Xbox.Services.API.C Xbox.XCurl.API Xbox.Game.Chat.2.Cpp.API PlayFab.Multiplayer.Cpp PlayFab.Party.Cpp PlayFab.PartyXboxLive.Cpp
+# Xbox.Services.API.C Xbox.XCurl.API Xbox.Game.Chat.2.Cpp.API PlayFab.Multiplayer.Cpp PlayFab.Party.Cpp PlayFab.PartyXboxLive.Cpp PlayFab.Services.C
 set_property(TARGET ${PROJECT_NAME} PROPERTY VS_GLOBAL_GDKExtLibNames Xbox.Services.API.C)
 
 # VC++ binary compatibility means we can use the VS 2019 version with VS 2019 or VS 2022

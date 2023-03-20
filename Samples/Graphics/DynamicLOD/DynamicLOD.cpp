@@ -131,6 +131,7 @@ Sample::Sample() noexcept(false)
     m_deviceResources = std::make_unique<DX::DeviceResources>(
         DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_D32_FLOAT, 2,
         DX::DeviceResources::c_AmplificationShaders);
+    m_deviceResources->SetClearColor(ATG::Colors::Background);
     m_deviceResources->RegisterDeviceNotify(this);
 }
 
@@ -173,6 +174,8 @@ void Sample::Tick()
     {
         Update(m_timer);
     });
+
+    m_mouse->EndOfInputFrame();
 
     Render();
 
@@ -399,7 +402,7 @@ void Sample::UpdateConstants(ID3D12GraphicsCommandList* commandList)
             XMPlaneNormalize(XMVectorAdd(vp.r[3], vp.r[0])),      // Left
             XMPlaneNormalize(XMVectorSubtract(vp.r[3], vp.r[0])), // Right
             XMPlaneNormalize(XMVectorAdd(vp.r[3], vp.r[1])),      // Bottom
-            XMPlaneNormalize(XMVectorAdd(vp.r[3], vp.r[1])),      // Top
+            XMPlaneNormalize(XMVectorSubtract(vp.r[3], vp.r[1])),      // Top
             XMPlaneNormalize(vp.r[2]),                            // Near
             XMPlaneNormalize(XMVectorSubtract(vp.r[3], vp.r[2])), // Far
         };

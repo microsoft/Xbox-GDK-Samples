@@ -1,7 +1,7 @@
 //--------------------------------------------------------------------------------------
 // Main.cpp
 //
-// Entry point for Microsoft GDK with Xbox extensions.
+// Entry point for Microsoft GDK with Xbox extensions
 //
 // Advanced Technology Group (ATG)
 // Copyright (C) Microsoft Corporation. All rights reserved.
@@ -17,14 +17,22 @@
 
 using namespace DirectX;
 
+#ifdef __clang__
+#pragma clang diagnostic ignored "-Wcovered-switch-default"
+#pragma clang diagnostic ignored "-Wswitch-enum"
+#endif
+
+#pragma warning(disable : 4061)
+
 namespace
 {
     std::unique_ptr<Sample> g_sample;
     HANDLE g_plmSuspendComplete = nullptr;
     HANDLE g_plmSignalResume = nullptr;
-};
+}
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+void ExitSample() noexcept;
 
 // Entry point
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
@@ -55,6 +63,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
 
     // Register class and create window
     PAPPSTATE_REGISTRATION hPLM = {};
+    PAPPCONSTRAIN_REGISTRATION hPLM2 = {};
+
     {
         // Register class
         WNDCLASSEXA wcex = {};
@@ -63,13 +73,14 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
         wcex.lpfnWndProc = WndProc;
         wcex.hInstance = hInstance;
         wcex.lpszClassName = u8"SimplePlaySoundStreamWindowClass";
-        wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+        wcex.hbrBackground = reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1);
         if (!RegisterClassExA(&wcex))
             return 1;
 
         // Create window
         HWND hwnd = CreateWindowExA(0, u8"SimplePlaySoundStreamWindowClass", u8"SimplePlaySoundStream", WS_OVERLAPPEDWINDOW,
-            CW_USEDEFAULT, CW_USEDEFAULT, 1920, 1080, nullptr, nullptr, hInstance,
+            CW_USEDEFAULT, CW_USEDEFAULT, 1920, 1080,
+            nullptr, nullptr, hInstance,
             nullptr);
         if (!hwnd)
             return 1;
@@ -101,13 +112,20 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
                 PostMessage(reinterpret_cast<HWND>(context), WM_USER, 0, 0);
 
                 // To defer suspend, you must wait to exit this callback
-                (void)WaitForSingleObject(g_plmSuspendComplete, INFINITE);
+                std::ignore = WaitForSingleObject(g_plmSuspendComplete, INFINITE);
             }
             else
             {
                 SetEvent(g_plmSignalResume);
             }
         }, hwnd, &hPLM))
+            return 1;
+
+        if (RegisterAppConstrainedChangeNotification([](BOOLEAN constrained, PVOID context)
+        {
+            // To ensure we use the main UI thread to process the notification, we self-post a message
+            SendMessage(reinterpret_cast<HWND>(context), WM_USER + 1, (constrained) ? 1u : 0u, 0);
+        }, hwnd, &hPLM2))
             return 1;
     }
 
@@ -129,13 +147,14 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
     g_sample.reset();
 
     UnregisterAppStateChangeNotification(hPLM);
+    UnregisterAppConstrainedChangeNotification(hPLM2);
 
     CloseHandle(g_plmSuspendComplete);
     CloseHandle(g_plmSignalResume);
 
     XGameRuntimeUninitialize();
 
-    return (int) msg.wParam;
+    return static_cast<int>(msg.wParam);
 }
 
 // Windows procedure
@@ -153,9 +172,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // Complete deferral
             SetEvent(g_plmSuspendComplete);
 
-            (void)WaitForSingleObject(g_plmSignalResume, INFINITE);
+            std::ignore = WaitForSingleObject(g_plmSignalResume, INFINITE);
 
             sample->OnResuming();
+        }
+        break;
+
+    case WM_USER + 1:
+        if (sample)
+        {
+            if (wParam)
+            {
+                sample->OnConstrained();
+            }
+            else
+            {
+                sample->OnUnConstrained();
+            }
         }
         break;
     }
@@ -164,7 +197,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 }
 
 // Exit helper
-void ExitSample()
+void ExitSample() noexcept
 {
     PostQuitMessage(0);
 }

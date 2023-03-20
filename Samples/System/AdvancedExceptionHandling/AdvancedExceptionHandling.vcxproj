@@ -575,7 +575,7 @@ $(ProjectDir)Scripts\Desktop.PostBuild.bat "$(ProjectDir)" "$(TargetDir)"
     <ClCompile Include="SharedMemory\SharedMemory.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config">
+    <MGCCompile Include="MicrosoftGameConfig.mgc">
       <SubType>Designer</SubType>
     </MGCCompile>
   </ItemGroup>
@@ -627,10 +627,10 @@ $(ProjectDir)Scripts\Desktop.PostBuild.bat "$(ProjectDir)" "$(TargetDir)"
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='NoEHsc|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
     </None>
-    <None Include="Readme_ja-JP.docx" />
-    <None Include="Readme_ko-KR.docx" />
-    <None Include="Readme_zh-CN.docx" />
-    <None Include="Readme.docx">
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
+    <None Include="readme.md">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </None>
     <None Include="Scripts\Desktop.PostBuild.bat" />
@@ -638,4 +638,7 @@ $(ProjectDir)Scripts\Desktop.PostBuild.bat "$(ProjectDir)" "$(TargetDir)"
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ItemGroup>
+    <None Include="media\image1.png" />
+  </ItemGroup>
 </Project>

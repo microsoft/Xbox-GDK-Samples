@@ -56,17 +56,23 @@
 
 #include <algorithm>
 #include <atomic>
+#include <cassert>
+#include <clocale>
 #include <cmath>
 #include <codecvt>
+#include <cstddef>
 #include <cstdint>
+#include <cstdio>
+#include <cstring>
+#include <cwchar>
 #include <exception>
-#include <locale.h>
+#include <iterator>
 #include <memory>
 #include <stdexcept>
+#include <string>
+#include <system_error>
+#include <tuple>
 
-#include <assert.h>
-#include <locale.h>
-#include <stdio.h>
 #include <pix3.h>
 
 #include <XGame.h>
@@ -93,9 +99,9 @@ namespace DX
     class com_exception : public std::exception
     {
     public:
-        com_exception(HRESULT hr) : result(hr) {}
+        com_exception(HRESULT hr) noexcept : result(hr) {}
 
-        const char* what() const override
+        const char* what() const noexcept override
         {
             static char s_str[64] = {};
             sprintf_s(s_str, "Failure with HRESULT of %08X", static_cast<unsigned int>(result));

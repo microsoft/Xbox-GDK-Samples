@@ -4,11 +4,9 @@
 cmake_minimum_required (VERSION 3.20)
 
 project(CMakeExampleDesktop
-  DESCRIPTION "CMake example for a Microsoft GDK Gaming.Desktop.x64 project"
+  DESCRIPTION "CMake example for a Microsoft GDK x64 project"
   HOMEPAGE_URL "https://github.com/microsoft/Xbox-GDK-Samples"
   LANGUAGES CXX)
-
-option(BUILD_USING_LTCG "Enable Whole Program Optimization" ON)
 
 # https://docs.microsoft.com/windows/win32/apiindex/umbrella-lib-onecore
 option(BUILD_USING_ONECORE "Build for Windows 10/Windows 11 only" OFF)
@@ -20,15 +18,15 @@ option(ENABLE_CODE_ANALYSIS "Use Static Code Analysis on build" OFF)
 
 set(CMAKE_MAP_IMPORTED_CONFIG_RELWITHDEBINFO Release)
 
-include(CMakeGDKDesktop.cmake)
+include(../CMake/CMakeGDKDesktop.cmake)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/Gaming.Desktop.x64")
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/Gaming.Desktop.x64")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/Gaming.Desktop.x64")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/x64")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/x64")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/x64")
 
 # Libraries
 # kernel32.lib user32.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib are the libs for Win32 desktop DirectX apps
@@ -52,8 +50,17 @@ add_executable(${PROJECT_NAME} WIN32
     d3dx12.h
 )
 
-target_include_directories(${PROJECT_NAME} PUBLIC ./ ../ ${Console_SdkIncludeRoot})
-target_link_directories(${PROJECT_NAME} PUBLIC ${Console_SdkLibPath})
+target_include_directories(${PROJECT_NAME} PUBLIC ./ ../)
+
+target_compile_definitions(${PROJECT_NAME} PRIVATE "$<$<CONFIG:DEBUG>:_DEBUG>" "$<$<CONFIG:RELEASE>:NDEBUG>" _GAMING_DESKTOP WINAPI_FAMILY=WINAPI_FAMILY_DESKTOP_APP _UNICODE UNICODE __WRL_NO_DEFAULT_LIB__)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE dxguid.lib d3d12.lib dxgi.lib Xbox::GameRuntime Xbox::XSAPI Xbox::XCurl)
+if (XdkEditionTarget GREATER_EQUAL 220600)
+    target_link_libraries(${PROJECT_NAME} PRIVATE Xbox::GameInput)
+endif()
+# uuid.lib if using Windows Imaging Component (WIC) or other COM objects
+# delayimp.lib if using /DELAYLOAD (or use dloadhelper.lib if BUILD_USING_ONECORE is ON)
+# optional additional extension libraries: Xbox::GameChat2 Xbox::PlayFabMultiplayer Xbox::PlayFabParty Xbox::PlayFabPartyLIVE Xbox::PlayFabServices
 
 # Build HLSL shaders
 add_custom_target(shaders)
@@ -65,7 +72,7 @@ foreach(FILE ../VertexShader.hlsl ../PixelShader.hlsl)
   get_filename_component(FILE_WE ${FILE} NAME_WE)
   get_source_file_property(shadertype ${FILE} ShaderType)
   add_custom_command(TARGET shaders
-                     COMMAND ${DXCToolPath}/dxc.exe /nologo /Emain /T${shadertype}_6_0 $<IF:$<CONFIG:DEBUG>,/Od,/O3> /Zi /Fo ${CMAKE_BINARY_DIR}/${FILE_WE}.cso /Fd ${CMAKE_BINARY_DIR}/${FILE_WE}.pdb ${FILE}
+                     COMMAND ${DIRECTX_DXC_TOOL} /nologo /Emain /T${shadertype}_6_0 $<IF:$<CONFIG:DEBUG>,/Od,/O3> /Zi /Fo ${CMAKE_BINARY_DIR}/${FILE_WE}.cso /Fd ${CMAKE_BINARY_DIR}/${FILE_WE}.pdb ${FILE}
                      MAIN_DEPENDENCY ${FILE}
                      COMMENT "HLSL ${FILE}"
                      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
@@ -79,15 +86,13 @@ configure_file(../MicrosoftGameConfig.mgc MicrosoftGame.config @ONLY)
 add_custom_target(mgccompile)
 
 add_custom_command(TARGET mgccompile
-                   COMMAND ${MGCToolPath}/makepkg.exe localize /d "${CMAKE_BINARY_DIR}" /pd "${CMAKE_BINARY_DIR}/bin/Gaming.Desktop.x64"
-                   MAIN_DEPENDENCY MicrosoftGame.config
+                   COMMAND ${MAKEPKG_TOOL} localize /d "${CMAKE_BINARY_DIR}" /pd "${CMAKE_BINARY_DIR}/bin/x64"
+                   MAIN_DEPENDENCY ../MicrosoftGameConfig.mgc
                    COMMENT "makepkg localize MicrosoftGame.config"
                    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
                    VERBATIM)
 
 add_dependencies(${PROJECT_NAME} mgccompile shaders)
-
-target_compile_definitions(${PROJECT_NAME} PRIVATE ${Console_Defines})
 
 # Recommended compiler switches:
 # /EHsc (C++ exception handling)
@@ -98,19 +103,14 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE ${Console_Defines})
 # /Zi (Debug Information Format)
 target_compile_options(${PROJECT_NAME} PRIVATE /W4 /GR- /fp:fast /GS /Gy)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE ${Console_Libs} Xbox::XSAPI Xbox::XCurl)
-# uuid.lib if using Windows Imaging Component (WIC) or other COM objects
-# delayimp.lib if using /DELAYLOAD (or use dloadhelper.lib if BUILD_USING_ONECORE is ON)
-# optional additional extension libraries: Xbox::GameChat2 Xbox::PlayFabMultiplayer Xbox::PlayFabParty Xbox::PlayFabPartyLIVE
-
 # Optional precompiled header switches:
 # /Ycpch.h (Create Precompiled Header File)
 # /Yupch.h (Use Precompiled Header File)
 # /Fp (Name .pch file)
 # /FI (Name Force Include File)
-target_precompile_headers(${PROJECT_NAME} PRIVATE ../pch.h )
+target_precompile_headers(${PROJECT_NAME} PRIVATE ../pch.h)
 
-target_link_options(${PROJECT_NAME} PRIVATE ${Console_LinkOptions})
+target_link_options(${PROJECT_NAME} PRIVATE /DYNAMICBASE /NXCOMPAT)
 
 # For the Windows platform, Control Flow Guard is recommended but may require updated middleware
 target_compile_options(${PROJECT_NAME} PRIVATE "$<$<NOT:$<CONFIG:DEBUG>>:/guard:cf>")
@@ -124,7 +124,8 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
    # /sdl (Enable Additional Security Checks)
    # /permissive- (C++ conformance mode enabled)
    # /Zc:__cplusplus (Enable updated __cplusplus macro)
-   target_compile_options(${PROJECT_NAME} PRIVATE /sdl /permissive- /Zc:__cplusplus)
+   # /Zc:inline (Remove unreferenced COMDAT)
+   target_compile_options(${PROJECT_NAME} PRIVATE /sdl /permissive- /Zc:__cplusplus /Zc:inline)
 
    # /analyze (Code analysis)
    if(ENABLE_CODE_ANALYSIS)
@@ -139,6 +140,10 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
    # /Zc:preprocessor (C99 conformant preprocessor)
    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.26)
       target_compile_options(${PROJECT_NAME} PRIVATE /Zc:preprocessor /wd5105)
+   endif()
+
+   if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.28)
+      target_compile_options(${PROJECT_NAME} PRIVATE /Zc:lambda)
    endif()
 
    # For the Windows platform, Enable EH Continuation Metadata is recommended but may require updated middleware
@@ -162,14 +167,18 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
        # Optional debug linker switches:
        # /INCREMENTAL
        # /DEBUG or /DEBUG:fastlink
-   elseif(BUILD_USING_LTCG)
+   elseif(CMAKE_INTERPROCEDURAL_OPTIMIZATION)
        # /GL (Whole Program Optimization)
        # /Gw (Optimize Global Data)
-       target_compile_options(${PROJECT_NAME} PRIVATE /GL /Gw)
+       target_compile_options(${PROJECT_NAME} PRIVATE /Gw)
+
+       if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.35)
+           target_compile_options(${PROJECT_NAME} PRIVATE /Zc:checkGwOdr)
+       endif()
 
        # /LTCG (Link-time Code Generation)
        # Ignores warning from CMake generator use of /INCREMENTAL
-       target_link_options(${PROJECT_NAME} PRIVATE /IGNORE:4075 /LTCG)
+       target_link_options(${PROJECT_NAME} PRIVATE /IGNORE:4075)
    endif()
 endif()
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -212,5 +221,5 @@ endif()
 
 # MSIXVC Packaging using the makepkg tool in the GDK:
 #    cd CMakeExample\Desktop\out\build\<config>\bin
-#    makepkg genmap /f chunks.xml /d Gaming.Desktop.x64
-#    makepkg pack /f chunks.xml /d Gaming.Desktop.x64 /pd . /pc
+#    makepkg genmap /f chunks.xml /d x64
+#    makepkg pack /f chunks.xml /d x64 /pd . /pc

@@ -349,7 +349,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config" />
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Kits\DirectXTK12\DirectXTK12_GXDK_2019.vcxproj">
@@ -366,12 +366,17 @@
     <Image Include="Assets\StoreLogo.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="FrontPanelLogo_ja-jp.docx" />
-    <None Include="FrontPanelLogo_ko-kr.docx" />
-    <None Include="FrontPanelLogo_zh-cn.docx" />
-    <None Include="readme.docx" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
+    <None Include="readme.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ItemGroup>
+    <None Include="media\image1.png" />
+    <None Include="media\image3.png" />
+    <None Include="media\image4.png" />
+  </ItemGroup>
 </Project>

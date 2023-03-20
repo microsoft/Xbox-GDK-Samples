@@ -17,7 +17,11 @@ description: "FrontPanelDolphin demonstrates how to use the GPU to render to the
 
 # FrontPanelDolphin
 
-For more information see this [Word document](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/FrontPanelDolphin/readme.docx).
+For more information see: 
+- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/FrontPanelDolphin/readme_en-us.md)
+- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/FrontPanelDolphin/readme_ja-jp.md)
+- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/FrontPanelDolphin/readme_ko-kr.md)
+- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/FrontPanelDolphin/readme_zh-cn.md)
 
 ## Privacy statement
 

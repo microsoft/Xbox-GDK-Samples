@@ -23,6 +23,7 @@ Sample::Sample(LPWSTR lpCmdLine) noexcept(false)
 {
     // Renders only 2D, so no need for a depth buffer.
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_UNKNOWN);
+    m_deviceResources->SetClearColor(ATG::Colors::Background);
 
     // Check for cross-restart triggering from command-line
     if (lpCmdLine && wcsstr(lpCmdLine, L"-crossrestart"))
@@ -88,6 +89,8 @@ DX::DeviceResources* Sample::GetDeviceResources() const
 void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
+
+    m_deviceResources->WaitForOrigin();
 
     m_timer.Tick([&]()
     {

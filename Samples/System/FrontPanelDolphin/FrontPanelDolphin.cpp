@@ -19,6 +19,9 @@ using Microsoft::WRL::ComPtr;
 
 namespace
 {
+    const XMVECTORF32 c_Ambient = { { { 0.25f, 0.25f, 0.25f, 1.f } } };
+    const XMVECTORF32 c_WaterColor = { { { 0.f, 0.5f, 1.f, 1.f } } };
+
     // Custom effect for sea floor
     class SeaEffect : public IEffect
     {
@@ -80,6 +83,7 @@ Sample::Sample() noexcept(false)
     , m_currentCausticTextureView(0)
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>();
+    m_deviceResources->SetClearColor(c_WaterColor);
 
     // Create the dolphins
     for (unsigned int i = 0; i < m_dolphins.size(); i++)
@@ -88,15 +92,6 @@ Sample::Sample() noexcept(false)
         d->Translate(XMVectorSet(0, -1.0f + 2.0f * static_cast<float>(i), 10, 0));
         m_dolphins[i] = d;
     }
-
-    // Set the water color to a nice blue.
-    SetWaterColor(0.0f, 0.5f, 1.0f);
-
-    // Set the ambient light.
-    m_ambient[0] = 0.25f;
-    m_ambient[1] = 0.25f;
-    m_ambient[2] = 0.25f;
-    m_ambient[3] = 0.25f;
 
     m_available = XFrontPanelIsSupported();
     if (m_available)
@@ -132,6 +127,8 @@ void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
 
+    m_deviceResources->WaitForOrigin();
+
     m_timer.Tick([&]()
     {
         Update(m_timer);
@@ -155,8 +152,6 @@ void Sample::Update(DX::StepTimer const& timer)
     for (unsigned int i = 0; i < m_dolphins.size(); i++)
         m_dolphins[i]->Update(totalTime, elapsedTime);
 
-    SetWaterColor(0.0f, 0.5f, 1.0f);
-
     // Animate the caustic textures
     m_currentCausticTextureView = (static_cast<unsigned int>(totalTime *32)) % 32;
 
@@ -169,18 +164,18 @@ void Sample::Update(DX::StepTimer const& timer)
             reinterpret_cast<BYTE*>(m_mappedVSConstantData) + 
             AlignUp(sizeof(VS_CONSTANT_BUFFER), D3D12_CONSTANT_BUFFER_DATA_PLACEMENT_ALIGNMENT) * constantBufferIndex);
 
-        vertShaderConstData->vZero = XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
+        vertShaderConstData->vZero = XMVectorZero();
         vertShaderConstData->vConstants = XMVectorSet(1.0f, 0.5f, 0.2f, 0.05f);
 
         // weight is for dolphins, so the value doesn't matter here (since we're setting it for the sea floor)
-        vertShaderConstData->vWeight = XMVectorSet(0, 0, 0, 0);
+        vertShaderConstData->vWeight = XMVectorZero();
 
         // Lighting vectors (in world space and in dolphin model space)
         // and other constants
         vertShaderConstData->vLight = XMVectorSet(0.00f, 1.00f, 0.00f, 0.00f);
         vertShaderConstData->vLightDolphinSpace = XMVectorSet(0.00f, 1.00f, 0.00f, 0.00f);
-        vertShaderConstData->vDiffuse = XMVectorSet(1.00f, 1.00f, 1.00f, 1.00f);
-        vertShaderConstData->vAmbient = XMVectorSet(m_ambient[0], m_ambient[1], m_ambient[2], m_ambient[3]);
+        vertShaderConstData->vDiffuse = DirectX::Colors::White.v;
+        vertShaderConstData->vAmbient = c_Ambient.v;
         vertShaderConstData->vFog = XMVectorSet(0.50f, 50.00f, 1.00f / (50.0f - 1.0f), 0.00f);
         vertShaderConstData->vCaustics = XMVectorSet(0.05f, 0.05f, sinf(totalTime) / 8, cosf(totalTime) / 10);
 
@@ -206,8 +201,8 @@ void Sample::Update(DX::StepTimer const& timer)
             reinterpret_cast<BYTE*>(m_mappedPSConstantData) + 
             AlignUp(sizeof(PS_CONSTANT_BUFFER), D3D12_CONSTANT_BUFFER_DATA_PLACEMENT_ALIGNMENT) * constantBufferIndex);
 
-        memcpy(pPsConstData->fAmbient, m_ambient, sizeof(m_ambient));
-        memcpy(pPsConstData->fFogColor, m_waterColor, sizeof(m_waterColor));
+        memcpy(pPsConstData->fAmbient, c_Ambient.f, sizeof(float) * 4);
+        memcpy(pPsConstData->fFogColor, c_WaterColor.f, sizeof(float) * 4);
     }
 
     auto pad = m_gamePad->GetState(0);
@@ -259,8 +254,6 @@ void Sample::Render()
     auto commandQueue = m_deviceResources->GetCommandQueue();
     auto renderTarget = m_deviceResources->GetRenderTarget();
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Render");
-
-    SetWaterColor(0.0f, 0.5f, 1.0f);
 
     /////////////////////////////////////////////////////
     //
@@ -324,7 +317,7 @@ void Sample::Clear()
     auto dsvDescriptor = m_deviceResources->GetDepthStencilView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
-    commandList->ClearRenderTargetView(rtvDescriptor, m_waterColor, 0, nullptr);
+    commandList->ClearRenderTargetView(rtvDescriptor, c_WaterColor, 0, nullptr);
     commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
@@ -503,14 +496,6 @@ void Sample::CreateWindowSizeDependentResources()
 }
 #pragma endregion
 
-void Sample::SetWaterColor(float red, float green, float blue)
-{
-    m_waterColor[0] = red;
-    m_waterColor[1] = green;
-    m_waterColor[2] = blue;
-    m_waterColor[3] = 1.0f;
-}
-
 void Sample::DrawDolphin(Dolphin &dolphin)
 {
     auto commandList = m_deviceResources->GetCommandList();
@@ -518,7 +503,7 @@ void Sample::DrawDolphin(Dolphin &dolphin)
 
     VS_CONSTANT_BUFFER* vertShaderConstData = dolphin.MapVSConstants(constantBufferIndex);
     {
-        vertShaderConstData->vZero = XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
+        vertShaderConstData->vZero = XMVectorZero();
         vertShaderConstData->vConstants = XMVectorSet(1.0f, 0.5f, 0.2f, 0.05f);
 
         FLOAT fBlendWeight = dolphin.GetBlendWeight();
@@ -544,8 +529,8 @@ void Sample::DrawDolphin(Dolphin &dolphin)
         // and other constants
         vertShaderConstData->vLight = XMVectorSet(0.00f, 1.00f, 0.00f, 0.00f);
         vertShaderConstData->vLightDolphinSpace = XMVectorSet(0.00f, 1.00f, 0.00f, 0.00f);
-        vertShaderConstData->vDiffuse = XMVectorSet(1.00f, 1.00f, 1.00f, 1.00f);
-        vertShaderConstData->vAmbient = XMVectorSet(m_ambient[0], m_ambient[1], m_ambient[2], m_ambient[3]);
+        vertShaderConstData->vDiffuse = DirectX::Colors::White.v;
+        vertShaderConstData->vAmbient = c_Ambient.v;
         vertShaderConstData->vFog = XMVectorSet(0.50f, 50.00f, 1.00f / (50.0f - 1.0f), 0.00f);
 
         float totalSeconds = float(m_timer.GetTotalSeconds());

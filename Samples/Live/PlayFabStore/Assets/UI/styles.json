@@ -1,0 +1,353 @@
+{
+  "styles": [
+    {
+      "id": "BasicPanelStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 0, 0, 0, 0.0 ]
+    },
+    {
+      "id": "StatusPanelStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 0, 0, 0, 0.3 ]
+    },
+    {
+      "id": "LogoStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 227, 211, 177, 0.76 ],
+      "texture": "Assets/LOGO_ATG.png"
+    },
+    {
+      "id": "PlayfabLogoStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "texture": "Assets/Logo_Playfab.png"
+    },
+    {
+      "id": "ItemPanelStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 50, 50, 50, 1.0 ]
+    },
+    {
+      "id": "ItemPanelStyleDark",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 100, 0, 0, 1.0 ]
+    },
+    {
+      "id": "PlayfabPanel",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 255, 109, 33, 1.0 ]
+    },
+    {
+      "id": "GoldSImageStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "texture": "Assets/icon_coins_small.png"
+    },
+    {
+      "id": "GoldMImageStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "texture": "Assets/icon_coins_medium.png"
+    },
+    {
+      "id": "GoldLImageStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "texture": "Assets/icon_coins_large.png"
+    },
+    {
+      "id": "PotionStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "texture": "Assets/icon_potion.png"
+    },
+    {
+      "id": "Potion5Style",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "texture": "Assets/icon_potion.png"
+    },
+    {
+      "id": "ArrowStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "texture": "Assets/icon_arrow.png"
+    },
+    {
+      "id": "BowStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "texture": "Assets/icon_bow.png"
+    },
+    {
+      "id": "ShieldStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "texture": "Assets/icon_shield.png"
+    },
+    {
+      "id": "GemStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "texture": "Assets/icon_gem.png"
+    },
+    {
+      "id": "SwordStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "texture": "Assets/icon_sword.png"
+    },
+    {
+      "id": "CatalogStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "texture": "Assets/Logo.png"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "BasicLabelStyle",
+      "colorUsage": "override",
+      "color": [ 0, 0, 0, 1.0 ],
+      "horizontalAlign": "center",
+      "verticalAlign": "middle",
+      "fontSize": 24
+    },
+    {
+      "classId": "TextStyle",
+      "id": "BasicTextStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "horizontalAlign": "left",
+      "verticalAlign": "middle",
+      "fontSize": 18
+    },
+
+    {
+      "id": "BoldTextStyle",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "horizontalAlign": "left",
+      "verticalAlign": "top",
+      "weight": "bold",
+      "fontSize": 24
+    },
+    {
+      "id": "BoldTextCenterStyle",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "horizontalAlign": "center",
+      "verticalAlign": "top",
+      "weight": "bold",
+      "fontSize": 24
+    },
+
+    {
+      "id": "Bold36TextStyle",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "horizontalAlign": "center",
+      "verticalAlign": "top",
+      "weight": "bold",
+      "fontSize": 36
+    },
+    {
+      "classId": "TextStyle",
+      "id": "StatusStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 0, 1.0 ],
+      "horizontalAlign": "left",
+      "verticalAlign": "middle",
+      "fontSize": 24
+    },
+    {
+      "classId": "TextStyle",
+      "id": "LegendTextStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "legendFont": "Assets/Fonts/XboxOneControllerLegend",
+      "horizontalAlign": "left",
+      "verticalAlign": "middle",
+      "fontSize": 18
+    },
+    {
+      "classId": "TextStyle",
+      "id": "SmallLegendTextStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "legendFont": "Assets/Fonts/XboxOneControllerLegendSmall",
+      "horizontalAlign": "left",
+      "verticalAlign": "middle",
+      "fontSize": 18
+    },
+
+    {
+      "id": "DisabledButtonStyle",
+      "inheritsFromId": "BasicButtonStyle",
+      "classId": "SpriteStyle",
+      "color": [ 128, 128, 128, 1.0 ]
+    },
+    {
+      "id": "FocusedButtonStyle",
+      "inheritsFromId": "BasicButtonStyle",
+      "classId": "SpriteStyle",
+      "color": [ 255, 255, 0, 1.0 ]
+    },
+    {
+      "id": "HoveredButtonStyle",
+      "inheritsFromId": "BasicButtonStyle",
+      "classId": "SpriteStyle",
+      "color": [ 128, 255, 128, 1.0 ]
+    },
+    {
+      "id": "PressedButtonStyle",
+      "inheritsFromId": "BasicButtonStyle",
+      "classId": "SpriteStyle",
+      "color": [ 192, 192, 0, 1.0 ]
+    },
+    {
+      "id": "BasicButtonStyle",
+      "classId": "SpriteStyle",
+      "color": [ 0, 0, 0, 1.0 ],
+      "colorUsage": "override",
+      "texture": "Assets/button.png",
+      "spriteType": "nineSliced",
+      "innerUVExtents": [ 0.1, 0.1, 0.9, 0.9 ],
+      "padding": [ 0, 0, 0, 0 ]
+    },
+
+    {
+      "id": "ScrollbarBackgroundStyle",
+      "classId": "SpriteStyle",
+      "color": [ 192, 192, 192, 1.0 ],
+      "colorUsage": "override",
+      "texture": "Assets/scrollbarbackground.png",
+      "spriteType": "nineSliced",
+      "innerUVExtents": [ 0.2, 0.2, 0.8, 0.8 ],
+      "padding": [ 0, 0, 0, 0 ]
+    },
+
+    {
+      "id": "MenuDisabledButtonStyle",
+      "inheritsFromId": "BasicButtonStyle",
+      "classId": "SpriteStyle",
+      "color": [ 64, 64, 64, 1.0 ]
+    },
+    {
+      "id": "MenuFocusedButtonStyle",
+      "inheritsFromId": "BasicButtonStyle",
+      "classId": "SpriteStyle",
+      "color": [ 255, 109, 33, 1.0 ]
+    },
+    {
+      "id": "MenuHoveredButtonStyle",
+      "inheritsFromId": "BasicButtonStyle",
+      "classId": "SpriteStyle",
+      "color": [ 128, 128, 128, 1.0 ]
+    },
+    {
+      "id": "MenuPressedButtonStyle",
+      "inheritsFromId": "BasicButtonStyle",
+      "classId": "SpriteStyle",
+      "color": [ 192, 192, 0, 1.0 ]
+    },
+
+    {
+      "id": "MenuItemTextStyle",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "horizontalAlign": "center",
+      "verticalAlign": "middle",
+      "fontSize": 24
+    },
+
+    {
+      "id": "MenuItemLeftTextStyle",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "horizontalAlign": "left",
+      "verticalAlign": "middle",
+      "weight": "italic",
+      "fontSize": 24
+    },
+
+    {
+      "id": "PopupTextStyle",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "horizontalAlign": "center",
+      "verticalAlign": "middle",
+      "fontSize": 22
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Sample_Text_Style",
+      "colorUsage": "override",
+      "color": [ 195, 181, 152, 1.0 ],
+      "verticalAlign": "bottom",
+      "horizontalAlign": "left"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Invisible_Panel_Style",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 0.0 ]
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Sample_Text_Style",
+      "colorUsage": "override",
+      "color": [ 195, 181, 152, 1.0 ],
+      "verticalAlign": "bottom",
+      "horizontalAlign": "left"
+    },
+
+    {
+      "id": "FaceButtonDisabledButtonStyle",
+      "inheritsFromId": "BasicPanelStyle",
+      "classId": "SpriteStyle",
+      "color": [ 64, 64, 64, 1.0 ]
+    },
+    {
+      "id": "FaceButtonFocusedButtonStyle",
+      "inheritsFromId": "BasicPanelStyle",
+      "classId": "SpriteStyle",
+      "color": [ 64, 64, 64, 1.0 ]
+    },
+    {
+      "id": "FaceButtonHoveredButtonStyle",
+      "inheritsFromId": "BasicPanelStyle",
+      "classId": "SpriteStyle",
+      "color": [ 92, 92, 92, 1.0 ]
+    },
+    {
+      "id": "FaceButtonPressedButtonStyle",
+      "inheritsFromId": "BasicPanelStyle",
+      "classId": "SpriteStyle",
+      "color": [ 192, 192, 192, 1.0 ]
+    }
+  ]
+}

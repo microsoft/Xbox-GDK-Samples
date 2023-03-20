@@ -111,6 +111,7 @@
     <GameDKLatest>$(GameDK)$(XDKEditionTarget)\</GameDKLatest>
     <GRDKLatest>$(GameDKLatest)GRDK\</GRDKLatest>
     <GXDKLatest>$(GameDKLatest)GXDK\</GXDKLatest>
+    <GDKPCEditionPath>$(GameDKLatest)GRDK\</GDKPCEditionPath>
   </PropertyGroup>
 
 </Project>

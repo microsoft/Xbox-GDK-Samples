@@ -17,7 +17,8 @@ description: "Demonstrates various ways that C++ and SEH exceptions can occur in
 
 # SimpleExceptionHandling
 
-For more information see this [Word document](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/SimpleExceptionHandling/Readme.docx).
+For more information see: 
+- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/SimpleExceptionHandling/readme_en-us.md)
 
 ## Privacy statement
 

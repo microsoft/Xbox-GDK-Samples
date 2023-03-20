@@ -25,7 +25,7 @@
       {
         "id": "menu_title_text",
         "classId": "StaticText",
-        "text": "Microsoft.StoreServices Client Sample",
+        "text": "Microsoft.Store.Services Client Sample",
         "styleId": "menu_title_text_style",
         "positioningAnchor": [ "left", "top" ],
         "position": [ 200, 50 ],
@@ -98,7 +98,7 @@
                 "id": "button_label",
                 "classId": "StaticText",
                 "styleId": "button_default_text_style",
-                "text": "Collections",
+                "text": "Collections v8",
                 "size": [ 400, 75 ]
               }
             ]

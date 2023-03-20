@@ -13,7 +13,7 @@
       "hidden": true,
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "cacheVariables": {
-        "XdkEditionTarget": "221000",
+        "XdkEditionTarget": "230300",
         "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}"
       }
     },
@@ -25,7 +25,11 @@
     },
     {
       "name": "Release",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" },
+      "cacheVariables":
+      {
+          "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+          "CMAKE_INTERPROCEDURAL_OPTIMIZATION": true
+      },
       "hidden": true
     },
 
@@ -52,10 +56,22 @@
       }
     },
 
+    {
+      "name": "Scarlett",
+      "cacheVariables":
+      {
+          "OPTIMIZE_FOR_SCARLETT": true
+      },
+      "hidden": true
+    },
+
     { "name": "x64-Debug"    , "description": "MSVC for x64 (Debug)", "inherits": [ "base", "Debug", "MSVC" ] },
     { "name": "x64-Release"  , "description": "MSVC for x64 (Release)", "inherits": [ "base", "Release", "MSVC" ] },
 
     { "name": "x64-Debug-Clang"    , "description": "Clang/LLVM for x64 (Debug)", "inherits": [ "base", "Debug", "Clang" ] },
-    { "name": "x64-Release-Clang"  , "description": "Clang/LLVM for x64 (Release)", "inherits": [ "base", "Release", "Clang" ] }
+    { "name": "x64-Release-Clang"  , "description": "Clang/LLVM for x64 (Release)", "inherits": [ "base", "Release", "Clang" ] },
+
+    { "name": "x64-Debug-Scarlett"   , "description": "MSVC for x64 (Debug) for Xbox Series X|S", "inherits": [ "base", "Debug", "MSVC", "Scarlett" ] },
+    { "name": "x64-Release-Scarlett" , "description": "MSVC for x64 (Release) for Xbox Series X|S", "inherits": [ "base", "Release", "MSVC", "Scarlett" ] }
   ]
 }

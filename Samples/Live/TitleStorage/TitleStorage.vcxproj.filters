@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="TitleStorage.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="DeviceResources.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
       <Filter>ATG Tool Kit</Filter>
     </ClCompile>
@@ -16,48 +16,59 @@
     <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
       <Filter>ATG Tool Kit</Filter>
     </ClCompile>
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\Kits\ATGTK\TextConsole.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Kits\ATGTK\Texture.cpp" />
     <ClCompile Include="..\..\..\Kits\LiveTK\LiveInfoHUD.cpp">
       <Filter>Xbox Live Tool Kit</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\LiveTK\LiveResources.cpp">
       <Filter>Xbox Live Tool Kit</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\Texture.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="TitleStorage.h" />
     <ClInclude Include="ListView.h" />
+    <ClInclude Include="TitleStorage.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="UIConstants.h" />
-    <ClInclude Include="DeviceResources.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="StepTimer.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Kits\ATGTK\SampleGUI.h">
-      <Filter>ATG Tool Kit</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Kits\ATGTK\CSVReader.h">
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h">
+    <ClInclude Include="..\..\..\Kits\ATGTK\CSVReader.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\ATGTK\Json.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\SampleGUI.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
       <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\Texture.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\ATGTK\TextConsole.h">
       <Filter>Common</Filter>
@@ -68,18 +79,27 @@
     <ClInclude Include="..\..\..\Kits\LiveTK\LiveResources.h">
       <Filter>Xbox Live Tool Kit</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h">
-      <Filter>ATG Tool Kit</Filter>
+    <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h">
+      <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Kits\ATGTK\Texture.h">
+    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <CopyFileToFolders Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
     <CopyFileToFolders Include="Assets\SampleUI.csv">
       <Filter>Assets</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="..\..\..\Media\Fonts\Courier_16.spritefont">
+    <CopyFileToFolders Include="..\..\..\Media\Textures\GamerPic.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\Courier_36.spritefont">
       <Filter>Assets</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
@@ -97,19 +117,25 @@
     <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_22_Bold.spritefont">
       <Filter>Assets</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_36_Italic.spritefont">
-      <Filter>Assets</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_36_Bold.spritefont">
-      <Filter>Assets</Filter>
-    </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_22_Italic.spritefont">
       <Filter>Assets</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
       <Filter>Assets</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="..\..\..\Media\Fonts\Courier_36.spritefont">
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_36_Bold.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_36_Italic.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\StoreLogo.png">
       <Filter>Assets</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneController.spritefont">
@@ -124,47 +150,28 @@
     <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
       <Filter>Assets</Filter>
     </CopyFileToFolders>
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="Assets">
-      <UniqueIdentifier>{f853e8b3-9496-440a-ba2a-0f6d766e10c3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Xbox Live Tool Kit">
-      <UniqueIdentifier>{976fbf7f-509a-409e-adca-0f1d8ca249ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ATG Tool Kit">
-      <UniqueIdentifier>{77ea4cfb-2684-46ca-b5f4-75205f182c80}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Common">
-      <UniqueIdentifier>{e6f8ec67-556e-4dfd-99f1-eff1c1453430}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <CopyFileToFolders Include="Assets\LargeLogo.png">
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\Courier_16.spritefont">
       <Filter>Assets</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="Assets\Logo.png">
-      <Filter>Assets</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="Assets\SmallLogo.png">
-      <Filter>Assets</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="Assets\SplashScreen.png">
-      <Filter>Assets</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="Assets\StoreLogo.png">
-      <Filter>Assets</Filter>
-    </CopyFileToFolders>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\..\Media\Textures\GamerPic.png">
-      <Filter>Assets</Filter>
-    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="Readme.docx" />
     <None Include="Readme_ja-JP.docx" />
     <None Include="Readme_ko-KR.docx" />
     <None Include="Readme_zh-CN.docx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{a175bf29-9096-4483-aa52-634bb1ebe9a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>{1d9d57c3-7b36-4ffd-a2b4-01421896def0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{11966b18-d346-4029-9c5e-d3762c6ae829}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Xbox Live Tool Kit">
+      <UniqueIdentifier>{9ed9d480-9178-4b2e-8cb1-013a2b331e74}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

@@ -36,8 +36,40 @@
 #endif
 
 namespace {
-    const char *LOGIN_URL = "https://3436.playfabapi.com/Client/LoginWithCustomID";
-    const char *EVENT_URL = "https://3436.playfabapi.com/Event/WriteTelemetryEvents";
+    using AsyncUniquePtr = std::unique_ptr<XAsyncBlock>;
+    AsyncUniquePtr CreateAsync() { return AsyncUniquePtr(new XAsyncBlock{}); }
+
+    const char* LOGIN_URL = "https://3436.playfabapi.com/Client/LoginWithCustomID";
+    const char* EVENT_URL = "https://3436.playfabapi.com/Event/WriteTelemetryEvents";
+
+    struct TelemetryData
+    {
+        std::string osVersion;
+        std::string hostingOsVersion;
+        std::string family;
+        std::string form;
+        std::string clientId;
+        std::string sandbox;
+        std::string titleId;
+        std::string exeName;
+        std::string sessionId;
+
+        json ToJson() const
+        {
+            return json
+            {
+                {"osVersion", osVersion },
+                {"hostingOsVersion", hostingOsVersion },
+                {"family", family },
+                {"form", form },
+                {"clientId", clientId },
+                {"sandboxId", sandbox },
+                {"titleId", titleId },
+                {"exeName", exeName },
+                {"sessionId", sessionId }
+            };
+        }
+    };
 }
 
 using namespace ATG;
@@ -45,9 +77,23 @@ using namespace ATG;
 class ATGTelemetry
 {
 public:
-    bool m_bHCInitialized{ false };
+    ATGTelemetry() :
+        m_bHCInitialized{ false },
+        m_authToken{},
+        m_data{}
+#if _GAMING_XBOX
+        , m_notificationChangedHandle{ nullptr }
+#endif
+    {
+    }
+
     ~ATGTelemetry()
     {
+        if (m_bHCInitialized)
+        {
+            HCCleanup();
+        }
+
 #if _GAMING_XBOX
         if (m_notificationChangedHandle)
         {
@@ -57,26 +103,33 @@ public:
 #endif
     }
 
-    void Cleanup()
-    {
-        if (m_bHCInitialized)
-        {
-            HCCleanup();
-        }
-    }
-
     void SendTelemetry()
     {
 #if _GAMING_XBOX
-        NotifyNetworkConnectivityHintChange([](void* context, NL_NETWORK_CONNECTIVITY_HINT connectivityHint)
-            {
-                auto atgTelemetry = static_cast<ATGTelemetry*>(context);
-                if (connectivityHint.ConnectivityLevel == NL_NETWORK_CONNECTIVITY_LEVEL_HINT::NetworkConnectivityLevelHintInternetAccess
-                    || connectivityHint.ConnectivityLevel == NL_NETWORK_CONNECTIVITY_LEVEL_HINT::NetworkConnectivityLevelHintConstrainedInternetAccess)
+        NL_NETWORK_CONNECTIVITY_HINT hint{};
+        GetNetworkConnectivityHint(&hint);
+
+        // If the vm is being reused, this will return with internet access
+        if (hint.ConnectivityLevel == NL_NETWORK_CONNECTIVITY_LEVEL_HINT::NetworkConnectivityLevelHintInternetAccess
+            || hint.ConnectivityLevel == NL_NETWORK_CONNECTIVITY_LEVEL_HINT::NetworkConnectivityLevelHintConstrainedInternetAccess)
+        {
+            OutputDebugStringA("GetNetworkConnectivityHint()\n");
+            SendTelemetryInternal();
+        }
+        else
+        {
+            // The vm is not being reused and we should send when internet access is available
+            NotifyNetworkConnectivityHintChange([](void* context, NL_NETWORK_CONNECTIVITY_HINT connectivityHint)
                 {
-                    atgTelemetry->SendTelemetryInternal();
-                }
-            }, this, true, &m_notificationChangedHandle);
+                    OutputDebugStringA("NotifyNetworkConnectivityHintChange()\n");
+                    auto atgTelemetry = static_cast<ATGTelemetry*>(context);
+                    if (connectivityHint.ConnectivityLevel == NL_NETWORK_CONNECTIVITY_LEVEL_HINT::NetworkConnectivityLevelHintInternetAccess
+                        || connectivityHint.ConnectivityLevel == NL_NETWORK_CONNECTIVITY_LEVEL_HINT::NetworkConnectivityLevelHintConstrainedInternetAccess)
+                    {
+                        atgTelemetry->SendTelemetryInternal();
+                    }
+                }, this, true, &m_notificationChangedHandle);
+        }
 #else
         SendTelemetryInternal();
 #endif
@@ -89,7 +142,6 @@ private:
 
         if (!sent)
         {
-            sent = true;
             // Ensure the HTTP library is initialized
             if (FAILED(HCInitialize(nullptr)))
             {
@@ -97,11 +149,9 @@ private:
             }
             m_bHCInitialized = true;
 
-            auto *async = new XAsyncBlock{};
-            async->queue = nullptr;
-
             CollectBaseTelemetry();
-            UploadTelemetry(async);
+            UploadTelemetry();
+            sent = true;
         }
     }
 
@@ -110,7 +160,7 @@ private:
         GUID id = {};
         char buf[64] = {};
 
-        CoCreateGuid(&id);
+        std::ignore = CoCreateGuid(&id);
 
         sprintf_s(buf, "%08lX-%04hX-%04hX-%02hhX%02hhX-%02hhX%02hhX%02hhX%02hhX%02hhX%02hhX",
             id.Data1, id.Data2, id.Data3,
@@ -122,7 +172,6 @@ private:
 
     std::string GetTelemetryId()
     {
-        using namespace std;
         const int BUFSIZE = 64;
         char buf[BUFSIZE] = {};
 
@@ -134,16 +183,15 @@ private:
         clientId.erase(std::remove(clientId.begin(), clientId.end(), '.'), clientId.end());
         return clientId;
 #else
-        wchar_t *folderPath;
-        string telemetryId;
+        wchar_t* folderPath;
+        std::string telemetryId;
 
         if (SUCCEEDED(SHGetKnownFolderPath(FOLDERID_RoamingAppData, KF_FLAG_NO_PACKAGE_REDIRECTION, nullptr, &folderPath)))
         {
-
             // Path information
-            wstring path(folderPath);
+            std::wstring path(folderPath);
             path += L"\\Microsoft\\ATGSamples\\";
-            wstring fullPath = path + L"telemetry.txt";
+            std::wstring fullPath = path + L"telemetry.txt";
 
             bool createFile = CreateDirectoryW(path.c_str(), nullptr);
 
@@ -163,8 +211,8 @@ private:
             {
                 if (createFile)
                 {
-                    ofstream telFile;
-                    telFile.open(fullPath, ios::out | ios::trunc);
+                    std::ofstream telFile;
+                    telFile.open(fullPath, std::ios::out | std::ios::trunc);
                     telemetryId = NewGuid();
 
                     telFile << telemetryId;
@@ -173,7 +221,7 @@ private:
                 }
                 else
                 {
-                    ifstream telFile;
+                    std::ifstream telFile;
                     telFile.open(fullPath);
                     if (telFile.good())
                     {
@@ -199,240 +247,149 @@ private:
     // Collect the base telemetry for the system
     void CollectBaseTelemetry()
     {
-        const int BUFSIZE = 256;
+        constexpr int BUFSIZE = 256;
         size_t ignore;
         char buf[BUFSIZE] = {};
-
-        m_telemetry = std::make_unique<TelemetryData>();
-
-        TelemetryData &data = *m_telemetry;
 
         // OS and client information
         {
             auto info = XSystemGetAnalyticsInfo();
 
-            data.osVersion = XVersionToString(info.osVersion);
-            data.hostingOsVersion = XVersionToString(info.hostingOsVersion);
-            data.family = info.family;
-            data.form = info.form;
+            m_data.osVersion = XVersionToString(info.osVersion);
+            m_data.hostingOsVersion = XVersionToString(info.hostingOsVersion);
+            m_data.family = info.family;
+            m_data.form = info.form;
 
-            data.clientId = GetTelemetryId();
+            m_data.clientId = GetTelemetryId();
 
-            data.sandbox.reserve(XSystemXboxLiveSandboxIdMaxBytes);
             XSystemGetXboxLiveSandboxId(XSystemXboxLiveSandboxIdMaxBytes, buf, &ignore);
-            data.sandbox = buf;
+            m_data.sandbox = buf;
         }
 
         // Sample information
         {
             uint32_t titleId = 0;
             XGameGetXboxTitleId(&titleId);
-            data.titleId = ToHexString(titleId);
+            m_data.titleId = ToHexString(titleId);
 
             wchar_t exePath[MAX_PATH + 1] = {};
 
             if (!GetModuleFileNameW(nullptr, exePath, MAX_PATH))
             {
-                data.exeName = "Unknown";
+                m_data.exeName = "Unknown";
             }
             else
             {
                 auto path = std::wstring(exePath);
                 auto off = path.find_last_of(L"\\");
                 auto exeOnly = path.substr(off + 1);
-                data.exeName = DX::WideToUtf8(exeOnly);
+                m_data.exeName = DX::WideToUtf8(exeOnly);
             }
         }
 
         // This run information
-        data.sessionId = NewGuid();
-
+        m_data.sessionId = NewGuid();
     }
 
-    void UploadTelemetry(XAsyncBlock *async)
+    void UploadTelemetry()
     {
-        if (m_authToken.length() == 0)
-        {
-            AuthPlayfab(async);
-            return;
-        }
+        AsyncUniquePtr async = CreateAsync();
+        AuthPlayfab();
 
-        async->callback = [](XAsyncBlock *async)
-        {
-            HCCallHandle httpCall = static_cast<HCCallHandle>(async->context);
-            auto response = PlayFabResponse::FromCall(httpCall);
-            HCHttpCallCloseHandle(httpCall);
-            delete async;
-        };
-
-
-        std::string payload = CreateEventPayload(*m_telemetry);
+        std::string payload = CreateEventPayload();
 
         auto httpCall = CreateEventRequest(m_authToken, payload);
-
         async->context = httpCall;
-        if (FAILED(HCHttpCallPerformAsync(httpCall, async)))
+
+        if (SUCCEEDED(HCHttpCallPerformAsync(httpCall, async.get())))
         {
-            delete async;
+            XAsyncGetStatus(async.get(), true);
         }
+
+        HCHttpCallCloseHandle(httpCall);
     }
 
-    void AuthPlayfab(XAsyncBlock *async)
+    void AuthPlayfab()
     {
         struct AuthContext
         {
-            ATGTelemetry *_this;
+            ATGTelemetry* _this;
             HCCallHandle httpCallHandle;
         };
 
-        async->callback = [](XAsyncBlock *async)
+        AsyncUniquePtr async = CreateAsync();
+        async->callback = [](XAsyncBlock* async)
         {
-            auto ctx = static_cast<AuthContext *>(async->context);
+            auto ctx = static_cast<AuthContext*>(async->context);
+            uint32_t status;
 
             HCCallHandle httpCall = ctx->httpCallHandle;
 
-            auto response = PlayFabResponse::FromCall(httpCall);
+            HCHttpCallResponseGetStatusCode(httpCall, &status);
+            if (status < 200 || status >= 300) { return; }
 
-            HCHttpCallCloseHandle(httpCall);
+            const char* responseString;
+            HCHttpCallResponseGetResponseString(httpCall, &responseString);
 
-            if (response.IsSuccessStatus())
-            {
-                auto respJs = response.AsJson();
-                ctx->_this->m_authToken = respJs["data"]["EntityToken"]["EntityToken"].get<std::string>();
-                ctx->_this->UploadTelemetry(async);
-            }
-            else
-            {
-                delete async;
-            }
+            json respJs = json::parse(responseString);
+            ctx->_this->m_authToken = respJs["data"]["EntityToken"]["EntityToken"].get<std::string>();
         };
 
-        HCCallHandle httpCall = CreateAuthRequest(m_telemetry->clientId);
-        auto ctx = new AuthContext({ this, httpCall });
+        HCCallHandle httpCall = CreateAuthRequest();
+        auto ctx = new AuthContext{ this, httpCall };
         async->context = ctx;
 
-        if (FAILED(HCHttpCallPerformAsync(httpCall, async)))
+        if (SUCCEEDED(HCHttpCallPerformAsync(httpCall, async.get())))
         {
-            delete async;
+            XAsyncGetStatus(async.get(), true);
         }
+
+        HCHttpCallCloseHandle(httpCall);
     }
 
 private:
-    // Base telemetry data to capture and serialize
-    struct TelemetryData
-    {
-        std::string osVersion;
-        std::string hostingOsVersion;
-        std::string family;
-        std::string form;
-        std::string clientId;
-        std::string sandbox;
-        std::string titleId;
-        std::string exeName;
-        std::string sessionId;
-
-        json ToJson() const
-        {
-            json js;
-            js["osVersion"] = osVersion;
-            js["hostingOsVersion"] = hostingOsVersion;
-            js["family"] = family;
-            js["form"] = form;
-            js["clientId"] = clientId;
-            js["sandboxId"] = sandbox;
-            js["titleId"] = titleId;
-            js["exeName"] = exeName;
-            js["sessionId"] = sessionId;
-
-            return js;
-        }
-    };
-
-private:
-    // HTTP response from a PlayFab API request
-    class PlayFabResponse
-    {
-    public:
-        static PlayFabResponse FromCall(HCCallHandle httpCall)
-        {
-            PlayFabResponse response;
-
-            HCHttpCallResponseGetStatusCode(httpCall, &response.status);
-
-            const char *responseString;
-            HCHttpCallResponseGetResponseString(httpCall, &responseString);
-            response.dataString = responseString;
-
-            return response;
-        }
-
-    public:
-        const std::string & AsString() const
-        {
-            return dataString;
-        }
-
-        json AsJson() const
-        {
-            return json::parse(dataString);
-        }
-
-        bool IsSuccessStatus() { return status >= 200 && status < 300; }
-
-    private:
-        PlayFabResponse() = default;
-
-        uint32_t status;
-        std::string dataString;
-    };
-
-private:
-    static std::string CreateAuthPayload(const std::string& clientId)
-    {
-        json payload;
-
-        payload["CreateAccount"] = true;
-        payload["CustomId"] = clientId;
-        payload["TitleId"] = "3436";
-
-        return payload.dump();
-    }
-
-    static HCCallHandle CreateAuthRequest(const std::string& clientId)
+#pragma region Utility Methods
+    HCCallHandle CreateAuthRequest()
     {
         HCCallHandle httpCall;
+        json payload
+        {
+            { "CreateAccount", true },
+            { "CustomId", m_data.clientId },
+            { "TitleId", "3436" }
+        };
+
         HCHttpCallCreate(&httpCall);
         HCHttpCallRequestSetUrl(httpCall, "POST", LOGIN_URL);
-
-        std::string payload = CreateAuthPayload(clientId);
-
-        HCHttpCallRequestSetRequestBodyString(httpCall, payload.c_str());
+        HCHttpCallRequestSetRequestBodyString(httpCall, payload.dump().c_str());
         HCHttpCallRequestSetHeader(httpCall, "Content-Type", "application/json", true);
 
         return httpCall;
     }
 
-    static std::string CreateEventPayload(const TelemetryData& data)
+    std::string CreateEventPayload()
     {
-        json ev;
-        ev["EventNamespace"] = "com.playfab.events.samples";
-        ev["Name"] = "launch";
-        ev["Payload"] = data.ToJson();
+        json evJS
+        {
+            {
+                "Events", json::array({
+                {
+                    { "EventNamespace", "com.playfab.events.samples" },
+                    { "Name", "launch" },
+                    { "Payload", m_data.ToJson() }
+                }})
+            }
+        };
 
-        json evJs;
-        evJs["Events"] = json::array({ ev });
-
-        return evJs.dump();
+        return evJS.dump();
     }
 
-    static HCCallHandle CreateEventRequest(const std::string &authToken, const std::string &payload)
+    static HCCallHandle CreateEventRequest(const std::string& authToken, const std::string& payload)
     {
         HCCallHandle httpCall;
 
         HCHttpCallCreate(&httpCall);
-
         HCHttpCallRequestSetUrl(httpCall, "POST", EVENT_URL);
-
         HCHttpCallRequestSetRequestBodyString(httpCall, payload.c_str());
         HCHttpCallRequestSetHeader(httpCall, "Content-Type", "application/json", true);
         HCHttpCallRequestSetHeader(httpCall, "X-EntityToken", authToken.c_str(), false);
@@ -453,34 +410,35 @@ private:
         ss << std::hex << value;
         return ss.str();
     }
+#pragma endregion
 
 private:
+    bool m_bHCInitialized;
     std::string m_authToken;
-
-    std::unique_ptr<TelemetryData> m_telemetry;
+    TelemetryData m_data;
 
 #if _GAMING_XBOX
-    HANDLE m_notificationChangedHandle = nullptr;
+    HANDLE m_notificationChangedHandle;
 #endif
 };
 
-static std::unique_ptr<ATGTelemetry> s_atgTelem;
 void ATG::SendLaunchTelemetry()
 {
-    if (!s_atgTelem)
+    AsyncUniquePtr async = CreateAsync();
+    async->callback = [](XAsyncBlock* ab)
     {
-        s_atgTelem = std::make_unique<ATGTelemetry>();
-    }
+        delete ab;
+    };
 
-    s_atgTelem->SendTelemetry();
-}
+    if (SUCCEEDED(XAsyncRun(async.get(), [](XAsyncBlock*) -> HRESULT
+        {
+            ATGTelemetry atgTelemetry;
+            atgTelemetry.SendTelemetry();
 
-void ATG::CleanupTelemetry()
-{
-    if (s_atgTelem)
+            return S_OK;
+        })))
     {
-        s_atgTelem->Cleanup();
+        async.release();
     }
-    s_atgTelem = nullptr;
 }
 #endif

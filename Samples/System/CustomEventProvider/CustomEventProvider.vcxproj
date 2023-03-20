@@ -344,7 +344,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config" />
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Kits\DirectXTK12\DirectXTK12_GXDK_2019.vcxproj">
@@ -362,15 +362,15 @@
     <ResourceCompile Include="etwproviderGenerated.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="CustomEventProvider_ja-jp.docx" />
-    <None Include="CustomEventProvider_ko-kr.docx" />
-    <None Include="CustomEventProvider_zh-cn.docx" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
     <None Include="etwprovider.man" />
     <None Include="etwproviderGeneratedTEMP.BIN">
       <DeploymentContent>false</DeploymentContent>
     </None>
     <None Include="etwproviderGenerated_MSG00001.bin" />
-    <None Include="ReadMe.docx" />
+    <None Include="readme.md" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="regions.xml" />
@@ -378,4 +378,16 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ItemGroup>
+    <None Include="media\image1.png" />
+    <None Include="media\image10.png" />
+    <None Include="media\image11.png" />
+    <None Include="media\image3.png" />
+    <None Include="media\image4.png" />
+    <None Include="media\image5.png" />
+    <None Include="media\image6.png" />
+    <None Include="media\image7.png" />
+    <None Include="media\image8.png" />
+    <None Include="media\image9.png" />
+  </ItemGroup>
 </Project>

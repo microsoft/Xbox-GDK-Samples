@@ -48,6 +48,7 @@ Sample::Sample() noexcept(false) :
     m_deviceResources = std::make_unique<DX::DeviceResources>(
         DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_D32_FLOAT, 2,
         DX::DeviceResources::c_Enable4K_UHD | DX::DeviceResources::c_EnableQHD);
+    m_deviceResources->SetClearColor(ATG::Colors::Background);
 
     DX::ThrowIfFailed(GameInputCreate(&m_gameInput));
 }

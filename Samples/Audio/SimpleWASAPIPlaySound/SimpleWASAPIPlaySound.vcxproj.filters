@@ -89,6 +89,6 @@
     <None Include="SimpleWASAPIPlaySound_ReadMe_zh-cn.docx" />
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config" />
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
 </Project>

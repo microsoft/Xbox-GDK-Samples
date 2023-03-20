@@ -41,6 +41,9 @@ namespace DX
         void WaitForGpu() noexcept;
         void WaitForOrigin();
 
+        // Direct3D Properties.
+        void SetClearColor(_In_reads_(4) const float* rgba) noexcept { memcpy(m_clearColor, rgba, sizeof(m_clearColor)); }
+
         // Device Accessors.
         RECT GetOutputSize() const noexcept { return m_outputSize; }
 
@@ -81,7 +84,7 @@ namespace DX
 
         // Direct3D objects.
         Microsoft::WRL::ComPtr<ID3D12Device8>               m_d3dDevice;
-        Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList5>  m_commandList;
+        Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList6>  m_commandList;
         Microsoft::WRL::ComPtr<ID3D12CommandQueue>          m_commandQueue;
         Microsoft::WRL::ComPtr<ID3D12CommandAllocator>      m_commandAllocators[MAX_BACK_BUFFER_COUNT];
 
@@ -106,6 +109,7 @@ namespace DX
         DXGI_FORMAT                                         m_backBufferFormat;
         DXGI_FORMAT                                         m_depthBufferFormat;
         UINT                                                m_backBufferCount;
+        float                                               m_clearColor[4];
 
         // Cached device properties.
         HWND                                                m_window;

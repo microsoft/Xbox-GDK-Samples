@@ -31,14 +31,25 @@
 #define DStorageQueueCrossPlatform  IDStorageQueueWin32
 #elif defined (_GAMING_XBOX_SCARLETT)
 #define DStorageFileCrossPlatform IDStorageFileX
-#define DStorageFactoryCrossPlatform IDStorageFactoryX
 #define DStorageStatusArrayCrossPlatform IDStorageStatusArrayX
+
+#if _GRDK_VER >= 0x55F0113F /* GDK Edition 220603 */
+#define DStorageFactoryCrossPlatform IDStorageFactoryX1
+#else   // GDK edition not at least 220603
+#define DStorageFactoryCrossPlatform IDStorageFactoryX
+#endif  // check GDK edition for which factory to use
+
+#if _GRDK_VER >= 0x585D073C /* GDK Edition 221000 */
+#define DStorageQueueCrossPlatform  IDStorageQueueX1
+#else   // GDK edition not at least 221000
 #define DStorageQueueCrossPlatform  IDStorageQueueX
+#endif  // check GDK edition for which queue to use
+
 #else
 #define DStorageFileCrossPlatform IDStorageFile
 #define DStorageFactoryCrossPlatform IDStorageFactory
 #define DStorageStatusArrayCrossPlatform IDStorageStatusArray
-#define DStorageQueueCrossPlatform  IDStorageQueue
+#define DStorageQueueCrossPlatform  IDStorageQueue1
 #endif
 
 inline HRESULT DStorageGetFactoryCrossPlatform(void** ppv) { return DStorageGetFactory(__uuidof(DStorageFactoryCrossPlatform), ppv); }

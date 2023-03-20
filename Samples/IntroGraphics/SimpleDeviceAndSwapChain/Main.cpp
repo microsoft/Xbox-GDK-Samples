@@ -79,7 +79,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
 
         // Create window
         HWND hwnd = CreateWindowExA(0, u8"SimpleDeviceAndSwapChainWindowClass", u8"SimpleDeviceAndSwapChain", WS_OVERLAPPEDWINDOW,
-            CW_USEDEFAULT, CW_USEDEFAULT, 1920, 1080, nullptr, nullptr, hInstance,
+            CW_USEDEFAULT, CW_USEDEFAULT, 1920, 1080,
+            nullptr, nullptr, hInstance,
             nullptr);
         if (!hwnd)
             return 1;

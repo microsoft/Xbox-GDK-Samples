@@ -20,7 +20,10 @@ using namespace DirectX;
 using Microsoft::WRL::ComPtr;
 
 #define ENABLE_4K
-#define ENABLE_AS
+//#define ENABLE_GS
+//#define ENABLE_DS_HS
+//#define ENABLE_DXR
+//#define ENABLE_AS
 
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wcovered-switch-default"
@@ -168,7 +171,7 @@ void Sample::Clear()
 
     CD3DX12_CPU_DESCRIPTOR_HANDLE dsvDescriptor(m_dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart());
     m_commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
-    m_commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
+    m_commandList->ClearRenderTargetView(rtvDescriptor, ATG::ColorsLinear::Background, 0, nullptr);
     m_commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, c_depthClearValue, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
@@ -260,12 +263,25 @@ void Sample::CreateDevice()
     params.GraphicsScratchMemorySizeBytes = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
     params.ComputeScratchMemorySizeBytes = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
 
+#ifndef ENABLE_GS
+    // When not using the Geometry Shader stage, setting this value to TRUE saves some title memory.
+    params.DisableGeometryShaderAllocations = TRUE;
+#endif
+
+#ifndef ENABLE_DS_HS
+    // When not using Domain or Hull Shade stage, setting this value to TRUE saves some title memory.
+    params.DisableTessellationShaderAllocations = TRUE;
+#endif
+
 #ifdef _GAMING_XBOX_SCARLETT
 
-#if (_GXDK_VER >= 0x4A6110CC /* GDK Edition 201100 */)
+#ifndef ENABLE_DXR
+    // When not using DirectX Raytracing (DXR), setting this value to TRUE saves some title memory.
+    params.DisableDXR = TRUE;
+#endif
+
     // Additional creation parameters for Xbox Series X|S.
     params.CreateDeviceFlags = D3D12XBOX_CREATE_DEVICE_FLAG_NONE;
-#endif
 
 #if defined(ENABLE_AS) && (_GXDK_VER >= 0x585D070E /* GDK Edition 221000 */)
     // Use of Amplification Shaders (AS) requires explicit enabling on Xbox Series X|S
@@ -407,8 +423,7 @@ void Sample::CreateResources()
     );
     swapChainBufferDesc.Flags |= D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET;
 
-    D3D12_CLEAR_VALUE swapChainOptimizedClearValue = {};
-    swapChainOptimizedClearValue.Format = c_backBufferFormat;
+    const CD3DX12_CLEAR_VALUE swapChainOptimizedClearValue(c_backBufferFormat, ATG::ColorsLinear::Background.f);
 
     for (UINT n = 0; n < c_swapBufferCount; n++)
     {
@@ -452,7 +467,7 @@ void Sample::CreateResources()
     );
     depthStencilDesc.Flags |= D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
 
-    CD3DX12_CLEAR_VALUE depthOptimizedClearValue(c_depthBufferFormat, c_depthClearValue, 0);
+    const CD3DX12_CLEAR_VALUE depthOptimizedClearValue(c_depthBufferFormat, c_depthClearValue, 0u);
 
     DX::ThrowIfFailed(m_d3dDevice->CreateCommittedResource(
         &depthHeapProperties,

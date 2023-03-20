@@ -462,7 +462,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config">
+    <MGCCompile Include="MicrosoftGameConfig.mgc">
       <SubType>Designer</SubType>
     </MGCCompile>
   </ItemGroup>
@@ -622,10 +622,10 @@
     <None Include="Assets\Fonts\segoeui_72pt_sharp_96.spritefont">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="Readme.docx" />
-    <None Include="UserManagement_ja-jp.docx" />
-    <None Include="UserManagement_ko-kr.docx" />
-    <None Include="UserManagement_zh-cn.docx" />
+    <None Include="readme.md" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\..\..\Kits\OpenSource\FreeType2\lib\x64\ReleaseStatic\freetype.lib">
@@ -740,4 +740,10 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ItemGroup>
+    <None Include="media\image1.png" />
+    <None Include="media\image3.png" />
+    <None Include="media\image4.png" />
+    <None Include="media\image5.png" />
+  </ItemGroup>
 </Project>

@@ -4,9 +4,9 @@
     <Filter Include="Common">
       <UniqueIdentifier>b0cbf1b8-1890-4b2c-a1e3-061958120915</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assets">
+    <Filter Include="Resource Files">
       <UniqueIdentifier>3f88ec31-e95f-4981-b455-2982b09e69f3</UniqueIdentifier>
-      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+      <Extensions>rc;ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="ATG Tool Kit">
       <UniqueIdentifier>09bc3d16-d611-4a50-acff-f305c4904ab3</UniqueIdentifier>
@@ -56,36 +56,53 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="VertexShader.hlsl">
-      <Filter>Assets</Filter>
+      <Filter>Resource Files</Filter>
     </FxCompile>
     <FxCompile Include="PixelShader.hlsl">
-      <Filter>Assets</Filter>
+      <Filter>Resource Files</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="xbox.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="settings.manifest">
+      <Filter>Resource Files</Filter>
+    </Manifest>
   </ItemGroup>
   <ItemGroup>
     <None Include="Readme.docx" />
     <None Include="SimpleTriangleDesktop_ReadMe_ja-jp.docx" />
     <None Include="SimpleTriangleDesktop_ReadMe_ko-kr.docx" />
     <None Include="SimpleTriangleDesktop_ReadMe_zh-cn.docx" />
+    <None Include="..\..\NuGet.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config" />
+    <CustomBuild Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Assets\LargeLogo.png">
-      <Filter>Assets</Filter>
+      <Filter>Resource Files</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="Assets\Logo.png">
-      <Filter>Assets</Filter>
+      <Filter>Resource Files</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="Assets\SmallLogo.png">
-      <Filter>Assets</Filter>
+      <Filter>Resource Files</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="Assets\SplashScreen.png">
-      <Filter>Assets</Filter>
+      <Filter>Resource Files</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="Assets\StoreLogo.png">
-      <Filter>Assets</Filter>
+      <Filter>Resource Files</Filter>
     </CopyFileToFolders>
   </ItemGroup>
 </Project>

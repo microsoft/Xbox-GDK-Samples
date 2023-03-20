@@ -126,7 +126,7 @@ void Sample::Render()
         m_radius * cosf(m_phi),
         m_radius * sinf(m_phi) * sinf(m_theta),
         0);
-    auto viewProj = XMMatrixMultiply(XMMatrixLookAtLH(pos, g_XMZero, g_upVec), m_proj);
+    auto viewProj = XMMatrixMultiply(XMMatrixLookAtLH(pos, g_XMZero, g_XMIdentityR1), m_proj);
 
     // Prepare the command list to render a new frame.
     m_deviceResources->Prepare();

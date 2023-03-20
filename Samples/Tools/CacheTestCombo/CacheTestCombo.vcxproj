@@ -343,7 +343,7 @@
     <ClCompile Include="PerfRun.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.Config">
+    <MGCCompile Include="MicrosoftGameConfig.mgc">
       <SubType>Designer</SubType>
     </MGCCompile>
   </ItemGroup>
@@ -372,7 +372,7 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">true</DeploymentContent>
     </None>
-    <None Include="Readme.docx" />
+    <None Include="readme.md" />
     <None Include="Scripts\Desktop.PostBuild.bat" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

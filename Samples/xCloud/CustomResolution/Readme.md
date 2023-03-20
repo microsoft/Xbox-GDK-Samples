@@ -17,7 +17,8 @@ description: "This sample demonstrates how to change rendering resolution and se
 
 # CustomResolution
 
-For more information see this [Word document](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/xCloud/CustomResolution/ReadMe.docx).
+For more information see: 
+- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/xCloud/CustomResolution/readme_en-us.md)
 
 ## Privacy statement
 

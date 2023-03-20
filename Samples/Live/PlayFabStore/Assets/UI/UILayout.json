@@ -1,0 +1,474 @@
+﻿{
+  "$schema": "https://atgsamplessa.blob.core.windows.net/uitkschema/latest/layout.schema.json",
+  "definitions": {
+    "#fullscreen": [ 1920, 1080 ]
+  },
+  "includes": [
+    "Assets/defs.json",
+    "Assets/styles.json"
+  ],
+  "layout": 
+  {
+    "id": "MasterPanel",
+    "classId": "Panel",
+    "position": [ 0, 0 ],
+    "size": [ 1920, 1280 ],
+    "positioningAnchor": [ "left", "top" ],
+    "sizingAnchor": [ "left", "top" ],
+    "styleId": "BasicPanelStyle",
+    "childElements": [
+      {
+        "id": "ATGLogo",
+        "classId": "Image",
+        "styleId": "LogoStyle",
+        "position": [ 50, 65 ],
+        "size": [ 110, 120 ]
+      },
+      {
+        "id": "PlayfabLogo",
+        "classId": "Image",
+        "styleId": "PlayfabLogoStyle",
+        "position": [ 50, 900 ],
+        "size": [ 450, 140 ]
+      },
+      {
+        "id": "SampleTitle",
+        "classId": "StaticText",
+        "size": [ 600, 50 ],
+        "position": [ 120, 80 ],
+        "verticalAlign": "middle",
+        "horizontalAlign": "left",
+        "styleId": "Bold36TextStyle",
+        "text": "PlayFab Store Sample"
+      },
+      {
+        "id": "OrangePanel",
+        "classId": "Panel",
+        "position": [ 0, 0 ],
+        "size": [ 40, 1280 ],
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "styleId": "PlayfabPanel"
+      },
+      {
+        "id": "ContentPanel",
+        "classId": "Panel",
+        "position": [ 0, 0 ],
+        "size": [ 1920, 1280 ],
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "styleId": "BasicPanelStyle",
+        "childElements": [
+          {
+            "id": "ItemPanel",
+            "classId": "Panel",
+            "position": [ 825, 225 ],
+            "size": [ 250, 250 ],
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "styleId": "ItemPanelStyle",
+            "childElements": [
+              {
+                "id": "SelectedItemImage",
+                "classId": "Image",
+                "styleId": "GoldSImageStyle",
+                "position": [ 0, 0 ],
+                "size": [ 250, 250 ]
+              },
+              {
+                "id": "SelectedItemGold",
+                "classId": "StaticText",
+                "size": [ 100, 100 ],
+                "position": [ 0, 0 ],
+                "verticalAlign": "middle",
+                "horizontalAlign": "center",
+                "styleId": "BoldTextStyle",
+                "text": "$0"
+              }
+            ]
+          },
+
+          {
+            "id": "LTButton",
+            "classId": "Button",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 120, 40 ],
+            "position": [ 810, 865 ],
+            "styleId": "BasicPanelStyle",
+            "focusable": false,
+            "disabledStyleId": "FaceButtonDisabledButtonStyle",
+            "focusedStyleId": "FaceButtonFocusedButtonStyle",
+            "hoveredStyleId": "FaceButtonHoveredButtonStyle",
+            "pressedStyleId": "FaceButtonPressedButtonStyle"
+          },
+
+          {
+            "id": "RTButton",
+            "classId": "Button",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 120, 40 ],
+            "position": [ 960, 865 ],
+            "styleId": "BasicPanelStyle",
+            "focusable": false,
+            "disabledStyleId": "FaceButtonDisabledButtonStyle",
+            "focusedStyleId": "FaceButtonFocusedButtonStyle",
+            "hoveredStyleId": "FaceButtonHoveredButtonStyle",
+            "pressedStyleId": "FaceButtonPressedButtonStyle"
+          },
+
+          {
+            "id": "LTRT",
+            "classId": "StaticText",
+            "size": [ 150, 50 ],
+            "position": [ 820, 860 ],
+            "verticalAlign": "middle",
+            "horizontalAlign": "center",
+            "styleId": "SmallLegendTextStyle",
+            "isLegend": true,
+            "text": "[LT] Shoot       [RT] Drink"
+          },
+
+          {
+            "id": "AButtonText",
+            "classId": "StaticText",
+            "size": [ 100, 50 ],
+            "position": [ 300, 860 ],
+            "verticalAlign": "middle",
+            "horizontalAlign": "left",
+            "styleId": "SmallLegendTextStyle",
+            "isLegend": true,
+            "text": "[A] Purchase"
+          },
+
+          {
+            "id": "ViewButton",
+            "classId": "Button",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 310, 40 ],
+            "position": [ 1290, 865 ],
+            "styleId": "BasicPanelStyle",
+            "focusable": false,
+            "disabledStyleId": "FaceButtonDisabledButtonStyle",
+            "focusedStyleId": "FaceButtonFocusedButtonStyle",
+            "hoveredStyleId": "FaceButtonHoveredButtonStyle",
+            "pressedStyleId": "FaceButtonPressedButtonStyle"
+          },
+
+          {
+            "id": "ViewButtonText",
+            "classId": "StaticText",
+            "size": [ 100, 50 ],
+            "position": [ 1300, 860 ],
+            "verticalAlign": "middle",
+            "horizontalAlign": "left",
+            "styleId": "SmallLegendTextStyle",
+            "isLegend": true,
+            "text": "[VIEW] Toggle debug window"
+          },
+
+          {
+            "id": "PotionPanel",
+            "classId": "Panel",
+            "position": [ 955, 750 ],
+            "size": [ 140, 100 ],
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "styleId": "ItemPanelStyle",
+            "childElements": [
+              {
+                "id": "Potion",
+                "classId": "StaticText",
+                "size": [ 140, 25 ],
+                "position": [ 0, 0 ],
+                "styleId": "BoldTextStyle",
+                "text": "POTION"
+              },
+
+              {
+                "id": "PotionBalance",
+                "classId": "StaticText",
+                "size": [ 140, 25 ],
+                "position": [ 0, 30 ],
+                "styleId": "Bold36TextStyle",
+                "text": "0"
+              }
+            ]
+          },
+
+          {
+            "id": "ShieldPanel",
+            "classId": "Panel",
+            "position": [ 955, 510 ],
+            "size": [ 140, 100 ],
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "styleId": "ItemPanelStyle",
+            "childElements": [
+              {
+                "id": "Shield",
+                "classId": "StaticText",
+                "size": [ 140, 25 ],
+                "position": [ 0, 0 ],
+                "styleId": "BoldTextStyle",
+                "text": "SHIELD"
+              },
+
+              {
+                "id": "ShieldBalance",
+                "classId": "StaticText",
+                "size": [ 140, 25 ],
+                "position": [ 0, 30 ],
+                "styleId": "Bold36TextStyle",
+                "text": "0"
+              }
+            ]
+          },
+
+          {
+            "id": "GemPanel",
+            "classId": "Panel",
+            "position": [ 800, 510 ],
+            "size": [ 140, 100 ],
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "styleId": "ItemPanelStyle",
+            "childElements": [
+              {
+                "id": "Gem",
+                "classId": "StaticText",
+                "size": [ 140, 25 ],
+                "position": [ 0, 0 ],
+                "styleId": "BoldTextStyle",
+                "text": "GEM"
+              },
+
+              {
+                "id": "GemBalance",
+                "classId": "StaticText",
+                "size": [ 140, 25 ],
+                "position": [ 0, 30 ],
+                "styleId": "Bold36TextStyle",
+                "text": "0"
+              }
+            ]
+          },
+
+          {
+            "id": "BowPanel",
+            "classId": "Panel",
+            "position": [ 800, 630 ],
+            "size": [ 140, 100 ],
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "styleId": "ItemPanelStyle",
+            "childElements": [
+              {
+                "id": "Bow",
+                "classId": "StaticText",
+                "size": [ 140, 25 ],
+                "position": [ 0, 0 ],
+                "styleId": "BoldTextStyle",
+                "text": "BOW"
+              },
+
+              {
+                "id": "BowBalance",
+                "classId": "StaticText",
+                "size": [ 140, 25 ],
+                "position": [ 0, 30 ],
+                "styleId": "Bold36TextStyle",
+                "text": "0"
+              }
+            ]
+          },
+
+          {
+            "id": "ArrowPanel",
+            "classId": "Panel",
+            "position": [ 800, 750 ],
+            "size": [ 140, 100 ],
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "styleId": "ItemPanelStyle",
+            "childElements": [
+              {
+                "id": "Arrow",
+                "classId": "StaticText",
+                "size": [ 140, 25 ],
+                "position": [ 0, 0 ],
+                "styleId": "BoldTextStyle",
+                "text": "ARROW"
+              },
+
+              {
+                "id": "ArrowBalance",
+                "classId": "StaticText",
+                "size": [ 140, 25 ],
+                "position": [ 0, 30 ],
+                "styleId": "Bold36TextStyle",
+                "text": "0"
+              }
+            ]
+          },
+
+          {
+            "id": "SwordPanel",
+            "classId": "Panel",
+            "position": [ 955, 630 ],
+            "size": [ 140, 100 ],
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "styleId": "ItemPanelStyle",
+            "childElements": [
+              {
+                "id": "Sword",
+                "classId": "StaticText",
+                "size": [ 140, 25 ],
+                "position": [ 0, 0 ],
+                "styleId": "BoldTextStyle",
+                "text": "SWORD"
+              },
+
+              {
+                "id": "SwordBalance",
+                "classId": "StaticText",
+                "size": [ 140, 25 ],
+                "position": [ 0, 30 ],
+                "styleId": "Bold36TextStyle",
+                "text": "0"
+              }
+            ]
+          },
+
+          {
+            "id": "GoldPanel",
+            "classId": "Panel",
+            "position": [ 1300, 750 ],
+            "size": [ 300, 40 ],
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "styleId": "ItemPanelStyleDark",
+            "childElements": [
+              {
+                "id": "Gold",
+                "classId": "StaticText",
+                "size": [ 300, 30 ],
+                "position": [ 0, 0 ],
+                "styleId": "BoldTextCenterStyle",
+                "text": "BALANCE"
+              }
+            ]
+          },
+
+          {
+            "id": "GoldBalancePanel",
+            "classId": "Panel",
+            "position": [ 1300, 790 ],
+            "size": [ 300, 40 ],
+            "positioningAnchor": [ "canter", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "styleId": "ItemPanelStyle",
+            "childElements": [
+              {
+                "id": "GoldBalance",
+                "classId": "StaticText",
+                "size": [ 300, 30 ],
+                "position": [ 0, 0 ],
+                "styleId": "BoldTextCenterStyle",
+                "text": "0 Gold"
+              }
+            ]
+          },
+
+          {
+            "classId": "Panel",
+            "id": "ConsolePanel",
+            "size": [ 1800, 800 ],
+            "position": [ 60, 100 ],
+            "visible": true,
+            "style": {
+              "classId": "SpriteStyle",
+              "color": [ 0, 0, 0, 0.4 ],
+              "colorUsage": "override"
+            },
+            "subElements": [
+              {
+                "id": "ConsoleWindow",
+                "prefabRef": "#console_prefab"
+              }
+            ]
+          },
+
+          {
+            "id": "MenuLeft",
+            "classId": "StaticText",
+            "size": [ 400, 200 ],
+            "position": [ 300, 160 ],
+            "styleId": "BoldTextStyle",
+            "text": "Microsoft Store Items"
+          },
+
+          {
+            "classId": "VerticalStackPanel",
+            "id": "ItemMenu",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 300, 200 ],
+            "sizingAnchor": [ "left", "top" ],
+            "styleId": "BasicButtonStyle",
+            "stackingOrientation": "down",
+            "stackElementPadding": 0.0,
+            "visible": false
+          },
+
+          {
+            "id": "MenuRight",
+            "classId": "StaticText",
+            "size": [ 400, 100 ],
+            "position": [ 1300, 160 ],
+            "styleId": "BoldTextStyle",
+            "text": "PlayFab Items"
+          },
+
+          {
+            "classId": "VerticalStackPanel",
+            "id": "ItemMenuPF",
+            "position": [ 1300, 200 ],
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "styleId": "BasicButtonStyle",
+            "stackingOrientation": "down",
+            "stackElementPadding": 0.0,
+            "visible": false
+          },
+
+          {
+            "classId": "VerticalStackPanel",
+            "id": "ActionMenu",
+            "position": [ 300, 440 ],
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "styleId": "BasicButtonStyle",
+            "stackingOrientation": "down",
+            "stackElementPadding": 0.0,
+            "visible": false
+          },
+
+          {
+            "id": "StatusText",
+            "classId": "StaticText",
+            "size": [ 400, 200 ],
+            "position": [ 300, 700 ],
+            "verticalAlign": "middle",
+            "horizontalAlign": "left",
+            "horzWrap": "wrapAtSpace",
+            "styleId": "StatusStyle",
+            "text": ""
+          }
+        ]
+      }
+    ]
+  }
+}

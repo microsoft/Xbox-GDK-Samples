@@ -60,17 +60,22 @@ private:
     // Sample code and data
     static const uint64_t c_ONE_MEG = 1024 * 1024;
     static const uint64_t c_NUM_MEGS_IN_GIG = 1024;
-    static const uint32_t c_dataBlockSize = c_NUM_MEGS_IN_GIG * c_ONE_MEG;		// The data file is created in block, this is due to the uint32_t vs. uint64_t max value and available memory
-    static const uint64_t c_dataFileSize = c_NUM_MEGS_IN_GIG * c_ONE_MEG * 5;	// this size file should give a decent amount of space for random loading. Couldn't hurt to increase this file size to increase the amount of seeking
-    static const uint64_t c_zipFileSize = c_ONE_MEG * 10;                       // these are the requested size, it is still rounded up to c_dataBlockSize
+    static const uint32_t c_dataBlockSize = c_NUM_MEGS_IN_GIG * c_ONE_MEG;		    // The data file is created in block, this is due to the uint32_t vs. uint64_t max value and available memory
+    static const uint64_t c_dataFileSize = c_NUM_MEGS_IN_GIG * c_ONE_MEG * 5;	    // this size file should give a decent amount of space for random loading. Couldn't hurt to increase this file size to increase the amount of seeking
+    static const uint64_t c_zipFileSize = c_ONE_MEG * 10;                           // these are the requested size, it is still rounded up to c_dataBlockSize
+    static const uint64_t c_gDeflateChunkSize = 16 * c_ONE_MEG;                     // GDeflate is chunk based where each chunk can be decompressed in parallel
+    static const uint64_t c_gDeflateNumChunks = 300;                                // Size for each chunk and the number of chunks in the data file
+    static const uint64_t c_gDeflateFileSize = c_gDeflateChunkSize * c_gDeflateNumChunks;
 
     static const uint64_t c_realDataFileSize = (c_dataFileSize + (c_dataBlockSize - 1ULL)) & ~(c_dataBlockSize - 1ULL);		// round up to c_dataBlockSize
     static const std::wstring c_dataFileName;									// all the reads come from one data file
     static const std::wstring c_zipDataFileName;                                // all the zlib decompression reads come from one data file
+    static const std::wstring c_gDeflateDataFileName;                           // all the gdeflate decompression reads come from one data file
 
     std::thread* m_dstorageSampleExecution;											// all the sample code runs in it's own thread to allow the rendering to run flat out and not impact performance
     void DSTORAGESampleFunc();														// Thread procedure for the sample code
     void CreateDataFiles();														// Checks for the data file and creates it if necessary, adds cost for first run, but zero for later runs
+    void CreateGDeflateDataFile();
 
     void DisplayStatusLine(testStatus status, const wchar_t* sampleName, DirectX::XMFLOAT2& pos);
 
@@ -79,9 +84,11 @@ private:
     std::atomic<testStatus> m_xBoxDecompressionStatus;
     std::atomic<testStatus> m_xBoxInMemoryDecompressionStatus;
     std::atomic<testStatus> m_desktopCPUDecompressionStatus;
+    std::atomic<testStatus> m_desktopGPUDecompressionStatus;
     std::atomic<testStatus> m_multipleQueuesStatus;
     std::atomic<testStatus> m_statusBatchStatus;
-    std::atomic<testStatus> m_statusFenceStatus;
+    std::atomic<testStatus> m_fenceBatchStatus;
+    std::atomic<testStatus> m_completionEventStatus;
     std::atomic<testStatus> m_recommendedPatternStatus;
     std::atomic<testStatus> m_creatingDataFile;
 

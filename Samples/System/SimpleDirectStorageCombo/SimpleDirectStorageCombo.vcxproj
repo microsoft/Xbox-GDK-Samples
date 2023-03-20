@@ -88,7 +88,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
-    <Import Project="..\..\packages\Microsoft.Direct3D.DirectStorage.1.0.2\build\native\targets\Microsoft.Direct3D.DirectStorage.targets" Condition="Exists('..\..\packages\Microsoft.Direct3D.DirectStorage.1.0.2\build\native\targets\Microsoft.Direct3D.DirectStorage.targets')" />
+    <Import Project="..\..\packages\Microsoft.Direct3D.DirectStorage.1.1.1\build\native\targets\Microsoft.Direct3D.DirectStorage.targets" Condition="Exists('..\..\packages\Microsoft.Direct3D.DirectStorage.1.1.1\build\native\targets\Microsoft.Direct3D.DirectStorage.targets')" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'" Label="PropertySheets">
@@ -339,9 +339,13 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h" />
     <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\Json.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp" />
     <ClInclude Include="..\..\..\Kits\ATGTK\OSLockable.h" />
     <ClInclude Include="..\..\..\Kits\ATGTK\RDTSCPStopWatch.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\crc32.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\deflate.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\gzguts.h" />
@@ -359,14 +363,16 @@
     <ClInclude Include="DirectStorageWin32\dstorageerr_win32.h" />
     <ClInclude Include="DirectStorageWin32\dstorage_win32.h" />
     <ClInclude Include="SampleImplementations\Cancellation.h" />
+    <ClInclude Include="SampleImplementations\CompletionEvent.h" />
     <ClInclude Include="SampleImplementations\DesktopCPUDecompression.h" />
+    <ClInclude Include="SampleImplementations\DesktopGPUDecompression.h" />
     <ClInclude Include="SampleImplementations\XBoxInMemoryZLibDecompression.h" />
     <ClInclude Include="SampleImplementations\MultipleQueues.h" />
     <ClInclude Include="SampleImplementations\ImplementationBase.h" />
     <ClInclude Include="SampleImplementations\RecommendedPattern.h" />
     <ClInclude Include="SampleImplementations\SimpleLoad.h" />
     <ClInclude Include="SampleImplementations\StatusBatch.h" />
-    <ClInclude Include="SampleImplementations\StatusFence.h" />
+    <ClInclude Include="SampleImplementations\FenceBatch.h" />
     <ClInclude Include="SampleImplementations\XBoxZLibDecompression.h" />
     <ClInclude Include="SimpleDirectStorageCombo.h" />
     <ClInclude Include="pch.h" />
@@ -375,7 +381,9 @@
     <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp" />
     <ClCompile Include="..\..\..\Kits\ATGTK\RDTSCPStopwatch.cpp" />
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp" />
     <ClCompile Include="DirectStorageWin32\DirectStorageWin32WrapperFactory.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">NotUsing</PrecompiledHeader>
@@ -426,14 +434,16 @@
     </ClCompile>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="SampleImplementations\Cancellation.cpp" />
+    <ClCompile Include="SampleImplementations\CompletionEvent.cpp" />
     <ClCompile Include="SampleImplementations\DesktopCPUDecompression.cpp" />
+    <ClCompile Include="SampleImplementations\DesktopGPUDecompression.cpp" />
     <ClCompile Include="SampleImplementations\XBoxInMemoryZLibDecompression.cpp" />
     <ClCompile Include="SampleImplementations\MultipleQueues.cpp" />
     <ClCompile Include="SampleImplementations\ImplementationBase.cpp" />
     <ClCompile Include="SampleImplementations\RecommendedPattern.cpp" />
     <ClCompile Include="SampleImplementations\SimpleLoad.cpp" />
     <ClCompile Include="SampleImplementations\StatusBatch.cpp" />
-    <ClCompile Include="SampleImplementations\StatusFence.cpp" />
+    <ClCompile Include="SampleImplementations\FenceBatch.cpp" />
     <ClCompile Include="SampleImplementations\XBoxZLibDecompression.cpp" />
     <ClCompile Include="SimpleDirectStorageCombo.cpp" />
     <ClCompile Include="DeviceResources.cpp" />
@@ -447,7 +457,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <MGCCompile Include="MicrosoftGame.config">
+    <MGCCompile Include="MicrosoftGameConfig.mgc">
       <SubType>Designer</SubType>
     </MGCCompile>
   </ItemGroup>
@@ -506,10 +516,10 @@
     </None>
     <None Include="..\..\NuGet.config" />
     <None Include="packages.config" />
-    <None Include="Readme.docx" />
-    <None Include="Readme_ja-JP.docx" />
-    <None Include="Readme_ko-KR.docx" />
-    <None Include="Readme_zh-CN.docx" />
+    <None Include="readme.md" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\..\..\Kits\OpenSource\zlib\lib\Debug\zlibstatic.lib">
@@ -528,6 +538,9 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Microsoft.Direct3D.DirectStorage.1.0.2\build\native\targets\Microsoft.Direct3D.DirectStorage.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Direct3D.DirectStorage.1.0.2\build\native\targets\Microsoft.Direct3D.DirectStorage.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.Direct3D.DirectStorage.1.1.1\build\native\targets\Microsoft.Direct3D.DirectStorage.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Direct3D.DirectStorage.1.1.1\build\native\targets\Microsoft.Direct3D.DirectStorage.targets'))" />
   </Target>
+  <ItemGroup>
+    <None Include="media\image1.png" />
+  </ItemGroup>
 </Project>

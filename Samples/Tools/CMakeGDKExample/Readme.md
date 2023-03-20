@@ -13,7 +13,11 @@ description: "This is an example of using the CMake cross-platform build system 
 
 # CMakeGDKExample
 
-For more information see this [Word document](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Tools/CMakeGDKExample/readme.docx).
+For more information see: 
+- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Tools/CMakeGDKExample/readme_en-us.md)
+- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Tools/CMakeGDKExample/readme_ja-jp.md)
+- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Tools/CMakeGDKExample/readme_ko-kr.md)
+- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Tools/CMakeGDKExample/readme_zh-cn.md)
 
 ## Privacy statement
 

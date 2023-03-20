@@ -1,0 +1,45 @@
+{
+  "includes": [
+    "Assets/defs.json",
+    "Assets/styles.json"
+  ],
+
+  "prefab": {
+	"classId": "Slider",
+	"positioningAnchor": [ "left", "top" ],
+	"sizingAnchor": [ "left", "top" ],
+	"sliderOrientation": "toptobottom",
+	"sliderType": "discrete",
+	"valueRange": [ 0.0, 1.0 ],
+	"initialValue": 0.0,
+	"numDiscreteSteps": 1,
+    "visible": false,
+	"style": {
+	  "classId": "NullStyle"
+	},
+	"backgroundSubElementId": "ScrollbarBackground",
+	"thumbButtonSubElementId": "ScrollbarSelector",
+	"subElements" : [
+	  {
+		"id": "ScrollbarBackground",
+		"classId": "Image",
+		"styleId": "ScrollbarBackgroundStyle",
+		"position": [ 10, 0 ],
+		"size": [ 30, 100 ]
+	  },
+	  {
+		"id": "ScrollbarSelector",
+		"classId": "Button",
+		"positioningAnchor": [ "left", "top" ],
+		"sizingAnchor": [ "left", "top" ],
+		"size": [ 50, 50 ],
+		"styleId": "BasicButtonStyle",
+		"focusable": true,
+		"focusedStyleId": "FocusedButtonStyle",
+		"hoveredStyleId": "HoveredButtonStyle",
+		"pressedStyleId": "PressedButtonStyle",
+		"disabledStyleId": "DisabledButtonStyle"
+	  }
+	]
+  }
+}

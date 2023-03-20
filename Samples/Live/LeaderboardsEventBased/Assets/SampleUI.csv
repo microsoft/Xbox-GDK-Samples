@@ -1,6 +1,6 @@
 #ITEM,ID,X,Y,DX,DY,PARAMETERS
 CUSTOM_OVERLAY,2000,0,0,1920,1080
-LEGEND,2001,35,830,625,350,[DPad] or UP/DOWN Arrows - Select a scenario|[A] or ENTER - Run the query|[X] or SPACE - Send game play event|[Y] or F1 - Toggle Leaderboard type|[LB][RB] or F2 - Leaderboard / Stats Query|[View] or ESC - Exit,SMALL
+LEGEND,2001,35,830,625,350,[DPad] or UP/DOWN Arrows - Select a scenario|[A] or ENTER - Run the query|[X] or SPACE - Send game play event|[Y] or F1 - Toggle Leaderboard type|[B] or F2 - Toggle SkipToUser(Leaderboard)|[LB][RB] or F3 - Leaderboard / Stats Query|[View] or ESC - Exit,SMALL
 
 # Console Labels
 LABEL,2002,525,150,300,50,Log,LEFT;SMALL
