@@ -97,8 +97,9 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <SDLCheck>true</SDLCheck>
       <OpenMPSupport>true</OpenMPSupport>
-      <AdditionalOptions>/Zc:twoPhase- %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zc:twoPhase- /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>5204</DisableSpecificWarnings>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -130,8 +131,9 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <SDLCheck>true</SDLCheck>
       <OpenMPSupport>true</OpenMPSupport>
-      <AdditionalOptions>/Zc:twoPhase- %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zc:twoPhase- /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>5204</DisableSpecificWarnings>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -164,8 +166,9 @@
       <ControlFlowGuard>Guard</ControlFlowGuard>
       <SDLCheck>true</SDLCheck>
       <OpenMPSupport>true</OpenMPSupport>
-      <AdditionalOptions>/Zc:twoPhase- %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zc:twoPhase- /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>5204</DisableSpecificWarnings>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -200,8 +203,9 @@
       <ControlFlowGuard>Guard</ControlFlowGuard>
       <SDLCheck>true</SDLCheck>
       <OpenMPSupport>true</OpenMPSupport>
-      <AdditionalOptions>/Zc:twoPhase- %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zc:twoPhase- /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>5204</DisableSpecificWarnings>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -248,6 +252,9 @@
       <Project>{9e4d1c18-9e5e-4b35-83be-74830b9b3c34}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="settings.manifest" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\..\packages\openexr-msvc-x64.2.3.0.8788\build\native\OpenEXR-msvc-x64.targets" Condition="Exists('..\..\packages\openexr-msvc-x64.2.3.0.8788\build\native\OpenEXR-msvc-x64.targets')" />
@@ -260,7 +267,4 @@
     <Error Condition="!Exists('..\..\packages\openexr-msvc-x64.2.3.0.8788\build\native\OpenEXR-msvc-x64.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\openexr-msvc-x64.2.3.0.8788\build\native\OpenEXR-msvc-x64.targets'))" />
     <Error Condition="!Exists('..\..\packages\zlib-msvc-x64.1.2.11.8900\build\native\zlib-msvc-x64.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\zlib-msvc-x64.1.2.11.8900\build\native\zlib-msvc-x64.targets'))" />
   </Target>
-  <ItemGroup>
-    <None Include="media\image1.png" />
-  </ItemGroup>
 </Project>

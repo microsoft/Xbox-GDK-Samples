@@ -115,6 +115,8 @@
 #include "SpriteFont.h"
 #include "WICTextureLoader.h"
 
+// To opt-out of telemetry uncomment the following line
+//#define ATG_DISABLE_TELEMETRY
 
 namespace DX
 {

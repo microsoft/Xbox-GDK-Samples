@@ -102,15 +102,11 @@ struct UIProductDetails
     std::string title;
     std::string description;
     std::string language;
-    std::string inAppOfferToken;
-    std::string linkUri;
     XStoreProductKind productKind;
     UIProductPrice price;
     bool hasDigitalDownload;
     bool isInUserCollection;
     uint32_t aggregateQuantity;
-    uint32_t keywordsCount;
-    std::vector<std::string> keywords;
     uint32_t skusCount;
     std::vector<UIProductSku> skus;
     uint32_t imagesCount;
@@ -175,6 +171,9 @@ public:
     void Download(const char* storeId);
     void PreviewLicense(const char* storeId);
     void AcquireLicense(const char* storeId);
+
+    void RateMyGame();
+    void RedeemToken();
 
     // Internal product management
     void AddOrUpdateProductToCatalog(XStoreProductKind kind, UIProductDetails& product);

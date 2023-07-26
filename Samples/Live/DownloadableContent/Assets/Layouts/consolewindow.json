@@ -1,0 +1,27 @@
+{
+  "prefab": {
+    "classId": "ConsoleWindow",
+    "maxConsoleLines": 500,
+    "viewportPanelSubElementId": "ConsolePanel",
+    "verticalSliderSubElementId": "ConsoleSlider",
+    "styleId": "Basic_Console_Style",
+    "focusable": false,
+    "subElements": [
+      {
+        "classId": "Panel",
+        "id": "ConsolePanel",
+        "style": {
+          "classId": "SpriteStyle",
+          "color": [ 0, 0, 0, 0 ],
+          "colorUsage": "override"
+        }
+      },
+      {
+        "id": "ConsoleSlider",
+        "prefabRef": "#slider_prefab",
+        "position": [ 0, 0 ],
+        "size": [ 50, 700 ]
+      }
+    ]
+  }
+}

@@ -18,7 +18,7 @@ namespace DX
     class SkyboxEffect : public DirectX::IEffect, public DirectX::IEffectMatrices
     {
     public:
-        explicit SkyboxEffect(_In_ ID3D12Device* device, const DirectX::EffectPipelineStateDescription& pipelineStateDesc);
+        explicit SkyboxEffect(_In_ ID3D12Device* device, const DirectX::EffectPipelineStateDescription& pipelineStateDesc, bool reverseZ = false);
 
         SkyboxEffect(SkyboxEffect&&) = delete;
         SkyboxEffect& operator= (SkyboxEffect&&) = delete;
@@ -62,5 +62,7 @@ namespace DX
         DirectX::SimpleMath::Matrix m_worldViewProj;
 
         DirectX::GraphicsResource   m_constantBuffer;
+
+        bool                        m_reverseZ;
     };
 }

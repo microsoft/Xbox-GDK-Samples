@@ -1,5 +1,5 @@
 ﻿{
-  "$schema": "https://raw.githubusercontent.com/microsoft/xbox-game-streaming-tools/master/touch-adaptation-kit/schemas/layout/v3.2/layout.json",
+  "$schema": "https://raw.githubusercontent.com/microsoft/xbox-game-streaming-tools/main/touch-adaptation-kit/schemas/layout/v3.2/layout.json",
   "content": {
     "left": {
       "inner": [

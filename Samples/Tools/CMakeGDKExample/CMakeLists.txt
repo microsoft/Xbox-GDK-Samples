@@ -75,6 +75,10 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE "$<$<CONFIG:DEBUG>:_DEBUG>" "
 # Build as Unicode (see UTF-8 Everywhere article's Win32 recommendations)
 target_compile_definitions(${PROJECT_NAME} PRIVATE _UNICODE UNICODE)
 
+if(NOT MSVC)
+  message(FATAL_ERROR "ERROR: This CMake file requires MSVC or MSVC-like compiler.")
+endif()
+
 # Recommended compiler switches:
 # /EHsc (C++ exception handling)
 # /fp:fast (Fast floating-point optimizations)
@@ -94,6 +98,12 @@ target_compile_options(${PROJECT_NAME} PRIVATE /permissive- /Zc:__cplusplus /Zc:
 # /DYNAMICBASE
 # /NXCOMPAT
 target_link_options(${PROJECT_NAME} PRIVATE /DYNAMICBASE /NXCOMPAT)
+
+# /ZH:SHA_256 (secure source hashing)
+if((MSVC_VERSION GREATER_EQUAL 1924)
+  AND ((NOT (CMAKE_CXX_COMPILER_ID MATCHES "Clang")) OR (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 16.0)))
+  target_compile_options(${PROJECT_NAME} PRIVATE /ZH:SHA_256)
+endif()
 
 # Set link libraries
 target_link_libraries(${PROJECT_NAME} PRIVATE xgameruntime.lib)

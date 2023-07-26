@@ -11,31 +11,49 @@
 #include "StepTimer.h"
 
 #include "xgamestreaming.h"
-
-#define TOUCHSIZE 24
+#include <unordered_map>
+#include <string>
 
 const int c_maxClients = 4;
 
 struct ClientDevice
 {
     XGameStreamingClientId id;
+    XTaskQueueRegistrationToken propertiesChangedRegistration;
     bool validOverlay;
     bool smallScreen;
 
     ClientDevice()
     {
         id = XGameStreamingNullClientId;
+        propertiesChangedRegistration = {};
         validOverlay = false;
         smallScreen = false;
     }
 };
+
+// Available touch layouts in the included "sample-layouts" bundle
+enum class TouchLayout
+{
+    Standard = 0,
+    Fighting = 1 
+};
+
+const std::unordered_map<TouchLayout, std::string> c_touchLayoutNames{
+    {TouchLayout::Standard, "standard-variable-replacement"},
+    {TouchLayout::Fighting, "fighting-variable-replacement"}
+};
+
+// The constraints on what the minimum (inclusive) and maximum (exclusive)
+// bundle versions are supported.
+const XVersion c_minimumBundleversion{0, 0, 0, 1};
+const XVersion c_maximumBundleVersion{1, 0, 0, 0};
 
 // A basic sample implementation that creates a D3D12 device and
 // provides a render loop.
 class Sample
 {
 public:
-
     Sample() noexcept(false);
     virtual ~Sample();
 
@@ -59,15 +77,16 @@ public:
 
     // Properties
     bool RequestHDRMode() const noexcept { return m_deviceResources ? (m_deviceResources->GetDeviceOptions() & DX::DeviceResources::c_EnableHDR) != 0 : false; }
+    XTaskQueueHandle GetTaskQueue() const noexcept { return m_queue; };
 
+    ClientDevice* GetClientById(XGameStreamingClientId clientId);
     void UpdateClientState();
+
+    void UpdateOverlayState(XGameStreamingClientId clientId);
 
     ClientDevice m_clients[c_maxClients];
 
 private:
-
-    void UpdateOverlayState();
-
     void Update(DX::StepTimer const& timer);
     void Render();
 
@@ -88,16 +107,17 @@ private:
     Microsoft::WRL::ComPtr<IGameInputReading>   m_reading;
     std::wstring			                    m_typeString;
 
+    // Game state.
     bool										m_buttonDown;
     bool                                        m_streaming;
     bool                                        m_validOverlay;
-    bool                                        m_showStandard;
-    XTaskQueueRegistrationToken                 m_token;
-    XTaskQueueHandle                            m_queue;
-
+    TouchLayout                                 m_activeLayout;
     bool                                        m_yVisibility;
     bool                                        m_aEnabled;
     double                                      m_bOpacity;
+    
+    XTaskQueueRegistrationToken                 m_token;
+    XTaskQueueHandle                            m_queue;
 
     // DirectXTK objects.
     std::unique_ptr<DirectX::GraphicsMemory>    m_graphicsMemory;

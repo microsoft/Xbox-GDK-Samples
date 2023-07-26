@@ -14,16 +14,5 @@
 
 namespace ATG
 {
-// To opt-out of telemetry uncomment the following line
-// #undef ATG_ENABLE_TELEMETRY
-
-#ifdef ATG_ENABLE_TELEMETRY
-    // Sends sample launch telemetry
     void SendLaunchTelemetry();
-    void CleanupTelemetry();
-#else
-    void SendLaunchTelemetry() {};
-    void CleanupTelemetry() {};
-#endif
-
 }

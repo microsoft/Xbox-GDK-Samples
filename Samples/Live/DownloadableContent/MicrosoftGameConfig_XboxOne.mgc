@@ -2,27 +2,13 @@
 <Game configVersion="1">
   <!-- Version "1" is supported by March 2022 GDK or later -->
 
-  <Identity Name="41336MicrosoftATG.ATGDownloadableContent" Version="2022.7.19.0" Publisher="CN=A4954634-DF4B-47C7-AB70-D3215D246AF1" />
+  <Identity Name="41336MicrosoftATG.ATGDownloadableContent" Version="2023.6.8.0" Publisher="CN=A4954634-DF4B-47C7-AB70-D3215D246AF1" />
 
   <ExecutableList>
     <Executable Name="DownloadableContent.exe"
                 TargetDeviceFamily="XboxOne"
                 Id="Game"/>
   </ExecutableList>
-
-  <TitleId>6F9201BF</TitleId>
-  <StoreId>9NQWJKKNHF1L</StoreId>
-  <MSAAppId>0000000040380102</MSAAppId>
-
-  <!-- Set this in order for the sample running on Scarlett hardware to be able to enumerate Xbox One GDK and ERA packages -->
-  <VirtualMachine>
-    <DlcCompatibility>XboxOne</DlcCompatibility>
-  </VirtualMachine>
-
-  <DevelopmentOnly>
-    <ContentIdOverride>D730AB4D-8C24-4963-AD8F-4A292B448997</ContentIdOverride>
-    <EKBIDOverride>00000000-0000-0000-0000-000000000001</EKBIDOverride>
-  </DevelopmentOnly>
 
   <ShellVisuals DefaultDisplayName="ATG Downloadable Content Sample"
     PublisherDisplayName="Xbox ATG"
@@ -34,5 +20,9 @@
     ForegroundText="dark"
     BackgroundColor="#000000"
     SplashScreenImage="Assets\SplashScreen.png"/>
+
+  <StoreId>9NQWJKKNHF1L</StoreId>
+  <TitleId>6F9201BF</TitleId>
+  <MSAAppId>0000000040380102</MSAAppId>
 
 </Game>

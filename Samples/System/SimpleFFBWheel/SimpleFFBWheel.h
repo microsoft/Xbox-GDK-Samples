@@ -16,14 +16,12 @@
 
 namespace
 {
-    const int c_sampleUIPanel = 2000;
-    const int c_valuesHeader = 2003;
-    const int c_valuesLabel = 2004;
-    const int c_descBox = 2006;
-    const int c_speedLabel = 2007;
-    const int c_StartBtn = 2101;
-
-    static constexpr int NUM_EFFECTS = 3;
+    constexpr int c_sampleUIPanel = 2000;
+    constexpr int c_valuesHeader = 2003;
+    constexpr int c_valuesLabel = 2004;
+    constexpr int c_descBox = 2006;
+    constexpr int c_speedLabel = 2007;
+    constexpr int c_StartBtn = 2101;
 
     // [SAMPLE] Our own enumeration to quickly map effect types to strings and
     // simplify some sample logic
@@ -51,10 +49,6 @@ namespace
         float Accelerator;
         float Brake;
     } SimulationInputState;
-
-    const wchar_t* g_DescText =
-        L"Use the pedals or dpad to accelerate or brake. The wheel's force feedback (Spring and Damper) will change based on the speed of the vehicle.\n\n"
-        L"Press the A button to simulate the effect of driving over a rough road or gravel (SawtoothUp).";
 }
 
 // A basic sample implementation that creates a D3D12 device and
@@ -131,7 +125,7 @@ private:
     GameInputCallbackToken                                  m_callbackToken = 0;
     Microsoft::WRL::ComPtr<IGameInputDevice>                m_wheelDevice;
     Microsoft::WRL::ComPtr<IGameInputReading>               m_reading;
-    SampleEffect                                            m_effects[NUM_EFFECTS]{};
+    SampleEffect                                            m_effects[3]{};
     GameInputRacingWheelState                               m_wheelState{};
     GameInputRacingWheelButtons                             m_lastRacingWheelButtons{};
     SimulationInputState                                    m_inputState{};

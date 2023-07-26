@@ -63,7 +63,7 @@ namespace
             EffectPipelineStateDescription pbrEffectPipelineState(
                 &GeometricPrimitive::VertexType::InputLayout,
                 CommonStates::Opaque,
-                CommonStates::DepthDefault,
+                CommonStates::DepthReverseZ,
                 CommonStates::CullClockwise,
                 hdrBufferRts,
                 D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE);
@@ -139,7 +139,7 @@ Sample::Sample() :
     m_gamepadConnected(false)
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>(
-        c_backBufferFormat, c_depthFormat, 2);
+        c_backBufferFormat, c_depthFormat, 2, DX::DeviceResources::c_ReverseDepth);
     m_deviceResources->SetClearColor(ATG::Colors::Background);
     m_deviceResources->RegisterDeviceNotify(this);
     m_gamePad = std::make_unique<GamePad>();
@@ -169,7 +169,7 @@ void Sample::Initialize(HWND window, int width, int height)
 
         m_camera = std::make_unique<DX::OrbitCamera>();
         m_camera->SetWindow(size.right, size.bottom);
-        m_camera->SetProjectionParameters(fovAngleY, 0.1f, 1000.f, false);
+        m_camera->SetProjectionParameters(fovAngleY, 1000.f, 0.1f, false);
         m_camera->SetRadius(25.f);
         m_camera->SetRadiusRate(5.f);
         m_camera->SetFocus(Vector3(0, 4, -5));
@@ -458,7 +458,7 @@ void Sample::Clear()
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
-    commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+    commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 0.0f, 0, 0, nullptr);
 
     // Set the viewport and scissor rect.
     auto viewport = m_deviceResources->GetScreenViewport();
@@ -556,7 +556,7 @@ void Sample::CreateDeviceDependentResources()
     EffectPipelineStateDescription UIRectPd(
         &VertexType::InputLayout,
         CommonStates::AlphaBlend,
-        CommonStates::DepthDefault,
+        CommonStates::DepthReverseZ,
         CommonStates::CullNone,
         UIRectRtState);
 
@@ -647,7 +647,7 @@ void Sample::CreateDeviceDependentResources()
         }
 
         // Skybox
-        m_skybox = std::make_unique<DX::Skybox>(device, m_srvPile->GetGpuHandle(static_cast<size_t>(StaticDescriptors::RadianceTex)), hdrBufferRts, *m_commonStates);
+        m_skybox = std::make_unique<DX::Skybox>(device, m_srvPile->GetGpuHandle(static_cast<size_t>(StaticDescriptors::RadianceTex)), hdrBufferRts, *m_commonStates, false, true);
     }
 
     // The current map has too much detail removed at last mips, scale back down to

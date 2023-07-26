@@ -115,6 +115,9 @@
 // This Windows message will be used for passing a message from an XTaskQueue monitor to the Message Loop
 #define WM_TASKQUEUEMONITOR (WM_USER + 1)
 
+// To opt-out of telemetry uncomment the following line
+//#define ATG_DISABLE_TELEMETRY
+
 namespace DX
 {
     // Helper class for COM exceptions

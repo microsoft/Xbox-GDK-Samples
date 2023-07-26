@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-#include <DirectxMath.h>
+#include <DirectXMath.h>
 
 extern "C" void OutputDebugStringW(const wchar_t* lpOutputString);
 

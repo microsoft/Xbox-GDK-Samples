@@ -105,11 +105,13 @@
 #include "Mouse.h"
 #include "RenderTargetState.h"
 
-
 // Enable Unicode rendering in UITK
 #define UITK_ENABLE_FREETYPE
 
 #include "UITK.h"
+
+// To opt-out of telemetry uncomment the following line
+//#define ATG_DISABLE_TELEMETRY
 
 namespace DX
 {

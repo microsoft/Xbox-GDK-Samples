@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package>
+  <Chunk Id="1000" Marker="Launch">
+    <FileGroup DestinationPath="\" SourcePath=".\" Include="*.*"/>
+    <FileGroup DestinationPath="\Assets\DefaultExperience" SourcePath=".\Assets\DefaultExperience" Include="*.*"/>
+    <FileGroup DestinationPath="\Assets\AlternateExperience" SourcePath=".\Assets\AlternateExperience" Include="*.*"/>
+    <FileGroup DestinationPath="\Assets\Fonts" SourcePath=".\Assets\Fonts" Include="*.*"/>
+    <FileGroup DestinationPath="\Assets" SourcePath=".\Assets" Include="*.*"/>
+  </Chunk>
+</Package>

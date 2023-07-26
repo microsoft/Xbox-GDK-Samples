@@ -26,6 +26,8 @@ namespace
     struct __declspec(align(16)) SkyboxEffectConstants
     {
         XMMATRIX worldViewProj;
+        float zMultiplier;
+        float padding[3];
     };
 
     static_assert((sizeof(SkyboxEffectConstants) % 16) == 0, "CB size alignment");
@@ -36,11 +38,13 @@ namespace
 
 SkyboxEffect::SkyboxEffect(
     _In_ ID3D12Device* device,
-    const EffectPipelineStateDescription& pipelineStateDesc) :
+    const EffectPipelineStateDescription& pipelineStateDesc,
+    bool reverseZ) :
         m_device(device),
         m_texture{},
         m_textureSampler{},
-        m_dirtyFlags(uint32_t(-1))
+        m_dirtyFlags(uint32_t(-1)),
+        m_reverseZ(reverseZ)
 {
     // Create root signature
     constexpr D3D12_ROOT_SIGNATURE_FLAGS rootSignatureFlags =
@@ -95,8 +99,11 @@ void SkyboxEffect::Apply(_In_ ID3D12GraphicsCommandList* commandList)
     {
         auto cb = GraphicsMemory::Get(m_device.Get()).AllocateConstant<SkyboxEffectConstants>();
 
-        const XMMATRIX transpose = XMMatrixTranspose(m_worldViewProj);
-        memcpy(cb.Memory(), &transpose, cb.Size());
+        SkyboxEffectConstants constants;
+        constants.worldViewProj = XMMatrixTranspose(m_worldViewProj);
+        constants.zMultiplier = m_reverseZ ? 0.f : 1.0f;
+        
+        memcpy(cb.Memory(), &constants, cb.Size());
         std::swap(m_constantBuffer, cb);
 
         m_dirtyFlags &= ~DirtyConstantBuffer;

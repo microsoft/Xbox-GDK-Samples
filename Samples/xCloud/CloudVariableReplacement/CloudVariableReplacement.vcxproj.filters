@@ -74,10 +74,6 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Readme_ja-JP.docx" />
-    <None Include="Readme_ko-KR.docx" />
-    <None Include="Readme_zh-CN.docx" />
-    <None Include="Readme.docx" />
     <None Include="..\..\..\Media\Fonts\SegoeUI_24.spritefont">
       <Filter>Assets</Filter>
     </None>
@@ -94,6 +90,14 @@
       <Filter>TAK</Filter>
     </None>
     <None Include="sample-layouts\layouts\neutral\fighting-variable-replacement.json">
+      <Filter>TAK</Filter>
+    </None>
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
+    <None Include="readme.md" />
+    <None Include="media\image1.jpeg" />
+    <None Include="sample-layouts\takxconfig.json">
       <Filter>TAK</Filter>
     </None>
   </ItemGroup>

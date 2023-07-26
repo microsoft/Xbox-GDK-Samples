@@ -34,3 +34,4 @@ Kits/DirectXTex/Shaders/Compiled/
 AppPackages
 packages
 !Kits/OpenSource/**/
+.vscode

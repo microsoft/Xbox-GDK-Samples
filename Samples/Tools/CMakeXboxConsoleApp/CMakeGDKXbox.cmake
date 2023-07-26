@@ -212,6 +212,18 @@ endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
    set(Console_ArchOptions /favor:AMD64 $<IF:$<BOOL:${OPTIMIZE_FOR_SCARLETT}>,/arch:AVX2,/arch:AVX>)
+
+   # Titles should use this switch to optimize the vzeroupper codegen based on console target
+   if(OPTIMIZE_FOR_SCARLETT)
+        if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.23)
+            set(Console_ArchOptions ${Console_ArchOptions} /d2vzeroupper)
+            set(Console_ArchOptions_LTCG /d2:-vzeroupper)
+        endif()
+   elseif(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.30)
+        set(Console_ArchOptions ${Console_ArchOptions} /d2vzeroupper-)
+        set(Console_ArchOptions_LTCG /d2:-vzeroupper-)
+   endif()
+
 endif()
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     # -march=btver2 to target AMD Jaguar CPU; -march=znver2 to target AMD Hercules CPU (requires clang v9; otherwise use znver1)

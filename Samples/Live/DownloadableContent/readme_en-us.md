@@ -2,21 +2,15 @@
 
 #   Downloadable Content (DLC) Sample
 
-*Windows PC: This sample is compatible with the Microsoft GDK (June
-2022)*
-
-*Xbox One/Xbox Series X|S: This sample is compatible with the Microsoft
-GDKX (June 2022)*
-
-# 
+This sample is compatible with the Microsoft GDK (June 2023)
 
 # Description
 
 This sample demonstrates how to implement purchase, download,
-enumeration and loading of downloadable content through XPackage and
-XStore APIs.
+enumeration and loading of downloadable content (DLC) through XPackage 
+and XStore APIs. DLC containing a DLL and an EXE is also demonstrated.
 
-![ビデオゲームの画面のスクリーンショット 低い精度で自動的に生成された説明](./media/image3.png)
+![](./media/image3.png)
 
 # Building the sample
 
@@ -31,19 +25,22 @@ Gaming.Desktop.x64
 
 # Running the sample
 
-This sample is configured to work in the XDKS.1 sandbox, but running it
-in this sandbox in licensed mode is not strictly required.
+This sample is configured to work in the XDKS.1 sandbox.
 
 The left side of the screen will show the packages that are installed.
-You can Mount / Unmount the package, which involve checking for the
-license. If you can mount the package successfully, the sample will
-display an image from package. This functionality will work without
-being licensed, but will require local installation of DLC packages
-outlined below.
+These operations can be available depending on what the DLC contains:
+- Mount: this will acquire a license and then mount the DLC contents
+in the filesystem
+  - DLCPackage: this will show an image
+  - DLCDlPackage: this will call an API found in the DLL that the 
+ComboDLL project builds
+  - DLCExePackage: this will launch the exe that is contained in
+the DLC
+- Unmount: unmount the DLC package
+- Uninstall: uninstall the DLC package
 
-If the sample is run in XDKS.1 using a test account that is entitled to
-the Store product (see below), the right side will show a list of
-available Durable addons. Selecting the item will bring up the Purchase
+If the sample is run in XDKS.1, the right side will show a list of
+available DLC addons. Selecting the item will bring up the Purchase
 UI if it is not owned by the account; if it is, then selecting the item
 download the package. Upon completion, the package should show up on the
 list on the left. This most closely represents the actual retail flow
@@ -58,29 +55,22 @@ CDN.
 | Toggle XPackageEnumeratePackages kind and scope |  Page Up/Page Down  |  LB/RB |
 | Uninstall Package          |  X                  |  X Button           |
 | Refresh the enumerated packages |  Y  |  Y Button |
+| Toggle debug window        |  OemTilde            |  Menu button        |
 | Exit                       |  Esc                |  View button        |
-
-XStore APIs require a valid license in order to function, as well as
-applying specific configuration actions. Refer to the GDK documentation
-section titled "**Enabling XStore development and testing**" for more
-details.
-
-If this is not done properly, XStore APIs will return 0x803f6107
-(IAP_E\_UNEXPECTED) indicating that a valid license was not found.
 
 # How the products are set up
 
 The Store ID for this product is 9NQWJKKNHF1L.
 
-To reach its Store page, from Gaming command prompt use
+To reach its Store page on Xbox, from Gaming command prompt use
 
 `xbapp launch ms-windows-store://pdp/?productid=9NQWJKKNHF1L`
 
-or just `ms-windows-store://pdp/?productid=9NQWJKKNHF1L` on Windows.
+On Windows `msxbox://game/?productId=9NQWJKKNHF1L` 
 
-![ロゴ が含まれている画像 自動的に生成された説明](./media/image4.jpeg)
+![](./media/image4.jpeg)
 
-9NQWJKKNHF1L contains three addons as of this writing, representing
+9NQWJKKNHF1L contains three addons, representing
 common combinations of packages for available platforms:
 
 -   9P96RFVJQ562 contains packages for Xbox Series, Xbox One GDK and PC
@@ -114,43 +104,32 @@ packages. The scripts will build the package with the correct contentID
 associated with the packages submitted for 9NQWJKKNHF1L on Partner
 Center.
 
-For side-loading game package onto **Xbox One and Scarlett**, you have
-to override EKBID.
+For DLC, several DLC are demonstrated:
 
-`xbapp setekbid 41336MicrosoftATG.ATGDownloadableContent_2022.7.19.0_neutral\_\_dspnxghe87tn0 {00000000-0000-0000-0000-000000000001}`
+- DLCPackage: Scarlett GDK, Xbox One GDK, and Xbox One ERA DLC
+- DLCPackagePC: PC DLC
+- DLCDllPackage: GDK DLC for console that includes ComboDLL
+- DLCDllPackagePC: GDK DLC for PC that includes ComboDLL
+- DLCExePackage: GDK DLC for console that includes 
+AlternateExperience.exe
+- DLCExePackage: GDK DLC for PC that includes AlternateExperience.exe
 
-Note for **Xbox One and Scarlett**, the correct **TargetDeviceFamily**
-node must be inserted into the
-Gaming.Xbox.\*.x64\\Layout\\Image\\Loose\\MicrosoftGame.config,
-otherwise makepkg will give an error:
+AlternateExperience and ComboDLL are derived from the SimpleMultiExePackage sample.
 
-```xml
-<ExecutableList>
-    <Executable Name="DownloadableContent.exe"
-        Id="Game"
-        TargetDeviceFamily="Scarlett"/>
-</ExecutableList>
-```
+Scarlett packages end in \_xs.xvc
 
-For DLC, the DLCPackage directory contains all required files for
+Xbox One (GDK) packages end in \_x.xvc
 
-1.  Scarlett GDK DLC (\_xs.xvc)
+Xbox One (XDK) packages will have no extension
 
-2.  Xbox One GDK DLC (\_x.xvc)
-
-3.  Xbox One ERA DLC (no extension)
-
-suitable for Xbox; DLCPackagePC will contain the required files for the
-PC .msixvc.
+PC packages end in .msixvc
 
 Within each are makedlcpkg commands that will generate each platform's
-DLC packages.
+DLC packages. BuildAllDlc.cmd in root directory will generate all type DLC.
 
-With these, it is possible to make packaged builds for the game and DLC.
 To install, use **xbapp install** on Xbox or **wdapp install** for PC,
 or available equivalent tools. In this configuration, any installed DLC
-should show up in the left hand side and be mountable, even if the
-sample itself is not running in licensed mode.
+should show up in the left hand side and be mountable.
 
 It is also possible to run completely using loose files. To achieve
 this, use **xbapp deploy** on Xbox or **wdapp register** on PC and pass
@@ -169,11 +148,13 @@ combinations.
 
 # Update history
 
-**Initial Release:** April 2019
+**Update:** June 2023
+
+Support EXE/DLL in DLC.
 
 **Update:** March 2022
 
-Added DLCPackagePC folder for demonstrate to create DLC on PC.
+Added DLCPackagePC folder for demonstrating DLC on PC.
 
 Fixed the crash when the license lost.
 
@@ -186,6 +167,8 @@ Add XPackageUninstallPackage API.
 **Update:** July 2022
 
 Fixed the error handling.
+
+**Initial Release:** April 2019
 
 # Privacy statement
 

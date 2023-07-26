@@ -171,7 +171,7 @@
       <ForcedUsingFiles>
       </ForcedUsingFiles>
       <Optimization>MaxSpeed</Optimization>
-      <PreprocessorDefinitions>ATG_ENABLE_TELEMETRY;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <ConformanceMode>true</ConformanceMode>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
@@ -205,7 +205,7 @@
       <ForcedUsingFiles>
       </ForcedUsingFiles>
       <Optimization>MaxSpeed</Optimization>
-      <PreprocessorDefinitions>ATG_ENABLE_TELEMETRY;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <ConformanceMode>true</ConformanceMode>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
@@ -242,7 +242,7 @@
       <ForcedUsingFiles>
       </ForcedUsingFiles>
       <Optimization>MaxSpeed</Optimization>
-      <PreprocessorDefinitions>ATG_ENABLE_TELEMETRY;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <ConformanceMode>true</ConformanceMode>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
@@ -274,7 +274,7 @@
       <ForcedUsingFiles>
       </ForcedUsingFiles>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>ATG_ENABLE_TELEMETRY;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus /favor:AMD64 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -304,7 +304,7 @@
       <ForcedUsingFiles>
       </ForcedUsingFiles>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>ATG_ENABLE_TELEMETRY;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus /favor:AMD64 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -336,7 +336,7 @@
       <ForcedUsingFiles>
       </ForcedUsingFiles>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>ATG_ENABLE_TELEMETRY;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus /favor:AMD64 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -354,7 +354,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level4</WarningLevel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PreprocessorDefinitions>ATG_ENABLE_TELEMETRY;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <DisableSpecificWarnings>5204</DisableSpecificWarnings>
@@ -442,7 +442,4 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-  <ItemGroup>
-    <None Include="media\image1.png" />
-  </ItemGroup>
 </Project>

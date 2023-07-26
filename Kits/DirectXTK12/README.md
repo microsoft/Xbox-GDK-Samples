@@ -6,7 +6,7 @@ http://go.microsoft.com/fwlink/?LinkID=615561
 
 Copyright (c) Microsoft Corporation.
 
-**February 6, 2023**
+**June 13, 2023**
 
 This package contains the "DirectX Tool Kit", a collection of helper classes for writing Direct3D 12 C++ code for Universal Windows Platform (UWP) apps for Windows 11 and Windows 10, game titles for Xbox Series X\|S and Xbox One, and Win32 desktop applications for Windows 11 and Windows 10.
 
@@ -114,6 +114,8 @@ This project welcomes contributions and suggestions. Most contributions require 
 
 When you submit a pull request, a CLA bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
 
+## Code of Conduct
+
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more informatsion see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
 ## Trademarks
@@ -137,3 +139,5 @@ Thanks to Pete Lewis and Justin Saunders for the normal-mapped and PBR shaders i
 Thanks for Travis Johnson for the mGPU support.
 
 Thanks to Roberto Sonnino for his help with the CMO format and the VS Starter Kit animation.
+
+Thanks to Andrew Farrier and Scott Matloff for their on-going help with code reviews.

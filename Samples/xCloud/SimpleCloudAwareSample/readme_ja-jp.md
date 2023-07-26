@@ -38,7 +38,7 @@ tak serve \--takx-file sample-layouts.takx
 このサンプルでは、xCloud 用クラウド対応 API の使用方法を示します。
 
 レイアウトはサンプルレイアウト GitHub:
-<https://github.com/microsoft/xbox-game-streaming-tools/tree/master/touch-adaptation-kit/touch-adaptation-bundles>
+<https://github.com/microsoft/xbox-game-streaming-tools/tree/main/touch-adaptation-kit/samples>
 からのものです。
 
 # バージョン履歴

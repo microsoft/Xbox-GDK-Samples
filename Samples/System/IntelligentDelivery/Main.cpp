@@ -14,9 +14,7 @@
 #include <XGameRuntimeInit.h>
 #include <XGameErr.h>
 
-#ifdef ATG_ENABLE_TELEMETRY
 #include "ATGTelemetry.h"
-#endif
 
 using namespace DirectX;
 
@@ -129,9 +127,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
         // Sample Usage Telemetry
         //
         // Disable or remove this code block to opt-out of sample usage telemetry
-#ifdef ATG_ENABLE_TELEMETRY
         ATG::SendLaunchTelemetry();
-#endif
 
         GetClientRect(hwnd, &rc);
         g_sample->Initialize(hwnd, rc.right - rc.left, rc.bottom - rc.top);

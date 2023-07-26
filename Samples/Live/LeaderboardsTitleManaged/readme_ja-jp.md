@@ -3,7 +3,7 @@
 #   ランキング サンプル
 
 *このサンプルは Microsoft Game Development Kit with Xbox Extensions
-(2020 年 11 月) と互換性があります。*
+(2022 年 10 月) と互換性があります。*
 
 # 
 

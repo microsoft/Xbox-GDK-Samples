@@ -11,6 +11,7 @@
 
 #include "ATGColors.h"
 #include "ControllerFont.h"
+#include "StringUtil.h"
 
 extern void ExitSample() noexcept;
 
@@ -21,9 +22,85 @@ using Microsoft::WRL::ComPtr;
 
 namespace
 {
+    //--------------------------------------------------------------------------------------
+    // Name: CompareVersions()
+    // Desc: Compares two version, a and b, returning -1 if a < b, 0 if a == b, 1 if a > b.
+    //--------------------------------------------------------------------------------------
+    int CompareVersions(const XVersion& a, const XVersion& b)
+    {
+        // XVersion.Value is big endian, swap to be able to compare sensibly
+        auto swapA = _byteswap_uint64(a.Value);
+        auto swapB = _byteswap_uint64(b.Value);
+
+        return (swapA < swapB) ? -1 : (swapA > swapB) ? 1 : 0;
+    }
+
+    void CALLBACK ClientPropertiesChangedCallback(
+        void* context,
+        XGameStreamingClientId clientId,
+        uint32_t updatedPropertiesCount,
+        XGameStreamingClientProperty* updatedProperties)
+    {
+        auto sample = reinterpret_cast<Sample*>(context);
+        
+        ClientDevice* client = sample->GetClientById(clientId);
+        if (client == nullptr)
+        {
+            return;
+        }
+
+        for (uint32_t i = 0; i < updatedPropertiesCount; ++i)
+        {
+            // Only properties that the sample cares about are checked for - all others are intentionally ignored
+#pragma warning (push)
+#pragma warning (disable: 4061)
+            switch (updatedProperties[i])
+            {
+            case XGameStreamingClientProperty::StreamPhysicalDimensions:
+            {
+                //Check to see if this client has a small display
+                uint32_t clientWidthMm = 0;
+                uint32_t clientHeightMm = 0;
+                if (SUCCEEDED(XGameStreamingGetStreamPhysicalDimensions(client->id, &clientWidthMm, &clientHeightMm)))
+                {
+                    if (clientWidthMm * clientHeightMm < 13000)
+                    {
+                        client->smallScreen = true;
+                    }
+                }
+            }
+            break;
+
+            case XGameStreamingClientProperty::TouchBundleVersion:
+            {
+                // Ensure the loaded bundle satisfies our versioning constraints
+                XVersion overlayVersion;
+                if (SUCCEEDED(XGameStreamingGetTouchBundleVersion(client->id, &overlayVersion, 0, nullptr)))
+                {
+                    if (CompareVersions(overlayVersion, c_minimumBundleversion) >= 0 && CompareVersions(overlayVersion, c_maximumBundleVersion) < 0)
+                    {
+                        client->validOverlay = true;
+
+                        // Update the overlay state for the client such that
+                        // it is upto date with the current game state.
+                        sample->UpdateOverlayState(client->id);
+                    }
+                }
+            }
+            break;
+
+            default:
+                break;
+            }
+        }
+#pragma warning (pop)
+
+        sample->UpdateClientState();
+    }
+
     void CALLBACK ConnectionStateChangedCallback(
         void* context,
-        XGameStreamingClientId client,
+        XGameStreamingClientId clientId,
         XGameStreamingConnectionState state) noexcept
     {
         auto sample = reinterpret_cast<Sample*>(context);
@@ -34,45 +111,23 @@ namespace
             {
                 if (sample->m_clients[i].id == XGameStreamingNullClientId)
                 {
-                    sample->m_clients[i].id = client;
+                    sample->m_clients[i].id = clientId;
 
-                    //Check to see if this client has a small display
-                    uint32_t clientWidthMm = 0;
-                    uint32_t clientHeightMm = 0;
-                    if (SUCCEEDED(XGameStreamingGetStreamPhysicalDimensions(sample->m_clients[i].id, &clientWidthMm, &clientHeightMm)))
-                    {
-                        if (clientWidthMm * clientHeightMm < 13000)
-                        {
-                            sample->m_clients[i].smallScreen = true;
-                        }
-                    }
-
-                    //The sample TAK is 10.0, so ensure that the client has the overlay
-                    XVersion overlayVersion;
-                    if (SUCCEEDED(XGameStreamingGetTouchBundleVersion(sample->m_clients[i].id, &overlayVersion, 0, nullptr)))
-                    {
-                        if (overlayVersion.major == 10 && overlayVersion.minor == 0)
-                        {
-                            sample->m_clients[i].validOverlay = true;
-                        }
-                    }
-
+                    // Register for client property change events
+                    DX::ThrowIfFailed(XGameStreamingRegisterClientPropertiesChanged(clientId, sample->GetTaskQueue(), sample, ClientPropertiesChangedCallback, &sample->m_clients[i].propertiesChangedRegistration));
                     break;
                 }
             }
         }
         else
         {
-            for (size_t i = 0; i < c_maxClients; ++i)
+            ClientDevice *client = sample->GetClientById(clientId);
+            if (client != nullptr)
             {
-                if (sample->m_clients[i].id == client)
-                {
-                    sample->m_clients[i] = ClientDevice();
-                }
+                XGameStreamingUnregisterClientPropertiesChanged(clientId, client->propertiesChangedRegistration, true);
+                *client = ClientDevice();
             }
         }
-
-        sample->UpdateClientState();
     }
 }
 
@@ -81,7 +136,7 @@ Sample::Sample() noexcept(false) :
     m_buttonDown(false),
     m_streaming(false),
     m_validOverlay(false),
-    m_showStandard(true),
+    m_activeLayout(TouchLayout::Standard),
     m_yVisibility(true),
     m_aEnabled(true),
     m_bOpacity(1.f)
@@ -182,23 +237,14 @@ void Sample::Update(DX::StepTimer const&)
             {
                 m_buttonDown = true;
                 needUpdate = true;
-                m_aEnabled = !m_aEnabled;
                 m_bOpacity = std::max(m_bOpacity - .1f, 0.);
             }
             else if (gamepadState.buttons & GameInputGamepadRightShoulder && !m_buttonDown)
             {
                 m_buttonDown = true;
                 needUpdate = true;
-                m_showStandard = !m_showStandard;
 
-                if (m_showStandard)
-                {
-                    XGameStreamingShowTouchControlLayout("standard-variable-replacement");
-                }
-                else
-                {
-                    XGameStreamingShowTouchControlLayout("fighting-variable-replacement");
-                }
+                m_activeLayout = m_activeLayout == TouchLayout::Standard ? TouchLayout::Fighting : TouchLayout::Standard;
             }
             else if (m_buttonDown && !(gamepadState.buttons & GameInputGamepadDPadUp
                 || gamepadState.buttons & GameInputGamepadDPadDown
@@ -211,7 +257,16 @@ void Sample::Update(DX::StepTimer const&)
 
             if (needUpdate)
             {
-                UpdateOverlayState();
+                // Update the overlay state for all connected clients that have a valid touch overlay
+                for (size_t i = 0; i < c_maxClients; ++i)
+                {
+                    auto client = m_clients[i];
+                    if (client.id != XGameStreamingNullClientId && client.validOverlay)
+                    {
+                        UpdateOverlayState(client.id);
+                    }
+                }
+                
             }
         }
     }
@@ -247,7 +302,7 @@ void Sample::Render()
     m_batch->Draw(m_resourceDescriptors->GetGpuHandle(Descriptors::Background), XMUINT2(1920, 1080), fullscreen);
 
     XMFLOAT2 pos(float(safeRect.left), float(safeRect.top));
-
+    XMFLOAT2 layoutNameOffset(285.f, 0.f);
     if (!m_streaming)
     {
         m_font->DrawString(m_batch.get(), L"Game is not currently being streamed", pos, ATG::Colors::Orange);
@@ -266,7 +321,8 @@ void Sample::Render()
         pos.y += m_font->GetLineSpacing() * 1.5f;
         DX::DrawControllerString(m_batch.get(), m_font, m_ctrlFont.get(), L"[DPad]Down: Toggle [A] enabled", pos);
         pos.y += m_font->GetLineSpacing() * 1.5f;
-        DX::DrawControllerString(m_batch.get(), m_font, m_ctrlFont.get(), L"[RB]: Toggle layout", pos);
+        DX::DrawControllerString(m_batch.get(), m_font, m_ctrlFont.get(), L"[RB]: Toggle layout: ", pos);
+        DX::DrawControllerString(m_batch.get(), m_font, m_ctrlFont.get(), DX::Utf8ToWide(c_touchLayoutNames.at(m_activeLayout)).c_str(), pos + layoutNameOffset);
         pos.y += m_font->GetLineSpacing() * 1.5f;
     }
 
@@ -377,6 +433,24 @@ void Sample::CreateWindowSizeDependentResources()
 }
 
 //--------------------------------------------------------------------------------------
+// Name: GetClientById()
+// Desc: Return the ClientDevice object which matches the clientId, nullptr if no device matches
+//--------------------------------------------------------------------------------------
+
+ClientDevice* Sample::GetClientById(XGameStreamingClientId clientId)
+{
+    for (size_t i = 0; i < c_maxClients; i++)
+    {
+        if (m_clients[i].id == clientId)
+        {
+            return &m_clients[i];
+        }
+    }
+
+    return nullptr;
+}
+
+//--------------------------------------------------------------------------------------
 // Name: UpdateClientState()
 // Desc: Updates overlay and screen size state for clients
 //--------------------------------------------------------------------------------------
@@ -406,8 +480,27 @@ void Sample::UpdateClientState()
 // Name: UpdateOverlayState()
 // Desc: Updates overlay state to match input
 //--------------------------------------------------------------------------------------
-void Sample::UpdateOverlayState()
+void Sample::UpdateOverlayState(XGameStreamingClientId clientId)
 {
+    // Update the active layout
+    auto layoutName = c_touchLayoutNames.at(m_activeLayout);
+    XGameStreamingShowTouchControlLayoutOnClient(clientId, layoutName.c_str());
+
+    std::string output;
+    output += "UpdateOverlayState client id: ";
+    output += std::to_string(clientId);
+    output += " layout ";
+    output += layoutName.c_str();
+    output += " Y visibility: ";
+    output += m_yVisibility ? "true" : "false";
+    output += " A enabled: ";
+    output += m_aEnabled ? "true" : "false";
+    output += " B opacity ";
+    output += std::to_string(m_bOpacity);
+    output += "\r\n";
+    OutputDebugStringA(output.c_str());
+
+    // Now perform the necessary state updates on the active layout
     XGameStreamingTouchControlsStateOperation stateOps[3];
 
     //Y visibility
@@ -428,7 +521,6 @@ void Sample::UpdateOverlayState()
     stateOps[2].value.valueKind = XGameStreamingTouchControlsStateValueKind::Double;
     stateOps[2].value.doubleValue = m_bOpacity;
 
-    //Send the updated state
-    XGameStreamingUpdateTouchControlsState(3, stateOps);
+    XGameStreamingUpdateTouchControlsStateOnClient(clientId, _countof(stateOps), stateOps);
 }
 #pragma endregion

@@ -241,7 +241,7 @@
       <ForcedUsingFiles>
       </ForcedUsingFiles>
       <Optimization>MaxSpeed</Optimization>
-      <PreprocessorDefinitions>ATG_ENABLE_TELEMETRY;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <ConformanceMode>true</ConformanceMode>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
@@ -275,7 +275,7 @@
       <ForcedUsingFiles>
       </ForcedUsingFiles>
       <Optimization>MaxSpeed</Optimization>
-      <PreprocessorDefinitions>ATG_ENABLE_TELEMETRY;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <ConformanceMode>true</ConformanceMode>
       <WarningLevel>Level4</WarningLevel>
@@ -315,7 +315,7 @@ $(ProjectDir)Scripts\Desktop.PostBuild.bat "$(ProjectDir)" "$(TargetDir)"
       <ForcedUsingFiles>
       </ForcedUsingFiles>
       <Optimization>MaxSpeed</Optimization>
-      <PreprocessorDefinitions>ATG_ENABLE_TELEMETRY;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <WarningLevel>Level4</WarningLevel>
       <AdditionalOptions>/Zc:__cplusplus /favor:AMD64 %(AdditionalOptions)</AdditionalOptions>
@@ -345,7 +345,7 @@ $(ProjectDir)Scripts\Desktop.PostBuild.bat "$(ProjectDir)" "$(TargetDir)"
       <ForcedUsingFiles>
       </ForcedUsingFiles>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>ATG_ENABLE_TELEMETRY;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus /favor:AMD64 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -375,7 +375,7 @@ $(ProjectDir)Scripts\Desktop.PostBuild.bat "$(ProjectDir)" "$(TargetDir)"
       <ForcedUsingFiles>
       </ForcedUsingFiles>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>ATG_ENABLE_TELEMETRY;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus /favor:AMD64 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -405,7 +405,7 @@ $(ProjectDir)Scripts\Desktop.PostBuild.bat "$(ProjectDir)" "$(TargetDir)"
       <ForcedUsingFiles>
       </ForcedUsingFiles>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>ATG_ENABLE_TELEMETRY;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus /favor:AMD64 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -442,7 +442,7 @@ $(ProjectDir)Scripts\Desktop.PostBuild.bat "$(ProjectDir)" "$(TargetDir)"
       <ForcedUsingFiles>
       </ForcedUsingFiles>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>ATG_ENABLE_TELEMETRY;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus /favor:AMD64 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -480,7 +480,7 @@ $(ProjectDir)Scripts\Desktop.PostBuild.bat "$(ProjectDir)" "$(TargetDir)"
       <ForcedUsingFiles>
       </ForcedUsingFiles>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>ATG_ENABLE_TELEMETRY;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus /favor:AMD64 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -509,7 +509,7 @@ $(ProjectDir)Scripts\Desktop.PostBuild.bat "$(ProjectDir)" "$(TargetDir)"
       <ForcedUsingFiles>
       </ForcedUsingFiles>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>ATG_ENABLE_TELEMETRY;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus /favor:AMD64 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -529,7 +529,7 @@ $(ProjectDir)Scripts\Desktop.PostBuild.bat "$(ProjectDir)" "$(TargetDir)"
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>ATG_ENABLE_TELEMETRY;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -638,7 +638,4 @@ $(ProjectDir)Scripts\Desktop.PostBuild.bat "$(ProjectDir)" "$(TargetDir)"
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-  <ItemGroup>
-    <None Include="media\image1.png" />
-  </ItemGroup>
 </Project>
