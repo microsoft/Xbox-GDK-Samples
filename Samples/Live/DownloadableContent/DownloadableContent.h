@@ -127,7 +127,7 @@ struct StoreProductDetails
 class Sample final : public DX::IDeviceNotify, public D3DResourcesProvider
 {
 public:
-    enum EnumFilterType
+    enum class EnumFilterType
     {
         AllDownloadableContent,
         AllRelatedPackages,
@@ -135,7 +135,7 @@ public:
         RelatedTitlesOnly
     };
 
-    enum EnumFocusArea
+    enum class EnumFocusArea
     {
         None,
         InstalledPackages,
@@ -186,6 +186,14 @@ public:
     PackageDetails* GetPackageDetail(const std::string &storeId);
     void UninstallPackage(PackageDetails& package);
 
+    // UI Methods
+    std::shared_ptr<ATG::UITK::UIConsoleWindow> GetConsole() const
+    {
+        return (m_console) ?
+            m_console->GetTypedSubElementById<ATG::UITK::UIConsoleWindow>(ATG::UITK::ID("ConsoleWindow")) :
+            nullptr;
+    }
+
 private:
 
     void Update(DX::StepTimer const& timer);
@@ -199,6 +207,7 @@ private:
     void InitializeUI();
     void ResetStoreButton(std::shared_ptr<UIButton> button);
     void SetBackgroundImage(const char* filename);
+    void ExecuteDLLFunction(const char* filename);
     void ErrorMessage(std::string_view format, ...);
 
     // UIStyleManager::D3DResourcesProvider interface methods
@@ -234,6 +243,8 @@ private:
     std::shared_ptr<ATG::UITK::UIImage>         m_backgroundImage;
     std::shared_ptr<ATG::UITK::UIStaticText>    m_errorMessage;
     std::shared_ptr<ATG::UITK::UIStaticText>    m_legendText;
+    std::shared_ptr<ATG::UITK::UIPanel>         m_console;
+    bool                                        m_showConsole;
 
     // Xbox Live objects.
     std::shared_ptr<ATG::LiveResources>         m_liveResources;

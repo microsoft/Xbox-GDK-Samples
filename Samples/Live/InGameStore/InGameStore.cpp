@@ -67,7 +67,18 @@ namespace
         if (s_sample)
         {
             auto popup = s_sample->GetPopup();
-            popup->GetTypedSubElementById<UIStaticText>(ID("PopupText"))->SetDisplayText(buffer);
+
+            if (popup->IsVisible())
+            {
+                auto str = popup->GetTypedSubElementById<UIStaticText>(ID("PopupText"))->GetDisplayText();
+                str += "\n";
+                str += buffer;
+                popup->GetTypedSubElementById<UIStaticText>(ID("PopupText"))->SetDisplayText(str);
+            }
+            else
+            {
+                popup->GetTypedSubElementById<UIStaticText>(ID("PopupText"))->SetDisplayText(buffer);
+            }
 
             auto button = popup->GetTypedSubElementById<UIButton>(ID("PopupButton"));
             button->ButtonState().AddListenerWhen(UIButton::State::Pressed,
@@ -89,7 +100,7 @@ namespace
         copy.isOnSale = price.isOnSale;
         copy.saleEndDate = price.saleEndDate;
 
-        copy.currencyCode = price.currencyCode;
+        copy.currencyCode = price.currencyCode? price.currencyCode : "";
         copy.formattedBasePrice = price.formattedBasePrice;
         copy.formattedPrice = price.formattedPrice;
         copy.formattedRecurrencePrice = price.formattedRecurrencePrice;
@@ -154,7 +165,7 @@ namespace
         copy.storeId = product->storeId;
         copy.title = product->title;
         copy.description = product->description;
-
+        copy.language = product->language;
         copy.productKind = product->productKind;
         copy.price = CopyToUIPrice(product->price);
         copy.hasDigitalDownload = product->hasDigitalDownload;
@@ -163,11 +174,11 @@ namespace
         copy.aggregateQuantity = 0;
         for (uint32_t i = 0; i < product->skusCount; i++)
         {
-            copy.skus.push_back(CopyToUISku(product->skus[i]));
-
             // See readme for comments regarding sku quantity and caution around
             // using quantity on the client (i.e. try to use b2b)
             copy.aggregateQuantity += product->skus[i].collectionData.quantity;
+
+            copy.skus.push_back(CopyToUISku(product->skus[i]));
         }
 
         for (uint32_t i = 0; i < product->imagesCount; i++)
@@ -330,25 +341,23 @@ void Sample::QueryGameLicense()
             if (!license.isActive)
             {
                 auto licenseInfo1 = pThis->m_uiManager.FindTypedById<UIStaticText>(ID("LicenseInfo1"));
-                std::string licenseInfo = "No license found\nPlease refer to the README for instructions to get a license for this sample.";
+                std::string licenseInfo = "No license found";
                 licenseInfo1->SetDisplayText(licenseInfo);
-                ConsoleWriteLine(licenseInfo.c_str());
+                ShowPopup(licenseInfo.c_str());
             }
             else
             {
                 auto licenseInfo1 = pThis->m_uiManager.FindTypedById<UIStaticText>(ID("LicenseInfo1"));
-                std::string licenseInfo = "Active license: ";
-                licenseInfo += license.skuStoreId;
 
+                std::string licenseInfo = (std::strlen(license.skuStoreId) == 12) ? "Base game store ID: " : "Active license: ";
+                licenseInfo += license.skuStoreId;
                 licenseInfo1->SetDisplayText(licenseInfo);
-                ConsoleWriteLine(licenseInfo.c_str());
 
                 auto licenseInfo2 = pThis->m_uiManager.FindTypedById<UIStaticText>(ID("LicenseInfo2"));
                 if (license.isDiscLicense)
                 {
                     licenseInfo = "Running from disc";
                     licenseInfo2->SetDisplayText(licenseInfo);
-                    ConsoleWriteLine(licenseInfo.c_str());
                 }
                 else
                 if (license.isTrial)
@@ -368,16 +377,12 @@ void Sample::QueryGameLicense()
                     licenseInfo += "Unique ID: " + std::string(license.trialUniqueId);
 
                     licenseInfo2->SetDisplayText(licenseInfo);
-                    ConsoleWriteLine(licenseInfo.c_str());
 
                     // Query current product to add to product list (for upsell)
                     pThis->QueryGameProduct();
                 }
-                else
-                {
-                    ConsoleWriteLine(licenseInfo.c_str());
 
-                }
+                ConsoleWriteLine(licenseInfo.c_str());
 
                 if (pThis->GetPopup()->IsVisible())
                 {
@@ -395,9 +400,7 @@ void Sample::QueryGameLicense()
         delete async;
     };
 
-    HRESULT hr = XStoreQueryGameLicenseAsync(
-        m_xStoreContext,
-        async);
+    HRESULT hr = XStoreQueryGameLicenseAsync(m_xStoreContext, async);
 
     if (FAILED(hr))
     {
@@ -408,6 +411,13 @@ void Sample::QueryGameLicense()
 
 void Sample::QueryAddonLicenses()
 {
+    // This will only return durable (without package) licenses associated
+    // with the game license at the time of query.
+    // Game licenses will not be updated with newly-purchased durables (until
+    // the game license is refreshed upon next game launch), therefore do not
+    // rely on this as a means of refreshing the ownership state of durables;
+    // use XStore(Can)AcquireLicenseForDurables/XStoreAcquireLicenseForStoreId
+
     ConsoleWriteLine("Calling XStoreQueryAddOnLicensesAsync");
 
     auto async = new XAsyncBlock{};
@@ -427,18 +437,8 @@ void Sample::QueryAddonLicenses()
             return;
         }
 
-        auto pThis = reinterpret_cast<Sample*>(async->context);
-
-        if (pThis->GetPopup()->IsVisible())
-        {
-            pThis->GetPopup()->GetTypedSubElementById<UIStaticText>(ID("PopupText"))->
-                SetDisplayText("Number of add-on licenses: " + std::to_string(count));
-        }
-        else
-        {
-            ConsoleWriteLine("Number of add-on licenses: %d", count);
-        }
-
+        ShowPopup("Number of add-on licenses: %u", count);
+        
         XStoreAddonLicense* licenses = new XStoreAddonLicense[count];
         hr = XStoreQueryAddOnLicensesResult(async, count, licenses);
 
@@ -471,9 +471,7 @@ void Sample::QueryAddonLicenses()
         delete[] licenses;
     };
 
-    HRESULT hr = XStoreQueryAddOnLicensesAsync(
-        m_xStoreContext,
-        async);
+    HRESULT hr = XStoreQueryAddOnLicensesAsync(m_xStoreContext, async);
 
     if (FAILED(hr))
     {
@@ -516,18 +514,9 @@ void Sample::QueryLicenseToken()
             return;
         }
 
-        auto pThis = reinterpret_cast<Sample*>(async->context);
+        ShowPopup("License Token size %u", result.size());
 
-        if (pThis->GetPopup()->IsVisible())
-        {
-            pThis->GetPopup()->GetTypedSubElementById<UIStaticText>(ID("PopupText"))->
-                SetDisplayText("License token size: " + std::to_string(result.size()));
-        }
-        else
-        {
-            ConsoleWriteLine("License Token size %d", result.size());
-        }
-
+        // Not using ConsoleWriteLine here in case token size exceeds buffer size
         OutputDebugStringA(result.data());
         OutputDebugStringA("\n");
 
@@ -577,9 +566,10 @@ bool CALLBACK ProductEnumerationCallback(const XStoreProduct* product, void* con
         quantity += "Quantity: " + std::to_string(productCopy.aggregateQuantity);
     }
 
-    ConsoleWriteLine("%10s: (%s) %s %s %s",
+    ConsoleWriteLine("%10s: (%s) [%s] %s %s %s",
         ProductKindToString(productCopy.productKind).c_str(),
         productCopy.storeId.c_str(),
+        productCopy.language.c_str(),
         productCopy.title.c_str(),
         productCopy.isInUserCollection ? "[OWNED]" : "",
         quantity.c_str());
@@ -609,6 +599,10 @@ void Sample::QueryGameProduct()
             {
                 ShowPopup("Error calling XStoreEnumerateProductsQuery : 0x%08X", hr);
             }
+            else
+            {
+                ShowPopup("%u game product found", count);
+            }
         }
 
         delete async;
@@ -623,11 +617,11 @@ void Sample::QueryGameProduct()
     }
 }
 
-void CALLBACK QueryAssociatedProductsCallback(XAsyncBlock* async)
+void CALLBACK QueryProductsCallback(XAsyncBlock* async)
 {
-    auto&[pThis, isCatalog, count, queryHandle] = *reinterpret_cast<QueryContext*>(async->context);
+    auto&[pThis, isCatalogQuery, count, queryHandle] = *reinterpret_cast<QueryContext*>(async->context);
 
-    HRESULT hr = XStoreQueryAssociatedProductsResult(async, &queryHandle);
+    HRESULT hr = XStoreQueryProductsResult(async, &queryHandle);
     if (SUCCEEDED(hr))
     {
         hr = XStoreEnumerateProductsQuery(queryHandle, async->context, ProductEnumerationCallback);
@@ -641,18 +635,11 @@ void CALLBACK QueryAssociatedProductsCallback(XAsyncBlock* async)
             }
             else
             {
-                if (pThis->GetPopup()->IsVisible())
-                {
-                    pThis->GetPopup()->GetTypedSubElementById<UIStaticText>(ID("PopupText"))->
-                        SetDisplayText(std::to_string(count) + " catalog products found");
-                }
-                else
-                {
-                    ConsoleWriteLine("%d catalog products found.", count);
-                }
+                ShowPopup(isCatalogQuery ? "%u catalog products found" : "You own %u products", count);
 
                 pThis->UpdateProductList();
 
+                XStoreCloseProductsQueryHandle(queryHandle);
                 delete async;
             }
         }
@@ -673,7 +660,7 @@ void Sample::QueryCatalog()
     auto async = new XAsyncBlock{};
     async->context = new QueryContext{ this, true, 0, nullptr };
     async->queue = m_asyncQueue;
-    async->callback = QueryAssociatedProductsCallback;
+    async->callback = QueryProductsCallback;
 
     XStoreProductKind typeFilter =
         XStoreProductKind::Consumable |
@@ -687,7 +674,6 @@ void Sample::QueryCatalog()
         typeFilter,     // Product filter types
         25,             // Products per page (25 is good default)
         async);
-
 
     //// Example of how to use XStoreQueryProducts to query specific products
     //// Replace above with below
@@ -709,47 +695,6 @@ void Sample::QueryCatalog()
     }
 }
 
-void CALLBACK QueryEntitledProductsCallback(XAsyncBlock* async)
-{
-    auto&[pThis, isCatalog, count, queryHandle] = *reinterpret_cast<QueryContext*>(async->context);
-
-    HRESULT hr = XStoreQueryEntitledProductsResult(async, &queryHandle);
-    if (SUCCEEDED(hr))
-    {
-        hr = XStoreEnumerateProductsQuery(queryHandle, async->context, ProductEnumerationCallback);
-
-        if (SUCCEEDED(hr))
-        {
-            if (XStoreProductsQueryHasMorePages(queryHandle))
-            {
-                ConsoleWriteLine("Has more pages!");
-                pThis->QueryNextPage(async);
-            }
-            else
-            {
-                if (pThis->GetPopup()->IsVisible())
-                {
-                    pThis->GetPopup()->GetTypedSubElementById<UIStaticText>(ID("PopupText"))->
-                        SetDisplayText(std::to_string(count) + " owned products found");
-                }
-                else
-                {
-                    ConsoleWriteLine("You own %d products.", count);
-                }
-
-                pThis->UpdateProductList();
-
-                delete async;
-            }
-        }
-        else
-        {
-            delete async;
-            ShowPopup("Error calling XStoreEnumerateProductsQuery : 0x%08X", hr);
-        }
-    }
-}
-
 void Sample::QueryCollections()
 {
     // Returns products the store user owns
@@ -759,7 +704,7 @@ void Sample::QueryCollections()
     auto async = new XAsyncBlock{};
     async->context = new QueryContext{ this, false, 0, nullptr };
     async->queue = m_asyncQueue;
-    async->callback = QueryEntitledProductsCallback;
+    async->callback = QueryProductsCallback;
 
     XStoreProductKind typeFilter =
         XStoreProductKind::Consumable |
@@ -789,7 +734,6 @@ void Sample::QueryNextPage(XAsyncBlock *async)
 
         if (SUCCEEDED(XStoreProductsQueryNextPageResult(async, &queryHandle)))
         {
-
             ConsoleWriteLine("Enumerating Page...");
             HRESULT hr = XStoreEnumerateProductsQuery(queryHandle, async->context, ProductEnumerationCallback);
 
@@ -805,33 +749,11 @@ void Sample::QueryNextPage(XAsyncBlock *async)
                 }
                 else
                 {
-                    if (isCatalogQuery)
-                    {
-                        if (pThis->GetPopup()->IsVisible())
-                        {
-                            pThis->GetPopup()->GetTypedSubElementById<UIStaticText>(ID("PopupText"))->
-                                SetDisplayText(std::to_string(count) + " catalog products found");
-                        }
-                        else
-                        {
-                            ConsoleWriteLine("%d catalog products found.", count);
-                        }
-                        
-                    }
-                    else
-                    {
-                        if (pThis->GetPopup()->IsVisible())
-                        {
-                            pThis->GetPopup()->GetTypedSubElementById<UIStaticText>(ID("PopupText"))->
-                                SetDisplayText(std::to_string(count) + " owned products found");
-                        }
-                        else
-                        {
-                            ConsoleWriteLine("You own %d products.", count);
-                        }
-                    }
+                    ShowPopup(isCatalogQuery? "%u catalog products found" : "You own %u products", count);
+
                     pThis->UpdateProductList();
 
+                    XStoreCloseProductsQueryHandle(queryHandle);
                     delete async;
                 }
             }
@@ -840,7 +762,6 @@ void Sample::QueryNextPage(XAsyncBlock *async)
                 delete async;
                 ShowPopup("Error calling XStoreEnumerateProductsQuery : 0x%08X", hr);
             }
-
         }
     };
 
@@ -882,7 +803,7 @@ void Sample::Download(const char* storeId)
             }
             else
             {
-                ShowPopup("Download queued (count %d)", count);
+                ShowPopup("Download queued (count %u)", count);
             }
         }
     };
@@ -923,7 +844,7 @@ void Sample::PreviewLicense(const char* storeId)
         }
         else
         {
-            ShowPopup("Status: %d LicensableSku: %s", result.status, result.licensableSku);
+            ShowPopup("Status: %u LicensableSku: %s", result.status, result.licensableSku);
         }
 
         delete async;
@@ -966,13 +887,13 @@ void Sample::AcquireLicense(const char* storeId)
     async->queue = m_asyncQueue;
     async->callback = [](XAsyncBlock* async)
     {
-        XStoreLicenseHandle result = {};
+        XStoreLicenseHandle handle = {};
 
         auto&[isDlc] = *reinterpret_cast<Ctx*>(async->context);
 
         HRESULT hr = (isDlc) ?
-            XStoreAcquireLicenseForPackageResult(async, &result) :
-            XStoreAcquireLicenseForDurablesResult(async, &result);
+            XStoreAcquireLicenseForPackageResult(async, &handle) :
+            XStoreAcquireLicenseForDurablesResult(async, &handle);
 
         if (FAILED(hr))
         {
@@ -991,14 +912,14 @@ void Sample::AcquireLicense(const char* storeId)
         }
         else
         {
-            bool isValid = XStoreIsLicenseValid(result);
+            bool isValid = XStoreIsLicenseValid(handle);
 
             ShowPopup("Is valid license: %s", isValid ? "yes" : "no");
 
             if (isValid)
             {
                 XTaskQueueRegistrationToken token = {};
-                hr = XStoreRegisterPackageLicenseLost(result, async->queue, async->context,
+                hr = XStoreRegisterPackageLicenseLost(handle, async->queue, async->context,
                     [](void *)
                     {
                         ConsoleWriteLine("License lost event received: %s");
@@ -1031,19 +952,22 @@ void Sample::AcquireLicense(const char* storeId)
 
     if (FAILED(hr))
     {
+        if (hr == E_GAMEPACKAGE_NO_PACKAGE_IDENTIFIER)
+        {
+            ShowPopup("Error calling %s: 0x%x (Check if DLC is installed)", apiName, hr);
+        }
+        else
+        {
+            ShowPopup("Error calling %s: 0x%x", apiName, hr);
+        }
         delete async;
 
-        ShowPopup("Error calling %s: 0x%x", apiName, hr);
         return;
     }
 }
 
 void Sample::ShowAssociatedProducts()
 {
-#if _GRDK_VER < 0x4A610D88 /* GDK Edition 200606 */
-    ConsoleWriteLine("XStoreShowAssociatedProductsUIAsync requires June 2020 QFE6 GDK");
-#else
-    
     // This opens up the Store app showing associated products filtered to the desired product types
     auto currentProductType = m_uiManager.FindTypedById<UITwistMenu>(ID("ProductTypeFilter"))->GetCurrentDisplayString();
 
@@ -1080,17 +1004,11 @@ void Sample::ShowAssociatedProducts()
         ShowPopup("Error calling XStoreShowAssociatedProductsUIAsync: 0x%08x", hr);
         delete async;
     }
-#endif
 }
 
 void Sample::ShowProductPage(const char* storeId)
 {
-#if _GRDK_VER < 0x4A610D88 /* GDK Edition 200606 */
-    ConsoleWriteLine("XStoreShowProductPageUIAsync requires June 2020 QFE6 GDK (%s)", storeId);
-#else
-
     // This opens up the Store app showing the PDP of the selected product
-
     ConsoleWriteLine("Calling XStoreShowProductPageUIAsync for %s", storeId);
 
     auto async = new XAsyncBlock{};
@@ -1112,58 +1030,6 @@ void Sample::ShowProductPage(const char* storeId)
     {
         ShowPopup("Error calling XStoreShowProductPageUIResult: 0x%08x", hr);
         delete async;
-    }
-#endif
-}
-
-void Sample::AddOrUpdateProductToCatalog(XStoreProductKind kind, UIProductDetails& product)
-{
-    auto& storeId = product.storeId;
-
-    // Insert or update product
-    m_catalog[kind].insert(storeId);
-    m_catalogDetails.insert_or_assign(storeId, product);
-}
-
-void Sample::DownloadProductImage(const UIProductDetails& product, const char* tag, std::shared_ptr<UIImage> imageElement)
-{
-    // This downloads the image with the provided tag
-    // If optional imageElement is passed in, apply image data when downloaded
-    for (auto& image : product.images)
-    {
-        if (image.tag == tag)
-        {
-            auto async = new XAsyncBlock{};
-            async->queue = m_asyncQueue;
-            async->context = imageElement.get();
-            async->callback = [](XAsyncBlock* async)
-            {
-                UIImage* imageElement = static_cast<UIImage*>(async->context);
-
-                FileHandle file;
-                HRESULT hr = Sample::GetFileDownloader().DownloadFileAsyncResult(async, &file);
-
-                if (FAILED(hr))
-                {
-                    ConsoleWriteLine("Error calling DownloadFileAsyncResult: 0x%x", hr);
-                }
-                else
-                {
-                    if (imageElement)
-                    {
-                        imageElement->UseTextureData(file->data(), file->size());
-                    }
-                }
-
-                delete async;
-            };
-
-            // image uris just start with //
-            std::string uri = "https:" + image.uri;
-
-            GetFileDownloader().DownloadFileAsync(uri, product.storeId + tag, async);
-            break;
-        }
     }
 }
 
@@ -1189,7 +1055,6 @@ void Sample::MakePurchase(const char* storeId)
             ConsoleWriteLine("Purchase succeeded (%s)", storeId.c_str());
             ShowPopup("Thank you for purchasing %s", itemName.c_str());
             pThis->QueryCollections();
-            pThis->QueryAddonLicenses();
         }
         else
         {
@@ -1197,7 +1062,11 @@ void Sample::MakePurchase(const char* storeId)
             {
                 ShowPopup("You already own %s", itemName.c_str());
             }
-            else if (hr != E_ABORT)
+            else if (hr == E_ABORT)
+            {
+                ConsoleWriteLine("Purchase cancelled");
+            }
+            else
             {
                 ShowPopup("Purchase failed (%s) 0x%x", storeId.c_str(), hr);
             }
@@ -1217,9 +1086,89 @@ void Sample::MakePurchase(const char* storeId)
     if (FAILED(hr))
     {
         delete async;
-        ShowPopup("Error calling XStoreShowPurchaseUIAsync : 0x%x", hr);
-        return;
+        ShowPopup("Error calling XStoreShowPurchaseUIAsync: 0x%x", hr);
     }
+}
+
+void Sample::RateMyGame()
+{
+    auto async = new XAsyncBlock{};
+    async->queue = m_asyncQueue;
+    async->callback = [](XAsyncBlock* async)
+    {
+        XStoreRateAndReviewResult result{};
+        HRESULT hr = XStoreShowRateAndReviewUIResult(async, &result);
+
+        if (FAILED(hr))
+        {
+            if (hr == E_ABORT)
+            {
+                ConsoleWriteLine("Review cancelled");
+            }
+            else
+            {
+                ShowPopup("Error calling XStoreShowRateAndReviewUIResult: 0x%x", hr);
+            }
+        }
+        else
+        {
+            ShowPopup("Review %s", result.wasUpdated ? "updated." : "posted.");
+        }
+
+        delete async;
+    };
+
+    HRESULT hr = XStoreShowRateAndReviewUIAsync(m_xStoreContext, async);
+
+    if (FAILED(hr))
+    {
+        delete async;
+        ShowPopup("Error calling XStoreShowRateAndReviewUIAsync: 0x%x", hr);
+    }
+}
+
+void Sample::RedeemToken()
+{
+    auto async = new XAsyncBlock{};
+    async->queue = m_asyncQueue;
+    async->context = this;
+    async->callback = [](XAsyncBlock* async)
+    {
+        HRESULT hr = XStoreShowRedeemTokenUIResult(async);
+
+        if (FAILED(hr))
+        {
+            if (hr == E_ABORT)
+            {
+                ConsoleWriteLine("Token entry cancelled");
+            }
+            else
+            {
+                ShowPopup("Error calling XStoreShowRedeemTokenUIResult: 0x%x", hr);
+            }
+        }
+        else
+        {
+            auto pThis = reinterpret_cast<Sample*>(async->context);
+
+            pThis->QueryCollections();
+        }
+    };
+    
+    HRESULT hr = XStoreShowRedeemTokenUIAsync(
+        m_xStoreContext,
+        " ",            // Using " " brings up the UI keyboard for code entry
+        nullptr,        // Restrict to specific Store IDs
+        0,
+        false,          // disallow CSV (cash gift cards)
+        async);
+
+    if (FAILED(hr))
+    {
+        delete async;
+        ShowPopup("Error calling XStoreShowRedeemTokenUIAsync: 0x%x", hr);
+    }
+
 }
 
 #pragma endregion
@@ -1261,11 +1210,10 @@ void Sample::Update(DX::StepTimer const& timer)
     m_uiInputState.Update(elapsedTime, *m_gamePad, *m_keyboard, *m_mouse);
     m_uiManager.Update(elapsedTime, m_uiInputState);
 
-    auto gamepadButtons = m_uiInputState.GetGamePadButtons(0);
-    auto keys = m_uiInputState.GetKeyboardKeys();
-    auto mouse = m_uiInputState.GetMouseState();
-    auto mouseButtons = m_uiInputState.GetMouseButtons();
-
+    const auto& gamepadButtons = m_uiInputState.GetGamePadButtons(0);
+    const auto& keys = m_uiInputState.GetKeyboardKeys();
+    const auto& mouse = m_uiInputState.GetMouseState();
+    const auto& mouseButtons = m_uiInputState.GetMouseButtons();
 
     if (gamepadButtons.view == GamePad::ButtonStateTracker::PRESSED ||
         keys.IsKeyReleased(Keyboard::Keys::OemTilde))
@@ -1324,10 +1272,11 @@ void Sample::Update(DX::StepTimer const& timer)
         CloseMenu();
     }
 
-    if ((!wasMenuVisible && m_itemMenu->IsVisible()) ||
-        (wasMenuVisible && menuY != uint32_t(m_itemMenu->GetRelativePositionInRefUnits().y)))
+    if (!GetPopup()->IsVisible() &&
+        ((!wasMenuVisible && m_itemMenu->IsVisible()) ||
+         (wasMenuVisible && menuY != uint32_t(m_itemMenu->GetRelativePositionInRefUnits().y))))
     {
-        // new menu just appeared, set first item to focus
+        // new menu just appeared, set first item to focus (unless popup is up)
         m_uiManager.SetFocus(m_itemMenu->GetChildByIndex(0));
     }
     else if (mouseButtons.leftButton == Mouse::ButtonStateTracker::PRESSED)
@@ -1363,7 +1312,6 @@ void Sample::Update(DX::StepTimer const& timer)
     }
 
     // Popup
-
     static bool popupShowing = false;
     if (!popupShowing && GetPopup()->IsVisible())
     {
@@ -1600,6 +1548,56 @@ void Sample::SetupUI()
     });
 }
 
+void Sample::AddOrUpdateProductToCatalog(XStoreProductKind kind, UIProductDetails& product)
+{
+    auto& storeId = product.storeId;
+
+    // Insert or update product
+    m_catalog[kind].insert(storeId);
+    m_catalogDetails.insert_or_assign(storeId, product);
+}
+
+void Sample::DownloadProductImage(const UIProductDetails& product, const char* tag, std::shared_ptr<UIImage> imageElement)
+{
+    // This downloads the image with the provided tag
+    // If optional imageElement is passed in, apply image data when downloaded
+    for (auto& image : product.images)
+    {
+        if (image.tag == tag)
+        {
+            auto async = new XAsyncBlock{};
+            async->queue = m_asyncQueue;
+            async->context = imageElement.get();
+            async->callback = [](XAsyncBlock* async)
+            {
+                UIImage* imageElement = static_cast<UIImage*>(async->context);
+
+                FileHandle file;
+                HRESULT hr = Sample::GetFileDownloader().DownloadFileAsyncResult(async, &file);
+
+                if (FAILED(hr))
+                {
+                    ConsoleWriteLine("Error calling DownloadFileAsyncResult: 0x%x", hr);
+                }
+                else
+                {
+                    if (imageElement)
+                    {
+                        imageElement->UseTextureData(file->data(), file->size());
+                    }
+                }
+
+                delete async;
+            };
+
+            // image uris just start with //
+            std::string uri = "https:" + image.uri;
+
+            GetFileDownloader().DownloadFileAsync(uri, product.storeId + tag, async);
+            break;
+        }
+    }
+}
 
 void Sample::UpdateProductList()
 {
@@ -1839,7 +1837,6 @@ void Sample::ShowGlobalMenu()
 
     auto menuButton = m_uiManager.FindTypedById<UIButton>(ID("MenuButton"));
 
-
     auto menuX = menuButton->GetRelativePositionInRefUnits().x;
     auto menuY = menuButton->GetRelativePositionInRefUnits().y + menuButton->GetRelativeSizeInRefUnits().y;
     m_itemMenu->SetRelativePositionInRefUnits(Vector2(menuX, menuY));
@@ -1850,6 +1847,24 @@ void Sample::ShowGlobalMenu()
         [this](UIButton*)
     {
         ShowAssociatedProducts();
+        CloseMenu();
+    });
+
+    button = CastPtr<UIButton>(m_itemMenu->AddChildFromPrefab("#menu_item_prefab"));
+    button->GetTypedSubElementById<UIStaticText>(ID("MenuItemButtonText"))->SetDisplayText("Rate and review");
+    button->ButtonState().AddListenerWhen(UIButton::State::Pressed,
+        [this](UIButton*)
+    {
+        RateMyGame();
+        CloseMenu();
+    });
+
+    button = CastPtr<UIButton>(m_itemMenu->AddChildFromPrefab("#menu_item_prefab"));
+    button->GetTypedSubElementById<UIStaticText>(ID("MenuItemButtonText"))->SetDisplayText("Redeem code");
+    button->ButtonState().AddListenerWhen(UIButton::State::Pressed,
+    [this](UIButton*)
+    {
+        RedeemToken();
         CloseMenu();
     });
 
@@ -1884,6 +1899,16 @@ void Sample::ShowGlobalMenu()
     });
 
     button = CastPtr<UIButton>(m_itemMenu->AddChildFromPrefab("#menu_item_prefab"));
+    button->GetTypedSubElementById<UIStaticText>(ID("MenuItemButtonText"))->SetDisplayText("Query game product");
+    button->ButtonState().AddListenerWhen(UIButton::State::Pressed,
+        [this](UIButton*)
+    {
+        QueryGameProduct();
+        ShowPopup("Querying game product...");
+        CloseMenu();
+    });
+
+    button = CastPtr<UIButton>(m_itemMenu->AddChildFromPrefab("#menu_item_prefab"));
     button->GetTypedSubElementById<UIStaticText>(ID("MenuItemButtonText"))->SetDisplayText("Query game license");
     button->ButtonState().AddListenerWhen(UIButton::State::Pressed,
         [this](UIButton*)
@@ -1914,6 +1939,12 @@ void Sample::CloseMenu(bool doUpdate)
         m_itemMenu->SetVisible(false);
         m_itemMenu->Reset();
         m_closeMenu = false;
+
+        // restore focus to popup if it was up
+        if (GetPopup()->IsVisible())
+        {
+            m_uiManager.SetFocus(GetPopup()->GetTypedSubElementById<UIButton>(ID("PopupButton")));
+        }
     }
     else
     {

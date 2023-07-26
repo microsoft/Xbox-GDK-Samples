@@ -245,6 +245,7 @@ Sample::Sample() noexcept(false) :
             2,
             DX::DeviceResources::c_Enable4K_UHD | DX::DeviceResources::c_EnableQHD
             | DX::DeviceResources::c_GeometryShaders | DX::DeviceResources::c_AmplificationShaders
+            | DX::DeviceResources::c_ReverseDepth
             );
     m_deviceResources->SetClearColor(ATG::ColorsLinear::Background);
 }
@@ -287,7 +288,7 @@ void Sample::Initialize(HWND window)
     m_amCubeMapViewAdjust[5] = XMMatrixLookAtLH(c_eyePoint, lookDir, upDir);
 
     // Create the projection matrices
-    m_projCBM = XMMatrixPerspectiveFovLH(XM_PI * 0.5f, 1.0f, .5f, 1000.f);
+    m_projCBM = XMMatrixPerspectiveFovLH(XM_PI * 0.5f, 1.0f, 1000.f, .5f);
 
     m_deviceResources->SetWindow(window);
 
@@ -560,7 +561,7 @@ void Sample::RenderSceneIntoCubeMap()
         auto const rtvHandle(m_rtvHeap->GetCpuHandle(RTVIndex::Array));
         auto const dsvHandle(m_dsvHeap->GetCpuHandle(DSVIndex::Array));
         commandList->ClearRenderTargetView(rtvHandle, ATG::ColorsLinear::Background, 0, nullptr);
-        commandList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+        commandList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 0.0f, 0, 0, nullptr);
 
         commandList->OMSetRenderTargets(1, &rtvHandle, TRUE, &dsvHandle);
 
@@ -610,7 +611,7 @@ void Sample::RenderSceneIntoCubeMap()
             auto const rtvHandle(m_rtvHeap->GetCpuHandle(view + RTVIndex::Face0));
             auto const dsvHandle(m_dsvHeap->GetCpuHandle(DSVIndex::Single));
             commandList->ClearRenderTargetView(rtvHandle, ATG::ColorsLinear::Background, 0, nullptr);
-            commandList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+            commandList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 0.0f, 0, 0, nullptr);
 
             commandList->OMSetRenderTargets(1, &rtvHandle, TRUE, &dsvHandle);
 
@@ -818,7 +819,7 @@ void Sample::Clear()
     auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
     auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::ColorsLinear::Background, 0, nullptr);
-    commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+    commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 0.0f, 0, 0, nullptr);
 
     PIXEndEvent(commandList);
 }
@@ -1011,7 +1012,7 @@ void Sample::CreateDeviceDependentResources()
         psoDesc.PS = { pixelShaderBlob.data(), pixelShaderBlob.size() };
         psoDesc.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
         psoDesc.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
-        psoDesc.DepthStencilState = CommonStates::DepthDefault;
+        psoDesc.DepthStencilState = CommonStates::DepthReverseZ;
         psoDesc.DSVFormat = m_deviceResources->GetDepthBufferFormat();
         psoDesc.SampleMask = UINT_MAX;
         psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
@@ -1047,7 +1048,7 @@ void Sample::CreateDeviceDependentResources()
         psoDesc.PS = { pixelShaderBlob.data(), pixelShaderBlob.size() };
         psoDesc.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
         psoDesc.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
-        psoDesc.DepthStencilState = CommonStates::DepthDefault;
+        psoDesc.DepthStencilState = CommonStates::DepthReverseZ;
         psoDesc.DSVFormat = m_deviceResources->GetDepthBufferFormat();
         psoDesc.SampleMask = UINT_MAX;
         psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
@@ -1080,7 +1081,7 @@ void Sample::CreateDeviceDependentResources()
         psoDesc.PS = { pixelShaderBlob.data(), pixelShaderBlob.size() };
         psoDesc.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
         psoDesc.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
-        psoDesc.DepthStencilState = CommonStates::DepthDefault;
+        psoDesc.DepthStencilState = CommonStates::DepthReverseZ;
         psoDesc.DSVFormat = m_deviceResources->GetDepthBufferFormat();
         psoDesc.SampleMask = UINT_MAX;
         psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
@@ -1117,7 +1118,7 @@ void Sample::CreateDeviceDependentResources()
         psoDesc.DSVFormat = m_deviceResources->GetDepthBufferFormat();
         psoDesc.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
         psoDesc.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
-        psoDesc.DepthStencilState = CommonStates::DepthDefault;
+        psoDesc.DepthStencilState = CommonStates::DepthReverseZ;
         psoDesc.SampleMask = UINT_MAX;
         psoDesc.SampleDesc = DefaultSampleDesc();
 
@@ -1162,7 +1163,7 @@ void Sample::CreateDeviceDependentResources()
             1,                                          // mipLevels
             1, 0,                                       // sampleCount, sampleQuality
             D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL);   // miscFlags
-        D3D12_CLEAR_VALUE envMapDepthClearValue = CD3DX12_CLEAR_VALUE(descTex.Format, 1.0f, 0);
+        D3D12_CLEAR_VALUE envMapDepthClearValue = CD3DX12_CLEAR_VALUE(descTex.Format, 0.0f, 0);
 
         DX::ThrowIfFailed(device->CreateCommittedResource(
             &defaultHeap,
@@ -1283,7 +1284,7 @@ void Sample::CreateWindowSizeDependentResources()
     auto displayHeight = static_cast<int>(size.bottom - size.top);
 
     m_camera.SetWindow(displayWidth, displayHeight);
-    m_camera.SetProjectionParameters(s_fovy, 1.0f, 10000.0f, true);
+    m_camera.SetProjectionParameters(s_fovy, 10000.0f, 1.0f, true);
 
     m_camera.SetLookAt(Vector3(-70.0f, 150.0f, 240.0f), Vector3::Down * 15.0f);
     m_camera.SetSensitivity(500.0f, 100.0f, 1000.0f, 10.0f);

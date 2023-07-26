@@ -13,9 +13,7 @@
 #include <XGameRuntimeInit.h>
 #include <XGameErr.h>
 
-#ifdef ATG_ENABLE_TELEMETRY
 #include "ATGTelemetry.h"
-#endif
 
 using namespace DirectX;
 
@@ -46,11 +44,8 @@ LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 void ExitSample() noexcept;
 
 // Entry point
-int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
+int SampleMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR, _In_ int nCmdShow)
 {
-    UNREFERENCED_PARAMETER(hPrevInstance);
-    UNREFERENCED_PARAMETER(lpCmdLine);
-
     if (!XMVerifyCPUSupport())
     {
 #ifdef _DEBUG
@@ -133,9 +128,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
         // Sample Usage Telemetry
         //
         // Disable or remove this code block to opt-out of sample usage telemetry
-#ifdef ATG_ENABLE_TELEMETRY
         ATG::SendLaunchTelemetry();
-#endif
 
         GetClientRect(hwnd, &rc);
 
@@ -162,6 +155,26 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     XGameRuntimeUninitialize();
 
     return static_cast<int>(msg.wParam);
+}
+
+int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
+{
+    try
+    {
+        return SampleMain(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+    }
+    catch (const std::exception& e)
+    {
+        OutputDebugStringA("*** ERROR: Unhandled C++ exception thrown: ");
+        OutputDebugStringA(e.what());
+        OutputDebugStringA(" *** \n");
+        return 1;
+    }
+    catch (...)
+    {
+        OutputDebugStringA("*** ERROR: Unknown unhandled C++ exception thrown ***\n");
+        return 1;
+    }
 }
 
 // Windows procedure

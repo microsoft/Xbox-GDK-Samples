@@ -134,7 +134,6 @@
     <None Include="..\..\..\Media\Meshes\MicroscopeCity\scanner.sdkmesh">
       <Filter>Assets\Models</Filter>
     </None>
-    <None Include="ReadMe.docx" />
     <None Include="Time.hlsli">
       <Filter>Assets</Filter>
     </None>

@@ -185,7 +185,7 @@
       <ForcedUsingFiles>
       </ForcedUsingFiles>
       <Optimization>MaxSpeed</Optimization>
-      <PreprocessorDefinitions>ATG_ENABLE_TELEMETRY;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -214,7 +214,7 @@
       <ForcedUsingFiles>
       </ForcedUsingFiles>
       <Optimization>MaxSpeed</Optimization>
-      <PreprocessorDefinitions>ATG_ENABLE_TELEMETRY;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -243,7 +243,7 @@
       <ForcedUsingFiles>
       </ForcedUsingFiles>
       <Optimization>MaxSpeed</Optimization>
-      <PreprocessorDefinitions>ATG_ENABLE_TELEMETRY;NDEBUG;PROFILE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;PROFILE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -272,7 +272,7 @@
       <ForcedUsingFiles>
       </ForcedUsingFiles>
       <Optimization>MaxSpeed</Optimization>
-      <PreprocessorDefinitions>ATG_ENABLE_TELEMETRY;NDEBUG;PROFILE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;PROFILE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -299,7 +299,7 @@
       </ForcedUsingFiles>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>ATG_ENABLE_TELEMETRY;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -323,7 +323,7 @@
       </ForcedUsingFiles>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>ATG_ENABLE_TELEMETRY;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -464,7 +464,6 @@
       <DestinationFileName Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">Assets/%(Filename)%(Extension)</DestinationFileName>
     </CopyFileToFolders>
     <None Include="readme.md" />
-    <None Include="Readme.md" />
     <None Include="Time.hlsli" />
   </ItemGroup>
   <ItemGroup>
@@ -535,8 +534,4 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-  <ItemGroup>
-    <None Include="media\rId20.png" />
-    <None Include="media\rId23.png" />
-  </ItemGroup>
 </Project>

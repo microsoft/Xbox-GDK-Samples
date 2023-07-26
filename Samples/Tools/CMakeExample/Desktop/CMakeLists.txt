@@ -94,6 +94,10 @@ add_custom_command(TARGET mgccompile
 
 add_dependencies(${PROJECT_NAME} mgccompile shaders)
 
+if(NOT MSVC)
+  message(FATAL_ERROR "ERROR: This CMake file requires MSVC or MSVC-like compiler.")
+endif()
+
 # Recommended compiler switches:
 # /EHsc (C++ exception handling)
 # /fp:fast (Fast floating-point optimizations)
@@ -120,6 +124,20 @@ if(BUILD_USING_ONECORE)
     target_link_options(${PROJECT_NAME} PRIVATE "/SUBSYSTEM:WINDOWS,10.0" "/NODEFAULTLIB:kernel32.lib")
 endif()
 
+# /ZH:SHA_256 (secure source hashing)
+if((MSVC_VERSION GREATER_EQUAL 1924)
+  AND ((NOT (CMAKE_CXX_COMPILER_ID MATCHES "Clang")) OR (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 16.0)))
+  target_compile_options(${PROJECT_NAME} PRIVATE /ZH:SHA_256)
+endif()
+
+# For the Windows platform, Enable EH Continuation Metadata is recommended but may require updated middleware
+if((MSVC_VERSION GREATER_EQUAL 1928)
+  AND (CMAKE_SIZEOF_VOID_P EQUAL 8)
+  AND ((NOT (CMAKE_CXX_COMPILER_ID MATCHES "Clang")) OR (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 13.0)))
+  target_compile_options(${PROJECT_NAME} PRIVATE "$<$<NOT:$<CONFIG:DEBUG>>:/guard:ehcont>")
+  target_link_options(${PROJECT_NAME} PRIVATE "$<$<NOT:$<CONFIG:DEBUG>>:/guard:ehcont>")
+endif()
+
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
    # /sdl (Enable Additional Security Checks)
    # /permissive- (C++ conformance mode enabled)
@@ -132,11 +150,6 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
       target_compile_options(${PROJECT_NAME} PRIVATE /analyze)
    endif()
 
-   # /ZH:SHA_256 (secure source hashing)
-   if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.24)
-      target_compile_options(${PROJECT_NAME} PRIVATE /ZH:SHA_256)
-   endif()
-
    # /Zc:preprocessor (C99 conformant preprocessor)
    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.26)
       target_compile_options(${PROJECT_NAME} PRIVATE /Zc:preprocessor /wd5105)
@@ -144,13 +157,6 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 
    if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.28)
       target_compile_options(${PROJECT_NAME} PRIVATE /Zc:lambda)
-   endif()
-
-   # For the Windows platform, Enable EH Continuation Metadata is recommended but may require updated middleware
-   if((MSVC_VERSION GREATER_EQUAL 1928) AND (CMAKE_SIZEOF_VOID_P EQUAL 8)
-      AND ((NOT (CMAKE_CXX_COMPILER_ID MATCHES "Clang")) OR (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 13.0)))
-      target_compile_options(${PROJECT_NAME} PRIVATE "$<$<NOT:$<CONFIG:DEBUG>>:/guard:ehcont>")
-      target_link_options(${PROJECT_NAME} PRIVATE "$<$<NOT:$<CONFIG:DEBUG>>:/guard:ehcont>")
    endif()
 
    # /CETCOMPAT (CET Shadow Stack compatible)
@@ -190,6 +196,13 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
        -Wno-nested-anon-types
        -Wno-reserved-id-macro
        -Wno-unknown-pragmas)
+
+    if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 13.0)
+        target_compile_options(${PROJECT_NAME} PRIVATE -Wno-reserved-identifier)
+    endif()
+    if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 16.0)
+        target_compile_options(${PROJECT_NAME} PRIVATE -Wno-unsafe-buffer-usage)
+    endif()
 
     target_link_options(${PROJECT_NAME} PRIVATE /IGNORE:4078)
 endif()

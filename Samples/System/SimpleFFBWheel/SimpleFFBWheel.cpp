@@ -479,7 +479,10 @@ void Sample::Render()
 
 void Sample::SetupUI()
 {
-    m_descBox->SetText(g_DescText);
+    m_descBox->SetText(
+        L"Use the pedals or DPad up/down to accelerate or brake. The wheel's force feedback (Spring and Damper) will change based on the speed of the vehicle.\n\n"
+        L"Press the View button to simulate the effect of driving over a rough road or gravel (SawtoothUp)."
+    );
 }
 
 // Helper method to clear the back buffers.

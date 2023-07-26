@@ -226,6 +226,13 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
    # /favor:AMD64
    # /arch:AVX
    set(Console_ArchOptions /favor:AMD64 /arch:AVX)
+
+   # Xbox One titles should use this switch to optimize the vzeroupper codegen with VS 2022
+   if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.30)
+       set(Console_ArchOptions ${Console_ArchOptions} /d2vzeroupper-)
+       set(Console_ArchOptions_LTCG /d2:-vzeroupper-)
+   endif()
+
 endif()
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     # -march=btver2 to target AMD Jaguar CPU

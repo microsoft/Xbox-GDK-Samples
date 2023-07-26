@@ -11,7 +11,6 @@
 //--------------------------------------------------------------------------------------
 #include "pch.h"
 
-#ifdef ATG_ENABLE_TELEMETRY
 #include "ATGTelemetry.h"
 
 #include <XGame.h>
@@ -81,9 +80,6 @@ public:
         m_bHCInitialized{ false },
         m_authToken{},
         m_data{}
-#if _GAMING_XBOX
-        , m_notificationChangedHandle{ nullptr }
-#endif
     {
     }
 
@@ -93,50 +89,9 @@ public:
         {
             HCCleanup();
         }
-
-#if _GAMING_XBOX
-        if (m_notificationChangedHandle)
-        {
-            CancelMibChangeNotify2(m_notificationChangedHandle);
-            m_notificationChangedHandle = nullptr;
-        }
-#endif
     }
 
     void SendTelemetry()
-    {
-#if _GAMING_XBOX
-        NL_NETWORK_CONNECTIVITY_HINT hint{};
-        GetNetworkConnectivityHint(&hint);
-
-        // If the vm is being reused, this will return with internet access
-        if (hint.ConnectivityLevel == NL_NETWORK_CONNECTIVITY_LEVEL_HINT::NetworkConnectivityLevelHintInternetAccess
-            || hint.ConnectivityLevel == NL_NETWORK_CONNECTIVITY_LEVEL_HINT::NetworkConnectivityLevelHintConstrainedInternetAccess)
-        {
-            OutputDebugStringA("GetNetworkConnectivityHint()\n");
-            SendTelemetryInternal();
-        }
-        else
-        {
-            // The vm is not being reused and we should send when internet access is available
-            NotifyNetworkConnectivityHintChange([](void* context, NL_NETWORK_CONNECTIVITY_HINT connectivityHint)
-                {
-                    OutputDebugStringA("NotifyNetworkConnectivityHintChange()\n");
-                    auto atgTelemetry = static_cast<ATGTelemetry*>(context);
-                    if (connectivityHint.ConnectivityLevel == NL_NETWORK_CONNECTIVITY_LEVEL_HINT::NetworkConnectivityLevelHintInternetAccess
-                        || connectivityHint.ConnectivityLevel == NL_NETWORK_CONNECTIVITY_LEVEL_HINT::NetworkConnectivityLevelHintConstrainedInternetAccess)
-                    {
-                        atgTelemetry->SendTelemetryInternal();
-                    }
-                }, this, true, &m_notificationChangedHandle);
-        }
-#else
-        SendTelemetryInternal();
-#endif
-    }
-
-private:
-    void SendTelemetryInternal()
     {
         static bool sent = false;
 
@@ -155,6 +110,7 @@ private:
         }
     }
 
+private:
     std::string NewGuid()
     {
         GUID id = {};
@@ -416,14 +372,11 @@ private:
     bool m_bHCInitialized;
     std::string m_authToken;
     TelemetryData m_data;
-
-#if _GAMING_XBOX
-    HANDLE m_notificationChangedHandle;
-#endif
 };
 
 void ATG::SendLaunchTelemetry()
 {
+#ifndef ATG_DISABLE_TELEMETRY
     AsyncUniquePtr async = CreateAsync();
     async->callback = [](XAsyncBlock* ab)
     {
@@ -440,5 +393,6 @@ void ATG::SendLaunchTelemetry()
     {
         async.release();
     }
-}
 #endif
+}
+

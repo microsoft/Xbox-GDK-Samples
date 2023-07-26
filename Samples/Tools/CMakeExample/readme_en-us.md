@@ -247,3 +247,4 @@ See the **BWOIExample** for more details.
 |December 2022|Simplified Desktop scenario to use the ‘x64’ platform style rather than the custom ‘Gaming.Desktop.x64’<br />Reorganized .cmake files into their own subfolder.|
 |February 2023|Removed custom build option BUILD_FOR_LTCG in favor of CMake 3.9’s standard `CMAKE_INTERPROCEDURAL_OPTIMIZATION`.<br /> Updated for new VS 2022 17.5 switches.|
 |March 2023|Updated to add new target for Playfab.Services.C extension library.|
+|June 2023|Xbox One titles need to use `/d2vzeroupper-` with VS 2022 or later as the default behavior has flipped from VS 2019|

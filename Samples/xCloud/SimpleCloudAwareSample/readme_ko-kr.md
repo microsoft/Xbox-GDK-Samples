@@ -34,7 +34,7 @@ tak serve \--takx-file sample-layouts.takx
 이 샘플에서는 xCloud에 클라우드 인식 API를 사용하는 방법을 보여 줍니다.
 
 레이아웃 출처는 샘플 레이아웃 GitHub
-<https://github.com/microsoft/xbox-game-streaming-tools/tree/master/touch-adaptation-kit/touch-adaptation-bundles>입니다.
+<https://github.com/microsoft/xbox-game-streaming-tools/tree/main/touch-adaptation-kit/samples>입니다.
 
 # 버전 기록
 

@@ -35,7 +35,7 @@ touch the screen to see the touchpoints being read.
 This sample demonstrates how to use the cloud aware API for xCloud.
 
 Layouts are from sample layout GitHub:
-<https://github.com/microsoft/xbox-game-streaming-tools/tree/master/touch-adaptation-kit/touch-adaptation-bundles>
+<https://github.com/microsoft/xbox-game-streaming-tools/tree/main/touch-adaptation-kit/samples>
 
 # Version History
 

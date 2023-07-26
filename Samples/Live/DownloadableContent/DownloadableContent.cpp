@@ -21,12 +21,14 @@ using Microsoft::WRL::ComPtr;
 
 namespace
 {
+    Sample* s_sample;
+
     template <size_t bufferSize = 2048>
     void debugPrint(std::string_view format, ...)
     {
         assert(format.size() < bufferSize && "format string is too large, split up the string or increase the buffer size");
 
-        static char buffer[bufferSize];
+        static char buffer[bufferSize] = "";
 
         va_list args;
         va_start(args, format);
@@ -34,6 +36,15 @@ namespace
         va_end(args);
 
         OutputDebugStringA(buffer);
+
+        if (s_sample)
+        {
+            auto console = s_sample->GetConsole();
+            if (console)
+            {
+                console->AppendLineOfText(buffer);
+            }
+        }
     }
 
     const std::pair<XPackageKind, XPackageEnumerationScope> c_filterOptions[4] = {
@@ -46,6 +57,7 @@ namespace
 
 Sample::Sample() noexcept(false) :
     m_frame(0),
+    m_showConsole(false),
     m_storeContext(nullptr),
     m_asyncQueue(nullptr),
     m_packageInstallToken{},
@@ -100,6 +112,8 @@ Sample::~Sample()
 // Initialize the Direct3D resources required to run.
 void Sample::Initialize(HWND window, int width, int height)
 {
+    s_sample = this;
+
     m_gamePad = std::make_unique<GamePad>();
     m_keyboard = std::make_unique<Keyboard>();
     m_mouse = std::make_unique<Mouse>();
@@ -188,21 +202,15 @@ void Sample::RefreshStoreProducts()
 
         XStoreProductQueryHandle queryHandle = nullptr;
 
-        // This call occurs following output, this will be fixed by future update (bug:40153923)
-        // XERROR: HR:80070006 threadID:1060 Handle: already exists (00000000d5d1e1a0:StoreProductQuery)
         HRESULT hr = XStoreQueryAssociatedProductsResult(
             async,
             &queryHandle);
 
-        if (static_cast<unsigned int>(hr) == 0x803F6107) /* IAP_E_UNEXPECTED */
+        if (FAILED(hr))
         {
-            pThis->ErrorMessage("User has no entitlement or configs are invalid (Sandbox / ContentIdOverride / EKBIDOverride) : 0x%08X\n", hr);
-            delete async;
-            pThis->m_isStoreEnumerating = false;
-            return;
-        }
-        else if (FAILED(hr))
-        {
+            // June 2023 GDK removes entitled account and override requirement for XStore API
+            // to work in development, 0x803F6107 for this state should not longer be possible
+
             pThis->ErrorMessage("XStoreQueryAssociatedProductsResult failed : 0x%08X\n", hr);
             delete async;
             pThis->m_isStoreEnumerating = false;
@@ -306,9 +314,8 @@ void Sample::RefreshStoreProducts()
 
             storeButton->ButtonState().AddListenerWhen(UIButton::State::Focused, [pThis](UIButton* )
             {
-                pThis->m_legendText->SetDisplayText(UIDisplayString("[A] to Purchase or Download DLC, [Y] to Refresh, [VIEW] to Close Sample"));
+                pThis->m_legendText->SetDisplayText(UIDisplayString("[A] to Purchase or Download DLC, [Y] to Refresh, [VIEW] to Close Sample, [MENU] to Toggle logs."));
             });
-
         }
 
         XStoreCloseProductsQueryHandle(queryHandle);
@@ -641,7 +648,7 @@ void Sample::RefreshInstalledPackages()
 
         dlcButton->ButtonState().AddListenerWhen(UIButton::State::Focused, [this](UIButton* button)
         {
-            m_legendText->SetDisplayText(UIDisplayString("[A] to Mount or Unmount Package, [X] to Uninstall, [Y] to Refresh, [LB] + [RB] to Toggle filter, [VIEW] to Close Sample"));
+            m_legendText->SetDisplayText(UIDisplayString("[A] to Mount or Unmount Package, [X] to Uninstall, [Y] to Refresh, [LB] + [RB] to Toggle filter, [VIEW] to Close Sample, [MENU] to Toggle logs."));
             m_currentFocusStoreId = button->GetTypedSubElementById<UIStaticText>(ID("DLC_StoreID"))->GetDisplayText();
         });
     }
@@ -731,7 +738,7 @@ HRESULT Sample::AcquireLicense(const char* packageIdentifier, XStoreLicenseHandl
             {
                 ErrorMessage("AcquireLicense failed: %s : LM_E_CONTENT_NOT_IN_CATALOG.\n", packageIdentifier);
             }
-            if (static_cast<uint32_t>(hr) == 0x803F9006) /* LM_E_ENTITLED_USER_SIGNED_OUT */
+            else if (static_cast<uint32_t>(hr) == 0x803F9006) /* LM_E_ENTITLED_USER_SIGNED_OUT */
             {
                 ErrorMessage("AcquireLicense failed: %s : LM_E_ENTITLED_USER_SIGNED_OUT.\n", packageIdentifier);
             }
@@ -844,13 +851,13 @@ XTaskQueueRegistrationToken Sample::RegisterPackageEvents(XStoreLicenseHandle li
             {
                 package->isLicense = false;
             }
+
+            pThis->UnregisterPackageEvents(mountInfo->packageLicense, mountInfo->licenseLostEvent);
+            mountInfo->context = nullptr;
         }
 
         pThis->RefreshInstalledPackages();
         delete reinterpret_cast<PackageEventContext*>(context);
-
-        pThis->UnregisterPackageEvents(mountInfo->packageLicense, mountInfo->licenseLostEvent);
-        mountInfo->context = nullptr;
 
     }, &token);
 
@@ -873,23 +880,51 @@ void Sample::AddNewMountedPackage(std::string &storeId, XStoreLicenseHandle lice
     PackageMountInfo package { license, token, mountHandle, context };
     m_mountedPackageList.emplace(storeId, package);
 
-    const char filename[] = "\\Image.jpg";
-
     size_t pathSize;
     XPackageGetMountPathSize(mountHandle, &pathSize);
 
-    pathSize += sizeof(filename);
-    char* path = new (std::nothrow) char[pathSize];
+    char* mountPath = new (std::nothrow) char[pathSize];
 
-    XPackageGetMountPath(mountHandle, pathSize, path);
+    if (mountPath)
+    {
+        XPackageGetMountPath(mountHandle, pathSize, mountPath);
 
-    strcat_s(path, pathSize, filename);
+        std::filesystem::path exeFilePath(mountPath);
+        exeFilePath /= "AlternateExperience.exe";
+        std::filesystem::path dllFilePath(mountPath);
+        dllFilePath /= "ComboDll.dll";
+        std::filesystem::path jpgFilePath(mountPath);
+        jpgFilePath /= "Image.jpg";
 
-    debugPrint("DLC path : %s\n", path);
+        if (std::filesystem::exists(exeFilePath))
+        {
+            debugPrint("DLC path : %s\n", exeFilePath.generic_string<char>().c_str());
 
-    SetBackgroundImage(path);
+            char currentPath[MAX_PATH];
+            GetCurrentDirectoryA(MAX_PATH, currentPath);
 
-    delete[] path;
+            // The debugger will disconnect here as the current process is ending and a new one is spawned
+            XLaunchNewGame(exeFilePath.generic_string<char>().c_str(), currentPath, nullptr);
+        }
+        else if (std::filesystem::exists(dllFilePath))
+        {
+            debugPrint("DLC path : %s\n", dllFilePath.generic_string<char>().c_str());
+
+            ExecuteDLLFunction(dllFilePath.generic_string<char>().c_str());
+        }
+        else if (std::filesystem::exists(jpgFilePath))
+        {
+            debugPrint("DLC path : %s\n", jpgFilePath.generic_string<char>().c_str());
+
+            SetBackgroundImage(jpgFilePath.generic_string<char>().c_str());
+        }
+        else
+        {
+            debugPrint("DLC doesn't have a file I need.");
+        }
+
+        delete[] mountPath;
+    }
 }
 
 PackageMountInfo* Sample::GetPackageMountInfo(const std::string &storeId)
@@ -935,6 +970,7 @@ void Sample::InitializeUI()
     m_storeList       = m_uiManager.FindTypedById<UIVerticalStack>(ID("StoreList"));
     m_dlcList         = m_uiManager.FindTypedById<UIVerticalStack>(ID("DlcList"));
     m_twistMenu       = m_uiManager.FindTypedById<UITwistMenu>(ID("Filter"));
+    m_console         = m_uiManager.FindTypedById<UIPanel>(ID("ConsolePanel"));
 
     m_twistMenu->SelectedItemState().AddListener([this](UITwistMenu* twistMenu)
     {
@@ -988,6 +1024,51 @@ void Sample::SetBackgroundImage(const char* filename)
     m_backgroundImage->UseTextureData(buffer.get(), fileSize.LowPart);
 }
 
+void Sample::ExecuteDLLFunction(const char* filename)
+{
+    HMODULE hModule = LoadLibraryA(filename);
+
+    if (hModule == nullptr)
+    {
+        ErrorMessage("Failed to load DLL %s\n", filename);
+        return;
+    }
+
+    // The function name is a C style name. This is the name that will appear in the DLL's export table
+    // after it is built. This is specified within the Dll's header file through the {extern "C"} modifier.
+    std::string functionName = "GetDllInfo";
+
+    // Create and obtain a function_pointer to the function defined in our DLL.
+    // Both XBOX and Desktop DLLs in this sample define this function with the same signature for simplicity.
+    using FunctionPtr = std::add_pointer<void(const char*, size_t, char*)>::type;
+
+    // There is a compiler warning that appears when converting FARPROC_, which represents a function ptr
+    // with no args, to FunctionPtr. This is can be avoided by doing the following casts.
+    FunctionPtr getDllInfoPtr =
+        reinterpret_cast<FunctionPtr>(
+            reinterpret_cast<void*>
+            (GetProcAddress(hModule, functionName.c_str())));
+
+    if (getDllInfoPtr == nullptr)
+    {
+        ErrorMessage("Failed to find %s from %s export table!", functionName.c_str(), filename);
+        return;
+    }
+
+    // Call the example function with a string argument
+    std::string executableName = "DownloadableContent.exe";
+    char result[256] = {};
+    getDllInfoPtr(executableName.c_str(), 256, result);
+
+    char buffer[256] = {};
+    sprintf_s(buffer, 256, u8"Called %s:: %s", filename, functionName.c_str());
+    debugPrint(std::string(buffer));
+    sprintf_s(buffer, 256, u8"-- Result: %s", result);
+    debugPrint(std::string(buffer));
+
+    FreeLibrary(hModule);
+}
+
 void Sample::ErrorMessage(std::string_view format, ...)
 {
     const size_t bufferSize = 2048;
@@ -1003,7 +1084,7 @@ void Sample::ErrorMessage(std::string_view format, ...)
 
     m_errorMessage->SetDisplayText(UIDisplayString(buffer));
 
-    OutputDebugStringA(buffer);
+    debugPrint(buffer);
 }
 
 #pragma endregion
@@ -1045,7 +1126,7 @@ void Sample::Update(DX::StepTimer const& timer)
 
     // check if the "view" button was pressed and exit the sample if so
 
-    auto buttons = m_uiInputState.GetGamePadButtons(0);
+    const auto& buttons = m_uiInputState.GetGamePadButtons(0);
 
     if (buttons.view == GamePad::ButtonStateTracker::PRESSED)
     {
@@ -1054,11 +1135,23 @@ void Sample::Update(DX::StepTimer const& timer)
 
     // ... also exit if the Sample user presses the [ESC] key
 
-    auto keys = m_uiInputState.GetKeyboardKeys();
+    const auto& keys = m_uiInputState.GetKeyboardKeys();
 
     if (keys.IsKeyPressed(DirectX::Keyboard::Keys::Escape))
     {
         ExitSample();
+    }
+
+    // debug console
+
+    if (buttons.menu == GamePad::ButtonStateTracker::PRESSED ||
+        keys.IsKeyReleased(Keyboard::Keys::OemTilde))
+    {
+        m_showConsole = !m_showConsole;
+        if (m_console)
+        {
+            m_console->SetVisible(m_showConsole);
+        }
     }
 
     if (buttons.rightShoulder == GamePad::ButtonStateTracker::PRESSED ||

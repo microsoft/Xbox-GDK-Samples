@@ -3,7 +3,7 @@
 #   Title-managed Leaderboard Sample
 
 *This sample is compatible with the Microsoft Game Development Kit with
-Xbox Extensions (March 2022)*
+Xbox Extensions (October 2022)*
 
 # 
 

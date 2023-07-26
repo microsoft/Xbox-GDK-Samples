@@ -22,6 +22,8 @@
 cbuffer SkyboxConstants : register(b0)
 {
     float4x4 WorldViewProj;
+    float zMultiplier;
+    float3 padding;
 }
 
 struct VSOutput

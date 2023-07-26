@@ -1,0 +1,11 @@
+{
+    "$schema": "https://raw.githubusercontent.com/microsoft/xbox-game-streaming-tools/main/touch-adaptation-kit/schemas/takxconfig/v1/takxconfig.json",
+    "layouts": {
+      "path": "./layouts",
+      "default": "standard-variable-replacement"
+    },
+    "context": {
+        "path": "./context.json"
+    },
+    "version": "0.0.0.1"
+}

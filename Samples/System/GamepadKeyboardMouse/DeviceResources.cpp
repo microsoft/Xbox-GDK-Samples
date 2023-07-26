@@ -95,8 +95,6 @@ void DeviceResources::CreateDeviceResources()
 #endif
 
     params.GraphicsCommandQueueRingSizeBytes = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
-    params.GraphicsScratchMemorySizeBytes = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
-    params.ComputeScratchMemorySizeBytes = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
 
 #if defined(_GAMING_XBOX_SCARLETT) && (_GRDK_VER >= 0x585D070E /* GXDK Edition 221000 */)
     if (m_options & c_AmplificationShaders)

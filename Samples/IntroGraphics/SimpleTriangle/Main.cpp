@@ -35,10 +35,8 @@ LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 void ExitSample() noexcept;
 
 // Entry point
-int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
+int SampleMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR, _In_ int nCmdShow)
 {
-    UNREFERENCED_PARAMETER(lpCmdLine);
-
     if (!XMVerifyCPUSupport())
     {
 #ifdef _DEBUG
@@ -155,6 +153,26 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
     XGameRuntimeUninitialize();
 
     return static_cast<int>(msg.wParam);
+}
+
+int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
+{
+    try
+    {
+        return SampleMain(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+    }
+    catch (const std::exception& e)
+    {
+        OutputDebugStringA("*** ERROR: Unhandled C++ exception thrown: ");
+        OutputDebugStringA(e.what());
+        OutputDebugStringA(" *** \n");
+        return 1;
+    }
+    catch (...)
+    {
+        OutputDebugStringA("*** ERROR: Unknown unhandled C++ exception thrown ***\n");
+        return 1;
+    }
 }
 
 // Windows procedure

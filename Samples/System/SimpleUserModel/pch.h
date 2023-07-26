@@ -45,11 +45,9 @@
 #include <gxdk.h>
 #endif
 
-
 #if (_GRDK_VER < 0x55F01108 /* GDK Edition 220600 */)
 #error This sample requires the June 2022 GDK or later for PC
 #endif
-
 
 #ifdef _GAMING_XBOX_SCARLETT
 #include <d3d12_xs.h>
@@ -112,6 +110,8 @@
 #define UITK_ENABLE_FREETYPE
 #include "UITK.h"
 
+// To opt-out of telemetry uncomment the following line
+//#define ATG_DISABLE_TELEMETRY
 
 namespace DX
 {

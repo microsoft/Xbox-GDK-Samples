@@ -50,6 +50,63 @@
     <Filter Include="DLCPackagePC\Package\Assets">
       <UniqueIdentifier>{ff8aba59-b653-4edf-82d0-42b24cd740fc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DLCExePackage">
+      <UniqueIdentifier>{631b5e7e-8552-4eca-bbaf-0f3c2cf7e6ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLCExePackage\Package_Scarlett">
+      <UniqueIdentifier>{5bb22589-a10c-4a71-9813-00e19015b0c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLCExePackage\Package_XboxOne">
+      <UniqueIdentifier>{2984d5b8-50e4-4003-9adb-619241b057c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLCExePackage\Package_XboxOne\Assets">
+      <UniqueIdentifier>{cabd53fd-40b0-49d6-919f-e7f33a2f53b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLCExePackage\Package_Scarlett\Assets">
+      <UniqueIdentifier>{928433ea-7a11-43b8-be52-d28b0f1296d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLCExePackagePC">
+      <UniqueIdentifier>{5e515dfd-6fc1-48d7-8495-e306a7b93802}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLCExePackagePC\Package">
+      <UniqueIdentifier>{a7b861fc-eacc-40e8-972a-9ef74e43d6a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLCExePackagePC\Package\Assets">
+      <UniqueIdentifier>{83c53099-93d1-4629-a67b-ade40719b60d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLCExePackagePC\Package\Assets\Fonts">
+      <UniqueIdentifier>{67ec1f9c-b28d-4fcc-a123-29af4c233967}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLCExePackage\Package_XboxOne\Assets\Fonts">
+      <UniqueIdentifier>{81e79620-3b77-4fe2-bbdb-c165f5e6be0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLCExePackage\Package_Scarlett\Assets\Fonts">
+      <UniqueIdentifier>{ff927fde-5bdb-40ec-8ed6-f57aabd6c16f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLCDllPackage">
+      <UniqueIdentifier>{612d3f1f-7d97-4330-8fd6-ce2f7182c51a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLCDllPackage\Package_Scarlett">
+      <UniqueIdentifier>{5389ebf8-b041-4d07-8939-799b3db39e1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLCDllPackage\Package_XboxOne">
+      <UniqueIdentifier>{b8587650-8419-4313-be77-440b81d817c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLCDllPackage\Package_Scarlett\Assets">
+      <UniqueIdentifier>{f7e3fd1c-d1bd-4edb-a599-26717e1fbbac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLCDllPackage\Package_XboxOne\Assets">
+      <UniqueIdentifier>{8311c5e2-cc2a-4ef5-9086-168d11180d9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLCDllPackagePC">
+      <UniqueIdentifier>{f1117bf4-8552-489d-94e5-ee209f22e5f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLCDllPackagePC\Package">
+      <UniqueIdentifier>{d17e9289-daac-4139-be3f-afa2773271f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLCDllPackagePC\Package\Assets">
+      <UniqueIdentifier>{7f45e082-a226-44e6-a879-c6645f01ddfd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -112,10 +169,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ReadMe.docx" />
-    <None Include="Readme_ja-JP.docx" />
-    <None Include="Readme_ko-KR.docx" />
-    <None Include="Readme_zh-CN.docx" />
     <None Include="makescarlettpkg.cmd" />
     <None Include="makexboxonepkg.cmd" />
     <None Include="makepcpkg.cmd" />
@@ -219,6 +272,170 @@
     <None Include="DLCPackagePC\Package\Assets\SmallLogo.png">
       <Filter>DLCPackagePC\Package\Assets</Filter>
     </None>
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
+    <None Include="readme.md" />
+    <None Include="media\image1.png">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="media\image3.png">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="media\image4.jpeg">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="DLCExePackage\makedlcpkg.cmd">
+      <Filter>DLCExePackage</Filter>
+    </None>
+    <None Include="DLCExePackage\chunks.xml">
+      <Filter>DLCExePackage</Filter>
+    </None>
+    <None Include="DLCExePackage\Package_Scarlett\MicrosoftGame.Config">
+      <Filter>DLCExePackage\Package_Scarlett</Filter>
+    </None>
+    <None Include="DLCExePackage\Package_XboxOne\MicrosoftGame.Config">
+      <Filter>DLCExePackage\Package_XboxOne</Filter>
+    </None>
+    <None Include="DLCExePackagePC\Package\MicrosoftGame.Config">
+      <Filter>DLCExePackagePC\Package</Filter>
+    </None>
+    <None Include="DLCExePackagePC\makedlcpkg.cmd">
+      <Filter>DLCExePackagePC</Filter>
+    </None>
+    <None Include="DLCExePackagePC\chunks.xml">
+      <Filter>DLCExePackagePC</Filter>
+    </None>
+    <None Include="DLCDllPackage\makedlcpkg.cmd">
+      <Filter>DLCDllPackage</Filter>
+    </None>
+    <None Include="DLCDllPackage\Package_Scarlett\MicrosoftGame.Config">
+      <Filter>DLCDllPackage\Package_Scarlett</Filter>
+    </None>
+    <None Include="DLCDllPackage\Package_XboxOne\MicrosoftGame.Config">
+      <Filter>DLCDllPackage\Package_XboxOne</Filter>
+    </None>
+    <None Include="DLCDllPackage\Package_XboxOne\Assets\LargeLogo.png">
+      <Filter>DLCDllPackage\Package_XboxOne\Assets</Filter>
+    </None>
+    <None Include="DLCDllPackage\Package_XboxOne\Assets\Logo.png">
+      <Filter>DLCDllPackage\Package_XboxOne\Assets</Filter>
+    </None>
+    <None Include="DLCDllPackage\Package_XboxOne\Assets\SmallLogo.png">
+      <Filter>DLCDllPackage\Package_XboxOne\Assets</Filter>
+    </None>
+    <None Include="DLCDllPackage\Package_XboxOne\Assets\SplashScreen.png">
+      <Filter>DLCDllPackage\Package_XboxOne\Assets</Filter>
+    </None>
+    <None Include="DLCDllPackage\Package_XboxOne\Assets\StoreLogo.png">
+      <Filter>DLCDllPackage\Package_XboxOne\Assets</Filter>
+    </None>
+    <None Include="DLCDllPackage\Package_Scarlett\Assets\LargeLogo.png">
+      <Filter>DLCDllPackage\Package_Scarlett\Assets</Filter>
+    </None>
+    <None Include="DLCDllPackage\Package_Scarlett\Assets\Logo.png">
+      <Filter>DLCDllPackage\Package_Scarlett\Assets</Filter>
+    </None>
+    <None Include="DLCDllPackage\Package_Scarlett\Assets\SmallLogo.png">
+      <Filter>DLCDllPackage\Package_Scarlett\Assets</Filter>
+    </None>
+    <None Include="DLCDllPackage\Package_Scarlett\Assets\SplashScreen.png">
+      <Filter>DLCDllPackage\Package_Scarlett\Assets</Filter>
+    </None>
+    <None Include="DLCDllPackage\Package_Scarlett\Assets\StoreLogo.png">
+      <Filter>DLCDllPackage\Package_Scarlett\Assets</Filter>
+    </None>
+    <None Include="DLCDllPackage\chunks.xml">
+      <Filter>DLCDllPackage</Filter>
+    </None>
+    <None Include="DLCDllPackagePC\Package\MicrosoftGame.Config">
+      <Filter>DLCDllPackagePC\Package</Filter>
+    </None>
+    <None Include="DLCDllPackagePC\makedlcpkg.cmd">
+      <Filter>DLCDllPackagePC</Filter>
+    </None>
+    <None Include="DLCDllPackagePC\Package\Assets\LargeLogo.png">
+      <Filter>DLCDllPackagePC\Package\Assets</Filter>
+    </None>
+    <None Include="DLCDllPackagePC\Package\Assets\Logo.png">
+      <Filter>DLCDllPackagePC\Package\Assets</Filter>
+    </None>
+    <None Include="DLCDllPackagePC\Package\Assets\SmallLogo.png">
+      <Filter>DLCDllPackagePC\Package\Assets</Filter>
+    </None>
+    <None Include="DLCDllPackagePC\Package\Assets\SplashScreen.png">
+      <Filter>DLCDllPackagePC\Package\Assets</Filter>
+    </None>
+    <None Include="DLCDllPackagePC\Package\Assets\StoreLogo.png">
+      <Filter>DLCDllPackagePC\Package\Assets</Filter>
+    </None>
+    <None Include="DLCDllPackagePC\chunks.xml">
+      <Filter>DLCDllPackagePC</Filter>
+    </None>
+    <None Include="DLCExePackagePC\Package\Image.jpg">
+      <Filter>DLCExePackagePC\Package</Filter>
+    </None>
+    <None Include="DLCExePackage\Package_XboxOne\Image.jpg">
+      <Filter>DLCExePackage\Package_XboxOne</Filter>
+    </None>
+    <None Include="DLCExePackage\Package_Scarlett\Image.jpg">
+      <Filter>DLCExePackage\Package_Scarlett</Filter>
+    </None>
+    <None Include="DLCDllPackage\Package_XboxOne\Image.jpg">
+      <Filter>DLCDllPackage\Package_XboxOne</Filter>
+    </None>
+    <None Include="DLCDllPackage\Package_Scarlett\Image.jpg">
+      <Filter>DLCDllPackage\Package_Scarlett</Filter>
+    </None>
+    <None Include="DLCDllPackagePC\Package\Image.jpg">
+      <Filter>DLCDllPackagePC\Package</Filter>
+    </None>
+    <None Include="DLCExePackage\Package_Scarlett\Assets\LargeLogo.png">
+      <Filter>DLCExePackage\Package_Scarlett\Assets</Filter>
+    </None>
+    <None Include="DLCExePackage\Package_Scarlett\Assets\Logo.png">
+      <Filter>DLCExePackage\Package_Scarlett\Assets</Filter>
+    </None>
+    <None Include="DLCExePackage\Package_Scarlett\Assets\SmallLogo.png">
+      <Filter>DLCExePackage\Package_Scarlett\Assets</Filter>
+    </None>
+    <None Include="DLCExePackage\Package_Scarlett\Assets\SplashScreen.png">
+      <Filter>DLCExePackage\Package_Scarlett\Assets</Filter>
+    </None>
+    <None Include="DLCExePackage\Package_Scarlett\Assets\StoreLogo.png">
+      <Filter>DLCExePackage\Package_Scarlett\Assets</Filter>
+    </None>
+    <None Include="DLCExePackage\Package_XboxOne\Assets\LargeLogo.png">
+      <Filter>DLCExePackage\Package_XboxOne\Assets</Filter>
+    </None>
+    <None Include="DLCExePackage\Package_XboxOne\Assets\Logo.png">
+      <Filter>DLCExePackage\Package_XboxOne\Assets</Filter>
+    </None>
+    <None Include="DLCExePackage\Package_XboxOne\Assets\SplashScreen.png">
+      <Filter>DLCExePackage\Package_XboxOne\Assets</Filter>
+    </None>
+    <None Include="DLCExePackage\Package_XboxOne\Assets\SmallLogo.png">
+      <Filter>DLCExePackage\Package_XboxOne\Assets</Filter>
+    </None>
+    <None Include="DLCExePackage\Package_XboxOne\Assets\StoreLogo.png">
+      <Filter>DLCExePackage\Package_XboxOne\Assets</Filter>
+    </None>
+    <None Include="DLCExePackagePC\Package\Assets\LargeLogo.png">
+      <Filter>DLCExePackagePC\Package\Assets</Filter>
+    </None>
+    <None Include="DLCExePackagePC\Package\Assets\Logo.png">
+      <Filter>DLCExePackagePC\Package\Assets</Filter>
+    </None>
+    <None Include="DLCExePackagePC\Package\Assets\SmallLogo.png">
+      <Filter>DLCExePackagePC\Package\Assets</Filter>
+    </None>
+    <None Include="DLCExePackagePC\Package\Assets\SplashScreen.png">
+      <Filter>DLCExePackagePC\Package\Assets</Filter>
+    </None>
+    <None Include="DLCExePackagePC\Package\Assets\StoreLogo.png">
+      <Filter>DLCExePackagePC\Package\Assets</Filter>
+    </None>
+    <None Include="BuildAllDlc.cmd" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Assets\LargeLogo.png">
@@ -235,6 +452,12 @@
     </CopyFileToFolders>
     <CopyFileToFolders Include="Assets\StoreLogo.png">
       <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Layouts\consolewindow.json">
+      <Filter>Assets\Layouts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Layouts\slider.json">
+      <Filter>Assets\Layouts</Filter>
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>

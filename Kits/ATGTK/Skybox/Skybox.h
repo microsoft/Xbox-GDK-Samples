@@ -21,7 +21,8 @@ namespace DX
             D3D12_GPU_DESCRIPTOR_HANDLE cubeTexture,
             const DirectX::RenderTargetState& rtState,
             const DirectX::CommonStates& commonStates,
-            bool lhcoords = false)
+            bool lhcoords = false,
+            bool reverseZ = false)
         {
             using namespace DirectX;
             using namespace DirectX::SimpleMath;
@@ -29,12 +30,12 @@ namespace DX
             // Skybox effect
             EffectPipelineStateDescription skyPSD(&GeometricPrimitive::VertexType::InputLayout,
                 CommonStates::Opaque,
-                CommonStates::DepthRead,
+                reverseZ ? CommonStates::DepthReadReverseZ : CommonStates::DepthRead,
                 lhcoords ? CommonStates::CullCounterClockwise : CommonStates::CullClockwise,
                 rtState,
                 D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE);
 
-            m_effect = std::make_unique<SkyboxEffect>(device, skyPSD);
+            m_effect = std::make_unique<SkyboxEffect>(device, skyPSD, reverseZ);
             m_effect->SetTexture(cubeTexture, commonStates.LinearWrap());
 
             // "Skybox" geometry

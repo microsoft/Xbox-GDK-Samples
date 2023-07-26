@@ -227,11 +227,12 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
    # /arch:AVX2
    set(Console_ArchOptions /favor:AMD64 /arch:AVX2)
 
-    # Scarlett titles should use this switch to optimize the vzeroupper codegen (requires VS 2019 16.3 or later)
+   # Scarlett titles should use this switch to optimize the vzeroupper codegen (requires VS 2019 16.3 or later)
    if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.23)
        set(Console_ArchOptions ${Console_ArchOptions} /d2vzeroupper)
        set(Console_ArchOptions_LTCG /d2:-vzeroupper)
    endif()
+
 endif()
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     # -march=znver2 to target AMD Hercules CPU (requires clang v9; otherwise use znver1)

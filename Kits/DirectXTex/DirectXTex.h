@@ -47,7 +47,7 @@ struct IWICImagingFactory;
 struct IWICMetadataQueryReader;
 #endif
 
-#define DIRECTX_TEX_VERSION 198
+#define DIRECTX_TEX_VERSION 199
 
 
 namespace DirectX
@@ -220,6 +220,9 @@ namespace DirectX
 
         DDS_FLAGS_FORCE_DX9_LEGACY = 0x40000,
         // Force use of legacy header for DDS writer (will fail if unable to write as such)
+
+        DDS_FLAGS_FORCE_DXT5_RXGB = 0x80000,
+        // Force use of 'RXGB' instead of 'DXT5' for DDS write of BC3_UNORM data
 
         DDS_FLAGS_ALLOW_LARGE_FILES = 0x1000000,
         // Enables the loader to read large dimension .dds files (i.e. greater than known hardware requirements)
@@ -575,8 +578,9 @@ namespace DirectX
         TEX_FILTER_RGB_COPY_RED = 0x1000,
         TEX_FILTER_RGB_COPY_GREEN = 0x2000,
         TEX_FILTER_RGB_COPY_BLUE = 0x4000,
-        // When converting RGB to R, defaults to using grayscale. These flags indicate copying a specific channel instead
-        // When converting RGB to RG, defaults to copying RED | GREEN. These flags control which channels are selected instead.
+        TEX_FILTER_RGB_COPY_ALPHA = 0x8000,
+        // When converting RGB(A) to R, defaults to using grayscale. These flags indicate copying a specific channel instead
+        // When converting RGB(A) to RG, defaults to copying RED | GREEN. These flags control which channels are selected instead.
 
         TEX_FILTER_DITHER = 0x10000,
         // Use ordered 4x4 dithering for any required conversions

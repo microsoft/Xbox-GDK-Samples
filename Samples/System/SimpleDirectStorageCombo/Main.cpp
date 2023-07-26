@@ -10,9 +10,7 @@
 #include "pch.h"
 #include "SimpleDirectStorageCombo.h"
 
-#ifdef ATG_ENABLE_TELEMETRY
 #include "ATGTelemetry.h"
-#endif
 
 #include <appnotify.h>
 #include <XGameRuntimeInit.h>
@@ -134,9 +132,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
         // Sample Usage Telemetry
         //
         // Disable or remove this code block to opt-out of sample usage telemetry
-#ifdef ATG_ENABLE_TELEMETRY
         ATG::SendLaunchTelemetry();
-#endif
 
         g_sample->Initialize(hwnd, rc.right - rc.left, rc.bottom - rc.top);
 

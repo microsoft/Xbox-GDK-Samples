@@ -1,7 +1,7 @@
 # Cloud Variable Replacement Sample
 
 *This sample is compatible with the Microsoft Game Development Kit
-(March 2022)*
+(October 2022)*
 
 # Description
 
@@ -13,12 +13,19 @@ kit from within a game.
 # Using the sample
 
 Ensure that Game Streaming is enabled before launching the sample.
-Connect to the console running the sample using any compatible client
-app (such as the Xbox Game Streaming Test App). Once you are connected,
-the sample should change to reflect presence of a streaming client.
-Ensure the "standard-controller" TAK is loaded.
+Also ensure that on the streaming client (such as the Xbox Game 
+Streaming Test App) that Settings > Developer > Touch adaptation > 
+Enable sideload is enabled. Connect to the console running the sample 
+using the streaming client app. Once you are connected, the sample 
+should change to reflect presence of a streaming client.
+Ensure the "sample-layouts" bundle is loaded by running the following
+command in a Gaming command prompt:
 
-Press the trigger buttons to change the opacity of the B button on the
+```
+tak serve --takxconfig sample-layouts\takxconfig.json
+```
+
+Press dpad left and right to change the opacity of the B button on the
 TAK. Press dpad up to toggle the visibility of the Y button and dpad
 down to toggle the enabled state of the A button.
 
@@ -26,11 +33,14 @@ down to toggle the enabled state of the A button.
 
 This sample demonstrates how to use the cloud aware API for xCloud.
 
-Layouts are in the sample-layout directory and are from sample layout
-GitHub:
-<https://github.com/microsoft/xbox-game-streaming-tools/tree/master/touch-adaptation-kit/touch-adaptation-bundles>
+For more information, please see the following documentation:
+https://learn.microsoft.com/gaming/gdk/_content/gc/system/overviews/game-streaming/building-touch-layouts/game-streaming-touch-changing-layouts-game-state
 
 # Version History
+
+April 2024:
+- Updated sample to use the `OnClient` APIs to allow for per-client control of the on screen touch layout.
+- Added a `takxconfig.json` to `sample-layouts`.
 
 July 2021: Initial sample
 

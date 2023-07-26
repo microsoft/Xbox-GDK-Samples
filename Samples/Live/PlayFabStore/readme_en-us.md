@@ -140,6 +140,8 @@ October 2022: Modified to use XPlatCppSdk NuGet
 
 March 2023: Updated to Economy V2 and PlayFab.Services.C
 
+June 2023: Updated PFInventoryRedeemMicrosoftStoreItemsRequest to use an XUserHandle instead of an XboxToken when targeting GDK 2306+.
+
 ## Privacy Statement
 When compiling and running a sample, the file name of the sample executable will be sent to Microsoft to help track sample usage.
 To opt-out of this data collection, you can remove the block of code in Main.cpp labeled “Sample Usage Telemetry”.

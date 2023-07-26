@@ -726,7 +726,12 @@ void Sample::RedeemStoreProducts()
 
     PFInventoryRedeemMicrosoftStoreInventoryItemsRequest request{};
     request.entity = m_playFabResources->GetPlayerEntityKey();
-    request.xboxToken = m_playFabResources->GetXboxToken();
+
+#if(_GRDK_VER < 0x585D1095 /* GXDK Edition 230600 */)
+        request.xboxToken = m_playFabResources->GetXboxToken();
+#else
+        request.user = m_liveResources->GetUser();
+#endif
 
     auto async = new XAsyncBlock{};
     async->context = this;

@@ -14,8 +14,8 @@ if(NOT WIN32)
    message(FATAL_ERROR "This tool is compatible with Windows 10 and Xbox")
 endif()
 
-if(CMAKE_SIZEOF_VOID_P EQUAL 4)
-    message(FATAL_ERROR "ERROR: This tool requires 64-bit")
+if((NOT MSVC) OR (CMAKE_SIZEOF_VOID_P EQUAL 4))
+   message(FATAL_ERROR "ERROR: This tool requires MSVC or MSVC-like 64-bit compiler")
 endif()
 
 set(CMAKE_CXX_STANDARD 14)
@@ -45,12 +45,13 @@ target_link_libraries(${PROJECT_NAME} PRIVATE onecore_apiset.lib)
 
 target_link_options(${PROJECT_NAME} PRIVATE /SUBSYSTEM:CONSOLE,10.0 /NODEFAULTLIB:kernel32.lib /NODEFAULTLIB:onecore.lib)
 
+if((MSVC_VERSION GREATER_EQUAL 1924)
+  AND ((NOT (CMAKE_CXX_COMPILER_ID MATCHES "Clang")) OR (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 16.0)))
+  target_compile_options(${PROJECT_NAME} PRIVATE /ZH:SHA_256)
+endif()
+
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
    target_compile_options(${PROJECT_NAME} PRIVATE /permissive- /Zc:__cplusplus /Zc:inline)
-
-   if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.24)
-      target_compile_options(${PROJECT_NAME} PRIVATE /ZH:SHA_256)
-   endif()
 
    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.26)
       target_compile_options(${PROJECT_NAME} PRIVATE /Zc:preprocessor)

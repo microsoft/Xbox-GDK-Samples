@@ -92,6 +92,9 @@
 #include "ControllerFont.h"
 #include "ReadData.h"
 
+// To opt-out of telemetry uncomment the following line
+//#define ATG_DISABLE_TELEMETRY
+
 namespace DX
 {
     // Helper class for COM exceptions

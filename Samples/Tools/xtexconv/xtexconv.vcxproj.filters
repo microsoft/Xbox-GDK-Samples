@@ -13,12 +13,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Readme.docx" />
-    <None Include="xtexconv_ReadMe_ja-jp.docx" />
-    <None Include="xtexconv_ReadMe_ko-kr.docx" />
-    <None Include="xtexconv_ReadMe_zh-cn.docx" />
     <None Include="..\..\NuGet.config" />
     <None Include="packages.config" />
+    <None Include="readme.md" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="EXR">
@@ -35,5 +35,8 @@
     <ClInclude Include="DirectXTexEXR.h">
       <Filter>EXR</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="settings.manifest" />
   </ItemGroup>
 </Project>

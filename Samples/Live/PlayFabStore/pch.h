@@ -117,6 +117,8 @@
 #define PIXScopedEvent
 #endif
 
+// To opt-out of telemetry uncomment the following line
+//#define ATG_DISABLE_TELEMETRY
 
 namespace DX
 {

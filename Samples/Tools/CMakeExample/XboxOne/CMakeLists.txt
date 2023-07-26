@@ -72,6 +72,10 @@ add_dependencies(${PROJECT_NAME} mgccompile shaders)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE ${Console_Defines})
 
+if(NOT MSVC)
+  message(FATAL_ERROR "ERROR: This CMake file requires MSVC or MSVC-like compiler.")
+endif()
+
 # Recommended compiler switches:
 # /EHsc (C++ exception handling)
 # /fp:fast (Fast floating-point optimizations)
@@ -97,6 +101,12 @@ target_link_options(${PROJECT_NAME} PRIVATE ${Console_LinkOptions})
 
 target_compile_options(${PROJECT_NAME} PRIVATE ${Console_ArchOptions})
 
+# /ZH:SHA_256 (secure source hashing)
+if((MSVC_VERSION GREATER_EQUAL 1924)
+  AND ((NOT (CMAKE_CXX_COMPILER_ID MATCHES "Clang")) OR (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 16.0)))
+  target_compile_options(${PROJECT_NAME} PRIVATE /ZH:SHA_256)
+endif()
+
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
    # /permissive- (C++ conformance mode enabled)
    # /Zc:__cplusplus (Enable updated __cplusplus macro)
@@ -106,11 +116,6 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
    # /analyze (Code analysis)
    if(ENABLE_CODE_ANALYSIS)
       target_compile_options(${PROJECT_NAME} PRIVATE /analyze)
-   endif()
-
-   # /ZH:SHA_256 (secure source hashing)
-   if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.24)
-      target_compile_options(${PROJECT_NAME} PRIVATE /ZH:SHA_256)
    endif()
 
    # /Zc:preprocessor (C99 conformant preprocessor)
@@ -141,7 +146,7 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 
        # /LTCG (Link-time Code Generation)
        # Ignores warning from CMake generator use of /INCREMENTAL
-       target_link_options(${PROJECT_NAME} PRIVATE /IGNORE:4075)
+       target_link_options(${PROJECT_NAME} PRIVATE /IGNORE:4075 ${Console_ArchOptions_LTCG})
    endif()
 endif()
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -153,6 +158,13 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
        -Wno-nested-anon-types
        -Wno-reserved-id-macro
        -Wno-unknown-pragmas)
+
+    if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 13.0)
+        target_compile_options(${PROJECT_NAME} PRIVATE -Wno-reserved-identifier)
+    endif()
+    if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 16.0)
+        target_compile_options(${PROJECT_NAME} PRIVATE -Wno-unsafe-buffer-usage)
+    endif()
 
     target_link_options(${PROJECT_NAME} PRIVATE /IGNORE:4078)
 endif()

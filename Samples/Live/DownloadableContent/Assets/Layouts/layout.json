@@ -52,7 +52,7 @@
       "font": "Assets/Fonts/Courier",
       "size": 16,
       "colorUsage": "override",
-      "color": [ 192, 192, 192, 1.0 ],
+      "color": [ 255, 255, 192, 1.0 ],
       "verticalAlign": "top",
       "horizontalAlign": "left"
     },
@@ -186,11 +186,23 @@
       "colorUsage": "override",
       "texture": "Assets/progressbar.png",
       "outerUVExtents": [ 0.5, 0.0, 1.0, 1.0 ]
+    },
+    {
+      "id": "ScrollbarBackgroundStyle",
+      "classId": "SpriteStyle",
+      "color": [ 192, 192, 192, 1.0 ],
+      "colorUsage": "override",
+      "texture": "Assets/blank.png",
+      "spriteType": "nineSliced",
+      "innerUVExtents": [ 0.2, 0.2, 0.8, 0.8 ],
+      "padding": [ 0, 0, 0, 0 ]
     }
   ],
   "definitions": {
     "#dlc_button_prefab": "Assets/Layouts/dlc_button.json",
-    "#store_button_prefab": "Assets/Layouts/store_button.json"
+    "#store_button_prefab": "Assets/Layouts/store_button.json",
+    "#console_prefab": "Assets/Layouts/consolewindow.json",
+    "#slider_prefab": "Assets/Layouts/slider.json"
   },
   "layout": {
     "classId": "Panel",
@@ -360,7 +372,7 @@
         "classId": "StaticText",
         "size": [ 1600, 50 ],
         "position": [ 100, 850 ],
-        "text": "[Y] to Refresh, [VIEW] to Close Sample",
+        "text": "[Y] to Refresh, [VIEW] to Close Sample, [MENU] to Toggle logs.",
         "isLegend": true,
         "styleId": "Basic_Legend_Style"
       },
@@ -371,6 +383,24 @@
         "position": [ 100, 800 ],
         "text": "Last error : ",
         "styleId": "Basic_Store_Style"
+      },
+      {
+        "classId": "Panel",
+        "id": "ConsolePanel",
+        "size": [ 1720, 700 ],
+        "position": [ 100, 100 ],
+        "visible": false,
+        "style": {
+          "classId": "SpriteStyle",
+          "color": [ 0, 0, 0, 0.8 ],
+          "colorUsage": "override"
+        },
+        "subElements": [
+          {
+            "id": "ConsoleWindow",
+            "prefabRef": "#console_prefab"
+          }
+        ]
       }
     ]
   }

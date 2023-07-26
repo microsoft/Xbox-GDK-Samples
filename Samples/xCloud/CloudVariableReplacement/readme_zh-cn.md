@@ -23,7 +23,7 @@ dpad 的可见性，切换 A 按钮的启用状态。
 此示例演示如何使用适用于 xCloud 的云感知 API。
 
 布局来自示例布局目录，同时也来自示例布局
-GitHub：<https://github.com/microsoft/xbox-game-streaming-tools/tree/master/touch-adaptation-kit/touch-adaptation-bundles>
+GitHub：<https://github.com/microsoft/xbox-game-streaming-tools/tree/main/touch-adaptation-kit/samples>
 
 # 版本历史记录
 

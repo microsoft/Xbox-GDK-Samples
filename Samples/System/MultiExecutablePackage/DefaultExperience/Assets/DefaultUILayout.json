@@ -1,0 +1,417 @@
+﻿{
+  "$schema": "https://atgsamplessa.blob.core.windows.net/uitkschema/latest/layout.schema.json",
+  "definitions": {
+    "#fullscreen": [ 1920, 1080 ],
+    "#primary_color_opaque80": [ 227, 211, 177, 0.8 ],
+    "#primary_color_opaque76": [ 227, 211, 177, 0.76 ],
+    "#primary_color_opaque30": [ 227, 211, 177, 0.3 ],
+    "#primary_color_opaque10": [ 227, 211, 177, 0.1 ],
+    "#black": [ 0, 0, 0, 1.0 ]
+  },
+  "styles": [
+    {
+      "id": "basic_panel_style",
+      "classId": "SpriteStyle",
+      "spriteStyle": {
+        "colorUsage": "override",
+        "color": [ 47, 47, 47, 1.0 ]
+      }
+    },
+    {
+      "id": "base_text_style",
+      "classId": "TextStyle",
+      "font": "Assets/Fonts/SegoeUI",
+      "color": [ 140, 198, 199, 1.0 ],
+      "size": 18,
+      "colorUsage": "override",
+      "horizontalAlign": "left",
+      "verticalAlign": "top"
+    },
+    {
+      "id": "header_text_style",
+      "classId": "TextStyle",
+      "font": "Assets/Fonts/SegoeUI_36pt_sharp",
+      "color": [ 225, 225, 225, 0.8 ],
+      "size": 48,
+      "colorUsage": "override",
+      "horizontalAlign": "left",
+      "verticalAlign": "top"
+    },
+    {
+      "id": "menu_title_text_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": [ 227, 211, 177, 0.8 ],
+      "font": "Assets/Fonts/segoeui_36pt_sharp",
+      "size": 48,
+      "horizontalAlign": "left",
+      "verticalAlign": "middle"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "ATG_Logo_Style",
+      "spriteStyle": {
+        "colorUsage": "override",
+        "color": [ 195, 181, 152, 1.0 ],
+        "texture": "Assets/LOGO_ATG_SMALL.png"
+      }
+    },
+
+    {
+      "id": "button_default_style",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#primary_color_opaque10"
+    },
+    {
+      "id": "button_focused_style",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#primary_color_opaque30"
+    },
+    {
+      "id": "button_pressed_style",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#primary_color_opaque76"
+    },
+    {
+      "id": "button_default_text_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": "#primary_color_opaque80",
+      "font": "Assets/Fonts/segoeuisb_27pt_sharp",
+      "size": 36,
+      "weight": "Bold",
+      "horizontalAlign": "center",
+      "verticalAlign": "middle"
+    },
+    {
+      "id": "button_focused_text_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": "#black",
+      "font": "Assets/Fonts/segoeuisb_27pt_sharp",
+      "size": 36,
+      "weight": "Bold",
+      "horizontalAlign": "center",
+      "verticalAlign": "middle"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Sample_Text_Style",
+      "colorUsage": "override",
+      "color": [ 195, 181, 152, 1.0 ],
+      "verticalAlign": "bottom",
+      "horizontalAlign": "left"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Dark_Panel_Style",
+      "colorUsage": "override",
+      "color": [ 38, 38, 38, 1.0 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Invisible_Panel_Style",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 0.0 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Slider_Button_Style",
+      "colorUsage": "setExisting",
+      "color": [ 255, 255, 255, 1.0 ],
+      "texture": "Assets/Slider_Unfocused.png"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Slider_Focused_Button_Style",
+      "inheritsFromId": "Slider_Button_Style",
+      "texture": "Assets/Slider_Focused.png"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Slider_Disabled_Button_Style",
+      "inheritsFromId": "Slider_Button_Style",
+      "texture": "Assets/Slider_Disabled.png"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Slider_Pressed_Button_Style",
+      "inheritsFromId": "Slider_Button_Style",
+      "texture": "Assets/Slider_Pressed.png"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Slider_Hovered_Button_Style",
+      "inheritsFromId": "Slider_Button_Style",
+      "texture": "Assets/Slider_Hovered.png"
+    },
+
+    {
+      "classId": "SpriteStyle",
+      "id": "User_Info_Panel_Style",
+      "horizontalAlign": "right",
+      "colorUsage": "override",
+      "color": [ 160, 50, 50, 1.0 ]
+    },
+    {
+      "id": "gamerpic_style",
+      "classId": "SpriteStyle"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Gamer_Tag_Style",
+      "colorUsage": "override",
+      "color": [ 195, 181, 152, 1.0 ],
+      "verticalAlign": "top",
+      "horizontalAlign": "middle"
+    }
+  ],
+  "layout": {
+    "id": "SamplePanel",
+    "classId": "panel",
+    "styleId": "basic_panel_style",
+    "panel": {
+      "positioningAnchor": [ "left", "top" ],
+      "position": [ 0, 0 ],
+      "sizingAnchor": [ "left", "top" ],
+      "size": "#fullscreen"
+    },
+    "childElements": [
+      {
+        "classId": "Image",
+        "id": "ATG_Logo_Image",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 90, 40 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 100, 110 ],
+        "focusable": false,
+        "styleId": "ATG_Logo_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Panel_Title_Label",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "text": "MultiExecutablePackage Sample",
+        "position": [ 200, 40 ],
+        "size": [ 1550, 120 ],
+        "focusable": false,
+        "styleId": "menu_title_text_style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "header_text",
+        "styleId": "header_text_style",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 150, 285 ],
+        "sizingAnchor": [ "left", "top" ],
+        "text": "DefaultExperience.exe",
+        "size": [ 800, 200 ],
+        "focusable": false
+      },
+
+      {
+        "id": "XLaunch_Other_Button",
+        "classId": "Button",
+        "styleId": "button_default_style",
+        "focusedStyleId": "button_focused_style",
+        "pressedStyleId": "button_pressed_style",
+        "hoveredStyleId": "button_focused_style",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 150, 600 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 400, 75 ],
+        "focusable": true,
+        "subElements": [
+          {
+            "id": "button_label",
+            "classId": "StaticText",
+            "styleId": "button_default_text_style",
+            "text": "Xlaunch other game",
+            "size": [ 400, 75 ]
+          }
+        ]
+      },
+      {
+        "id": "Switch_User_Button",
+        "classId": "Button",
+        "styleId": "button_default_style",
+        "focusedStyleId": "button_focused_style",
+        "pressedStyleId": "button_pressed_style",
+        "hoveredStyleId": "button_focused_style",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 150, 690 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 400, 75 ],
+        "focusable": true,
+        "subElements": [
+          {
+            "id": "button_label",
+            "classId": "StaticText",
+            "styleId": "button_default_text_style",
+            "text": "Switch user",
+            "size": [ 400, 75 ]
+          }
+        ]
+      },
+      {
+        "id": "Load_DLL_Button",
+        "classId": "Button",
+        "styleId": "button_default_style",
+        "focusedStyleId": "button_focused_style",
+        "pressedStyleId": "button_pressed_style",
+        "hoveredStyleId": "button_focused_style",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 1050, 275 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 400, 75 ],
+        "focusable": true,
+        "subElements": [
+          {
+            "id": "button_label",
+            "classId": "StaticText",
+            "styleId": "button_default_text_style",
+            "text": "Load DLL",
+            "size": [ 400, 75 ]
+          }
+        ]
+      },
+      {
+        "id": "Run_Utility_Button",
+        "classId": "Button",
+        "styleId": "button_default_style",
+        "focusedStyleId": "button_focused_style",
+        "pressedStyleId": "button_pressed_style",
+        "hoveredStyleId": "button_focused_style",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 1050, 365 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 400, 75 ],
+        "focusable": true,
+        "subElements": [
+          {
+            "id": "button_label",
+            "classId": "StaticText",
+            "styleId": "button_default_text_style",
+            "text": "Run utility.exe",
+            "size": [ 400, 75 ]
+          }
+        ]
+      },
+
+      {
+        "classId": "Panel",
+        "id": "Output_Console_Window_Outer_Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "position": [ 1050, 450 ],
+        "size": [ 850, 610 ],
+        "styleId": "Dark_Panel_Style",
+        "focusable": false,
+        "childElements": [
+          {
+            "classId": "ConsoleWindow",
+            "id": "Output_Console_Window",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "position": [ 0, 0 ],
+            "size": [ 850, 610 ],
+            "focusable": false,
+            "maxConsoleLines": 200,
+            "styleId": "Sample_Text_Style",
+            "verticalSliderSubElementId": "Output_Console_Window_Slider",
+            "viewportPanelSubElementId": "Output_Console_Window_Panel",
+            "subElements": [
+              {
+                "classId": "Panel",
+                "id": "Output_Console_Window_Panel",
+                "positioningAnchor": [ "left", "top" ],
+                "position": [ 0, 0 ],
+                "sizingAnchor": [ "left", "top" ],
+                "size": [ 850, 610 ],
+                "focusable": false,
+                "styleId": "Invisible_Panel_Style"
+              },
+              {
+                "classId": "Slider",
+                "id": "Output_Console_Window_Slider",
+                "size": [ 35, 610 ],
+                "style": {
+                  "classId": "NullStyle"
+                },
+                "thumbButtonSubElementId": "Output_Console_Window_Slider_Thumb",
+                "backgroundSubElementId": "Output_Console_Window_Slider_Background",
+                "sliderOrientation": "TopToBottom",
+                "sliderType": "discrete",
+                "numDiscreteSteps": 1,
+                "initialValue": 0,
+                "sizingAnchor": [ "right", "top" ],
+                "positioningAnchor": [ "right", "top" ],
+                "focusable": false,
+                "subElements": [
+                  {
+                    "classId": "Image",
+                    "id": "Output_Console_Window_Slider_Background",
+                    "size": [ 35, 610 ],
+                    "focusable": false,
+                    "style": {
+                      "classId": "SpriteStyle",
+                      "color": [ 128, 128, 128, 1.0 ],
+                      "colorUsage": "override"
+                    }
+                  },
+                  {
+                    "classId": "Button",
+                    "id": "Output_Console_Window_Slider_Thumb",
+                    "size": [ 35, 45 ],
+                    "styleId": "Slider_Button_Style",
+                    "focusable": false,
+                    "focusedStyleId": "Slider_Focused_Button_Style",
+                    "hoveredStyleId": "Slider_Hovered_Button_Style",
+                    "pressedStyleId": "Slider_Pressed_Button_Style",
+                    "disabledStyleId": "Slider_Disabled_Button_Style"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+
+      {
+        "classId": "VerticalStackPanel",
+        "id": "User_Info_Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "position": [ 1720, 50 ],
+        "styleId": "User_Info_Panel_Style",
+        "stackingOrientation": "down",
+        "focusable": false,
+        "childElements": [
+          {
+            "id": "Gamerpic",
+            "classId": "Image",
+            "styleId": "Gamerpic_Style",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "focusable": false,
+            "size": [ 160, 160 ]
+          },
+          {
+            "classId": "StaticText",
+            "id": "Gamertag_Label",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "text": "Gamer Tag:",
+            "focusable": false,
+            "styleId": "Gamer_Tag_Style"
+          }
+        ]
+      }
+
+    ]
+  }
+}

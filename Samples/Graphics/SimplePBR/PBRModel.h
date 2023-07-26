@@ -95,7 +95,7 @@ namespace ATG
             EffectPipelineStateDescription pbrEffectPipelineState(
                 &GeometricPrimitive::VertexType::InputLayout,
                 CommonStates::Opaque,
-                CommonStates::DepthDefault,
+                CommonStates::DepthReverseZ,
                 CommonStates::CullClockwise,
                 rtState,
                 D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE);

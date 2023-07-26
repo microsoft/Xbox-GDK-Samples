@@ -24,6 +24,7 @@ using Microsoft::WRL::ComPtr;
 //#define ENABLE_DS_HS
 //#define ENABLE_DXR
 //#define ENABLE_AS
+//#define ENABLE_SCRATCH
 
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wcovered-switch-default"
@@ -260,8 +261,12 @@ void Sample::CreateDevice()
 #endif
 
     params.GraphicsCommandQueueRingSizeBytes = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
+
+#ifdef ENABLE_SCRATCH
+    // If no shaders use scratch memory, leaving these values at 0 saves some title memory.
     params.GraphicsScratchMemorySizeBytes = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
     params.ComputeScratchMemorySizeBytes = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
+#endif
 
 #ifndef ENABLE_GS
     // When not using the Geometry Shader stage, setting this value to TRUE saves some title memory.
