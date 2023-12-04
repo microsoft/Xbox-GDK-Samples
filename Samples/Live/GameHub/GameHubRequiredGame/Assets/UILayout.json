@@ -1,0 +1,102 @@
+﻿{
+  "$schema": "https://atgsamplessa.blob.core.windows.net/uitkschema/latest/layout.schema.json",
+  "definitions": {
+    "#fullscreen": [ 1920, 1080 ]
+  },
+  "styles": [
+    {
+      "id": "BasicPanelStyle",
+      "classId": "SpriteStyle",
+      "spriteStyle": {
+        "colorUsage": "override",
+        "color": [ 38, 38, 38, 1.0 ]
+      }
+    },
+    {
+      "id": "FilePanelStyle",
+      "classId": "SpriteStyle",
+      "spriteStyle": {
+        "colorUsage": "override",
+        "color": [ 0, 0, 0, 1.0 ]
+      }
+    },
+    {
+      "id": "MainTextStyle",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "size": 18,
+      "verticalAlign": "top",
+      "horizontalAlign": "left",
+      "legendFont": "Assets/Fonts/XboxOneControllerLegendSmall"
+    }
+  ],
+  "layout": {
+    "id": "SamplePanel",
+    "classId": "panel",
+    "styleId": "BasicPanelStyle",
+    "panel": {
+      "positioningAnchor": [ "left", "top" ],
+      "position": [ 0, 0 ],
+      "sizingAnchor": [ "left", "top" ],
+      "size": "#fullscreen",
+      "childElements": [
+        {
+          "id": "FilePanel",
+          "classId": "Panel",
+          "positioningAnchor": [ "left", "top" ],
+          "sizingAnchor": [ "left", "top" ],
+          "position": [ 40, 390 ],
+          "size": [ 1840, 200 ],
+          "styleId": "FilePanelStyle"
+        },
+        {
+          "classId": "StaticText",
+          "id": "MainText",
+          "positioningAnchor": [ "left", "top" ],
+          "sizingAnchor": [ "left", "top" ],
+          "position": [ 50, 200 ],
+          "text": "This is the blank game which is meant for demonstrating the GameHub sample feature.",
+          "styleId": "MainTextStyle"
+        },
+        {
+          "classId": "StaticText",
+          "id": "SharedPLSDescription1Text",
+          "positioningAnchor": [ "left", "top" ],
+          "sizingAnchor": [ "left", "top" ],
+          "position": [ 50, 300 ],
+          "text": "Title can read files in shared Persistent Local Storage of other title by using XPersistentLocalStorageMountForPackage.",
+          "styleId": "MainTextStyle"
+        },
+        {
+          "classId": "StaticText",
+          "id": "SharedPLSDescription2Text",
+          "positioningAnchor": [ "left", "top" ],
+          "sizingAnchor": [ "left", "top" ],
+          "position": [ 50, 350 ],
+          "text": "The below file is read from the Shared Persistent Local Storage of the GameHub sample.",
+          "styleId": "MainTextStyle"
+        },
+        {
+          "classId": "StaticText",
+          "id": "SharedPLSFileText",
+          "positioningAnchor": [ "left", "top" ],
+          "sizingAnchor": [ "left", "top" ],
+          "position": [ 50, 400 ],
+          "text": "<File name and file content should be written here>",
+          "styleId": "MainTextStyle"
+        },
+        {
+          "classId": "StaticText",
+          "id": "ExitText",
+          "positioningAnchor": [ "left", "top" ],
+          "sizingAnchor": [ "left", "top" ],
+          "position": [ 50, 700 ],
+          "text": "Press [view] or ESC key to launch the GameHub sample.",
+          "styleId": "MainTextStyle",
+          "isLegend": true
+        }
+      ]
+    }
+  }
+}

@@ -34,8 +34,8 @@ namespace
 typedef struct LampArrayContext
 {
     ComPtr<ILampArray> lampArray;
-    std::unique_ptr<LampArrayColor> lampColors;
-    std::unique_ptr<uint32_t> lampIndices;
+    std::unique_ptr<LampArrayColor[]> lampColors;
+    std::unique_ptr<uint32_t[]> lampIndices;
 
     std::map<uint32_t, double> lampXPositions;
     std::map<uint32_t, double> lampWheelAngles;

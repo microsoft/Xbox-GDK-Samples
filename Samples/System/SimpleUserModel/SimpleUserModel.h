@@ -73,6 +73,13 @@ private:
         _In_ XUserChangeEvent event
     );
 
+    static void CALLBACK UserDeviceAssociationChangedCallback(
+        _In_opt_ void* context,
+        _In_ const XUserDeviceAssociationChange* change
+    );
+
+    static void LoopFindControllerForUserWithUiAsync(_In_ void* context);
+
 private:
     // Device resources.
     std::unique_ptr<DX::DeviceResources>        m_deviceResources;
@@ -101,5 +108,6 @@ private:
     XUserHandle                                 m_user;
     XUserLocalId                                m_userLocalId;
     XTaskQueueRegistrationToken                 m_userChangeEventCallbackToken;
+    XTaskQueueRegistrationToken                 m_userDeviceAssociationChangedCallbackToken;
     XTaskQueueHandle                            m_taskQueue;
 };

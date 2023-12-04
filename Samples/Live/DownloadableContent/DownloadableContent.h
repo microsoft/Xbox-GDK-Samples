@@ -22,103 +22,81 @@ using namespace ATG::UITK;
 
 class Sample;
 
-// XPackageDetails objects returned by XPackageEnumeratePackages don't stick around past the enumeration.
-// This struct will keeps the strings around.
-struct PackageDetails
+enum class EnumMountProgress
 {
-    PackageDetails() = default;
+    Idle,
+    Acquire,
+    WaitAcquire,
+    Mount,
+    WaitMount,
+    Use
+};
 
-    PackageDetails(const XPackageDetails* package) :
+struct PackageInfo
+{
+    PackageInfo() = default;
+
+    PackageInfo(const XPackageDetails* package) :
         packageIdentifier{ package->packageIdentifier },
-        version{ package->version },
-        kind{ package->kind },
         displayName{ package->displayName },
-        description{ package->description },
-        publisher{ package->publisher },
         storeId{ package->storeId },
-        installing{ package->installing },
-        isMounted{ false },
-        isLicense { false },
-        isBusy { false },
         button{ nullptr }
     {
-    }
+    };
 
     std::string packageIdentifier;
-    XVersion version;
-    XPackageKind kind;
     std::string displayName;
-    std::string description;
-    std::string publisher;
     std::string storeId;
-    bool installing;
-    bool isMounted;
-    bool isLicense;
-    bool isBusy;
+
     std::shared_ptr<UIButton> button;
 };
 
-struct PackageEventContext
+struct TrackedPackage
 {
-    Sample *pThis;
-    std::string storeId;
-};
+    TrackedPackage() = default;
 
-struct PackageMountInfo
-{
-    XStoreLicenseHandle packageLicense;
+    TrackedPackage(std::string packageidentifier, std::string storeid) :
+        packageIdentifier{ packageidentifier },
+        storeId{ storeid },
+        progress{ EnumMountProgress::Idle },
+        isMounted{ false },
+        isLicensed{ false },
+        licenseHandle{ nullptr },
+        licenseLostEvent{ 0 },
+        mountHandle{ nullptr }
+    {
+    };
+
+    std::string packageIdentifier;
+    std::string storeId;
+    EnumMountProgress progress;
+
+    bool isMounted;
+    bool isLicensed;
+
+    XStoreLicenseHandle licenseHandle;
     XTaskQueueRegistrationToken licenseLostEvent;
     XPackageMountHandle mountHandle;
-    PackageEventContext *context;
 };
 
-struct StoreProductDetails
+struct ProductInfo
 {
-    StoreProductDetails() = default;
+    ProductInfo() = default;
 
-    StoreProductDetails(const XStoreProduct* package) :
-        storeId{ package->storeId },
-        title{ package->title },
-        description{ package->description },
-        language{ package->language },
-        inAppOfferToken{ package->inAppOfferToken ? package->inAppOfferToken : "" },
-        linkUri{ package->linkUri },
-        productKind{ package->productKind },
-        price{ package->price },
-        hasDigitalDownload{ package->hasDigitalDownload },
-        isInUserCollection{ package->isInUserCollection },
-        keywordsCount{ package->keywordsCount },
-        keywords{ package->keywords },
-        skusCount{ package->skusCount },
-        skus{ package->skus },
-        imagesCount{ package->imagesCount },
-        images{ package->images },
-        videosCount{ package->videosCount },
-        videos{ package->videos },
+    ProductInfo(const XStoreProduct* product) :
+        storeId{ product->storeId },
+        title{ product->title },
+        isInUserCollection{ product->isInUserCollection },
         isBusy{ false },
         button{ nullptr }
     {
-    }
+    };
 
     std::string storeId;
     std::string title;
-    std::string description;
-    std::string language;
-    std::string inAppOfferToken;
-    std::string linkUri;
-    XStoreProductKind productKind;
-    XStorePrice price;
-    bool hasDigitalDownload;
     bool isInUserCollection;
-    uint32_t keywordsCount;
-    const char** keywords;
-    uint32_t skusCount;
-    XStoreSku* skus;
-    uint32_t imagesCount;
-    XStoreImage* images;
-    uint32_t videosCount;
-    XStoreVideo* videos;
     bool isBusy;
+
     std::shared_ptr<UIButton> button;
 };
 
@@ -133,13 +111,6 @@ public:
         AllRelatedPackages,
         CurrentTitleOnly,
         RelatedTitlesOnly
-    };
-
-    enum class EnumFocusArea
-    {
-        None,
-        InstalledPackages,
-        StoreProducts
     };
 
     Sample() noexcept(false);
@@ -168,23 +139,16 @@ public:
 
     // Store Methods
     void RefreshStoreProducts();
-    void PurchaseStoreProduct(StoreProductDetails &package);
-    void DownloadStorePackage(StoreProductDetails &package);
-    StoreProductDetails* GetStoreProductDetail(const std::string &storeId);
-    void StartInstallMonitor(const char* identity, StoreProductDetails &package);
+    void PurchaseStoreProduct(ProductInfo& product);
+    void DownloadStorePackage(ProductInfo& product);
+    void StartInstallMonitor(const char* identity, ProductInfo& product);
 
     // DLC Methods
     void RefreshInstalledPackages();
-    HRESULT MountPackage(const char* packageIdentifier, XPackageMountHandle* mountHandle);
-    HRESULT AcquireLicense(const char* packageIdentifier, XStoreLicenseHandle* licenseHandle);
-    void MountSelectedPackage(PackageDetails &package);
-    void UnmountSelectedPackage(PackageDetails &package);
-    XTaskQueueRegistrationToken RegisterPackageEvents(XStoreLicenseHandle license, PackageEventContext *context);
-    void UnregisterPackageEvents(XStoreLicenseHandle license, XTaskQueueRegistrationToken licenseLostEvent);
-    void AddNewMountedPackage(std::string &storeId, XStoreLicenseHandle license, XTaskQueueRegistrationToken token, XPackageMountHandle mountHandle, PackageEventContext *context);
-    PackageMountInfo* GetPackageMountInfo(const std::string &storeId);
-    PackageDetails* GetPackageDetail(const std::string &storeId);
-    void UninstallPackage(PackageDetails& package);
+    void ProcessMountingPackage();
+    void MountSelectedPackage(TrackedPackage& package);
+    void UnmountSelectedPackage(TrackedPackage& package);
+    void UninstallPackage(PackageInfo& package);
 
     // UI Methods
     std::shared_ptr<ATG::UITK::UIConsoleWindow> GetConsole() const
@@ -193,6 +157,9 @@ public:
             m_console->GetTypedSubElementById<ATG::UITK::UIConsoleWindow>(ATG::UITK::ID("ConsoleWindow")) :
             nullptr;
     }
+
+    template <size_t bufferSize = 2048>
+    void ErrorMessage(std::string_view format, ...);
 
 private:
 
@@ -206,9 +173,17 @@ private:
 
     void InitializeUI();
     void ResetStoreButton(std::shared_ptr<UIButton> button);
+    void UpdatePackageStatus(std::shared_ptr<UIButton> button, bool isMounted, bool isLicensed);
+    void UpdateDownloadProgress(std::shared_ptr<UIButton> button, UINT64 installedBytes, UINT64 totalBytes);
     void SetBackgroundImage(const char* filename);
     void ExecuteDLLFunction(const char* filename);
     void ErrorMessage(std::string_view format, ...);
+
+    HRESULT AcquireLicense(TrackedPackage& package);
+    HRESULT Mount(TrackedPackage& package);
+    HRESULT UsePackage(TrackedPackage& package);
+    void RegisterPackageEvents(TrackedPackage& package);
+    void UnregisterPackageEvents(TrackedPackage& package);
 
     // UIStyleManager::D3DResourcesProvider interface methods
     virtual ID3D12Device* GetD3DDevice() override { return m_deviceResources->GetD3DDevice(); }
@@ -237,8 +212,8 @@ private:
     // UITK members
     ATG::UITK::UIManager                        m_uiManager;
     ATG::UITK::UIInputState                     m_uiInputState;
-    std::shared_ptr<ATG::UITK::UIVerticalStack> m_storeList;
-    std::shared_ptr<ATG::UITK::UIVerticalStack> m_dlcList;
+    std::shared_ptr<ATG::UITK::UIVerticalStack> m_uiProductList;
+    std::shared_ptr<ATG::UITK::UIVerticalStack> m_uiPackageList;
     std::shared_ptr<ATG::UITK::UITwistMenu>     m_twistMenu;
     std::shared_ptr<ATG::UITK::UIImage>         m_backgroundImage;
     std::shared_ptr<ATG::UITK::UIStaticText>    m_errorMessage;
@@ -255,17 +230,15 @@ private:
     XTaskQueueHandle                            m_asyncQueue;
     XTaskQueueRegistrationToken                 m_packageInstallToken;
 
-    std::map<std::string, PackageMountInfo>     m_mountedPackageList;
     EnumFilterType                              m_selectedEnumFilter;
 
-    std::vector<PackageDetails>                 m_dlcDetailList;
-    std::vector<StoreProductDetails>            m_storeDetailList;
-    bool                                        m_isStoreEnumerating;
+    std::map<std::string, PackageInfo>          m_packageList;
+    std::map<std::string, TrackedPackage>       m_trackedPackageList;
+    std::map<std::string, ProductInfo>          m_productList;
 
+    bool                                        m_isStoreEnumerating;
     std::string                                 m_currentFocusStoreId;
-    std::string                                 m_lastSelectStoreId;
-    EnumFocusArea                               m_needSetFocus;
-    
+
     enum Descriptors
     {
         Texture,

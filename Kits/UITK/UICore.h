@@ -195,7 +195,8 @@ struct Anchor
     VerticalAnchor Vertical;
     constexpr Anchor() : Horizontal(HorizontalAnchor::Left), Vertical(VerticalAnchor::Top) {}
     constexpr Anchor(HorizontalAnchor horizontal, VerticalAnchor vertical) : Horizontal(horizontal), Vertical(vertical) {}
-    constexpr Anchor(const Anchor& other) = default;
+    constexpr Anchor(const Anchor&) = default;
+    Anchor& operator=(const Anchor&) = default;
     static Anchor FromIDs(const ID& horizontal, const ID& vertical, const Anchor& defaultAnchor = Anchor());
     const static std::map<ID, int> AnchorIDMap;
     std::tuple<const char *, const char *> GetIDs() const;

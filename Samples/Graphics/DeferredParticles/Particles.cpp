@@ -1021,7 +1021,7 @@ namespace ATG
 
         // Copy particle vertex data into our vertex buffer.
         size_t vertSizeBytes = sizeof(ParticleVertex) * 6 * m_numParticlesToDraw;
-        auto vertexMem = GraphicsMemory::Get().Allocate(vertSizeBytes);
+        auto vertexMem = GraphicsMemory::Get().Allocate(vertSizeBytes, 16, GraphicsMemory::TAG_VERTEX);
         CopyParticlesToVertexBuffer(reinterpret_cast<ParticleVertex*>(vertexMem.Memory()), camPos, XMLoadFloat3(&m_particleConstants.Right), XMLoadFloat3(&m_particleConstants.Up));
 
         // Set up input data for particle rendering

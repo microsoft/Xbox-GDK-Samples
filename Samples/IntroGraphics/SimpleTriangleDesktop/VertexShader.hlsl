@@ -21,5 +21,5 @@ struct Interpolants
 
 Interpolants main(Vertex In)
 {
-    return In;
+    return (Interpolants) In;
 }

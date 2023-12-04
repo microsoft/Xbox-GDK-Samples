@@ -263,7 +263,7 @@ namespace TextRenderer
                 uploadDesc.Height = ShapedString->m_height;
                 uploadDesc.Depth = 1;
                 uploadDesc.RowPitch = (uint32_t)AlignUp(ShapedString->m_width, d3d12TextureDataPitchAlignment);
-                GraphicsResource graphicsResource = graphicsMemory.Allocate(size_t(uploadDesc.Height) * size_t(uploadDesc.RowPitch), D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT);
+                GraphicsResource graphicsResource = graphicsMemory.Allocate(size_t(uploadDesc.Height) * size_t(uploadDesc.RowPitch), D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT, GraphicsMemory::TAG_TEXTURE);
 
                 // Describe placed texture
                 D3D12_PLACED_SUBRESOURCE_FOOTPRINT placedTexture2D;

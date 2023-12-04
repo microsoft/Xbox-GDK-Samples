@@ -39,11 +39,24 @@ Sample::Sample() noexcept(false) :
         &UserChangeEventCallback,
         &m_userChangeEventCallbackToken
     );
+
+    // [Simple User Model]
+    // Register for any change events for user-device associations.
+    // Change events are triggered when:
+    //  - A user signs out from the console.
+    //  - Someone uses the input device to select a different user in the Account Picker.
+    XUserRegisterForDeviceAssociationChanged(
+        m_taskQueue,
+        this,
+        &UserDeviceAssociationChangedCallback,
+        &m_userDeviceAssociationChangedCallbackToken
+    );
 }
 
 Sample::~Sample()
 {
     XUserUnregisterForChangeEvent(m_userChangeEventCallbackToken, false);
+    XUserUnregisterForDeviceAssociationChanged(m_userDeviceAssociationChangedCallbackToken, false);
 
     XTaskQueueTerminate(m_taskQueue, false, nullptr, nullptr);
     XTaskQueueDispatch(m_taskQueue, XTaskQueuePort::Completion, INFINITE);
@@ -268,12 +281,12 @@ void Sample::CreateWindowSizeDependentResources()
 // This method signs in the default user that launched the application
 void Sample::SignInDefaultUser()
 {
-    XAsyncBlock* asyncBlock = new XAsyncBlock{};
+    auto asyncBlock = new XAsyncBlock{};
     asyncBlock->queue = m_taskQueue;
     asyncBlock->context = this;
     asyncBlock->callback = [](XAsyncBlock* asyncBlock)
     {
-        Sample* pThis = static_cast<Sample*>(asyncBlock->context);
+        auto pThis = static_cast<Sample*>(asyncBlock->context);
 
         // [Simple User Model]
         // XUserAddResult is guaranteed to return S_OK when signing in the default user silently with
@@ -311,12 +324,12 @@ void Sample::UpdateUserUIData()
     m_gamertagText->SetDisplayText(gamertagBuffer);
 
     // Setup gamerpic request
-    XAsyncBlock* asyncBlock = new XAsyncBlock{};
+    auto asyncBlock = new XAsyncBlock{};
     asyncBlock->queue = m_taskQueue;
     asyncBlock->context = this;
     asyncBlock->callback = [](XAsyncBlock* asyncBlock)
     {
-        Sample* pThis = static_cast<Sample*>(asyncBlock->context);
+        auto pThis = static_cast<Sample*>(asyncBlock->context);
 
         // Get buffer size
         size_t bufferSize = 0;
@@ -357,7 +370,7 @@ void CALLBACK Sample::UserChangeEventCallback(
     }
 
     // Only handle events for the default user
-    Sample* pThis = static_cast<Sample*>(context);
+    auto pThis = static_cast<Sample*>(context);
     if (userLocalId.value != pThis->m_userLocalId.value)
     {
         return;
@@ -387,4 +400,74 @@ void CALLBACK Sample::UserChangeEventCallback(
     {
         pThis->UpdateUserUIData();
     }
+}
+
+// [Simple User Model]
+// This callback is called whenever a user-device association changes. It was registered with XUserRegisterForDeviceAssociationChanged in the Sample constructor.
+void CALLBACK Sample::UserDeviceAssociationChangedCallback(
+    _In_opt_ void* context,
+    _In_ const XUserDeviceAssociationChange* change
+)
+{
+    // Log the callback
+    {
+        char debugString[512] = {};
+        sprintf_s(debugString, 512, u8"UserDeviceAssociationChangedCallback() : deviceId = %08x-%08x-%08x-%08x-%08x-%08x-%08x-%08x, oldUser = 0x%llx, newUser = 0x%llx\n",
+            *reinterpret_cast<const unsigned int*>(&change->deviceId.value[0]),
+            *reinterpret_cast<const unsigned int*>(&change->deviceId.value[4]),
+            *reinterpret_cast<const unsigned int*>(&change->deviceId.value[8]),
+            *reinterpret_cast<const unsigned int*>(&change->deviceId.value[12]),
+            *reinterpret_cast<const unsigned int*>(&change->deviceId.value[16]),
+            *reinterpret_cast<const unsigned int*>(&change->deviceId.value[20]),
+            *reinterpret_cast<const unsigned int*>(&change->deviceId.value[24]),
+            *reinterpret_cast<const unsigned int*>(&change->deviceId.value[28]),
+            change->oldUser.value,
+            change->newUser.value
+        );
+        OutputDebugStringA(debugString);
+    }
+
+    auto pThis = static_cast<Sample*>(context);
+    // If default user doesn't have a controller attached, display the UI to assign a controller
+    if (change->oldUser.value == pThis->m_userLocalId.value){
+        LoopFindControllerForUserWithUiAsync(pThis);
+    }
+}
+
+void Sample::LoopFindControllerForUserWithUiAsync(_In_ void* context)
+{
+    auto pThis = static_cast<Sample*>(context);
+
+    auto asyncBlock = new XAsyncBlock{};
+    asyncBlock->queue = pThis->m_taskQueue;
+    asyncBlock->context = pThis;
+    asyncBlock->callback = [](XAsyncBlock* asyncBlock)
+    {
+        APP_LOCAL_DEVICE_ID deviceId = {};
+        if (SUCCEEDED(XUserFindControllerForUserWithUiResult(asyncBlock, &deviceId)))
+        {
+            // Log the newly associated deviceId.
+            char debugString[512] = {};
+            sprintf_s(debugString, 512, u8"Found deviceId:  deviceId = %08x-%08x-%08x-%08x-%08x-%08x-%08x-%08x\n",
+                *reinterpret_cast<const unsigned int*>(&deviceId.value[0]),
+                *reinterpret_cast<const unsigned int*>(&deviceId.value[4]),
+                *reinterpret_cast<const unsigned int*>(&deviceId.value[8]),
+                *reinterpret_cast<const unsigned int*>(&deviceId.value[12]),
+                *reinterpret_cast<const unsigned int*>(&deviceId.value[16]),
+                *reinterpret_cast<const unsigned int*>(&deviceId.value[20]),
+                *reinterpret_cast<const unsigned int*>(&deviceId.value[24]),
+                *reinterpret_cast<const unsigned int*>(&deviceId.value[28])
+            );
+            OutputDebugStringA(debugString);
+
+            delete asyncBlock;
+        }
+        else
+        {
+            // Keep trying until the default user is assigned to a controller.
+            LoopFindControllerForUserWithUiAsync(asyncBlock->context);
+        }
+    };
+
+    XUserFindControllerForUserWithUiAsync(pThis->m_user, asyncBlock);
 }

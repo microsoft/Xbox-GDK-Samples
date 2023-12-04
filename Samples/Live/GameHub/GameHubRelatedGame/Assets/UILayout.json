@@ -1,0 +1,57 @@
+﻿{
+  "$schema": "https://atgsamplessa.blob.core.windows.net/uitkschema/latest/layout.schema.json",
+  "definitions": {
+    "#fullscreen": [ 1920, 1080 ]
+  },
+  "styles": [
+    {
+      "id": "BasicPanelStyle",
+      "classId": "SpriteStyle",
+      "spriteStyle": {
+        "colorUsage": "override",
+        "color": [ 38, 38, 38, 1.0 ]
+      }
+    },
+    {
+      "id": "FilePanelStyle",
+      "classId": "SpriteStyle",
+      "spriteStyle": {
+        "colorUsage": "override",
+        "color": [ 0, 0, 0, 1.0 ]
+      }
+    },
+    {
+      "id": "MainTextStyle",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "size": 18,
+      "verticalAlign": "top",
+      "horizontalAlign": "left",
+      "legendFont": "Assets/Fonts/XboxOneControllerLegendSmall"
+    }
+  ],
+  "layout": {
+    "id": "SamplePanel",
+    "classId": "panel",
+    "styleId": "BasicPanelStyle",
+    "panel": {
+      "positioningAnchor": [ "left", "top" ],
+      "position": [ 0, 0 ],
+      "sizingAnchor": [ "left", "top" ],
+      "size": "#fullscreen",
+      "childElements": [
+        {
+          "classId": "StaticText",
+          "id": "MainText",
+          "positioningAnchor": [ "left", "top" ],
+          "sizingAnchor": [ "left", "top" ],
+          "position": [ 50, 200 ],
+          "text": "This is the blank game representing a hub-unaware game that will have no ability to return to the Franchise Game Hub.\nPress [view] or ESC key to exit the sample.",
+          "styleId": "MainTextStyle",
+          "isLegend": true
+        }
+      ]
+    }
+  }
+}

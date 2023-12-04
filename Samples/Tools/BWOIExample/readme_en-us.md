@@ -41,13 +41,13 @@ Be sure to install the following components:
 | Workload  |  Component ID (for [command line install](https://docs.microsoft.com/en-us/visualstudio/install/use-command-line-parameters-to-install-visual-studio)) |
 |-----------------------------------------|----------------------------|
 | Game Development with C++ | Microsoft.VisualStudio.Workload.NativeGame |
-| Desktop development with C++<br /> *Required component:* Windows 10 SDK (10.0.19041.0)<br /><br /> *Optional component:* MSVC v141 - VS 2017 C++ x64/x86 build tools (v14.16)<br /> *Only required if building v141 platform toolset projects using VS 2019/MSBuild 16.0 or VS 2022/MSBuild 17.0*<br /><br />  *Optional component, VS 2022 only:* MSVC v142 - VS 2019 C++ x64/x86 build tools (v14.29)<br /><br /> *Only required if building v142 platform toolset projects using VS 2022/MSBuild 17.0* <br /><br /> *Optional component:* C++ Clang tools for Windows (12.0.0 - x64/x86) <br /> *Only required if building using the Clang toolset* | Microsoft.VisualStudio.Workload.NativeDesktop<br /> Microsoft.VisualStudio.Component.Windows10SDK.19041<br /><br /> *Optional:* Microsoft.VisualStudio.Component.VC.v141.x86.x64<br /><br /> *Optional, VS 2022 only:* Microsoft.VisualStudio.ComponentGroup.VC.Tools.142.x86.x64<br /><br /> *Optional:* Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Llvm.Clang|
+| Desktop development with C++<br /> *Required component:* Windows 10 SDK (10.0.19041.0) -or- Windows 11 SDK (10.0.22000.0)<br /><br /> *Optional component:* MSVC v141 - VS 2017 C++ x64/x86 build tools (v14.16)<br /> *Only required if building v141 platform toolset projects using VS 2019/MSBuild 16.0 or VS 2022/MSBuild 17.0*<br /><br />  *Optional component, VS 2022 only:* MSVC v142 - VS 2019 C++ x64/x86 build tools (v14.29)<br /><br /> *Only required if building v142 platform toolset projects using VS 2022/MSBuild 17.0* <br /><br /> *Optional component:* C++ Clang tools for Windows (12.0.0 - x64/x86) <br /> *Only required if building using the Clang toolset* | Microsoft.VisualStudio.Workload.NativeDesktop<br /> Microsoft.VisualStudio.Component.Windows10SDK.19041<br />Microsoft.VisualStudio.Component.Windows11SDK.22000<br /><br /> *Optional:* Microsoft.VisualStudio.Component.VC.v141.x86.x64<br /><br /> *Optional, VS 2022 only:* Microsoft.VisualStudio.ComponentGroup.VC.Tools.142.x86.x64<br /><br /> *Optional:* Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Llvm.Clang|
 
 **Option 2: Visual Studio Build Tools**
 
 | Workload  |  Component ID (for [command line install](https://docs.microsoft.com/en-us/visualstudio/install/use-command-line-parameters-to-install-visual-studio)) |
 |-----------------------------------------|----------------------------|
-| C++ Build Tools<br /> *Required component:* Windows 10 SDK (10.0.19041.0)<br /> *Required component:* MSVC v142 - VS 2019 C++ x64/x86 build tools (Latest)<br /> -or- MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)<br /><br /> *Optional component:* MSVC v141 - VS 2017 C++ x64/x86 build tools (v14.16)<br /> *Only required if building v141 platform toolset projects using VS 2019/MSBuild 16.0 or VS 2022/MSBuild 17.0*<br /><br /> *Optional component, VS 2022 only:* MSVC v142 - VS 2019 C++ x64/x86 build tools (v14.29)<br /> *Only required if building v142 platform toolset projects using VS 2022/MSBuild 17.0*<br /><br /> *Optional component:* C++ Clang tools for Windows (12.0.0 - x64/x86)<br /> *Only required if building using the Clang toolset* | Microsoft.VisualStudio.Workload.VCTools<br /> Microsoft.VisualStudio.Component.Windows10SDK.19041<br /> Microsoft.VisualStudio.Component.VC.Tools.x86.x64<br /><br /> *Optional:* Microsoft.VisualStudio.Component.VC.v141.x86.x64<br /><br /> *Optional, VS 2022 only:* Microsoft.VisualStudio.ComponentGroup.VC.Tools.142.x86.x64<br /><br /> *Optional:* Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Llvm.Clang|
+| C++ Build Tools<br /> *Required component:* Windows 10 SDK (10.0.19041.0) -or- Windows 11 SDK (10.0.22000.0)<br /><br /> *Required component:* MSVC v142 - VS 2019 C++ x64/x86 build tools (Latest)<br /> -or- MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)<br /><br /> *Optional component:* MSVC v141 - VS 2017 C++ x64/x86 build tools (v14.16)<br /> *Only required if building v141 platform toolset projects using VS 2019/MSBuild 16.0 or VS 2022/MSBuild 17.0*<br /><br /> *Optional component, VS 2022 only:* MSVC v142 - VS 2019 C++ x64/x86 build tools (v14.29)<br /> *Only required if building v142 platform toolset projects using VS 2022/MSBuild 17.0*<br /><br /> *Optional component:* C++ Clang tools for Windows (12.0.0 - x64/x86)<br /> *Only required if building using the Clang toolset* | Microsoft.VisualStudio.Workload.VCTools<br /> Microsoft.VisualStudio.Component.Windows10SDK.19041<br />Microsoft.VisualStudio.Component.Windows11SDK.22000<br /><br /> Microsoft.VisualStudio.Component.VC.Tools.x86.x64<br /><br /> *Optional:* Microsoft.VisualStudio.Component.VC.v141.x86.x64<br /><br /> *Optional, VS 2022 only:* Microsoft.VisualStudio.ComponentGroup.VC.Tools.142.x86.x64<br /><br /> *Optional:* Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Llvm.Clang|
 
 > The BWOIExample project uses the v142 toolset by default, which means it requires VS 2019 or VS 2022. Building with VS 2019 requires the MSVC v142 - VS 2019 C++ x64/x86 build tools (Latest) component, and  VS 2022 requires the MSVC v142 - VS 2019 C++ x64/x86 build tools (v14.29) component.                                                   |
 
@@ -118,18 +118,17 @@ extractgdk <path-to-gdk-installer>\Installers
 > All use of MSIEXEC takes a global lock, so even for just extract operations it will fail if another MSIEXEC instance is running at the same time (Windows update or other instance of the same script). For build pipelines run on the same VM, you need to provide some external lock/unlock cycle based on the use of the `Global\_MSIExecute` mutex and your own global lock. Generally, it's easier to just extract the MSI once on a developer's machine and copy the results to an agent-accessible folder.
 
 
-## Optional: Extract the Windows 10 SDK
+## Optional: Extract the Windows SDK
 
-If you wish, you can also extract the Windows 10 SDK, which will ensure
+If you wish, you can also extract the Windows SDK, which will ensure
 the right version is always available on the build machine. This is
-generally unnecessary, as long as you install the Windows 10 SDK (19041)
+generally unnecessary, as long as you install the Windows SDK
 with your Visual Studio install.
 
-This process requires a copy of the Windows 10 SDK installer image. The
-easiest way to get this is to download the Windows 10 SDK .ISO
+This process requires a copy of the Windows SDK installer image. The
+easiest way to get this is to download the Windows SDK .ISO
 from [Windows Dev
-Center](https://developer.microsoft.com/windows/downloads/windows-10-sdk) (Version
-10.0.19041.0 is required).
+Center](https://developer.microsoft.com/windows/downloads/windows-sdk/).
 
 1.  **Open a Command Prompt** and **cd** to the BWOIExample folder.
 
@@ -349,3 +348,4 @@ in Visual Studio 2019 version 16.11.
 |March 2022|Updated to support Visual Studio 2022.<br /> Updated the project file to use the v142 toolset by default.<br /> Changed the Dockerfile to use a mounted directory.|
 |October 2022|Removed VS 2017 / MSBuild 15.0 support.|
 |March 2023|Added NuGet instructions.|
+|October 2023|GDK now requires Windows SDK (20000)|

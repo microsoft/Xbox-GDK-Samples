@@ -594,12 +594,13 @@ void SessionManager::CreateSession(const std::string& sessionTemplatName)
 
     RegisterSessionChangedEvent();
 
-    SetHostDeviceToken();
+    XblMultiplayerSessionCurrentUserSetSecureDeviceAddressBase64(m_currentSessionHandle, "AAAAAAAA00112233445566778899AABBCCDDEEFF");
 
     WriteSession(XblMultiplayerSessionWriteMode::CreateNew, [this](bool success)
     {
         if (success)
         {
+            SetHostDeviceToken();
             SetSessionActivity();
             HandleMemberListChange();
         }

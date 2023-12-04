@@ -70,7 +70,7 @@ add_dependencies(${PROJECT_NAME} shaders)
 # Standard Debug vs. Release preprocessor definitions
 # _DEBUG (Debug)
 # NDEBUG (Release without asserts)
-target_compile_definitions(${PROJECT_NAME} PRIVATE "$<$<CONFIG:DEBUG>:_DEBUG>" "$<$<CONFIG:RELEASE>:NDEBUG>")
+target_compile_definitions(${PROJECT_NAME} PRIVATE $<IF:$<CONFIG:DEBUG>,_DEBUG,NDEBUG>)
 
 # Build as Unicode (see UTF-8 Everywhere article's Win32 recommendations)
 target_compile_definitions(${PROJECT_NAME} PRIVATE _UNICODE UNICODE)

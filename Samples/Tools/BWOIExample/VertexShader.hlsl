@@ -17,5 +17,5 @@ struct Interpolants
 [RootSignature("RootFlags(ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT)")]
 Interpolants main( Vertex In )
 {
-    return In;
+    return (Interpolants) In;
 }

@@ -70,7 +70,7 @@ add_custom_command(TARGET mgccompile
 
 add_dependencies(${PROJECT_NAME} mgccompile shaders)
 
-target_compile_definitions(${PROJECT_NAME} PRIVATE ${Console_Defines})
+target_compile_definitions(${PROJECT_NAME} PRIVATE $<IF:$<CONFIG:DEBUG>,_DEBUG,NDEBUG> ${Console_Defines})
 
 if(NOT MSVC)
   message(FATAL_ERROR "ERROR: This CMake file requires MSVC or MSVC-like compiler.")

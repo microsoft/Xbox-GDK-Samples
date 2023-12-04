@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>c91bfc87-3380-4ca5-83ff-f14e504fceb5</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>dcb6ce68-2b1b-45e7-a860-a280e7d0059f</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>0155765a-4c84-41da-b565-4bff0477646b</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Xbox Live Tool Kit">
+      <UniqueIdentifier>cfaef85c-570b-4597-8553-7e7ae9989163</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>a81494fa-57c3-4afd-8e54-dd4ccfb92610</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLCPackage">
+      <UniqueIdentifier>{1ab979d6-98de-477c-8147-4134027ef11b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLCPackage\Package_Scarlett">
+      <UniqueIdentifier>{98d96e93-acdb-4bb7-aab8-a6d8626ed291}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLCPackage\Package_XboxOne">
+      <UniqueIdentifier>{9f49f2c3-5b54-4b2e-b4f4-4b121be76661}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLCPackage\Package_Scarlett\Assets">
+      <UniqueIdentifier>{c2e81317-9482-44f0-a5d0-38e6012db6c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLCPackage\Package_XboxOne\Assets">
+      <UniqueIdentifier>{64081f5b-8b53-440d-b670-f1beddcabfe3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="GameHubRelatedGame.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\d3dx12.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\FindMedia.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\LiveTK\LiveResources.h">
+      <Filter>Xbox Live Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\json\json.hpp">
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\LiveTK\LiveInfoHUD.h">
+      <Filter>Xbox Live Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\Texture.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="GameHubRelatedGame.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\LiveTK\LiveResources.cpp">
+      <Filter>Xbox Live Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\LiveTK\LiveInfoHUD.cpp">
+      <Filter>Xbox Live Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\ATGTK\Texture.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DLCPackage\makedlcpkg.cmd">
+      <Filter>DLCPackage</Filter>
+    </None>
+    <None Include="DLCPackage\chunks.xml">
+      <Filter>DLCPackage</Filter>
+    </None>
+    <None Include="DLCPackage\Package_Scarlett\Image.jpg">
+      <Filter>DLCPackage\Package_Scarlett</Filter>
+    </None>
+    <None Include="DLCPackage\Package_Scarlett\MicrosoftGame.Config">
+      <Filter>DLCPackage\Package_Scarlett</Filter>
+    </None>
+    <None Include="DLCPackage\Package_XboxOne\MicrosoftGame.Config">
+      <Filter>DLCPackage\Package_XboxOne</Filter>
+    </None>
+    <None Include="makescarlettpkg.cmd" />
+    <None Include="makexboxonepkg.cmd" />
+    <None Include="chunks.xml" />
+    <None Include="makepcpkg.cmd" />
+    <None Include="DLCPackage\Package_Scarlett\Assets\LargeLogo.png">
+      <Filter>DLCPackage\Package_Scarlett\Assets</Filter>
+    </None>
+    <None Include="DLCPackage\Package_Scarlett\Assets\Logo.png">
+      <Filter>DLCPackage\Package_Scarlett\Assets</Filter>
+    </None>
+    <None Include="DLCPackage\Package_Scarlett\Assets\SmallLogo.png">
+      <Filter>DLCPackage\Package_Scarlett\Assets</Filter>
+    </None>
+    <None Include="DLCPackage\Package_Scarlett\Assets\SplashScreen.png">
+      <Filter>DLCPackage\Package_Scarlett\Assets</Filter>
+    </None>
+    <None Include="DLCPackage\Package_Scarlett\Assets\StoreLogo.png">
+      <Filter>DLCPackage\Package_Scarlett\Assets</Filter>
+    </None>
+    <None Include="DLCPackage\Package_XboxOne\Assets\LargeLogo.png">
+      <Filter>DLCPackage\Package_XboxOne\Assets</Filter>
+    </None>
+    <None Include="DLCPackage\Package_XboxOne\Assets\Logo.png">
+      <Filter>DLCPackage\Package_XboxOne\Assets</Filter>
+    </None>
+    <None Include="DLCPackage\Package_XboxOne\Assets\SmallLogo.png">
+      <Filter>DLCPackage\Package_XboxOne\Assets</Filter>
+    </None>
+    <None Include="DLCPackage\Package_XboxOne\Assets\SplashScreen.png">
+      <Filter>DLCPackage\Package_XboxOne\Assets</Filter>
+    </None>
+    <None Include="DLCPackage\Package_XboxOne\Assets\StoreLogo.png">
+      <Filter>DLCPackage\Package_XboxOne\Assets</Filter>
+    </None>
+    <None Include="DLCPackage\Package_XboxOne\Image.JPG">
+      <Filter>DLCPackage\Package_XboxOne</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="..\..\..\..\Media\Textures\GamerPic.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\UILayout.json">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\..\Media\Fonts\SegoeUI_18_Bold.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\..\Media\Fonts\SegoeUI_30_Bold.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig_PC.mgc" />
+    <MGCCompile Include="MicrosoftGameConfig_Scarlett.mgc" />
+    <MGCCompile Include="MicrosoftGameConfig_XboxOne.mgc" />
+  </ItemGroup>
+</Project>

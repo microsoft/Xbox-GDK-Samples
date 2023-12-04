@@ -14,10 +14,7 @@
 #include <cstdint>
 
 #include "DDSTextureLoader.h"
-
-#if defined(__d3d12_h__) || defined(__d3d12_x_h__) || defined(__XBOX_D3D12_X__)
 #include "ResourceUploadBatch.h"
-#endif
 
 
 namespace DX
@@ -25,8 +22,6 @@ namespace DX
     class Texture
     {
     public:
-#if defined(__d3d12_h__) || defined(__d3d12_x_h__) || defined(__XBOX_D3D12_X__)
-
         Texture(_In_ ID3D12Device* device,
             DirectX::ResourceUploadBatch& resourceUpload,
             D3D12_CPU_DESCRIPTOR_HANDLE srvDescriptor,
@@ -44,14 +39,17 @@ namespace DX
             _In_reads_bytes_(wicDataSize) const uint8_t* wicData,
             size_t wicDataSize) noexcept(false);
 
-#elif defined(__d3d11_h__) || defined(__d3d11_x_h__)
-
-        Texture(_In_ ID3D11Device* device, _In_z_ const wchar_t* fileName, bool forceSRGB = false);
-        explicit Texture(_In_ ID3D11ShaderResourceView* resourceView);
-
-#else
-#   error Please #include <d3d11.h> or <d3d12.h>
-#endif
+        Texture(_In_ ID3D12Device* device,
+            DXGI_FORMAT format,
+            int width,
+            int height,
+            D3D12_RESOURCE_FLAGS resFlags,
+            D3D12_RESOURCE_STATES initialState,
+            LPCWSTR name,
+            CD3DX12_HEAP_PROPERTIES& heap,
+            D3D12_CPU_DESCRIPTOR_HANDLE srvHandle,
+            D3D12_CPU_DESCRIPTOR_HANDLE uavHandle,
+            int arraySize = 1);
 
         Texture(Texture&&) = default;
         Texture& operator= (Texture&&) = default;
@@ -66,8 +64,6 @@ namespace DX
         int ArrayCount() const { return m_array; }
         DXGI_FORMAT Format() const { return m_format; }
         DirectX::DDS_ALPHA_MODE AlphaMode() const { return m_alphaMode; }
-
-#if defined(__d3d12_h__) || defined(__d3d12_x_h__) || defined(__XBOX_D3D12_X__)
 
         bool IsCubeMap() const { return m_cubeMap; }
         DirectX::XMUINT2 GetTextureSize() const { return DirectX::XMUINT2(static_cast<uint32_t>(m_width), static_cast<uint32_t>(m_height)); }
@@ -84,29 +80,6 @@ namespace DX
     private:
         Microsoft::WRL::ComPtr<ID3D12Resource> m_resource;
         bool m_cubeMap;
-
-#elif defined(__d3d11_h__) || defined(__d3d11_x_h__)
-
-        void GetResource(_Outptr_ ID3D11Resource** resource) const
-        {
-            assert(resource != 0);
-            m_resourceView->GetResource(resource);
-        }
-
-        void GetResourceView(_Outptr_ ID3D11ShaderResourceView** resourceView) const
-        {
-            assert(resourceView != 0);
-            *resourceView = m_resourceView.Get();
-            (*resourceView)->AddRef();
-        }
-
-        ID3D11ShaderResourceView* Get() const { return m_resourceView.Get(); }
-
-    private:
-        Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_resourceView;
-
-        void GetDesc(_In_ ID3D11Resource* resource);
-#endif
 
         int                     m_width;
         int                     m_height;

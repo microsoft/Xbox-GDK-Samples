@@ -170,10 +170,9 @@ The CMake project in this sample supports an opt-in build option to use
 Build With/Out Installing (BWOI). If enabled, it requires an
 ExtractedFolder environment variable which points to the extracted
 Microsoft GDK created by the *BWOIExample*'s `extractgdk.cmd` script. It
-can optionally also have an extracted Windows 10 SDK (19041) for the May
-2020 GDK or later. The CMake project does not need the results of the
-vctargets.cmd script because it doesn't use the Gaming.\*.x64 MSBuild
-platforms.
+can optionally also have an extracted Windows SDK. The CMake project does
+not need the results of the vctargets.cmd script because it doesn't use
+the Gaming.\*.x64 MSBuild platforms.
 
 To enable this build option, set `BUILD_USING_BWOI` to True using
 CMakeSettings.json. Alternately, if building with the command line, add
@@ -184,7 +183,7 @@ See the **BWOIExample** for more details.
 # Known Issues
 
 If you use the clang/LLVM toolset, be sure you are using the Windows 10
-SDK (19041) which includes DirectXMath 3.14. In DirectXMath 3.13 and
+SDK (19041) or later. In DirectXMath 3.13 and
 before, the XMVerifyCPUSupport implementation doesn't build correctly
 for that toolset. See <https://walbourn.github.io/directxmath-3.14/> for
 details.
@@ -204,3 +203,4 @@ details.
 |February 2023|Removed custom build option BUILD_FOR_LTCG in favor of CMake 3.9’s standard CMAKE_INTERPROCEDURAL_OPTIMIZATION.<br />Updated for new VS 2022 17.5 switches.|
 |March 2023|Updated to add new target for Playfab.Services.C extension library.|
 |June 2023|Xbox One titles need to use `/d2vzeroupper-` with VS 2022 or later as the default behavior has flipped from VS 2019|
+|October 2023|The Microsoft GDK now requires Windows 11 SDK (22000) or later.|

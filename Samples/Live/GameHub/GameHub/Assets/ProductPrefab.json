@@ -1,0 +1,273 @@
+﻿{
+  "styles": [
+    {
+      "id": "InvisibleButtonStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 0.0 ]
+    },
+    {
+      "id": "FocusedButtonStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "texture": "Assets/Selected.png"
+    },
+    {
+      "id": "HoveredButtonStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 128, 128, 128, 0.7 ],
+      "texture": "Assets/Selected.png"
+    },
+    {
+      "id": "ProductTextStyle",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "size": 18,
+      "verticalAlign": "top",
+      "horizontalAlign": "center",
+      "legendFont": "Assets/Fonts/XboxOneControllerLegendSmall"
+    },
+    {
+      "id": "ProductLogoStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "texture": "Assets/GameLogo.png"
+    },
+    {
+      "id": "InvisiblePanelStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 0.0 ]
+    },
+    {
+      "id": "NotInstalledImageStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "texture": "Assets/NotInstalled.png"
+    },
+    {
+      "id": "NotPurchasedImageStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "texture": "Assets/NotPurchased.png"
+    },
+    {
+      "id": "UpdateAvailableImageStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "texture": "Assets/UpdateAvailable.png"
+    },
+    {
+      "id": "ProgressPanelStyle",
+      "classId": "SpriteStyle",
+      "spriteStyle": {
+        "colorUsage": "override",
+        "color": [ 0, 0, 0, 0.0 ]
+      }
+    },
+    {
+      "id": "ProgressBarStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "texture": "Assets/ProgressBar.png",
+      "outerUVExtents": [ 0.0, 0.0, 0.5, 1.0 ]
+    },
+    {
+      "id": "ProgressBarBackStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "texture": "Assets/ProgressBar.png",
+      "outerUVExtents": [ 0.5, 0.0, 1.0, 1.0 ]
+    },
+    {
+      "id": "ProgressBarTextStyle",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "size": 18,
+      "weight": "bold",
+      "verticalAlign": "top",
+      "horizontalAlign": "center",
+      "legendFont": "Assets/Fonts/XboxOneControllerLegendSmall"
+    }
+  ],
+  "prefab": {
+    "classId": "Button",
+    "positioningAnchor": [ "center", "middle" ],
+    "sizingAnchor": [ "center", "middle" ],
+    "position": [ 1920, 1080 ],
+    "size": [ 250, 250 ],
+    "styleId": "InvisibleButtonStyle",
+    "focusable": true,
+    "focusedStyleId": "FocusedButtonStyle",
+    "hoveredStyleId": "HoveredButtonStyle",
+    "pressedStyleId": "InvisibleButtonStyle",
+    "disabledStyleId": "InvisibleButtonStyle",
+    "subElements": [
+      {
+        "id": "ProductLogo",
+        "classId": "Image",
+        "styleId": "ProductLogoStyle",
+        "sizingAnchor": [ "center", "middle" ],
+        "positioningAnchor": [ "center", "middle" ],
+        "position": [ 0, 0 ],
+        "size": [ 220, 220 ]
+      },
+      {
+        "id": "ProductText",
+        "classId": "StaticText",
+        "styleId": "ProductTextStyle",
+        "text": "Test title",
+        "positioningAnchor": [ "center", "middle" ],
+        "sizingAnchor": [ "center", "middle" ],
+        "position": [ 0, 170 ],
+        "size": [ 220, 75 ]
+      },
+      {
+        "id": "StoreID",
+        "classId": "StaticText",
+        "styleId": "ProductTextStyle",
+        "text": "StoreID",
+        "visible": false,
+        "positioningAnchor": [ "center", "middle" ],
+        "sizingAnchor": [ "center", "middle" ],
+        "position": [ 0, 0 ],
+        "size": [ 0, 0 ]
+      },
+      {
+        "id": "NotPurchasedPanel",
+        "classId": "Panel",
+        "positioningAnchor": [ "center", "middle" ],
+        "sizingAnchor": [ "center", "middle" ],
+        "position": [ 0, 0 ],
+        "size": [ 0, 0 ],
+        "visible": false,
+        "styleId": "InvisiblePanelStyle",
+        "subElements": [
+          {
+            "id": "NotPurchasedImage",
+            "classId": "Image",
+            "styleId": "NotPurchasedImageStyle",
+            "sizingAnchor": [ "center", "middle" ],
+            "positioningAnchor": [ "center", "middle" ],
+            "position": [ 0, 0 ],
+            "size": [ 225, 225 ]
+          },
+          {
+            "id": "NotPurchasedText",
+            "classId": "StaticText",
+            "styleId": "ProductTextStyle",
+            "text": "Not Purchased",
+            "positioningAnchor": [ "center", "middle" ],
+            "sizingAnchor": [ "center", "middle" ],
+            "position": [ 10, 113 ],
+            "size": [ 220, 75 ]
+          }
+        ]
+      },
+      {
+        "id": "NotInstalledPanel",
+        "classId": "Panel",
+        "positioningAnchor": [ "center", "middle" ],
+        "sizingAnchor": [ "center", "middle" ],
+        "position": [ 0, 0 ],
+        "size": [ 0, 0 ],
+        "visible": false,
+        "styleId": "InvisiblePanelStyle",
+        "subElements": [
+          {
+            "id": "NotInstalledImage",
+            "classId": "Image",
+            "styleId": "NotInstalledImageStyle",
+            "sizingAnchor": [ "center", "middle" ],
+            "positioningAnchor": [ "center", "middle" ],
+            "position": [ 0, 0 ],
+            "size": [ 225, 225 ]
+          },
+          {
+            "id": "NotInstalledText",
+            "classId": "StaticText",
+            "styleId": "ProductTextStyle",
+            "text": "Not Installed",
+            "positioningAnchor": [ "center", "middle" ],
+            "sizingAnchor": [ "center", "middle" ],
+            "position": [ 0, 113 ],
+            "size": [ 220, 75 ]
+          }
+        ]
+      },
+      {
+        "id": "UpdateAvailablePanel",
+        "classId": "Panel",
+        "positioningAnchor": [ "center", "middle" ],
+        "sizingAnchor": [ "center", "middle" ],
+        "position": [ 0, 0 ],
+        "size": [ 0, 0 ],
+        "visible": false,
+        "styleId": "InvisiblePanelStyle",
+        "subElements": [
+          {
+            "id": "UpdateAvailableImage",
+            "classId": "Image",
+            "styleId": "UpdateAvailableImageStyle",
+            "sizingAnchor": [ "center", "middle" ],
+            "positioningAnchor": [ "center", "middle" ],
+            "position": [ 0, 0 ],
+            "size": [ 210, 210 ]
+          },
+          {
+            "id": "UpdateAvailableText",
+            "classId": "StaticText",
+            "styleId": "ProductTextStyle",
+            "text": "Update",
+            "positioningAnchor": [ "center", "middle" ],
+            "sizingAnchor": [ "center", "middle" ],
+            "position": [ 0, 110 ],
+            "size": [ 220, 75 ]
+          }
+        ]
+      },
+      {
+        "id": "ProgressPanel",
+        "classId": "Panel",
+        "positioningAnchor": [ "right", "middle" ],
+        "sizingAnchor": [ "center", "top" ],
+        "position": [ -125, 70 ],
+        "size": [ 216, 40 ],
+        "visible": false,
+        "styleId": "ProgressPanelStyle",
+        "subElements": [
+          {
+            "id": "ProgressBackground",
+            "classId": "ProgressBar",
+            "styleId": "ProgressBarBackStyle",
+            "progressPercentage": 1.0
+          },
+          {
+            "id": "ProgressBox",
+            "classId": "ProgressBar",
+            "styleId": "ProgressBarStyle",
+            "progressPercentage": 0.0
+          },
+          {
+            "id": "ProgressText",
+            "classId": "StaticText",
+            "positioningAnchor": [ "right", "middle" ],
+            "position": [ 0, 0 ],
+            "size": [ 217, 30 ],
+            "sizingAnchor": [ "right", "middle" ],
+            "styleId": "ProgressBarTextStyle",
+            "text": "0 %"
+          }
+        ]
+      }
+    ]
+  }
+}
