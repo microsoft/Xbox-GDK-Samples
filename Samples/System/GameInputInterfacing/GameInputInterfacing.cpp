@@ -646,7 +646,7 @@ void Sample::Update(DX::StepTimer const& timer)
 
                 //UI navigation states
                 GameInputUiNavigationState uiNavigationstate;
-                if (m_reading->GetUiNavigationState(&uiNavigationstate))
+                if (m_reading->GetUiNavigationState(&uiNavigationstate) && ((uiNavigationstate.buttons | GameInputUiNavigationNone) != 0))
                 {
                     int currentIndex = 1;
                     currentElement = GetUINavigationUI(i);

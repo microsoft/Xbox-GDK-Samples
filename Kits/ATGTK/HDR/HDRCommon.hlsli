@@ -96,7 +96,7 @@ float3 ST2084ToLinear(float3 ST2084)
 // Name: NormalizeHDRSceneValue
 // Desc: Per spec, the max nits for ST.2084 is 10,000 nits. We need to establish what the value of 1.0f means
 //       by normalizing the values using the defined nits for paper white. According to SDR specs, paper white
-//       is 80 nits, but that is paper white in a cinema with a dark envirnment, and is perceived as grey on
+//       is 80 nits, but that is paper white in a cinema with a dark environment, and is perceived as grey on
 //       a display in office and living room environments. This value should be tuned according to the nits
 //       that the consumer perceives as white in his living room, e.g. 200 nits. As refernce, PC monitors is
 //       normally in the range 200-300 nits, SDR TVs 150-250 nits
@@ -155,7 +155,11 @@ float3 MapHDRSceneToDisplayCapabilities(float3 normalizedLinearValue, float soft
 
     mappedValue = min(mappedValue, ST2084);                 // If HDR scene max luminance is too close to shoulders, then it could end up producing a higher value than the ST.2084 curve,
                                                             // which will saturate colors, i.e. the opposite of what HDR display mapping should do, therefore always take minimum of the two
+#if __HLSL_VERSION >= 2019
+    return select((ST2084 > softShoulderStart2084), mappedValue, ST2084);
+#else
     return (ST2084 > softShoulderStart2084) ? mappedValue : ST2084;
+#endif
 }
 
 

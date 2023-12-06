@@ -132,6 +132,8 @@ namespace DX
 
             Frame() :
                 m_pending(false),
+                m_start{},
+                m_end{},
                 m_avg{},
                 m_timing{},
                 m_used{}

@@ -54,7 +54,7 @@ namespace DX
     {
     public:
         void Initialize(_In_ ID3D11Device* d3dDevice);
-        void Draw(_In_ ID3D11DeviceContext* d3dContext, DirectX::CommonStates& states, _In_ ID3D11ShaderResourceView* texture, _In_opt_ std::function<void __cdecl()> setCustomState = nullptr);
+        void Draw(_In_ ID3D11DeviceContext* d3dContext, DirectX::CommonStates& states, _In_ ID3D11ShaderResourceView* texture, _In_ std::function<void __cdecl()> setCustomState = nullptr);
         void ReleaseDevice();
 
     private:

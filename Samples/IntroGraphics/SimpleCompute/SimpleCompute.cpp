@@ -430,8 +430,8 @@ void Sample::CreateDeviceDependentResources()
     m_renderResourceFenceValue = 1;
 
     // Initialize resource and descriptor heaps
-    m_renderHeap = GraphicsMemory::Get().Allocate((size_t)(4 * 1024));
-    m_computeHeap = GraphicsMemory::Get().Allocate((size_t)(4 * 1024));
+    m_renderHeap = GraphicsMemory::Get().Allocate((size_t)(4 * 1024), 16, GraphicsMemory::TAG_COMPUTE);
+    m_computeHeap = GraphicsMemory::Get().Allocate((size_t)(4 * 1024), 16, GraphicsMemory::TAG_COMPUTE);
 
     // sampler setup
     {

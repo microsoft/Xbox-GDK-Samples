@@ -72,6 +72,7 @@ namespace ATG
             SRV_ParticleResetData,
             SRV_ParticleColors,
             SRV_Particle,
+            UAV_ParticleCounter,
             HeapCount
         };
 

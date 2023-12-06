@@ -24,5 +24,5 @@ struct Interpolants
 [RootSignature(MainRS)]
 Interpolants main( Vertex In )
 {
-    return In;
+    return (Interpolants) In;
 }

@@ -188,36 +188,36 @@ ModelMesh::~ModelMesh()
 }
 
 // Draw the mesh
-void __cdecl ModelMesh::DrawOpaque(_In_ ID3D12GraphicsCommandList* commandList) const
+void ModelMesh::DrawOpaque(_In_ ID3D12GraphicsCommandList* commandList) const
 {
     ModelMeshPart::DrawMeshParts(commandList, opaqueMeshParts);
 }
 
-void __cdecl ModelMesh::DrawAlpha(_In_ ID3D12GraphicsCommandList* commandList) const
+void ModelMesh::DrawAlpha(_In_ ID3D12GraphicsCommandList* commandList) const
 {
     ModelMeshPart::DrawMeshParts(commandList, alphaMeshParts);
 }
 
 
 // Draw the mesh with an effect
-void __cdecl ModelMesh::DrawOpaque(_In_ ID3D12GraphicsCommandList* commandList, _In_ IEffect* effect) const
+void ModelMesh::DrawOpaque(_In_ ID3D12GraphicsCommandList* commandList, _In_ IEffect* effect) const
 {
     ModelMeshPart::DrawMeshParts(commandList, opaqueMeshParts, effect);
 }
 
-void __cdecl ModelMesh::DrawAlpha(_In_ ID3D12GraphicsCommandList* commandList, _In_ IEffect* effect) const
+void ModelMesh::DrawAlpha(_In_ ID3D12GraphicsCommandList* commandList, _In_ IEffect* effect) const
 {
     ModelMeshPart::DrawMeshParts(commandList, alphaMeshParts, effect);
 }
 
 
 // Draw the mesh with a callback for each mesh part
-void __cdecl ModelMesh::DrawOpaque(_In_ ID3D12GraphicsCommandList* commandList, ModelMeshPart::DrawCallback callback) const
+void ModelMesh::DrawOpaque(_In_ ID3D12GraphicsCommandList* commandList, ModelMeshPart::DrawCallback callback) const
 {
     ModelMeshPart::DrawMeshParts(commandList, opaqueMeshParts, callback);
 }
 
-void __cdecl ModelMesh::DrawAlpha(_In_ ID3D12GraphicsCommandList* commandList, ModelMeshPart::DrawCallback callback) const
+void ModelMesh::DrawAlpha(_In_ ID3D12GraphicsCommandList* commandList, ModelMeshPart::DrawCallback callback) const
 {
     ModelMeshPart::DrawMeshParts(commandList, alphaMeshParts, callback);
 }
@@ -830,3 +830,21 @@ void Model::Transition(
         commandList->ResourceBarrier(count, barrier);
     }
 }
+
+
+//--------------------------------------------------------------------------------------
+// Adapters for /Zc:wchar_t- clients
+
+#if defined(_MSC_VER) && !defined(_NATIVE_WCHAR_T_DEFINED)
+
+_Use_decl_annotations_
+std::unique_ptr<EffectTextureFactory> Model::LoadTextures(
+    ID3D12Device* device,
+    ResourceUploadBatch& resourceUploadBatch,
+    const __wchar_t* texturesPath,
+    D3D12_DESCRIPTOR_HEAP_FLAGS flags) const
+{
+    return LoadTextures(device, resourceUploadBatch, reinterpret_cast<const unsigned short*>(texturesPath), flags);
+}
+
+#endif

@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>786fb018-3a16-408a-a704-dfa488eed99f</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>2cd9bcb0-2c98-47d9-897d-e6d543ea2c90</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>40ad373c-3ef2-4ca4-8c8e-79e626d306c7</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Xbox Live Tool Kit">
+      <UniqueIdentifier>f60435c1-3563-4c3b-8740-3c3cd17c4fb6</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>d6607003-69c0-4473-9110-c241e3167d45</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UpdateTesting">
+      <UniqueIdentifier>{f582f14c-bc5e-4cab-8638-265d8481922e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="GameHub.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\d3dx12.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\FindMedia.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\LiveTK\LiveResources.h">
+      <Filter>Xbox Live Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\json\json.hpp">
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\LiveTK\LiveInfoHUD.h">
+      <Filter>Xbox Live Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\FileDownloader.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\Texture.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="GameHub.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\LiveTK\LiveResources.cpp">
+      <Filter>Xbox Live Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\LiveTK\LiveInfoHUD.cpp">
+      <Filter>Xbox Live Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\ATGTK\Texture.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\ATGTK\FileDownloader.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig_PC.mgc" />
+    <MGCCompile Include="MicrosoftGameConfig_Scarlett.mgc" />
+    <MGCCompile Include="MicrosoftGameConfig_XboxOne.mgc" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="..\..\..\..\Media\Textures\GamerPic.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\UILayout.json">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\..\Media\Fonts\SegoeUI_18_Bold.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\ProductPrefab.json">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\UpdateAvailable.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\NotInstalled.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\NotPurchased.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\ProgressBar.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\GameLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\..\Media\Fonts\SegoeUI_30_Bold.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Selected.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="makepcpkg.cmd" />
+    <None Include="makescarlettpkg.cmd" />
+    <None Include="makexboxonepkg.cmd" />
+    <None Include="chunks.xml" />
+    <None Include="..\readme.md" />
+    <None Include="..\readme_ja-jp.md" />
+    <None Include="..\UpdateTesting\installandstageupdates.cmd">
+      <Filter>UpdateTesting</Filter>
+    </None>
+    <None Include="..\UpdateTesting\buildpackages.cmd">
+      <Filter>UpdateTesting</Filter>
+    </None>
+    <None Include="..\UpdateTesting\GameHubRelatedGameDLCV1.mgc">
+      <Filter>UpdateTesting</Filter>
+    </None>
+    <None Include="..\UpdateTesting\GameHubRelatedGameDLCV2.mgc">
+      <Filter>UpdateTesting</Filter>
+    </None>
+    <None Include="..\UpdateTesting\GameHubRelatedGameV1.mgc">
+      <Filter>UpdateTesting</Filter>
+    </None>
+    <None Include="..\UpdateTesting\GameHubRelatedGameV2.mgc">
+      <Filter>UpdateTesting</Filter>
+    </None>
+    <None Include="..\UpdateTesting\GameHubRequiredGameDLCV1.mgc">
+      <Filter>UpdateTesting</Filter>
+    </None>
+    <None Include="..\UpdateTesting\GameHubRequiredGameDLCV2.mgc">
+      <Filter>UpdateTesting</Filter>
+    </None>
+    <None Include="..\UpdateTesting\GameHubRequiredGameV1.mgc">
+      <Filter>UpdateTesting</Filter>
+    </None>
+    <None Include="..\UpdateTesting\GameHubRequiredGameV2.mgc">
+      <Filter>UpdateTesting</Filter>
+    </None>
+  </ItemGroup>
+</Project>

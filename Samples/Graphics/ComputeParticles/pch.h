@@ -77,6 +77,7 @@
 #include <XSystem.h>
 #include <XTaskQueue.h>
 
+#include "BufferHelpers.h"
 #include "CommonStates.h"
 #include "DDSTextureLoader.h"
 #include "DescriptorHeap.h"

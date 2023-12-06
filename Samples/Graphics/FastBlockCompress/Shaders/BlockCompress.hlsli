@@ -433,9 +433,9 @@ void GetIndicesAlpha(float block[16], float minA, float maxA, inout uint2 packed
     packed.y |= (index >> 1);
 
     shift = 2;
-    for (i = 6; i < 16; ++i)
+    for (int j = 6; j < 16; ++j)
     {
-        index = round((block[i] - maxA) * stepInc);
+        index = round((block[j] - maxA) * stepInc);
         index += (index > 0) - (7 * (index == 7));
 
         packed.y |= (index << shift);

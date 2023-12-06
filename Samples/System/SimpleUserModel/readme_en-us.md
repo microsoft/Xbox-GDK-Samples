@@ -36,6 +36,8 @@ button to exit the sample.
 
 ![Graphical user interface, application Description automatically generated](./media/image3.png)
 
+CONSOLE ONLY: When the controller assigned to the default user is disconnected, the sample calls `XUserFindControllerForUserWithUiAsync`, which launches a UI that prompts for controller input. This ensures that a controller is always paired to the default user.
+
 # Implementation Notes
 
 The new simple user model greatly simplifies the user management code
@@ -96,6 +98,8 @@ sign-in/out events, gamepad pairing, XR handling, and other more
 advanced user topics, please see the UserManagement Sample.
 
 # Update history
+
+**August 10, 2023:** Added scenario for reconnecting controller to user after controller loss
 
 **June 24, 2022:** Added PC support, upgraded requirements to June 2022
 GDK

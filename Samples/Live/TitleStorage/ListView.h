@@ -27,14 +27,14 @@ public:
     ListView(std::shared_ptr<ATG::UIManager> ui, const ListViewConfig &config) :
         m_ui(ui)
     {
-        m_rows.resize(config.MaxRows);
+        m_rows.resize(static_cast<size_t>(config.MaxRows));
 
-        auto panel = ui->FindPanel<ATG::IPanel>(config.ParentPanel);
+        auto panel = ui->FindPanel<ATG::IPanel>(static_cast<size_t>(config.ParentPanel));
 
         for (int i = 0; i < config.MaxRows; ++i)
         {
             int row = config.RowStartIndex + i * config.RowIncrement;
-            m_rows[i].SetControls(panel, row);
+            m_rows[size_t(i)].SetControls(panel, static_cast<size_t>(row));
         }
     }
 

@@ -1,0 +1,333 @@
+﻿{
+  "$schema": "https://atgsamplessa.blob.core.windows.net/uitkschema/latest/layout.schema.json",
+  "definitions": {
+    "#fullscreen": [ 1920, 1080 ]
+  },
+  "styles": [
+    {
+      "id": "BasicPanelStyle",
+      "classId": "SpriteStyle",
+      "spriteStyle": {
+        "colorUsage": "override",
+        "color": [ 38, 38, 38, 1.0 ]
+      }
+    },
+    {
+      "id": "InvisiblePanelStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 0, 0, 0, 0.0 ]
+    },
+    {
+      "id": "DurableBackgroundPanelStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 50, 55, 50, 1.0 ]
+    },
+    {
+      "id": "ConsolePanelStyle",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 0, 0, 0, 1.0 ]
+    },
+    {
+      "id": "ProductTypeTextStyle",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "size": 30,
+      "weight": "bold",
+      "verticalAlign": "top",
+      "horizontalAlign": "left"
+    },
+    {
+      "id": "EnumeratingTextStyle",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": [ 195, 181, 152, 1.0 ],
+      "size": 30,
+      "weight": "bold",
+      "verticalAlign": "top",
+      "horizontalAlign": "left"
+    },
+    {
+      "id": "MenuTextStyle",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "size": 18,
+      "verticalAlign": "top",
+      "horizontalAlign": "left",
+      "legendFont": "Assets/Fonts/XboxOneControllerLegendSmall"
+    },
+    {
+      "id": "ItemTextStyle",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1.0 ],
+      "size": 18,
+      "verticalAlign": "top",
+      "horizontalAlign": "center",
+      "legendFont": "Assets/Fonts/XboxOneControllerLegendSmall"
+    },
+    {
+      "id": "ScrollbarBackgroundStyle",
+      "classId": "SpriteStyle",
+      "color": [ 192, 192, 192, 1.0 ],
+      "colorUsage": "override"
+    },
+    {
+      "id": "SliderStyle",
+      "classId": "SpriteStyle",
+      "color": [ 87, 87, 87, 1.0 ],
+      "colorUsage": "override"
+    },
+    {
+      "id": "SliderFocusedStyle",
+      "classId": "SpriteStyle",
+      "color": [ 192, 0, 0, 1.0 ],
+      "colorUsage": "override"
+    },
+    {
+      "id": "ConsoleTextStyle",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": [ 195, 181, 152, 1.0 ],
+      "verticalAlign": "bottom",
+      "horizontalAlign": "left"
+    },
+    {
+      "id": "SlectedBorderStyle",
+      "classId": "SpriteStyle",
+      "texture": "Assets/Selected.png"
+    }
+  ],
+  "layout": {
+    "id": "MainPanel",
+    "classId": "Panel",
+    "styleId": "BasicPanelStyle",
+    "panel": {
+      "positioningAnchor": [ "left", "top" ],
+      "position": [ 0, 0 ],
+      "sizingAnchor": [ "left", "top" ],
+      "size": "#fullscreen",
+      "childElements": [
+        {
+          "id": "GamePanel",
+          "classId": "HorizontalStackPanel",
+          "positioningAnchor": [ "left", "top" ],
+          "sizingAnchor": [ "left", "top" ],
+          "position": [ 300, 100 ],
+          "size": [ 1920, 330 ],
+          "styleId": "InvisiblePanelStyle",
+          "stackingOrientation": "right",
+          "stackElementPadding": 200.0,
+          "maxVisibleItems": 8
+        },
+        {
+          "classId": "StaticText",
+          "id": "ProductTypeGameText",
+          "positioningAnchor": [ "left", "top" ],
+          "sizingAnchor": [ "left", "top" ],
+          "position": [ 50, 200 ],
+          "text": "Game",
+          "styleId": "ProductTypeTextStyle"
+        },
+        {
+          "classId": "StaticText",
+          "id": "EnumeratingGameText",
+          "positioningAnchor": [ "left", "top" ],
+          "sizingAnchor": [ "left", "top" ],
+          "position": [ 850, 200 ],
+          "text": "Enumerating...",
+          "styleId": "EnumeratingTextStyle"
+        },
+        {
+          "id": "DurableBackgroundPanel",
+          "classId": "Panel",
+          "positioningAnchor": [ "left", "top" ],
+          "sizingAnchor": [ "left", "top" ],
+          "position": [ 0, 410 ],
+          "size": [ 1920, 330 ],
+          "styleId": "DurableBackgroundPanelStyle"
+        },
+        {
+          "id": "DurablePanel",
+          "classId": "HorizontalStackPanel",
+          "positioningAnchor": [ "left", "top" ],
+          "sizingAnchor": [ "left", "top" ],
+          "position": [ 300, 440 ],
+          "size": [ 1920, 300 ],
+          "styleId": "InvisiblePanelStyle",
+          "stackingOrientation": "right",
+          "stackElementPadding": 200.0,
+          "maxVisibleItems": 8
+        },
+        {
+          "classId": "StaticText",
+          "id": "ProductTypeDurableText",
+          "positioningAnchor": [ "left", "top" ],
+          "sizingAnchor": [ "left", "top" ],
+          "position": [ 50, 540 ],
+          "text": "Durable",
+          "styleId": "ProductTypeTextStyle"
+        },
+        {
+          "classId": "StaticText",
+          "id": "EnumeratingDLCText",
+          "positioningAnchor": [ "left", "top" ],
+          "sizingAnchor": [ "left", "top" ],
+          "position": [ 850, 540 ],
+          "text": "Enumerating...",
+          "styleId": "EnumeratingTextStyle"
+        },
+        {
+          "id": "MenuPanel",
+          "classId": "Panel",
+          "positioningAnchor": [ "left", "top" ],
+          "sizingAnchor": [ "left", "top" ],
+          "position": [ 15, 710 ],
+          "size": [ 300, 550 ],
+          "styleId": "InvisiblePanelStyle",
+          "childElements": [
+            {
+              "classId": "StaticText",
+              "id": "InstallLaunchText",
+              "positioningAnchor": [ "left", "top" ],
+              "sizingAnchor": [ "left", "top" ],
+              "position": [ 0, 50 ],
+              "text": "[A] Install",
+              "styleId": "MenuTextStyle",
+              "isLegend": true
+            },
+            {
+              "classId": "StaticText",
+              "id": "CheckAllUpdatesText",
+              "positioningAnchor": [ "left", "top" ],
+              "sizingAnchor": [ "left", "top" ],
+              "position": [ 0, 100 ],
+              "text": "[X] Check all for updates",
+              "styleId": "MenuTextStyle",
+              "isLegend": true
+            },
+            {
+              "classId": "StaticText",
+              "id": "CheckLicenseText",
+              "positioningAnchor": [ "left", "top" ],
+              "sizingAnchor": [ "left", "top" ],
+              "position": [ 0, 150 ],
+              "text": "[Y] Check license",
+              "styleId": "MenuTextStyle",
+              "isLegend": true
+            },
+            {
+              "classId": "StaticText",
+              "id": "CheckUpdateText",
+              "positioningAnchor": [ "left", "top" ],
+              "sizingAnchor": [ "left", "top" ],
+              "position": [ 0, 200 ],
+              "text": "[B] Check selected for update",
+              "styleId": "MenuTextStyle",
+              "isLegend": true
+            },
+			{
+              "classId": "StaticText",
+              "id": "UninstallText",
+              "positioningAnchor": [ "left", "top" ],
+              "sizingAnchor": [ "left", "top" ],
+              "position": [ 0, 250 ],
+              "text": "[LThumb] Uninstall",
+              "styleId": "MenuTextStyle",
+              "isLegend": true
+            },
+			{
+              "classId": "StaticText",
+              "id": "RefreshText",
+              "positioningAnchor": [ "left", "top" ],
+              "sizingAnchor": [ "left", "top" ],
+              "position": [ 0, 300 ],
+              "text": "[RThumb] Refresh",
+              "styleId": "MenuTextStyle",
+              "isLegend": true
+            }
+          ]
+        },
+        {
+          "id": "OutputConsoleWindowOuterPanel",
+          "classId": "Panel",
+          "positioningAnchor": [ "left", "top" ],
+          "sizingAnchor": [ "left", "top" ],
+          "position": [ 350, 760 ],
+          "size": [ 1550, 250 ],
+          "styleId": "ConsolePanelStyle",
+          "childElements": [
+            {
+              "classId": "ConsoleWindow",
+              "id": "OutputConsoleWindow",
+              "positioningAnchor": [ "left", "top" ],
+              "sizingAnchor": [ "left", "top" ],
+              "position": [ 0, 0 ],
+              "size": [ 1660, 250 ],
+              "maxConsoleLines": 200,
+              "styleId": "ConsoleTextStyle",
+              "verticalSliderSubElementId": "OutputConsoleWindowSlider",
+              "viewportPanelSubElementId": "OutputConsoleWindowPanel",
+              "subElements": [
+                {
+                  "classId": "Panel",
+                  "id": "OutputConsoleWindowPanel",
+                  "positioningAnchor": [ "left", "top" ],
+                  "position": [ 0, 0 ],
+                  "sizingAnchor": [ "left", "top" ],
+                  "size": [ 1660, 250 ],
+                  "styleId": "InvisiblePanelStyle"
+                },
+                {
+                  "id": "OutputConsoleWindowSlider",
+                  "classId": "Slider",
+                  "positioningAnchor": [ "left", "top" ],
+                  "sizingAnchor": [ "left", "top" ],
+                  "position": [ 0, 0 ],
+                  "size": [ 20, 240 ],
+                  "sliderOrientation": "toptobottom",
+                  "sliderType": "discrete",
+                  "valueRange": [ 0.0, 1.0 ],
+                  "initialValue": 0.0,
+                  "numDiscreteSteps": 1,
+                  "visible": false,
+                  "style": {
+                    "classId": "NullStyle"
+                  },
+                  "backgroundSubElementId": "ScrollbarBackground",
+                  "thumbButtonSubElementId": "ScrollbarSelector",
+                  "subElements": [
+                    {
+                      "id": "ScrollbarBackground",
+                      "classId": "Image",
+                      "styleId": "ScrollbarBackgroundStyle",
+                      "position": [ 0, 0 ],
+                      "size": [ 30, 50 ]
+                    },
+                    {
+                      "id": "ScrollbarSelector",
+                      "classId": "Button",
+                      "positioningAnchor": [ "left", "top" ],
+                      "sizingAnchor": [ "left", "top" ],
+                      "size": [ 30, 50 ],
+                      "styleId": "SliderStyle",
+                      "focusable": true,
+                      "focusedStyleId": "SliderFocusedStyle",
+                      "hoveredStyleId": "SliderFocusedStyle",
+                      "pressedStyleId": "SliderFocusedStyle",
+                      "disabledStyleId": "SliderFocusedStyle"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

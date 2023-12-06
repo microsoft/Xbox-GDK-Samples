@@ -186,6 +186,7 @@
     <FXCompile>
       <ShaderModel>6.0</ShaderModel>
       <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTK\FullScreenQuad</AdditionalIncludeDirectories>
+      <AdditionalOptions>-HV 2021 %(AdditionalOptions)</AdditionalOptions>
     </FXCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">
@@ -215,6 +216,7 @@
     <FXCompile>
       <ShaderModel>6.0</ShaderModel>
       <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTK\FullScreenQuad</AdditionalIncludeDirectories>
+      <AdditionalOptions>-HV 2021 %(AdditionalOptions)</AdditionalOptions>
     </FXCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">
@@ -242,6 +244,7 @@
     <FXCompile>
       <ShaderModel>6.0</ShaderModel>
       <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTK\FullScreenQuad</AdditionalIncludeDirectories>
+      <AdditionalOptions>-HV 2021 %(AdditionalOptions)</AdditionalOptions>
     </FXCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">
@@ -271,6 +274,7 @@
     <FXCompile>
       <ShaderModel>6.0</ShaderModel>
       <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTK\FullScreenQuad</AdditionalIncludeDirectories>
+      <AdditionalOptions>-HV 2021 %(AdditionalOptions)</AdditionalOptions>
     </FXCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">
@@ -295,6 +299,7 @@
     <FXCompile>
       <ShaderModel>6.0</ShaderModel>
       <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTK\FullScreenQuad</AdditionalIncludeDirectories>
+      <AdditionalOptions>-HV 2021 %(AdditionalOptions)</AdditionalOptions>
     </FXCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">
@@ -321,6 +326,7 @@
     <FXCompile>
       <ShaderModel>6.0</ShaderModel>
       <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTK\FullScreenQuad</AdditionalIncludeDirectories>
+      <AdditionalOptions>-HV 2021 %(AdditionalOptions)</AdditionalOptions>
     </FXCompile>
   </ItemDefinitionGroup>
   <ItemGroup>

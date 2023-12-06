@@ -33,8 +33,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/x64")
 # alternatively you can use onecore.lib for Win32 desktop apps that only support Windows 10/Windows 11
 
 if(BUILD_USING_ONECORE)
-    set(CMAKE_CXX_STANDARD_LIBRARIES "onecore.lib")
-    set(CMAKE_CXX_STANDARD_LIBRARIES_INIT "onecore.lib")
+    set(CMAKE_CXX_STANDARD_LIBRARIES "onecore_apiset.lib user32.lib")
+    set(CMAKE_CXX_STANDARD_LIBRARIES_INIT "onecore_apiset.lib user32.lib")
 endif()
 
 # WARNING: Only ever use _one_ of: kernel32.lib, onecore*.lib, onecoreuap*.lib, WindowsApp.lib, xgameplatform.lib
@@ -51,8 +51,7 @@ add_executable(${PROJECT_NAME} WIN32
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC ./ ../)
-
-target_compile_definitions(${PROJECT_NAME} PRIVATE "$<$<CONFIG:DEBUG>:_DEBUG>" "$<$<CONFIG:RELEASE>:NDEBUG>" _GAMING_DESKTOP WINAPI_FAMILY=WINAPI_FAMILY_DESKTOP_APP _UNICODE UNICODE __WRL_NO_DEFAULT_LIB__)
+target_compile_definitions(${PROJECT_NAME} PRIVATE $<IF:$<CONFIG:DEBUG>,_DEBUG,NDEBUG> _GAMING_DESKTOP WINAPI_FAMILY=WINAPI_FAMILY_DESKTOP_APP _UNICODE UNICODE __WRL_NO_DEFAULT_LIB__)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE dxguid.lib d3d12.lib dxgi.lib Xbox::GameRuntime Xbox::XSAPI Xbox::XCurl)
 if (XdkEditionTarget GREATER_EQUAL 220600)
