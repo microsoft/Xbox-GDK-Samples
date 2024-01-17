@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- For multi-config generators, the UseDebugLibraries global is set for Release configurations, but this implies unsupported switches -->
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'!='Debug|Gaming.Xbox.XboxOne.x64'" Label="Configuration">
+    <ClCompile>
+      <BasicRuntimeChecks />
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'!='Debug|Gaming.Xbox.Scarlett.x64'" Label="Configuration">
+    <ClCompile>
+      <BasicRuntimeChecks />
+    </ClCompile>
+  </ItemDefinitionGroup>
+</Project>
