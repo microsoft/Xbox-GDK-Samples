@@ -280,6 +280,12 @@ namespace
             return HRESULT_E_INVALID_DATA;
         }
 
+        uint64_t sizeBytes = uint64_t(pHeader->wWidth) * uint64_t(pHeader->wHeight) * uint64_t(pHeader->bBitsPerPixel) / 8;
+        if (sizeBytes > UINT32_MAX)
+        {
+            return HRESULT_E_ARITHMETIC_OVERFLOW;
+        }
+
         metadata.width = pHeader->wWidth;
         metadata.height = pHeader->wHeight;
         metadata.depth = metadata.arraySize = metadata.mipLevels = 1;
@@ -1652,7 +1658,7 @@ HRESULT DirectX::LoadFromTGAMemory(
         return hr;
 
     if (offset > size)
-        return E_FAIL;
+        return HRESULT_E_INVALID_DATA;
 
     size_t paletteOffset = 0;
     uint8_t palette[256 * 4] = {};
@@ -1825,6 +1831,9 @@ HRESULT DirectX::LoadFromTGAFile(
     HRESULT hr = DecodeTGAHeader(header, headerLen, flags, mdata, offset, &convFlags);
     if (FAILED(hr))
         return hr;
+
+    if (offset > len)
+        return HRESULT_E_INVALID_DATA;
 
     // Read the pixels
     auto const remaining = len - offset;
