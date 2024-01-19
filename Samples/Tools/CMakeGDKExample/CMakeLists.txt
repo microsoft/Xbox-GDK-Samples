@@ -153,6 +153,7 @@ set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
 
 if(CMAKE_CONFIGURATION_TYPES MATCHES "Debug")
     set_property(TARGET ${PROJECT_NAME} PROPERTY VS_GLOBAL_UseDebugLibraries "true")
+    set_target_properties(${PROJECT_NAME} PROPERTIES VS_USER_PROPS "${CMAKE_CURRENT_LIST_DIR}/BasicChecksWorkaround.props")
 endif()
 
 if(NOT CMAKE_VS_PLATFORM_NAME STREQUAL "Gaming.Desktop.x64")
