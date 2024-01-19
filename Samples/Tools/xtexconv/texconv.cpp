@@ -10,15 +10,19 @@
 #error This tool is only supported for x64 native
 #endif
 
+#ifdef  _MSC_VER
 #pragma warning(push)
 #pragma warning(disable : 4005)
+#endif
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 #define NODRAWTEXT
 #define NOMCX
 #define NOSERVICE
 #define NOHELP
+#ifdef  _MSC_VER
 #pragma warning(pop)
+#endif
 
 #include <ShlObj.h>
 
@@ -53,7 +57,9 @@
 
 #include <wincodec.h>
 
+#ifdef  _MSC_VER
 #pragma warning(disable : 4619 4616 26812)
+#endif
 
 #include "DirectXTex.h"
 #include "DirectXTexXbox.h"
@@ -548,7 +554,9 @@ HRESULT __cdecl SaveToPortablePixMapHDR(
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
+#ifdef  _MSC_VER
 #pragma warning( disable : 4616 6211 )
+#endif
 
 namespace
 {

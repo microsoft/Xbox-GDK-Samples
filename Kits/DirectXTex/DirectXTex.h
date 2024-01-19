@@ -47,7 +47,7 @@ struct IWICImagingFactory;
 struct IWICMetadataQueryReader;
 #endif
 
-#define DIRECTX_TEX_VERSION 201
+#define DIRECTX_TEX_VERSION 202
 
 
 namespace DirectX
@@ -1011,12 +1011,16 @@ namespace DirectX
 #pragma clang diagnostic ignored "-Wswitch-enum"
 #endif
 
+#ifdef  _MSC_VER
 #pragma warning(push)
 #pragma warning(disable : 4619 4616 4061)
+#endif
 
 #include "DirectXTex.inl"
 
+#ifdef  _MSC_VER
 #pragma warning(pop)
+#endif
 
 #ifdef __clang__
 #pragma clang diagnostic pop
