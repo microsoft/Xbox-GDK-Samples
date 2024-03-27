@@ -54,7 +54,6 @@ namespace DX
     };
 
 
-#if defined(__d3d12_h__)
     //----------------------------------------------------------------------------------
     // DirectX 12 implementation of GPU timer
     class GPUTimer
@@ -124,94 +123,4 @@ namespace DX
         bool                                    m_used[c_maxTimers];
         UINT64                                  m_timing[c_timerSlots];
     };
-
-#elif defined(__d3d11_h__)
-    //----------------------------------------------------------------------------------
-    // DirectX 11 implementation of GPU timer
-    class GPUTimer
-    {
-    public:
-    public:
-        static constexpr size_t c_maxTimers = 8;
-
-        GPUTimer() :
-            m_currentFrame(0),
-            m_frame{}
-        {}
-
-        GPUTimer(ID3D11Device* device) :
-            m_currentFrame(0),
-            m_frame{}
-        {
-            RestoreDevice(device);
-        }
-
-        GPUTimer(const GPUTimer&) = delete;
-        GPUTimer& operator=(const GPUTimer&) = delete;
-
-        GPUTimer(GPUTimer&&) = default;
-        GPUTimer& operator=(GPUTimer&&) = default;
-
-        ~GPUTimer() { ReleaseDevice(); }
-
-        // Indicate beginning & end of frame
-        void BeginFrame(_In_ ID3D11DeviceContext* context);
-
-        void EndFrame(_In_ ID3D11DeviceContext* context);
-
-        // Allows GetElapsedMS to retrieve the most recently submitted timings, instead of the oldest ones
-        // Requires the caller to block until the data is available
-        void Flush(_In_ ID3D11DeviceContext* context);
-
-        // Start/stop a particular performance timer (don't start same index more than once in a single frame)
-        void Start(_In_ ID3D11DeviceContext* context, uint32_t timerid = 0);
-        void Stop(_In_ ID3D11DeviceContext* context, uint32_t timerid = 0);
-
-        // Reset running average
-        void Reset();
-
-        // Returns delta time in milliseconds
-        double GetElapsedMS(uint32_t timerid = 0) const;
-
-        // Returns running average in milliseconds
-        float GetAverageMS(uint32_t timerid = 0) const;
-
-        // Device management
-        void ReleaseDevice();
-        void RestoreDevice(_In_ ID3D11Device* device);
-
-    private:
-        static constexpr size_t c_bufferCount = 3;
-
-        unsigned m_currentFrame;
-        struct Frame
-        {
-            bool                                m_pending;
-            Microsoft::WRL::ComPtr<ID3D11Query> m_disjoint;
-            Microsoft::WRL::ComPtr<ID3D11Query> m_start[c_maxTimers];
-            Microsoft::WRL::ComPtr<ID3D11Query> m_end[c_maxTimers];
-            float                               m_avg[c_maxTimers];
-            float                               m_timing[c_maxTimers];
-            bool                                m_used[c_maxTimers];
-
-            Frame() :
-                m_pending(false),
-                m_avg{},
-                m_timing{},
-                m_used{}
-            {}
-
-            void BeginFrame(_In_ ID3D11DeviceContext* context);
-            void EndFrame(_In_ ID3D11DeviceContext* context);
-            void ComputeFrame(_In_ ID3D11DeviceContext* context);
-
-            void Start(_In_ ID3D11DeviceContext* context, uint32_t timerid = 0);
-            void Stop(_In_ ID3D11DeviceContext* context, uint32_t timerid = 0);
-
-        } m_frame[c_bufferCount];
-    };
-
-#else
-#error Must include d3d11*.h or d3d12*.h before PerformanceTimers.h
-#endif
 }

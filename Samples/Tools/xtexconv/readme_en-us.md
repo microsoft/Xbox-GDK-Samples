@@ -153,3 +153,4 @@ for additional details.
 |February 2019|Initial release.|
 |November 2019|Xbox Series X|S support.|
 |February 2020|Updates for XG library changes.|
+|February 2024|Reworked XG implementation to use CopyFromSubresource and CopyToSubresource to optimize performance and handle complex swizzling cases.|

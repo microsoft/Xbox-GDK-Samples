@@ -60,6 +60,7 @@ public:
     // Initialization and management
     void Initialize(HWND window);
     void InitializeUI();
+    bool CheckDeviceType();
 
     // Basic render loop
     void Tick();

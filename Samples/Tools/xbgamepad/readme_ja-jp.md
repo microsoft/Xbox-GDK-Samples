@@ -1,43 +1,38 @@
 # xbgamepad
 
-*このツールは、Microsoft ゲーム開発キットのプレビュー (2020 年 2 月)
-に対応しています。*
+*このサンプルは、Microsoft Game Development Kit と互換性があります (2022 年 3 月)*
 
 # 説明
 
-これは、ローカルに接続された XINPUT デバイス (Xbox One
-のコントローラーなど) から入力を受け取り、XDK および GDK に付属している
-XTF (Xbox ツール フレームワーク) ライブラリを使用して、Xbox One または
-Xbox シリーズ X devkit に送信する最小限の win32 コンソール アプリです。
+これは、ローカルに接続された XINPUT デバイス (例: Xbox ゲームパッド) から入力を受け取り、 それらの入力をXDK と GDK に付属するライブラリに送信する、
+最小限の win32 コンソール アプリです。
+| | |
+|---|---|
+|XTF (Xbox ツール フレームワーク)を使用した Xbox One または Xbox Series X|S 開発キット|
 
-# 実行
+# Running
 
-xtfdlls フォルダー内に dll が存在する場合はそれらを使用するため、GDK
-がインストールされていないコンピューターで実行できます。このツールには、Windows
-8 以降が必要です。
+xtfdlls フォルダー内の DLL が存在する場合はそれを使用するため、GDK がインストールされていないマシンでも実行できます。 ツールには Windows 8 以降が必要です。
 
-# 使用方法
+# 使用法
 
-*xbgamepad /x:\<devkit ipv4 address\> \[/r:\<update rate in hz - default
-is 30\>\]*
+```
+xbgamepad /x:<devkit ipv4 address> [/r:<update rate in hz - default is 30>]
+```
 
-TCP ポート 4211 および 4212 経由で devkit にアクセスする必要があります。
 
-# ビルドの前提条件
+TCP ポート 4211 および 4212 経由で開発キットにアクセスする必要があります。
 
--   Visual Studio 2017
+# 前提条件を構築する
 
--   Windows 10 SDK
+- Visual Studio 2019 (16.11) および Visual Studio 2022
 
--   XTF のヘッダーおよびライブラリ用の最近の GDK のインストール
-    (環境変数 GameDK をインクルードおよびリンカー内で XDK
-    バージョンに変更して、プロジェクトは、XDK
-    を使うように修正できます)。
+- Windows 10 SDK
+
+- XTF ヘッダーとライブラリ用の最近の GDK インストール (インクルードとリンカーの入力で環境変数 GameDK を XDK バージョンに変更することで、XDK を使用するようにプロジェクトを変更できます)
 
 # 配布
 
-GDK がインストールされていないコンピューターで実行するには、xbtp.dll
-および xtfinput.dll のファイルを既存の GDK
-インストールからコピーする必要があります。 %GameDK%\\bin
-内にあります。GDK がインストールされていないコンピューターの
-xbgamepad.exe の横に配置することができます。
+GDK がインストールされていないコンピューターで実行するには、既存の GDK インストールから xbtp.dll ファイルと xtfinput.dll ファイルをコピーする必要があります。 これらは `%GameDK%\bin` に存在します。GDK がインストールされていないコンピューターで xbgamepad.exe の横に配置できます。
+
+

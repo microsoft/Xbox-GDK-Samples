@@ -1,43 +1,36 @@
-# 간단한 재생 소리 스트림 샘플
+# 단순 플레이 사운드 스트림 샘플
 
-*이 샘플은 Microsoft 게임 개발 키트 미리 보기와 호환됩니다(2019년
-11월).*
+*이 샘플은 Microsoft 게임 개발 키트와 호환 가능합니다(2020년 6월).*
 
 # 설명
 
-이 샘플에서는 Xbox One에서 XAudio2를 사용하여 wav 파일을 스트리밍하는
-방법을 보여 줍니다.
+이 샘플에서는 Xbox One에서 XAudio2를 사용하여 wav 파일을 스트리밍하는 방법을 보여 줍니다.
 
 ![](./media/image1.png)
 
-# 샘플 빌드하기
+# 샘플 빌드
 
-Xbox One devkit을 사용하는 경우 활성 솔루션 플랫폼을
-Gaming.Xbox.XboxOne.x64로 설정하세요.
+Xbox One 개발 키트를 사용하는 경우 활성 솔루션 플랫폼을 `Gaming.Xbox.XboxOne.x64`(으)로 설정합니다.
 
-Project Scarlett을 사용하는 경우 활성 솔루션 플랫폼을
-Gaming.Xbox.Scarlett.x64로 설정하세요.
+Project Scarlett을 사용하는 경우 활성 솔루션 플랫폼을 `Gaming.Xbox.Scarlett.x64`(으)로 설정합니다.
 
-*자세한 내용은 GDK 문서에서* 샘플 실행하기*를 참조하세요.*
+*GDK 설명서의* __샘플 실행__에서 *자세한 내용을 알아보세요.*
 
-# 샘플 사용하기
+# 샘플 사용
 
-이 샘플에는 보기 버튼으로 종료하는 것 외에 다른 컨트롤은 없습니다.
+샘플에는 보기 버튼을 통한 종료 외에는 컨트롤이 없습니다.
 
 # 구현 참고 사항
 
-이 샘플에서는 자체 WAV 파일 파서를 사용하여 wav 파일을 스트리밍하는
-방법을 보여 줍니다.
+이 샘플에서는 자체 WAV 파일 파서로 wav 파일을 스트리밍하는 방법을 보여 줍니다.
 
-XAudio2를 사용하여 스트리밍하는 다른 예제는
-[GitHub](https://github.com/walbourn/directx-sdk-samples/tree/master/XAudio2)를
-참조하세요.
+XAudio2를 사용하여 스트리밍하는 다른 예제는 [GitHub](https://github.com/walbourn/directx-sdk-samples/tree/master/XAudio2)를 참조하세요.
 
--   Win32 버퍼링되지 않은 중복 I/O를 지원하기 위해 디스크의 .WAV
-    데이터를 준비하는 **XAudio2AsyncStream**
+- **XAudio2AsyncStream** - Win32의 버퍼링되지 않은 중첩된 I/O를 지원하기 위한 디스크의 .WAV 데이터 준비
 
--   미디어 파운데이션 원본 읽기 프로그램을 사용하여 WMA 파일에서 데이터
-    압축을 푸는 **XAudio2MFStream**
+- **XAudio2MFStream** - 미디어 파운데이션 원본 판독기를 사용하여 WMA 파일에서 데이터의 압축 해제
+
+- 모든 XAaudio2 형식에 대해 버퍼링되지 않은 겹치는 I/O를 구현하는 *DirectX 도구 키트의* **SoundStreamInstance**입니다.
 
 # 알려진 문제
 
@@ -45,11 +38,8 @@ XAudio2를 사용하여 스트리밍하는 다른 예제는
 
 # 개인정보처리방침
 
-샘플을 컴파일하고 실행할 때 샘플 사용을 추적하는 데 도움이 되도록 샘플
-실행 파일의 파일 이름이 Microsoft에 전송됩니다. 이 데이터 수집을
-옵트아웃하려면 \"샘플 사용 원격 분석\"이라고 표시된 Main.cpp에서 코드
-블록을 제거할 수 있습니다.
+샘플을 컴파일하고 실행하는 경우 샘플 사용량을 추적할 수 있도록 샘플 실행 파일의 파일 이름이 Microsoft에 전송됩니다. 이 데이터 수집을 옵트아웃하려면 Main.cpp에서 "샘플 사용량 원격 분석"이라는 레이블이 지정된 코드 블록을 제거할 수 있습니다.
 
-Microsoft의 개인 정보 보호 정책에 대한 자세한 내용은 [Microsoft
-개인정보처리방침](https://privacy.microsoft.com/en-us/privacystatement/)을
-참조하세요.
+일반적인 Microsoft의 개인 정보 정책에 대한 자세한 내용은 [Microsoft 개인정보처리방침](https://privacy.microsoft.com/en-us/privacystatement/)을 참조하세요.
+
+

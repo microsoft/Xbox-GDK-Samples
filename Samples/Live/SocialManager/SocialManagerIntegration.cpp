@@ -101,6 +101,94 @@ void Sample::DestroySocialGroup(_In_ XblSocialManagerUserGroup* group)
     }
 }
 
+void Sample::LoadGamerPics(uint64_t* xuids, size_t count)
+{
+    auto async = new XAsyncBlock();
+    async->context = this;
+    async->queue = m_asyncQueue;
+    async->callback = [](XAsyncBlock* asyncProf)
+    {
+        auto sample = reinterpret_cast<Sample*>(asyncProf->context);
+
+        size_t profilesCount;
+        HRESULT hr = XblProfileGetUserProfilesResultCount(asyncProf, &profilesCount);
+        if (FAILED(hr))
+        {
+            sample->m_console->Format(L"Failed to get user profile count: 0x%08X\n", static_cast<unsigned int>(hr));
+        }
+        else
+        {
+            XblUserProfile* profiles = new XblUserProfile[profilesCount];
+            hr = XblProfileGetUserProfilesResult(asyncProf, profilesCount, profiles);
+            if (FAILED(hr))
+            {
+                sample->m_console->Format(L"Failed to get user profiles: 0x%08X\n", static_cast<unsigned int>(hr));
+            }
+            else
+            {
+                sample->m_profilesToLoadCount = profilesCount;
+                for (size_t i = 0; i < profilesCount; i++)
+                {
+                    // Load gamerpic to cache
+                    auto profile = profiles[i];
+
+                    HCCallHandle httpHandle;
+                    DX::ThrowIfFailed(HCHttpCallCreate(&httpHandle));
+                    DX::ThrowIfFailed(HCHttpCallRequestSetUrl(httpHandle, "GET", profile.gameDisplayPictureResizeUri));
+
+                    PictureData* picData = new PictureData(profile.xboxUserId, httpHandle, &sample->m_profilePicCache, &sample->m_profilesLoadedCount);
+
+                    auto async = new XAsyncBlock{};
+                    async->context = picData;
+                    async->queue = nullptr;
+                    async->callback = [](XAsyncBlock* asyncImg)
+                    {
+                        auto picData = reinterpret_cast<PictureData*>(asyncImg->context);
+                        static size_t bufferSize = 1024 * 16;
+                        uint8_t* pictureData = new uint8_t[bufferSize];
+
+                        size_t responseSize;
+                        HRESULT hr = HCHttpCallResponseGetResponseBodyBytesSize(picData->httpHandle, &responseSize);
+                        DX::ThrowIfFailed(hr);
+
+                        uint8_t* responseBuffer = new uint8_t[responseSize];
+                        size_t responseBufferUsed;
+
+                        hr = HCHttpCallResponseGetResponseBodyBytes(picData->httpHandle, responseSize, responseBuffer, &responseBufferUsed);
+                        DX::ThrowIfFailed(hr);
+
+                        if (SUCCEEDED(hr))
+                        {
+                            pictureData = responseBuffer;
+
+                            // Write to cache
+                            std::pair<uint8_t*, size_t> bufferPair;
+                            bufferPair.first = pictureData;
+                            bufferPair.second = responseBufferUsed;
+                            (*picData->profileCache)[picData->xuid] = bufferPair;
+                            (*picData->profilesLoadedCount)++;
+                        }
+                        else
+                        {
+                            pictureData = 0;
+                            pictureData = nullptr;
+                        }
+
+                        DX::ThrowIfFailed(HCHttpCallCloseHandle(picData->httpHandle));
+
+                        delete asyncImg;
+                    };
+
+                    DX::ThrowIfFailed(HCHttpCallPerformAsync(httpHandle, async));
+                }
+            }
+        }
+        delete asyncProf;
+    };
+
+    DX::ThrowIfFailed(XblProfileGetUserProfilesAsync(m_liveResources->GetLiveContext(), xuids, count, async));
+}
+
 void Sample::UpdateSocialManager()
 {
     // Process events from the social manager

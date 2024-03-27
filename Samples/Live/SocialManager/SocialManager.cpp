@@ -27,7 +27,7 @@ namespace
     constexpr int c_unselected1 = 300;
     constexpr int c_selected1 = 310;
 
-    constexpr int c_listSize = 15;
+    constexpr int c_listSize = 8;
 
     std::string friendListTypeStrings[] =
     {
@@ -56,6 +56,10 @@ Sample::Sample() noexcept(false) :
     ATG::UIConfig uiconfig;
     m_ui = std::make_unique<ATG::UIManager>(uiconfig);
     m_console = std::make_unique<DX::TextConsoleImage>();
+    m_profilePicCache = std::map<uint64_t, std::pair<uint8_t*, size_t>>();
+
+    m_profilesToLoadCount = 0;
+    m_profilesLoadedCount = 0;
 }
 
 Sample::~Sample()
@@ -79,7 +83,6 @@ void Sample::Initialize(HWND window, int width, int height)
     wchar_t result[MAX_PATH];
     DX::FindMediaFile(result, MAX_PATH, L".\\Assets\\SampleUI.csv");
     m_ui->LoadLayout(result, L".\\Assets\\");
-    SetupUI();
 
     m_deviceResources->SetWindow(window, width, height);
 
@@ -92,6 +95,7 @@ void Sample::Initialize(HWND window, int width, int height)
     m_liveResources->SetUserChangedCallback([this](XUserHandle user)
     {
         m_liveInfoHUD->SetUser(user, m_liveResources->GetAsyncQueue());
+        m_userRepeater->SetLiveContext(m_liveResources->GetLiveContext());
         m_ui->FindPanel<ATG::IPanel>(c_sampleUIPanel)->Show();
         AddUserToSocialManager(user);
         RefreshUserList();
@@ -130,6 +134,8 @@ void Sample::Initialize(HWND window, int width, int height)
 
     m_liveResources->Initialize();
     m_liveInfoHUD->Initialize();
+
+    SetupUI();
 }
 
 #pragma region UI Methods
@@ -139,9 +145,10 @@ void Sample::SetupUI()
 
     // Setup user list repeater
     auto loc = POINT{ 150, 200 };
-    auto pos = SIZE{ 610, 40 };
+    auto dim = SIZE{ 610, 78 };
 
-    m_userRepeater = std::make_unique<UserRepeater>(m_ui, loc, pos, 8000, m_liveResources->GetTitleId());
+    m_userRepeater = std::make_unique<UserRepeater>(m_ui, loc, dim, 8000, m_liveResources->GetTitleId(), &m_profilePicCache);
+    m_userRepeater->InitializeProfilePics(c_listSize, m_deviceResources.get(), m_resourceDescriptors.get());
     m_userRepeater->SetSelectedCallback([this](std::shared_ptr<UserListItem> item)
     {
         if(!item)
@@ -168,7 +175,7 @@ void Sample::SetupUI()
             m_liveResources->GetUser(),
             item->GetXuid()
         );
-        if(FAILED(hr))
+        if(FAILED(hr) && hr != E_ABORT)
         {
             m_console->WriteLine(L"Could not show player profile card.");
         }
@@ -176,7 +183,7 @@ void Sample::SetupUI()
 
     // Populate each list with empty items to start
     auto users = std::vector<std::shared_ptr<UserListItem>>(c_listSize);
-    m_userRepeater->GenerateList(200, users, 2);
+    m_userRepeater->GenerateList(c_sampleUIPanel, users, 2);
 
     SetActivePage(0);
 }
@@ -188,7 +195,6 @@ void Sample::SetActivePage(int page)
         m_ui->FindControl<ATG::Image>(c_sampleUIPanel, static_cast<unsigned int>(c_unselected1 + i))->SetVisible(!(page==i));
         m_ui->FindControl<ATG::Image>(c_sampleUIPanel, static_cast<unsigned int>(c_selected1 + i))->SetVisible(page==i);
     }
-
 }
 #pragma endregion
 
@@ -211,17 +217,27 @@ void Sample::RefreshUserList()
 
     m_console->Format(L"Group contains %d user(s)\n", count);
 
-    for (size_t x = 0; x < c_listSize; x++)
+    auto profilePicsToGet = std::vector<uint64_t>();
+    for (unsigned x = 0; x < c_listSize; x++)
     {
-        if (x < count)
+        if (x < static_cast<int>(count))
         {
+            auto userXuid = m_userList[x]->xboxUserId;
             users.push_back(std::make_shared<UserListItem>(m_userList[x]));
+            // If user data isn't already cached, include in list
+            if (m_profilePicCache.find(userXuid) == m_profilePicCache.end())
+                profilePicsToGet.push_back(userXuid);
+
+            m_userRepeater->SetPicDisplayXuid(x, userXuid);
         }
         else
         {
             users.push_back(nullptr);
         }
     }
+
+    if(profilePicsToGet.size() > 0)
+        LoadGamerPics(&profilePicsToGet[0], profilePicsToGet.size());
 
     m_userRepeater->UpdateList(users);
 }
@@ -334,6 +350,14 @@ void Sample::Update(DX::StepTimer const& timer)
     {
     }
 
+    // Once all profile pictures are loaded, refresh the list to display them
+    if (m_profilesToLoadCount > 0 && m_profilesLoadedCount >= m_profilesToLoadCount)
+    {
+        RefreshUserList();
+        m_profilesToLoadCount = 0;
+        m_profilesLoadedCount = 0;
+    }
+    m_userRepeater->UpdateProfilePics(m_deviceResources->GetD3DDevice(), m_deviceResources->GetCommandQueue());
     m_ui->Update(elapsedTime, pad);
     m_ui->Update(elapsedTime, *m_mouse, *m_keyboard);
     m_liveInfoHUD->Update(m_deviceResources->GetCommandQueue());
@@ -495,6 +519,8 @@ void Sample::CreateDeviceDependentResources()
 
     m_ui->RestoreDevice(device, rtState, resourceUpload, *m_resourceDescriptors);
     m_liveInfoHUD->RestoreDevice(device, rtState, resourceUpload, *m_resourceDescriptors);
+    if(m_userRepeater)
+        m_userRepeater->RestoreDevice(*m_resourceDescriptors);
 
     auto uploadResourcesFinished = resourceUpload.End(m_deviceResources->GetCommandQueue());
     uploadResourcesFinished.wait();
@@ -538,6 +564,8 @@ void Sample::OnDeviceLost()
     m_resourceDescriptors.reset();
     m_ui->ReleaseDevice();
     m_console->ReleaseDevice();
+    if (m_userRepeater)
+        m_userRepeater->ReleaseDevice();
 }
 
 void Sample::OnDeviceRestored()

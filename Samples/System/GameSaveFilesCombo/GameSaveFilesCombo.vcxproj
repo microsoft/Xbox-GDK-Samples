@@ -728,6 +728,7 @@
     <CopyFileToFolders Include="Assets\Fonts\XboxOneControllerLegendSmall.spritefont">
       <FileType>Document</FileType>
       <DeploymentContent>true</DeploymentContent>
+      <DestinationFolders>$(OutDir)Assets\Fonts</DestinationFolders>
     </CopyFileToFolders>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

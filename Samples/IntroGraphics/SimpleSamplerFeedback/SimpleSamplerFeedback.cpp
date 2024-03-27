@@ -381,7 +381,7 @@ void Sample::CreateDeviceDependentResources()
         resourceUpload.Begin();
 
         // Textures
-        DX::ThrowIfFailed(CreateDDSTextureFromFile(device, resourceUpload, L"Clouds.dds", m_diffuseTexture.ReleaseAndGetAddressOf(), true));
+        DX::ThrowIfFailed(CreateDDSTextureFromFile(device, resourceUpload, L"Clouds.dds", m_diffuseTexture.ReleaseAndGetAddressOf(), false));
         device->CreateShaderResourceView(m_diffuseTexture.Get(), nullptr, m_resourceDescriptorHeap->GetCpuHandle(static_cast<int>(ResourceDescriptors::DiffuseTextureSRV)));
         m_diffuseTexture->SetName(L"Diffuse");
 

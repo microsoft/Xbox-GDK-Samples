@@ -678,45 +678,51 @@
     </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets" />
+  <Target Name="EnsureGDK" BeforeTargets="_CheckForInvalidConfigurationAndPlatform" Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(Platform)', 'Gaming\..+\.x64'))">
+    <PropertyGroup>
+      <ErrorText Condition="'$(Platform)'=='Gaming.Desktop.x64'">This project requires the Microsoft GDK to be installed. If you have already installed the GDK, then run Repair to ensure proper integration with Visual Studio. The missing platform is {0}.</ErrorText>
+      <ErrorText Condition="'$(Platform)'!='Gaming.Desktop.x64'">This project requires the Microsoft GDK with Xbox Extensions to be installed. If you have already installed the GDK, then run Repair to ensure proper integration with Visual Studio. The missing platform is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(VCTargetsPath)\Platforms\$(Platform)\Platform.props')" Text="$([System.String]::Format('$(ErrorText)', '$(Platform)'))" />
+  </Target>
   <Target Name="ATGEnsureShaders" BeforeTargets="PrepareForBuild" Condition="'$(Platform)'=='Gaming.Desktop.x64'">
     <PropertyGroup>
       <_ATGFXCPath>$(WindowsSDK_ExecutablePath_x64.Split(';')[0])</_ATGFXCPath>
       <_ATGFXCPath>$(_ATGFXCPath.Replace("x64",""))</_ATGFXCPath>
       <_ATGFXCPath Condition="'$(_ATGFXCPath)' != '' and !HasTrailingSlash('$(_ATGFXCPath)')">$(_ATGFXCPath)\</_ATGFXCPath>
     </PropertyGroup>
-    <Exec Condition="!Exists('src/Shaders/Compiled/SpriteEffect_SpriteVertexShader.inc')" WorkingDirectory="$(ProjectDir)src/Shaders" Command="CompileShaders dxil" EnvironmentVariables="WindowsSdkVerBinPath=$(_ATGFXCPath)" />
+    <Exec Condition="!Exists('Src/Shaders/Compiled/SpriteEffect_SpriteVertexShader.inc')" WorkingDirectory="$(ProjectDir)Src/Shaders" Command="CompileShaders dxil" EnvironmentVariables="WindowsSdkVerBinPath=$(_ATGFXCPath);CompileShadersOutput=$(ProjectDir)Src/Shaders/Compiled" LogStandardErrorAsError="true" />
     <PropertyGroup>
       <_ATGFXCPath />
     </PropertyGroup>
   </Target>
   <Target Name="ATGDeleteShaders" AfterTargets="Clean" Condition="'$(Platform)'=='Gaming.Desktop.x64'">
     <ItemGroup>
-      <_ATGShaderHeaders Include="$(ProjectDir)src/Shaders/Compiled/*.inc" Exclude="$(ProjectDir)src/Shaders/Compiled/*Xbox*.inc" />
-      <_ATGShaderSymbols Include="$(ProjectDir)src/Shaders/Compiled/*.pdb" Exclude="$(ProjectDir)src/Shaders/Compiled/*Xbox*.pdb" />
+      <_ATGShaderHeaders Include="$(ProjectDir)Src/Shaders/Compiled/*.inc" Exclude="$(ProjectDir)Src/Shaders/Compiled/*Xbox*.inc" />
+      <_ATGShaderSymbols Include="$(ProjectDir)Src/Shaders/Compiled/*.pdb" Exclude="$(ProjectDir)Src/Shaders/Compiled/*Xbox*.pdb" />
     </ItemGroup>
     <Delete Files="@(_ATGShaderHeaders)" />
     <Delete Files="@(_ATGShaderSymbols)" />
   </Target>
   <Target Name="ATGEnsureShadersXbox" BeforeTargets="PrepareForBuild" Condition="'$(Platform)'=='Gaming.Xbox.XboxOne.x64'">
-    <Exec Condition="!Exists('src/Shaders/Compiled/XboxGamingXboxOneSpriteEffect_SpriteVertexShader.inc')" WorkingDirectory="$(ProjectDir)src/Shaders" Command="CompileShaders gxdk" EnvironmentVariables="GameDKLatest=$(DurangoXdkInstallPath)" />
+    <Exec Condition="!Exists('Src/Shaders/Compiled/XboxGamingXboxOneSpriteEffect_SpriteVertexShader.inc')" WorkingDirectory="$(ProjectDir)Src/Shaders" Command="CompileShaders gxdk" EnvironmentVariables="GameDKLatest=$(DurangoXdkInstallPath);CompileShadersOutput=$(ProjectDir)Src/Shaders/Compiled" LogStandardErrorAsError="true" />
   </Target>
   <Target Name="ATGDeleteShadersXbox" AfterTargets="Clean" Condition="'$(Platform)'=='Gaming.Xbox.XboxOne.x64'">
     <ItemGroup>
-      <_ATGShaderHeaders Include="$(ProjectDir)src/Shaders/Compiled/XboxGamingXboxOne*.inc" />
-      <_ATGShaderSymbols Include="$(ProjectDir)src/Shaders/Compiled/XboxGamingXboxOne*.pdb" />
+      <_ATGShaderHeaders Include="$(ProjectDir)Src/Shaders/Compiled/XboxGamingXboxOne*.inc" />
+      <_ATGShaderSymbols Include="$(ProjectDir)Src/Shaders/Compiled/XboxGamingXboxOne*.pdb" />
     </ItemGroup>
     <Delete Files="@(_ATGShaderHeaders)" />
     <Delete Files="@(_ATGShaderSymbols)" />
   </Target>
   <Target Name="ATGEnsureShadersXboxScarlett" BeforeTargets="PrepareForBuild" Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64'">
-    <Exec Condition="!Exists('src/Shaders/Compiled/XboxGamingScarlettSpriteEffect_SpriteVertexShader.inc')" WorkingDirectory="$(ProjectDir)src/Shaders" Command="CompileShaders gxdk scarlett" EnvironmentVariables="GameDKLatest=$(DurangoXdkInstallPath)" />
+    <Exec Condition="!Exists('Src/Shaders/Compiled/XboxGamingScarlettSpriteEffect_SpriteVertexShader.inc')" WorkingDirectory="$(ProjectDir)Src/Shaders" Command="CompileShaders gxdk scarlett" EnvironmentVariables="GameDKLatest=$(DurangoXdkInstallPath);CompileShadersOutput=$(ProjectDir)Src/Shaders/Compiled" LogStandardErrorAsError="true" />
   </Target>
   <Target Name="ATGDeleteShadersXboxScarlett" AfterTargets="Clean" Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64'">
     <ItemGroup>
-      <_ATGShaderHeaders Include="$(ProjectDir)src/Shaders/Compiled/XboxGamingScarlett*.inc" />
-      <_ATGShaderSymbols Include="$(ProjectDir)src/Shaders/Compiled/XboxGamingScarlett*.pdb" />
+      <_ATGShaderHeaders Include="$(ProjectDir)Src/Shaders/Compiled/XboxGamingScarlett*.inc" />
+      <_ATGShaderSymbols Include="$(ProjectDir)Src/Shaders/Compiled/XboxGamingScarlett*.pdb" />
     </ItemGroup>
     <Delete Files="@(_ATGShaderHeaders)" />
     <Delete Files="@(_ATGShaderSymbols)" />

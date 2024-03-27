@@ -96,8 +96,6 @@ void DeviceResources::CreateDeviceResources()
 #endif
 
     params.GraphicsCommandQueueRingSizeBytes = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
-    params.GraphicsScratchMemorySizeBytes = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
-    params.ComputeScratchMemorySizeBytes = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
     params.DisableGeometryShaderAllocations = (m_options & c_GeometryShaders) ? FALSE : TRUE;
     params.DisableTessellationShaderAllocations = (m_options & c_TessellationShaders) ? FALSE : TRUE;
 
@@ -511,7 +509,7 @@ void DeviceResources::CreateWindowSizeDependentResources()
             m_depthBufferFormat,
             backBufferWidth,
             backBufferHeight,
-            1, // This depth stencil view has only one texture.
+            1, // Use a single array entry.
             1  // Use a single mipmap level.
             );
         depthStencilDesc.Flags |= D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
@@ -671,7 +669,9 @@ void DeviceResources::Present(D3D12_RESOURCE_STATES beforeState)
     // Xbox apps do not need to handle DXGI_ERROR_DEVICE_REMOVED or DXGI_ERROR_DEVICE_RESET.
 
     // Update the back buffer index.
+    const UINT64 currentFenceValue = m_fenceValues[m_backBufferIndex];
     m_backBufferIndex = (m_backBufferIndex + 1) % m_backBufferCount;
+    m_fenceValues[m_backBufferIndex] = currentFenceValue;
 
 #else // _GAMING_DESKTOP
 

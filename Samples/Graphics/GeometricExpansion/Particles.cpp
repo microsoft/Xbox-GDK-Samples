@@ -78,7 +78,19 @@ void ParticleSystem::CreateResources(DX::DeviceResources& deviceResources)
     const CD3DX12_HEAP_PROPERTIES heapProps(D3D12_HEAP_TYPE_DEFAULT);
     auto cbDesc = CD3DX12_RESOURCE_DESC::Buffer(GetAlignedSize(sizeof(Constants)));
 
-    DX::ThrowIfFailed(m_device->CreateCommittedResource(&heapProps, D3D12_HEAP_FLAG_NONE, &cbDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_GRAPHICS_PPV_ARGS(m_constantBuffer.ReleaseAndGetAddressOf())));
+    DX::ThrowIfFailed(
+        m_device->CreateCommittedResource(
+            &heapProps,
+            D3D12_HEAP_FLAG_NONE,
+            &cbDesc,
+#ifdef _GAMING_XBOX
+            D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER,
+#else
+            // on PC buffers are created in the common state and can be promoted without a barrier to VERTEX_AND_CONSTANT_BUFFER on first access
+            D3D12_RESOURCE_STATE_COMMON,
+#endif
+            nullptr,
+            IID_GRAPHICS_PPV_ARGS(m_constantBuffer.ReleaseAndGetAddressOf())));
 
     ReloadPipelineState(deviceResources);
 }
@@ -192,14 +204,14 @@ void ParticleSystem::Draw(ID3D12GraphicsCommandList6* commandList, GraphicsMemor
     std::memcpy(static_cast<uint8_t*>(upload.Memory()) + GetAlignedSize(sizeof(Constants)), m_particles.data(), m_particles.size() * sizeof(Particle));
 
     // Copy from upload buffer to resource
-    DirectX::TransitionResource(commandList, m_particleBuffer.Get(), D3D12_RESOURCE_STATE_GENERIC_READ, D3D12_RESOURCE_STATE_COPY_DEST);
-    DirectX::TransitionResource(commandList, m_constantBuffer.Get(), D3D12_RESOURCE_STATE_GENERIC_READ, D3D12_RESOURCE_STATE_COPY_DEST);
+    DirectX::TransitionResource(commandList, m_particleBuffer.Get(), D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_COPY_DEST);
+    DirectX::TransitionResource(commandList, m_constantBuffer.Get(), D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, D3D12_RESOURCE_STATE_COPY_DEST);
 
     commandList->CopyBufferRegion(m_constantBuffer.Get(), 0, upload.Resource(), 0, sizeof(Constants));
     commandList->CopyBufferRegion(m_particleBuffer.Get(), 0, upload.Resource(), GetAlignedSize(sizeof(Constants)), m_particles.size() * sizeof(Particle));
 
-    DirectX::TransitionResource(commandList, m_particleBuffer.Get(), D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_GENERIC_READ);
-    DirectX::TransitionResource(commandList, m_constantBuffer.Get(), D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_GENERIC_READ);
+    DirectX::TransitionResource(commandList, m_particleBuffer.Get(), D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE);
+    DirectX::TransitionResource(commandList, m_constantBuffer.Get(), D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER);
 
     // Draw
     commandList->SetGraphicsRootSignature(m_rootSignature.Get());
@@ -269,5 +281,17 @@ void ParticleSystem::TryResizeBuffers()
     const CD3DX12_HEAP_PROPERTIES heapProps(D3D12_HEAP_TYPE_DEFAULT);
     auto particleDesc = CD3DX12_RESOURCE_DESC::Buffer(GetAlignedSize(newSize));
 
-    DX::ThrowIfFailed(m_device->CreateCommittedResource(&heapProps, D3D12_HEAP_FLAG_NONE, &particleDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_GRAPHICS_PPV_ARGS(m_particleBuffer.ReleaseAndGetAddressOf())));
+    DX::ThrowIfFailed(
+        m_device->CreateCommittedResource(
+            &heapProps,
+            D3D12_HEAP_FLAG_NONE,
+            &particleDesc,
+#ifdef _GAMING_XBOX
+            D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE,
+#else
+            // on PC buffers are created in the common state and can be promoted without a barrier to NON_PIXEL_SHADER_RESOURCE on first access
+            D3D12_RESOURCE_STATE_COMMON,
+#endif
+            nullptr,
+            IID_GRAPHICS_PPV_ARGS(m_particleBuffer.ReleaseAndGetAddressOf())));
 }

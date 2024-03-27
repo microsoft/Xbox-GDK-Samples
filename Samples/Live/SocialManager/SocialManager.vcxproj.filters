@@ -71,6 +71,7 @@
     <ClInclude Include="..\..\..\Kits\ATGTK\TextConsole.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
+    <ClInclude Include="FriendGamerPicDisplay.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -99,6 +100,7 @@
     <ClCompile Include="..\..\..\Kits\ATGTK\TextConsole.cpp">
       <Filter>ATG Tool Kit</Filter>
     </ClCompile>
+    <ClCompile Include="FriendGamerPicDisplay.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MGCCompile Include="MicrosoftGameConfig.mgc" />
@@ -179,18 +181,10 @@
     <None Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
       <Filter>Assets</Filter>
     </None>
-    <None Include="SocialManager_ReadMe.docx">
-      <Filter>ReadMe</Filter>
-    </None>
-    <None Include="SocialManager_ReadMe_ja-jp.docx">
-      <Filter>ReadMe</Filter>
-    </None>
-    <None Include="SocialManager_ReadMe_ko-kr.docx">
-      <Filter>ReadMe</Filter>
-    </None>
-    <None Include="SocialManager_ReadMe_zh-cn.docx">
-      <Filter>ReadMe</Filter>
-    </None>
+    <None Include="readme.md" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="..\..\..\Media\Textures\GamerPic.png">

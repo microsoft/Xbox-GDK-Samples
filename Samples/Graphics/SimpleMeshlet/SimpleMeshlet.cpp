@@ -359,9 +359,9 @@ void Sample::UpdateConstants(ID3D12GraphicsCommandList* commandList)
         constants.DebugCull = m_debugCamCull;
         constants.DrawMeshlets = m_drawMeshlets;
 
-        TransitionResource(commandList, m_viewCB.Get(), D3D12_RESOURCE_STATE_GENERIC_READ, D3D12_RESOURCE_STATE_COPY_DEST);
+        TransitionResource(commandList, m_viewCB.Get(), D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, D3D12_RESOURCE_STATE_COPY_DEST);
         commandList->CopyBufferRegion(m_viewCB.Get(), 0, cbMem.Resource(), cbMem.ResourceOffset(), cbMem.Size());
-        TransitionResource(commandList, m_viewCB.Get(), D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_GENERIC_READ);
+        TransitionResource(commandList, m_viewCB.Get(), D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER);
 
 
         m_frustumDraw.Update(viewProj, m_debugCamCull ? debugViewProj : viewProj);
@@ -377,9 +377,9 @@ void Sample::UpdateConstants(ID3D12GraphicsCommandList* commandList)
         instanceData.World = object.World.Transpose();
         instanceData.WorldInvTrans = object.World.Transpose().Invert().Transpose();
 
-        TransitionResource(commandList, object.ConstantBuffer.Get(), D3D12_RESOURCE_STATE_GENERIC_READ, D3D12_RESOURCE_STATE_COPY_DEST);
+        TransitionResource(commandList, object.ConstantBuffer.Get(), D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, D3D12_RESOURCE_STATE_COPY_DEST);
         commandList->CopyBufferRegion(object.ConstantBuffer.Get(), 0, cbMem.Resource(), cbMem.ResourceOffset(), cbMem.Size());
-        TransitionResource(commandList, object.ConstantBuffer.Get(), D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_GENERIC_READ);
+        TransitionResource(commandList, object.ConstantBuffer.Get(), D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER);
     }
 }
 
@@ -568,7 +568,12 @@ void Sample::CreateDeviceDependentResources()
             &defaultHeapProps,
             D3D12_HEAP_FLAG_NONE,
             &cbDesc,
-            D3D12_RESOURCE_STATE_GENERIC_READ,
+#ifdef _GAMING_XBOX
+            D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER,
+#else
+            // on PC buffers are created in the common state and can be promoted without a barrier to VERTEX_AND_CONSTANT_BUFFER on first access
+            D3D12_RESOURCE_STATE_COMMON,
+#endif
             nullptr,
             IID_GRAPHICS_PPV_ARGS(m_viewCB.ReleaseAndGetAddressOf()))
         );
@@ -685,7 +690,12 @@ void Sample::CreateDeviceDependentResources()
             &defaultHeapProps,
             D3D12_HEAP_FLAG_NONE,
             &cbDesc,
-            D3D12_RESOURCE_STATE_GENERIC_READ,
+#ifdef _GAMING_XBOX
+            D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER,
+#else
+            // on PC buffers are created in the common state and can be promoted without a barrier to VERTEX_AND_CONSTANT_BUFFER on first access
+            D3D12_RESOURCE_STATE_COMMON,
+#endif
             nullptr,
             IID_GRAPHICS_PPV_ARGS(m_scene[i].ConstantBuffer.ReleaseAndGetAddressOf()))
         );

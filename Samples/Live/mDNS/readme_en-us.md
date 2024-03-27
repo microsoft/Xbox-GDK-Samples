@@ -46,7 +46,8 @@ discover each other.
 
 # Update history
 
-February 2020 - Initial release February 2020
+- March 2024 - Merged console and desktop samples into combo solution
+- February 2020 - Initial release February 2020
 
 # Privacy Statement
 

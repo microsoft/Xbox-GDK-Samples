@@ -461,6 +461,7 @@
     <ClInclude Include="..\..\..\Kits\ATGTK\CSVReader.h" />
     <ClInclude Include="..\..\..\Kits\ATGTK\SampleGUI.h" />
     <ClInclude Include="..\..\..\Kits\ATGTK\TextConsole.h" />
+    <ClInclude Include="FriendGamerPicDisplay.h" />
     <ClInclude Include="ItemRepeater.h" />
     <ClInclude Include="SocialManager.h" />
     <ClInclude Include="pch.h" />
@@ -480,6 +481,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\Kits\ATGTK\SampleGUI.cpp" />
     <ClCompile Include="..\..\..\Kits\ATGTK\TextConsole.cpp" />
+    <ClCompile Include="FriendGamerPicDisplay.cpp" />
     <ClCompile Include="SocialManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="DeviceResources.cpp" />

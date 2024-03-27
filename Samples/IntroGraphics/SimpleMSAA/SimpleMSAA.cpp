@@ -433,7 +433,7 @@ void Sample::CreateWindowSizeDependentResources()
         c_depthBufferFormat,
         backBufferWidth,
         backBufferHeight,
-        1, // This depth stencil view has only one texture.
+        1, // Use a single array entry.
         1, // Use a single mipmap level.
         c_sampleCount
     );

@@ -30,10 +30,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\NuGet.config" />
-    <None Include="readme_ja-jp.md" />
-    <None Include="readme_ko-kr.md" />
-    <None Include="readme_zh-cn.md" />
-    <None Include="readme.md" />
+    <None Include="..\readme_ja-jp.md" />
+    <None Include="..\readme_ko-kr.md" />
+    <None Include="..\readme_zh-cn.md" />
+    <None Include="..\readme.md" />
     <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -175,14 +175,14 @@
     <None Include="..\..\..\Media\PBR\XboxOrb\XboxOrb.sdkmesh">
       <Filter>Assets\Models\XboxOrb</Filter>
     </None>
-    <None Include="Readme_ja-JP.docx" />
-    <None Include="Readme_ko-KR.docx" />
-    <None Include="Readme_zh-CN.docx" />
-    <None Include="Readme.docx" />
     <None Include="Scripts\Desktop.PostBuild.bat">
       <Filter>Scripts</Filter>
     </None>
     <None Include="..\..\NuGet.config" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
+    <None Include="readme.md" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

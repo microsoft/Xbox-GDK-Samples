@@ -78,11 +78,11 @@
     </Manifest>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Readme.docx" />
-    <None Include="SimpleTriangleDesktop_ReadMe_ja-jp.docx" />
-    <None Include="SimpleTriangleDesktop_ReadMe_ko-kr.docx" />
-    <None Include="SimpleTriangleDesktop_ReadMe_zh-cn.docx" />
     <None Include="..\..\NuGet.config" />
+    <None Include="readme.md" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

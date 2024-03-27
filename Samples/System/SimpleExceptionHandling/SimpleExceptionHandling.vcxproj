@@ -425,13 +425,13 @@
     <None Include="..\..\..\Media\Fonts\XboxOneController.spritefont">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="Readme_ja-JP.docx" >
+    <None Include="readme_ja-jp.md" >
     <ExcludedFromBuild>true</ExcludedFromBuild>
     </None>
-    <None Include="Readme_ko-KR.docx" >
+    <None Include="readme_ko-kr.md" >
     <ExcludedFromBuild>true</ExcludedFromBuild>
     </None>
-    <None Include="Readme_zh-CN.docx" >
+    <None Include="readme_zh-cn.md" >
     <ExcludedFromBuild>true</ExcludedFromBuild>
     </None>
     <None Include="readme.md">

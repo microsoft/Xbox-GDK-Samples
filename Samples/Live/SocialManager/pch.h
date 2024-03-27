@@ -41,6 +41,10 @@
 
 #include <grdk.h>
 
+#if _GRDK_VER == 0x63360735 /* GDK Edition 231000 */
+#error A bug exists in the base October GDK which prevents SocialManager from working correctly. Please use an October GDK Update or a different GDK version
+#endif
+
 #if _GRDK_VER < 0x55F00C58 /* GDK Edition 220300 */
 #error This sample requires the March 2022 GDK or later
 #endif

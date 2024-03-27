@@ -1,54 +1,45 @@
-# 音声のストリーミング再生の簡単なサンプル
+# シンプル プレイ サウンド ストリームのサンプル
 
-*このサンプルは、Microsoft ゲーム開発キットのプレビュー (2019 年 11 月)
-に対応しています。*
+*このサンプルは Microsoft Game Development Kit (2020 年 6 月) と互換性があります*
 
 # 説明
 
-このサンプルでは、Xbox one で XAudio2 を使用して wav
-ファイルをストリーミング再生する方法を実演します。
+このサンプルでは、Xbox One で XAudio2 を使用して wav ファイルをストリーミングする方法を示します。
 
 ![](./media/image1.png)
 
 # サンプルのビルド
 
-Xbox One の devkit を使用している場合は、アクティブなソリューション
-プラットフォームを Gaming.Xbox.XboxOne.x64 に設定します。
+Xbox One 開発キットを使用している場合は、アクティブなソリューション プラットフォームを `Gaming.Xbox.XboxOne.x64` に設定します。
 
-Project Scarlett を使用している場合は、アクティブなソリューション
-プラットフォームを Gaming.Xbox.Scarlett.x64 に設定します。
+Project Scarlett を使用している場合は、アクティブなソリューション プラットフォームを `Gaming.Xbox.Scarlett.x64` に設定します。
 
-*詳細については、GDK
-ドキュメント*の「サンプルの実行」を*参照してください*。
+*詳細については、* *GDK ドキュメント*の「__サンプルの実行__」を参照してください。
 
-# サンプルの使用
+# サンプルの使用方法
 
-このサンプルでは、ビュー ボタンを押して終了する以外の操作はできません。
+サンプルには、[表示] ボタンを使用して終了する以外のコントロールはありません。
 
-# 実装に関する注意事項
+# 実装メモ
 
-このサンプルでは、付属の WAV ファイル パーサーを使用して wav
-ファイルをストリーミング再生する方法を実演します。
+このサンプルでは、独自の WAV ファイル パーサーを使用して wav ファイルをストリーミングする方法を示します。
 
-XAudio2 を使用したストリーミング再生のその他の例は GitHub
-[でご覧になれます。](https://github.com/walbourn/directx-sdk-samples/tree/master/XAudio2)
+XAudio2 でストリーミングを行うその他の例については、[GitHub](https://github.com/walbourn/directx-sdk-samples/tree/master/XAudio2) を参照してください。
 
--   **XAudio2AsyncStream** は、ディスク上に .WAV データを作成して Win32
-    非バッファ重複 I/O をサポートします。
+- **XAudio2AsyncStream** は Win32 非バッファー オーバーラップ I/O をサポートするためディスク上の WAV データを準備します
 
--   **XAudio2MFStream** は、Media Foundation Source Reader を使用して
-    WMA ファイルからデータを展開します。
+- **XAudio2MFStream** はWMA ファイルからデータの圧縮を解除するためソース リーダー メディア ファンデーションを使用します。
+
+- *DirectX ツール キットの* **SoundStreamInstance** は、すべての XAaudio2 形式に対してバッファーされていないオーバーラップ I/O を実装します。
 
 # 既知の問題
 
-このサンプルは、xWMA .wav ファイルをサポートしていません。
+このサンプルでは、xWMA .wav ファイルのストリーミングはサポートされていません。
 
-# プライバシーに関する声明
+# プライバシーにかんするせいめい
 
-サンプルをコンパイルして実行すると、サンプルの使用状況を追跡するため、サンプル実行可能ファイルのファイル名が
-Microsoft に送信されます。このデータ収集を無効にするには、「Sample Usage
-Telemetry」とラベル付けされた Main.cpp
-内のコードのブロックを削除します。
+サンプルをコンパイルして実行する場合、サンプルの使用状況を追跡するために、サンプルの実行可能ファイルのファイル名が Microsoft に送信されます。 このデータ コレクションからオプトアウトするには、Main.cpp の "サンプル使用状況テレメトリ" というラベルの付いたコードのブロックを削除します。
 
-Microsoft のプライバシー方針の詳細については、「[Microsoft
-プライバシーに関する声明](https://privacy.microsoft.com/en-us/privacystatement/)」を参照してください。
+Microsoft のプライバシー ポリシー全般の詳細については、「[Microsoft のプライバシーに関する声明](https://privacy.microsoft.com/en-us/privacystatement/)」を参照してください。
+
+

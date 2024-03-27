@@ -25,6 +25,8 @@ using Microsoft::WRL::ComPtr;
 //#define ENABLE_DXR
 //#define ENABLE_AS
 //#define ENABLE_SCRATCH
+//#define ENABLE_COLOR_DCC
+//#define ENABLE_DEPTH_TCC
 
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wcovered-switch-default"
@@ -48,7 +50,7 @@ Sample::Sample() noexcept :
     m_backBufferIndex(0),
     m_rtvDescriptorSize(0),
     m_dsvDescriptorSize(0),
-    m_fenceValues{},
+    m_fenceValue(0),
     m_framePipelineToken{},
     m_frame(0)
 {
@@ -345,8 +347,8 @@ void Sample::CreateDevice()
     DX::ThrowIfFailed(m_commandList->Close());
 
     // Create a fence for tracking GPU execution progress.
-    DX::ThrowIfFailed(m_d3dDevice->CreateFence(m_fenceValues[m_backBufferIndex], D3D12_FENCE_FLAG_NONE, IID_GRAPHICS_PPV_ARGS(m_fence.ReleaseAndGetAddressOf())));
-    m_fenceValues[m_backBufferIndex]++;
+    DX::ThrowIfFailed(m_d3dDevice->CreateFence(m_fenceValue, D3D12_FENCE_FLAG_NONE, IID_GRAPHICS_PPV_ARGS(m_fence.ReleaseAndGetAddressOf())));
+    m_fenceValue++;
 
     m_fenceEvent.Attach(CreateEventEx(nullptr, nullptr, 0, EVENT_MODIFY_STATE | SYNCHRONIZE));
     if (!m_fenceEvent.IsValid())
@@ -409,7 +411,6 @@ void Sample::CreateResources()
     for (UINT n = 0; n < c_swapBufferCount; n++)
     {
         m_renderTargets[n].Reset();
-        m_fenceValues[n] = m_fenceValues[m_backBufferIndex];
     }
 
     UINT backBufferWidth = static_cast<UINT>(m_outputWidth);
@@ -427,6 +428,11 @@ void Sample::CreateResources()
         1  // Use a single mipmap level.
     );
     swapChainBufferDesc.Flags |= D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET;
+
+#if defined(_GAMING_XBOX_SCARLETT) && defined(ENABLE_COLOR_DCC)
+    // Enable DCC (Delta Color Compression) for the swap buffer (requires a clear).
+    swapChainBufferDesc.Flags |= D3D12XBOX_RESOURCE_FLAG_ALLOW_DCC;
+#endif
 
     const CD3DX12_CLEAR_VALUE swapChainOptimizedClearValue(c_backBufferFormat, ATG::ColorsLinear::Background.f);
 
@@ -467,10 +473,15 @@ void Sample::CreateResources()
         c_depthBufferFormat,
         backBufferWidth,
         backBufferHeight,
-        1, // This depth stencil view has only one texture.
+        1, // Use a single array entry.
         1  // Use a single mipmap level.
     );
     depthStencilDesc.Flags |= D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
+
+#if defined(_GAMING_XBOX_SCARLETT) && defined(ENABLE_DEPTH_TCC)
+    // Enable Texture Compatibility for the depth buffer (avoids a decompress).
+    depthStencilDesc.Flags |= D3D12XBOX_RESOURCE_FLAG_FORCE_TEXTURE_COMPATIBILITY;
+#endif
 
     const CD3DX12_CLEAR_VALUE depthOptimizedClearValue(c_depthBufferFormat, c_depthClearValue, 0u);
 
@@ -529,7 +540,7 @@ void Sample::WaitForGpu() noexcept
     if (m_commandQueue && m_fence && m_fenceEvent.IsValid())
     {
         // Schedule a Signal command in the GPU queue.
-        const UINT64 fenceValue = m_fenceValues[m_backBufferIndex];
+        const UINT64 fenceValue = m_fenceValue;
         if (SUCCEEDED(m_commandQueue->Signal(m_fence.Get(), fenceValue)))
         {
             // Wait until the Signal has been processed.
@@ -538,7 +549,7 @@ void Sample::WaitForGpu() noexcept
                 std::ignore = WaitForSingleObjectEx(m_fenceEvent.Get(), INFINITE, FALSE);
 
                 // Increment the fence value for the current frame.
-                m_fenceValues[m_backBufferIndex]++;
+                m_fenceValue++;
             }
         }
     }

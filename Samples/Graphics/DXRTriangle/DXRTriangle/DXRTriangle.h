@@ -9,7 +9,6 @@
 
 #include "DeviceResources.h"
 #include "StepTimer.h"
-#include "DXRHelper.h"
 
 struct SimpleTriangleRecord : public ShaderRecord
 {

@@ -45,6 +45,9 @@
     <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
       <Filter>External</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -90,7 +93,10 @@
     <None Include="..\..\..\Media\Fonts\SegoeUI_24.spritefont">
       <Filter>Assets</Filter>
     </None>
-    <None Include="Readme.md" />
+    <None Include="readme.md" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">

@@ -91,7 +91,7 @@ namespace DX
 
         // Presentation fence objects.
         Microsoft::WRL::ComPtr<ID3D12Fence>                 m_fence;
-        UINT64                                              m_fenceValues[MAX_BACK_BUFFER_COUNT];
+        UINT64                                              m_fenceValue;
         Microsoft::WRL::Wrappers::Event                     m_fenceEvent;
         D3D12XBOX_FRAME_PIPELINE_TOKEN                      m_framePipelineToken;
 

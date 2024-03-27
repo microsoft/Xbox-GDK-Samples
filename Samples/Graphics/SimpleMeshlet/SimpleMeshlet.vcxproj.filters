@@ -120,7 +120,6 @@
     <None Include="..\..\..\Media\Meshes\Camera\camera.sdkmesh">
       <Filter>Assets\Meshes</Filter>
     </None>
-    <None Include="ReadMe.docx" />
     <None Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD1.sdkmesh">
       <Filter>Assets\Meshes</Filter>
     </None>
@@ -151,10 +150,11 @@
     <None Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD5.sdkmesh.bin">
       <Filter>Assets\Meshes</Filter>
     </None>
-    <None Include="SimpleMeshlet_ReadMe_ja-jp.docx" />
-    <None Include="SimpleMeshlet_ReadMe_ko-kr.docx" />
-    <None Include="SimpleMeshlet_ReadMe_zh-cn.docx" />
     <None Include="..\..\NuGet.config" />
+    <None Include="readme.md" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

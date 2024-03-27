@@ -417,7 +417,7 @@ void Sample::CreateDeviceDependentResources()
                 &heapPropsDefault,
                 D3D12_HEAP_FLAG_NONE,
                 &txtDesc,
-                D3D12_RESOURCE_STATE_COPY_DEST,
+                c_initialCopyTargetState,
                 nullptr,
                 IID_GRAPHICS_PPV_ARGS(m_texture.ReleaseAndGetAddressOf())));
 
@@ -465,7 +465,7 @@ void Sample::CreateDeviceDependentResources()
             D3D12_TEXTURE_ADDRESS_MODE_CLAMP, // AddressW
             0.0f, // MipLODBias
             16,
-            D3D12_COMPARISON_FUNC_LESS_EQUAL,
+            D3D12_COMPARISON_FUNC_NEVER,
             { 1, 1, 1, 1 }, // BorderColor
             0.0f, // MinLOD
             FLT_MAX // MaxLOD

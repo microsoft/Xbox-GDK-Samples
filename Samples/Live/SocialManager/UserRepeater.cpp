@@ -9,15 +9,64 @@
 #include "UserRepeater.h"
 #include "StringUtil.h"
 
-void UserRepeater::CreateItem(unsigned index, std::shared_ptr<UserListItem> /*item*/, RECT & bounds)
+using namespace DirectX;
+
+void UserRepeater::InitializeProfilePics(size_t count, DX::DeviceResources* deviceResources, DirectX::DescriptorPile* pile)
+{
+    auto device = deviceResources->GetD3DDevice();
+
+    RenderTargetState rtState(
+        deviceResources->GetBackBufferFormat(),
+        deviceResources->GetDepthBufferFormat());
+
+    ResourceUploadBatch resourceUpload(device);
+    resourceUpload.Begin();
+
+    for (size_t i = 0; i < count; i++)
+    {
+        auto newDisplay = std::make_shared<FriendGamerPicDisplay>();
+        newDisplay->RestoreDevice(*pile);
+
+        _friendGamerPicDisplays.push_back(newDisplay);
+    }
+    auto uploadResourcesFinished = resourceUpload.End(deviceResources->GetCommandQueue());
+    uploadResourcesFinished.wait();
+}
+
+void UserRepeater::UpdateProfilePics(ID3D12Device* device, ID3D12CommandQueue* commandQueue)
+{
+    for (auto pic : _friendGamerPicDisplays)
+    {
+        pic->Update(device, commandQueue);
+    }
+}
+
+void UserRepeater::ReleaseDevice()
+{
+    for (auto pic : _friendGamerPicDisplays)
+    {
+        pic->ReleaseDevice();
+    }
+}
+
+void UserRepeater::RestoreDevice(DirectX::DescriptorPile& pile)
+{
+    for (auto pic : _friendGamerPicDisplays)
+    {
+        pic->RestoreDevice(pile);
+    }
+}
+
+void UserRepeater::CreateItem(unsigned index, std::shared_ptr<UserListItem> /*item*/, RECT& bounds)
 {
     auto base = GetItemId(index);
     auto panel = _mgr->FindPanel<ATG::Overlay>(_panelId);
+    auto dim = bounds.bottom - bounds.top;
 
     // Name
     auto r = bounds;
 
-    r.left += 24;
+    r.left += dim + 24;
     r.right = r.left + 400;
     r.top += 5;
     r.bottom = r.top + 40;
@@ -39,21 +88,41 @@ void UserRepeater::CreateItem(unsigned index, std::shared_ptr<UserListItem> /*it
     label->SetBackgroundColor(DirectX::Colors::Transparent);
     label->SetForegroundColor(DirectX::Colors::White);
     panel->Add(label);
+
+    // Image
+    RECT imgRect = { bounds.left, bounds.top, bounds.left + dim, bounds.top + dim };
+    auto image = new ATG::Image(base + 3, base, imgRect);
+    image->SetVisible(false);
+    panel->Add(image);
 }
 
 void UserRepeater::UpdateItem(unsigned index, std::shared_ptr<UserListItem> item)
 {
     auto base = GetItemId(index);
+    auto picDisplay = _friendGamerPicDisplays.size() > 0 ? _friendGamerPicDisplays[index] : nullptr;
 
     if (item)
     {
         _mgr->FindControl<ATG::TextLabel>(_panelId, base + 1)->SetText(item->GetName().c_str());
         _mgr->FindControl<ATG::TextLabel>(_panelId, base + 2)->SetText(item->GetStatus(_titleId).c_str());
+        _mgr->FindControl<ATG::Image>(_panelId, base + 3)->SetImageId(static_cast<unsigned int>(item->GetXuid()));
+
+        if (!picDisplay->IsInitialized())
+        {
+            if (picDisplay->CheckGamerPicCache(_mgr.get(), _profilePicCache))
+            {
+                _mgr->FindControl<ATG::Image>(_panelId, base + 3)->SetVisible(true);
+                picDisplay->SetInitlized();
+            }
+        }
     }
     else
     {
         _mgr->FindControl<ATG::TextLabel>(_panelId, base + 1)->SetText(L"");
         _mgr->FindControl<ATG::TextLabel>(_panelId, base + 2)->SetText(L"");
+        _mgr->FindControl<ATG::Image>(_panelId, base + 3)->SetVisible(false);
+        if(picDisplay)
+            picDisplay->SetInitlized(false);
     }
 }
 

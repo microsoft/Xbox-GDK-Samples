@@ -114,6 +114,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="readme.md" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="media\image1.png">

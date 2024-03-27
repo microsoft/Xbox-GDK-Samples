@@ -2,7 +2,7 @@
 <Game configVersion="1">
   <!-- Version "1" is supported by March 2022 GDK or later -->
 
-  <Identity Name="41336MicrosoftATG.InGameStoreXS" Version="2023.5.5.0" Publisher="CN=A4954634-DF4B-47C7-AB70-D3215D246AF1"/>
+  <Identity Name="41336MicrosoftATG.InGameStoreXS" Version="2024.1.10.0" Publisher="CN=A4954634-DF4B-47C7-AB70-D3215D246AF1"/>
   
   <ExecutableList>
     <Executable Name="InGameStore.exe" Id="Game" />

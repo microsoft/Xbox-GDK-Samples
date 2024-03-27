@@ -19,10 +19,10 @@
     <ClInclude Include="SDKMesh.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\ReadMe.docx" />
-    <None Include="..\MeshletConverter_ReadMe_ja-jp.docx" />
-    <None Include="..\MeshletConverter_ReadMe_ko-kr.docx" />
-    <None Include="..\MeshletConverter_ReadMe_zh-cn.docx" />
+    <None Include="..\readme_ja-jp.md" />
+    <None Include="..\readme_ko-kr.md" />
+    <None Include="..\readme_zh-cn.md" />
+    <None Include="..\readme.md" />
     <None Include="..\..\..\NuGet.config" />
     <None Include="packages.config" />
   </ItemGroup>

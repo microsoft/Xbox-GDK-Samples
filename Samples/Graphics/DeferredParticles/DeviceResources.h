@@ -18,6 +18,8 @@ namespace DX
         static constexpr unsigned int c_TessellationShaders  = 0x20;
         static constexpr unsigned int c_AmplificationShaders = 0x40;
         static constexpr unsigned int c_EnableDXR            = 0x80;
+        static constexpr unsigned int c_ColorDcc             = 0x100;
+        static constexpr unsigned int c_DepthTcc             = 0x200;
 
         DeviceResources(DXGI_FORMAT backBufferFormat = DXGI_FORMAT_B8G8R8A8_UNORM,
                         DXGI_FORMAT depthBufferFormat = DXGI_FORMAT_D32_FLOAT,
@@ -105,7 +107,7 @@ namespace DX
 
         // Presentation fence objects.
         Microsoft::WRL::ComPtr<ID3D12Fence>                 m_fence;
-        UINT64                                              m_fenceValues[MAX_BACK_BUFFER_COUNT];
+        UINT64                                              m_fenceValue;
         Microsoft::WRL::Wrappers::Event                     m_fenceEvent;
         D3D12XBOX_FRAME_PIPELINE_TOKEN                      m_framePipelineToken;
 

@@ -19,6 +19,9 @@ description: "This sample works with the Cross-Core Memory Cost entry in the Mic
 
 For more information see: 
 - [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Tools/CacheTestCombo/readme_en-us.md)
+- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Tools/CacheTestCombo/readme_ja-jp.md)
+- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Tools/CacheTestCombo/readme_ko-kr.md)
+- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Tools/CacheTestCombo/readme_zh-cn.md)
 
 ## Privacy statement
 

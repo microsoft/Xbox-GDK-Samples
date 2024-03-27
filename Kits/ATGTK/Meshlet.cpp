@@ -151,11 +151,66 @@ void MeshletSet::CreateResources(ID3D12Device* device, DirectX::ResourceUploadBa
     auto const meshInfoDesc   = CD3DX12_RESOURCE_DESC::Buffer(GetAlignedSize(sizeof(MeshInfo)));
 
     auto const heapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
-    device->CreateCommittedResource(&heapProps, D3D12_HEAP_FLAG_NONE, &meshletDesc, D3D12_RESOURCE_STATE_COPY_DEST, nullptr, IID_GRAPHICS_PPV_ARGS(m_meshletResource.ReleaseAndGetAddressOf()));
-    device->CreateCommittedResource(&heapProps, D3D12_HEAP_FLAG_NONE, &cullDataDesc, D3D12_RESOURCE_STATE_COPY_DEST, nullptr, IID_GRAPHICS_PPV_ARGS(m_cullDataResource.ReleaseAndGetAddressOf()));
-    device->CreateCommittedResource(&heapProps, D3D12_HEAP_FLAG_NONE, &indexDesc, D3D12_RESOURCE_STATE_COPY_DEST, nullptr, IID_GRAPHICS_PPV_ARGS(m_uniqueIndexResource.ReleaseAndGetAddressOf()));
-    device->CreateCommittedResource(&heapProps, D3D12_HEAP_FLAG_NONE, &primitiveDesc, D3D12_RESOURCE_STATE_COPY_DEST, nullptr, IID_GRAPHICS_PPV_ARGS(m_primitiveResource.ReleaseAndGetAddressOf()));
-    device->CreateCommittedResource(&heapProps, D3D12_HEAP_FLAG_NONE, &meshInfoDesc, D3D12_RESOURCE_STATE_COPY_DEST, nullptr, IID_GRAPHICS_PPV_ARGS(m_meshInfoResource.ReleaseAndGetAddressOf()));
+    device->CreateCommittedResource(
+        &heapProps,
+        D3D12_HEAP_FLAG_NONE,
+        &meshletDesc,
+#ifdef _GAMING_XBOX
+        D3D12_RESOURCE_STATE_COPY_DEST,
+#else
+        // on PC buffers are created in the common state and can be promoted without a barrier to COPY_DEST on first access
+        D3D12_RESOURCE_STATE_COMMON,
+#endif
+        nullptr,
+        IID_GRAPHICS_PPV_ARGS(m_meshletResource.ReleaseAndGetAddressOf()));
+    device->CreateCommittedResource(
+        &heapProps,
+        D3D12_HEAP_FLAG_NONE,
+        &cullDataDesc,
+#ifdef _GAMING_XBOX
+        D3D12_RESOURCE_STATE_COPY_DEST,
+#else
+        // on PC buffers are created in the common state and can be promoted without a barrier to COPY_DEST on first access
+        D3D12_RESOURCE_STATE_COMMON,
+#endif
+        nullptr,
+        IID_GRAPHICS_PPV_ARGS(m_cullDataResource.ReleaseAndGetAddressOf()));
+    device->CreateCommittedResource(
+        &heapProps,
+        D3D12_HEAP_FLAG_NONE,
+        &indexDesc,
+#ifdef _GAMING_XBOX
+        D3D12_RESOURCE_STATE_COPY_DEST,
+#else
+        // on PC buffers are created in the common state and can be promoted without a barrier to COPY_DEST on first access
+        D3D12_RESOURCE_STATE_COMMON,
+#endif
+        nullptr,
+        IID_GRAPHICS_PPV_ARGS(m_uniqueIndexResource.ReleaseAndGetAddressOf()));
+    device->CreateCommittedResource(
+        &heapProps,
+        D3D12_HEAP_FLAG_NONE,
+        &primitiveDesc,
+#ifdef _GAMING_XBOX
+        D3D12_RESOURCE_STATE_COPY_DEST,
+#else
+        // on PC buffers are created in the common state and can be promoted without a barrier to COPY_DEST on first access
+        D3D12_RESOURCE_STATE_COMMON,
+#endif
+        nullptr,
+        IID_GRAPHICS_PPV_ARGS(m_primitiveResource.ReleaseAndGetAddressOf()));
+    device->CreateCommittedResource(
+        &heapProps,
+        D3D12_HEAP_FLAG_NONE,
+        &meshInfoDesc,
+#ifdef _GAMING_XBOX
+        D3D12_RESOURCE_STATE_COPY_DEST,
+#else
+        // on PC buffers are created in the common state and can be promoted without a barrier to COPY_DEST on first access
+        D3D12_RESOURCE_STATE_COMMON,
+#endif
+        nullptr,
+        IID_GRAPHICS_PPV_ARGS(m_meshInfoResource.ReleaseAndGetAddressOf()));
 
     // Upload to D3D resources
     auto meshletMem = GraphicsMemory::Get().Allocate(meshletDesc.Width);

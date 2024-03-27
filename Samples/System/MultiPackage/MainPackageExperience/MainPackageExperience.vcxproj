@@ -475,7 +475,10 @@
     </CopyFileToFolders>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="readme.md" />
+    <None Include="..\readme_ja-jp.md" />
+    <None Include="..\readme_ko-kr.md" />
+    <None Include="..\readme_zh-cn.md" />
+    <None Include="..\readme.md" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Kits\ATGTK\Texture.h" />
