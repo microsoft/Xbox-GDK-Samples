@@ -29,7 +29,7 @@ StructuredBuffer<CullData> MeshletCullData : register(t0);
 //---------------------------------------------
 // Main
 
-[RootSignature("CBV(b0), CBV(b1), SRV(t0)")]
+[RootSignature(ROOT_SIG_DEBUG)]
 [NumThreads(GROUP_SIZE, 1, 1)]
 [OutputTopology("line")]
 void main(

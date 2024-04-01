@@ -114,7 +114,7 @@ namespace DX
         Microsoft::WRL::ComPtr<ID3D12Fence>                 m_fence;
         Microsoft::WRL::ComPtr<ID3D12Fence>                 m_computeToGraphicsFence;
         Microsoft::WRL::ComPtr<ID3D12Fence>                 m_graphicsToComputeFence;
-        UINT64                                              m_fenceValues[MAX_BACK_BUFFER_COUNT];
+        UINT64                                              m_fenceValue;
         UINT64                                              m_computeToGraphicsFenceValues;
         UINT64                                              m_graphicsToComputeFenceValues;
         Microsoft::WRL::Wrappers::Event                     m_fenceEvent;

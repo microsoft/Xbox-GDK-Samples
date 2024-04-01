@@ -1,14 +1,13 @@
 //--------------------------------------------------------------------------------------
 // File: TexConv.cpp
 //
-// DirectX Texture Converter for Microsoft GDK with Xbox extensions
+// DirectX Texture Converter
 //
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+//
+// http://go.microsoft.com/fwlink/?LinkId=248926
 //--------------------------------------------------------------------------------------
-
-#ifndef _M_X64
-#error This tool is only supported for x64 native
-#endif
 
 #ifdef  _MSC_VER
 #pragma warning(push)
@@ -62,22 +61,24 @@
 #endif
 
 #include "DirectXTex.h"
-#include "DirectXTexXbox.h"
-
 #include "DirectXPackedVector.h"
-
-#include <gxdk.h>
-
-#ifndef _USE_SCARLETT
-#include <xg.h>
-#endif
-
-//Comment to remove support for OpenEXR (.exr)
-#define USE_OPENEXR
 
 #ifdef USE_OPENEXR
 // See <https://github.com/Microsoft/DirectXTex/wiki/Adding-OpenEXR> for details
 #include "DirectXTexEXR.h"
+#endif
+
+// See <https://github.com/Microsoft/DirectXTex/wiki/Using-JPEG-PNG-OSS> for details
+#ifdef USE_LIBJPEG
+#include "DirectXTexJPEG.h"
+#endif
+#ifdef USE_LIBPNG
+#include "DirectXTexPNG.h"
+#endif
+
+#ifdef USE_XBOX_EXTS
+// See <https://github.com/microsoft/DirectXTex/wiki/DirectXTexXbox> for details
+#include "DirectXTexXbox.h"
 #endif
 
 using namespace DirectX;
@@ -147,8 +148,10 @@ namespace
         OPT_PAPER_WHITE_NITS,
         OPT_BCNONMULT4FIX,
         OPT_SWIZZLE,
+    #ifdef USE_XBOX_EXTS
         OPT_USE_XBOX,
         OPT_XGMODE,
+    #endif
         OPT_MAX
     };
 
@@ -246,8 +249,10 @@ namespace
         { L"nits",          OPT_PAPER_WHITE_NITS },
         { L"fixbc4x4",      OPT_BCNONMULT4FIX },
         { L"swizzle",       OPT_SWIZZLE },
+    #ifdef USE_XBOX_EXTS
         { L"xbox",          OPT_USE_XBOX },
         { L"xgmode",        OPT_XGMODE },
+    #endif
         { nullptr,          0 }
     };
 
@@ -340,11 +345,13 @@ namespace
         // D3D11on12 format
         { L"A4B4G4R4_UNORM", DXGI_FORMAT(191) },
 
+    #ifdef USE_XBOX_EXTS
         // Xbox One extended formats
         { L"R10G10B10_7E3_A2_FLOAT", DXGI_FORMAT(116) },
         { L"R10G10B10_6E4_A2_FLOAT", DXGI_FORMAT(117) },
         { L"R10G10B10_SNORM_A2_UNORM", DXGI_FORMAT(189) },
         { L"R4G4_UNORM", DXGI_FORMAT(190) },
+    #endif
 
         { nullptr, DXGI_FORMAT_UNKNOWN }
     };
@@ -425,10 +432,12 @@ namespace
         { L"V208", DXGI_FORMAT(131) },
         { L"V408", DXGI_FORMAT(132) },
 
+    #ifdef USE_XBOX_EXTS
         // Xbox One extended formats
         { L"D16_UNORM_S8_UINT", DXGI_FORMAT(118) },
         { L"R16_UNORM_X8_TYPELESS", DXGI_FORMAT(119) },
         { L"X16_TYPELESS_G8_UINT", DXGI_FORMAT(120) },
+    #endif
 
         { nullptr, DXGI_FORMAT_UNKNOWN }
     };
@@ -480,13 +489,28 @@ namespace
 #ifdef USE_OPENEXR
 #define CODEC_EXR 0xFFFF0008
 #endif
+#ifdef USE_LIBJPEG
+#define CODEC_JPEG 0xFFFF0009
+#endif
+#ifdef USE_LIBPNG
+#define CODEC_PNG 0xFFFF000A
+#endif
 
     const SValue<uint32_t> g_pSaveFileTypes[] =   // valid formats to write to
     {
         { L"bmp",   WIC_CODEC_BMP  },
+#ifdef USE_LIBJPEG
+        { L"jpg",   CODEC_JPEG     },
+        { L"jpeg",  CODEC_JPEG     },
+#else
         { L"jpg",   WIC_CODEC_JPEG },
         { L"jpeg",  WIC_CODEC_JPEG },
+#endif
+#ifdef USE_LIBPNG
+        { L"png",   CODEC_PNG      },
+#else
         { L"png",   WIC_CODEC_PNG  },
+#endif
         { L"dds",   CODEC_DDS      },
         { L"ddx",   CODEC_DDS      },
         { L"tga",   CODEC_TGA      },
@@ -862,18 +886,46 @@ namespace
 
     void PrintLogo(bool versionOnly)
     {
+        wchar_t version[32] = {};
+
+        wchar_t appName[_MAX_PATH] = {};
+        if (GetModuleFileNameW(nullptr, appName, _MAX_PATH))
+        {
+            const DWORD size = GetFileVersionInfoSizeW(appName, nullptr);
+            if (size > 0)
+            {
+                auto verInfo = std::make_unique<uint8_t[]>(size);
+                if (GetFileVersionInfoW(appName, 0, size, verInfo.get()))
+                {
+                    LPVOID lpstr = nullptr;
+                    UINT strLen = 0;
+                    if (VerQueryValueW(verInfo.get(), L"\\StringFileInfo\\040904B0\\ProductVersion", &lpstr, &strLen))
+                    {
+                        wcsncpy_s(version, reinterpret_cast<const wchar_t*>(lpstr), strLen);
+                    }
+                }
+            }
+        }
+
+        if (!*version || wcscmp(version, L"1.0.0.0") == 0)
+        {
+            swprintf_s(version, L"%03d (library)", DIRECTX_TEX_VERSION);
+        }
+
         if (versionOnly)
         {
-            wprintf(L"xtexconv version %03d (library)", DIRECTX_TEX_VERSION);
+            wprintf(L"texconv version %ls\n", version);
         }
         else
         {
-        #ifdef _USE_SCARLETT
-            wprintf(L"Microsoft (R) DirectX Texture Converter for Microsoft GDKX for Xbox Series X|S\n");
+        #if defined(USE_XBOX_EXTS) && defined(_USE_SCARLETT)
+            wprintf(L"Microsoft (R) DirectX Texture Converter for Microsoft GDKX for Xbox Series X|S [Version %ls]\n", version);
+        #elif defined(USE_XBOX_EXTS)
+            wprintf(L"Microsoft (R) DirectX Texture Converter for Microsoft GDKX for Xbox One [Version %ls]\n", version);
         #else
-            wprintf(L"Microsoft (R) DirectX Texture Converter for Microsoft GDKX for Xbox One\n");
+            wprintf(L"Microsoft (R) DirectX Texture Converter [DirectXTex] Version %ls\n", version);
         #endif
-            wprintf(L"Copyright (C) Microsoft Corp. All rights reserved.\n");
+            wprintf(L"Copyright (C) Microsoft Corp.\n");
         #ifdef _DEBUG
             wprintf(L"*** Debug build ***\n");
         #endif
@@ -967,8 +1019,10 @@ namespace
             L"                       (DDS output only)\n"
             L"   -dx10               Force use of 'DX10' extended header\n"
             L"   -dx9                Force use of legacy DX9 header\n"
+        #ifdef USE_XBOX_EXTS
             L"   -xbox               Tile/swizzle and use 'XBOX' variant of DDS\n"
             L"   -xgmode <mode>      Tile/swizzle using provided memory layout mode\n"
+        #endif
             L"\n"
             L"                       (TGA input only)\n"
             L"   -tgazeroalpha       Allow all zero alpha channel files to be loaded 'as is'\n"
@@ -1547,7 +1601,9 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
             case OPT_PAPER_WHITE_NITS:
             case OPT_PRESERVE_ALPHA_COVERAGE:
             case OPT_SWIZZLE:
+        #ifdef USE_XBOX_EXTS
             case OPT_XGMODE:
+        #endif
                 // These support either "-arg:value" or "-arg value"
                 if (!*pValue)
                 {
@@ -2030,6 +2086,7 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
                 }
                 break;
 
+        #ifdef USE_XBOX_EXTS
             case OPT_XGMODE:
                 {
                 #ifdef _USE_SCARLETT
@@ -2056,11 +2113,12 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
                         wprintf(L"\n   <mode>: ");
                         PrintList(14, s_pXGModes);
                         return 1;
-                    };
+                    }
 
                     XGSetHardwareVersion(static_cast<XG_HARDWARE_VERSION>(mode));
                     break;
                 }
+        #endif // USE_XBOX_EXTS
             }
         }
         else if (wcspbrk(pArg, L"?*") != nullptr)
@@ -2145,9 +2203,13 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
         std::filesystem::path curpath(pConv->szSrc);
         auto const ext = curpath.extension();
 
+    #ifndef USE_XBOX_EXTS
+        constexpr
+    #endif
         bool isXbox = false;
         if (_wcsicmp(ext.c_str(), L".dds") == 0 || _wcsicmp(ext.c_str(), L".ddx") == 0)
         {
+        #ifdef USE_XBOX_EXTS
             hr = Xbox::GetMetadataFromDDSFile(curpath.c_str(), info, isXbox);
             if (FAILED(hr))
             {
@@ -2167,6 +2229,7 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
                 }
             }
             else
+        #endif // USE_XBOX_EXTS
             {
                 DDS_FLAGS ddsFlags = DDS_FLAGS_ALLOW_LARGE_FILES;
                 if (dwOptions & (uint64_t(1) << OPT_DDS_DWORD_ALIGN))
@@ -2268,6 +2331,30 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
         else if (_wcsicmp(ext.c_str(), L".exr") == 0)
         {
             hr = LoadFromEXRFile(curpath.c_str(), &info, *image);
+            if (FAILED(hr))
+            {
+                wprintf(L" FAILED (%08X%ls)\n", static_cast<unsigned int>(hr), GetErrorDesc(hr));
+                retVal = 1;
+                continue;
+            }
+        }
+    #endif
+    #ifdef USE_LIBJPEG
+        else if (_wcsicmp(ext.c_str(), L".jpg") == 0 || _wcsicmp(ext.c_str(), L".jpeg") == 0)
+        {
+            hr = LoadFromJPEGFile(curpath.c_str(), &info, *image);
+            if (FAILED(hr))
+            {
+                wprintf(L" FAILED (%08X%ls)\n", static_cast<unsigned int>(hr), GetErrorDesc(hr));
+                retVal = 1;
+                continue;
+            }
+        }
+    #endif
+    #ifdef USE_LIBPNG
+        else if (_wcsicmp(ext.c_str(), L".png") == 0)
+        {
+            hr = LoadFromPNGFile(curpath.c_str(), &info, *image);
             if (FAILED(hr))
             {
                 wprintf(L" FAILED (%08X%ls)\n", static_cast<unsigned int>(hr), GetErrorDesc(hr));
@@ -3760,7 +3847,12 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
             assert(img);
             const size_t nimg = image->GetImageCount();
 
-            PrintInfo(info, (FileType == CODEC_DDS) && (dwOptions & (uint64_t(1) << OPT_USE_XBOX)));
+        #ifdef USE_XBOX_EXTS
+            const bool isXboxOut = ((FileType == CODEC_DDS) && (dwOptions & (uint64_t(1) << OPT_USE_XBOX))) != 0;
+        #else
+            constexpr bool isXboxOut = false;
+        #endif
+            PrintInfo(info, isXboxOut);
             wprintf(L"\n");
 
             // Figure out dest filename
@@ -3825,7 +3917,8 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
             switch (FileType)
             {
             case CODEC_DDS:
-                if (dwOptions & (uint64_t(1) << OPT_USE_XBOX))
+            #ifdef USE_XBOX_EXTS
+                if (isXboxOut)
                 {
                     Xbox::XboxImage xbox;
 
@@ -3836,6 +3929,7 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
                     }
                 }
                 else
+            #endif // USE_XBOX_EXTS
                 {
                     DDS_FLAGS ddsFlags = DDS_FLAGS_NONE;
                     if (dwOptions & (uint64_t(1) << OPT_USE_DX10))
@@ -3875,6 +3969,16 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
             #ifdef USE_OPENEXR
             case CODEC_EXR:
                 hr = SaveToEXRFile(img[0], destName.c_str());
+                break;
+            #endif
+            #ifdef USE_LIBJPEG
+            case CODEC_JPEG:
+                hr = SaveToJPEGFile(img[0], destName.c_str());
+                break;
+            #endif
+            #ifdef USE_LIBPNG
+            case CODEC_PNG:
+                hr = SaveToPNGFile(img[0], destName.c_str());
                 break;
             #endif
 

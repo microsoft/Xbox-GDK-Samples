@@ -761,19 +761,19 @@ void Sample::CreateDeviceDependentResources()
     DX::FindMediaFile(strFilePath, MAX_PATH, L"Assets/GamerPic_Transparent.png");
     DX::ThrowIfFailed(
         CreateWICTextureFromFile(device, upload, strFilePath,
-            m_cursor.ReleaseAndGetAddressOf(), true)
+            m_cursor.ReleaseAndGetAddressOf(), false)
     );
 
     DX::FindMediaFile(strFilePath, MAX_PATH, L"Assets/GamerPic_Pointer.png");
     DX::ThrowIfFailed(
         CreateWICTextureFromFile(device, upload, strFilePath,
-            m_pointer.ReleaseAndGetAddressOf(), true)
+            m_pointer.ReleaseAndGetAddressOf(), false)
     );
 
     DX::FindMediaFile(strFilePath, MAX_PATH, L"Assets/LOGO_ATG_SMALL.png");
     DX::ThrowIfFailed(
         CreateWICTextureFromFile(device, upload, strFilePath,
-            m_logo.ReleaseAndGetAddressOf(), true)
+            m_logo.ReleaseAndGetAddressOf(), false)
     );
 
     DX::FindMediaFile(strFilePath, MAX_PATH, L"ATGSampleBackground.DDS");

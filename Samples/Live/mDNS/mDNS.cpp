@@ -9,9 +9,10 @@
 #include "mDNS.h"
 
 #include "ATGColors.h"
-#include "SampleGUI.h"
+#include "FindMedia.h"
 
-extern void ExitSample();
+
+extern void ExitSample() noexcept;
 
 using namespace DirectX;
 
@@ -19,10 +20,10 @@ using Microsoft::WRL::ComPtr;
 
 namespace
 {
-    constexpr int s_button_RegisterLocalDevice = 2001;
-    constexpr int s_button_DeRegisterLocalDevice = 2002;
-    constexpr int s_button_StartBrowse = 2003;
-    constexpr int s_button_StopBrowse = 2004;
+    const int s_button_RegisterLocalDevice = 2001;
+    const int s_button_DeRegisterLocalDevice = 2002;
+    const int s_button_StartBrowse = 2003;
+    const int s_button_StopBrowse = 2004;
 
     // NOTE: Service name must conform to the following format: <ServiceName>._<ServiceType>._<TransportProtocol>.local
     //                                                          e.g. StrategyGame._game._udp.local  
@@ -40,8 +41,9 @@ Sample::Sample() noexcept(false) :
     m_browseCancel{}
 {
     // Renders only 2D, so no need for a depth buffer.
-    m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_UNKNOWN);
+    m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_UNKNOWN, 2);
     m_deviceResources->SetClearColor(ATG::Colors::Background);
+    m_deviceResources->RegisterDeviceNotify(this);
 
     ATG::UIConfig uiconfig;
     uiconfig.colorBackground = DirectX::XMFLOAT4(0, 0, 0, 1);
@@ -51,14 +53,31 @@ Sample::Sample() noexcept(false) :
     m_console = std::make_unique<DX::TextConsoleImage>();
 }
 
+Sample::~Sample()
+{
+    DeRegisterDNS();
+    StopBrowseDNS();
+    WSACleanup();
+
+    if (m_deviceResources)
+    {
+        m_deviceResources->WaitForGpu();
+    }
+}
+
 // Initialize the Direct3D resources required to run.
-void Sample::Initialize(HWND window)
+void Sample::Initialize(HWND window, int width, int height)
 {
     m_gamePad = std::make_unique<GamePad>();
 
-    m_deviceResources->SetWindow(window);
+    m_keyboard = std::make_unique<Keyboard>();
 
-    m_deviceResources->CreateDeviceResources();  	
+    m_mouse = std::make_unique<Mouse>();
+    m_mouse->SetWindow(window);
+
+    m_deviceResources->SetWindow(window, width, height);
+
+    m_deviceResources->CreateDeviceResources();
     CreateDeviceDependentResources();
 
     m_deviceResources->CreateWindowSizeDependentResources();
@@ -77,40 +96,27 @@ void Sample::Initialize(HWND window)
 
     // UI Callbacks
     m_ui->FindControl<ATG::Button>(c_sampleUIPanel, s_button_RegisterLocalDevice)->SetCallback([this](ATG::IPanel*, ATG::IControl* /*ctrl*/)
-    {
-        RegisterDNS();
-    });
+        {
+            RegisterDNS();
+        });
 
     m_ui->FindControl<ATG::Button>(c_sampleUIPanel, s_button_DeRegisterLocalDevice)->SetCallback([this](ATG::IPanel*, ATG::IControl* /*ctrl*/)
-    {
-        DeRegisterDNS();
-    });
+        {
+            DeRegisterDNS();
+        });
 
     m_ui->FindControl<ATG::Button>(c_sampleUIPanel, s_button_StartBrowse)->SetCallback([this](ATG::IPanel*, ATG::IControl* /*ctrl*/)
-    {
-        BrowseDNS();
-    });
+        {
+            BrowseDNS();
+        });
 
     m_ui->FindControl<ATG::Button>(c_sampleUIPanel, s_button_StopBrowse)->SetCallback([this](ATG::IPanel*, ATG::IControl* /*ctrl*/)
-    {
-        StopBrowseDNS();
-    });
+        {
+            StopBrowseDNS();
+        });
 
     m_waitEvent = CreateEvent(nullptr, TRUE, FALSE, L"mdnsWait");
     m_console->WriteLine(L"mDNS Sample Started");
-}
-
-
-Sample::~Sample()
-{
-    DeRegisterDNS();
-    StopBrowseDNS();
-    WSACleanup();
-
-    if (m_deviceResources)
-    {
-        m_deviceResources->WaitForGpu();
-    }
 }
 
 #pragma region Frame Update
@@ -119,12 +125,16 @@ void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
 
+#ifdef _GAMING_XBOX
     m_deviceResources->WaitForOrigin();
+#endif
 
     m_timer.Tick([&]()
     {
         Update(m_timer);
     });
+
+    m_mouse->EndOfInputFrame();
 
     Render();
 
@@ -135,7 +145,7 @@ void Sample::Tick()
 // Updates the world.
 void Sample::Update(DX::StepTimer const& timer)
 {
-    PIXScopedEvent(PIX_COLOR_DEFAULT, L"Update");
+    PIXBeginEvent(PIX_COLOR_DEFAULT, L"Update");
 
     auto pad = m_gamePad->GetState(0);
     if (pad.IsConnected())
@@ -152,7 +162,18 @@ void Sample::Update(DX::StepTimer const& timer)
         m_gamePadButtons.Reset();
     }
 
+    auto kb = m_keyboard->GetState();
+    m_keyboardButtons.Update(kb);
+
+    if (kb.Escape)
+    {
+        ExitSample();
+    }
+
     m_ui->Update(static_cast<float>(timer.GetElapsedSeconds()), pad);
+    m_ui->Update(static_cast<float>(timer.GetElapsedSeconds()), *m_mouse, *m_keyboard);
+
+    PIXEndEvent();
 }
 #pragma endregion
 
@@ -223,8 +244,29 @@ void Sample::OnResuming()
     m_deviceResources->Resume();
     m_timer.ResetElapsedTime();
     m_gamePadButtons.Reset();
-
+    m_keyboardButtons.Reset();
     m_ui->Reset();
+}
+
+void Sample::OnWindowMoved()
+{
+    auto const r = m_deviceResources->GetOutputSize();
+    m_deviceResources->WindowSizeChanged(r.right, r.bottom);
+}
+
+void Sample::OnWindowSizeChanged(int width, int height)
+{
+    if (!m_deviceResources->WindowSizeChanged(width, height))
+        return;
+
+    CreateWindowSizeDependentResources();
+}
+
+// Properties
+void Sample::GetDefaultSize(int& width, int& height) const noexcept
+{
+    width = 1920;
+    height = 1080;
 }
 #pragma endregion
 
@@ -233,6 +275,18 @@ void Sample::OnResuming()
 void Sample::CreateDeviceDependentResources()
 {
     auto device = m_deviceResources->GetD3DDevice();
+
+#ifdef _GAMING_DESKTOP
+    D3D12_FEATURE_DATA_SHADER_MODEL shaderModel = { D3D_SHADER_MODEL_6_0 };
+    if (FAILED(device->CheckFeatureSupport(D3D12_FEATURE_SHADER_MODEL, &shaderModel, sizeof(shaderModel)))
+        || (shaderModel.HighestShaderModel < D3D_SHADER_MODEL_6_0))
+    {
+#ifdef _DEBUG
+        OutputDebugStringA("ERROR: Shader Model 6.0 is not supported!\n");
+#endif
+        throw std::runtime_error("Shader Model 6.0 is not supported!");
+    }
+#endif
 
     m_graphicsMemory = std::make_unique<GraphicsMemory>(device);
 
@@ -246,7 +300,7 @@ void Sample::CreateDeviceDependentResources()
         D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE,
         46,
         0
-        );
+    );
 
     auto fonthandle = m_resourceDescriptors->Allocate();
     auto bghandle = m_resourceDescriptors->Allocate();
@@ -255,8 +309,8 @@ void Sample::CreateDeviceDependentResources()
         device,
         resourceUpload,
         rtState,
-        L"courier_16.spritefont",
-        L"ATGSampleBackground.DDS",
+        L"Assets\\courier_16.spritefont",
+        L"Assets\\ATGSampleBackground.DDS",
         m_resourceDescriptors->GetCpuHandle(fonthandle),
         m_resourceDescriptors->GetGpuHandle(fonthandle),
         m_resourceDescriptors->GetCpuHandle(bghandle),
@@ -272,7 +326,7 @@ void Sample::CreateDeviceDependentResources()
 // Allocate all memory resources that change on a window SizeChanged event.
 void Sample::CreateWindowSizeDependentResources()
 {
-    const RECT size = m_deviceResources->GetOutputSize();
+    RECT size = m_deviceResources->GetOutputSize();
 
     static const RECT screenDisplay = { 640, 32, 1920 - 32, 1080 - 32 };
     m_console->SetWindow(screenDisplay, false);
@@ -281,11 +335,25 @@ void Sample::CreateWindowSizeDependentResources()
     m_ui->SetWindow(size);
 }
 
+void Sample::OnDeviceLost()
+{
+    m_graphicsMemory.reset();
+    m_ui->ReleaseDevice();
+    m_console->ReleaseDevice();
+    m_resourceDescriptors.reset();
+}
+
+void Sample::OnDeviceRestored()
+{
+    CreateDeviceDependentResources();
+
+    CreateWindowSizeDependentResources();
+}
 #pragma endregion
 
 void RegisterDNS_Callback(DWORD /*Status*/, PVOID pQueryContext, PDNS_SERVICE_INSTANCE pInstance)
 {
-    auto pSample = reinterpret_cast<Sample*>(pQueryContext);
+    Sample* pSample = reinterpret_cast<Sample*>(pQueryContext);
 
     pSample->SetDNSServiceInstance(pInstance);
     pSample->SetWaitEvent();
@@ -300,7 +368,7 @@ void Sample::RegisterDNS()
 {
     if (m_dnsServiceInstance == nullptr)
     {
-        uint16_t portNumber = 5000;
+        const uint16_t portNumber = 5000;
         PDNS_SERVICE_INSTANCE pInst = nullptr;
 
         // Determine hostname
@@ -333,14 +401,14 @@ void Sample::RegisterDNS()
         DWORD registerResult = DnsServiceRegister(&registerReq, nullptr);
         if (registerResult == DNS_REQUEST_PENDING)
         {
-            m_console->WriteLine(L"DNS REGISTERED");
+            m_console->WriteLine(L"DNS Registered");
 
             // Wait for the request to complete
             WaitForSingleObject(m_waitEvent, INFINITE);
         }
         else
         {
-            m_console->WriteLine(L"DNS REGISTER FAILED");
+            m_console->Format(L"DNS Registration Failed %ul\n", registerResult);
         }
 
         if (pInst != nullptr)
@@ -356,12 +424,12 @@ void Sample::RegisterDNS()
 }
 
 void DeRegisterDNS_Callback(
-    _In_ DWORD /*status*/,
+    _In_ DWORD /*Status*/,
     _In_ PVOID pQueryContext,
     _In_ PDNS_SERVICE_INSTANCE /*pInstance*/
 )
 {
-    auto pSample = reinterpret_cast<Sample*>(pQueryContext);
+    Sample* pSample = reinterpret_cast<Sample*>(pQueryContext);
     pSample->m_console->WriteLine(L"DNS entry was de-registered");
 
     pSample->SetWaitEvent();
@@ -371,7 +439,7 @@ void Sample::DeRegisterDNS()
 {
     if (m_dnsServiceInstance != nullptr)
     {
-        DWORD dwStatus = ERROR_SUCCESS;
+        DNS_STATUS dwStatus = ERROR_SUCCESS;
         DNS_SERVICE_REGISTER_REQUEST deRegisterReq = {};
 
         deRegisterReq.pQueryContext = this;
@@ -379,15 +447,15 @@ void Sample::DeRegisterDNS()
         deRegisterReq.Version = DNS_QUERY_REQUEST_VERSION1;
         deRegisterReq.unicastEnabled = FALSE;
         deRegisterReq.pServiceInstance = m_dnsServiceInstance;
-        deRegisterReq.InterfaceIndex = m_dnsServiceInstance->dwInterfaceIndex;;
+        deRegisterReq.InterfaceIndex = m_dnsServiceInstance->dwInterfaceIndex;
 
         // Deregister the service
-        dwStatus = DnsServiceDeRegister(&deRegisterReq, NULL);
+        dwStatus = static_cast<DNS_STATUS>(DnsServiceDeRegister(&deRegisterReq, nullptr));
 
         if (dwStatus == DNS_REQUEST_PENDING)
         {
             // Wait for the request to complete
-            dwStatus = WaitForSingleObject(m_waitEvent, INFINITE);
+            dwStatus = static_cast<DNS_STATUS>(WaitForSingleObject(m_waitEvent, INFINITE));
         }
 
         if (m_dnsServiceInstance != nullptr)
@@ -404,7 +472,7 @@ void Sample::DeRegisterDNS()
 
 void BrowseDNS_Callback(DWORD /*Status*/, PVOID pQueryContext, PDNS_RECORD pDnsRecord)
 {
-    auto pSample = reinterpret_cast<Sample*>(pQueryContext);
+    Sample* pSample = reinterpret_cast<Sample*>(pQueryContext);
 
     if (pDnsRecord)
     {
@@ -412,25 +480,25 @@ void BrowseDNS_Callback(DWORD /*Status*/, PVOID pQueryContext, PDNS_RECORD pDnsR
         {
             switch (record->wType)
             {
-                case DNS_TYPE_PTR:
+            case DNS_TYPE_PTR:
+            {
+                pSample->m_console->Format(L"Browse - Request Resolve: %ls\n", record->Data.PTR.pNameHost);
+                pSample->Resolve(record->Data.PTR.pNameHost);
+                break;
+            }
+            case DNS_TYPE_SRV:
+            {
+                pSample->m_console->Format(L"DNS_TYPE_SRV: %ls", record->Data.SRV.pNameTarget);
+                break;
+            }
+            case DNS_TYPE_TEXT:
+            {
+                for (uint32_t i = 0; i < record->Data.TXT.dwStringCount; i++)
                 {
-                    pSample->m_console->Format(L"Browse - Request Resolve: %ls\n", record->Data.PTR.pNameHost);
-                    pSample->Resolve(record->Data.PTR.pNameHost);
-                    break;
+                    pSample->m_console->Format(L"DNS_TYPE_TEXT: %ls", record->Data.TXT.pStringArray[i]);
                 }
-                case DNS_TYPE_SRV:
-                {
-                    pSample->m_console->Format(L"DNS_TYPE_SRV: %ls", record->Data.SRV.pNameTarget);
-                    break;
-                }
-                case DNS_TYPE_TEXT:
-                {
-                    for (uint32_t i = 0; i < record->Data.TXT.dwStringCount; i++)
-                    {
-                        pSample->m_console->Format(L"DNS_TYPE_TEXT: %ls", record->Data.TXT.pStringArray[i]);
-                    }
-                    break;
-                }
+                break;
+            }
             }
         }
         DnsFree(pDnsRecord, DnsFreeRecordList);
@@ -439,7 +507,7 @@ void BrowseDNS_Callback(DWORD /*Status*/, PVOID pQueryContext, PDNS_RECORD pDnsR
 
 void ResolveCallback(DWORD /*Status*/, PVOID pQueryContext, PDNS_SERVICE_INSTANCE pInstance)
 {
-    auto pSample = reinterpret_cast<Sample*>(pQueryContext);
+    Sample* pSample = reinterpret_cast<Sample*>(pQueryContext);
     pSample->SetWaitEvent();
 
     if (pInstance)
@@ -510,7 +578,11 @@ DNS_STATUS Sample::StopBrowseDNS()
 {
     DNS_STATUS dwStatus = DnsServiceBrowseCancel(&m_browseCancel);
 
-    if (dwStatus == DNS_REQUEST_PENDING)
+    if(dwStatus == ERROR_SUCCESS)
+    {
+        m_console->WriteLine(L"DNS Browse stopped successfully");
+    }
+    else if (dwStatus == DNS_REQUEST_PENDING)
     {
         m_console->WriteLine(L"DNS Browse canceled");
         return ERROR_SUCCESS;

@@ -367,6 +367,7 @@ void Sample::CreateRaytracingPipeline()
         globalRootSignature->SetRootSignature(m_globalRootSignature.Get());
     }
 
+    PrintStateObjectDesc(raytracingPipeline);
 
     DX::ThrowIfFailed(device->CreateStateObject(raytracingPipeline, IID_GRAPHICS_PPV_ARGS(m_raytracingStateObject.GetAddressOf())));
     DX::ThrowIfFailed(m_raytracingStateObject->QueryInterface(IID_GRAPHICS_PPV_ARGS(m_raytracingStateObjectProps.GetAddressOf())));
@@ -418,8 +419,32 @@ void Sample::BuildBottomLevelAccelerationStructure(bool buildEveryFrame)
 
         D3D12_HEAP_PROPERTIES defaultHeapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
 
-        DX::ThrowIfFailed(device->CreateCommittedResource(&defaultHeapProps, D3D12_HEAP_FLAG_NONE, &vbDesc, D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE, nullptr, IID_GRAPHICS_PPV_ARGS(m_VB.GetAddressOf())));
-        DX::ThrowIfFailed(device->CreateCommittedResource(&defaultHeapProps, D3D12_HEAP_FLAG_NONE, &ibDesc, D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE, nullptr, IID_GRAPHICS_PPV_ARGS(m_IB.GetAddressOf())));
+        DX::ThrowIfFailed(
+            device->CreateCommittedResource(
+                &defaultHeapProps,
+                D3D12_HEAP_FLAG_NONE,
+                &vbDesc,
+#ifdef _GAMING_XBOX
+                D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE,
+#else
+                // on PC buffers are created in the common state and can be promoted without a barrier to NON_PIXEL_SHADER_RESOURCE on first access
+                D3D12_RESOURCE_STATE_COMMON,
+#endif
+                nullptr,
+                IID_GRAPHICS_PPV_ARGS(m_VB.GetAddressOf())));
+        DX::ThrowIfFailed(
+            device->CreateCommittedResource(
+                &defaultHeapProps,
+                D3D12_HEAP_FLAG_NONE,
+                &ibDesc,
+#ifdef _GAMING_XBOX
+                D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE,
+#else
+                // on PC buffers are created in the common state and can be promoted without a barrier to NON_PIXEL_SHADER_RESOURCE on first access
+                D3D12_RESOURCE_STATE_COMMON,
+#endif
+                nullptr,
+                IID_GRAPHICS_PPV_ARGS(m_IB.GetAddressOf())));
 
         D3D12_RAYTRACING_ACCELERATION_STRUCTURE_PREBUILD_INFO preBuildInfo;
         device->GetRaytracingAccelerationStructurePrebuildInfo(&rtInputs, &preBuildInfo);
@@ -429,8 +454,19 @@ void Sample::BuildBottomLevelAccelerationStructure(bool buildEveryFrame)
 
         DX::ThrowIfFailed(device->CreateCommittedResource(&defaultHeapProps, D3D12_HEAP_FLAG_NONE, &blasDesc, D3D12_RESOURCE_STATE_RAYTRACING_ACCELERATION_STRUCTURE,
             nullptr, IID_GRAPHICS_PPV_ARGS(m_triangleBLAS.GetAddressOf())));
-        DX::ThrowIfFailed(device->CreateCommittedResource(&defaultHeapProps, D3D12_HEAP_FLAG_NONE, &scratchDesc, D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
-            nullptr, IID_GRAPHICS_PPV_ARGS(m_scratch.GetAddressOf())));
+        DX::ThrowIfFailed(
+            device->CreateCommittedResource(
+                &defaultHeapProps,
+                D3D12_HEAP_FLAG_NONE,
+                &scratchDesc,
+#ifdef _GAMING_XBOX
+                D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
+#else
+                // on PC buffers are created in the common state and can be promoted without a barrier to UNORDERED_ACCESS on first access
+                D3D12_RESOURCE_STATE_COMMON,
+#endif
+                nullptr,
+                IID_GRAPHICS_PPV_ARGS(m_scratch.GetAddressOf())));
     }
 
     geometryDesc.Triangles.VertexBuffer.StartAddress = m_VB->GetGPUVirtualAddress();
@@ -513,8 +549,19 @@ void Sample::BuildTopLevelAccelerationStructure(bool buildEveryFrame)
 
         DX::ThrowIfFailed(device->CreateCommittedResource(&defaultHeapProps, D3D12_HEAP_FLAG_NONE, &tlasDesc, D3D12_RESOURCE_STATE_RAYTRACING_ACCELERATION_STRUCTURE,
             nullptr, IID_GRAPHICS_PPV_ARGS(m_TLAS.GetAddressOf())));
-        DX::ThrowIfFailed(device->CreateCommittedResource(&defaultHeapProps, D3D12_HEAP_FLAG_NONE, &tlasScratchDesc, D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
-            nullptr, IID_GRAPHICS_PPV_ARGS(m_TLASScratch.GetAddressOf())));
+        DX::ThrowIfFailed(
+            device->CreateCommittedResource(
+                &defaultHeapProps,
+                D3D12_HEAP_FLAG_NONE,
+                &tlasScratchDesc,
+#ifdef _GAMING_XBOX
+                D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
+#else
+                // on PC buffers are created in the common state and can be promoted without a barrier to UNORDERED_ACCESS on first access
+                D3D12_RESOURCE_STATE_COMMON,
+#endif
+                nullptr,
+                IID_GRAPHICS_PPV_ARGS(m_TLASScratch.GetAddressOf())));
     }
 
     topLevelBuildDesc.Inputs.NumDescs = m_numInstancesInTLAS;

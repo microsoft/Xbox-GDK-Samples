@@ -725,7 +725,7 @@ void Sample::LoadModels()
                 device->CreateCommittedResource(&heapProps,
                     D3D12_HEAP_FLAG_NONE,
                     &resData,
-                    D3D12_RESOURCE_STATE_COPY_DEST,
+                    c_initialCopyTargetState,
                     nullptr,
                     IID_GRAPHICS_PPV_ARGS(m_uniqueIndicesBuffer[i].ReleaseAndGetAddressOf())));
 
@@ -762,7 +762,7 @@ void Sample::LoadModels()
                 device->CreateCommittedResource(&heapProps,
                     D3D12_HEAP_FLAG_NONE,
                     &resData,
-                    D3D12_RESOURCE_STATE_COPY_DEST,
+                    c_initialCopyTargetState,
                     nullptr,
                     IID_GRAPHICS_PPV_ARGS(m_primitiveIndicesBuffer[i].ReleaseAndGetAddressOf())));
 
@@ -799,7 +799,7 @@ void Sample::LoadModels()
                 device->CreateCommittedResource(&heapProps,
                     D3D12_HEAP_FLAG_NONE,
                     &resData,
-                    D3D12_RESOURCE_STATE_COPY_DEST,
+                    c_initialCopyTargetState,
                     nullptr,
                     IID_GRAPHICS_PPV_ARGS(m_meshletsBuffer[i].ReleaseAndGetAddressOf())));
 
@@ -1006,7 +1006,7 @@ void Sample::BuildObjectBuffer()
         device->CreateCommittedResource(&heapProps,
             D3D12_HEAP_FLAG_NONE,
             &resData,
-            D3D12_RESOURCE_STATE_COPY_DEST,
+            c_initialCopyTargetState,
             nullptr,
             IID_GRAPHICS_PPV_ARGS(m_objectBuffer.ReleaseAndGetAddressOf())));
 

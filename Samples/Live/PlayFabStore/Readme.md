@@ -19,6 +19,9 @@ description: "This sample demonstrates the client-based operations used in prese
 
 For more information see: 
 - [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Live/PlayFabStore/readme_en-us.md)
+- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Live/PlayFabStore/readme_ja-jp.md)
+- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Live/PlayFabStore/readme_ko-kr.md)
+- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Live/PlayFabStore/readme_zh-cn.md)
 
 ## Privacy statement
 

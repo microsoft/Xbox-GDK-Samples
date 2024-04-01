@@ -451,6 +451,7 @@
     </CopyFileToFolders>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h" />
     <ClInclude Include="PIXCircularCaptureCombo.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="StepTimer.h" />
@@ -548,7 +549,10 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">true</DeploymentContent>
     </None>
-    <None Include="Readme.md" />
+    <None Include="readme.md" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\Media\Textures\ATGSampleBackground.DDS" />

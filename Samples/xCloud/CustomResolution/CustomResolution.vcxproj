@@ -464,6 +464,9 @@
       <DestinationFileName Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">Assets/%(Filename)%(Extension)</DestinationFileName>
     </CopyFileToFolders>
     <None Include="readme.md" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
     <None Include="Time.hlsli" />
   </ItemGroup>
   <ItemGroup>

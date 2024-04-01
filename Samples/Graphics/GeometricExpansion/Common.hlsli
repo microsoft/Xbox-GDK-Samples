@@ -7,8 +7,8 @@
 
 #include "Shared.h"
 
-#define ROOT_SIG "CBV(b0), \
-                  SRV(t0)"
+#define ROOT_SIG "CBV(b0, visibility=SHADER_VISIBILITY_MESH), \
+                  SRV(t0, visibility=SHADER_VISIBILITY_MESH)"
 
 struct VertexOut
 {

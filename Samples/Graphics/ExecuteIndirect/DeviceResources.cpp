@@ -26,7 +26,7 @@ DeviceResources::DeviceResources(
     UINT backBufferCount,
     unsigned int flags) noexcept(false) :
         m_backBufferIndex(0),
-        m_fenceValues{},
+        m_fenceValue(0),
         m_framePipelineToken{},
         m_rtvDescriptorSize(0),
         m_screenViewport{},
@@ -94,7 +94,7 @@ void DeviceResources::CreateDeviceResources()
     }
 #endif
 #else // _GAMING_XBOX_XBOXONE
-    m_options &= ~(c_AmplificationShaders | c_EnableDXR);
+    m_options &= ~(c_AmplificationShaders | c_EnableDXR | c_ColorDcc | c_DepthTcc);
 #endif
 
     HRESULT hr = D3D12XboxCreateDevice(
@@ -163,8 +163,8 @@ void DeviceResources::CreateDeviceResources()
     m_commandList->SetName(L"DeviceResources");
 
     // Create a fence for tracking GPU execution progress.
-    ThrowIfFailed(m_d3dDevice->CreateFence(m_fenceValues[m_backBufferIndex], D3D12_FENCE_FLAG_NONE, IID_GRAPHICS_PPV_ARGS(m_fence.ReleaseAndGetAddressOf())));
-    m_fenceValues[m_backBufferIndex]++;
+    ThrowIfFailed(m_d3dDevice->CreateFence(m_fenceValue, D3D12_FENCE_FLAG_NONE, IID_GRAPHICS_PPV_ARGS(m_fence.ReleaseAndGetAddressOf())));
+    m_fenceValue++;
 
     m_fence->SetName(L"DeviceResources");
 
@@ -232,7 +232,6 @@ void DeviceResources::CreateWindowSizeDependentResources()
     for (UINT n = 0; n < m_backBufferCount; n++)
     {
         m_renderTargets[n].Reset();
-        m_fenceValues[n] = m_fenceValues[m_backBufferIndex];
     }
 
     // Determine the render target size in pixels.
@@ -251,6 +250,14 @@ void DeviceResources::CreateWindowSizeDependentResources()
         1  // Use a single mipmap level.
     );
     swapChainBufferDesc.Flags |= D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET;
+
+#ifdef _GAMING_XBOX_SCARLETT
+    if (m_options & c_ColorDcc)
+    {
+        // Enable DCC (Delta Color Compression) for the swap buffer (requires a clear).
+        swapChainBufferDesc.Flags |= D3D12XBOX_RESOURCE_FLAG_ALLOW_DCC;
+    }
+#endif
 
 #ifdef _GAMING_XBOX_XBOXONE
     if (m_options & c_EnableHDR)
@@ -298,10 +305,18 @@ void DeviceResources::CreateWindowSizeDependentResources()
             m_depthBufferFormat,
             backBufferWidth,
             backBufferHeight,
-            1, // This depth stencil view has only one texture.
+            1, // Use a single array entry.
             1  // Use a single mipmap level.
             );
         depthStencilDesc.Flags |= D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
+
+#ifdef _GAMING_XBOX_SCARLETT
+        if (m_options & c_DepthTcc)
+        {
+            // Enable Texture Compatibility for the depth buffer (avoids a decompress).
+            depthStencilDesc.Flags |= D3D12XBOX_RESOURCE_FLAG_FORCE_TEXTURE_COMPATIBILITY;
+        }
+#endif
 
         const CD3DX12_CLEAR_VALUE depthOptimizedClearValue(m_depthBufferFormat, (m_options & c_ReverseDepth) ? 0.0f : 1.0f, 0u);
 
@@ -408,7 +423,7 @@ void DeviceResources::WaitForGpu() noexcept
     if (m_commandQueue && m_fence && m_fenceEvent.IsValid())
     {
         // Schedule a Signal command in the GPU queue.
-        const UINT64 fenceValue = m_fenceValues[m_backBufferIndex];
+        const UINT64 fenceValue = m_fenceValue;
         if (SUCCEEDED(m_commandQueue->Signal(m_fence.Get(), fenceValue)))
         {
             // Wait until the Signal has been processed.
@@ -417,7 +432,7 @@ void DeviceResources::WaitForGpu() noexcept
                 std::ignore = WaitForSingleObjectEx(m_fenceEvent.Get(), INFINITE, FALSE);
 
                 // Increment the fence value for the current frame.
-                m_fenceValues[m_backBufferIndex]++;
+                m_fenceValue++;
             }
         }
     }

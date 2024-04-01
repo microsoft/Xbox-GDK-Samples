@@ -191,7 +191,6 @@ private:
 //======================================================================================
 // GPUTimer (DirectX 12.X)
 //======================================================================================
-#if defined(__d3d12_x_h__) || defined(__XBOX_D3D12_X__)
 
 template<typename t_CommandList>
 void GPUCommandListTimer<t_CommandList>::BeginFrame(_In_ t_CommandList* commandList)
@@ -208,7 +207,7 @@ void GPUCommandListTimer<t_CommandList>::EndFrame(_In_ t_CommandList* commandLis
 
     if (m_frame[m_currentFrame].m_pending)
     {
-        m_frame[m_currentFrame].ComputeFrame(commandList);
+        m_frame[m_currentFrame].ComputeFrame(commandList, m_lastUpdatedValues);
         m_frame[m_currentFrame].m_pending = false;
     }
 }
@@ -262,6 +261,15 @@ float GPUCommandListTimer<t_CommandList>::GetAverageMS(uint32_t timerid) const
 
     uint32_t oldestBuffer = (m_currentFrame + 1) % c_bufferCount;
     return m_frame[oldestBuffer].m_avg[timerid];
+}
+
+template<typename t_CommandList>
+float GPUCommandListTimer<t_CommandList>::GetLastUpdatedMS(uint32_t timerid) const
+{
+    if (timerid >= c_maxTimers)
+        return 0.f;
+
+    return m_lastUpdatedValues[timerid];
 }
 
 template<typename t_CommandList>
@@ -322,7 +330,7 @@ void GPUCommandListTimer<t_CommandList>::Frame::EndFrame(_In_ t_CommandList* /*c
 }
 
 template<typename t_CommandList>
-void GPUCommandListTimer<t_CommandList>::Frame::ComputeFrame(_In_ t_CommandList* commandList)
+void GPUCommandListTimer<t_CommandList>::Frame::ComputeFrame(_In_ t_CommandList* commandList, _Out_writes_(c_maxTimers) float* lastUpdatedValues)
 {
 #if defined(_DEBUG) || defined(PROFILE)
     bool blocked = false;
@@ -370,6 +378,7 @@ void GPUCommandListTimer<t_CommandList>::Frame::ComputeFrame(_In_ t_CommandList*
         constexpr double c_FrequencyInvMS = 1000.0 / double(D3D11X_XBOX_GPU_TIMESTAMP_FREQUENCY);
         float value = float(double(end - start) * c_FrequencyInvMS);
         m_timing[j] = value;
+        lastUpdatedValues[j] = value;
         m_avg[j] = UpdateRunningAverage(m_avg[j], value);
         m_used[j] = false;
     }
@@ -401,222 +410,3 @@ namespace DX
     template class GPUCommandListTimer<ID3D12GraphicsCommandList>;
     template class GPUCommandListTimer<ID3D12XboxDmaCommandList>;
 }
-
-//======================================================================================
-// GPUTimer (DirectX 11.X)
-//======================================================================================
-#elif defined(__d3d11_x_h__)
-
-template<typename t_Context>
-void GPUContextTimer<t_Context>::BeginFrame(_In_ t_Context* context)
-{
-    m_frame[m_currentFrame].BeginFrame(context);
-}
-
-template<typename t_Context>
-void GPUContextTimer<t_Context>::EndFrame(_In_ t_Context* context)
-{
-    m_frame[m_currentFrame].EndFrame(context);
-    m_frame[m_currentFrame].m_pending = true;
-    m_currentFrame = (m_currentFrame + 1) % c_bufferCount;
-
-    if (m_frame[m_currentFrame].m_pending)
-    {
-        m_frame[m_currentFrame].ComputeFrame(context);
-        m_frame[m_currentFrame].m_pending = false;
-    }
-}
-
-template<typename t_Context>
-void GPUContextTimer<t_Context>::Flush(_In_ t_Context* context)
-{
-    for (size_t frame = 0; frame < 2 * (c_bufferCount - 1); ++frame)
-    {
-        BeginFrame(context);
-        EndFrame(context);
-    }
-}
-
-template<typename t_Context>
-void GPUContextTimer<t_Context>::Start(_In_ t_Context* context, uint32_t timerid)
-{
-    m_frame[m_currentFrame].Start(context, timerid);
-}
-
-template<typename t_Context>
-void GPUContextTimer<t_Context>::Stop(_In_ t_Context* context, uint32_t timerid)
-{
-    m_frame[m_currentFrame].Stop(context, timerid);
-}
-
-template<typename t_Context>
-void GPUContextTimer<t_Context>::Reset()
-{
-    for (size_t i = 0; i < c_bufferCount; ++i)
-    {
-        memset(m_frame[i].m_avg, 0, sizeof(Frame::m_avg));
-    }
-}
-
-template<typename t_Context>
-double GPUContextTimer<t_Context>::GetElapsedMS(uint32_t timerid) const
-{
-    if (timerid >= c_maxTimers)
-        return 0.0;
-
-    uint32_t oldestBuffer = (m_currentFrame + 1) % c_bufferCount;
-    return m_frame[oldestBuffer].m_timing[timerid];
-}
-
-template<typename t_Context>
-float GPUContextTimer<t_Context>::GetAverageMS(uint32_t timerid) const
-{
-    if (timerid >= c_maxTimers)
-        return 0.f;
-
-    uint32_t oldestBuffer = (m_currentFrame + 1) % c_bufferCount;
-    return m_frame[oldestBuffer].m_avg[timerid];
-}
-
-template<typename t_Context>
-void GPUContextTimer<t_Context>::ReleaseDevice()
-{
-    for (size_t i = 0; i < c_bufferCount; ++i)
-    {
-        for (size_t j = 0; j < c_maxTimers; ++j)
-        {
-            *m_frame[i].m_start[j] = c_invalidTimestamp;
-            *m_frame[i].m_end[j] = c_invalidTimestamp;
-        }
-    }
-}
-
-template<typename t_Context>
-void GPUContextTimer<t_Context>::RestoreDevice(_In_ ID3D11DeviceX* /*device*/)
-{
-    // Dma context requires 32-byte alignment for writebacks
-    constexpr uint32_t dmaWritebackAlignment = 32;
-    constexpr uint32_t alignmentPadding = dmaWritebackAlignment / sizeof(Timestamp);
-    typedef __declspec(align(dmaWritebackAlignment)) uint64_t PaddedTimestamp[alignmentPadding];
-
-    // One large page supports a total of 2048 timestamps, which is enough for 85 timers
-    const uint32_t largePageSize = 64 * 1024;
-
-    // Allocate Timestamp memory --- a single page shared among all timers of this type
-    static TimestampAllocator<PaddedTimestamp> Allocator(largePageSize);
-
-    for (size_t i = 0; i < c_bufferCount; ++i)
-    {
-        for (size_t j = 0; j < c_maxTimers; ++j)
-        {
-            m_frame[i].m_start[j] = *Allocator.GetNext();
-            m_frame[i].m_end[j] = *Allocator.GetNext();
-        }
-    }
-}
-
-template<typename t_Context>
-void GPUContextTimer<t_Context>::Frame::BeginFrame(_In_ t_Context* /*context*/)
-{
-    for (size_t j = 0; j < c_maxTimers; ++j)
-    {
-        if (m_used[j])
-        {
-            throw std::overflow_error("Timer reset while still in use");
-        }
-
-        *m_start[j] = c_invalidTimestamp;
-        *m_end[j] = c_invalidTimestamp;
-    }
-}
-
-template<typename t_Context>
-void GPUContextTimer<t_Context>::Frame::EndFrame(_In_ t_Context* /*context*/)
-{
-}
-
-template<typename t_Context>
-void GPUContextTimer<t_Context>::Frame::ComputeFrame(_In_ t_Context* context)
-{
-#if defined(_DEBUG) || defined(PROFILE)
-    bool blocked = false;
-#endif
-
-    for (uint32_t j = 0; j < c_maxTimers; ++j)
-    {
-        if (!m_used[j])
-        {
-            m_timing[j] = 0.f;
-            continue;
-        }
-
-        while (c_invalidTimestamp == *m_start[j])
-        {
-#if defined(_DEBUG) || defined(PROFILE)
-            if (!blocked)
-            {
-                OutputDebugStringA("WARNING: Blocked performance queries\n");
-                blocked = true;
-            }
-#endif
-            Flush(context);
-            Sleep(1);
-        }
-
-        while (c_invalidTimestamp == *m_end[j])
-        {
-#if defined(_DEBUG) || defined(PROFILE)
-            if (!blocked)
-            {
-                OutputDebugStringA("WARNING: Blocked performance queries\n");
-                blocked = true;
-            }
-#endif
-            Flush(context);
-            Sleep(1);
-        }
-
-        uint64_t start = *m_start[j];
-        uint64_t end = *m_end[j];
-
-        DebugWarnings(j, start, end);
-
-        constexpr double c_FrequencyInvMS = 1000.0 / double(D3D11X_XBOX_GPU_TIMESTAMP_FREQUENCY);
-        float value = float(double(end - start) * c_FrequencyInvMS);
-        m_timing[j] = value;
-        m_avg[j] = UpdateRunningAverage(m_avg[j], value);
-        m_used[j] = false;
-    }
-}
-
-template<typename t_Context>
-void GPUContextTimer<t_Context>::Frame::Start(_In_ t_Context* context, uint32_t timerid)
-{
-    if (timerid >= c_maxTimers)
-        throw std::out_of_range("Timer ID out of range");
-
-    m_used[timerid] = true;
-
-    context->WriteTimestampToMemory(m_start[timerid]);
-}
-
-template<typename t_Context>
-void GPUContextTimer<t_Context>::Frame::Stop(_In_ t_Context* context, uint32_t timerid)
-{
-    if (timerid >= c_maxTimers)
-        throw std::out_of_range("Timer ID out of range");
-
-    context->WriteTimestampToMemory(m_end[timerid]);
-}
-
-// Force compilation of these template instantiations
-namespace DX
-{
-    template class GPUContextTimer<ID3D11DeviceContextX>;
-    template class GPUContextTimer<ID3D11DmaEngineContextX>;
-    template class GPUContextTimer<ID3D11ComputeContextX>;
-}
-
-#else
-#error Must include d3d11*.h or d3d12*.h in pch.h
-#endif

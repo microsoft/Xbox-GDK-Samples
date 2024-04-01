@@ -296,3 +296,5 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY VS_GLOBAL_VCToolsVersion "14.20.275
 |October 2022|Removed VS 2017 support.<br />Fixed bugs with the CmakePresets.json|
 |November 2022|Requires March 2022 GDK or later as it’s now using the .mgc file extension.<br /> Updated to require CMake 3.20 now that VS 2019 16.10 and earlier are out of their support lifecycle.|
 |March 2023|Updated to add new target for Playfab.Services.C extension library.|
+|January 2024|Fixed issue with non-Debug configurations using /RTC1|
+

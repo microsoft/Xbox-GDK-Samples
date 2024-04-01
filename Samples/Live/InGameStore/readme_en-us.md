@@ -44,10 +44,13 @@ in the section [How to use a real license](#how-to-use-a-real-license).
 
 ![](./media/image8.png)
 
-This sample can also be run in trial mode. This requires the sample to
-be configured to use a real license. This uses a product that is 
-configured with a usage-based trial that expires after 10 hours of 
+This sample can also be run in trial mode. 
+This requires the sample to be configured to use a real license. 
+This uses a product that is configured with a usage-based trial that expires after 10 hours of 
 title uptimes.
+
+When the game is operating with a trial license, the product list will include an offer for the base game.
+The game license can be upgraded from trial->full by selecting the 'Purchase' option for this offer and completing the in-game purchase flow.
 
 Trial configuration and limits are configured in Partner Center, and
 requires the title to use the Restrictive Licensing policy.
@@ -382,3 +385,5 @@ Statement](https://privacy.microsoft.com/en-us/privacystatement/).
 **Update:** June 2022
 
 **Update:** June 2023
+
+**Update:** January 2024

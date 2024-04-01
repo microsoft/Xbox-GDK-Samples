@@ -678,7 +678,7 @@ void Sample::CreateDeviceDependentResources()
             &defaultHeap,
             D3D12_HEAP_FLAG_NONE,
             &constantsDesc,
-            D3D12_RESOURCE_STATE_GENERIC_READ,
+            c_initialReadTargetState,
             nullptr,
             IID_GRAPHICS_PPV_ARGS(m_constantBuffer.ReleaseAndGetAddressOf())));
 
@@ -996,7 +996,7 @@ void Sample::RegenerateInstances()
                 &defaultHeap,
                 D3D12_HEAP_FLAG_NONE,
                 &instanceDesc,
-                D3D12_RESOURCE_STATE_GENERIC_READ,
+                c_initialReadTargetState,
                 nullptr,
                 IID_GRAPHICS_PPV_ARGS(m_instanceBuffer.ReleaseAndGetAddressOf()))
         );
@@ -1012,7 +1012,7 @@ void Sample::RegenerateInstances()
             &defaultHeap,
             D3D12_HEAP_FLAG_NONE,
             &countsDesc,
-            D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
+            c_initialUAVTargetState,
             nullptr,
             IID_GRAPHICS_PPV_ARGS(m_lodCountsBuffer.ReleaseAndGetAddressOf()))
         );

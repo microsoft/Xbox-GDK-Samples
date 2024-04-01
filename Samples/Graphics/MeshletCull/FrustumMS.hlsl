@@ -60,7 +60,7 @@ cbuffer Globals : register(b0)
 //---------------------------------------------
 // Main
 
-[RootSignature("CBV(b0)")]
+[RootSignature(ROOT_SIG_DEBUG)]
 [NumThreads(GROUP_SIZE, 1, 1)]
 [OutputTopology("line")]
 void main(

@@ -113,6 +113,13 @@ struct UIProductDetails
     std::vector<UIProductImage> images;
 };
 
+enum class ProductQueryType
+{
+    Catalog,
+    Collections,
+    CurrentGame
+};
+
 // A basic sample implementation that creates a D3D12 device and
 // provides a render loop.
 class Sample : public DX::IDeviceNotify, public ATG::UITK::D3DResourcesProvider
@@ -153,6 +160,7 @@ public:
 
     // Core XStore scenarios
     void InitStore();
+    void CreateStoreContext();
 
     void QueryGameLicense();
     void QueryAddonLicenses();
@@ -194,6 +202,22 @@ public:
 
     void DownloadProductImage(const UIProductDetails& product, const char* tag, std::shared_ptr<ATG::UITK::UIImage> image);
 
+    const char* GetBaseGameStoreId()
+    {
+        if (m_baseGameStoreId.empty())
+        {
+            return nullptr;
+        }
+
+        return m_baseGameStoreId.c_str();
+    }
+
+    void SetBaseGameStoreId(const char* storeId)
+    {
+        // Truncate any sku or availability id
+        m_baseGameStoreId.assign(storeId, 12);
+    }
+
 private:
 
     void Update(DX::StepTimer const& timer);
@@ -214,6 +238,10 @@ private:
 
     // Marketplace Object Storage                                   
     XStoreContextHandle                                             m_xStoreContext;
+
+    // Game license changes
+    XTaskQueueRegistrationToken                                     m_licenseChangeToken;
+    XStoreGameLicense                                               m_gameLicense;
                                                                     
     // Device resources.                                            
     std::unique_ptr<DX::DeviceResources>                            m_deviceResources;
@@ -251,7 +279,7 @@ private:
 
     // UI methods
     void SetupUI();
-    void ShowItemMenu(UIProductDetails item, long);
+    void ShowItemMenu(const char* storeId, long);
     void ShowGlobalMenu();
     void CloseMenu(bool doUpdate = false);
 
@@ -265,6 +293,7 @@ private:
     
     // Mapping of product ids to item details
     std::map<std::string, UIProductDetails>                         m_catalogDetails;
+    std::map<std::string, std::shared_ptr<ATG::UITK::UIButton>>     m_catalogButtons;
     
     enum Descriptors
     {
@@ -273,11 +302,7 @@ private:
         Count = 64,
     };
 
-    void SetBaseGameStoreId(char* storeId)
-    {
-        // Truncate any sku or availability id
-        m_baseGameStoreId.assign(storeId, 12);
-    }
+    bool OwnsFullGameSku(const char* storeId);
 
 public:
     static ATG::FileDownloader& GetFileDownloader() { return s_fileDownloader; }

@@ -318,7 +318,7 @@ void ParticleSystem::initialize(std::unique_ptr<DX::DeviceResources>& m_deviceRe
             &heapPropsDefault,
             D3D12_HEAP_FLAG_NONE,
             &resDesc,
-            D3D12_RESOURCE_STATE_COPY_DEST,
+            c_initialCopyTargetState,
             nullptr,
             IID_GRAPHICS_PPV_ARGS(m_PerParticleDataSRV.ReleaseAndGetAddressOf())));
         m_PerParticleDataSRV->SetName(L"PerParticleDataResource");
@@ -346,7 +346,7 @@ void ParticleSystem::initialize(std::unique_ptr<DX::DeviceResources>& m_deviceRe
             &heapPropsDefault,
             D3D12_HEAP_FLAG_NONE,
             &resDesc,
-            D3D12_RESOURCE_STATE_COPY_DEST,
+            c_initialCopyTargetState,
             nullptr,
             IID_GRAPHICS_PPV_ARGS(m_ParticleAnglesUAV.ReleaseAndGetAddressOf())));
         m_ParticleAnglesUAV->SetName(L"ParticleAnglesResource");
@@ -360,7 +360,7 @@ void ParticleSystem::initialize(std::unique_ptr<DX::DeviceResources>& m_deviceRe
             &heapPropsDefault,
             D3D12_HEAP_FLAG_NONE,
             &resDesc,
-            D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
+            c_initialUAVTargetState,
             nullptr,
             IID_GRAPHICS_PPV_ARGS(m_ParticlePosRes.ReleaseAndGetAddressOf())));
         m_ParticlePosRes->SetName(L"ParticlePositionsRes");
@@ -373,7 +373,7 @@ void ParticleSystem::initialize(std::unique_ptr<DX::DeviceResources>& m_deviceRe
             &heapPropsDefault,
             D3D12_HEAP_FLAG_NONE,
             &resDesc,
-            D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
+            c_initialUAVTargetState,
             nullptr,
             IID_GRAPHICS_PPV_ARGS(m_ParticlePosCounterRes.ReleaseAndGetAddressOf())));
         m_ParticlePosCounterRes->SetName(L"ParticlePositionsCounterRes");
@@ -594,7 +594,11 @@ void ParticleSystem::initialize(std::unique_ptr<DX::DeviceResources>& m_deviceRe
                 &heapProps,
                 D3D12_HEAP_FLAG_NONE,
                 &resDesc,
+#ifdef _GAMING_XBOX
                 D3D12_RESOURCE_STATE_INDIRECT_ARGUMENT,
+#else
+                D3D12_RESOURCE_STATE_COMMON,
+#endif
                 nullptr,
                 IID_GRAPHICS_PPV_ARGS(m_indArgsRes.ReleaseAndGetAddressOf())));
             m_indArgsRes->SetName(L"EIArgumentsResource");

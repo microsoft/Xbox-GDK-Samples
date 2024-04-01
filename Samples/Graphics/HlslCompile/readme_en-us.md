@@ -49,6 +49,13 @@ If using an Xbox Series X|S devkit, set the active solution platform to `Gaming.
 
 *For more information, see* __Running samples__, *in the GDK documentation.*
 
+When you build and run the Solution, Visual Studio will 
+
+- Build the MyHlslCompiler project
+- Build the HlslCompile project 
+  - As part of that build, compile certain shaders using MyHlslCompiler.exe
+- Run the HlslCompile executable on the console using the compilation results
+
 # Using the sample
 
 The sample is non-interactive. Each row in the screen image below
@@ -65,6 +72,11 @@ will automatically retrieve the proper symbols, while in other cases,
 manual action on the user's part is required.
 
 ![](./media/image3.png)
+
+If you want to debug the MyHlslCompiler project on the PC, you need to point the 
+Path environment variable to the GDK binaries, as shown below:
+
+![MyHlslCompiler Settings](./media/MyHlslCompiler-settings.png)
 
 # Known issues
 

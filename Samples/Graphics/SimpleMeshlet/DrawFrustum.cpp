@@ -67,7 +67,12 @@ void DrawFrustumEffect::CreateDeviceResources(DeviceResources& deviceResources, 
         &heapProps,
         D3D12_HEAP_FLAG_NONE,
         &cbDesc,
+#ifdef _GAMING_XBOX
         D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER,
+#else
+        // on PC buffers are created in the common state and can be promoted without a barrier to VERTEX_AND_CONSTANT_BUFFER on first access
+        D3D12_RESOURCE_STATE_COMMON,
+#endif
         nullptr,
         IID_GRAPHICS_PPV_ARGS(m_constantBuffer.ReleaseAndGetAddressOf()))
     );

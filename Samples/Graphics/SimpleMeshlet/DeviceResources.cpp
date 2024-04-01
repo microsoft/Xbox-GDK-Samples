@@ -203,6 +203,9 @@ void DeviceResources::CreateDeviceResources()
             // Workarounds for debug layer issues on hybrid-graphics systems
             D3D12_MESSAGE_ID_EXECUTECOMMANDLISTS_WRONGSWAPCHAINBUFFERREFERENCE,
             D3D12_MESSAGE_ID_RESOURCE_BARRIER_MISMATCHING_COMMAND_LIST_TYPE,
+#if defined(D3D12_SDK_VERSION) && (D3D12_SDK_VERSION >= 5)
+            D3D12_MESSAGE_ID_CREATEMESHSHADER_TOPOLOGY_MISMATCH,
+#endif
         };
         D3D12_INFO_QUEUE_FILTER filter = {};
         filter.DenyList.NumIDs = static_cast<UINT>(std::size(hide));
@@ -495,7 +498,7 @@ void DeviceResources::CreateWindowSizeDependentResources()
             m_depthBufferFormat,
             backBufferWidth,
             backBufferHeight,
-            1, // This depth stencil view has only one texture.
+            1, // Use a single array entry.
             1  // Use a single mipmap level.
             );
         depthStencilDesc.Flags |= D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
@@ -655,7 +658,9 @@ void DeviceResources::Present(D3D12_RESOURCE_STATES beforeState)
     // Xbox apps do not need to handle DXGI_ERROR_DEVICE_REMOVED or DXGI_ERROR_DEVICE_RESET.
 
     // Update the back buffer index.
+    const UINT64 currentFenceValue = m_fenceValues[m_backBufferIndex];
     m_backBufferIndex = (m_backBufferIndex + 1) % m_backBufferCount;
+    m_fenceValues[m_backBufferIndex] = currentFenceValue;
 
 #else // _GAMING_DESKTOP
 

@@ -76,7 +76,7 @@ void DrawCullDataEffect::CreateDeviceResources(DeviceResources& deviceResources)
         blendDesc.RenderTarget[0].SrcBlend       = D3D12_BLEND_SRC_ALPHA;
         blendDesc.RenderTarget[0].DestBlend      = D3D12_BLEND_INV_SRC_ALPHA;
         blendDesc.RenderTarget[0].BlendOpAlpha   = D3D12_BLEND_OP_MAX;
-        blendDesc.RenderTarget[0].SrcBlendAlpha  = D3D12_BLEND_ZERO;
+        blendDesc.RenderTarget[0].SrcBlendAlpha  = D3D12_BLEND_ONE;
         blendDesc.RenderTarget[0].DestBlendAlpha = D3D12_BLEND_ONE;
 
         psoDesc.MS = { boundingSphereMs.data(), boundingSphereMs.size() };
@@ -100,7 +100,12 @@ void DrawCullDataEffect::CreateDeviceResources(DeviceResources& deviceResources)
         &defaultHeap,
         D3D12_HEAP_FLAG_NONE,
         &cbDesc,
+#ifdef _GAMING_XBOX
         D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER,
+#else
+        // on PC buffers are created in the common state and can be promoted without a barrier to VERTEX_AND_CONSTANT_BUFFER on first access
+        D3D12_RESOURCE_STATE_COMMON,
+#endif
         nullptr,
         IID_GRAPHICS_PPV_ARGS(m_constantBuffer.ReleaseAndGetAddressOf()))
     );

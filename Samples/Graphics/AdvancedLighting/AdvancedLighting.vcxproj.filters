@@ -167,8 +167,11 @@
     <None Include="Scripts\Desktop.PostBuild.bat">
       <Filter>Scripts</Filter>
     </None>
-    <None Include="Readme.docx" />
     <None Include="..\..\NuGet.config" />
+    <None Include="readme.md" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

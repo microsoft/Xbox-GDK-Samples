@@ -137,7 +137,10 @@
     <None Include="Time.hlsli">
       <Filter>Assets</Filter>
     </None>
-    <None Include="Readme.md" />
+    <None Include="readme.md" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Assets\ui_layout.json">

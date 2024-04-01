@@ -7,6 +7,8 @@
 
 #include "Shared.h"
 
+#define ROOT_SIG_DEBUG "CBV(b0), CBV(b1), SRV(t0)"
+
 struct DebugVertex
 {
     float4 Color      : COLOR0;

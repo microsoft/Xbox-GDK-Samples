@@ -79,7 +79,6 @@
 #include <iterator>
 #include <memory>
 #include <stdexcept>
-#include <string>
 #include <system_error>
 #include <tuple>
 
@@ -100,6 +99,8 @@
 #include "SimpleMath.h"
 #include "SpriteBatch.h"
 #include "SpriteFont.h"
+
+#include "DXRHelper.h"
 
 // To opt-out of telemetry uncomment the following line
 //#define ATG_DISABLE_TELEMETRY

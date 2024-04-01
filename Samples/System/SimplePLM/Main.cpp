@@ -36,8 +36,7 @@ bool g_HDRMode = false;
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 void ExitSample() noexcept;
 
-// Entry point
-int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
+int SampleMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 {
     UNREFERENCED_PARAMETER(lpCmdLine);
 
@@ -140,6 +139,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
 
     // Main message loop
     MSG msg = {};
+    OutputDebugStringA("INFO: Sample started.\n");
     while (WM_QUIT != msg.message)
     {
         if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
@@ -166,6 +166,27 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lp
     XGameRuntimeUninitialize();
 
     return static_cast<int>(msg.wParam);
+}
+
+// Entry point
+int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
+{
+    try
+    {
+        return SampleMain(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+    }
+    catch (const std::exception& e)
+    {
+        OutputDebugStringA("*** ERROR: Unhandled C++ exception thrown: ");
+        OutputDebugStringA(e.what());
+        OutputDebugStringA(" *** \n");
+        return 1;
+    }
+    catch (...)
+    {
+        OutputDebugStringA("*** ERROR: Unknown unhandled C++ exception thrown ***\n");
+        return 1;
+    }
 }
 
 // Windows procedure

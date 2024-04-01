@@ -69,7 +69,7 @@ private:
     Microsoft::WRL::ComPtr<ID3D12CommandAllocator>      m_commandAllocators[c_swapBufferCount];
     Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>   m_commandList;
     Microsoft::WRL::ComPtr<ID3D12Fence>                 m_fence;
-    UINT64                                              m_fenceValues[c_swapBufferCount];
+    UINT64                                              m_fenceValue;
     Microsoft::WRL::Wrappers::Event                     m_fenceEvent;
     D3D12XBOX_FRAME_PIPELINE_TOKEN                      m_framePipelineToken;
 

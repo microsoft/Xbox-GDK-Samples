@@ -47,7 +47,7 @@ struct IWICImagingFactory;
 struct IWICMetadataQueryReader;
 #endif
 
-#define DIRECTX_TEX_VERSION 202
+#define DIRECTX_TEX_VERSION 203
 
 
 namespace DirectX
@@ -115,6 +115,9 @@ namespace DirectX
 
         CP_FLAGS_8BPP = 0x40000,
         // Override with a legacy 8 bits-per-pixel format size
+
+        CP_FLAGS_LIMIT_4GB = 0x10000000,
+        // Don't allow pixel allocations in excess of 4GB (always true for 32-bit)
     };
 
     HRESULT __cdecl ComputePitch(
@@ -172,7 +175,7 @@ namespace DirectX
         DXGI_FORMAT     format;
         TEX_DIMENSION   dimension;
 
-        size_t __cdecl ComputeIndex(_In_ size_t mip, _In_ size_t item, _In_ size_t slice) const noexcept;
+        size_t __cdecl ComputeIndex(size_t mip, size_t item, size_t slice) const noexcept;
             // Returns size_t(-1) to indicate an out-of-range error
 
         bool __cdecl IsCubemap() const noexcept { return (miscFlags & TEX_MISC_TEXTURECUBE) != 0; }
@@ -185,6 +188,10 @@ namespace DirectX
 
         bool __cdecl IsVolumemap() const noexcept { return (dimension == TEX_DIMENSION_TEXTURE3D); }
             // Helper for dimension
+
+        uint32_t __cdecl CalculateSubresource(size_t mip, size_t item) const noexcept;
+        uint32_t __cdecl CalculateSubresource(size_t mip, size_t item, size_t plane) const noexcept;
+            // Returns size_t(-1) to indicate an out-of-range error
     };
 
     struct DDSMetaData

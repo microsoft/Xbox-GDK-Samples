@@ -1344,6 +1344,7 @@ namespace
 
         switch (metadata.GetAlphaMode())
         {
+        default:
         case TEX_ALPHA_MODE_UNKNOWN:
             ext->bAttributesType = HasAlpha(metadata.format) ? TGA_ATTRIBUTE_UNDEFINED : TGA_ATTRIBUTE_NONE;
             break;
@@ -1399,6 +1400,7 @@ namespace
             case TGA_ATTRIBUTE_UNDEFINED: return TEX_ALPHA_MODE_CUSTOM;
             case TGA_ATTRIBUTE_ALPHA: return TEX_ALPHA_MODE_STRAIGHT;
             case TGA_ATTRIBUTE_PREMULTIPLIED: return TEX_ALPHA_MODE_PREMULTIPLIED;
+            default: return TEX_ALPHA_MODE_UNKNOWN;
             }
         }
 
@@ -1683,7 +1685,7 @@ HRESULT DirectX::LoadFromTGAMemory(
 
     const void* pPixels = static_cast<const uint8_t*>(pSource) + offset + paletteOffset;
 
-    hr = image.Initialize2D(mdata.format, mdata.width, mdata.height, 1, 1);
+    hr = image.Initialize2D(mdata.format, mdata.width, mdata.height, 1, 1, CP_FLAGS_LIMIT_4GB);
     if (FAILED(hr))
         return hr;
 
@@ -1856,7 +1858,7 @@ HRESULT DirectX::LoadFromTGAFile(
     #endif
     }
 
-    hr = image.Initialize2D(mdata.format, mdata.width, mdata.height, 1, 1);
+    hr = image.Initialize2D(mdata.format, mdata.width, mdata.height, 1, 1, CP_FLAGS_LIMIT_4GB);
     if (FAILED(hr))
         return hr;
 

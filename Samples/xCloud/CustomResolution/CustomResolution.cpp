@@ -207,14 +207,6 @@ Sample::Sample() noexcept(false)
     , m_cameraDistance(c_defaultCameraDistance)
     , m_isExiting(false)
 {
-    m_deviceType = XSystemGetDeviceType();
-    if (m_deviceType == XSystemDeviceType::XboxOneX || m_deviceType == XSystemDeviceType::XboxOneXDevkit)
-    {
-        OutputDebugStringA("ERROR: This sample renders to multiple display planes, which isn't supported on Xbox One X. "
-            "Please change the devkit's console mode, or run on a different device.");
-        throw std::exception("Xbox One X console mode not supported");
-    }
-
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM,
         DXGI_FORMAT_D32_FLOAT, c_numBackBuffers, DX::DeviceResources::c_Enable4K_UHD);
     m_deviceResources->SetClearColor(ATG::ColorsLinear::Background);
@@ -228,6 +220,18 @@ Sample::~Sample()
     {
         m_deviceResources->WaitForGpu();
     }
+}
+
+bool Sample::CheckDeviceType()
+{
+    m_deviceType = XSystemGetDeviceType();
+    if (m_deviceType == XSystemDeviceType::XboxOneX || m_deviceType == XSystemDeviceType::XboxOneXDevkit)
+    {
+        OutputDebugStringA("** UNSUPPORTED: This sample renders to multiple display planes, which isn't supported on Xbox One X. "
+            "Please change the devkit's console mode, or run on a different device.\n");
+        return false;
+    }
+    return true;
 }
 
 // Initialize the Direct3D resources required to run.

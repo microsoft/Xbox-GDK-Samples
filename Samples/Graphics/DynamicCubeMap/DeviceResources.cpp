@@ -28,7 +28,7 @@ DeviceResources::DeviceResources(
     UINT backBufferCount,
     unsigned int flags) noexcept(false) :
         m_backBufferIndex(0),
-        m_fenceValues{},
+        m_fenceValue(0),
         m_computeToGraphicsFenceValues(0),
         m_graphicsToComputeFenceValues(0),
         m_framePipelineToken{},
@@ -184,8 +184,8 @@ void DeviceResources::CreateDeviceResources()
     m_computeCommandList->SetName(L"ComputeDeviceResources");
 
     // Create a fence for tracking GPU execution progress.
-    ThrowIfFailed(m_d3dDevice->CreateFence(m_fenceValues[m_backBufferIndex], D3D12_FENCE_FLAG_NONE, IID_GRAPHICS_PPV_ARGS(m_fence.ReleaseAndGetAddressOf())));
-    m_fenceValues[m_backBufferIndex]++;
+    ThrowIfFailed(m_d3dDevice->CreateFence(m_fenceValue, D3D12_FENCE_FLAG_NONE, IID_GRAPHICS_PPV_ARGS(m_fence.ReleaseAndGetAddressOf())));
+    m_fenceValue++;
 
     m_fence->SetName(L"DeviceResources");
 
@@ -263,7 +263,6 @@ void DeviceResources::CreateWindowSizeDependentResources()
     for (UINT n = 0; n < m_backBufferCount; n++)
     {
         m_renderTargets[n].Reset();
-        m_fenceValues[n] = m_fenceValues[m_backBufferIndex];
     }
 
     // Determine the render target size in pixels.
@@ -329,7 +328,7 @@ void DeviceResources::CreateWindowSizeDependentResources()
             m_depthBufferFormat,
             backBufferWidth,
             backBufferHeight,
-            1, // This depth stencil view has only one texture.
+            1, // Use a single array entry.
             1  // Use a single mipmap level.
             );
         depthStencilDesc.Flags |= D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
@@ -443,7 +442,7 @@ void DeviceResources::WaitForGpu() noexcept
     if (m_commandQueue && m_fence && m_fenceEvent.IsValid())
     {
         // Schedule a Signal command in the GPU queue.
-        const UINT64 fenceValue = m_fenceValues[m_backBufferIndex];
+        const UINT64 fenceValue = m_fenceValue;
         if (SUCCEEDED(m_commandQueue->Signal(m_fence.Get(), fenceValue)))
         {
             // Wait until the Signal has been processed.
@@ -452,7 +451,7 @@ void DeviceResources::WaitForGpu() noexcept
                 std::ignore = WaitForSingleObjectEx(m_fenceEvent.Get(), INFINITE, FALSE);
 
                 // Increment the fence value for the current frame.
-                m_fenceValues[m_backBufferIndex]++;
+                m_fenceValue++;
             }
         }
     }

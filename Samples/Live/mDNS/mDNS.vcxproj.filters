@@ -2,17 +2,17 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Common">
-      <UniqueIdentifier>d52f3074-377e-41f3-8e2a-413799584d8d</UniqueIdentifier>
+      <UniqueIdentifier>f69e8219-223b-4905-8968-324884972f0d</UniqueIdentifier>
     </Filter>
     <Filter Include="Assets">
-      <UniqueIdentifier>0a7e98b0-acc0-4001-a425-7f02f1b28e65</UniqueIdentifier>
+      <UniqueIdentifier>ff8cb242-12ba-4024-802b-6f042daeed41</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="ATG Tool Kit">
-      <UniqueIdentifier>ec272887-8777-4911-8eab-18ffcfa89259</UniqueIdentifier>
+      <UniqueIdentifier>f60550ae-4296-4e93-b86e-d3c1b5360d63</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts">
-      <UniqueIdentifier>{e82c3189-2a23-405d-a94b-43f75cf6ca05}</UniqueIdentifier>
+    <Filter Include="External">
+      <UniqueIdentifier>b4ba54be-9513-4995-a523-e15398d619a1</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -27,29 +27,34 @@
     <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\ATGTK\json.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
-    <ClInclude Include="UIConstants.h" />
-    <ClInclude Include="..\..\..\Kits\ATGTK\CSVReader.h">
-      <Filter>ATG Tool Kit</Filter>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
+      <Filter>External</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\CSVReader.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\ATGTK\SampleGUI.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\ATGTK\TextConsole.h">
-      <Filter>ATG Tool Kit</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h">
-      <Filter>ATG Tool Kit</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
   </ItemGroup>
@@ -60,16 +65,16 @@
     <ClCompile Include="DeviceResources.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
       <Filter>ATG Tool Kit</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Kits\ATGTK\TextConsole.cpp">
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
       <Filter>ATG Tool Kit</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\ATGTK\SampleGUI.cpp">
       <Filter>ATG Tool Kit</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+    <ClCompile Include="..\..\..\Kits\ATGTK\TextConsole.cpp">
       <Filter>ATG Tool Kit</Filter>
     </ClCompile>
   </ItemGroup>
@@ -92,55 +97,90 @@
     <CopyFileToFolders Include="Assets\StoreLogo.png">
       <Filter>Assets</Filter>
     </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\Courier_16.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\Courier_36.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18_Bold.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18_Italic.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_22.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_22_Bold.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_22_Italic.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_24.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_24_Bold.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_24_Italic.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_30.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_30_Bold.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_30_Italic.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_34.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_36_Bold.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_36_Italic.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_48.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_48_Bold.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_48_Italic.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneController.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SampleUI.csv" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
-      <Filter>Assets</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\Media\Fonts\Courier_16.spritefont">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18_Bold.spritefont">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18_Italic.spritefont">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_22.spritefont">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_22_Bold.spritefont">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_22_Italic.spritefont">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_36_Bold.spritefont">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_36_Italic.spritefont">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="Assets\SampleUI.csv">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="ReadMe.docx" />
-    <None Include="mDNS_ReadMe_ja-jp.docx" />
-    <None Include="mDNS_ReadMe_ko-kr.docx" />
-    <None Include="mDNS_ReadMe_zh-cn.docx" />
+    <None Include="readme.md" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
   </ItemGroup>
 </Project>

@@ -5,7 +5,8 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.
 //--------------------------------------------------------------------------------------
 
-#pragma once
+#include <atomic>
+#include <map>
 
 #include "DeviceResources.h"
 #include "LiveResources.h"
@@ -81,9 +82,9 @@ private:
 
     void DestroySocialGroup(_In_ XblSocialManagerUserGroup*);
 
-    void UpdateSocialManager();
+    void LoadGamerPics(uint64_t* xuids, size_t count);
 
-    bool HandleInput(DX::StepTimer const& timer);
+    void UpdateSocialManager();
 
     enum friendListType
     {
@@ -127,6 +128,10 @@ private:
     std::unique_ptr<DX::TextConsoleImage>       m_console;
     std::unique_ptr<UserRepeater>               m_userRepeater;
 
+    std::map<uint64_t, std::pair<uint8_t*, size_t>>     m_profilePicCache;
+    size_t                                              m_profilesToLoadCount;
+    std::atomic<size_t>                                 m_profilesLoadedCount;
+
     enum Descriptors
     {
         Font,
@@ -139,4 +144,20 @@ private:
 
     // UI State
     friendListType                              m_selectedFriendList;
+};
+
+struct PictureData
+{
+    uint64_t        xuid;
+    HCCallHandle   httpHandle;
+    std::map<uint64_t, std::pair<uint8_t*, size_t>>* profileCache;
+    std::atomic<size_t>* profilesLoadedCount;
+
+    PictureData(uint64_t x, HCCallHandle handle, std::map<uint64_t, std::pair<uint8_t*, size_t>>* cache, std::atomic<size_t>* loadCount) :
+        xuid(x),
+        httpHandle(handle),
+        profileCache(cache),
+        profilesLoadedCount(loadCount)
+    {
+    }
 };

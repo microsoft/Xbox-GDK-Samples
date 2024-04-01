@@ -87,15 +87,15 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Readme_ja-JP.docx" />
-    <None Include="Readme_ko-KR.docx" />
-    <None Include="Readme_zh-CN.docx" />
-    <None Include="Readme.docx" />
     <None Include="RootSig.hlsli">
       <Filter>Assets</Filter>
     </None>
     <None Include="..\..\NuGet.config" />
     <None Include="packages.config" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
+    <None Include="readme.md" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PixelShader.hlsl">

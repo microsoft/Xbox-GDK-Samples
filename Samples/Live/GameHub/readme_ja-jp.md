@@ -1,109 +1,95 @@
 ![](./media/image1.png)
 
-#   Franchise Game Hub sample
+# フランチャイズ ゲーム ハブのサンプル
 
-このサンプルは Microsoft GDK (October 2023) と互換性があります。
+このサンプルは Microsoft GDK と互換性があります (2023 年 10 月)
 
 # 説明
 
-フランチャイズ ハブとは、パブリッシャーが関連タイトルを厳選して提供することで、ユーザーをゲーム間で共有体験させる方法です。
-これは、関連するタイトルを取得、インストール、起動するための起点として機能し、関連するタイトルが使用できる永続的なローカルストレージ（PLS）スペースをホストします。
+フランチャイズ ハブは、パブリッシャーが関連タイトルのキュレーションされた組織を提供する方法で、ユーザーがゲーム間で共有エクスペリエンスを維持する方法で提供する方法です。 関連タイトルを取得、インストール、および起動するための中心的なポイントとして機能し、関連するタイトルが使用できる永続的なローカル記憶域スペースをホストします。
 
-このサンプルはユーザー体験で期待される多くの処理をどのように実装するかをデモンストレーションします。
-３つのプロジェクトから構成されています:
-- ゲームハブ製品 (GameHub) 関連するタイトルを表示しそれぞれに何ができるかを示します。
-- Hub-aware 製品 (RequiredGame) 起動するためにはゲームハブが要求され、ハブによって書き込まれた共有データを読むことができます。
-- Hub-unaware 製品 (RelatedGame) 起動するためにゲームハブは必要がない、古いタイトルを表します。ゲームハブに関連付けられることが期待されていますが、古い GDK によって出荷済である（想定のため）ゲームハブ固有のフィールドとAPIを使用することはできません。
+このサンプルでは、ユーザー エクスペリエンスに必要な多くの操作を実装する方法を示します。 3 つのプロジェクトで構成されます。
+- 関連するタイトルと各タイトルに対して実行できる操作を示すゲーム ハブ製品 (GameHub)
+- ゲーム ハブを起動する必要があり、ハブによって書き込まれた共有データを読み取ることができるハブ対応製品 (RequiredGame)
+- ゲーム ハブを起動する必要のないハブ非対応製品 (RelatedGame)。これは古いタイトルを表しますが、それ以外の場合はゲーム ハブに関連付ける必要がありますが、古い GDK に付属しているため、ゲーム ハブ固有のフィールドと API を利用することはできません
 
 ![](./media/image3.png)
 
 # サンプルのビルド
 
-Xbox Series X|S devkit を使用している場合、アクティブソルーションプラットフォームに`Gaming.Xbox.Scarlett.x64`を設定してください。
+Xbox Series X|S 開発キットを使用している場合は、アクティブなソリューション プラットフォームを `Gaming.Xbox.Scarlett.x64` に設定します。
 
-Xbox One devkit を使用している場合、アクティブソルーションプラットフォームに`Gaming.Xbox.XboxOne.x64`を設定してください。
+Xbox One 開発キットを使用している場合は、アクティブなソリューション プラットフォームを `Gaming.Xbox.XboxOne.x64` に設定します。
 
-Windows PC を使用している場合、アクティブソルーションプラットフォームに`Gaming.Desktop.x64`を設定してください。
-注：コードはコンパイルできますが、フランチャイズゲームハブは主にコンソール向けの機能であり、いくつかの機能は動作しない場合があります。
+Windows PC を使用している場合は、アクティブなソリューション プラットフォームを `Gaming.Desktop.x64` に設定します。コードをコンパイルする必要がありますが、主に本体の機能であり、一部の機能が機能しない可能性があることに注意してください。
 
-*詳細については、GDK ドキュメントの* __Running samples__*を参照してください。*
+*詳細については、**GDK ドキュメント*の「__サンプルの実行__」 を参照してください。
 
 # サンプルの実行
 
-このサンプルは XDKS.1 サンドボックスで動作するように構成されています。
-購入やインストール動作を行うためにテストアカウントが必要です。
-全ての @xboxtest.com テストアカウントは XDKS.1 サンドボックスで使用可能です。
+このサンプルは、XDKS.1 サンドボックスで動作するように構成されています。 購入とインストールの操作には、テスト アカウントが必要です。 すべての @xboxtest.com テスト アカウントは、XDKS.1 サンドボックスで動作する必要があります。
 
 ![](./media/screenshot1.jpg)
 
-上段はゲームハブに関連するゲームを表示しており、この例では２つあります。
-各タイトルが選択されると、関連付けられたアドオンが下に表示されます。
-それぞれは購入することができ、それがゲームやパッケージ付きDLCの場合にはインストールもできます。
+一番上の行には、ゲーム ハブに関連するゲームが表示されます。この場合、2 つあります。 各タイトルを選択すると、関連する各アドオンが以下にリスト表示されます。 各パッケージがインストールされているゲームまたは DLC の場合は、それぞれを購入できます。
 
-インストール済であれば、各ゲームは起動することができます。
-Hub-aware ゲームは共有 PLS に書き込まれたファイルの中身を表示することができ、ハブに戻ることが出来るようになっています。
+インストールが完了すると、各ゲームを起動できます。 ハブ対応ゲームでは、共有 PLS に書き込まれたファイルの内容を表示し、ハブに戻すことができるようになります。
 
 ![](./media/screenshot2.jpg)
 
 
-Hub-unaware ゲームは起動することはできますが、それがハブから起動されたのかどうか認識していません。
+ハブに対応しないゲームは起動することしかできません。それ以外の場合は、ハブからのゲームであることを認識できません。
 
-これらは全て Visual Studio デバッグ実行を通じてゲームハブを使用することができますが、各プロジェクトをパッケージ化するためのスクリプトも用意してあります。
+これはすべて、Visual Studio デバッグを通じて実行されるゲーム ハブで実行できますが、各プロジェクトをパッケージ化するためのスクリプトを使用できます。
 - `makepcpkg.cmd`
 - `makescarlett.cmd`
 - `makexboxone.cmd`
 
-パッケージを作成したあとは、それぞれ`xbapp install`にてインストールしてください。
-これにより、ストアから取得してインストールしなくても、ローカルでビルドされたパッケージと対話することができます。
+パッケージが作成されたら、`xbapp install` を使用してそれぞれをインストールします。これにより、Microsoft Store から取得してインストールしなくても、ローカルでビルドされたパッケージとのやり取りが可能になります。
 
-アップデートをテストしようとする場合に重要なことですが、ローカルビルド（デプロイまたはパッケージ）はストアビルドにアップデートすることはできません。
-このため、UpdateTesting ディレクトリにスクリプトの個別のセットを用意しています：
-- `buildpackages.cmd`: 関連ゲームと DLC それぞれの v100 と v200 バージョンのパッケージをビルドします。
-- `installandstageupdates.cmd`: v100 パッケージに`xbapp install`を行い、v200 に`xbapp update /a`を行います。これによりアップデート可能な状態をシミュレートします。
+これは、ローカル ビルド (配置またはパッケージ化) を Microsoft Store ビルドに更新できないため、更新をテストする際に特に重要です。 この目的のために、UpdateTesting ディレクトリで別のスクリプト セットを使用できます。
+- `buildpackages.cmd`: 関連するゲームのパッケージの v100 バージョンと v200 バージョンをビルドし、それぞれに DLC をビルドします
+- `installandstageupdates.cmd`: `xbapp install` 各パッケージの v100 と `xbapp update /a` v200。更新プログラムの可用性をシミュレートします。
 
-この結果、ゲームは各アップデート可能な状態を反映し、アップデートの流れを有効にします。
+その結果、ゲームは各更新プログラムが利用可能であることを反映し、更新フローを有効にする必要があります。
 
 ![](./media/screenshot3.jpg)
 
 
 # 実装メモ
 
-`XPackageEnumeratePackages`は`ThisAndRelated`と`ThisPublisher`スコープで同じ結果を返すように見えます。
-違いを見るには、XDKS.1 に存在する他のサンプルの一つをインストールしてください。例：InGameStore, DownloadableContent.
+`XPackageEnumeratePackages` は、`ThisAndRelated` スコープと `ThisPublisher` スコープの両方で同じ結果を返すように見えます。 違いを確認するには、XDKS.1 サンドボックスで利用可能な他のサンプルのいずれかをインストールします。たとえば、 InGameStore、DownloadableContent。
 
-RelatedGame (hub-unaware)を GameHub に関連付けるには、GameHub の microsoftgame.config にある`RelatedProduct`ノードを使用します。
+GameHub に関連する RelatedGame (ハブ非対応) の作成方法は、GameHub の microsoftgame.config 内の `RelatedProduct` ノードを使用しています。
 
-RequiredGame (hub-aware)を GameHub に関連付けるには、microsoftgame.config において GameHub の`FranchiseGameHubId`と RequiredGame の`AssociatedFranchiseGameHubId`を同じ値にします。
+GameHub と RequiredGame をそれぞれの microsoftgame.config で照合することによって、GameHub `FranchiseGameHubId` に関連する RequiredGame `AssociatedFranchiseGameHubId` (ハブ対応) を作成する方法。
 
-鍵となる違いは、hub-unaware ゲームはゲームハブで参照されるタイトルとして含ませるために再パブリッシュしたくないということと、hub-aware は開始時からフランチャイズゲームハブシナリオを想定して作成されることです。これはまた hub-aware ゲームがゲームハブに戻ることができる理由でもあります。hub-aware ゲームは`XLaunchUri`で戻るために必要なゲームハブのタイトルIDを知っているはずです。
+主な違いは、ハブに対応しないゲームを GameHub で参照されるタイトルとして含めるために再発行する必要はありませんが、ハブ対応のゲームは最初からシリーズ ゲーム ハブ のシナリオで作成されるということです。 これは、ハブ対応ゲームが戻ることができる titleId を認識しているため、GameHub に `XLaunchUri` 戻ることができる理由でもあります。
 
-October 2023リカバリーではフランチャイズゲームハブがどのように動くかを示す UI の変更がまだ有効になっていません。hub-aware ゲームはマイゲームに表示されず、ゲームハブ内からしかインストール及び起動できないというのが本来の挙動になります。
+2023 年 10 月の回復では利用できない UI の変更が行われます。この変更により、シリーズ ゲーム ハブの動作がさらに示されます。つまり、ハブ対応ゲームはマイ ゲームに表示されず、ゲーム ハブと組み合わせてのみインストールおよび起動できます。
 
-ゲームハブと関連するゲームが同じ GDK でビルドされている必要はありません。
-RelatedGame は October 2023 よりも前の GDK でビルドするように設定することができます。
-RequiredGame と GameHub は October 2023 の新しい API と microsoftgame.config フィールドに依存するため、それはできません。
+ゲーム ハブと関連するゲームが同じ GDK を使用して構築されるという要件はありません。 RelatedGame は、2023 年 10 月より前の GDK でビルドするように設定できます。 RequiredGame と GameHub は、2023 年 10 月の新機能である API フィールドと microsoftgame.config フィールドに依存しているため、使用できません。
 
-`XStoreEnumerateProductsQuery`が実行された時に`XStoreProductsQueryHasMorePages`が呼ばれないのは意図的なものです。
-まず、このサンプルはとても少数のプロダクトしか含みません。
-次に、October 2023 から `XStoreQueryAssociatedProducts` や `XStoreQueryAssociatedProductsForStoreId` に渡す maxItems が単に拡張されため、すべてのプロダクトが Result 関数のクエリハンドルで返されます。
-コールバックは、すべてのプロダクトが列挙されている場合にのみヒットしますが、もちろん、多くのプロダクトを含むタイトルには時間がかかる場合があります。
+`XStoreEnumerateProductsQuery` が発生している場合、`XStoreProductsQueryHasMorePages` が呼び出されないのは意図的なものです。 最初に、このサンプルにはごく少数の製品が含まれます。 次に、2023 年 10 月に、`XStoreQueryAssociatedProducts` または `XStoreQueryAssociatedProductsForStoreId` に渡される maxItems を展開するだけで、タイトルの予想される製品数を含め、すべての製品が Result 関数のクエリ ハンドルに返されます。 コールバックは、すべての製品が列挙されたときにのみヒットします。もちろん、多くの製品を含むタイトルには時間がかかる場合があります。
 
 # 既知の問題
 
-PC での機能はプロトタイプ版と考えてください。このサンプルはコンソール向けです。
+PC の機能をプロトタイプと見なします。このサンプルは本体を対象としています。
 
-オフラインではハブは DLC を区別できません。（`XStoreQueryAssociatedProductsForStoreId` はオフラインで動作しません）
+ハブがオフラインの場合は DLC を区別できません (`XStoreQueryAssociatedProductsForStoreId` はオフラインでは機能しません)。
 
-`XStoreQueryGameAndDlcPackageUpdates` 及び `XStoreQueryPackageUpdates` に複数の ID を渡すと、`xbapp update` 実行下で一貫したアップデート可能状態を返しません。
+`XStoreQueryGameAndDlcPackageUpdates`、または `XStoreQueryPackageUpdates` は複数の ID で渡された場合、`xbapp update` ステージングが使用されている場合は、利用可能な更新プログラムが一貫して返されません。
 
-`XStoreDownloadAndInstallPackageUpdates` を通してアップデートのインストールを開始して、`XPackageCreateInstallationMonitor`で監視している時、`XPackageGetInstallationProgress` は途中で`completed` = true を返します。
+`XStoreDownloadAndInstallPackageUpdates` を使用して更新プログラムをインストールして `XPackageCreateInstallationMonitor` で監視している場合は、`XPackageGetInstallationProgress` は `completed` = true を途中で返します。
 
 # 更新履歴
 
-**初期リリース:** October 2023
+**初期リリース:** 2023 年 10 月
 
-# プライバシーに関する声明
+# プライバシーにかんするせいめい
 
-サンプルをコンパイルして実行する場合、サンプルの実行可能ファイルのファイル名は、サンプルの使用状況を追跡するためにマイクロソフトに送信されます。このデータ収集をオプトアウトする場合、Main.cpp の "Sample Usage Telemetry" とラベルされたコードブロックを削除することができます。
+サンプルをコンパイルして実行する場合、サンプルの使用状況を追跡するために、サンプルの実行可能ファイルのファイル名が Microsoft に送信されます。 このデータ コレクションからオプトアウトするには、Main.cpp の "サンプル使用状況テレメトリ" というラベルの付いたコードのブロックを削除します。
 
-マイクロソフトの一般的なプライバシーポリシーについての詳細は、 [Microsoft Privacy Statement](https://privacy.microsoft.com/en-us/privacystatement/)をご参照ください。
+Microsoft のプライバシー ポリシー全般の詳細については、「[Microsoft のプライバシーに関する声明](https://privacy.microsoft.com/en-us/privacystatement/)」を参照してください。
+
+

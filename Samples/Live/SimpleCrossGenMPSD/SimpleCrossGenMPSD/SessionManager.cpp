@@ -1095,6 +1095,7 @@ void SessionManager::WriteSession(XblMultiplayerSessionWriteMode writeMode, std:
             SessionManager* pSessionManager = pContext->m_sessionManager;
 
             XblMultiplayerSessionCloseHandle(pSessionManager->m_currentSessionHandle); //Close Original Handle
+            pSessionManager->m_currentSessionHandle = nullptr;
 
             XblMultiplayerSessionHandle createdHandle;
             HRESULT hr = XblMultiplayerWriteSessionResult(asyncBlock, &createdHandle);
