@@ -105,6 +105,20 @@ if((MSVC_VERSION GREATER_EQUAL 1924)
   target_compile_options(${PROJECT_NAME} PRIVATE /ZH:SHA_256)
 endif()
 
+if (CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELEASE OR CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELWITHDEBINFO)
+    # /GL (Whole Program Optimization)
+    # /Gw (Optimize Global Data)
+    target_compile_options(${PROJECT_NAME} PRIVATE $<$<NOT:$<CONFIG:Debug>>:/Gw>)
+
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.35)
+        target_compile_options(${PROJECT_NAME} PRIVATE $<$<NOT:$<CONFIG:Debug>>:/Zc:checkGwOdr>)
+    endif()
+
+    # /LTCG (Link-time Code Generation)
+    # Ignores warning from CMake generator use of /INCREMENTAL
+    target_link_options(${PROJECT_NAME} PRIVATE /IGNORE:4075)
+endif()
+
 # Set link libraries
 target_link_libraries(${PROJECT_NAME} PRIVATE xgameruntime.lib)
 
@@ -142,7 +156,13 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY VS_GLOBAL_GDKExtLibNames Xbox.Servi
 # VC++ binary compatibility means we can use the VS 2019 version with VS 2019 or VS 2022
 set(ExtensionPlatformToolset 142)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE "libHttpClient.${ExtensionPlatformToolset}.GDK.C.lib" "Microsoft.Xbox.Services.${ExtensionPlatformToolset}.GDK.C.lib" winhttp.lib crypt32.lib)
+target_link_libraries(${PROJECT_NAME} PRIVATE "Microsoft.Xbox.Services.${ExtensionPlatformToolset}.GDK.C.lib" winhttp.lib crypt32.lib)
+
+if(XdkEditionTarget GREATER_EQUAL 240600)
+    target_link_libraries(${PROJECT_NAME} PRIVATE "libHttpClient.GDK.lib")
+else()
+    target_link_libraries(${PROJECT_NAME} PRIVATE "libHttpClient.${ExtensionPlatformToolset}.GDK.C.lib")
+endif()
 
 if(CMAKE_VS_PLATFORM_NAME STREQUAL "Gaming.Desktop.x64")
     target_link_libraries(${PROJECT_NAME} PRIVATE appnotify.lib)

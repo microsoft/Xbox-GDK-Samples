@@ -248,11 +248,11 @@
     <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
       <Filter>Assets</Filter>
     </None>
-    <None Include="Readme.docx" />
-    <None Include="Readme_ja-JP.docx" />
-    <None Include="Readme_ko-KR.docx" />
-    <None Include="Readme_zh-CN.docx" />
     <None Include="..\..\NuGet.config" />
+    <None Include="readme.md" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

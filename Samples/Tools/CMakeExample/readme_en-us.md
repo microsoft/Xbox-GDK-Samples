@@ -1,6 +1,6 @@
 # CMake Example
 
-*This sample is compatible with the Microsoft Game Development Kit (March 2022)*
+*This sample is compatible with the Microsoft Game Development Kit (March 2023)*
 
 # Description
 
@@ -248,3 +248,5 @@ See the **BWOIExample** for more details.
 |March 2023|Updated to add new target for Playfab.Services.C extension library.|
 |June 2023|Xbox One titles need to use `/d2vzeroupper-` with VS 2022 or later as the default behavior has flipped from VS 2019.|
 |October 2023|The Microsoft GDK now requires Windows 11 SDK (22000) or later.|
+|June 2024|Minor update for multi-config generators.|
+

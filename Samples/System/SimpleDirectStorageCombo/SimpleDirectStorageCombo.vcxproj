@@ -36,6 +36,7 @@
     <TargetRuntime>Native</TargetRuntime>
     <GDKExtLibNames>Xbox.Services.API.C</GDKExtLibNames>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Condition="Exists($(ATGBuildProps))" Project="$(ATGBuildProps)" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -88,7 +89,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
-    <Import Project="..\..\packages\Microsoft.Direct3D.DirectStorage.1.1.1\build\native\targets\Microsoft.Direct3D.DirectStorage.targets" Condition="Exists('..\..\packages\Microsoft.Direct3D.DirectStorage.1.1.1\build\native\targets\Microsoft.Direct3D.DirectStorage.targets')" />
+    <Import Project="..\..\packages\Microsoft.Direct3D.DirectStorage.1.2.2\build\native\targets\Microsoft.Direct3D.DirectStorage.targets" Condition="Exists('..\..\packages\Microsoft.Direct3D.DirectStorage.1.2.2\build\native\targets\Microsoft.Direct3D.DirectStorage.targets')" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'" Label="PropertySheets">
@@ -538,6 +539,6 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Microsoft.Direct3D.DirectStorage.1.1.1\build\native\targets\Microsoft.Direct3D.DirectStorage.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Direct3D.DirectStorage.1.1.1\build\native\targets\Microsoft.Direct3D.DirectStorage.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.Direct3D.DirectStorage.1.2.2\build\native\targets\Microsoft.Direct3D.DirectStorage.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Direct3D.DirectStorage.1.2.2\build\native\targets\Microsoft.Direct3D.DirectStorage.targets'))" />
   </Target>
 </Project>

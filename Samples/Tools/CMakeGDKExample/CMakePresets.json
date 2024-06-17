@@ -13,8 +13,9 @@
       "hidden": true,
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "cacheVariables": {
-        "XdkEditionTarget": "231000",
-        "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}"
+        "XdkEditionTarget": "240600",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+        "CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELEASE": true
       }
     },
 

@@ -198,9 +198,6 @@ void Sample::Update(DX::StepTimer const& timer)
         }
     }
 
-    auto mouse = m_mouse->GetState();
-    mouse;
-
     m_liveInfoHUD->Update(m_deviceResources->GetCommandQueue());
 
     m_inputState.Update(elapsedTime, *m_gamePad, *m_keyboard, *m_mouse);

@@ -175,10 +175,10 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
    elseif(CMAKE_INTERPROCEDURAL_OPTIMIZATION)
        # /GL (Whole Program Optimization)
        # /Gw (Optimize Global Data)
-       target_compile_options(${PROJECT_NAME} PRIVATE /Gw)
+       target_compile_options(${PROJECT_NAME} PRIVATE $<$<NOT:$<CONFIG:Debug>>:/Gw>)
 
        if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.35)
-           target_compile_options(${PROJECT_NAME} PRIVATE /Zc:checkGwOdr)
+           target_compile_options(${PROJECT_NAME} PRIVATE $<$<NOT:$<CONFIG:Debug>>:/Zc:checkGwOdr>)
        endif()
 
        # /LTCG (Link-time Code Generation)

@@ -48,6 +48,7 @@ void DrawFrustumEffect::CreateDeviceResources(DeviceResources& deviceResources, 
     psoDesc.DepthStencilState     = commonStates.DepthDefault;
     psoDesc.SampleMask            = UINT_MAX;
     psoDesc.SampleDesc            = DefaultSampleDesc();
+    psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_LINE;
 
     auto meshStreamDesc = CD3DX12_PIPELINE_MESH_STATE_STREAM(psoDesc);
 

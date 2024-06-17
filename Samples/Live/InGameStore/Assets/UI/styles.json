@@ -233,7 +233,7 @@
       "id": "MenuFocusedButtonStyle",
       "inheritsFromId": "BasicButtonStyle",
       "classId": "SpriteStyle",
-      "color": [ 255, 255, 0, 1.0 ]
+      "color": [ 136, 0, 21, 1.0 ]
     },
     {
       "id": "MenuHoveredButtonStyle",

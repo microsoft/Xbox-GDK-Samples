@@ -220,21 +220,21 @@ void LiveInfoHUD::Render(ID3D12GraphicsCommandList *commandList)
         DirectX::XMMatrixAffineTransformation2D(XMVectorSet(m_scaleWidth, m_scaleHeight, 0, 0), XMVectorZero(), 0.f, XMVectorZero())
     );
 
-    m_titleFont->DrawString(m_batch.get(), m_sampleTitle.c_str(), XMFLOAT2(60.f, c_HeaderBarCoordinate), ATG::Colors::OffWhite, 0.0f);
+    m_titleFont->DrawString(m_batch.get(), m_sampleTitle.c_str(), XMFLOAT2(60.f, c_HeaderBarCoordinate), ATG::Colors::White, 0.0f);
 
-    m_boldFont->DrawString(m_batch.get(), "Sandbox Id:", XMFLOAT2(270.f, c_StatusBarCoordinate), ATG::Colors::OffWhite, 0.0f);
-    m_smallFont->DrawString(m_batch.get(), m_sandboxId.c_str(), XMFLOAT2(410.f, c_StatusBarCoordinate), ATG::Colors::OffWhite, 0.0f);
+    m_boldFont->DrawString(m_batch.get(), "Sandbox Id:", XMFLOAT2(270.f, c_StatusBarCoordinate), ATG::Colors::White, 0.0f);
+    m_smallFont->DrawString(m_batch.get(), m_sandboxId.c_str(), XMFLOAT2(410.f, c_StatusBarCoordinate), ATG::Colors::White, 0.0f);
 
-    m_boldFont->DrawString(m_batch.get(), "Title Id:", XMFLOAT2(590.f, c_StatusBarCoordinate), ATG::Colors::OffWhite, 0.0f);
-    m_smallFont->DrawString(m_batch.get(), m_titleId.c_str(), XMFLOAT2(680.f, c_StatusBarCoordinate), ATG::Colors::OffWhite, 0.0f);
+    m_boldFont->DrawString(m_batch.get(), "Title Id:", XMFLOAT2(590.f, c_StatusBarCoordinate), ATG::Colors::White, 0.0f);
+    m_smallFont->DrawString(m_batch.get(), m_titleId.c_str(), XMFLOAT2(680.f, c_StatusBarCoordinate), ATG::Colors::White, 0.0f);
 
-    m_boldFont->DrawString(m_batch.get(), "Service Config Id:", XMFLOAT2(950.f, c_StatusBarCoordinate), ATG::Colors::OffWhite, 0.0f);
-    m_smallFont->DrawString(m_batch.get(), m_serviceConfigId.c_str(), XMFLOAT2(1155.f, c_StatusBarCoordinate), ATG::Colors::OffWhite, 0.0f);
+    m_boldFont->DrawString(m_batch.get(), "Service Config Id:", XMFLOAT2(950.f, c_StatusBarCoordinate), ATG::Colors::White, 0.0f);
+    m_smallFont->DrawString(m_batch.get(), m_serviceConfigId.c_str(), XMFLOAT2(1155.f, c_StatusBarCoordinate), ATG::Colors::White, 0.0f);
 
     auto pos = XMFLOAT2(1770.f, c_HeaderBarCoordinate + 26.0f);
     pos.x -= XMVectorGetX(m_smallFont->MeasureString(m_gamerTag.c_str()));
 
-    m_smallFont->DrawString(m_batch.get(), m_gamerTag.c_str(), pos, ATG::Colors::OffWhite, 0.0f);
+    m_smallFont->DrawString(m_batch.get(), m_gamerTag.c_str(), pos, ATG::Colors::White, 0.0f);
 
     static const RECT gamerPicRect = { 1780, c_GamerPicCoordinate, 1780 + 64, c_GamerPicCoordinate + 64 };
 

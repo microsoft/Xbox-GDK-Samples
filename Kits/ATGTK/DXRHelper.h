@@ -7,7 +7,7 @@
 #pragma once
 
 #pragma warning(push)
-#pragma warning(disable : 4316 4324) // We don't care that ShaderRecord (or derived types) are potentially unaligned or padded. They won't be in the Upload Heap
+#pragma warning(disable : 4062 4316 4324) // We don't care that ShaderRecord (or derived types) are potentially unaligned or padded. They won't be in the Upload Heap
 
 #include <iomanip>
 #include <sstream>
