@@ -149,9 +149,9 @@ float3 MapHDRSceneToDisplayCapabilities(float3 normalizedLinearValue, float soft
     const float max = maxBrightnessOfHDRScene2084;          // To determine range, use max brightness of HDR scene
 
     float3 t = saturate((ST2084 - p0) / (max - p0));        // Amount to lerp wrt current value
-    float3 b0 = (p0 * (1 - t)) + (p1 * t);                  // Lerp between p0 and p1
-    float3 b1 = (p1 * (1 - t)) + (p2 * t);                  // Lerp between p1 and p2
-    float3 mappedValue = (b0 * (1 - t)) + (b1 * t);         // Final lerp for Bezier
+    float3 b0 = lerp(p0, p1, t);                            // Lerp between p0 and p1
+    float3 b1 = lerp(p1, p2, t);                            // Lerp between p1 and p2
+    float3 mappedValue = lerp(b0, b1, t);                   // Final lerp for Bezier
 
     mappedValue = min(mappedValue, ST2084);                 // If HDR scene max luminance is too close to shoulders, then it could end up producing a higher value than the ST.2084 curve,
                                                             // which will saturate colors, i.e. the opposite of what HDR display mapping should do, therefore always take minimum of the two
@@ -206,8 +206,8 @@ float3 ExpandColorGamut(float3 color, float start, float stop)
 
     // Interpolate between Rec.709 and P3-D65, but only for bright HDR values, we don't want to change the overall look of the image
     float lum = max(max(color.r, color.g), color.b);
-    float lerp = saturate((lum - start) / (stop - start));
-    float3 expandedColorInP3 = ((1.0f - lerp) * Rec709) + (lerp * P3);
+    float t = saturate((lum - start) / (stop - start));
+    float3 expandedColorInP3 = lerp(Rec709, P3, t);
 
     return expandedColorInP3;
 }

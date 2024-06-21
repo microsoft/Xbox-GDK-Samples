@@ -56,6 +56,7 @@ void DrawCullDataEffect::CreateDeviceResources(DeviceResources& deviceResources)
         // Cone lines are drawn opaquely
         psoDesc.MS = { normalConeMs.data(), normalConeMs.size() };
         psoDesc.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT); // Opaque
+        psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_LINE;
 
         auto meshStreamDesc = CD3DX12_PIPELINE_MESH_STATE_STREAM(psoDesc);
 
@@ -81,6 +82,7 @@ void DrawCullDataEffect::CreateDeviceResources(DeviceResources& deviceResources)
 
         psoDesc.MS = { boundingSphereMs.data(), boundingSphereMs.size() };
         psoDesc.BlendState = blendDesc;
+        psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
 
         auto meshStreamDesc = CD3DX12_PIPELINE_MESH_STATE_STREAM(psoDesc);
 

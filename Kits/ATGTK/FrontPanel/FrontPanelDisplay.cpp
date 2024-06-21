@@ -71,7 +71,7 @@ namespace DirectX
 {
     inline namespace DX12
     {
-        namespace Internal
+        namespace ToolKitInternal
         {
             // Reuse the WIC factory function from the DirectX Tool Kit. For implementation details, see WICTextureLoader.cpp
             extern IWICImagingFactory2* GetWIC();
@@ -79,7 +79,7 @@ namespace DirectX
     }
 }
 
-using namespace DirectX::DX12::Internal;
+using namespace DirectX::DX12::ToolKitInternal;
 
 // --------------------------------------------------------------------------------
 // FrontPanelDisplay methods

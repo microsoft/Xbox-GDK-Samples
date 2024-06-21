@@ -220,7 +220,7 @@ void Sample::RefreshUserList()
     auto profilePicsToGet = std::vector<uint64_t>();
     for (unsigned x = 0; x < c_listSize; x++)
     {
-        if (x < static_cast<int>(count))
+        if (x < count)
         {
             auto userXuid = m_userList[x]->xboxUserId;
             users.push_back(std::make_shared<UserListItem>(m_userList[x]));

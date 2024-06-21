@@ -245,6 +245,7 @@ void ParticleSystem::ReloadPipelineState(DX::DeviceResources& deviceResources)
     psoDesc.DepthStencilState     = CommonStates::DepthRead;
     psoDesc.SampleMask            = UINT_MAX;
     psoDesc.SampleDesc            = DefaultSampleDesc();
+    psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
         
     auto meshStreamDesc = CD3DX12_PIPELINE_MESH_STATE_STREAM(psoDesc);
 

@@ -181,7 +181,7 @@ void Sample::Update(DX::StepTimer const& timer)
         m_bShowOnlyPaperWhite = false;
     }
 
-    auto gamepad = m_gamePad->GetState(0);
+    auto gamepad = m_gamePad->GetState(DirectX::GamePad::c_MergedInput);
 
     if (gamepad.IsConnected())
     {

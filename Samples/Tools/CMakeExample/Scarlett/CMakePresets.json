@@ -13,7 +13,7 @@
       "hidden": true,
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "cacheVariables": {
-        "XdkEditionTarget": "231000",
+        "XdkEditionTarget": "240600",
         "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}"
       }
     },

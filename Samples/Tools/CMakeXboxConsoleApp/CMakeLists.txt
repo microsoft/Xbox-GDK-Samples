@@ -74,11 +74,11 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
       target_compile_options(${PROJECT_NAME} PRIVATE /Zc:lambda)
    endif()
 
-   if((NOT (CMAKE_BUILD_TYPE MATCHES "Debug")) AND CMAKE_INTERPROCEDURAL_OPTIMIZATION)
-      target_compile_options(${PROJECT_NAME} PRIVATE /Gw)
+   if(CMAKE_INTERPROCEDURAL_OPTIMIZATION)
+      target_compile_options(${PROJECT_NAME} PRIVATE $<$<NOT:$<CONFIG:Debug>>:/Gw>)
 
        if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.35)
-           target_compile_options(${PROJECT_NAME} PRIVATE /Zc:checkGwOdr)
+           target_compile_options(${PROJECT_NAME} PRIVATE $<$<NOT:$<CONFIG:Debug>>:/Zc:checkGwOdr>)
        endif()
 
       target_link_options(${PROJECT_NAME} PRIVATE /IGNORE:4075 ${Console_ArchOptions_LTCG})
@@ -112,7 +112,8 @@ add_custom_command(
     $<TARGET_FILE_DIR:${PROJECT_NAME}>
     )
 
-if(CMAKE_BUILD_TYPE MATCHES "Debug")
+get_property(is_multi_config GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
+if((CMAKE_BUILD_TYPE MATCHES "Debug") OR is_multi_config)
     add_custom_command(
       TARGET ${PROJECT_NAME} POST_BUILD
       COMMAND ${CMAKE_COMMAND} -E copy
