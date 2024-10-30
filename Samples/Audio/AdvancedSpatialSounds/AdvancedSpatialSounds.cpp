@@ -917,7 +917,7 @@ bool Sample::LoadPointFile(LPCWSTR inFile, PointSound* outChannel)
     outChannel->curBufferLoc = 0;
     outChannel->volume = 1.f;
 
-    if (DirectX::LoadWAVAudioFromFileEx(inFile, m_waveFile, WavData))
+    if (FAILED(DirectX::LoadWAVAudioFromFileEx(inFile, m_waveFile, WavData)))
     {
         return false;
     }

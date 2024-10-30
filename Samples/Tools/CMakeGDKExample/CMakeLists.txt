@@ -86,12 +86,32 @@ endif()
 # /GS (buffer security check)
 # /Gy (enable function-level linking)
 # /Zi (Debug Information Format)
-target_compile_options(${PROJECT_NAME} PRIVATE /W4 /GR- /fp:fast /GS /Gy)
+target_compile_options(${PROJECT_NAME} PRIVATE /W4 /EHsc /GR- /fp:fast /GS /Gy)
 
-# /permissive- (C++ conformance mode enabled)
-# /Zc:__cplusplus (Enable updated __cplusplus macro)
-# /Zc:inline (Remove unreferenced COMDAT)
-target_compile_options(${PROJECT_NAME} PRIVATE /permissive- /Zc:__cplusplus /Zc:inline)
+if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+    # /Zc:inline (Remove unreferenced COMDAT)
+    target_compile_options(${PROJECT_NAME} PRIVATE /Zc:inline)
+
+    # /permissive- (C++ conformance mode enabled)
+    if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.10)
+        target_compile_options(${PROJECT_NAME} PRIVATE /permissive-)
+    endif()
+
+    # /Zc:__cplusplus (Enable updated __cplusplus macro)
+    if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.14)
+        target_compile_options(${PROJECT_NAME} PRIVATE /Zc:__cplusplus)
+    endif()
+
+    # /Zc:preprocessor (C99 conformant preprocessor)
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.26)
+        target_compile_options(${PROJECT_NAME} PRIVATE /Zc:preprocessor)
+    endif()
+
+    # /Zc:lambda (Enable updated lambda processor)
+    if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.28)
+        target_compile_options(${PROJECT_NAME} PRIVATE /Zc:lambda)
+    endif()
+endif()
 
 # Required linker switches:
 # /MACHINE:X64 /SUBSYSTEM:WINDOWS
@@ -110,6 +130,7 @@ if (CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELEASE OR CMAKE_INTERPROCEDURAL_OPTIMIZA
     # /Gw (Optimize Global Data)
     target_compile_options(${PROJECT_NAME} PRIVATE $<$<NOT:$<CONFIG:Debug>>:/Gw>)
 
+    # /Zc:checkGwOdr (Enforce Standard C++ ODR violations under /Gw)
     if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.35)
         target_compile_options(${PROJECT_NAME} PRIVATE $<$<NOT:$<CONFIG:Debug>>:/Zc:checkGwOdr>)
     endif()
@@ -171,7 +192,7 @@ endif()
 # Set global VS properties
 set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
 
-if(CMAKE_CONFIGURATION_TYPES MATCHES "Debug")
+if((${CMAKE_VERSION} LESS "3.30") AND (CMAKE_CONFIGURATION_TYPES MATCHES "Debug"))
     set_property(TARGET ${PROJECT_NAME} PROPERTY VS_GLOBAL_UseDebugLibraries "true")
     set_target_properties(${PROJECT_NAME} PROPERTIES VS_USER_PROPS "${CMAKE_CURRENT_LIST_DIR}/BasicChecksWorkaround.props")
 endif()

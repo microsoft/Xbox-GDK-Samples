@@ -111,7 +111,7 @@ void DeviceResources::CreateDeviceResources()
     }
 #endif
 #else // _GAMING_XBOX_XBOXONE
-    m_options &= ~(c_AmplificationShaders | c_EnableDXR);
+    m_options &= ~(c_AmplificationShaders | c_EnableDXR | c_ColorDcc | c_DepthTcc);
 #endif
 
     HRESULT hr = D3D12XboxCreateDevice(
@@ -215,7 +215,7 @@ void DeviceResources::CreateDeviceResources()
     // Determine maximum supported feature level for this device
     static const D3D_FEATURE_LEVEL s_featureLevels[] =
     {
-#if defined(NTDDI_WIN10_FE) && (NTDDI_VERSION >= NTDDI_WIN10_FE)
+#if defined(NTDDI_WIN10_FE) || defined(USING_D3D12_AGILITY_SDK)
         D3D_FEATURE_LEVEL_12_2,
 #endif
         D3D_FEATURE_LEVEL_12_1,
@@ -374,6 +374,14 @@ void DeviceResources::CreateWindowSizeDependentResources()
     );
     swapChainBufferDesc.Flags |= D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET;
 
+#ifdef _GAMING_XBOX_SCARLETT
+    if (m_options & c_ColorDcc)
+    {
+        // Enable DCC (Delta Color Compression) for the swap buffer (requires a clear).
+        swapChainBufferDesc.Flags |= D3D12XBOX_RESOURCE_FLAG_ALLOW_DCC;
+    }
+#endif
+
     const CD3DX12_CLEAR_VALUE swapChainOptimizedClearValue(m_backBufferFormat, m_clearColor);
 
     for (UINT n = 0; n < m_backBufferCount; n++)
@@ -394,9 +402,8 @@ void DeviceResources::CreateWindowSizeDependentResources()
         rtvDesc.Format = m_backBufferFormat;
         rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 
-        const CD3DX12_CPU_DESCRIPTOR_HANDLE rtvDescriptor(
-            m_rtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart(),
-            static_cast<INT>(n), m_rtvDescriptorSize);
+        const auto cpuHandle = m_rtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+        const CD3DX12_CPU_DESCRIPTOR_HANDLE rtvDescriptor(cpuHandle, static_cast<INT>(n), m_rtvDescriptorSize);
         m_d3dDevice->CreateRenderTargetView(m_renderTargets[n].Get(), &rtvDesc, rtvDescriptor);
     }
 
@@ -488,9 +495,8 @@ void DeviceResources::CreateWindowSizeDependentResources()
         rtvDesc.Format = m_backBufferFormat;
         rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 
-        const CD3DX12_CPU_DESCRIPTOR_HANDLE rtvDescriptor(
-            m_rtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart(),
-            static_cast<INT>(n), m_rtvDescriptorSize);
+        const auto cpuHandle = m_rtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+        const CD3DX12_CPU_DESCRIPTOR_HANDLE rtvDescriptor(cpuHandle, static_cast<INT>(n), m_rtvDescriptorSize);
         m_d3dDevice->CreateRenderTargetView(m_renderTargets[n].Get(), &rtvDesc, rtvDescriptor);
     }
 
@@ -514,6 +520,14 @@ void DeviceResources::CreateWindowSizeDependentResources()
             );
         depthStencilDesc.Flags |= D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
 
+#ifdef _GAMING_XBOX_SCARLETT
+        if (m_options & c_DepthTcc)
+        {
+            // Enable Texture Compatibility for the depth buffer (avoids a decompress).
+            depthStencilDesc.Flags |= D3D12XBOX_RESOURCE_FLAG_FORCE_TEXTURE_COMPATIBILITY;
+        }
+#endif
+
         const CD3DX12_CLEAR_VALUE depthOptimizedClearValue(m_depthBufferFormat, (m_options & c_ReverseDepth) ? 0.0f : 1.0f, 0u);
 
         ThrowIfFailed(m_d3dDevice->CreateCommittedResource(
@@ -531,7 +545,8 @@ void DeviceResources::CreateWindowSizeDependentResources()
         dsvDesc.Format = m_depthBufferFormat;
         dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
 
-        m_d3dDevice->CreateDepthStencilView(m_depthStencil.Get(), &dsvDesc, m_dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart());
+        const auto cpuHandle = m_dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+        m_d3dDevice->CreateDepthStencilView(m_depthStencil.Get(), &dsvDesc, cpuHandle);
     }
 
     // Set the 3D rendering viewport and scissor rectangle to target the entire window.

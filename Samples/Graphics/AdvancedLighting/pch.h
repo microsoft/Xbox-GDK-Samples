@@ -84,7 +84,16 @@
 #include <system_error>
 #include <tuple>
 
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-but-set-variable"
+#endif
+
 #include <pix3.h>
+
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
 
 #include <XGame.h>
 #include <XSystem.h>

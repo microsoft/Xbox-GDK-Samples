@@ -10,9 +10,16 @@ namespace DX
     class DeviceResources
     {
     public:
-        static constexpr unsigned int c_Enable4K_UHD = 0x1;
-        static constexpr unsigned int c_EnableQHD    = 0x2;
-        static constexpr unsigned int c_ReverseDepth = 0x8;
+        static constexpr unsigned int c_Enable4K_UHD         = 0x1;
+        static constexpr unsigned int c_EnableQHD            = 0x2;
+        static constexpr unsigned int c_EnableHDR            = 0x4;
+        static constexpr unsigned int c_ReverseDepth         = 0x8;
+        static constexpr unsigned int c_GeometryShaders      = 0x10;
+        static constexpr unsigned int c_TessellationShaders  = 0x20;
+        static constexpr unsigned int c_AmplificationShaders = 0x40;
+        static constexpr unsigned int c_EnableDXR            = 0x80;
+        static constexpr unsigned int c_ColorDcc             = 0x100;
+        static constexpr unsigned int c_DepthTcc             = 0x200;
 
         DeviceResources(DXGI_FORMAT backBufferFormat = DXGI_FORMAT_B8G8R8A8_UNORM,
                         DXGI_FORMAT depthBufferFormat = DXGI_FORMAT_D32_FLOAT,
@@ -26,7 +33,11 @@ namespace DX
         DeviceResources(DeviceResources const&) = delete;
         DeviceResources& operator= (DeviceResources const&) = delete;
 
+#ifdef _GAMING_XBOX_SCARLETT
+        void CreateDeviceResources(D3D12XBOX_CREATE_DEVICE_FLAGS createDeviceFlags = D3D12XBOX_CREATE_DEVICE_FLAG_NONE);
+#else
         void CreateDeviceResources();
+#endif
         void CreateWindowSizeDependentResources();
         void SetWindow(HWND window) noexcept { m_window = window; }
         void Prepare(D3D12_RESOURCE_STATES beforeState = D3D12_RESOURCE_STATE_PRESENT,
@@ -63,13 +74,13 @@ namespace DX
 
         CD3DX12_CPU_DESCRIPTOR_HANDLE GetRenderTargetView() const noexcept
         {
-            return CD3DX12_CPU_DESCRIPTOR_HANDLE(
-                m_rtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart(),
-                static_cast<INT>(m_backBufferIndex), m_rtvDescriptorSize);
+            const auto cpuHandle = m_rtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+            return CD3DX12_CPU_DESCRIPTOR_HANDLE(cpuHandle, static_cast<INT>(m_backBufferIndex), m_rtvDescriptorSize);
         }
         CD3DX12_CPU_DESCRIPTOR_HANDLE GetDepthStencilView() const noexcept
         {
-            return CD3DX12_CPU_DESCRIPTOR_HANDLE(m_dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart());
+            const auto cpuHandle = m_dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+            return CD3DX12_CPU_DESCRIPTOR_HANDLE(cpuHandle);
         }
 
     private:
@@ -80,8 +91,13 @@ namespace DX
         UINT                                                m_backBufferIndex;
 
         // Direct3D objects.
-        Microsoft::WRL::ComPtr<ID3D12Device>                m_d3dDevice;
+#ifdef _GAMING_XBOX_SCARLETT
+        Microsoft::WRL::ComPtr<ID3D12Device8>               m_d3dDevice;
+        Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList6>  m_commandList;
+#else
+        Microsoft::WRL::ComPtr<ID3D12Device2>               m_d3dDevice;
         Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>   m_commandList;
+#endif
         Microsoft::WRL::ComPtr<ID3D12CommandQueue>          m_commandQueue;
         Microsoft::WRL::ComPtr<ID3D12CommandAllocator>      m_commandAllocators[MAX_BACK_BUFFER_COUNT];
 

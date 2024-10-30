@@ -98,6 +98,13 @@ void Sample::Initialize(HWND window, int width, int height)
         m_userRepeater->SetLiveContext(m_liveResources->GetLiveContext());
         m_ui->FindPanel<ATG::IPanel>(c_sampleUIPanel)->Show();
         AddUserToSocialManager(user);
+        // Sets whether to enable social manager to poll every 30 seconds from the presence service.
+        // Removes the need to manually refresh for presence changes.
+        HRESULT hr = XblSocialManagerSetRichPresencePollingStatus(user, true);
+        if (FAILED(hr))
+        {
+            m_console->Format(L"Error setting rich presence polling: 0x%08X\n", hr);
+        }
         RefreshUserList();
     });
 
@@ -212,7 +219,7 @@ void Sample::RefreshUserList()
     HRESULT hr = XblSocialManagerUserGroupGetUsers(group, &m_userList, &count);
     if(FAILED(hr))
     {
-        m_console->Format(L" Error refreshing user list: 0x%08X\n", hr);
+        m_console->Format(L"Error refreshing user list: 0x%08X\n", hr);
     }
 
     m_console->Format(L"Group contains %d user(s)\n", count);
@@ -480,9 +487,6 @@ void Sample::CreateDeviceDependentResources()
     if (FAILED(device->CheckFeatureSupport(D3D12_FEATURE_SHADER_MODEL, &shaderModel, sizeof(shaderModel)))
         || (shaderModel.HighestShaderModel < D3D_SHADER_MODEL_6_0))
     {
-#ifdef _DEBUG
-        OutputDebugStringA("ERROR: Shader Model 6.0 is not supported!\n");
-#endif
         throw std::runtime_error("Shader Model 6.0 is not supported!");
     }
 #endif

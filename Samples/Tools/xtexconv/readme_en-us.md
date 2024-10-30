@@ -154,3 +154,5 @@ for additional details.
 |November 2019|Xbox Series X|S support.|
 |February 2020|Updates for XG library changes.|
 |February 2024|Reworked XG implementation to use CopyFromSubresource and CopyToSubresource to optimize performance and handle complex swizzling cases.|
+|September 2024|Refactored code to use CmdLineHelpers.h header|
+|October 2024|Added GNU-style long-options|

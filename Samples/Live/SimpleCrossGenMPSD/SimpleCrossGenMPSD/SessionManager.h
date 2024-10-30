@@ -73,7 +73,10 @@ public:
 
     void ShowPlatformInviteUI(XUserHandle inUser);
 
-    void ProcessSessionChanged();
+    void ProcessSessionChange();
+
+    void TryProcessNextSessionChange();
+
     void ProcessSessionChangeComplete(const std::string& sessionName, XblMultiplayerSessionChangeTypes diff);
     void HandleInitilizationStateChanged();
     void HandleMatchmakingStatusChange();
@@ -116,5 +119,5 @@ private:
 
     std::mutex m_sessionChangeLock;
     std::queue<XblMultiplayerSessionChangeEventArgs> m_sessionChanges;
-    bool m_processingSessionChange = false;
+    bool m_processingSessionChanges = false;
 };

@@ -6,7 +6,7 @@ http://go.microsoft.com/fwlink/?LinkId=248926
 
 Copyright (c) Microsoft Corporation.
 
-**June 4, 2024**
+**October 28, 2024**
 
 This package contains DirectXTex, a shared source library for reading and writing ``.DDS`` files, and performing various texture content processing operations including resizing, format conversion, mip-map generation, block compression for Direct3D runtime texture resources, and height-map to normal-map conversion. This library makes use of the Windows Image Component (WIC) APIs. It also includes ``.TGA`` and ``.HDR`` readers and writers since these image file formats are commonly used for texture content processing pipelines, but are not currently supported by a built-in WIC codec.
 
@@ -25,6 +25,10 @@ These components are designed to work without requiring any content from the leg
 * ``Auxiliary\``
 
   + Contains optional source files for the DirectXTex library, such as adapter loading functions using the OpenEXR library, Xbox texture tiling extensions, etc.
+
+* ``Common\``
+
+  + Contains shared source headers used by the DirectXTex library and tools.
 
 * ``Texconv\``
 
@@ -94,9 +98,32 @@ For a full change history, see [CHANGELOG.md](https://github.com/microsoft/Direc
 
 * The UWP projects and the Win10 classic desktop project include configurations for the ARM64 platform. Building these requires installing the ARM64 toolset.
 
-* When using clang/LLVM for the ARM64 platform, the Windows 11 SDK ([22000](https://walbourn.github.io/windows-sdk-for-windows-11/)) or later is required.
+* For ARM64/AArch64 development, the VS 2022 compiler is strongly recommended over the VS 2019 toolset. The Windows SDK (26100 or later) is not compatible with VS 2019 for Win32 on ARM64 development. *Note that the ARM32/AArch32 platform is [deprecated](https://learn.microsoft.com/windows/arm/arm32-to-arm64)*.
+
+* When using clang/LLVM for the ARM64/AArch64 platform, the Windows 11 SDK ([22000](https://walbourn.github.io/windows-sdk-for-windows-11/)) or later is required.
 
 * The ``CompileShaders.cmd`` script must have Windows-style (CRLF) line-endings. If it is changed to Linux-style (LF) line-endings, it can fail to build all the required shaders.
+
+* As of the October 2024 release, the command-line tools also support GNU-style long options using ``--``. All existing switches continue to function, but some of the `-` options are now deprecated per this table:
+
+|texassemble||texconv||texdiag||
+|---|---|---|---|---|---|
+|-tonemap|--tonemap|-badtails|--bad-tails|-badtails|--bad-tails|
+|-bgcolor|--gif-bg-color|-fixbc4x4|--fix-bc-4x4|-ignoremips|--ignore-mips|
+|-swizzle|--swizzle|-ignoremips|--ignore-mips|-permissive|--permissive|
+|-stripmips|--strip-mips|-inverty|--invert-y|-targetx|--target-x||-targety|--target-y|
+|||-keepcoverage|--keep-coverage|||
+|||-permissive|--permissive|||
+|||-reconstructz|--reconstruct-z|||
+|||-rotatecolor|--rotate-color|||
+|||-singleproc|--single-proc|||
+|||-swizzle|--swizzle|||
+|||-tgazeroalpha|--tga-zero-alpha|||
+|||-timing|--timing|||
+|||-tonemap|--tonemap|||
+|||-wiclossless|--wic-lossless|||
+|||-wicmulti|--wic-multiframe|||
+|||-x2bias|--x2-bias|||
 
 ## Support
 

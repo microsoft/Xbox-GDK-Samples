@@ -43,7 +43,7 @@
 
 #if _GRDK_VER < 0x55F00C58 /* GDK Edition 220300 */
 #error This sample requires the March 2022 GDK or later
-#endif 
+#endif
 
 #ifdef _GAMING_XBOX_SCARLETT
 #include <d3d12_xs.h>
@@ -85,7 +85,16 @@
 #include <tuple>
 #include <vector>
 
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-but-set-variable"
+#endif
+
 #include <pix3.h>
+
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
 
 #include <XGame.h>
 #include <XSystem.h>

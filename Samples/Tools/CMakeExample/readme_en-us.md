@@ -249,4 +249,4 @@ See the **BWOIExample** for more details.
 |June 2023|Xbox One titles need to use `/d2vzeroupper-` with VS 2022 or later as the default behavior has flipped from VS 2019.|
 |October 2023|The Microsoft GDK now requires Windows 11 SDK (22000) or later.|
 |June 2024|Minor update for multi-config generators.|
-
+|October 2024|Updated for changes to Extension Libraries directory layout.|

@@ -6,7 +6,7 @@
 # The script directory should contain the setenv.cmd and vctargets.cmd scripts from the BWOIExample sample.
 
 # To build the container (change arguments as necessary):
-#    docker build -t gdkbwoi:latest -m 2GB --build-arg ExtractedSDKDir="sdks" --build-arg ScriptDir="BWOIExample" --build-arg GDKVer="220300" .
+#    docker build -t gdkbwoi:latest -m 2GB --build-arg ExtractedSDKDir="sdks" --build-arg ScriptDir="BWOIExample" --build-arg GDKVer="240300" .
 # To run the container and invoke a build:
 # Using cmd.exe:
 #    docker run --rm -v %cd%\BWOIExample:c:\Project -w c:\Project gdkbwoi msbuild BWOIExample.vcxproj /p:Configuration=Debug /p:Platform=Gaming.Xbox.Scarlett.x64
@@ -19,7 +19,7 @@ FROM mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2022
 ARG ExtractedSDKDir=sdks
 # ScriptDir is the directory containing the setenv.cmd and vctargets.cmd scripts from the sample
 ARG ScriptDir=BWOIExample
-ARG GDKVer=220300
+ARG GDKVer=240300
 
 # Restore the default Windows shell for correct batch processing.
 SHELL ["cmd", "/S", "/C"]

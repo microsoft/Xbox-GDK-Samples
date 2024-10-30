@@ -2,8 +2,8 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <!-- TODO: Change this value to your target Microsoft GDK edition (currently the March 2022 GDK) -->
-    <XDKEditionTarget Condition="'$(XDKEditionTarget)'==''">220300</XDKEditionTarget>
+    <!-- TODO: Change this value to your target Microsoft GDK edition (currently the March 2024 GDK) -->
+    <XDKEditionTarget Condition="'$(XDKEditionTarget)'==''">240300</XDKEditionTarget>
 
     <!-- TODO: Change this to the value for your extracted Microsoft GDK / Windows 10 SDK -->
     <ExtractedFolder Condition="'$(ExtractedFolder)'==''">d:\xtrctd.sdks\BWOIExample\</ExtractedFolder>
@@ -19,7 +19,7 @@
     <_AlternativeVCTargetsPath160>$(ExtractedFolder)VCTargets160\</_AlternativeVCTargetsPath160>
 
     <!-- Comment out setting the _AlternativeVCTargetsPath150 property if you do not have Microsoft.VisualStudio.Component.VC.v141.x86.x64 installed -->
-    <_AlternativeVCTargetsPath150>$(ExtractedFolder)VCTargets150\</_AlternativeVCTargetsPath150>
+    <_AlternativeVCTargetsPath150 Condition="'$(XDKEditionTarget)' &lt; '241000'">$(ExtractedFolder)VCTargets150\</_AlternativeVCTargetsPath150>
 
     <!-- Workaround for VS bug -->
     <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>

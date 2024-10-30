@@ -94,7 +94,7 @@ if NOT %3.==. (set ExtractedFolder=%3) else (set ExtractedFolder=%~d0\xtrctd.sdk
 REM ****************************************************************************************************
 REM Figure out our target edition
 REM ****************************************************************************************************
-if NOT %2.==. (set XdkEditionTarget=%2) else (set XdkEditionTarget=220300)
+if NOT %2.==. (set XdkEditionTarget=%2) else (set XdkEditionTarget=240300)
 
 echo ExtractedFolder=%ExtractedFolder%
 echo XdkEditionTarget=%XdkEditionTarget%

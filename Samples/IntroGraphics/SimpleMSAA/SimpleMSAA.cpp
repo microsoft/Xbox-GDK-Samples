@@ -341,8 +341,7 @@ void Sample::CreateDeviceDependentResources()
     uploadResourcesFinished.wait();
 
     {
-        RenderTargetState rtState(c_backBufferFormat, c_depthBufferFormat);
-        rtState.sampleDesc.Count = c_sampleCount;
+        RenderTargetState rtState(c_backBufferFormat, c_depthBufferFormat, c_sampleCount);
 
         EffectPipelineStateDescription pd(
             nullptr,

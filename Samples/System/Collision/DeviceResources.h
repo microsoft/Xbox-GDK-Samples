@@ -25,6 +25,8 @@ namespace DX
         static constexpr unsigned int c_TessellationShaders  = 0x4;
         static constexpr unsigned int c_AmplificationShaders = 0x8;
         static constexpr unsigned int c_EnableDXR            = 0x10;
+        static constexpr unsigned int c_ColorDcc             = 0x20;
+        static constexpr unsigned int c_DepthTcc             = 0x40;
 
         DeviceResources(DXGI_FORMAT backBufferFormat = DXGI_FORMAT_B8G8R8A8_UNORM,
                         DXGI_FORMAT depthBufferFormat = DXGI_FORMAT_D32_FLOAT,
@@ -83,13 +85,13 @@ namespace DX
 
         CD3DX12_CPU_DESCRIPTOR_HANDLE GetRenderTargetView() const noexcept
         {
-            return CD3DX12_CPU_DESCRIPTOR_HANDLE(
-                m_rtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart(),
-                static_cast<INT>(m_backBufferIndex), m_rtvDescriptorSize);
+            const auto cpuHandle = m_rtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+            return CD3DX12_CPU_DESCRIPTOR_HANDLE(cpuHandle, static_cast<INT>(m_backBufferIndex), m_rtvDescriptorSize);
         }
         CD3DX12_CPU_DESCRIPTOR_HANDLE GetDepthStencilView() const noexcept
         {
-            return CD3DX12_CPU_DESCRIPTOR_HANDLE(m_dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart());
+            const auto cpuHandle = m_dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+            return CD3DX12_CPU_DESCRIPTOR_HANDLE(cpuHandle);
         }
 
     private:

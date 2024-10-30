@@ -48,8 +48,12 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <PropertyGroup>
+    <GDKPCExtLibsPath></GDKPCExtLibsPath>
+    <GDKPCExtLibsPath Condition="!Exists('$(GDKPCEditionPath)ExtensionLibraries\Xbox.Services.API.C\ExtensionLibrary.props')">DesignTime\CommonConfiguration\Neutral\</GDKPCExtLibsPath>
+  </PropertyGroup>
   <ImportGroup Label="ExtensionSettings">
-    <Import Condition="'$(GDKPCEditionPath)'!=''" Project="$(GDKPCEditionPath)ExtensionLibraries\Xbox.Services.API.C\DesignTime\CommonConfiguration\Neutral\ExtensionLibrary.props" />
+    <Import Condition="'$(GDKPCEditionPath)'!=''" Project="$(GDKPCEditionPath)ExtensionLibraries\Xbox.Services.API.C\$(GDKPCExtLibsPath)ExtensionLibrary.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
