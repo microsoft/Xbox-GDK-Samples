@@ -763,7 +763,12 @@ void Sample::RedeemStoreProducts()
                     for (uint32_t i = 0; i < succeededCount; ++i)
                     {
                         PFInventoryRedemptionSuccess item = *responseResult->succeeded[i];
+#if _GRDK_VER < 0x65F40752 /* GDK Edition 241000 */
                         ConsoleWriteLine("Store ID: %s redeemed", item.offerId);
+#else
+                        ConsoleWriteLine("Store ID: %s redeemed", item.marketplaceAlternateId);
+                        ConsoleWriteLine("MarketplaceTransactionId: %s", item.marketplaceTransactionId);
+#endif
                     }
 
                     pThis->QueryPlayFabInventory();
