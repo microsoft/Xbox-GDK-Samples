@@ -51,7 +51,11 @@ bool FenceBatch::RunSample(const std::wstring& fileName, ID3D12Device* device, u
     m_fence->SetEventOnCompletion(c_dataBatches, m_fenceEvent);
 
     // NOTE: Since on the console the SetEventOnCompletion function spins until the fence is signaled this function should immediately return WAIT_OBJECT_0
-    DX::ThrowIfFailed(WaitForSingleObject(m_fenceEvent, INFINITE) != WAIT_OBJECT_0);
+    if(WaitForSingleObject(m_fenceEvent, INFINITE) != WAIT_OBJECT_0)
+    {
+        throw std::runtime_error("WaitForSingleObject");
+    }
+
     // at this point it's guaranteed all of the batches have finished since notification is always in queue order
 
     // check the contents of the data reads from the file to make sure the correct contents were loaded

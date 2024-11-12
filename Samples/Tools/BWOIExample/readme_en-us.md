@@ -78,13 +78,19 @@ This is recommended as the simplest option.
 
 ## Method 2: Install using the GDK NuGet package
 
-This method makes use of the `Microsoft.GDK.PC.<edition>` package on [nuget.org](https://www.nuget.org/).
+This method makes use of the `Microsoft.GDK.PC` package on [nuget.org](https://www.nuget.org/).
 
 1.  Download the [nuget.exe](https://www.nuget.org/downloads) and put in a path on your command-line
 
 2.  Configurate a source for nuget.org per [these instructions](https://learn.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior).
 
 3.  Extract the GDK content using:
+
+```
+nuget install -ExcludeVersion -Source <name-of-source> Microsoft.GDK.PC -OutputDirectory [path-for-extracted-sdks]
+```
+
+or with June 2024 or earlier:
 
 ```
 nuget install -ExcludeVersion -Source <name-of-source> Microsoft.GDK.PC.<edition> -OutputDirectory [path-for-extracted-sdks]
@@ -106,7 +112,7 @@ You will need a copy of the standard GDK installer.
     such as exceeding MAX_PATH.
 
 ```
-setenv vs2022 220300 [path-for-extracted-sdks]
+setenv vs2022 240300 [path-for-extracted-sdks]
 ```
 
 4.  Extract the GDK from the installer image:
@@ -136,7 +142,7 @@ Center](https://developer.microsoft.com/windows/downloads/windows-sdk/).
     extracted GDK.
 
 ```
-setenv vs2022 220300 [path-for-extracted-sdks]
+setenv vs2022 240300 [path-for-extracted-sdks]
 ```
 
 3.  Extract the Windows 10 SDK from the installer image:
@@ -159,7 +165,7 @@ alongside the extracted GDK.
     downloaded or manually extracted GDK.
 
 ```
-setenv vs2022 220300 [path-for-extracted-sdks]
+setenv vs2022 240300 [path-for-extracted-sdks]
 ```
 
 3.  Build the merged VC++ MSBuild targets directories and place them
@@ -190,7 +196,7 @@ installed.
 3.  Run **setenv** for VS 2022 or 2019 and your GDK edition target:
 
 ```
-setenv vs2022 220300 [path-for-extracted-sdks]
+setenv vs2022 240300 [path-for-extracted-sdks]
 ```
 
 > If you don't run setenv, the build will fall back to default values specified in Directory.Build.props. You can modify these directly in the file if you prefer. You will also need to make sure MSBuild is on the path if not using setenv.
@@ -247,7 +253,7 @@ Visual Studio on the host machine.
 ```
 docker build -t gdkbwoi:latest -m 2GB --build-arg
 ExtractedSDKDir="sdks" --build-arg ScriptDir="BWOIExample"
---build-arg GDKVer="220300" .
+--build-arg GDKVer="240300" .
 ```
 
 > To allow your container to use additional CPU cores, use the ``--cpus=N`` flag. To use additional memory, change the value in the ``-m 2GB`` flag.

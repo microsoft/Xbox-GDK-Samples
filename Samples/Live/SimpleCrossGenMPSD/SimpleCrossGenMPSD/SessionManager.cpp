@@ -116,6 +116,8 @@ void SessionManager::RegisterSessionChangedEvent()
         }
     };
 
+    m_lastChangeNumber = 0;
+
     m_sessionChangedHandlerContext = XblMultiplayerAddSessionChangedHandler(m_liveContext, SessionChanged, this);
 
     HRESULT hr = XblMultiplayerSessionSetSessionChangeSubscription(m_currentSessionHandle, XblMultiplayerSessionChangeTypes::Everything);
@@ -192,13 +194,13 @@ void SessionManager::OnSessionChanged(const XblMultiplayerSessionChangeEventArgs
         m_sessionChanges.emplace(eventArgs);
     }
 
-    if (m_processingSessionChange == false)
+    if (m_processingSessionChanges == false)
     {
-        ProcessSessionChanged();
+        ProcessSessionChange();
     }
 }
 
-void SessionManager::ProcessSessionChanged()
+void SessionManager::ProcessSessionChange()
 {
     XblMultiplayerSessionChangeEventArgs eventArgs;
 
@@ -207,11 +209,11 @@ void SessionManager::ProcessSessionChanged()
 
         if (m_sessionChanges.empty())
         {
-            m_processingSessionChange = false;
+            m_processingSessionChanges = false;
             return;
         }
 
-        m_processingSessionChange = true;
+        m_processingSessionChanges = true;
 
         eventArgs = m_sessionChanges.front();
         m_sessionChanges.pop();
@@ -275,18 +277,7 @@ void SessionManager::ProcessSessionChanged()
                     XblMultiplayerSessionCloseHandle(updatedHandle);
                 }
 
-                bool changesPending = false;
-                {
-                    std::lock_guard<std::mutex> lock(pThis->m_sessionChangeLock);
-
-                    pThis->m_processingSessionChange = false;
-                    changesPending = pThis->m_sessionChanges.empty() == false;
-                }
-
-                if(changesPending)
-                {
-                    pThis->ProcessSessionChanged();
-                }
+                pThis->TryProcessNextSessionChange();
             }
         };
 
@@ -301,19 +292,28 @@ void SessionManager::ProcessSessionChanged()
         {
             DEBUGLOG("SessionManager::OnSessionChanged: XblMultiplayerGetSessionAsync failed with HRESULT = 0x%08x", hr);
 
-            bool changesPending = false;
-            {
-                std::lock_guard<std::mutex> lock(m_sessionChangeLock);
-
-                m_processingSessionChange = false;
-                changesPending = m_sessionChanges.empty() == false;
-            }
-
-            if (changesPending)
-            {
-                ProcessSessionChanged();
-            }
+            TryProcessNextSessionChange();
         }
+    }
+    else
+    {
+        TryProcessNextSessionChange();
+    }
+}
+
+void SessionManager::TryProcessNextSessionChange()
+{
+    bool changesPending = false;
+    {
+        std::lock_guard<std::mutex> lock(m_sessionChangeLock);
+
+        m_processingSessionChanges = false;
+        changesPending = m_sessionChanges.empty() == false;
+    }
+
+    if (changesPending)
+    {
+        ProcessSessionChange();
     }
 }
 
@@ -934,6 +934,8 @@ void SessionManager::InternalJoinSession()
 void SessionManager::LeaveSession()
 {
     DEBUGLOG("SessionManager::LeaveSession:");
+
+    m_lastChangeNumber = 0;
 
     XblMultiplayerRemoveSessionChangedHandler(m_liveContext, m_sessionChangedHandlerContext);
 

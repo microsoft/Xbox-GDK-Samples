@@ -85,7 +85,7 @@ namespace DX
             // Handle text encoding
             if (encoding == Encoding::UTF16)
             {
-                m_data.reset(reinterpret_cast<wchar_t*>(data.release()));
+                m_data.reset(reinterpret_cast<wchar_t*>(data.release())); // [CodeQL.SM02986]: The cast here is intentional to handle UTF16 vs. UTF8 encoding.
                 m_end = reinterpret_cast<wchar_t*>(&data[out]);
             }
             else

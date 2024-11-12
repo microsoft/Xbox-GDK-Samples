@@ -46,7 +46,7 @@ if(NOT MSVC)
 endif()
 
 # If not using typeid or dynamic_cast, we can disable RTTI to save binary size
-target_compile_options(${PROJECT_NAME} PRIVATE /fp:fast /W4 /GR- /GS /Gy ${Console_ArchOptions})
+target_compile_options(${PROJECT_NAME} PRIVATE /fp:fast /W4 /EHsc /GR- /GS /Gy ${Console_ArchOptions})
 
 target_link_libraries(${PROJECT_NAME} PRIVATE ${Console_Libs})
 # optional extension libraries: Xbox::XSAPI Xbox::XCurl Xbox::GameChat2 Xbox::PlayFabMultiplayer Xbox::PlayFabParty Xbox::PlayFabPartyLIVE Xbox::PlayFabServices
@@ -60,10 +60,18 @@ if((MSVC_VERSION GREATER_EQUAL 1924)
 endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-   target_compile_options(${PROJECT_NAME} PRIVATE /permissive- /Zc:__cplusplus /Zc:inline)
+   target_compile_options(${PROJECT_NAME} PRIVATE /Zc:inline)
 
    if(ENABLE_CODE_ANALYSIS)
       target_compile_options(${PROJECT_NAME} PRIVATE /analyze)
+   endif()
+
+   if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.10)
+      target_compile_options(${PROJECT_NAME} PRIVATE /permissive-)
+   endif()
+
+   if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.14)
+      target_compile_options(${PROJECT_NAME} PRIVATE /Zc:__cplusplus)
    endif()
 
    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.26)

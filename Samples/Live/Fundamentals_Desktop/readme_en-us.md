@@ -164,11 +164,10 @@ Statement](https://privacy.microsoft.com/en-us/privacystatement/).
 
 # Update history
 
-**Initial Release:** April 2019
-
-**Updated:** January 2020
-
-**Updated:** June 2022
-
-**Converted to use 'stock' x64 instead of Gaming.Desktop.x64:** November
-2022
+|Date|Notes|
+|---|---|
+|April 2019|Initial version.|
+|January 2020|Updates for changes in GDK.|
+|June 2022|Updates for changes in GDK.|
+|November 2022|Converted to use 'stock' x64 instead of Gaming.Desktop.x64|
+|October 2024|Updated for changes to Extension Libraries directory layout.|

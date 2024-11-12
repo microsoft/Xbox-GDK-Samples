@@ -74,3 +74,5 @@ September 2019 -- Initial release
 February 2022
 
 June 2022 -- March 2022 (and newer) GDK compatibility
+
+August 2024 -- Adding `XblSocialManagerSetRichPresencePollingStatus` in code

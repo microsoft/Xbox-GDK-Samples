@@ -63,9 +63,15 @@ endif()
 set(Console_GRDKExtLibRoot "${Console_SdkRoot}/${XdkEditionTarget}/GRDK/ExtensionLibraries")
 set(ExtensionPlatformToolset 142)
 
-set(Console_GRDKExtIncludePath "DesignTime/CommonConfiguration/neutral/Include")
-set(Console_GRDKExtLibPath "DesignTime/CommonConfiguration/neutral/Lib")
-set(Console_GRDKExtDLLPath "Redist/CommonConfiguration/neutral")
+if(XdkEditionTarget GREATER_EQUAL 241000)
+   set(Console_GRDKExtIncludePath "Include")
+   set(Console_GRDKExtLibPath "Lib/x64")
+   set(Console_GRDKExtDLLPath "Redist/x64")
+else()
+   set(Console_GRDKExtIncludePath "DesignTime/CommonConfiguration/neutral/Include")
+   set(Console_GRDKExtLibPath "DesignTime/CommonConfiguration/neutral/Lib")
+   set(Console_GRDKExtDLLPath "Redist/CommonConfiguration/neutral")
+endif()
 
 # XCurl
 add_library(Xbox::XCurl SHARED IMPORTED)

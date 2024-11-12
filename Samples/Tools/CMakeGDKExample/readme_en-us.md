@@ -298,3 +298,4 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY VS_GLOBAL_VCToolsVersion "14.20.275
 |March 2023|Updated to add new target for Playfab.Services.C extension library.|
 |January 2024|Fixed issue with non-Debug configurations using /RTC1.|
 |June 2024|Update Whole Program Optimization support.|
+|October 2024|Updated for changes to Extension Libraries directory layout.<br /> CMake 3.30 fixed the generation of UseDebugLibraries which is more robust than my workaround.|

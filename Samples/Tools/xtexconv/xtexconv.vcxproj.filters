@@ -35,6 +35,7 @@
     <ClInclude Include="DirectXTexEXR.h">
       <Filter>EXR</Filter>
     </ClInclude>
+    <ClInclude Include="CmdLineHelpers.h" />
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="settings.manifest" />

@@ -113,8 +113,10 @@ LiveResources::~LiveResources()
     XUserUnregisterForChangeEvent(m_userChangedEventToken, false);
     XNetworkingUnregisterConnectivityHintChanged(m_networkConnectivityChangedToken, false);
 
-    auto async = new XAsyncBlock{};
-    XblCleanupAsync(async);
+    XAsyncBlock async = {};    
+
+    XblCleanupAsync(&async);
+    XAsyncGetStatus(&async, true);      // this is a blocking call so we can use a stack variable
 
     XTaskQueueCloseHandle(m_asyncQueue);
 }

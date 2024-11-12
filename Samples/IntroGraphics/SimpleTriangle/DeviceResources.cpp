@@ -60,7 +60,11 @@ DeviceResources::~DeviceResources()
 }
 
 // Configures the Direct3D device, and stores handles to it and the device context.
+#ifdef _GAMING_XBOX_SCARLETT
+void DeviceResources::CreateDeviceResources(D3D12XBOX_CREATE_DEVICE_FLAGS createDeviceFlags)
+#else
 void DeviceResources::CreateDeviceResources()
+#endif
 {
     // Create the DX12 API device object.
     D3D12XBOX_CREATE_DEVICE_PARAMETERS params = {};
@@ -75,12 +79,22 @@ void DeviceResources::CreateDeviceResources()
 #endif
 
     params.GraphicsCommandQueueRingSizeBytes = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
-    params.DisableGeometryShaderAllocations = TRUE;
-    params.DisableTessellationShaderAllocations = TRUE;
+    params.DisableGeometryShaderAllocations = (m_options & c_GeometryShaders) ? FALSE : TRUE;
+    params.DisableTessellationShaderAllocations = (m_options & c_TessellationShaders) ? FALSE : TRUE;
 
 #ifdef _GAMING_XBOX_SCARLETT
-    params.DisableDXR = TRUE;
-    params.CreateDeviceFlags = D3D12XBOX_CREATE_DEVICE_FLAG_NONE;
+    params.DisableDXR = (m_options & c_EnableDXR) ? FALSE : TRUE;
+    params.CreateDeviceFlags = createDeviceFlags;
+
+#if (_GXDK_VER >= 0x585D070E /* GXDK Edition 221000 */)
+    if (m_options & c_AmplificationShaders)
+    {
+        params.AmplificationShaderIndirectArgsBufferSize = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
+        params.AmplificationShaderPayloadBufferSize = static_cast<UINT>(D3D12XBOX_DEFAULT_SIZE_BYTES);
+    }
+#endif
+#else // _GAMING_XBOX_XBOXONE
+    m_options &= ~(c_AmplificationShaders | c_EnableDXR | c_ColorDcc | c_DepthTcc);
 #endif
 
     HRESULT hr = D3D12XboxCreateDevice(
@@ -237,6 +251,21 @@ void DeviceResources::CreateWindowSizeDependentResources()
     );
     swapChainBufferDesc.Flags |= D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET;
 
+#ifdef _GAMING_XBOX_SCARLETT
+    if (m_options & c_ColorDcc)
+    {
+        // Enable DCC (Delta Color Compression) for the swap buffer (requires a clear).
+        swapChainBufferDesc.Flags |= D3D12XBOX_RESOURCE_FLAG_ALLOW_DCC;
+    }
+#endif
+
+#ifdef _GAMING_XBOX_XBOXONE
+    if (m_options & c_EnableHDR)
+    {
+        swapChainBufferDesc.Flags |= D3D12XBOX_RESOURCE_FLAG_ALLOW_AUTOMATIC_GAMEDVR_TONE_MAP;
+    }
+#endif
+
     const CD3DX12_CLEAR_VALUE swapChainOptimizedClearValue(m_backBufferFormat, m_clearColor);
 
     for (UINT n = 0; n < m_backBufferCount; n++)
@@ -257,9 +286,8 @@ void DeviceResources::CreateWindowSizeDependentResources()
         rtvDesc.Format = m_backBufferFormat;
         rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 
-        const CD3DX12_CPU_DESCRIPTOR_HANDLE rtvDescriptor(
-            m_rtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart(),
-            static_cast<INT>(n), m_rtvDescriptorSize);
+        const auto cpuHandle = m_rtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+        const CD3DX12_CPU_DESCRIPTOR_HANDLE rtvDescriptor(cpuHandle, static_cast<INT>(n), m_rtvDescriptorSize);
         m_d3dDevice->CreateRenderTargetView(m_renderTargets[n].Get(), &rtvDesc, rtvDescriptor);
     }
 
@@ -281,6 +309,14 @@ void DeviceResources::CreateWindowSizeDependentResources()
             );
         depthStencilDesc.Flags |= D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
 
+#ifdef _GAMING_XBOX_SCARLETT
+        if (m_options & c_DepthTcc)
+        {
+            // Enable Texture Compatibility for the depth buffer (avoids a decompress).
+            depthStencilDesc.Flags |= D3D12XBOX_RESOURCE_FLAG_FORCE_TEXTURE_COMPATIBILITY;
+        }
+#endif
+
         const CD3DX12_CLEAR_VALUE depthOptimizedClearValue(m_depthBufferFormat, (m_options & c_ReverseDepth) ? 0.0f : 1.0f, 0u);
 
         ThrowIfFailed(m_d3dDevice->CreateCommittedResource(
@@ -298,7 +334,8 @@ void DeviceResources::CreateWindowSizeDependentResources()
         dsvDesc.Format = m_depthBufferFormat;
         dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
 
-        m_d3dDevice->CreateDepthStencilView(m_depthStencil.Get(), &dsvDesc, m_dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart());
+        const auto cpuHandle = m_dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+        m_d3dDevice->CreateDepthStencilView(m_depthStencil.Get(), &dsvDesc, cpuHandle);
     }
 
     // Set the 3D rendering viewport and scissor rectangle to target the entire window.
@@ -351,6 +388,11 @@ void DeviceResources::Present(D3D12_RESOURCE_STATES beforeState, _In_opt_ const 
     planeParameters.Token = m_framePipelineToken;
     planeParameters.ResourceCount = 1;
     planeParameters.ppResources = m_renderTargets[m_backBufferIndex].GetAddressOf();
+
+    if (m_options & c_EnableHDR)
+    {
+        planeParameters.ColorSpace = DXGI_COLOR_SPACE_RGB_FULL_G2084_NONE_P2020;
+    }
 
     ThrowIfFailed(
         m_commandQueue->PresentX(1, &planeParameters, params)

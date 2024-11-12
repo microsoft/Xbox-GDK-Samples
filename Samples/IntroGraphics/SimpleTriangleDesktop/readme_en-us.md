@@ -37,3 +37,15 @@ For details on device creation and presentation handling, see
 
 For details on the use of the loop timer, see
 [StepTimer](https://github.com/Microsoft/DirectXTK/wiki/StepTimer).
+
+# Update history
+
+|Date|Notes|
+|---|---|
+|November 2019|Initial version.|
+|October 2021|Workaround for debug layer validation issue on Windows 11 with hybrid graphics systems.|
+|February 2022|Fix for HDR10 handling on PC with Alt+Win+B hotkey in DeviceResources. Opt-in support for DirectX 12 Agility SDK.|
+|November 2022|Converted to use 'stock' x64 instead of Gaming.Desktop.x64.|
+|March 2023|Added use if WinPixEventRuntime.|
+|September 2023| HLSL 2021 language syntax fix.|
+|October 2024|Updated for changes to Extension Libraries directory layout.|

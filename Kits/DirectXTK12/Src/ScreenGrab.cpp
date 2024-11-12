@@ -123,8 +123,11 @@ namespace
         bufferDesc.SampleDesc.Count = 1;
 
         ComPtr<ID3D12Resource> copySource(pSource);
+        D3D12_RESOURCE_STATES beforeStateSource = beforeState;
         if (desc.SampleDesc.Count > 1)
         {
+            TransitionResource(commandList.Get(), pSource, beforeState, D3D12_RESOURCE_STATE_RESOLVE_SOURCE);
+
             // MSAA content must be resolved before being copied to a staging texture
             auto descCopy = desc;
             descCopy.SampleDesc.Count = 1;
@@ -136,7 +139,7 @@ namespace
                 &defaultHeapProperties,
                 D3D12_HEAP_FLAG_NONE,
                 &descCopy,
-                D3D12_RESOURCE_STATE_COPY_DEST,
+                D3D12_RESOURCE_STATE_RESOLVE_DEST,
                 nullptr,
                 IID_GRAPHICS_PPV_ARGS(pTemp.GetAddressOf()));
             if (FAILED(hr))
@@ -166,6 +169,11 @@ namespace
             }
 
             copySource = pTemp;
+            beforeState = D3D12_RESOURCE_STATE_RESOLVE_DEST;
+        }
+        else
+        {
+            beforeStateSource = D3D12_RESOURCE_STATE_COPY_SOURCE;
         }
 
         // Create a staging texture
@@ -177,14 +185,21 @@ namespace
             nullptr,
             IID_GRAPHICS_PPV_ARGS(pStaging));
         if (FAILED(hr))
+        {
+            if (*pStaging)
+            {
+                (*pStaging)->Release();
+                *pStaging = nullptr;
+            }
             return hr;
+        }
 
         SetDebugObjectName(*pStaging, L"ScreenGrab staging");
 
         assert(*pStaging);
 
         // Transition the resource if necessary
-        TransitionResource(commandList.Get(), pSource, beforeState, D3D12_RESOURCE_STATE_COPY_SOURCE);
+        TransitionResource(commandList.Get(), copySource.Get(), beforeState, D3D12_RESOURCE_STATE_COPY_SOURCE);
 
         // Get the copy target location
         D3D12_PLACED_SUBRESOURCE_FOOTPRINT bufferFootprint = {};
@@ -200,12 +215,16 @@ namespace
         // Copy the texture
         commandList->CopyTextureRegion(&copyDest, 0, 0, 0, &copySrc, nullptr);
 
-        // Transition the resource to the next state
-        TransitionResource(commandList.Get(), pSource, D3D12_RESOURCE_STATE_COPY_SOURCE, afterState);
+        // Transition the source resource to the next state
+        TransitionResource(commandList.Get(), pSource, beforeStateSource, afterState);
 
         hr = commandList->Close();
         if (FAILED(hr))
+        {
+            (*pStaging)->Release();
+            *pStaging = nullptr;
             return hr;
+        }
 
         // Execute the command list
         pCommandQ->ExecuteCommandLists(1, CommandListCast(commandList.GetAddressOf()));
@@ -213,7 +232,11 @@ namespace
         // Signal the fence
         hr = pCommandQ->Signal(fence.Get(), 1);
         if (FAILED(hr))
+        {
+            (*pStaging)->Release();
+            *pStaging = nullptr;
             return hr;
+        }
 
         // Block until the copy is complete
         while (fence->GetCompletedValue() < 1)
@@ -291,13 +314,12 @@ HRESULT DirectX::SaveDDSTextureToFile(
     auto_delete_file delonfail(hFile.get());
 
     // Setup header
-    constexpr size_t MAX_HEADER_SIZE = sizeof(uint32_t) + sizeof(DDS_HEADER) + sizeof(DDS_HEADER_DXT10);
-    uint8_t fileHeader[MAX_HEADER_SIZE] = {};
+    uint8_t fileHeader[DDS_DX10_HEADER_SIZE] = {};
 
     *reinterpret_cast<uint32_t*>(&fileHeader[0]) = DDS_MAGIC;
 
     auto header = reinterpret_cast<DDS_HEADER*>(&fileHeader[0] + sizeof(uint32_t));
-    size_t headerSize = sizeof(uint32_t) + sizeof(DDS_HEADER);
+    size_t headerSize = DDS_MIN_HEADER_SIZE;
     header->size = sizeof(DDS_HEADER);
     header->flags = DDS_HEADER_FLAGS_TEXTURE | DDS_HEADER_FLAGS_MIPMAP;
     header->height = desc.Height;
@@ -355,7 +377,7 @@ HRESULT DirectX::SaveDDSTextureToFile(
         memcpy(&header->ddspf, &DDSPF_DX10, sizeof(DDS_PIXELFORMAT));
 
         headerSize += sizeof(DDS_HEADER_DXT10);
-        extHeader = reinterpret_cast<DDS_HEADER_DXT10*>(fileHeader + sizeof(uint32_t) + sizeof(DDS_HEADER));
+        extHeader = reinterpret_cast<DDS_HEADER_DXT10*>(fileHeader + DDS_MIN_HEADER_SIZE);
         extHeader->dxgiFormat = desc.Format;
         extHeader->resourceDimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
         extHeader->arraySize = 1;
@@ -795,7 +817,9 @@ HRESULT DirectX::SaveWICTextureToFile(
     else
     {
         // No conversion required
-        hr = frame->WritePixels(desc.Height, static_cast<UINT>(dstRowPitch), static_cast<UINT>(imageSize), static_cast<BYTE*>(pMappedMemory));
+        hr = frame->WritePixels(desc.Height,
+            static_cast<UINT>(dstRowPitch), static_cast<UINT>(imageSize),
+            static_cast<BYTE*>(pMappedMemory));
     }
 
     pStaging->Unmap(0, &writeRange);

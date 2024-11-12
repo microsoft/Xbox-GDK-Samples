@@ -47,6 +47,10 @@ namespace DX
             D3D12_RESOURCE_STATES beforeState = D3D12_RESOURCE_STATE_DEPTH_WRITE,
             D3D12_RESOURCE_STATES afterState = D3D12_RESOURCE_STATE_DEPTH_WRITE);
 
+        void Transition(_In_ ID3D12GraphicsCommandList* commandList, D3D12_RESOURCE_STATES beforeState, D3D12_RESOURCE_STATES afterState);
+
+        void TransitionDepth(_In_ ID3D12GraphicsCommandList* commandList, D3D12_RESOURCE_STATES beforeState, D3D12_RESOURCE_STATES afterState);
+
         ID3D12Resource* GetMSAARenderTarget() const noexcept { return m_msaaRenderTarget.Get(); }
         ID3D12Resource* GetMSAADepthStencil() const noexcept { return m_msaaDepthStencil.Get(); }
 

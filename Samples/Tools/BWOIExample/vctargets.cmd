@@ -18,7 +18,6 @@ if NOT EXIST "%VSInstallDir%\MSBuild\Microsoft\VC\v170\Microsoft.cpp.Default.pro
 if NOT EXIST "%ExtractedFolder%\Microsoft GDK\%XDKEditionTarget%\GXDK\VS2022" goto :needsvs2022gdk
 if NOT EXIST "%ExtractedFolder%\Microsoft GDK\%XDKEditionTarget%\GRDK\VS2022" goto :needsvs2022gdk
 
-if NOT EXIST "%ExtractedFolder%\VCTargets150" md "%ExtractedFolder%\VCTargets150"
 if NOT EXIST "%ExtractedFolder%\VCTargets160" md "%ExtractedFolder%\VCTargets160"
 if NOT EXIST "%ExtractedFolder%\VCTargets170" md "%ExtractedFolder%\VCTargets170"
 
@@ -39,6 +38,9 @@ robocopy /NJH /NJS /NDL /NC /NS /S "%ExtractedFolder%\Microsoft GDK\%XDKEditionT
 :skipv160
 
 if NOT EXIST "%VSInstallDir%\MSBuild\Microsoft\VC\v150\Microsoft.Cpp.Default.props" goto :eof
+if %XDKEditionTarget% LSS 241000 goto :eof
+
+if NOT EXIST "%ExtractedFolder%\VCTargets150" md "%ExtractedFolder%\VCTargets150"
 
 echo Set up VS 2022 150 VC Targets (Platform Toolset v141)
 
@@ -52,7 +54,6 @@ goto :eof
 if NOT EXIST "%VSInstallDir%\MSBuild\Microsoft\VC\v160\Microsoft.cpp.Default.props" goto :missingvsinstalldir
 
 if EXIST "%ExtractedFolder%\VCTargets170" goto :mismatchVCTargets
-if NOT EXIST "%ExtractedFolder%\VCTargets150" md "%ExtractedFolder%\VCTargets150"
 if NOT EXIST "%ExtractedFolder%\VCTargets160" md "%ExtractedFolder%\VCTargets160"
 
 echo Set up VS 2019 160 VC Targets (Platform Toolset v142)
@@ -62,6 +63,9 @@ robocopy /NJH /NJS /NDL /NC /NS /S "%ExtractedFolder%\Microsoft GDK\%XDKEditionT
 robocopy /NJH /NJS /NDL /NC /NS /S "%ExtractedFolder%\Microsoft GDK\%XDKEditionTarget%\GXDK\VS2019\flatDeployment\MSBuild\Microsoft\VC\v160" "%ExtractedFolder%\VCTargets160"
 
 if NOT EXIST "%VSInstallDir%\MSBuild\Microsoft\VC\v150\Microsoft.Cpp.Default.props" goto :eof
+if %XDKEditionTarget% LSS 241000 goto :eof
+
+if NOT EXIST "%ExtractedFolder%\VCTargets150" md "%ExtractedFolder%\VCTargets150"
 
 echo Set up VS 2019 150 VC Targets (Platform Toolset v141)
 

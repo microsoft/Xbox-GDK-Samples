@@ -227,6 +227,12 @@ namespace
         {
         }
 
+        DeviceResources(const DeviceResources&) = delete;
+        DeviceResources& operator=(const DeviceResources&) = delete;
+
+        DeviceResources(DeviceResources&&) = delete;
+        DeviceResources& operator=(DeviceResources&&) = delete;
+
         ID3D12RootSignature* GetRootSignature(const D3D12_ROOT_SIGNATURE_DESC& desc)
         {
             return DemandCreate(mRootSignature, mMutex, [&](ID3D12RootSignature** pResult) noexcept -> HRESULT
@@ -254,6 +260,12 @@ class ToneMapPostProcess::Impl : public AlignedNew<ToneMapConstants>
 {
 public:
     Impl(_In_ ID3D12Device* device, const RenderTargetState& rtState, Operator op, TransferFunction func, bool mrt = false);
+
+    Impl(const Impl&) = delete;
+    Impl& operator=(const Impl&) = delete;
+
+    Impl(Impl&&) = default;
+    Impl& operator=(Impl&&) = default;
 
     void Process(_In_ ID3D12GraphicsCommandList* commandList);
 

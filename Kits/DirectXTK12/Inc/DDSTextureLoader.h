@@ -57,6 +57,7 @@ namespace DirectX
             DDS_LOADER_IGNORE_SRGB = 0x2,
             DDS_LOADER_MIP_AUTOGEN = 0x8,
             DDS_LOADER_MIP_RESERVE = 0x10,
+            DDS_LOADER_IGNORE_MIPS = 0x20,
         };
     }
 
@@ -159,7 +160,7 @@ namespace DirectX
 
     inline namespace DX12
     {
-        DEFINE_ENUM_FLAG_OPERATORS(DDS_LOADER_FLAGS);
+        DEFINE_ENUM_FLAG_OPERATORS(DDS_LOADER_FLAGS)
     }
 
 #ifdef __clang__

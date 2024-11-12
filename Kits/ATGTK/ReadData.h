@@ -55,7 +55,14 @@ namespace DX
 #endif
 
         if (!inFile)
+        {
+#ifdef _DEBUG
+            wchar_t errorMessage[MAX_PATH] = {};
+            swprintf_s(errorMessage, MAX_PATH, L"ReadData: file not open %ls\n", name);
+            OutputDebugStringW(errorMessage);
+#endif
             throw std::runtime_error("ReadData");
+        }
 
         const std::streampos len = inFile.tellg();
         if (!inFile)
