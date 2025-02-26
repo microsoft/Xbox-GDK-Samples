@@ -98,6 +98,7 @@
   -->
   <PropertyGroup Condition="'$(Platform)' == 'Gaming.Xbox.XboxOne.x64' OR '$(Platform)' == 'Gaming.Xbox.Scarlett.x64' OR '$(Platform)' == 'Gaming.Desktop.x64'">
     <ClearDevCommandPromptEnvVars>false</ClearDevCommandPromptEnvVars>
+    <VCToolsVersion />
     <DurangoXdkInstallPath>$(_ExtractedMicrosoftGDK)</DurangoXdkInstallPath>
   </PropertyGroup>
 
