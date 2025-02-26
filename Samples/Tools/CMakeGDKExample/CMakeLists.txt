@@ -11,8 +11,8 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/${CMAKE_VS_PLATFORM_NAME}")
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/${CMAKE_VS_PLATFORM_NAME}")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib/${CMAKE_VS_PLATFORM_NAME}")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib/${CMAKE_VS_PLATFORM_NAME}")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/${CMAKE_VS_PLATFORM_NAME}")
 
 set(GAME_SOURCES
@@ -26,7 +26,7 @@ set(GAME_SOURCES
     MicrosoftGameConfig.mgc
 )
 
-if(CMAKE_VS_PLATFORM_NAME STREQUAL "Gaming.Desktop.x64")
+if(NOT (DEFINED XBOX_CONSOLE_TARGET))
     set(GAME_SOURCES ${GAME_SOURCES} d3dx12.h)
 endif()
 
@@ -143,21 +143,21 @@ endif()
 # Set link libraries
 target_link_libraries(${PROJECT_NAME} PRIVATE xgameruntime.lib)
 
-if((CMAKE_VS_PLATFORM_NAME STREQUAL "Gaming.Desktop.x64") AND (XdkEditionTarget GREATER_EQUAL 220600))
+if((NOT (DEFINED XBOX_CONSOLE_TARGET)) AND (XdkEditionTarget GREATER_EQUAL 220600))
     target_link_libraries(${PROJECT_NAME} PRIVATE gameinput.lib)
 endif()
 
 # Add uuid.lib if using Windows Imaging Component (WIC) or other COM objects
 
 # Set the correct graphics link libraries
-if(CMAKE_VS_PLATFORM_NAME STREQUAL "Gaming.Desktop.x64")
-    target_link_libraries(${PROJECT_NAME} PRIVATE dxguid.lib d3d12.lib dxgi.lib)
-elseif(CMAKE_VS_PLATFORM_NAME MATCHES "Gaming.Xbox.*.x64")
-    if(CMAKE_VS_PLATFORM_NAME STREQUAL "Gaming.Xbox.Scarlett.x64")
+if(DEFINED XBOX_CONSOLE_TARGET)
+    if(XBOX_CONSOLE_TARGET STREQUAL "scarlett")
         target_link_libraries(${PROJECT_NAME} PRIVATE pixevt.lib d3d12_xs.lib xmem.lib xg_xs.lib)
     else()
         target_link_libraries(${PROJECT_NAME} PRIVATE pixevt.lib d3d12_x.lib xmem.lib xg_x.lib)
     endif()
+else()
+    target_link_libraries(${PROJECT_NAME} PRIVATE dxguid.lib d3d12.lib dxgi.lib)
 endif()
 
 target_precompile_headers(${PROJECT_NAME} PRIVATE pch.h)
@@ -185,7 +185,9 @@ else()
     target_link_libraries(${PROJECT_NAME} PRIVATE "libHttpClient.${ExtensionPlatformToolset}.GDK.C.lib")
 endif()
 
-if(CMAKE_VS_PLATFORM_NAME STREQUAL "Gaming.Desktop.x64")
+# target_link_libraries(${PROJECT_NAME} PRIVATE XCurl.lib GameChat2.lib PlayFabMultiplayerGDK.lib Party.lib PartyXboxLive.lib PlayFabCore.GDK.lib PlayFabServices.GDK.lib)
+
+if(NOT (DEFINED XBOX_CONSOLE_TARGET))
     target_link_libraries(${PROJECT_NAME} PRIVATE appnotify.lib)
 endif()
 
@@ -197,8 +199,9 @@ if((${CMAKE_VERSION} LESS "3.30") AND (CMAKE_CONFIGURATION_TYPES MATCHES "Debug"
     set_target_properties(${PROJECT_NAME} PROPERTIES VS_USER_PROPS "${CMAKE_CURRENT_LIST_DIR}/BasicChecksWorkaround.props")
 endif()
 
-if(NOT CMAKE_VS_PLATFORM_NAME STREQUAL "Gaming.Desktop.x64")
+if(DEFINED XBOX_CONSOLE_TARGET)
     set_property(TARGET ${PROJECT_NAME} PROPERTY VS_GLOBAL_XdkEditionTarget ${XdkEditionTarget})
+    set_property(TARGET ${PROJECT_NAME} PROPERTY VS_GLOBAL_VC_Target_Library_Platform "OneCore")
 endif()
 
 # If using a side-by-side MSVC toolset, set the desired toolset version number and uncomment the following statements
