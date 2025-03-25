@@ -21,8 +21,8 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/Gaming.Xbox.XboxOne.x64")
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/Gaming.Xbox.XboxOne.x64")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib/Gaming.Xbox.XboxOne.x64")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib/Gaming.Xbox.XboxOne.x64")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/Gaming.Xbox.XboxOne.x64")
 
 add_executable(${PROJECT_NAME} WIN32
@@ -109,7 +109,7 @@ endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
    # /Zc:inline (Remove unreferenced COMDAT)
-   target_compile_options(${PROJECT_NAME} PRIVATE /permissive- /Zc:__cplusplus /Zc:inline)
+   target_compile_options(${PROJECT_NAME} PRIVATE /Zc:inline)
 
    # /analyze (Code analysis)
    if(ENABLE_CODE_ANALYSIS)
