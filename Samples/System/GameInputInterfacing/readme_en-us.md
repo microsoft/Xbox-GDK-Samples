@@ -2,8 +2,7 @@
 
 #   GameInputInterfacing Sample
 
-*This sample is compatible with the Microsoft Game Development Kit (June
-2020)*
+*This sample is compatible with the Microsoft Game Development Kit (June 2020)*
 
 # Description
 
@@ -12,9 +11,11 @@ from a gamepad, arcade sticks, racing wheels, and more in the GDK
 
 # Building the sample
 
-If using an Xbox One devkit, set the active solution platform to `Gaming.Xbox.XboxOne.x64`.
-
-If using an Xbox Series X|S devkit, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
+- If building for Xbox One, set the active solution platform to `Gaming.Xbox.XboxOne.x64`.
+- If building for Xbox Series X|S, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
+- If building for PC, set the active solution platform to Gaming.Desktop.x64.\
+**NOTE: This requires the [GameInput NuGet package](https://www.nuget.org/packages/Microsoft.GameInput) and its 
+included redistributable to be installed.  Please see [GameInput on PC](https://learn.microsoft.com/gaming/gdk/_content/gc/input/overviews/input-nuget) for more information.**.
 
 *For more information, see* __Running samples__, *in the GDK documentation.*
 
@@ -26,11 +27,16 @@ the readings.
 
 # Implementation notes
 
-This sample demonstrates how to use the new GameInput API to read input
-from a variety of devices in a wide variety of ways.
+This sample demonstrates how to use new GameInput API to read input
+from devices in a wide variety of ways.
 
 Note that motion and touch are PC only features. Mouse and keyboard will
 be available in a future update.
+
+# Version History
+
+- March 2025: Added support for GameInput v1 on PC via the
+  [GameInput NuGet package](https://www.nuget.org/packages/Microsoft.GameInput)
 
 # Privacy statement
 

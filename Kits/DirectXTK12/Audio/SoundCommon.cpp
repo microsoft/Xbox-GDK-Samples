@@ -478,7 +478,7 @@ bool DirectX::IsValid(_In_ const WAVEFORMATEX* wfx) noexcept
 
             if (wfex->dwChannelMask)
             {
-                auto const channelBits = ChannelsSpecifiedInMask(wfex->dwChannelMask);
+                const auto channelBits = ChannelsSpecifiedInMask(wfex->dwChannelMask);
                 if (channelBits != wfx->nChannels)
                 {
                     DebugTrace("ERROR: WAVEFORMATEXTENSIBLE: nChannels=%u but ChannelMask has %u bits set\n",
@@ -755,23 +755,10 @@ void SoundEffectInstanceBase::Apply3D(const X3DAUDIO_LISTENER& listener, const X
         throw std::runtime_error("Apply3D");
     }
 
-    DWORD dwCalcFlags = X3DAUDIO_CALCULATE_MATRIX | X3DAUDIO_CALCULATE_DOPPLER | X3DAUDIO_CALCULATE_LPF_DIRECT;
-
-    if (mFlags & SoundEffectInstance_UseRedirectLFE)
-    {
-        // On devices with an LFE channel, allow the mono source data to be routed to the LFE destination channel.
-        dwCalcFlags |= X3DAUDIO_CALCULATE_REDIRECT_TO_LFE;
-    }
-
-    auto reverb = mReverbVoice;
-    if (reverb)
-    {
-        dwCalcFlags |= X3DAUDIO_CALCULATE_LPF_REVERB | X3DAUDIO_CALCULATE_REVERB;
-    }
-
     float matrix[XAUDIO2_MAX_AUDIO_CHANNELS * 8] = {};
     assert(mDSPSettings.SrcChannelCount <= XAUDIO2_MAX_AUDIO_CHANNELS);
     assert(mDSPSettings.DstChannelCount <= 8);
+    mDSPSettings.DopplerFactor = 1.f;
     mDSPSettings.pMatrixCoefficients = matrix;
 
     assert(engine != nullptr);
@@ -791,11 +778,11 @@ void SoundEffectInstanceBase::Apply3D(const X3DAUDIO_LISTENER& listener, const X
         lhListener.Position.z = -listener.Position.z;
         lhListener.Velocity.z = -listener.Velocity.z;
 
-        X3DAudioCalculate(engine->Get3DHandle(), &lhListener, &lhEmitter, dwCalcFlags, &mDSPSettings);
+        X3DAudioCalculate(engine->Get3DHandle(), &lhListener, &lhEmitter, mX3DCalcFlags, &mDSPSettings);
     }
     else
     {
-        X3DAudioCalculate(engine->Get3DHandle(), &listener, &emitter, dwCalcFlags, &mDSPSettings);
+        X3DAudioCalculate(engine->Get3DHandle(), &listener, &emitter, mX3DCalcFlags, &mDSPSettings);
     }
 
     mDSPSettings.pMatrixCoefficients = nullptr;
@@ -806,6 +793,7 @@ void SoundEffectInstanceBase::Apply3D(const X3DAUDIO_LISTENER& listener, const X
     assert(direct != nullptr);
     std::ignore = voice->SetOutputMatrix(direct, mDSPSettings.SrcChannelCount, mDSPSettings.DstChannelCount, matrix);
 
+    auto reverb = mReverbVoice;
     if (reverb)
     {
         for (size_t j = 0; (j < mDSPSettings.SrcChannelCount) && (j < XAUDIO2_MAX_AUDIO_CHANNELS); ++j)
@@ -928,6 +916,7 @@ bool AudioListener::IsValid() const
     if (!std::isfinite(Position.y))
         return false;
     if (!std::isfinite(Position.z))
+        return false;
 
     if (!std::isfinite(Velocity.x))
         return false;
@@ -975,6 +964,7 @@ bool AudioEmitter::IsValid() const
     if (!std::isfinite(Position.y))
         return false;
     if (!std::isfinite(Position.z))
+        return false;
 
     if (!std::isfinite(Velocity.x))
         return false;

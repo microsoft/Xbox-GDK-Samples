@@ -196,8 +196,7 @@
     <None Include="readme_ja-jp.md" />
     <None Include="readme_ko-kr.md" />
     <None Include="readme_zh-cn.md" />
-    <None Include="media\image1.png">
-      <Filter>media</Filter>
-    </None>
+    <None Include="packages.config" />
+    <None Include="..\..\NuGet.config" />
   </ItemGroup>
 </Project>

@@ -76,8 +76,6 @@
 #include <cwchar>
 #include <exception>
 #include <fstream>
-#include <functional>
-#include <future>
 #include <iterator>
 #include <memory>
 #include <stdexcept>

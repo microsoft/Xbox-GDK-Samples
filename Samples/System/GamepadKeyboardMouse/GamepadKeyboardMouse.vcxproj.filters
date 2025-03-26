@@ -100,12 +100,6 @@
     <CopyFileToFolders Include="Assets\GamerPic_Pointer.png">
       <Filter>Assets</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="media\image1.png">
-      <Filter>Assets</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="media\sample_ss.png">
-      <Filter>Assets</Filter>
-    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
@@ -126,5 +120,7 @@
       <Filter>Assets</Filter>
     </None>
     <None Include="readme.md" />
+    <None Include="packages.config" />
+    <None Include="..\..\NuGet.config" />
   </ItemGroup>
 </Project>

@@ -40,7 +40,11 @@ Sample::Sample() noexcept(false) :
 
 Sample::~Sample()
 {
+#if GAMEINPUT_API_VERSION >= 1
+    m_gameInput->UnregisterCallback(deviceCallbackToken);
+#else
     m_gameInput->UnregisterCallback(deviceCallbackToken, UINT64_MAX);
+#endif
 
     if (m_deviceResources)
     {
@@ -341,6 +345,10 @@ void Sample::Update()
 
                 m_mouseGiString += L"\nAccumulated X pos: " + std::to_wstring(state.positionX) + L" + " + std::to_wstring(lastDeltaX);
                 m_mouseGiString += L"\nAccumulated Y pos: " + std::to_wstring(state.positionY) + L" + " + std::to_wstring(lastDeltaY);
+#if GAMEINPUT_API_VERSION >= 1
+                m_mouseGiString += L"\nAbsolute X pos: " + std::to_wstring(state.absolutePositionX);
+                m_mouseGiString += L"\nAbsolute Y pos: " + std::to_wstring(state.absolutePositionY);
+#endif
                 m_mouseGiString += L"\nWheel: " + std::to_wstring(state.wheelY) + L" + " + std::to_wstring(lastDeltaWheel);
             }
         }
@@ -380,7 +388,13 @@ void CALLBACK Sample::DeviceCallback(
 {
     // [GameInput]
     // GameInputDeviceInfo contains general and type-specific information of a given device
-    const GameInputDeviceInfo* info = device->GetDeviceInfo();
+    const GameInputDeviceInfo* info = nullptr;
+#if GAMEINPUT_API_VERSION >= 1
+    device->GetDeviceInfo(&info);
+#else
+    info = device->GetDeviceInfo();
+#endif
+
     GameInputKind deviceKind = info->supportedInput;
     const wchar_t* deviceKindString;
     const wchar_t* deviceEventString = nullptr;
@@ -560,7 +574,7 @@ void Sample::Render()
     if (!m_mouseGiString.empty())
     {
         m_smallFont->DrawString(m_batch.get(), m_mouseGiString.c_str(), pos);
-        pos.y += m_smallFontSpacing * 4.f;
+        pos.y += m_smallFontSpacing * 6.5f;
     }
     else
     {

@@ -10,12 +10,11 @@ This sample demonstrates how to use a force feedback steering wheel with the GDK
 
 # Building the sample
 
-If using an Xbox One devkit, set the active solution platform to Gaming.Xbox.XboxOne.x64.
-
-If using an Xbox Series X|S devkit, set the active solution platform to Gaming.Xbox.Scarlett.x64.
-
-**Note:** The Desktop build is currently not supported due to an issue with racing wheels on PC. 
-A future verison of this sample will include Desktop support.
+- If building for Xbox One, set the active solution platform to `Gaming.Xbox.XboxOne.x64`.
+- If building for Xbox Series X|S, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
+- If building for PC, set the active solution platform to Gaming.Desktop.x64.\
+**NOTE: This requires the [GameInput NuGet package](https://www.nuget.org/packages/Microsoft.GameInput) and its 
+included redistributable to be installed.  Please see [GameInput on PC](https://learn.microsoft.com/gaming/gdk/_content/gc/input/overviews/input-nuget) for more information.**.
 
 *For more information, see* __Running samples__, *in the GDK documentation.*
 
@@ -42,6 +41,23 @@ vehicle simulation, only to demonstrate how effect parameters can be updated bas
 simulation.
 
 Comments marked as `// [SAMPLE]` are specific to the implementation of this sample.
+
+# PC-specific notes
+
+Racing wheels on PC can operate in either GIP mode or HID mode.
+
+If the device is in GIP mode, typically the mode when NO drivers are installed AND its firmware supports Xbox consoles (i.e. it probably has
+an Xbox Guide button), no mappings are needed and the device will be automatically detected properly.
+
+If the device is in HID mode, typically the mode when drivers from the manufacturer are installed, Windows needs to know how to map its 
+input axes, buttons, and switches to the appropriate GameInput items.  If these mappings to do not exist, the wheel will not be 
+detected as a GameInputKindRacingWheel.
+
+
+# Version History
+
+- March 2025: Added support for GameInput v1 on PC via the
+  [GameInput NuGet package](https://www.nuget.org/packages/Microsoft.GameInput)
 
 # Privacy statement
 

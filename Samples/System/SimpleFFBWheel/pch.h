@@ -94,7 +94,6 @@
 #include <XGame.h>
 #include <XSystem.h>
 
-#include "GamePad.h"
 #include "GraphicsMemory.h"
 #include "RenderTargetState.h"
 #include "WICTextureLoader.h"

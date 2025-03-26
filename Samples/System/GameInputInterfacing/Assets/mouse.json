@@ -7,87 +7,119 @@
     "size": [ 450, 270 ],
     "styleId": "Basic_Panel_Style",
     "subElements": [
-      {
-        "classId": "StaticText",
-        "id": "Title",
-        "position": [ 0, 10 ],
-        "size": [ 450, 30 ],
-        "text": "Mouse",
-        "styleId": "Basic_Title_Style"
-      },
-      {
-        "classId": "StaticText",
-        "id": "Inputs",
-        "isLegend": true,
-        "text": "",
-        "position": [ 20, 30 ],
-        "size": [ 450, 30 ],
-        "styleId": "Basic_Text_Style"
-      },
-      {
-        "classId": "StaticText",
-        "id": "X Label",
-        "text": "X",
-        "position": [ 20, 60 ],
-        "size": [ 90, 30 ],
-        "styleId": "Basic_Text_Style"
-      },
-      {
-        "classId": "StaticText",
-        "id": "X Value",
-        "text": "",
-        "position": [ 20, 90 ],
-        "size": [ 90, 30 ],
-        "styleId": "Basic_Text_Style"
-      },
-      {
-        "classId": "StaticText",
-        "id": "Y Label",
-        "text": "Y",
-        "position": [ 20, 120 ],
-        "size": [ 90, 30 ],
-        "styleId": "Basic_Text_Style"
-      },
-      {
-        "classId": "StaticText",
-        "id": "Y Value",
-        "text": "",
-        "position": [ 20, 150 ],
-        "size": [ 90, 30 ],
-        "styleId": "Basic_Text_Style"
-      },
-      {
-        "classId": "StaticText",
-        "id": "WheelX Label",
-        "text": "WheelX",
-        "position": [ 120, 60 ],
-        "size": [ 90, 30 ],
-        "styleId": "Basic_Text_Style"
-      },
-      {
-        "classId": "StaticText",
-        "id": "WheelX Value",
-        "text": "",
-        "position": [ 120, 90 ],
-        "size": [ 90, 30 ],
-        "styleId": "Basic_Text_Style"
-      },
-      {
-        "classId": "StaticText",
-        "id": "WheelY Label",
-        "text": "WheelY",
-        "position": [ 120, 120 ],
-        "size": [ 90, 30 ],
-        "styleId": "Basic_Text_Style"
-      },
-      {
-        "classId": "StaticText",
-        "id": "WheelY Value",
-        "text": "",
-        "position": [ 120, 150 ],
-        "size": [ 90, 30 ],
-        "styleId": "Basic_Text_Style"
-      }
+        {
+            "classId": "StaticText",
+            "id": "Title",
+            "position": [ 0, 10 ],
+            "size": [ 450, 30 ],
+            "text": "Mouse",
+            "styleId": "Basic_Title_Style"
+        },
+        {
+            "classId": "StaticText",
+            "id": "Inputs",
+            "isLegend": true,
+            "text": "",
+            "position": [ 20, 30 ],
+            "size": [ 450, 30 ],
+            "styleId": "Basic_Text_Style"
+        },
+        {
+            "classId": "StaticText",
+            "id": "X Label",
+            "text": "X",
+            "position": [ 20, 60 ],
+            "size": [ 90, 30 ],
+            "styleId": "Basic_Text_Style"
+        },
+        {
+            "classId": "StaticText",
+            "id": "X Value",
+            "text": "",
+            "position": [ 20, 90 ],
+            "size": [ 90, 30 ],
+            "styleId": "Basic_Text_Style"
+        },
+        {
+            "classId": "StaticText",
+            "id": "Y Label",
+            "text": "Y",
+            "position": [ 20, 120 ],
+            "size": [ 90, 30 ],
+            "styleId": "Basic_Text_Style"
+        },
+        {
+            "classId": "StaticText",
+            "id": "Y Value",
+            "text": "",
+            "position": [ 20, 150 ],
+            "size": [ 90, 30 ],
+            "styleId": "Basic_Text_Style"
+        },
+        {
+            "classId": "StaticText",
+            "id": "Absolute X Label",
+            "text": "Absolute X",
+            "position": [ 120, 60 ],
+            "size": [ 90, 30 ],
+            "styleId": "Basic_Text_Style"
+        },
+        {
+            "classId": "StaticText",
+            "id": "Absolute X Value",
+            "text": "",
+            "position": [ 120, 90 ],
+            "size": [ 90, 30 ],
+            "styleId": "Basic_Text_Style"
+        },
+        {
+            "classId": "StaticText",
+            "id": "Absolute Y Label",
+            "text": "Absolute Y",
+            "position": [ 120, 120 ],
+            "size": [ 90, 30 ],
+            "styleId": "Basic_Text_Style"
+        },
+        {
+            "classId": "StaticText",
+            "id": "Absolute Y Value",
+            "text": "",
+            "position": [ 120, 150 ],
+            "size": [ 90, 30 ],
+            "styleId": "Basic_Text_Style"
+        },
+        {
+            "classId": "StaticText",
+            "id": "WheelX Label",
+            "text": "WheelX",
+            "position": [ 260, 60 ],
+            "size": [ 90, 30 ],
+            "styleId": "Basic_Text_Style"
+        },
+        {
+            "classId": "StaticText",
+            "id": "WheelX Value",
+            "text": "",
+            "position": [ 260, 90 ],
+            "size": [ 90, 30 ],
+            "styleId": "Basic_Text_Style"
+        },
+        {
+            "classId": "StaticText",
+            "id": "WheelY Label",
+            "text": "WheelY",
+            "position": [ 260, 120 ],
+            "size": [ 90, 30 ],
+            "styleId": "Basic_Text_Style"
+        },
+        {
+            "classId": "StaticText",
+            "id": "WheelY Value",
+            "text": "",
+            "position": [ 260, 150 ],
+            "size": [ 90, 30 ],
+            "styleId": "Basic_Text_Style"
+        }
     ]
   }
 }

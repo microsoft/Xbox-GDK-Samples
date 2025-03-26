@@ -12,6 +12,9 @@
 #include "TextConsole.h"
 
 #include <GameInput.h>
+#if GAMEINPUT_API_VERSION == 1
+using namespace GameInput::v1;
+#endif
 
 // A basic sample implementation that creates a D3D12 device and
 // provides a render loop.
