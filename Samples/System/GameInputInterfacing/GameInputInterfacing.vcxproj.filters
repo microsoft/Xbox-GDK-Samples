@@ -48,6 +48,8 @@
     <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
       <Filter>External</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h" />
     <ClInclude Include="..\..\..\Kits\ATGTK\Texture.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
@@ -91,26 +93,8 @@
     <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
       <Filter>Assets\Fonts</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="Assets\layout.json">
-      <Filter>Assets\Layouts</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="Assets\device.json">
-      <Filter>Assets\Layouts</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="Assets\gamepad.json">
-      <Filter>Assets\Layouts</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="Assets\buttons.json">
-      <Filter>Assets\Layouts</Filter>
-    </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="Assets\styles.json">
-      <Filter>Assets\Layouts</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="Assets\roundy-border.png">
-      <Filter>Assets\Textures</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="Assets\arcade.json">
       <Filter>Assets\Layouts</Filter>
@@ -118,19 +102,34 @@
     <CopyFileToFolders Include="Assets\axis.json">
       <Filter>Assets\Layouts</Filter>
     </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\buttons.json">
+      <Filter>Assets\Layouts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\device.json">
+      <Filter>Assets\Layouts</Filter>
+    </CopyFileToFolders>
     <CopyFileToFolders Include="Assets\flightstick.json">
+      <Filter>Assets\Layouts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\gamepad.json">
       <Filter>Assets\Layouts</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="Assets\keys.json">
       <Filter>Assets\Layouts</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="Assets\motion.json">
+    <CopyFileToFolders Include="Assets\layout.json">
       <Filter>Assets\Layouts</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="Assets\mouse.json">
       <Filter>Assets\Layouts</Filter>
     </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\styles.json">
+      <Filter>Assets\Layouts</Filter>
+    </CopyFileToFolders>
     <CopyFileToFolders Include="Assets\switches.json">
+      <Filter>Assets\Layouts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\touch.json">
       <Filter>Assets\Layouts</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="Assets\uinavigation.json">
@@ -139,19 +138,16 @@
     <CopyFileToFolders Include="Assets\wheel.json">
       <Filter>Assets\Layouts</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="Assets\touch.json">
-      <Filter>Assets\Layouts</Filter>
+    <CopyFileToFolders Include="..\..\..\Media\Textures\roundy-border.png">
+      <Filter>Assets\Textures</Filter>
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Readme.docx" />
-    <None Include="GameInputInterfacing_ko-kr.docx" />
-    <None Include="GameInputInterfacing_zh-cn.docx" />
-    <None Include="GameInputInterfacing_ja-jp.docx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
-      <Filter>Assets</Filter>
-    </Image>
+    <None Include="readme.md" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
+    <None Include="packages.config" />
+    <None Include="..\..\NuGet.config" />
   </ItemGroup>
 </Project>

@@ -54,6 +54,7 @@ void Sample::Initialize(HWND window, int width, int height)
     CreateWindowSizeDependentResources();
 
     HRESULT hr = GameInputCreate(&m_gameInput);
+
 #ifdef _GAMING_XBOX
     DX::ThrowIfFailed(hr);
 #else

@@ -15,7 +15,6 @@ extern void ExitSample() noexcept;
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
-
 using Microsoft::WRL::ComPtr;
 
 namespace Moves
@@ -108,8 +107,9 @@ Sample::Sample() noexcept(false) :
     m_scale(1.25f)
 {
     // Renders only 2D, so no need for a depth buffer.
-    m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_UNKNOWN);
+    m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_UNKNOWN, 2);
     m_deviceResources->SetClearColor(ATG::Colors::Background);
+    m_deviceResources->RegisterDeviceNotify(this);
 }
 
 Sample::~Sample()
@@ -118,17 +118,26 @@ Sample::~Sample()
     {
         if (m_gameInput)
         {
+#if GAMEINPUT_API_VERSION >= 1
+            std::ignore = m_gameInput->UnregisterCallback(m_deviceToken);
+#else
             std::ignore = m_gameInput->UnregisterCallback(m_deviceToken, UINT64_MAX);
+#endif
         }
 
         m_deviceToken = 0;
     }
+
+    if (m_deviceResources)
+    {
+        m_deviceResources->WaitForGpu();
+    }
 }
 
 // Initialize the Direct3D resources required to run.
-void Sample::Initialize(HWND window)
+void Sample::Initialize(HWND window, int width, int height)
 {
-    m_deviceResources->SetWindow(window);
+    m_deviceResources->SetWindow(window, width, height);
 
     m_deviceResources->CreateDeviceResources();
     CreateDeviceDependentResources();
@@ -150,9 +159,9 @@ void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
 
-    // For PresentX presentation loops, the wait for the origin event
-    // should be just before input is processed.
+#ifdef _GAMING_XBOX
     m_deviceResources->WaitForOrigin();
+#endif
 
     m_timer.Tick([&]()
     {
@@ -168,7 +177,7 @@ void Sample::Tick()
 // Updates the world.
 void Sample::Update(DX::StepTimer const&)
 {
-    PIXScopedEvent(PIX_COLOR_DEFAULT, L"Update");
+    PIXBeginEvent(PIX_COLOR_DEFAULT, L"Update");
 
     GameInputGamepadState currentState;
 
@@ -316,6 +325,8 @@ void Sample::Update(DX::StepTimer const&)
             }
         }
     }
+
+    PIXEndEvent();
 }
 #pragma endregion
 
@@ -418,14 +429,14 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    const auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, nullptr);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto const viewport = m_deviceResources->GetScreenViewport();
-    auto const scissorRect = m_deviceResources->GetScissorRect();
+    const auto viewport = m_deviceResources->GetScreenViewport();
+    const auto scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -445,6 +456,32 @@ void Sample::OnResuming()
     m_deviceResources->Resume();
     m_timer.ResetElapsedTime();
 }
+
+void Sample::OnWindowMoved()
+{
+    const auto r = m_deviceResources->GetOutputSize();
+    m_deviceResources->WindowSizeChanged(r.right, r.bottom);
+}
+
+void Sample::OnDisplayChange()
+{
+    m_deviceResources->UpdateColorSpace();
+}
+
+void Sample::OnWindowSizeChanged(int width, int height)
+{
+    if (!m_deviceResources->WindowSizeChanged(width, height))
+        return;
+
+    CreateWindowSizeDependentResources();
+}
+
+// Properties
+void Sample::GetDefaultSize(int& width, int& height) const noexcept
+{
+    width = 1920;
+    height = 1080;
+}
 #pragma endregion
 
 #pragma region Direct3D Resources
@@ -452,6 +489,15 @@ void Sample::OnResuming()
 void Sample::CreateDeviceDependentResources()
 {
     auto device = m_deviceResources->GetD3DDevice();
+
+#ifdef _GAMING_DESKTOP
+    D3D12_FEATURE_DATA_SHADER_MODEL shaderModel = { D3D_SHADER_MODEL_6_0 };
+    if (FAILED(device->CheckFeatureSupport(D3D12_FEATURE_SHADER_MODEL, &shaderModel, sizeof(shaderModel)))
+        || (shaderModel.HighestShaderModel < D3D_SHADER_MODEL_6_0))
+    {
+        throw std::runtime_error("Shader Model 6.0 is not supported!");
+    }
+#endif
 
     m_graphicsMemory = std::make_unique<GraphicsMemory>(device);
 
@@ -491,5 +537,17 @@ void Sample::CreateWindowSizeDependentResources()
 {
     auto const vp = m_deviceResources->GetScreenViewport();
     m_batch->SetViewport(vp);
+}
+
+void Sample::OnDeviceLost()
+{
+    m_graphicsMemory.reset();
+}
+
+void Sample::OnDeviceRestored()
+{
+    CreateDeviceDependentResources();
+
+    CreateWindowSizeDependentResources();
 }
 #pragma endregion

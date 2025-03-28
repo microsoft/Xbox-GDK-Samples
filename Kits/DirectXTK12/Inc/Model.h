@@ -45,6 +45,21 @@
 #include "GraphicsMemory.h"
 #include "Effects.h"
 
+#ifndef DIRECTX_TOOLKIT_API
+#ifdef DIRECTX_TOOLKIT_EXPORT
+#define DIRECTX_TOOLKIT_API __declspec(dllexport)
+#elif defined(DIRECTX_TOOLKIT_IMPORT)
+#define DIRECTX_TOOLKIT_API __declspec(dllimport)
+#else
+#define DIRECTX_TOOLKIT_API
+#endif
+#endif
+
+#if defined(DIRECTX_TOOLKIT_IMPORT) && defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable : 4251)
+#endif
+
 
 namespace DirectX
 {
@@ -67,7 +82,7 @@ namespace DirectX
 
         //------------------------------------------------------------------------------
         // Frame hierarchy for rigid body and skeletal animation
-        struct ModelBone
+        struct DIRECTX_TOOLKIT_API ModelBone
         {
             ModelBone() noexcept :
                 parentIndex(c_Invalid),
@@ -107,7 +122,7 @@ namespace DirectX
 
         //------------------------------------------------------------------------------
         // Each mesh part is a submesh with a single effect
-        class ModelMeshPart
+        class DIRECTX_TOOLKIT_API ModelMeshPart
         {
         public:
             ModelMeshPart(uint32_t partIndex) noexcept;
@@ -235,7 +250,7 @@ namespace DirectX
 
         //------------------------------------------------------------------------------
         // A mesh consists of one or more model mesh parts
-        class ModelMesh
+        class DIRECTX_TOOLKIT_API ModelMesh
         {
         public:
             ModelMesh() noexcept;
@@ -243,8 +258,8 @@ namespace DirectX
             ModelMesh(ModelMesh&&) = default;
             ModelMesh& operator= (ModelMesh&&) = default;
 
-            ModelMesh(ModelMesh const&) = default;
-            ModelMesh& operator= (ModelMesh const&) = default;
+            ModelMesh(ModelMesh const&) = delete;
+            ModelMesh& operator= (ModelMesh const&) = delete;
 
             virtual ~ModelMesh();
 
@@ -357,7 +372,7 @@ namespace DirectX
 
         //------------------------------------------------------------------------------
         // A model consists of one or more meshes
-        class Model
+        class DIRECTX_TOOLKIT_API Model
         {
         public:
             Model() noexcept;
@@ -526,6 +541,33 @@ namespace DirectX
                 _In_opt_ ID3D12Device* device,
                 _In_z_ const wchar_t* szFileName,
                 ModelLoaderFlags flags = ModelLoader_Default);
+
+#ifdef __cpp_lib_byte
+            static std::unique_ptr<Model> __cdecl CreateFromCMO(
+                _In_opt_ ID3D12Device* device,
+                _In_reads_bytes_(dataSize) const std::byte* meshData, _In_ size_t dataSize,
+                ModelLoaderFlags flags = ModelLoader_Default,
+                _Out_opt_ size_t* animsOffset = nullptr)
+            {
+                return CreateFromCMO(device, reinterpret_cast<const uint8_t*>(meshData), dataSize, flags, animsOffset);
+            }
+
+            static std::unique_ptr<Model> __cdecl CreateFromSDKMESH(
+                _In_opt_ ID3D12Device* device,
+                _In_reads_bytes_(dataSize) const std::byte* meshData, _In_ size_t dataSize,
+                ModelLoaderFlags flags = ModelLoader_Default)
+            {
+                return CreateFromSDKMESH(device, reinterpret_cast<const uint8_t*>(meshData), dataSize, flags);
+            }
+
+            static std::unique_ptr<Model> __cdecl CreateFromVBO(
+                _In_opt_ ID3D12Device* device,
+                _In_reads_bytes_(dataSize) const std::byte* meshData, _In_ size_t dataSize,
+                ModelLoaderFlags flags = ModelLoader_Default)
+            {
+                return CreateFromVBO(device, reinterpret_cast<const uint8_t*>(meshData), dataSize, flags);
+            }
+#endif //  __cpp_lib_byte
 
             // Utility function for getting a GPU descriptor for a mesh part/material index. If there is no texture the
             // descriptor will be zero.
@@ -716,3 +758,7 @@ namespace DirectX
     #endif
     }
 }
+
+#if defined(DIRECTX_TOOLKIT_IMPORT) && defined(_MSC_VER)
+#pragma warning(pop)
+#endif

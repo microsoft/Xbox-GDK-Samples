@@ -25,6 +25,17 @@
 #define DIRECTX_ENABLE_SEEK_TABLES
 #endif
 
+#ifndef DIRECTX_TOOLKIT_API
+#ifdef DIRECTX_TOOLKIT_EXPORT
+#define DIRECTX_TOOLKIT_API __declspec(dllexport)
+#elif defined(DIRECTX_TOOLKIT_IMPORT)
+#define DIRECTX_TOOLKIT_API __declspec(dllimport)
+#else
+#define DIRECTX_TOOLKIT_API
+#endif
+#endif
+
+
 namespace DirectX
 {
     // Helper for getting a format tag from a WAVEFORMATEX
@@ -55,31 +66,31 @@ namespace DirectX
 
 
     // Helper for validating wave format structure
-    bool IsValid(_In_ const WAVEFORMATEX* wfx) noexcept;
+    DIRECTX_TOOLKIT_API bool __cdecl IsValid(_In_ const WAVEFORMATEX* wfx) noexcept;
 
 
     // Helper for getting a default channel mask from channels
-    uint32_t GetDefaultChannelMask(int channels) noexcept;
+    DIRECTX_TOOLKIT_API uint32_t __cdecl GetDefaultChannelMask(int channels) noexcept;
 
 
     // Helpers for creating various wave format structures
-    void CreateIntegerPCM(_Out_ WAVEFORMATEX* wfx,
+    void __cdecl CreateIntegerPCM(_Out_ WAVEFORMATEX* wfx,
         int sampleRate, int channels, int sampleBits) noexcept;
-    void CreateFloatPCM(_Out_ WAVEFORMATEX* wfx,
+    void __cdecl CreateFloatPCM(_Out_ WAVEFORMATEX* wfx,
         int sampleRate, int channels) noexcept;
-    void CreateADPCM(_Out_writes_bytes_(wfxSize) WAVEFORMATEX* wfx, size_t wfxSize,
+    void __cdecl CreateADPCM(_Out_writes_bytes_(wfxSize) WAVEFORMATEX* wfx, size_t wfxSize,
         int sampleRate, int channels, int samplesPerBlock) noexcept(false);
 #ifdef DIRECTX_ENABLE_XWMA
-    void CreateXWMA(_Out_ WAVEFORMATEX* wfx,
+    void __cdecl CreateXWMA(_Out_ WAVEFORMATEX* wfx,
         int sampleRate, int channels, int blockAlign, int avgBytes, bool wma3) noexcept;
 #endif
 #ifdef DIRECTX_ENABLE_XMA2
-    void CreateXMA2(_Out_writes_bytes_(wfxSize) WAVEFORMATEX* wfx, size_t wfxSize,
+    void __cdecl CreateXMA2(_Out_writes_bytes_(wfxSize) WAVEFORMATEX* wfx, size_t wfxSize,
         int sampleRate, int channels, int bytesPerBlock, int blockCount, int samplesEncoded) noexcept(false);
 #endif
 
     // Helper for computing pan volume matrix
-    bool ComputePan(float pan, unsigned int channels, _Out_writes_(16) float* matrix) noexcept;
+    bool __cdecl ComputePan(float pan, unsigned int channels, _Out_writes_(16) float* matrix) noexcept;
 
     // Helper class for implementing SoundEffectInstance
     class SoundEffectInstanceBase
@@ -94,6 +105,7 @@ namespace DirectX
             mFreqRatio(1.f),
             mPan(0.f),
             mFlags(SoundEffectInstance_Default),
+            mX3DCalcFlags(0),
             mDirectVoice(nullptr),
             mReverbVoice(nullptr),
             mDSPSettings{}
@@ -115,13 +127,12 @@ namespace DirectX
         {
             assert(eng != nullptr);
             engine = eng;
+            mFlags = flags;
+
+            UpdateCalculateFlags();
+
             mDirectVoice = eng->GetMasterVoice();
             mReverbVoice = eng->GetReverbVoice();
-
-            if (eng->GetChannelMask() & SPEAKER_LOW_FREQUENCY)
-                mFlags = flags | SoundEffectInstance_UseRedirectLFE;
-            else
-                mFlags = flags & ~SoundEffectInstance_UseRedirectLFE;
 
             memset(&mDSPSettings, 0, sizeof(X3DAUDIO_DSP_SETTINGS));
             assert(wfx != nullptr);
@@ -322,10 +333,7 @@ namespace DirectX
             mDirectVoice = engine->GetMasterVoice();
             mReverbVoice = engine->GetReverbVoice();
 
-            if (engine->GetChannelMask() & SPEAKER_LOW_FREQUENCY)
-                mFlags = mFlags | SoundEffectInstance_UseRedirectLFE;
-            else
-                mFlags = mFlags & ~SoundEffectInstance_UseRedirectLFE;
+            UpdateCalculateFlags();
 
             mDSPSettings.DstChannelCount = engine->GetOutputChannels();
         }
@@ -379,9 +387,25 @@ namespace DirectX
         float                       mFreqRatio;
         float                       mPan;
         SOUND_EFFECT_INSTANCE_FLAGS mFlags;
+        uint32_t                    mX3DCalcFlags;
         IXAudio2Voice*              mDirectVoice;
         IXAudio2Voice*              mReverbVoice;
         X3DAUDIO_DSP_SETTINGS       mDSPSettings;
+
+        void UpdateCalculateFlags()
+        {
+            assert(engine != nullptr);
+            mX3DCalcFlags = engine->Get3DCalculateFlags();
+            if ((engine->GetChannelMask() & SPEAKER_LOW_FREQUENCY) && (mFlags & SoundEffectInstance_UseRedirectLFE))
+            {
+                mX3DCalcFlags |= X3DAUDIO_CALCULATE_REDIRECT_TO_LFE;
+            }
+
+            if (mFlags & SoundEffectInstance_ZeroCenter3D)
+            {
+                mX3DCalcFlags |= X3DAUDIO_CALCULATE_ZEROCENTER;
+            }
+        }
     };
 
     struct WaveBankSeekData

@@ -58,10 +58,12 @@
     <ClCompile Include="Gamepad.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Readme.docx" />
-    <None Include="Gamepad_ko-kr.docx" />
-    <None Include="Gamepad_zh-cn.docx" />
-    <None Include="Gamepad_ja-jp.docx" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
+    <None Include="readme.md" />
+    <None Include="packages.config" />
+    <None Include="..\..\NuGet.config" />
   </ItemGroup>
   <ItemGroup>
     <MGCCompile Include="MicrosoftGameConfig.mgc" />
@@ -88,8 +90,14 @@
     <CopyFileToFolders Include="..\..\..\Media\Textures\gamepad.dds">
       <Filter>Assets</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont" />
-    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_24.spritefont" />
-    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont" />
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_24.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

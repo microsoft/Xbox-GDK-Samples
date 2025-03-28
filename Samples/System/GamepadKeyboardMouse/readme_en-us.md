@@ -13,11 +13,11 @@ This sample demonstrates how to read and process inputs from gamepad, mouse, and
 
 # Building the sample
 
-If using an Xbox One devkit, set the active solution platform to `Gaming.Xbox.XboxOne.x64`.
-
-If using an Xbox Series X|S devkit, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
-
-If using a PC, set the active solution platform to Gaming.Desktop.x64.
+- If building for Xbox One, set the active solution platform to `Gaming.Xbox.XboxOne.x64`.
+- If building for Xbox Series X|S, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
+- If building for PC, set the active solution platform to Gaming.Desktop.x64.\
+**NOTE: This requires the [GameInput NuGet package](https://www.nuget.org/packages/Microsoft.GameInput) and its 
+included redistributable to be installed.  Please see [GameInput on PC](https://learn.microsoft.com/gaming/gdk/_content/gc/input/overviews/input-nuget) for more information.**.
 
 *For more information, see* __Running samples__, *in the GDK documentation.*
 
@@ -59,13 +59,11 @@ For more information about how to handle multiple users, user
 sign-in/out events, gamepad pairing, XR handling, and other more
 advanced user topics, please see the UserManagement Sample.
 
-# Known Issues
-
-* GameInput does not currently support laptop trackpads.
-
 # Update history
 
 **Initial Release:** Microsoft Game Development Kit (March 2023)
+- March 2025: Added support for GameInput v1 on PC via the
+  [GameInput NuGet package](https://www.nuget.org/packages/Microsoft.GameInput)
 
 # Privacy Statement
 

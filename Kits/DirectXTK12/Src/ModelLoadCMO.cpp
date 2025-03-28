@@ -376,7 +376,7 @@ std::unique_ptr<Model> DirectX::Model::CreateFromCMO(
                     throw std::runtime_error("IB too large for DirectX 12");
             }
 
-            auto const ibBytes = static_cast<size_t>(sizeInBytes);
+            const auto ibBytes = static_cast<size_t>(sizeInBytes);
 
             auto indexes = reinterpret_cast<const uint16_t*>(meshData + usedSize);
             usedSize += ibBytes;
@@ -781,7 +781,7 @@ std::unique_ptr<Model> DirectX::Model::CreateFromCMO(
 
             auto& mat = materials[sm.MaterialIndex];
 
-            auto part = new ModelMeshPart(partCount++);
+            auto part = std::make_unique<ModelMeshPart>(partCount++);
 
             part->indexCount = sm.PrimCount * 3;
             part->materialIndex = mat.materialIndex;
@@ -795,11 +795,11 @@ std::unique_ptr<Model> DirectX::Model::CreateFromCMO(
 
             if (mat.pMaterial->Diffuse.w < 1)
             {
-                mesh->alphaMeshParts.emplace_back(part);
+                mesh->alphaMeshParts.emplace_back(std::move(part));
             }
             else
             {
-                mesh->opaqueMeshParts.emplace_back(part);
+                mesh->opaqueMeshParts.emplace_back(std::move(part));
             }
         }
 

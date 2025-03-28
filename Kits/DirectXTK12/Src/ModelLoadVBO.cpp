@@ -76,7 +76,7 @@ std::unique_ptr<Model> DirectX::Model::CreateFromVBO(
             throw std::runtime_error("VB too large for DirectX 12");
     }
 
-    auto const vertSize = static_cast<size_t>(sizeInBytes);
+    const auto vertSize = static_cast<size_t>(sizeInBytes);
 
     if (dataSize < (vertSize + sizeof(VBO::header_t)))
         throw std::runtime_error("End of file");
@@ -92,7 +92,7 @@ std::unique_ptr<Model> DirectX::Model::CreateFromVBO(
             throw std::runtime_error("IB too large for DirectX 12");
     }
 
-    auto const indexSize = static_cast<size_t>(sizeInBytes);
+    const auto indexSize = static_cast<size_t>(sizeInBytes);
 
     if (dataSize < (sizeof(VBO::header_t) + vertSize + indexSize))
         throw std::runtime_error("End of file");
@@ -106,7 +106,7 @@ std::unique_ptr<Model> DirectX::Model::CreateFromVBO(
     auto ib = GraphicsMemory::Get(device).Allocate(indexSize, 16, GraphicsMemory::TAG_INDEX);
     memcpy(ib.Memory(), indices, indexSize);
 
-    auto part = new ModelMeshPart(0);
+    auto part = std::make_unique<ModelMeshPart>(0);
     part->materialIndex = 0;
     part->indexCount = header->numIndices;
     part->startIndex = 0;
@@ -121,9 +121,11 @@ std::unique_ptr<Model> DirectX::Model::CreateFromVBO(
     auto mesh = std::make_shared<ModelMesh>();
     BoundingSphere::CreateFromPoints(mesh->boundingSphere, header->numVertices, &verts->position, sizeof(VertexPositionNormalTexture));
     BoundingBox::CreateFromPoints(mesh->boundingBox, header->numVertices, &verts->position, sizeof(VertexPositionNormalTexture));
-    mesh->opaqueMeshParts.emplace_back(part);
+    mesh->opaqueMeshParts.reserve(1);
+    mesh->opaqueMeshParts.emplace_back(std::move(part));
 
     auto model = std::make_unique<Model>();
+    model->meshes.reserve(1);
     model->meshes.emplace_back(mesh);
 
     return model;

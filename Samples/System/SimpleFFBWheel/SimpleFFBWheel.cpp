@@ -81,7 +81,14 @@ void Sample::StartEffect(EffectType type)
     if (!m_wheelDevice)
         return;
 
-    auto deviceInfo = m_wheelDevice->GetDeviceInfo();
+    const GameInputDeviceInfo* deviceInfo;
+
+#if GAMEINPUT_API_VERSION >= 1
+    m_wheelDevice->GetDeviceInfo(&deviceInfo);
+#else
+    deviceInfo = m_wheelDevice->GetDeviceInfo();
+#endif
+
     bool foundMotor = false;
     SampleEffect& sampleEffect = GetSampleEffect(type);
     uint32_t motorIndex;
@@ -302,7 +309,13 @@ void CALLBACK Sample::OnGameInputDeviceAddedRemoved(
 
     if (currentStatus & GameInputDeviceConnected)
     {
-        const GameInputDeviceInfo* deviceInfo = device->GetDeviceInfo();
+        const GameInputDeviceInfo* deviceInfo;
+
+#if GAMEINPUT_API_VERSION >= 1
+        device->GetDeviceInfo(&deviceInfo);
+#else
+        deviceInfo = device->GetDeviceInfo();
+#endif
 
         // [SAMPLE] if we aren't already tracking a FFB wheel device
         if (!sample->m_wheelDevice)
@@ -351,7 +364,11 @@ Sample::~Sample()
     // [SAMPLE] Unregister the device callback on exit
     if (m_callbackToken)
     {
+#if GAMEINPUT_API_VERSION >= 1
+        m_gameInput->UnregisterCallback(m_callbackToken);
+#else
         m_gameInput->UnregisterCallback(m_callbackToken, 5000);
+#endif
         m_callbackToken = 0;
     }
 

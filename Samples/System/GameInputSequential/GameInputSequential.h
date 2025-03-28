@@ -9,8 +9,12 @@
 
 #include "DeviceResources.h"
 #include "StepTimer.h"
+#include "SampleGUI.h"
 
 #include <GameInput.h>
+#if GAMEINPUT_API_VERSION == 1
+using namespace GameInput::v1;
+#endif
 
 constexpr size_t COMBOCOUNT = 4;
 
@@ -43,7 +47,7 @@ struct InputMove
 
 // A basic sample implementation that creates a D3D12 device and
 // provides a render loop.
-class Sample
+class Sample final : public DX::IDeviceNotify
 {
 public:
 
@@ -57,16 +61,33 @@ public:
     Sample& operator= (Sample const&) = delete;
 
     // Initialization and management
-    void Initialize(HWND window);
+    void Initialize(HWND window, int width, int height);
 
     // Basic render loop
     void Tick();
 
+    // IDeviceNotify
+    void OnDeviceLost() override;
+    void OnDeviceRestored() override;
+
     // Messages
+    void OnActivated() {}
+    void OnDeactivated() {}
     void OnSuspending();
     void OnResuming();
+#ifdef _GAMING_XBOX
     void OnConstrained() {}
     void OnUnConstrained() {}
+#endif
+    void OnWindowMoved();
+    void OnDisplayChange();
+    void OnWindowSizeChanged(int width, int height);
+
+    // Properties
+    void GetDefaultSize(int& width, int& height) const noexcept;
+#ifdef _GAMING_XBOX
+    bool RequestHDRMode() const noexcept { return m_deviceResources ? (m_deviceResources->GetDeviceOptions() & DX::DeviceResources::c_EnableHDR) != 0 : false; }
+#endif
 
     Microsoft::WRL::ComPtr<IGameInputDevice>    m_device;
     Microsoft::WRL::ComPtr<IGameInput>			m_gameInput;

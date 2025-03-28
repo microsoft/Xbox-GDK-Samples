@@ -13,6 +13,9 @@
 #include "TextConsole.h"
 
 #include <GameInput.h>
+#if GAMEINPUT_API_VERSION == 1
+using namespace GameInput::v1;
+#endif
 
 namespace
 {

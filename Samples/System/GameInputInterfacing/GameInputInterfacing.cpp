@@ -5,6 +5,7 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.
 //--------------------------------------------------------------------------------------
 
+
 #include "pch.h"
 #include "GameInputInterfacing.h"
 
@@ -65,18 +66,26 @@ namespace
 }
 
 Sample::Sample() noexcept(false) :
-    m_frame(0),
-    m_deviceToken(0)
+    m_frame(0)
 {
     // Renders only 2D, so no need for a depth buffer.
-    m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_UNKNOWN);
+    m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_UNKNOWN, 2);
     m_deviceResources->SetClearColor(ATG::Colors::Background);
+    m_deviceResources->RegisterDeviceNotify(this);
+}
+
+Sample::~Sample()
+{
+    if (m_deviceResources)
+    {
+        m_deviceResources->WaitForGpu();
+    }
 }
 
 // Initialize the Direct3D resources required to run.
-void Sample::Initialize(HWND window)
+void Sample::Initialize(HWND window, int width, int height)
 {
-    m_deviceResources->SetWindow(window);
+    m_deviceResources->SetWindow(window, width, height);
 
     m_deviceResources->CreateDeviceResources();
     CreateDeviceDependentResources();
@@ -90,28 +99,15 @@ void Sample::Initialize(HWND window)
     m_uiManager.GetRootElement()->AddChildFromLayout("Assets/layout.json");
 }
 
-Sample::~Sample()
-{
-    if (m_deviceToken)
-    {
-        if (m_gameInput)
-        {
-            std::ignore = m_gameInput->UnregisterCallback(m_deviceToken, UINT64_MAX);
-        }
-
-        m_deviceToken = 0;
-    }
-}
-
 #pragma region Frame Update
 // Executes basic render loop.
 void Sample::Tick()
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
 
-    // For PresentX presentation loops, the wait for the origin event
-    // should be just before input is processed.
+#ifdef _GAMING_XBOX
     m_deviceResources->WaitForOrigin();
+#endif
 
     m_timer.Tick([&]()
     {
@@ -127,7 +123,7 @@ void Sample::Tick()
 // Updates the world.
 void Sample::Update(DX::StepTimer const& timer)
 {
-    PIXScopedEvent(PIX_COLOR_DEFAULT, L"Update");
+    PIXBeginEvent(PIX_COLOR_DEFAULT, L"Update");
 
     for (size_t i = 0; i < c_maxDevices; i++)
     {
@@ -301,7 +297,8 @@ void Sample::Update(DX::StepTimer const& timer)
                 }
 
                 //Touch states
-                //PC AND XCLOUD ONLY
+                //CONSOLE-BASED XCLOUD ONLY
+#ifdef _GAMING_XBOX
                 inputCount = m_reading->GetTouchCount();
                 if (inputCount > 0)
                 {
@@ -330,7 +327,7 @@ void Sample::Update(DX::StepTimer const& timer)
                         k++;
                     }
                 }
-
+#endif
                 //Mouse state
                 GameInputMouseState mouseState;
                 if (m_reading->GetMouseState(&mouseState))
@@ -371,82 +368,21 @@ void Sample::Update(DX::StepTimer const& timer)
                     currentElement->GetTypedSubElementById<UIStaticText>(ID("Inputs"))->SetDisplayText(mouseString);
                     currentElement->GetTypedSubElementById<UIStaticText>(ID("X Value"))->SetDisplayText(std::to_string(mouseState.positionX));
                     currentElement->GetTypedSubElementById<UIStaticText>(ID("Y Value"))->SetDisplayText(std::to_string(mouseState.positionY));
+
+#if GAMEINPUT_API_VERSION >= 1
+                    // Absolute positioning is only supported on GameInput API version >= 1
+                    currentElement->GetTypedSubElementById<UIStaticText>(ID("Absolute X Value"))->SetDisplayText(std::to_string(mouseState.absolutePositionX));
+                    currentElement->GetTypedSubElementById<UIStaticText>(ID("Absolute Y Value"))->SetDisplayText(std::to_string(mouseState.absolutePositionY));
+#else
+                    // Hide the value everywhere else
+                    currentElement->GetTypedSubElementById<UIStaticText>(ID("Absolute X Label"))->SetVisible(false);
+                    currentElement->GetTypedSubElementById<UIStaticText>(ID("Absolute Y Label"))->SetVisible(false);
+                    currentElement->GetTypedSubElementById<UIStaticText>(ID("Absolute X Value"))->SetVisible(false);
+                    currentElement->GetTypedSubElementById<UIStaticText>(ID("Absolute Y Value"))->SetVisible(false);
+#endif
                     currentElement->GetTypedSubElementById<UIStaticText>(ID("WheelX Value"))->SetDisplayText(std::to_string(mouseState.wheelX));
                     currentElement->GetTypedSubElementById<UIStaticText>(ID("WheelY Value"))->SetDisplayText(std::to_string(mouseState.wheelY));
                 }
-
-// Motion state is NOT yet supported in GameInput, however
-// this code demonstrates what will work when it is implemented
-#if 0
-                //Motion states
-                //PC ONLY
-                GameInputMotionState motionState;
-                if (m_reading->GetMotionState(&motionState))
-                {
-                    currentElement = GetMotionUI(i);
-
-                    switch (motionState.magnetometerAccuracy)
-                    {
-                    case GameInputMotionAccuracyUnknown:
-                        currentElement->GetTypedSubElementById<UIStaticText>(ID("Mag Acc"))->SetDisplayText("MagnetometerAccuracy: Unknown");
-                        break;
-                    case GameInputMotionUnavailable:
-                        currentElement->GetTypedSubElementById<UIStaticText>(ID("Mag Acc"))->SetDisplayText("MagnetometerAccuracy: Unavailable");
-                        break;
-                    case GameInputMotionUnreliable:
-                        currentElement->GetTypedSubElementById<UIStaticText>(ID("Mag Acc"))->SetDisplayText("MagnetometerAccuracy: Unreliable");
-                        break;
-                    case GameInputMotionApproximate:
-                        currentElement->GetTypedSubElementById<UIStaticText>(ID("Mag Acc"))->SetDisplayText("MagnetometerAccuracy: Approximate");
-                        break;
-                    case GameInputMotionAccurate:
-                        currentElement->GetTypedSubElementById<UIStaticText>(ID("Mag Acc"))->SetDisplayText("MagnetometerAccuracy: Accurate");
-                        break;
-                    }
-
-                    switch (motionState.orientationAccuracy)
-                    {
-                    case GameInputMotionAccuracyUnknown:
-                        currentElement->GetTypedSubElementById<UIStaticText>(ID("Or Acc"))->SetDisplayText("OrientationAccuracy: Unknown");
-                        break;
-                    case GameInputMotionUnavailable:
-                        currentElement->GetTypedSubElementById<UIStaticText>(ID("Or Acc"))->SetDisplayText("OrientationAccuracy: Unavailable");
-                        break;
-                    case GameInputMotionUnreliable:
-                        currentElement->GetTypedSubElementById<UIStaticText>(ID("Or Acc"))->SetDisplayText("OrientationAccuracy: Unreliable");
-                        break;
-                    case GameInputMotionApproximate:
-                        currentElement->GetTypedSubElementById<UIStaticText>(ID("Or Acc"))->SetDisplayText("OrientationAccuracy: Approximate");
-                        break;
-                    case GameInputMotionAccurate:
-                        currentElement->GetTypedSubElementById<UIStaticText>(ID("Or Acc"))->SetDisplayText("OrientationAccuracy: Accurate");
-                        break;
-                    }
-
-                    currentElement->GetTypedSubElementById<UIStaticText>(ID("Acc"))->SetDisplayText("Acc: (" +
-                        std::to_string(motionState.accelerationX) + "," +
-                        std::to_string(motionState.accelerationY) + "," +
-                        std::to_string(motionState.accelerationZ) + ")");
-
-                    currentElement->GetTypedSubElementById<UIStaticText>(ID("Ang"))->SetDisplayText("Ang: (" +
-                        std::to_string(motionState.angularVelocityX) + "," +
-                        std::to_string(motionState.angularVelocityY) + "," +
-                        std::to_string(motionState.angularVelocityZ) + ")");
-
-                    currentElement->GetTypedSubElementById<UIStaticText>(ID("Mag"))->SetDisplayText("Mag: (" +
-                        std::to_string(motionState.magneticFieldX) + "," +
-                        std::to_string(motionState.magneticFieldY) + "," +
-                        std::to_string(motionState.magneticFieldZ) + ")");
-
-                    currentElement->GetTypedSubElementById<UIStaticText>(ID("Motion1"))->SetDisplayText("Motion: (" +
-                        std::to_string(motionState.orientationX) + "," +
-                        std::to_string(motionState.orientationY) + ",");
-
-                    currentElement->GetTypedSubElementById<UIStaticText>(ID("Motion2"))->SetDisplayText(
-                        std::to_string(motionState.orientationZ) + "," +
-                        std::to_string(motionState.orientationW) + ")");
-                }
-#endif
 
                 //Arcade stick states
                 GameInputArcadeStickState arcadeState;
@@ -844,6 +780,8 @@ void Sample::Update(DX::StepTimer const& timer)
     }
 
     m_uiManager.Update((float)timer.GetElapsedSeconds(), UIInputState());
+
+    PIXEndEvent();
 }
 #pragma endregion
 
@@ -863,6 +801,7 @@ void Sample::Render()
 
     auto commandList = m_deviceResources->GetCommandList();
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Render");
+    m_uiManager.Render();
 
     m_uiManager.Render();
 
@@ -882,14 +821,14 @@ void Sample::Clear()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
 
     // Clear the views.
-    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
+    const auto rtvDescriptor = m_deviceResources->GetRenderTargetView();
 
     commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, nullptr);
     commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
 
     // Set the viewport and scissor rect.
-    auto const viewport = m_deviceResources->GetScreenViewport();
-    auto const scissorRect = m_deviceResources->GetScissorRect();
+    const auto viewport = m_deviceResources->GetScreenViewport();
+    const auto scissorRect = m_deviceResources->GetScissorRect();
     commandList->RSSetViewports(1, &viewport);
     commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -909,6 +848,32 @@ void Sample::OnResuming()
     m_deviceResources->Resume();
     m_timer.ResetElapsedTime();
 }
+
+void Sample::OnWindowMoved()
+{
+    const auto r = m_deviceResources->GetOutputSize();
+    m_deviceResources->WindowSizeChanged(r.right, r.bottom);
+}
+
+void Sample::OnDisplayChange()
+{
+    m_deviceResources->UpdateColorSpace();
+}
+
+void Sample::OnWindowSizeChanged(int width, int height)
+{
+    if (!m_deviceResources->WindowSizeChanged(width, height))
+        return;
+
+    CreateWindowSizeDependentResources();
+}
+
+// Properties
+void Sample::GetDefaultSize(int& width, int& height) const noexcept
+{
+    width = 1280;
+    height = 720;
+}
 #pragma endregion
 
 #pragma region Direct3D Resources
@@ -917,9 +882,17 @@ void Sample::CreateDeviceDependentResources()
 {
     auto device = m_deviceResources->GetD3DDevice();
 
+#ifdef _GAMING_DESKTOP
+    D3D12_FEATURE_DATA_SHADER_MODEL shaderModel = { D3D_SHADER_MODEL_6_0 };
+    if (FAILED(device->CheckFeatureSupport(D3D12_FEATURE_SHADER_MODEL, &shaderModel, sizeof(shaderModel)))
+        || (shaderModel.HighestShaderModel < D3D_SHADER_MODEL_6_0))
+    {
+        throw std::runtime_error("Shader Model 6.0 is not supported!");
+    }
+#endif
+
     m_graphicsMemory = std::make_unique<GraphicsMemory>(device);
 
-    // create the style renderer for the UI manager to use for rendering the UI scene styles
     auto styleRenderer = std::make_unique<UIStyleRendererD3D>(*this);
     m_uiManager.GetStyleManager().InitializeStyleRenderer(std::move(styleRenderer));
 }
@@ -927,9 +900,22 @@ void Sample::CreateDeviceDependentResources()
 // Allocate all memory resources that change on a window SizeChanged event.
 void Sample::CreateWindowSizeDependentResources()
 {
-    // notify the UI manager of the current window size
-    auto const size = m_deviceResources->GetOutputSize();
+    const auto size = m_deviceResources->GetOutputSize();
     m_uiManager.SetWindowSize(size.right, size.bottom);
+
+}
+
+void Sample::OnDeviceLost()
+{
+    m_graphicsMemory.reset();
+    m_uiManager.GetStyleManager().ResetStyleRenderer();
+}
+
+void Sample::OnDeviceRestored()
+{
+    CreateDeviceDependentResources();
+
+    CreateWindowSizeDependentResources();
 }
 #pragma endregion
 
@@ -997,17 +983,6 @@ UIElementPtr Sample::GetKeysUI(size_t index)
     }
 
     return m_devices[index].elements[InputTypes::Keys];
-}
-
-UIElementPtr Sample::GetMotionUI(size_t index)
-{
-    if (!m_devices[index].elements[InputTypes::Motion])
-    {
-        m_devices[index].elements[InputTypes::Motion] = m_uiManager.InstantiatePrefab("Assets/motion.json");
-        m_uiManager.AttachTo(m_devices[index].elements[InputTypes::Motion], m_devices[index].deviceElement->GetSubElementById(ID("hsp")));
-    }
-
-    return m_devices[index].elements[InputTypes::Motion];
 }
 
 UIElementPtr Sample::GetMouseUI(size_t index)
