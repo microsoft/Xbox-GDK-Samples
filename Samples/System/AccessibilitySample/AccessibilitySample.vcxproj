@@ -832,15 +832,15 @@
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">
       </AdditionalInputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">false</LinkObjects>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">"$(GXDKLatest)bin\Scarlett\dxc.exe" /T rootsig_1_1 shaders\%(Filename).hlsl /E imgui_impl_dx12_rs /Fh shaders\$(Platform)\imgui_impl_dx12_rs.h</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">"dxc.exe" /T rootsig_1_1 shaders\%(Filename).hlsl /E imgui_impl_dx12_rs /Fh shaders\$(Platform)\imgui_impl_dx12_rs.h</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">
       </AdditionalInputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">false</LinkObjects>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">"$(GXDKLatest)bin\Scarlett\dxc.exe" /T rootsig_1_1 shaders\%(Filename).hlsl /E imgui_impl_dx12_rs /Fh shaders\$(Platform)\imgui_impl_dx12_rs.h</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">"dxc.exe" /T rootsig_1_1 shaders\%(Filename).hlsl /E imgui_impl_dx12_rs /Fh shaders\$(Platform)\imgui_impl_dx12_rs.h</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">
       </AdditionalInputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">false</LinkObjects>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">"$(GXDKLatest)bin\Scarlett\dxc.exe" /T rootsig_1_1 shaders\%(Filename).hlsl /E imgui_impl_dx12_rs /Fh shaders\$(Platform)\imgui_impl_dx12_rs.h</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">"dxc.exe" /T rootsig_1_1 shaders\%(Filename).hlsl /E imgui_impl_dx12_rs /Fh shaders\$(Platform)\imgui_impl_dx12_rs.h</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">
       </AdditionalInputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">false</LinkObjects>
