@@ -228,7 +228,7 @@ public:
     }
 
     template <typename T>
-    auto Get(uint32_t index) -> decltype(auto)
+    auto Get(size_t index) -> decltype(auto)
     {
         UI_ASSERT_ISARRAY();
         return GetArrayValue(index)->Get<T>();
@@ -434,12 +434,12 @@ public:
         return m_myJson->size();
     }
 
-    UIDataPtr operator[](uint32_t index)
+    UIDataPtr operator[](size_t index)
     {
         return GetArrayValue(index);
     }
 
-    UIDataPtr GetArrayValue(uint32_t index)
+    UIDataPtr GetArrayValue(size_t index)
     {
         UI_ASSERT(index <= GetArrayCount(), "Index is out of range!");
         return std::make_shared<UISerializedObject>((*m_myJson)[index]);

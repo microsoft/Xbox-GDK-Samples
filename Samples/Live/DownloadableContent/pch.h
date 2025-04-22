@@ -79,6 +79,7 @@
 #include <exception>
 #include <filesystem>
 #include <functional>
+#include <future>
 #include <iterator>
 #include <map>
 #include <memory>

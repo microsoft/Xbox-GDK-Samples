@@ -91,7 +91,7 @@ void UIConsoleWindow::ClearAllLines()
 
     auto lineHeight = textStyle->GetScaledLineHeight();
 
-    for (uint32_t consoleLineIndex = m_startingDisplayOffset; consoleLineIndex < m_linesOfText.size(); ++consoleLineIndex)
+    for (size_t consoleLineIndex = m_startingDisplayOffset; consoleLineIndex < m_linesOfText.size(); ++consoleLineIndex)
     {
         const auto& consoleLine = m_linesOfText[consoleLineIndex];
 

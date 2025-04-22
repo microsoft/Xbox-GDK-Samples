@@ -1,0 +1,18 @@
+{
+  "prefab": {
+    "classId": "Panel",
+    "size": [ 1380, 250 ],
+    "styleId": "background_style",
+    "focusable": false,
+    "subElements": [
+      {
+        "classId": "staticText",
+        "id": "Label",
+        "styleId": "panel_label_style",
+        "staticText": {
+          "text": "Exit"
+        }
+      }
+    ]
+  }
+}

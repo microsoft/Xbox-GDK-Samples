@@ -1,0 +1,334 @@
+﻿{  
+  "includes": [
+    "Assets/Layouts/sample-styles.json"
+  ],
+  "layout": {
+    "id": "SamplePanel",
+    "classId": "panel",
+    "styleId": "background_style",
+    "panel": {
+      "positioningAnchor": [ "left", "top" ],
+      "position": [ 0, 70 ],
+      "sizingAnchor": [ "left", "top" ],
+      "size": [ 1920, 830 ]
+    },
+    "childElements": [
+      {
+        "id": "GetLeaderboardButton",
+        "prefabRef": "Assets/Layouts/menu-button.json",
+        "position": [ 50, 140 ],
+        "subElements": [
+          {
+            "classId": "staticText",
+            "id": "Label",
+            "styleId": "button_label_style",
+            "staticText": {
+              "text": "Get Leaderboard data"
+            }
+          }
+        ]
+      },
+      {
+        "id": "GetEntityIDButton",
+        "prefabRef": "Assets/Layouts/menu-button.json",
+        "position": [ 50, 200 ],
+        "subElements": [
+          {
+            "classId": "staticText",
+            "id": "Label",
+            "styleId": "button_label_style",
+            "staticText": {
+              "text": "Get surroundings of EntityID"
+            }
+          }
+        ]
+      },
+      {
+        "id": "GetFriendLeaderboardButton",
+        "prefabRef": "Assets/Layouts/menu-button.json",
+        "position": [ 50, 260 ],
+        "subElements": [
+          {
+            "classId": "staticText",
+            "id": "Label",
+            "styleId": "button_label_style",
+            "staticText": {
+              "text": "Get Friend Leaderboard"
+            }
+          }
+        ]
+      },
+      {
+        "classId": "staticText",
+        "id": "GuideLabel",
+        "position": [ 50, 730 ],
+        "size": [ 500, 500 ],
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "styleId": "guide_label_style",
+        "isLegend": true,
+        "staticText": {
+          "text": "[DPad]: Navigate\n[A]: Select\n[LT]: Show preview Leaderboard\n[RT]: Show next Leaderboard\n[LB]: Show previous 10 scores\n[RB]: Show next 10 scores"
+        }
+      },
+      {
+        "id": "LeaderboardsPanel",
+        "classId": "panel",
+        "styleId": "leaderboards_style",
+        "panel": {
+          "positioningAnchor": [ "left", "top" ],
+          "position": [ 500, 120 ],
+          "sizingAnchor": [ "left", "top" ],
+          "size": [ 1400, 570 ]
+        }
+      },
+      {
+        "id": "PrevLeaderboardButton",
+        "prefabRef": "Assets/Layouts/select-leaderboard-button.json",
+        "position": [ 500, 50 ],
+        "subElements": [
+          {
+            "classId": "staticText",
+            "id": "Label",
+            "styleId": "leaderboard_button_label_style",
+            "position": [ 50, 0 ],
+            "staticText": {
+              "text": "Preview Leaderboard"
+            }
+          },
+          {
+            "classId": "staticText",
+            "id": "Label",
+            "styleId": "legend_style",
+            "position": [ 20, 12 ],
+            "isLegend": true,
+            "staticText": {
+              "text": "[LT]"
+            }
+          }
+        ]
+      },
+      {
+        "id": "NextLeaderboardButton",
+        "prefabRef": "Assets/Layouts/select-leaderboard-button.json",
+        "position": [ 800, 50 ],
+        "subElements": [
+          {
+            "classId": "staticText",
+            "id": "Label",
+            "styleId": "leaderboard_button_label_style",
+            "position": [ 20, 0 ],
+            "staticText": {
+              "text": "Next Leaderboard"
+            }
+          },
+          {
+            "classId": "staticText",
+            "id": "Label",
+            "styleId": "legend_style",
+            "position": [ 240, 12 ],
+            "isLegend": true,
+            "staticText": {
+              "text": "[RT]"
+            }
+          }
+        ]
+      },
+      {
+        "id": "PrevRankingsButton",
+        "prefabRef": "Assets/Layouts/select-ranking-button.json",
+        "position": [ 510, 625 ],
+        "subElements": [
+          {
+            "classId": "staticText",
+            "id": "Label",
+            "styleId": "leaderboard_button_label_style",
+            "position": [ 55, 0 ],
+            "staticText": {
+              "text": "Prev 10"
+            }
+          },
+          {
+            "classId": "staticText",
+            "id": "Label",
+            "styleId": "legend_style",
+            "position": [ 20, 12 ],
+            "isLegend": true,
+            "staticText": {
+              "text": "[LB]"
+            }
+          }
+        ]
+      },
+      {
+        "id": "NextRankingsButton",
+        "prefabRef": "Assets/Layouts/select-ranking-button.json",
+        "position": [ 690, 625 ],
+        "subElements": [
+          {
+            "classId": "staticText",
+            "id": "Label",
+            "styleId": "leaderboard_button_label_style",
+            "position": [ 20, 0 ],
+            "staticText": {
+              "text": "Next 10"
+            }
+          },
+          {
+            "classId": "staticText",
+            "id": "Label",
+            "styleId": "legend_style",
+            "position": [ 120, 12 ],
+            "isLegend": true,
+            "staticText": {
+              "text": "[RB]"
+            }
+          }
+        ]
+      },
+      {
+        "classId": "staticText",
+        "id": "LeaderboardsNameLabel",
+        "position": [ 510, 130 ],
+        "size": [ 1000, 50 ],
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "styleId": "panel_label_style",
+        "staticText": {
+          "text": "LeaderboardName"
+        }
+      },
+      {
+        "classId": "staticText",
+        "id": "LeaderboardsContentLabel",
+        "position": [ 510, 180 ],
+        "size": [ 1000, 550 ],
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "styleId": "leaderboard_contents_label_style",
+        "staticText": {
+          "text": ""
+        }
+      },
+      {
+        "classId": "staticText",
+        "id": "Scores_Label",
+        "position": [ 910, 130 ],
+        "size": [ 500, 500 ],
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "styleId": "panel_label_style",
+        "isLegend": true,
+        "staticText": {
+          "text": "Score"
+        }
+      },
+      {
+        "classId": "staticText",
+        "id": "Scores_Label2",
+        "position": [ 1100, 130 ],
+        "size": [ 500, 500 ],
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "styleId": "panel_label_style",
+        "isLegend": true,
+        "staticText": {
+          "text": "Rank"
+        }
+      },
+      {
+        "classId": "staticText",
+        "id": "Metadata_Label",
+        "position": [ 1305, 130 ],
+        "size": [ 500, 500 ],
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "styleId": "panel_label_style",
+        "isLegend": true,
+        "staticText": {
+          "text": "Metadata"
+        }
+      },
+      {
+        "classId": "staticText",
+        "id": "LastUpdate_Label",
+        "position": [ 1600, 130 ],
+        "size": [ 500, 500 ],
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "styleId": "panel_label_style",
+        "isLegend": true,
+        "staticText": {
+          "text": "LastUpdate"
+        }
+      },
+      {
+        "classId": "staticText",
+        "id": "LeaderboardsScoreLabel1",
+        "position": [ 890, 180 ],
+        "size": [ 1000, 550 ],
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "styleId": "leaderboard_scores_label_style",
+        "staticText": {
+          "text": ""
+        }
+      },
+      {
+        "classId": "staticText",
+        "id": "LeaderboardsScoreLabel2",
+        "position": [ 1120, 180 ],
+        "size": [ 1000, 550 ],
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "styleId": "leaderboard_scores_label_style",
+        "staticText": {
+          "text": ""
+        }
+      },
+      {
+        "classId": "staticText",
+        "id": "LeaderboardsMetadataLabel",
+        "position": [ 1300, 180 ],
+        "size": [ 1100, 550 ],
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "styleId": "leaderboard_metadata_label_style",
+        "staticText": {
+          "text": ""
+        }
+      },
+      {
+        "classId": "staticText",
+        "id": "LeaderboardsLastUpdateLabel",
+        "position": [ 1550, 180 ],
+        "size": [ 1100, 550 ],
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "styleId": "leaderboard_lastupdate_label_style",
+        "staticText": {
+          "text": ""
+        }
+      },
+      {
+        "classId": "Image",
+        "id": "Console_Background",
+        "position": [ 500, 700 ],
+        "size": [ 1400, 220 ],
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "style": {
+          "classId": "SpriteStyle",
+          "colorUsage": "override",
+          "color": [ 32, 32, 32, 1 ]
+        },
+        "childElements": [
+          {
+            "id": "ConsoleWindow",
+            "prefabRef": "Assets/Layouts/console-window.json"
+          }
+        ]
+      }
+    ]
+  }
+}

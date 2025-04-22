@@ -57,8 +57,8 @@ namespace DX
         if (!inFile)
         {
 #ifdef _DEBUG
-            wchar_t errorMessage[MAX_PATH] = {};
-            swprintf_s(errorMessage, MAX_PATH, L"ReadData: file not open %ls\n", name);
+            wchar_t errorMessage[1024] = {};
+            swprintf_s(errorMessage, 1024, L"ERROR: ReadData file not open %ls\n", name);
             OutputDebugStringW(errorMessage);
 #endif
             throw std::runtime_error("ReadData");

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>66e872cd-bf47-405a-854d-b1c97ebfbcce</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>94765aa9-0b6a-43cb-98ea-567d0949a371</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>7bd159e5-7b08-412b-8c74-3ad0bf1a0582</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>653649ea-07a5-4abd-8b44-a1d00ba5426f</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Textures">
+      <UniqueIdentifier>{600b2e9a-d0e9-4f3c-ab8b-d6b989a7ff88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Fonts">
+      <UniqueIdentifier>{bed165e7-d562-4cc5-bdb5-3f65c72e078c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{3ba0f437-9bca-4f3c-a317-cef2b9d8ad5e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="DirectStorageTextureShuffling.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="DirectStorageTextureShuffling.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\Shared.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </None>
+    <None Include="readme.md" />
+    <None Include="Assets\Textures\BC1_shuffled_compressed.bin">
+      <Filter>Assets\Textures</Filter>
+    </None>
+    <None Include="Assets\Textures\BC3_shuffled_compressed.bin">
+      <Filter>Assets\Textures</Filter>
+    </None>
+    <None Include="Assets\Textures\BC4_shuffled_compressed.bin">
+      <Filter>Assets\Textures</Filter>
+    </None>
+    <None Include="Assets\Textures\BC5_shuffled_compressed.bin">
+      <Filter>Assets\Textures</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\SimplePS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SimpleVS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\UnshuffleBC1.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\UnshuffleBC3.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\UnshuffleBC4.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\UnshuffleBC5.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+</Project>

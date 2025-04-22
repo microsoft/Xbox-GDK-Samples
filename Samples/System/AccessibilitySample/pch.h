@@ -16,10 +16,12 @@
 // Use the C++ standard templated min/max
 #define NOMINMAX
 
-// DirectX apps don't need GDI
+// ImGui Desktop needs GDI
+#ifdef _GAMING_XBOX
 #define NODRAWTEXT
 #define NOGDI
 #define NOBITMAP
+#endif // !_GAMING_XBOX
 
 // Include <mcx.h> if you need this
 #define NOMCX
@@ -77,6 +79,8 @@
 #include <cstring>
 #include <cwchar>
 #include <exception>
+#include <functional>
+#include <future>
 #include <iterator>
 #include <memory>
 #include <stdexcept>

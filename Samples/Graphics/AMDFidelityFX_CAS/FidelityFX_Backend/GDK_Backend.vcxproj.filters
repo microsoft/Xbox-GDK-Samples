@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="BuildGDKShaders.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="public_source">
+      <UniqueIdentifier>{0828ac35-abd2-4d67-893f-06080abc95f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="public_shaders">
+      <UniqueIdentifier>{ce82d28a-1568-43e7-9c56-7b62c97a9dff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="private_source">
+      <UniqueIdentifier>{c6a043d4-e972-4a00-9065-b01f084a0abe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="private_shaders">
+      <UniqueIdentifier>{3dd44943-7bf6-4f34-a570-703bd40c75d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="private_shaders\dx12">
+      <UniqueIdentifier>{4d99295f-a747-499a-8ec4-728c6d540472}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="private_shaders\xbox">
+      <UniqueIdentifier>{f00128b7-e032-4422-8a3a-0ced7c8ab710}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cas\ffx_cas_sharpen_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cas\ffx_cas_sharpen_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\ffx_gdk.cpp">
+      <Filter>private_source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\ffx_shader_blobs.cpp">
+      <Filter>private_source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\blob_accessors\ffx_cas_shaderblobs.cpp">
+      <Filter>private_source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\shared\ffx_assert.cpp">
+      <Filter>private_source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\ffx_dx12.cpp">
+      <Filter>private_source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\shared\ffx_breadcrumbs_list.cpp">
+      <Filter>private_source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\ffx_shader_blobs.h">
+      <Filter>private_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\blob_accessors\ffx_cas_shaderblobs.h">
+      <Filter>private_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\ffx_core.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\ffx_common_types.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\ffx_core_hlsl.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\ffx_core_gpu_common.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\ffx_core_gpu_common_half.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\cas\ffx_cas.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\cas\ffx_cas_callbacks_hlsl.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\cas\ffx_cas_resources.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\cas\ffx_cas_sharpen.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\host\backends\gdk\ffx_gdk.h">
+      <Filter>public_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\host\backends\dx12\ffx_dx12.h">
+      <Filter>public_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\host\backends\dx12\d3dx12.h">
+      <Filter>public_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\ffx_core_portability.h">
+      <Filter>public_source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\Kits\AMDTK\fidelityfx\tools\binary_store\FidelityFX_SC.exe" />
+  </ItemGroup>
+</Project>

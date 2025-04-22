@@ -410,7 +410,7 @@ namespace
         assert(panel != 0);
         assert(panel->GetUser() != 0);
 
-        auto const *cb = reinterpret_cast<std::function<void(bool, bool)>*>(panel->GetUser());
+        const auto *cb = reinterpret_cast<std::function<void(bool, bool)>*>(panel->GetUser());
 
         if (id == 1)
         {
@@ -1424,10 +1424,10 @@ public:
             m_heldTimer -= elapsedTime;
         }
 
-        auto const mstate = mouse.GetState();
+        const auto mstate = mouse.GetState();
         m_mouseButtonState.Update(mstate);
 
-        auto const kbstate = kb.GetState();
+        const auto kbstate = kb.GetState();
         m_keyboardState.Update(kbstate);
 
         bool result = false;
@@ -1855,7 +1855,7 @@ public:
         {
             font = m_midFont.get();
         }
-        
+
         assert(font != 0);
 
         return font;
@@ -2230,7 +2230,7 @@ void UIManager::SetWindow(const RECT& layout)
 
     for (auto it : pImpl->m_panels)
     {
-        if (it.second->IsVisible())
+        if (it.second->IsVisible()) // CodeQL [CodeQL.SM02310] False-positive due to STL usage
         {
             it.second->OnWindowSize(layout);
         }
@@ -2448,7 +2448,7 @@ void TextLabel::Render()
 
         text = m_wordWrap.c_str();
     }
-        
+
     // Determine layout
     XMFLOAT2 pos(float(m_screenRect.left), float(m_screenRect.top));
     if (m_style & (c_StyleAlignCenter | c_StyleAlignRight | c_StyleAlignMiddle | c_StyleAlignBottom))
@@ -2491,7 +2491,7 @@ void TextLabel::Render()
 
         mgr->DrawRect(m_screenRect, bgColor);
     }
-    
+
     const XMVECTOR color = XMLoadFloat4(&m_fgColor);
 
     font->DrawString(mgr->m_batch.get(), text, pos, color);
@@ -2626,7 +2626,7 @@ void Legend::Render()
 
         mgr->DrawRect(m_screenRect, bgColor);
     }
-        
+
 
     const XMVECTOR color = XMLoadFloat4(&m_fgColor);
     DX::DrawControllerString(mgr->m_batch.get(), font, ctrlFont, m_text.c_str(), pos, color);
@@ -2679,7 +2679,7 @@ void Button::Render()
     XMVECTOR fontColor;
 
     buttonColor = (m_focus) ? XMLoadFloat4(&mgr->mConfig.colorFocus) : XMLoadFloat4(&m_color);
-    
+
     if (m_focus && !m_noFocusColor)
     {
         buttonColor = XMLoadFloat4(&mgr->mConfig.colorFocus);
@@ -2755,7 +2755,7 @@ bool Button::OnSelected(IPanel* panel)
     {
         m_callBack(panel, this);
     }
-    
+
     if (m_style & c_StyleExit)
     {
         return true;
@@ -2885,7 +2885,7 @@ void CheckBox::Render()
     chkrct.bottom -= boxThickness;
 
     mgr->DrawRect(chkrct, ckColor);
-    
+
     font->DrawString(batch, m_text.c_str(), pos, fgColor);
 
     if (m_checked)
@@ -3808,7 +3808,7 @@ void TextList::RemoveItem(int index)
     auto it = m_items.begin() + index;
     m_items.erase(it);
     if (m_topItem >= static_cast<int>(m_items.size()))
-        --m_topItem;    
+        --m_topItem;
 }
 
 void TextList::RemoveAllItems()
@@ -3847,7 +3847,7 @@ void TextList::Render()
         const SpriteFont* font = mgr->SelectFont(m_style);
 
         m_lastHeight = (m_itemHeight <= 0) ? static_cast<int>(font->GetLineSpacing()) : m_itemHeight;
-                
+
         XMFLOAT2 pos = { float(m_itemRect.left), float(m_itemRect.top) };
 
         RECT selectRect = { m_itemRect.left, m_itemRect.top, m_itemRect.right, m_itemRect.top + m_lastHeight };
@@ -4579,7 +4579,7 @@ void Popup::Close()
 
     m_visible = false;
 
-    // For now, no focus stack. 
+    // For now, no focus stack.
     auto mgr = UIManager::Impl::s_uiManager;
     if (!mgr)
     {
@@ -4608,7 +4608,7 @@ void Popup::Cancel()
 
     m_visible = false;
 
-    // For now, no focus stack. 
+    // For now, no focus stack.
     auto mgr = UIManager::Impl::s_uiManager;
     if (!mgr)
     {
@@ -5055,7 +5055,7 @@ void Overlay::Cancel()
 
     m_visible = false;
 
-    // For now, no focus stack. 
+    // For now, no focus stack.
     auto mgr = UIManager::Impl::s_uiManager;
     if (!mgr)
     {

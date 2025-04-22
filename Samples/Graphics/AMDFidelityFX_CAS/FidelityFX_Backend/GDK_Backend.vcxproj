@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\packages\Microsoft.Direct3D.DXC.1.8.2407.12\build\native\Microsoft.Direct3D.DXC.props" Condition="Exists('..\..\..\packages\Microsoft.Direct3D.DXC.1.8.2407.12\build\native\Microsoft.Direct3D.DXC.props')" />
+  <Import Project="..\..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.props" Condition="Exists('..\..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.props')" />
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Gaming.Desktop.x64">
+      <Configuration>Debug</Configuration>
+      <Platform>Gaming.Desktop.x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Profile|Gaming.Desktop.x64">
+      <Configuration>Profile</Configuration>
+      <Platform>Gaming.Desktop.x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Gaming.Desktop.x64">
+      <Configuration>Release</Configuration>
+      <Platform>Gaming.Desktop.x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Gaming.Xbox.Scarlett.x64">
+      <Configuration>Debug</Configuration>
+      <Platform>Gaming.Xbox.Scarlett.x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Profile|Gaming.Xbox.Scarlett.x64">
+      <Configuration>Profile</Configuration>
+      <Platform>Gaming.Xbox.Scarlett.x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Gaming.Xbox.Scarlett.x64">
+      <Configuration>Release</Configuration>
+      <Platform>Gaming.Xbox.Scarlett.x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Gaming.Xbox.XboxOne.x64">
+      <Configuration>Release</Configuration>
+      <Platform>Gaming.Xbox.XboxOne.x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Profile|Gaming.Xbox.XboxOne.x64">
+      <Configuration>Profile</Configuration>
+      <Platform>Gaming.Xbox.XboxOne.x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Gaming.Xbox.XboxOne.x64">
+      <Configuration>Debug</Configuration>
+      <Platform>Gaming.Xbox.XboxOne.x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="BuildGDKShaders.bat">
+      <FileType>Document</FileType>
+      <ExcludedFromBuild>false</ExcludedFromBuild>
+      <DeploymentContent>false</DeploymentContent>
+      <Command>set GDKEDITION=$(XdkEdition)
+set GXDKLatest=$(Console_SdkToolPath)..\..\
+call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Command>
+      <Message>Precompiling FidelityFX Shader Permutations</Message>
+      <LinkObjects>false</LinkObjects>
+      <Outputs>$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_cas_sharpen_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_cas_sharpen_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_cas_sharpen_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_cas_sharpen_pass_wave64_16bit_permutations.h;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cas\ffx_cas_sharpen_pass.hlsl">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cas\ffx_cas_sharpen_pass.hlsl">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\ffx_gdk.cpp">
+      <DisableSpecificWarnings>4324;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ExcludedFromBuild Condition="'$(Platform)'=='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\ffx_dx12.cpp">
+      <DisableSpecificWarnings>4324;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\shared\ffx_breadcrumbs_list.cpp">
+      <DisableSpecificWarnings>4324;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\blob_accessors\ffx_cas_shaderblobs.cpp">
+      <DisableSpecificWarnings>4201;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\ffx_shader_blobs.cpp" />
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\shared\ffx_assert.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\ffx_core.h" />
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\ffx_common_types.h" />
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\ffx_core_hlsl.h" />
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\ffx_core_gpu_common.h" />
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\ffx_core_gpu_common_half.h" />
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\ffx_core_portability.h" />
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\cas\ffx_cas.h" />
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\cas\ffx_cas_callbacks_hlsl.h" />
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\cas\ffx_cas_resources.h" />
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\cas\ffx_cas_sharpen.h" />
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\host\backends\gdk\ffx_gdk.h">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\host\backends\dx12\ffx_dx12.h">
+      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\host\backends\dx12\d3dx12.h">
+      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\blob_accessors\ffx_cas_shaderblobs.h" />
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\ffx_shader_blobs.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\Kits\AMDTK\fidelityfx\tools\binary_store\FidelityFX_SC.exe" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <RootNamespace>GDK_Backend</RootNamespace>
+    <ProjectGuid>{076f8cb0-94f8-4832-b7a6-da2144245657}</ProjectGuid>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <Keyword>Win32Proj</Keyword>
+    <!-- - - - -->
+    <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
+    <TargetRuntime>Native</TargetRuntime>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <Import Condition="Exists($(ATGBuildProps))" Project="$(ATGBuildProps)" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <!-- Base Configuration properties -->
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <EmbedManifest>false</EmbedManifest>
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <!-- Extra Profile/Release Configuration properties -->
+  <PropertyGroup Condition="'$(Configuration)'!='Debug'" Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <!-- Extra Debug Configuration properties -->
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <!-- Scarlett/Xbox One paths -->
+  <PropertyGroup Condition="'$(Platform)'!='Gaming.Desktop.x64'">
+    <ReferencePath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</ReferencePath>
+    <LibraryPath>$(Console_SdkLibPath)</LibraryPath>
+    <LibraryWPath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</LibraryWPath>
+    <IncludePath>$(Console_SdkIncludeRoot)</IncludePath>
+    <ExecutablePath>$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
+  </PropertyGroup>
+  <!-- Desktop paths -->
+  <PropertyGroup Condition="'$(Platform)'=='Gaming.Desktop.x64'">
+    <ReferencePath>$(VC_ReferencesPath_x64);</ReferencePath>
+    <LibraryPath>$(WindowsSDK_LibraryPath_x64);$(Console_SdkLibPath);$(LibraryPath)</LibraryPath>
+    <LibraryWPath>$(WindowsSDK_MetadataPath);</LibraryWPath>
+    <IncludePath>$(WindowsSDK_IncludePath);$(Console_SdkIncludeRoot);$(IncludePath)</IncludePath>
+    <ExecutablePath>$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
+  </PropertyGroup>
+  <!-- Extra Profile/Release properties -->
+  <PropertyGroup Condition="'$(Configuration)'!='Debug'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <!-- Extra Debug properties -->
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <!-- Base properties -->
+  <ItemDefinitionGroup>
+    <Link>
+      <AdditionalDependencies>$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>FFX_CAS=ON;NOMINMAX;_LIB;_DISABLE_CONSTEXPR_MUTEX_CONSTRUCTOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\Kits\AMDTK\fidelityfx\include;$(SolutionDir)..\..\..\Kits\AMDTK\fidelityfx\src\shared;$(SolutionDir)..\..\..\Kits\AMDTK\fidelityfx\src\components;$(SolutionDir)..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared;$(SolutionDir)..\..\..\Kits\AMDTK\fidelityfx\sc_bin\$(PlatformName);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <!-- Extra Profile/Release properties -->
+  <ItemDefinitionGroup Condition="'$(Configuration)'!='Debug'">
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <!-- Extra Profile properties -->
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Profile'">
+    <ClCompile>
+      <PreprocessorDefinitions>PROFILE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <!-- Extra Debug properties -->
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
+    <ClCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Platform)'=='Gaming.Desktop.x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\Kits\ATGTK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\..\..\packages\WinPixEventRuntime.1.0.240308001\build\WinPixEventRuntime.targets" Condition="Exists('..\..\..\packages\WinPixEventRuntime.1.0.240308001\build\WinPixEventRuntime.targets')" />
+    <Import Project="..\..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.targets" Condition="Exists('..\..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.targets')" />
+    <Import Project="..\..\..\packages\Microsoft.Direct3D.DXC.1.8.2407.12\build\native\Microsoft.Direct3D.DXC.targets" Condition="Exists('..\..\..\packages\Microsoft.Direct3D.DXC.1.8.2407.12\build\native\Microsoft.Direct3D.DXC.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureGDKX" BeforeTargets="_CheckForInvalidConfigurationAndPlatform" Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(Platform)', 'Gaming\..+\.x64'))">
+    <PropertyGroup>
+      <ErrorText Condition="'$(Platform)'=='Gaming.Desktop.x64'">This project requires the Microsoft GDK to be installed. If you have already installed the GDK, then run Repair to ensure proper integration with Visual Studio. The missing platform is {0}.</ErrorText>
+      <ErrorText Condition="'$(Platform)'!='Gaming.Desktop.x64'">This project requires the Microsoft GDK with Xbox Extensions to be installed. If you have already installed the GDK, then run Repair to ensure proper integration with Visual Studio. The missing platform is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(VCTargetsPath)\Platforms\$(Platform)\Platform.props')" Text="$([System.String]::Format('$(ErrorText)', '$(Platform)'))" />
+  </Target>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\packages\WinPixEventRuntime.1.0.240308001\build\WinPixEventRuntime.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\WinPixEventRuntime.1.0.240308001\build\WinPixEventRuntime.targets'))" />
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.props'))" />
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.targets'))" />
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.Direct3D.DXC.1.8.2407.12\build\native\Microsoft.Direct3D.DXC.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.Direct3D.DXC.1.8.2407.12\build\native\Microsoft.Direct3D.DXC.props'))" />
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.Direct3D.DXC.1.8.2407.12\build\native\Microsoft.Direct3D.DXC.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.Direct3D.DXC.1.8.2407.12\build\native\Microsoft.Direct3D.DXC.targets'))" />
+  </Target>
+  <!-- We don't distribute those binaries as a package, so we need to place them properly for FidelityFX_SC.exe -->
+  <Target Name="EnsureFXMSFTBinaries" AfterTargets="EnsureNuGetPackageBuildImports">
+    <ItemGroup>
+      <ShaderBuildBinaries Include="..\..\..\packages\**\bin\$(PlatformTarget)\dxcompiler.dll" />
+      <ShaderBuildBinaries Include="..\..\..\packages\**\bin\$(PlatformTarget)\dxcompiler.pdb" />
+      <ShaderBuildBinaries Include="..\..\..\packages\**\bin\$(PlatformTarget)\dxil.dll" />
+      <ShaderBuildBinaries Include="..\..\..\packages\**\bin\$(PlatformTarget)\dxil.pdb" />
+      <ShaderBuildBinaries Include="..\..\..\packages\**\bin\$(PlatformTarget)\D3D12Core.dll" />
+      <ShaderBuildBinaries Include="..\..\..\packages\**\bin\$(PlatformTarget)\D3D12Core.pdb" />
+      <ShaderBuildBinaries Include="..\..\..\packages\**\bin\$(PlatformTarget)\d3d12SDKLayers.dll" />
+      <ShaderBuildBinaries Include="..\..\..\packages\**\bin\$(PlatformTarget)\d3d12SDKLayers.pdb" />
+      <ShaderBuildBinaries Include="..\..\..\packages\**\bin\$(PlatformTarget)\d3dconfig.exe" />
+      <ShaderBuildBinaries Include="..\..\..\packages\**\bin\$(PlatformTarget)\d3dconfig.pdb" />
+    </ItemGroup>
+    <Copy SkipUnchangedFiles="true" SourceFiles="@(ShaderBuildBinaries)" DestinationFolder="$(SolutionDir)..\..\..\Kits\AMDTK\fidelityfx\tools\binary_store" />
+  </Target>
+</Project>

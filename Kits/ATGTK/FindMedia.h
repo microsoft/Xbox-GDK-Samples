@@ -12,7 +12,8 @@
 
 #include <cstddef>
 #include <cstring>
-#include <exception>
+#include <stdexcept>
+#include <tuple>
 
 
 namespace DX
@@ -28,7 +29,7 @@ namespace DX
 
         // Check CWD for quick out
         wcscpy_s(strDestPath, size_t(cchDest), strFilename);
-        if (GetFileAttributesW(strDestPath) != 0xFFFFFFFF)
+        if (GetFileAttributesW(strDestPath) != INVALID_FILE_ATTRIBUTES)
             return;
 
         // Search CWD with folder names
@@ -56,7 +57,7 @@ namespace DX
         for (const wchar_t* const * searchFolder = searchFolders; *searchFolder != 0; ++searchFolder)
         {
             swprintf_s(strFullFileName, MAX_PATH, L"%ls\\%ls", *searchFolder, strFilename);
-            if (GetFileAttributesW(strFullFileName) != 0xFFFFFFFF)
+            if (GetFileAttributesW(strFullFileName) != INVALID_FILE_ATTRIBUTES)
             {
                 wcscpy_s(strDestPath, size_t(cchDest), strFullFileName);
                 return;
@@ -65,7 +66,7 @@ namespace DX
 
         // Get the exe name, and exe path
         wchar_t strExePath[MAX_PATH] = {};
-        GetModuleFileNameW(nullptr, strExePath, MAX_PATH);
+        std::ignore = GetModuleFileNameW(nullptr, strExePath, MAX_PATH);
         strExePath[MAX_PATH - 1] = 0;
 
         // Search all parent directories starting at .\ and using strFilename as the leaf name
@@ -76,12 +77,12 @@ namespace DX
         wchar_t strSearch[MAX_PATH] = {};
         wchar_t* strFilePart = nullptr;
 
-        GetFullPathNameW(strExePath, MAX_PATH, strFullPath, &strFilePart);
+        std::ignore = GetFullPathNameW(strExePath, MAX_PATH, strFullPath, &strFilePart);
 
         while (strFilePart && *strFilePart != '\0')
         {
             swprintf_s(strFullFileName, MAX_PATH, L"%ls\\%ls", strFullPath, strLeafName);
-            if (GetFileAttributesW(strFullFileName) != 0xFFFFFFFF)
+            if (GetFileAttributesW(strFullFileName) != INVALID_FILE_ATTRIBUTES)
             {
                 wcscpy_s(strDestPath, size_t(cchDest), strFullFileName);
                 return;
@@ -90,7 +91,7 @@ namespace DX
             for (const wchar_t* const * searchFolder = searchFolders; *searchFolder != 0; ++searchFolder)
             {
                 swprintf_s(strFullFileName, MAX_PATH, L"%ls\\%ls\\%ls", strFullPath, *searchFolder, strLeafName);
-                if (GetFileAttributesW(strFullFileName) != 0xFFFFFFFF)
+                if (GetFileAttributesW(strFullFileName) != INVALID_FILE_ATTRIBUTES)
                 {
                     wcscpy_s(strDestPath, size_t(cchDest), strFullFileName);
                     return;
@@ -98,12 +99,18 @@ namespace DX
             }
 
             swprintf_s(strSearch, MAX_PATH, L"%ls\\..", strFullPath);
-            GetFullPathNameW(strSearch, MAX_PATH, strFullPath, &strFilePart);
+            std::ignore = GetFullPathNameW(strSearch, MAX_PATH, strFullPath, &strFilePart);
         }
 
         // On failure, return the file as the path but also throw an error
         wcscpy_s(strDestPath, size_t(cchDest), strFilename);
 
-        throw std::exception("File not found");
+#ifdef _DEBUG
+        wchar_t errorMessage[1024] = {};
+        swprintf_s(errorMessage, 1024, L"ERROR: FindMedia file not found: %ls\n", strFilename);
+        OutputDebugStringW(errorMessage);
+#endif
+
+        throw std::runtime_error("File not found");
     }
 }

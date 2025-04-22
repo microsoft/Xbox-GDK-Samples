@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="shared_source">
+      <UniqueIdentifier>{afa8cb9e-e1f6-4bb4-a74a-94a650ec56be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="public_source">
+      <UniqueIdentifier>{b998f86b-9d81-415e-b2e1-762de6305ef7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="private_source">
+      <UniqueIdentifier>{ecb95f5a-e312-4d9f-8f23-a686f7692e53}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\ffx_cacao.cpp">
+      <Filter>private_source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\shared\ffx_assert.cpp">
+      <Filter>shared_source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\shared\ffx_object_management.cpp">
+      <Filter>shared_source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\ffx_cacao_private.h">
+      <Filter>private_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\FidelityFX\gpu\ffx_core.h">
+      <Filter>private_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\FidelityFX\gpu\ffx_common_types.h">
+      <Filter>private_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\FidelityFX\gpu\ffx_core_cpu.h">
+      <Filter>private_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\FidelityFX\host\ffx_assert.h">
+      <Filter>public_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\FidelityFX\host\ffx_cacao.h">
+      <Filter>public_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\FidelityFX\host\ffx_error.h">
+      <Filter>public_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\FidelityFX\host\ffx_fx.h">
+      <Filter>public_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\FidelityFX\host\ffx_interface.h">
+      <Filter>public_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\FidelityFX\host\ffx_types.h">
+      <Filter>public_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\FidelityFX\host\ffx_util.h">
+      <Filter>public_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\shared\ffx_object_management.h">
+      <Filter>shared_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\shared\ffx_breadcrumbs_list.h">
+      <Filter>shared_source</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

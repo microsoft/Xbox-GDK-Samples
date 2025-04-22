@@ -341,7 +341,7 @@ namespace
         }
 
         // DDS files always start with the same magic number ("DDS ")
-        auto const dwMagicNumber = *static_cast<const uint32_t*>(pSource);
+        const auto dwMagicNumber = *static_cast<const uint32_t*>(pSource);
         if (dwMagicNumber != DDS_MAGIC)
         {
             return E_FAIL;
@@ -378,7 +378,7 @@ namespace
         }
 
         metadata.mipLevels = pHeader->mipMapCount;
-        if ((metadata.mipLevels == 0) || (flags & DDS_FLAGS_IGNORE_MIPS))
+        if (metadata.mipLevels == 0)
         {
             metadata.mipLevels = 1;
         }
@@ -648,6 +648,12 @@ namespace
             {
                 return HRESULT_E_NOT_SUPPORTED;
             }
+        }
+
+        // Special-handling flag for ignoring mipchains on simple DDS files
+        if ((flags & DDS_FLAGS_IGNORE_MIPS) && (metadata.arraySize == 1))
+        {
+            metadata.mipLevels = 1;
         }
 
         // Handle DDS-specific metadata
@@ -1878,12 +1884,10 @@ HRESULT DirectX::GetMetadataFromDDSFileEx(
         return E_INVALIDARG;
 
 #ifdef _WIN32
-#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
-    ScopedHandle hFile(safe_handle(CreateFile2(szFile, GENERIC_READ, FILE_SHARE_READ, OPEN_EXISTING, nullptr)));
-#else
-    ScopedHandle hFile(safe_handle(CreateFileW(szFile, GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING,
-        FILE_FLAG_SEQUENTIAL_SCAN, nullptr)));
-#endif
+    ScopedHandle hFile(safe_handle(CreateFile2(
+        szFile,
+        GENERIC_READ, FILE_SHARE_READ, OPEN_EXISTING,
+        nullptr)));
     if (!hFile)
     {
         return HRESULT_FROM_WIN32(GetLastError());
@@ -1938,9 +1942,9 @@ HRESULT DirectX::GetMetadataFromDDSFileEx(
         return HRESULT_FROM_WIN32(GetLastError());
     }
 
-    auto const headerLen = static_cast<size_t>(bytesRead);
+    const auto headerLen = static_cast<size_t>(bytesRead);
 #else
-    auto const headerLen = std::min<size_t>(len, DDS_DX10_HEADER_SIZE);
+    const auto headerLen = std::min<size_t>(len, DDS_DX10_HEADER_SIZE);
 
     inFile.read(reinterpret_cast<char*>(header), headerLen);
     if (!inFile)
@@ -2002,9 +2006,35 @@ HRESULT DirectX::LoadFromDDSMemoryEx(
             return E_FAIL;
     }
 
+    size_t remaining = size - offset;
+    if (remaining == 0)
+        return E_FAIL;
+
     hr = image.Initialize(mdata);
     if (FAILED(hr))
         return hr;
+
+    if (flags & DDS_FLAGS_PERMISSIVE)
+    {
+        // For cubemaps, DDS_HEADER_DXT10.arraySize is supposed to be 'number of cubes'.
+        // This handles cases where the value is incorrectly written as the original 6*numCubes value.
+        if ((mdata.miscFlags & TEX_MISC_TEXTURECUBE)
+            && (convFlags & CONV_FLAGS_DX10)
+            && (image.GetPixelsSize() > remaining)
+            && ((mdata.arraySize % 6) == 0))
+        {
+            mdata.arraySize = mdata.arraySize / 6;
+            hr = image.Initialize(mdata);
+            if (FAILED(hr))
+                return hr;
+
+            if (image.GetPixelsSize() > remaining)
+            {
+                image.Release();
+                return HRESULT_E_HANDLE_EOF;
+            }
+        }
+    }
 
     CP_FLAGS cflags = CP_FLAGS_NONE;
     if (flags & DDS_FLAGS_LEGACY_DWORD)
@@ -2064,12 +2094,10 @@ HRESULT DirectX::LoadFromDDSFileEx(
     image.Release();
 
 #ifdef _WIN32
-#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
-    ScopedHandle hFile(safe_handle(CreateFile2(szFile, GENERIC_READ, FILE_SHARE_READ, OPEN_EXISTING, nullptr)));
-#else
-    ScopedHandle hFile(safe_handle(CreateFileW(szFile, GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING,
-        FILE_FLAG_SEQUENTIAL_SCAN, nullptr)));
-#endif
+    ScopedHandle hFile(safe_handle(CreateFile2(
+        szFile,
+        GENERIC_READ, FILE_SHARE_READ, OPEN_EXISTING,
+        nullptr)));
     if (!hFile)
     {
         return HRESULT_FROM_WIN32(GetLastError());
@@ -2122,9 +2150,9 @@ HRESULT DirectX::LoadFromDDSFileEx(
         return HRESULT_FROM_WIN32(GetLastError());
     }
 
-    auto const headerLen = static_cast<size_t>(bytesRead);
+    const auto headerLen = static_cast<size_t>(bytesRead);
 #else
-    auto const headerLen = std::min<size_t>(len, DDS_DX10_HEADER_SIZE);
+    const auto headerLen = std::min<size_t>(len, DDS_DX10_HEADER_SIZE);
 
     inFile.read(reinterpret_cast<char*>(header), headerLen);
     if (!inFile)
@@ -2192,6 +2220,28 @@ HRESULT DirectX::LoadFromDDSFileEx(
     hr = image.Initialize(mdata);
     if (FAILED(hr))
         return hr;
+
+    if (flags & DDS_FLAGS_PERMISSIVE)
+    {
+        // For cubemaps, DDS_HEADER_DXT10.arraySize is supposed to be 'number of cubes'.
+        // This handles cases where the value is incorrectly written as the original 6*numCubes value.
+        if ((mdata.miscFlags & TEX_MISC_TEXTURECUBE)
+            && (convFlags & CONV_FLAGS_DX10)
+            && (image.GetPixelsSize() > remaining)
+            && ((mdata.arraySize % 6) == 0))
+        {
+            mdata.arraySize = mdata.arraySize / 6;
+            hr = image.Initialize(mdata);
+            if (FAILED(hr))
+                return hr;
+
+            if (image.GetPixelsSize() > remaining)
+            {
+                image.Release();
+                return HRESULT_E_HANDLE_EOF;
+            }
+        }
+    }
 
     if ((convFlags & CONV_FLAGS_EXPAND) || (flags & (DDS_FLAGS_LEGACY_DWORD | DDS_FLAGS_BAD_DXTN_TAILS)))
     {
@@ -2261,7 +2311,7 @@ HRESULT DirectX::LoadFromDDSFileEx(
         }
 
     #ifdef _WIN32
-        auto const pixelBytes = static_cast<DWORD>(image.GetPixelsSize());
+        const auto pixelBytes = static_cast<DWORD>(image.GetPixelsSize());
         if (!ReadFile(hFile.get(), image.GetPixels(), pixelBytes, &bytesRead, nullptr))
         {
             image.Release();
@@ -2368,7 +2418,7 @@ HRESULT DirectX::SaveToDDSMemory(
     size_t remaining = blob.GetBufferSize() - required;
     pDestination += required;
 
-    if (!remaining)
+    if (remaining == 0)
     {
         blob.Release();
         return E_FAIL;
@@ -2548,13 +2598,9 @@ HRESULT DirectX::SaveToDDSFile(
 
     // Create file and write header
 #ifdef _WIN32
-#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
-    ScopedHandle hFile(safe_handle(CreateFile2(szFile,
+    ScopedHandle hFile(safe_handle(CreateFile2(
+        szFile,
         GENERIC_WRITE | DELETE, 0, CREATE_ALWAYS, nullptr)));
-#else
-    ScopedHandle hFile(safe_handle(CreateFileW(szFile,
-        GENERIC_WRITE | DELETE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr)));
-#endif
     if (!hFile)
     {
         return HRESULT_FROM_WIN32(GetLastError());

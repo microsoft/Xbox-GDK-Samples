@@ -176,8 +176,8 @@ public:
 
         const Matrix im = XMMatrixInverse(nullptr, GetView());
 
-        auto const mstate = mouse.GetState();
-        auto const kbstate = kb.GetState();
+        const auto mstate = mouse.GetState();
+        const auto kbstate = kb.GetState();
 
         // Keyboard controls
         {

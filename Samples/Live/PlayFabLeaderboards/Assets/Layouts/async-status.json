@@ -1,0 +1,41 @@
+{
+  "$schema": "https://atgsamplessa.blob.core.windows.net/uitkschema/latest/layout.schema.json",
+  "definitions": {
+    "#async_panel_width": 600,
+    "#async_panel_height": 120,
+    "#async_label_height": 60
+  },
+  "prefab": {
+    "classId": "Panel",
+    "style": {
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [0, 0, 0, 1]
+    },
+    "positioningAnchor": [ "center", "middle" ],
+    "sizingAnchor": [ "center", "middle" ],
+    "size": [ "#async_panel_width", "#async_panel_height" ],
+    "subElements": [
+      {
+        "classId": "staticText",
+        "id": "Op_Description_Text",
+        "styleId": "Basic_Console_Style",
+        "staticText": {
+          "position": [ 0, 0 ],
+          "size": [ "#async_panel_width", "#async_label_height" ],
+          "text": "<ASYNC OP DESC>"
+        }
+      },
+      {
+        "classId": "staticText",
+        "id": "Op_Progress_Dots",
+        "styleId": "Basic_Console_Style",
+        "staticText": {
+          "position": [ 0, "#async_label_height" ],
+          "size": [ "#async_panel_width", "#async_label_height" ],
+          "text": "<ASYNC OP DOTS>"
+        }
+      }
+    ]
+  }
+}

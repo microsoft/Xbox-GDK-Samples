@@ -1,0 +1,41 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 15.0.28307.168
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ShaderReflect", "ShaderReflect.vcxproj", "{F0F1D55C-7F0B-410E-B907-0AF894952FF8}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ShaderReflectTest", "ShaderReflectTest\ShaderReflectTest.vcxproj", "{295E1BD3-62BA-4C71-A20D-EAD997AB4E14}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug_Scarlett|x64 = Debug_Scarlett|x64
+		Debug_XboxOne|x64 = Debug_XboxOne|x64
+		Release_Scarlett|x64 = Release_Scarlett|x64
+		Release_XboxOne|x64 = Release_XboxOne|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F0F1D55C-7F0B-410E-B907-0AF894952FF8}.Debug_Scarlett|x64.ActiveCfg = Debug_Scarlett|x64
+		{F0F1D55C-7F0B-410E-B907-0AF894952FF8}.Debug_Scarlett|x64.Build.0 = Debug_Scarlett|x64
+		{F0F1D55C-7F0B-410E-B907-0AF894952FF8}.Debug_XboxOne|x64.ActiveCfg = Debug_XboxOne|x64
+		{F0F1D55C-7F0B-410E-B907-0AF894952FF8}.Debug_XboxOne|x64.Build.0 = Debug_XboxOne|x64
+		{F0F1D55C-7F0B-410E-B907-0AF894952FF8}.Release_Scarlett|x64.ActiveCfg = Release_Scarlett|x64
+		{F0F1D55C-7F0B-410E-B907-0AF894952FF8}.Release_Scarlett|x64.Build.0 = Release_Scarlett|x64
+		{F0F1D55C-7F0B-410E-B907-0AF894952FF8}.Release_XboxOne|x64.ActiveCfg = Release_XboxOne|x64
+		{F0F1D55C-7F0B-410E-B907-0AF894952FF8}.Release_XboxOne|x64.Build.0 = Release_XboxOne|x64
+		{295E1BD3-62BA-4C71-A20D-EAD997AB4E14}.Debug_Scarlett|x64.ActiveCfg = Debug_Scarlett|x64
+		{295E1BD3-62BA-4C71-A20D-EAD997AB4E14}.Debug_Scarlett|x64.Build.0 = Debug_Scarlett|x64
+		{295E1BD3-62BA-4C71-A20D-EAD997AB4E14}.Debug_XboxOne|x64.ActiveCfg = Debug_XboxOne|x64
+		{295E1BD3-62BA-4C71-A20D-EAD997AB4E14}.Debug_XboxOne|x64.Build.0 = Debug_XboxOne|x64
+		{295E1BD3-62BA-4C71-A20D-EAD997AB4E14}.Release_Scarlett|x64.ActiveCfg = Release_Scarlett|x64
+		{295E1BD3-62BA-4C71-A20D-EAD997AB4E14}.Release_Scarlett|x64.Build.0 = Release_Scarlett|x64
+		{295E1BD3-62BA-4C71-A20D-EAD997AB4E14}.Release_XboxOne|x64.ActiveCfg = Release_XboxOne|x64
+		{295E1BD3-62BA-4C71-A20D-EAD997AB4E14}.Release_XboxOne|x64.Build.0 = Release_XboxOne|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1B5E2F43-AE05-48EF-8FE2-A4624D080851}
+	EndGlobalSection
+EndGlobal

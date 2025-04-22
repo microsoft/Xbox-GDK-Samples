@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>9a79cc6b-704d-422b-ad36-0b962a8b61aa</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>b4cca170-3b0d-4c0b-ab72-8f2397de0ffe</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>25708ca4-8400-4303-9049-64333901e624</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Xbox Live Tool Kit">
+      <UniqueIdentifier>6ca970b3-470a-40be-92fa-f1819f1b3c34</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>d158baeb-991e-4dfb-bf73-9cd5ec71c5bb</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Layouts">
+      <UniqueIdentifier>{03b36495-69d9-42de-b3be-dea210b307e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Fonts">
+      <UniqueIdentifier>{193cb350-643c-4ce5-8277-a78d57f06760}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Textures">
+      <UniqueIdentifier>{ecf456e9-ae33-47aa-a14e-595a5c51c0af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayFab">
+      <UniqueIdentifier>{af621311-4133-4f8f-b460-60b936669bf3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="PlayFabLeaderboards.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\LiveTK\LiveResources.h">
+      <Filter>Xbox Live Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\LiveTK\LiveInfoHUD.h">
+      <Filter>Xbox Live Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\PlayFabGDK\PlayFabResources.h">
+      <Filter>PlayFab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\Texture.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="PlayFabLeaderboards.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\LiveTK\LiveResources.cpp">
+      <Filter>Xbox Live Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\LiveTK\LiveInfoHUD.cpp">
+      <Filter>Xbox Live Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\Texture.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\PlayFabGDK\PlayFabResources.cpp">
+      <Filter>PlayFab</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\Layouts\async-status.json">
+      <Filter>Assets\Layouts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Layouts\console-window.json">
+      <Filter>Assets\Layouts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Layouts\menu-button.json">
+      <Filter>Assets\Layouts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Layouts\sample-styles.json">
+      <Filter>Assets\Layouts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Layouts\UILayout.json">
+      <Filter>Assets\Layouts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18_Bold.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_24_Bold.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Textures\black-square.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Textures\debug-rect.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Textures\focused_button.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Textures\roundy-border.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Textures\Selected.DDS">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Textures\Unselected.DDS">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Textures\GamerPic.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Layouts\select-leaderboard-button.json">
+      <Filter>Assets\Layouts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Layouts\select-ranking-button.json">
+      <Filter>Assets\Layouts</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Layouts\leaderboards-panel.json">
+      <Filter>Assets\Layouts</Filter>
+    </None>
+    <None Include="Readme.md" />
+    <None Include="Readme_ja-jp.md" />
+  </ItemGroup>
+</Project>

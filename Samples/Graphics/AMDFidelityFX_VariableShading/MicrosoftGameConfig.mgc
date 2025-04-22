@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Game configVersion="0">
+  <!-- Version "1" is supported by March 2022 GDK or later -->
+  <Identity Name="93B70378-A73B-4877-8D31-E81069315EFB"
+            Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+            Version="1.0.0.0"/>
+
+  <ExecutableList>
+    <Executable Name="AMDFidelityFX_VariableShading.exe" TargetDeviceFamily="PC" Id="GameP"/>
+    <Executable Name="AMDFidelityFX_VariableShading_XBS.exe" TargetDeviceFamily="Scarlett" Id="GameS"/>
+  </ExecutableList>
+  
+  <ShellVisuals DefaultDisplayName="AMD FidelityFX Variable Shading"
+                PublisherDisplayName="AMD GPUOPEN"
+                StoreLogo="Assets\StoreLogo.png"
+                Square150x150Logo="Assets\Logo.png"
+                Square44x44Logo="Assets\SmallLogo.png"
+                Description="AMD FidelityFX Variable Shading"
+                ForegroundText="dark"
+                BackgroundColor="#000000"
+                SplashScreenImage="Assets\SplashScreen.png"/>
+</Game>

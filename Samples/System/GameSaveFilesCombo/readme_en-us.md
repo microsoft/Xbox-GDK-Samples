@@ -5,25 +5,23 @@
 *This sample is compatible with the Microsoft Game Development Kit
 (March 2022)*
 
-![Graphical user interface, text Description automatically generated](./media/image3.png)
+![Image of GameSaveFilesCombo sample](./media/GameSaveFilesComboImage.jpg)
 
 # 
 
 # Description
 
-A simple sample that implements many of the
-[XGameSave](https://docs.microsoft.com/en-us/gaming/gdk/_content/gc/reference/system/xgamesave/xgamesave_members)
-api functions. This implementation is done by modifying the data of a
-single container with 2 blobs.
+A simple sample that implements the
+[XGameSaveFiles](https://learn.microsoft.com/en-us/gaming/gdk/_content/gc/reference/system/xgamesavefiles/xgamesavefiles_members)
+api functions. It also demonstrates how to use Win32 FileIO with XGameSaveFiles.
 
-Important Methods
+# Important Methods
 
 ## GetFolderWithUIAsync
 
 -   Calls the
     [XGameSaveFilesGetFolderWithUiAsync](https://docs.microsoft.com/en-us/gaming/gdk/_content/gc/reference/system/xgamesavefiles/functions/xgamesavefilesgetfolderwithuiasync)
-    in order to get a folder that can be used to contain directories and
-    files for storage in the cloud.
+     to get a folder path that can be used to read and write files. Data in the path will also be synced with the cloud.
 
 ## GetRemainingQuoata
 

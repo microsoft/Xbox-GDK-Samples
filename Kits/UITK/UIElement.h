@@ -66,7 +66,18 @@ struct ElementDataProperties
     static constexpr bool               c_defaultFocusable = false;
     static constexpr bool               c_defaultFocusing = false;
     static constexpr Vector2            c_defaultPosition = { 0.0f, 0.0f };
+
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunknown-warning-option"
+#pragma clang diagnostic ignored "-Wnan-infinity-disabled"
+#endif
+
     static constexpr Vector2            c_undefinedSize = { -INFINITY, -INFINITY };
+
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
 };
 
 //! @private

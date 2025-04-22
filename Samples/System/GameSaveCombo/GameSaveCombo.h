@@ -27,9 +27,10 @@ public:
     Sample(Sample const&) = delete;
     Sample& operator= (Sample const&) = delete;
 
-    // Initialization and management
+    // Initialization
     void Initialize(HWND window, int width, int height);
     void RegisterUIEventHandlers();
+    void LoadLayout();
 
     // Basic render loop
     void Tick();
@@ -56,6 +57,8 @@ public:
 
     // UI
     void Log(const char* text);
+    void DisableProviderReqButtons();
+    void EnableProviderReqButtons();
 
     // User Load
     HRESULT GetUserHandle(XUserAddOptions xUserAddOptions);
@@ -105,7 +108,7 @@ private:
     HRESULT UpdateUserUIData();
     void UpdateView();
 
-    HRESULT CreateContainer(bool containerExists);
+    HRESULT AddModifyContainer();
     HRESULT GenerateBlobData(XGameSaveUpdateHandle updateHandle);
     HRESULT LoadBlobsFromDisk();
     void SetDataDisplayable(bool value);
@@ -134,7 +137,6 @@ private:
     std::shared_ptr<ATG::UITK::UIStaticText>    m_gamertagText;
     std::shared_ptr<ATG::UITK::UIImage>         m_gamerpicImage;
     std::shared_ptr<ATG::UITK::UIStaticText>    m_containerLabel;
-    std::shared_ptr<ATG::UITK::UIStackPanel>    m_userInfoPanel;
 
     std::shared_ptr<ATG::UITK::UIStaticText>    m_characterDataNameLabel;
     std::shared_ptr<ATG::UITK::UIStaticText>    m_characterDataLevelLabel;

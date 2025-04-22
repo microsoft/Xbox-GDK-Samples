@@ -20,10 +20,11 @@ using Microsoft::WRL::ComPtr;
 
 constexpr int c_maxItemsPerQuery = 5; // Deliberately set low in this sample to demonstrate querying multiple pages
 
+// [Event-based Leaderboards]
 // Initiates a leaderboard query
 void Sample::QueryLeaderboards(
     const std::string &leaderboardName, // Name of the leaderboard from Partner Center
-    const std::string &statName,        // Stat Name the leaderboard is based off of from Partner Center
+    const std::string &statName,        // Name of the stat rule the leaderboard is based off of from Partner Center
     bool isGlobalLeaderboard,           // Should the query use the Global or Social leaderboards
     const char **additionalColumns,     // Additional columns to include with the leaderboards, defined in Partner Center
     size_t additionalColumnsCount       // Number of additional columns
@@ -51,6 +52,7 @@ void Sample::QueryLeaderboards(
 
     if (queryGroupType != XblSocialGroupType::None)
     {
+        // [Event-based Leaderboards]
         // Social queries must include a valid XUID
         // If the user has no friends or favorited people who have played this sample, only this user's results will be returned
         query.socialGroup = XblSocialGroupType::People;
@@ -59,6 +61,7 @@ void Sample::QueryLeaderboards(
 
     if (additionalColumns && additionalColumnsCount > 0)
     {
+        // [Event-based Leaderboards]
         // Additional columns are not aggregated, but rather the "latest" value at the time the stat was changed
         // This is useful for stats which use MIN/MAX aggregations in their stat rules to include information that triggered the update
         // (e.g. MostItemsFound includes the "Environment" and "DistanceTraveled" fields to indicate
@@ -217,6 +220,7 @@ void Sample::PlayGame()
     m_logConsole->Clear();
     m_logConsole->WriteLine(DX::Utf8ToWide(json).c_str());
 
+    // [Event-based Leaderboards]
     // While both properties and measurements are supplied, it's ok for one to be empty as they are merged server-side anyway
     HRESULT hr = XblEventsWriteInGameEvent(m_liveResources->GetLiveContext(), c_eventName, json.c_str(), "{}");
     if (FAILED(hr))

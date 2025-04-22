@@ -201,7 +201,7 @@ void TextConsole::FormatImpl(CXMVECTOR color, const wchar_t* strFormat, va_list 
 {
     std::lock_guard<std::mutex> lock(m_mutex);
 
-    auto const len = size_t(_vscwprintf(strFormat, args) + 1);
+    const auto len = size_t(_vscwprintf(strFormat, args) + 1);
 
     if (m_tempBuffer.size() < len)
         m_tempBuffer.resize(len);
@@ -363,7 +363,7 @@ void TextConsole::ProcessString(FXMVECTOR color, const wchar_t* str)
         {
             m_lines[m_currentLine].m_text[m_currentColumn] = *ch;
 
-            auto const fontSize = m_font->MeasureString(m_lines[m_currentLine].m_text);
+            const auto fontSize = m_font->MeasureString(m_lines[m_currentLine].m_text);
             if (XMVectorGetX(fontSize) > width)
             {
                 m_lines[m_currentLine].m_text[m_currentColumn] = L'\0';
@@ -474,8 +474,8 @@ void TextConsoleImage::SetWindow(const RECT& fullscreen, bool useSafeRect)
         TextConsole::SetWindow(fullscreen);
     }
 
-    auto const width = UINT(std::max<LONG>(fullscreen.right - fullscreen.left, 1));
-    auto const height = UINT(std::max<LONG>(fullscreen.bottom - fullscreen.top, 1));
+    const auto width = UINT(std::max<LONG>(fullscreen.right - fullscreen.left, 1));
+    const auto height = UINT(std::max<LONG>(fullscreen.bottom - fullscreen.top, 1));
 
 #if defined(__d3d12_h__) || defined(__d3d12_x_h__) || defined(__XBOX_D3D12_X__)
     D3D12_VIEWPORT vp = { 0.0f, 0.0f, static_cast<float>(width), static_cast<float>(height),
@@ -519,7 +519,7 @@ void TextConsoleImage::RestoreDevice(
         DX::ThrowIfFailed(CreateWICTextureFromFile(device, upload, image, m_background.ReleaseAndGetAddressOf()));
     }
 
-    auto const desc = m_background->GetDesc();
+    const auto desc = m_background->GetDesc();
     if (desc.Dimension != D3D12_RESOURCE_DIMENSION_TEXTURE2D)
     {
         throw std::runtime_error("Only supports 2D images");

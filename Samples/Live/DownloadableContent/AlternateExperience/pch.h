@@ -77,13 +77,15 @@
 #include <cstring>
 #include <cwchar>
 #include <exception>
+#include <filesystem>
+#include <functional>
+#include <future>
 #include <iterator>
 #include <memory>
 #include <stdexcept>
 #include <string>
 #include <system_error>
 #include <tuple>
-#include <filesystem>
 
 #ifdef _GAMING_XBOX
 #include <pix3.h>

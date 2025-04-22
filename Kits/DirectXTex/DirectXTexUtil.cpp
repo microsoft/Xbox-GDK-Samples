@@ -84,7 +84,6 @@ namespace
 
     BOOL WINAPI InitializeWICFactory(PINIT_ONCE, PVOID, PVOID *ifactory) noexcept
     {
-    #if (_WIN32_WINNT >= _WIN32_WINNT_WIN8) || defined(_WIN7_PLATFORM_UPDATE)
         HRESULT hr = CoCreateInstance(
             CLSID_WICImagingFactory2,
             nullptr,
@@ -112,16 +111,6 @@ namespace
             );
             return SUCCEEDED(hr) ? TRUE : FALSE;
         }
-    #else
-        g_WIC2 = false;
-
-        return SUCCEEDED(CoCreateInstance(
-            CLSID_WICImagingFactory,
-            nullptr,
-            CLSCTX_INPROC_SERVER,
-            __uuidof(IWICImagingFactory),
-            ifactory)) ? TRUE : FALSE;
-    #endif
     }
 
 #else // !WIN32
@@ -150,13 +139,11 @@ DXGI_FORMAT DirectX::Internal::WICToDXGI(const GUID& guid) noexcept
             return g_WICFormats[i].format;
     }
 
-#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8) || defined(_WIN7_PLATFORM_UPDATE)
     if (g_WIC2)
     {
         if (memcmp(&GUID_WICPixelFormat96bppRGBFloat, &guid, sizeof(GUID)) == 0)
             return DXGI_FORMAT_R32G32B32_FLOAT;
     }
-#endif
 
     return DXGI_FORMAT_UNKNOWN;
 }
@@ -196,7 +183,6 @@ bool DirectX::Internal::DXGIToWIC(DXGI_FORMAT format, GUID& guid, bool ignoreRGB
         memcpy(&guid, &GUID_WICPixelFormat32bppBGR, sizeof(GUID));
         return true;
 
-    #if (_WIN32_WINNT >= _WIN32_WINNT_WIN8) || defined(_WIN7_PLATFORM_UPDATE)
     case DXGI_FORMAT_R32G32B32_FLOAT:
         if (g_WIC2)
         {
@@ -204,7 +190,6 @@ bool DirectX::Internal::DXGIToWIC(DXGI_FORMAT format, GUID& guid, bool ignoreRGB
             return true;
         }
         break;
-    #endif
 
     default:
         for (size_t i = 0; i < std::size(g_WICFormats); ++i)
@@ -328,14 +313,12 @@ void DirectX::SetWICFactory(_In_opt_ IWICImagingFactory* pWIC) noexcept
     bool iswic2 = false;
     if (pWIC)
     {
-    #if(_WIN32_WINNT >= _WIN32_WINNT_WIN8) || defined(_WIN7_PLATFORM_UPDATE)
         ComPtr<IWICImagingFactory2> wic2;
         HRESULT hr = pWIC->QueryInterface(IID_PPV_ARGS(wic2.GetAddressOf()));
         if (SUCCEEDED(hr))
         {
             iswic2 = true;
         }
-    #endif
         pWIC->AddRef();
     }
 
@@ -409,10 +392,20 @@ bool DirectX::IsVideo(DXGI_FORMAT fmt) noexcept
 
 //-------------------------------------------------------------------------------------
 _Use_decl_annotations_
-bool DirectX::IsPlanar(DXGI_FORMAT fmt) noexcept
+bool DirectX::IsPlanar(DXGI_FORMAT fmt, bool isd3d12) noexcept
 {
     switch (static_cast<int>(fmt))
     {
+    case DXGI_FORMAT_R32G8X24_TYPELESS:
+    case DXGI_FORMAT_D32_FLOAT_S8X24_UINT:
+    case DXGI_FORMAT_R32_FLOAT_X8X24_TYPELESS:
+    case DXGI_FORMAT_X32_TYPELESS_G8X24_UINT:
+    case DXGI_FORMAT_R24G8_TYPELESS:
+    case DXGI_FORMAT_D24_UNORM_S8_UINT:
+    case DXGI_FORMAT_R24_UNORM_X8_TYPELESS:
+    case DXGI_FORMAT_X24_TYPELESS_G8_UINT:
+        return isd3d12; // Direct3D 12 considers these planar, Direct3D 11 does not.
+
     case DXGI_FORMAT_NV12:      // 4:2:0 8-bit
     case DXGI_FORMAT_P010:      // 4:2:0 10-bit
     case DXGI_FORMAT_P016:      // 4:2:0 16-bit
@@ -972,6 +965,9 @@ HRESULT DirectX::ComputePitch(DXGI_FORMAT fmt, size_t width, size_t height,
 
     switch (static_cast<int>(fmt))
     {
+    case DXGI_FORMAT_UNKNOWN:
+        return E_INVALIDARG;
+
     case DXGI_FORMAT_BC1_TYPELESS:
     case DXGI_FORMAT_BC1_UNORM:
     case DXGI_FORMAT_BC1_UNORM_SRGB:
@@ -1192,6 +1188,9 @@ size_t DirectX::ComputeScanlines(DXGI_FORMAT fmt, size_t height) noexcept
 {
     switch (static_cast<int>(fmt))
     {
+    case DXGI_FORMAT_UNKNOWN:
+        return 0;
+
     case DXGI_FORMAT_BC1_TYPELESS:
     case DXGI_FORMAT_BC1_UNORM:
     case DXGI_FORMAT_BC1_UNORM_SRGB:
@@ -1244,6 +1243,163 @@ size_t DirectX::ComputeScanlines(DXGI_FORMAT fmt, size_t height) noexcept
         assert(!IsCompressed(fmt) && !IsPlanar(fmt));
         return height;
     }
+}
+
+
+//-------------------------------------------------------------------------------------
+// Compute standard tile shape for 64KB tiles
+//-------------------------------------------------------------------------------------
+namespace
+{
+    constexpr size_t TILED_RESOURCE_TILE_SIZE_IN_BYTES = 65536;
+}
+
+_Use_decl_annotations_
+HRESULT DirectX::ComputeTileShape(
+    DXGI_FORMAT fmt,
+    TEX_DIMENSION dimension,
+    TileShape& tiling) noexcept
+{
+    tiling = {};
+
+    if (IsVideo(fmt) || IsPacked(fmt))
+        return E_INVALIDARG;
+
+    const size_t bpp = BitsPerPixel(fmt);
+    if (!bpp || bpp == 1 || bpp == 24 || bpp == 96)
+        return E_INVALIDARG;
+
+    const bool iscompressed = IsCompressed(fmt);
+
+    switch(dimension)
+    {
+    case TEX_DIMENSION_TEXTURE1D:
+        if (iscompressed)
+            return E_INVALIDARG;
+
+        tiling.width = (bpp) ? ((TILED_RESOURCE_TILE_SIZE_IN_BYTES * 8) / bpp) : TILED_RESOURCE_TILE_SIZE_IN_BYTES;
+        tiling.height = tiling.depth = 1;
+        break;
+
+    case TEX_DIMENSION_TEXTURE2D:
+        tiling.depth = 1;
+        if(iscompressed)
+        {
+            size_t bpb = BytesPerBlock(fmt);
+            switch(bpb)
+            {
+            case 8:
+                tiling.width = 128 * 4;
+                tiling.height = 64 * 4;
+                break;
+
+            case 16:
+                tiling.width = tiling.height = 64 * 4;
+                break;
+
+            default:
+                return E_INVALIDARG;
+            }
+
+            assert(((tiling.width / 4) * (tiling.height / 4) * bpb) == TILED_RESOURCE_TILE_SIZE_IN_BYTES);
+        }
+        else
+        {
+            if (bpp <= 8)
+            {
+                tiling.width = tiling.height = 256;
+            }
+            else if (bpp <= 16)
+            {
+                tiling.width = 256;
+                tiling.height = 128;
+            }
+            else if (bpp <= 32)
+            {
+                tiling.width = tiling.height = 128;
+            }
+            else if (bpp <= 64)
+            {
+                tiling.width = 128;
+                tiling.height = 64;
+            }
+            else if (bpp <= 128)
+            {
+                tiling.width = tiling.height = 64;
+            }
+            else
+            {
+                tiling = {};
+                return E_INVALIDARG;
+            }
+
+            assert(((tiling.width * tiling.height * bpp) / 8) == TILED_RESOURCE_TILE_SIZE_IN_BYTES);
+        }
+        break;
+
+    case TEX_DIMENSION_TEXTURE3D:
+        if(iscompressed)
+        {
+            size_t bpb = BytesPerBlock(fmt);
+            switch(bpb)
+            {
+            case 8:
+                tiling.width = 32 * 4;
+                tiling.height = 16 * 4;
+                tiling.depth = 16;
+                break;
+
+            case 16:
+                tiling.width = tiling.height = 16 * 4;
+                tiling.depth = 16;
+                break;
+
+            default:
+                return E_INVALIDARG;
+            }
+
+            assert(((tiling.width / 4) * (tiling.height / 4) * tiling.depth * bpb) == TILED_RESOURCE_TILE_SIZE_IN_BYTES);
+        }
+        else
+        {
+            if (bpp <= 8)
+            {
+                tiling.width = 64;
+                tiling.height = tiling.depth = 32;
+            }
+            else if (bpp <= 16)
+            {
+                tiling.width = tiling.height = tiling.depth = 32;
+            }
+            else if (bpp <= 32)
+            {
+                tiling.width = tiling.height = 32;
+                tiling.depth = 16;
+            }
+            else if (bpp <= 64)
+            {
+                tiling.width = 32;
+                tiling.height = tiling.depth = 16;
+            }
+            else if (bpp <= 128)
+            {
+                tiling.width = tiling.height = tiling.depth = 16;
+            }
+            else
+            {
+                tiling = {};
+                return E_INVALIDARG;
+            }
+
+            assert(((tiling.width * tiling.height * tiling.depth * bpp) / 8) == TILED_RESOURCE_TILE_SIZE_IN_BYTES);
+        }
+        break;
+
+    default:
+        return E_INVALIDARG;
+    }
+
+    return S_OK;
 }
 
 

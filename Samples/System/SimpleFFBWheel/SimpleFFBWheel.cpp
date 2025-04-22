@@ -214,49 +214,58 @@ void Sample::UpdateForceFeedbackFrame()
 {
     wchar_t ffbStateText[256]{};
 
-    // [SAMPLE] Request the most recent reading from the wheel
-    HRESULT hr = m_gameInput->GetCurrentReading(GameInputKindRacingWheel, nullptr, &m_reading);
-    if (SUCCEEDED(hr))
+    if(m_wheelDevice)
     {
-        // [SAMPLE] From that reading, get the state of thw wheel, pedals, etc.
-        if (m_reading->GetRacingWheelState(&m_wheelState))
+        // [SAMPLE] Request the most recent reading from the wheel
+        HRESULT hr = m_gameInput->GetCurrentReading(GameInputKindRacingWheel, nullptr, &m_reading);
+        if (SUCCEEDED(hr))
         {
-            swprintf_s(ffbStateText, L"Throttle   Brake   Clutch   Handbrake   Wheel");
-            m_valuesHeader->SetText(ffbStateText);
-
-            // update on-screen stats
-            swprintf_s(ffbStateText, L"%.3f        %.3f    %.3f     %.3f             %.3f",
-                        m_wheelState.throttle, m_wheelState.brake, m_wheelState.clutch, m_wheelState.handbrake, m_wheelState.wheel);
-            m_valuesLabel->SetForegroundColor(Colors::White);
-            m_valuesLabel->SetText(ffbStateText);
-
-            m_inputState.Accelerator = m_wheelState.throttle;
-            m_inputState.Brake = m_wheelState.brake;
-
-            // allow simple accelerator/brake control with dpad
-            if (m_wheelState.buttons & GameInputRacingWheelDpadUp)
+            // [SAMPLE] From that reading, get the state of thw wheel, pedals, etc.
+            if (m_reading->GetRacingWheelState(&m_wheelState))
             {
-                m_inputState.Accelerator = 0.5f;
+                swprintf_s(ffbStateText, L"Throttle   Brake   Clutch   Handbrake   Wheel");
+                m_valuesHeader->SetText(ffbStateText);
+
+                // update on-screen stats
+                swprintf_s(ffbStateText, L"%.3f        %.3f    %.3f     %.3f             %.3f",
+                            m_wheelState.throttle, m_wheelState.brake, m_wheelState.clutch, m_wheelState.handbrake, m_wheelState.wheel);
+                m_valuesLabel->SetForegroundColor(Colors::White);
+                m_valuesLabel->SetText(ffbStateText);
+
+                m_inputState.Accelerator = m_wheelState.throttle;
+                m_inputState.Brake = m_wheelState.brake;
+
+                // allow simple accelerator/brake control with dpad
+                if (m_wheelState.buttons & GameInputRacingWheelDpadUp)
+                {
+                    m_inputState.Accelerator = 0.5f;
+                }
+                else if (m_wheelState.buttons & GameInputRacingWheelDpadDown)
+                {
+                    m_inputState.Brake = 0.3f;
+                }
+
+                m_inputState.Gravel = GetRacingWheelButtonPressed(GameInputRacingWheelMenu);
+                m_inputState.Exit   = GetRacingWheelButtonPressed(GameInputRacingWheelView);
+
+                m_lastRacingWheelButtons = m_wheelState.buttons;
             }
-            else if (m_wheelState.buttons & GameInputRacingWheelDpadDown)
+            else
             {
-                m_inputState.Brake = 0.3f;
+                m_valuesLabel->SetForegroundColor(Colors::Red);
+                m_valuesLabel->SetText(L"GetRacingWheelState failed");
             }
-
-            m_inputState.Gravel = GetRacingWheelButtonPressed(GameInputRacingWheelMenu);
-            m_inputState.Exit   = GetRacingWheelButtonPressed(GameInputRacingWheelView);
-
-            m_lastRacingWheelButtons = m_wheelState.buttons;
         }
         else
         {
+            swprintf_s(ffbStateText, L"Error getting reading: %08X", hr);
             m_valuesLabel->SetForegroundColor(Colors::Red);
-            m_valuesLabel->SetText(L"GetRacingWheelState failed");
+            m_valuesLabel->SetText(ffbStateText);
         }
     }
     else
     {
-        swprintf_s(ffbStateText, L"Supported racing wheel not connected: %08X", hr);
+        swprintf_s(ffbStateText, L"Supported racing wheel not connected.");
         m_valuesLabel->SetForegroundColor(Colors::Red);
         m_valuesLabel->SetText(ffbStateText);
     }
@@ -303,11 +312,15 @@ void CALLBACK Sample::OnGameInputDeviceAddedRemoved(
     _In_ IGameInputDevice * device,
     _In_ uint64_t,
     _In_ GameInputDeviceStatus currentStatus,
-    _In_ GameInputDeviceStatus) noexcept
+    _In_ GameInputDeviceStatus previousStatus) noexcept
 {
     auto sample = reinterpret_cast<Sample*>(context);
 
-    if (currentStatus & GameInputDeviceConnected)
+    bool wasConnected = (previousStatus & GameInputDeviceConnected) != 0;
+    bool isConnected = (currentStatus & GameInputDeviceConnected) != 0;
+
+    // [SAMPLE] Device connected and we're not already tracking a wheel?
+    if (isConnected && !wasConnected && !sample->m_wheelDevice)
     {
         const GameInputDeviceInfo* deviceInfo;
 
@@ -317,33 +330,26 @@ void CALLBACK Sample::OnGameInputDeviceAddedRemoved(
         deviceInfo = device->GetDeviceInfo();
 #endif
 
-        // [SAMPLE] if we aren't already tracking a FFB wheel device
-        if (!sample->m_wheelDevice)
+        // [SAMPLE] determine if this device has more than zero FFB motors (i.e. it's a device that supports force feedback)
+        // If it does, we'll use it for the sample.
+        if (deviceInfo->forceFeedbackMotorCount > 0)
         {
-            // [SAMPLE] determine if this device has more than zero FFB motors (i.e. it's a device that supports force feedback)
-            // If it does, we'll use it for the sample.
-            if (deviceInfo->forceFeedbackMotorCount > 0)
-            {
-                sample->m_log->Format(L"with %d force feedback motor(s)\n", deviceInfo->forceFeedbackMotorCount);
-                sample->m_wheelDevice = device;
+            sample->m_log->Format(L"with %d force feedback motor(s)\n", deviceInfo->forceFeedbackMotorCount);
+            sample->m_wheelDevice = device;
 
-                sample->StartEffect(EffectType::Spring);
-                sample->StartEffect(EffectType::Damper);
-            }
-            else
-            {
-                sample->m_log->WriteLine(L"with no force feedback motors");
-            }
+            sample->StartEffect(EffectType::Spring);
+            sample->StartEffect(EffectType::Damper);
+        }
+        else
+        {
+            sample->m_log->WriteLine(L"with no force feedback motors");
         }
     }
-    else if (currentStatus == GameInputDeviceNoStatus) // [SAMPLE] Disconnected...
+    else if(!isConnected && wasConnected && sample->m_wheelDevice.Get() == device) // [SAMPLE] Device disconnected
     {
-        if (sample->m_wheelDevice.Get() == device)
-        {
-            sample->m_log->WriteLine(L"Device disconnected");
-            sample->m_wheelDevice.Reset();
-            sample->m_wheelDevice = nullptr;
-        }
+        sample->m_log->WriteLine(L"Device disconnected");
+        sample->m_wheelDevice.Reset();
+        sample->m_wheelDevice = nullptr;
     }
 }
 

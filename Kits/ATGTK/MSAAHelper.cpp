@@ -97,7 +97,7 @@ void MSAAHelper::SetDevice(_In_ ID3D12Device* device)
         {
 #ifdef _DEBUG
             char buff[128] = {};
-            sprintf_s(buff, "MSAAHelper: Device does not support MSAA for requested backbuffer format (%u)!\n", m_backBufferFormat);
+            sprintf_s(buff, "MSAAHelper: Device does not support MSAA for requested backbuffer format (%d)!\n", m_backBufferFormat);
             OutputDebugStringA(buff);
 #endif
             throw std::exception();
@@ -118,7 +118,7 @@ void MSAAHelper::SetDevice(_In_ ID3D12Device* device)
         {
 #ifdef _DEBUG
             char buff[128] = {};
-            sprintf_s(buff, "MSAAHelper: Device does not support MSAA for requested depth/stencil format (%u)!\n", m_depthBufferFormat);
+            sprintf_s(buff, "MSAAHelper: Device does not support MSAA for requested depth/stencil format (%d)!\n", m_depthBufferFormat);
             OutputDebugStringA(buff);
 #endif
             throw std::exception();
@@ -365,7 +365,7 @@ void MSAAHelper::ResolveDepth(_In_ ID3D12GraphicsCommandList* commandList,
 
     commandList->ResourceBarrier((beforeState != D3D12_RESOURCE_STATE_RESOLVE_DEST) ? 2u : 1u, barriers);
 
-    auto const desc = depthBuffer->GetDesc();
+    const auto desc = depthBuffer->GetDesc();
     commandList->ResolveSubresource(depthBuffer, 0, m_msaaDepthStencil.Get(), 0, desc.Format);
 
     std::swap(barriers[0].Transition.StateBefore, barriers[0].Transition.StateAfter);
@@ -452,7 +452,7 @@ void MSAAHelper::SetDevice(_In_ ID3D11Device* device)
         {
 #ifdef _DEBUG
             char buff[128] = {};
-            sprintf_s(buff, "MSAAHelper: Device does not support MSAA for requested backbuffer format (%u)!\n", m_backBufferFormat);
+            sprintf_s(buff, "MSAAHelper: Device does not support MSAA for requested backbuffer format (%d)!\n", m_backBufferFormat);
             OutputDebugStringA(buff);
 #endif
             throw std::exception();
@@ -473,7 +473,7 @@ void MSAAHelper::SetDevice(_In_ ID3D11Device* device)
         {
 #ifdef _DEBUG
             char buff[128] = {};
-            sprintf_s(buff, "MSAAHelper: Device does not support MSAA for requested depth/stencil format (%u)!\n", m_depthBufferFormat);
+            sprintf_s(buff, "MSAAHelper: Device does not support MSAA for requested depth/stencil format (%d)!\n", m_depthBufferFormat);
             OutputDebugStringA(buff);
 #endif
             throw std::exception();
@@ -649,8 +649,8 @@ void MSAAHelper::ResolveDepth(_In_ ID3D11DeviceContext* context, _In_ ID3D11Text
 void MSAAHelper::SetWindow(const RECT& output)
 {
     // Determine the render target size in pixels.
-    auto const width = size_t(std::max<LONG>(output.right - output.left, 1));
-    auto const height = size_t(std::max<LONG>(output.bottom - output.top, 1));
+    const auto width = size_t(std::max<LONG>(output.right - output.left, 1));
+    const auto height = size_t(std::max<LONG>(output.bottom - output.top, 1));
 
     SizeResources(width, height);
 }

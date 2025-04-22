@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>685cdc14-ac13-44b4-9968-035d970ba88c</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>51007f66-c964-419d-af55-9d5839e99432</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>d9f5e342-b600-4f23-9b0b-5cfc74c46102</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>f83f825b-b738-4499-9f32-1e77eacfc481</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{37995aab-530d-4701-9676-ab26fccb295b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media">
+      <UniqueIdentifier>{563a269f-8adb-4902-9b2d-a1ace88a9b6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media\Meshes">
+      <UniqueIdentifier>{b5f10d6f-eb5b-4db4-90de-bb7fb1028a68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media\Meshes\AbstractCathedral">
+      <UniqueIdentifier>{4d500d06-a128-46e1-909a-6320bdb80f87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media\Fonts">
+      <UniqueIdentifier>{e94974c8-164e-44f0-9be1-c85e271d6823}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media\Screenshots">
+      <UniqueIdentifier>{5ce2a62d-fa4a-408d-aacd-478a1834318b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ATG Tool Kit\FullScreenQuad">
+      <UniqueIdentifier>{dd814110-8007-4a2b-8743-41e622949b07}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="AutoRGB.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h" />
+    <ClInclude Include="Heuristics.h" />
+    <ClInclude Include="shared.h" />
+    <ClInclude Include="utils.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuad.h">
+      <Filter>ATG Tool Kit\FullScreenQuad</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FlyCamera.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\PerformanceTimersXbox.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\Texture.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ReadCompressedData.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ReadData.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="AutoRGB.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="Heuristics.cpp" />
+    <ClCompile Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuad.cpp">
+      <Filter>ATG Tool Kit\FullScreenQuad</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\FlyCamera.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\PerformanceTimersXbox.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\Texture.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\ReadCompressedData.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\AmbientPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\AmbientVS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\GPassPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\GPassVertex.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\HistogramCS_GSM.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\RenderHistogramPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuadPS.hlsl">
+      <Filter>ATG Tool Kit\FullScreenQuad</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuadVS.hlsl">
+      <Filter>ATG Tool Kit\FullScreenQuad</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SingleColorBlockPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LightBinningCompute.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\GPassCommon.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\AbstractCathedral\AbstractCathedral.sdkmes_">
+      <Filter>Media\Meshes\AbstractCathedral</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\AbstractCathedral\AbstractCathedral.sdkmesh">
+      <Filter>Media\Meshes\AbstractCathedral</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\AbstractCathedral\AbstractCathedral.sdkmesh.bin">
+      <Filter>Media\Meshes\AbstractCathedral</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Media\Fonts</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
+      <Filter>Media\Fonts</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+      <Filter>Media\Fonts</Filter>
+    </None>
+    <None Include="Shaders\HistogramCS.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuad.hlsli">
+      <Filter>ATG Tool Kit\FullScreenQuad</Filter>
+    </None>
+    <None Include="readme.md" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\CelingCubesLightingMap.dds">
+      <Filter>Media\Meshes\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\Cement.dds">
+      <Filter>Media\Meshes\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\CenterCubes.dds">
+      <Filter>Media\Meshes\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\CenterCubesLightingMap.dds">
+      <Filter>Media\Meshes\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\CenterLightingMap.dds">
+      <Filter>Media\Meshes\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\CenterPool.dds">
+      <Filter>Media\Meshes\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\CenterRimLightingMap.dds">
+      <Filter>Media\Meshes\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\EndBoxes2LightingMap.dds">
+      <Filter>Media\Meshes\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\EndCubes1LightingMap.dds">
+      <Filter>Media\Meshes\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\FloorLightingMap .dds">
+      <Filter>Media\Meshes\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\GridLightingMap.dds">
+      <Filter>Media\Meshes\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\Light.dds">
+      <Filter>Media\Meshes\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\Mosaic3.dds">
+      <Filter>Media\Meshes\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\Pillar.dds">
+      <Filter>Media\Meshes\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\PillarBase.dds">
+      <Filter>Media\Meshes\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\PillarBasesLightingMap.dds">
+      <Filter>Media\Meshes\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\PillarsLightingMap.dds">
+      <Filter>Media\Meshes\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\Rust.dds">
+      <Filter>Media\Meshes\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\Sky.dds">
+      <Filter>Media\Meshes\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\StripeConcrete.dds">
+      <Filter>Media\Meshes\AbstractCathedral</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\Game Images\GOW4_1.DDS">
+      <Filter>Media\Screenshots</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\Game Images\GOW4_2.DDS">
+      <Filter>Media\Screenshots</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\Game Images\GOW4_3.DDS">
+      <Filter>Media\Screenshots</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\Game Images\GOW4_4.DDS">
+      <Filter>Media\Screenshots</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\Game Images\Halo_1.DDS">
+      <Filter>Media\Screenshots</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\Game Images\Halo_2.DDS">
+      <Filter>Media\Screenshots</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\Game Images\Halo_3.DDS">
+      <Filter>Media\Screenshots</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\Game Images\Halo_4.DDS">
+      <Filter>Media\Screenshots</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

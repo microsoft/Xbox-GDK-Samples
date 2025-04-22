@@ -1,0 +1,302 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="public_source">
+      <UniqueIdentifier>{6f32dd82-e26b-4a82-99d6-d78b7532a9ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="public_shaders">
+      <UniqueIdentifier>{e129ce04-5816-4ca0-a6fe-be83bcc29a44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="private_source">
+      <UniqueIdentifier>{fc1de67e-62f5-4c1a-a42b-8abe90999e84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="private_shaders">
+      <UniqueIdentifier>{535b96c7-ed5a-494f-8fdf-59f11c81591a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="private_shaders\dx12">
+      <UniqueIdentifier>{47477c30-4cce-4402-8768-adc0506eddf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="private_shaders\xbox">
+      <UniqueIdentifier>{06a268a6-a407-4a1b-9ed2-f8b97f4dac71}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_apply_non_smart_half_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_apply_non_smart_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_apply_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_clear_load_counter_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_edge_sensitive_blur_1_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_edge_sensitive_blur_2_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_edge_sensitive_blur_3_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_edge_sensitive_blur_4_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_edge_sensitive_blur_5_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_edge_sensitive_blur_6_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_edge_sensitive_blur_7_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_edge_sensitive_blur_8_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_generate_importance_map_a_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_generate_importance_map_b_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_generate_importance_map_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_generate_q0_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_generate_q1_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_generate_q2_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_generate_q3_base_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_generate_q3_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_prepare_downsampled_depths_and_mips_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_prepare_downsampled_depths_half_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_prepare_downsampled_depths_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_prepare_downsampled_normals_from_input_normals_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_prepare_downsampled_normals_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_prepare_native_depths_and_mips_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_prepare_native_depths_half_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_prepare_native_depths_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_prepare_native_normals_from_input_normals_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_prepare_native_normals_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\cacao\ffx_cacao_upscale_bilateral_5x5_pass.hlsl">
+      <Filter>private_shaders\xbox</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_apply_non_smart_half_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_apply_non_smart_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_apply_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_clear_load_counter_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_edge_sensitive_blur_1_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_edge_sensitive_blur_2_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_edge_sensitive_blur_3_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_edge_sensitive_blur_4_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_edge_sensitive_blur_5_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_edge_sensitive_blur_6_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_edge_sensitive_blur_7_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_edge_sensitive_blur_8_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_generate_importance_map_a_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_generate_importance_map_b_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_generate_importance_map_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_generate_q0_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_generate_q1_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_generate_q2_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_generate_q3_base_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_generate_q3_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_prepare_downsampled_depths_and_mips_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_prepare_downsampled_depths_half_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_prepare_downsampled_depths_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_prepare_downsampled_normals_from_input_normals_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_prepare_downsampled_normals_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_prepare_native_depths_and_mips_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_prepare_native_depths_half_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_prepare_native_depths_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_prepare_native_normals_from_input_normals_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_prepare_native_normals_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\shaders\cacao\ffx_cacao_upscale_bilateral_5x5_pass.hlsl">
+      <Filter>private_shaders\dx12</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\shared\ffx_assert.cpp">
+      <Filter>private_source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\ffx_gdk.cpp">
+      <Filter>private_source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\ffx_shader_blobs.cpp">
+      <Filter>private_source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\blob_accessors\ffx_cacao_shaderblobs.cpp">
+      <Filter>private_source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\ffx_dx12.cpp">
+      <Filter>private_source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\shared\ffx_breadcrumbs_list.cpp">
+      <Filter>private_source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\ffx_shader_blobs.h">
+      <Filter>private_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\blob_accessors\ffx_cacao_shaderblobs.h">
+      <Filter>private_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\ffx_core.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\ffx_common_types.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\ffx_core_hlsl.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\ffx_core_gpu_common.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\ffx_core_gpu_common_half.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\ffx_core_portability.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\cacao\ffx_cacao_apply.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\cacao\ffx_cacao_callbacks_hlsl.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\cacao\ffx_cacao_defines.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\cacao\ffx_cacao_edge_sensitive_blur.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\cacao\ffx_cacao_importance_map.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\cacao\ffx_cacao_prepare.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\cacao\ffx_cacao_resources.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\cacao\ffx_cacao_ssao_generation.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\cacao\ffx_cacao_upscale.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\cacao\ffx_cacao_utils.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\host\backends\gdk\ffx_gdk.h">
+      <Filter>public_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\host\backends\dx12\ffx_dx12.h">
+      <Filter>public_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\host\backends\dx12\d3dx12.h">
+      <Filter>public_source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="BuildGDKShaders.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\Kits\AMDTK\fidelityfx\tools\binary_store\FidelityFX_SC.exe" />
+  </ItemGroup>
+</Project>

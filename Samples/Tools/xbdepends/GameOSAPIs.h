@@ -1,5 +1,5 @@
 //--------------------------------------------------------------------------------------
-// File: .\GameOSAPIs.h
+// File: GameOSAPIs.h
 //
 // Microsoft Xbox Binary Dependencies Tool - Game APIs data
 //
@@ -1074,6 +1074,9 @@ namespace KnownAPIs
         "PssCaptureSnapshot",
         "PssFreeSnapshot",
         "PssQuerySnapshot",
+        "PssWalkMarkerCreate",
+        "PssWalkMarkerFree",
+        "PssWalkSnapshot",
         "QueryAllTracesA",
         "QueryAllTracesW",
         "QueryCompressorInformation",

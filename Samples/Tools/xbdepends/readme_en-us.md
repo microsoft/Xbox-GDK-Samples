@@ -161,3 +161,4 @@ File Format, Part 2*". MSDN Magazine (March 2002)
 |January 2022|CMake cleanup and added presets file|
 |November 2022|Updated to CMake 3.20|
 |June 2024|Update for recent DLL additions|
+|January 2025|Update for recent additions for ASAN support|

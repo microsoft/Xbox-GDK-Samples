@@ -1335,9 +1335,9 @@ void Image::MakeRGBATexture(uint32_t texSize, size_t levels, const D3D12_SUBRESO
 
     size_t totalSize = 0;
 
-    for (uint32_t level = 0; level < levels; ++level)
+    for (size_t level = 0; level < levels; ++level)
     {
-        uint32_t mipSize = std::max(texSize >> level, 4u);
+        size_t mipSize = std::max(texSize >> level, 4u);
 
         totalSize += AlignUp(mipSize * mipSize * 4, 16);
     }
@@ -1351,15 +1351,15 @@ void Image::MakeRGBATexture(uint32_t texSize, size_t levels, const D3D12_SUBRESO
 
     uint8_t* destPtr = mem;
 
-    for (uint32_t level = 0; level < levels; ++level)
+    for (size_t level = 0; level < levels; ++level)
     {
-        uint32_t mipSize = std::max(texSize >> level, 1u);
-        uint32_t targetMipSize = std::max(texSize >> level, 4u);
+        size_t mipSize = std::max(texSize >> level, 1u);
+        size_t targetMipSize = std::max(texSize >> level, 4u);
 
         D3D12_SUBRESOURCE_DATA rgba;
         rgba.pData = destPtr;
-        rgba.RowPitch = targetMipSize * 4;
-        rgba.SlicePitch = targetMipSize * targetMipSize * 4;
+        rgba.RowPitch = static_cast<LONG_PTR>(targetMipSize * 4);
+        rgba.SlicePitch = static_cast<LONG_PTR>(targetMipSize * targetMipSize * 4);
         m_rgbaSubresources.emplace_back(rgba);
 
         auto rowPitch = static_cast<uint32_t>(subresources[level].RowPitch);

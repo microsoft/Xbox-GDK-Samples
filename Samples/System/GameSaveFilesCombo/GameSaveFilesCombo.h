@@ -57,14 +57,21 @@ public:
     // UI
     void Log(const char* text);
     void LogFailedHR(const char* functionName, HRESULT hr);
+    void LogFailedDWORD(const char* functionName, DWORD dword);
+    void EnableFileIOButtons(bool enable);
 
     // GameSaveFiles
     HRESULT GetFolderWithUIAsync();
     HRESULT GetRemainingQuota();
 
+    void GenerateFile();
+    void ReadData();
+
+    void GetContainerPath(char* containerPath);
+
     struct GamerPicBytes
     {
-        size_t size;
+        size_t size = 0;
         std::unique_ptr<uint8_t> data;
     };
 
@@ -100,6 +107,8 @@ private:
     std::vector<std::string>                    m_logQueue;
     std::shared_ptr<ATG::UITK::UIButton>        m_loadButton;
     std::shared_ptr<ATG::UITK::UIButton>        m_quotaButton;
+    std::shared_ptr<ATG::UITK::UIButton>        m_generateButton;
+    std::shared_ptr<ATG::UITK::UIButton>        m_readButton;
     std::shared_ptr<ATG::UITK::UIButton>        m_switchUserButton;
     std::shared_ptr<ATG::UITK::UIConsoleWindow> m_consoleWindow;
     std::shared_ptr<ATG::UITK::UIStaticText>    m_gamertagText;
@@ -120,7 +129,8 @@ private:
     // UserSignIn.
     bool                                        m_userAddInProgress;
     XUserHandle                                 m_userHandle;
-    XTaskQueueHandle                            m_taskQueue;
 
     GamerPicBytes                               m_gamerPic;
+
+    std::string                                 m_gamesavePath;
 };

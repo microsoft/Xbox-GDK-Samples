@@ -98,15 +98,11 @@ parameters.
 
 # Implementation notes
 
--   While the implementation allows for both Global and Social
-    leaderboards to be queried, the only real difference between them is
-    setting an enum value passed into the query and including a XUID to
-    indicate who's friends should be included in the result list.
-
--   The sample also demonstrates querying of stat values directly.
-
-*NOTE: Leaderboards.cpp contains code relevant to producing and querying
-stats and leaderboards*
+- `LeaderboardsEventBased.cpp` contains code relevant to producing and querying stats and leaderboards.
+- While the implementation allows for both Global and Social leaderboards to be queried, the only real difference between them is setting an enum value passed into the query and including a XUID to indicate who's friends should be included in the result list.
+- The Title-managed leaderboard API works differently from the Event-based leaderboard API. Due to these differences, it is recommended for your title to use Event-based stats if possible.
+  - For general documentation on the reasoning and differences between Title-managed stats and Event-based stats, refer to this [documentation](https://learn.microsoft.com/en-us/gaming/gdk/_content/gc/live/features/player-data/stats-leaderboards/live-stats-eb-vs-tm).
+- The sample also demonstrates querying of stat values directly.
 
 # Known issues
 
@@ -131,6 +127,8 @@ the [Microsoft Privacy
 Statement](https://privacy.microsoft.com/en-us/privacystatement/).
 
 # Update history
+
+**Update:** March 2025 - Updatine Implementation notes section
 
 **Update:** July 2022
 

@@ -76,18 +76,21 @@ namespace
         _In_ IGameInputDevice * device,
         _In_ uint64_t,
         _In_ GameInputDeviceStatus currentStatus,
-        _In_ GameInputDeviceStatus) noexcept
+        _In_ GameInputDeviceStatus previousStatus) noexcept
     {
         auto sample = reinterpret_cast<Sample*>(context);
 
-        if (currentStatus & GameInputDeviceConnected)
+        bool wasConnected = (previousStatus & GameInputDeviceConnected) != 0;
+        bool isConnected = (currentStatus & GameInputDeviceConnected) != 0;
+
+        if (isConnected && !wasConnected && !sample->m_device)
         {
             sample->m_device = device;
 
             //We have a new device, so get the current reading as a frame of reference for future readings
             sample->m_gameInput->GetCurrentReading(GameInputKindGamepad, sample->m_device.Get(), &sample->m_lastReading);
         }
-        else if (sample->m_device.Get() == device)
+        else if(!isConnected && wasConnected && sample->m_device.Get() == device) // [SAMPLE] Device disconnected
         {
             sample->m_device.Reset();
             sample->m_lastReading.Reset();

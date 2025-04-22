@@ -1413,7 +1413,7 @@ namespace
 
         if (ext && ext->wSize == sizeof(TGA_EXTENSION) && ext->wGammaDenominator != 0)
         {
-            auto const gamma = static_cast<float>(ext->wGammaNumerator) / static_cast<float>(ext->wGammaDenominator);
+            const auto gamma = static_cast<float>(ext->wGammaNumerator) / static_cast<float>(ext->wGammaDenominator);
             if (fabsf(gamma - 2.2f) < GAMMA_EPSILON || fabsf(gamma - 2.4f) < GAMMA_EPSILON)
             {
                 sRGB = true;
@@ -1492,12 +1492,10 @@ HRESULT DirectX::GetMetadataFromTGAFile(const wchar_t* szFile, TGA_FLAGS flags, 
         return E_INVALIDARG;
 
 #ifdef _WIN32
-#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
-    ScopedHandle hFile(safe_handle(CreateFile2(szFile, GENERIC_READ, FILE_SHARE_READ, OPEN_EXISTING, nullptr)));
-#else
-    ScopedHandle hFile(safe_handle(CreateFileW(szFile, GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING,
-        FILE_FLAG_SEQUENTIAL_SCAN, nullptr)));
-#endif
+    ScopedHandle hFile(safe_handle(CreateFile2(
+        szFile,
+        GENERIC_READ, FILE_SHARE_READ, OPEN_EXISTING,
+        nullptr)));
     if (!hFile)
     {
         return HRESULT_FROM_WIN32(GetLastError());
@@ -1552,7 +1550,7 @@ HRESULT DirectX::GetMetadataFromTGAFile(const wchar_t* szFile, TGA_FLAGS flags, 
         return HRESULT_FROM_WIN32(GetLastError());
     }
 
-    auto const headerLen = static_cast<size_t>(bytesRead);
+    const auto headerLen = static_cast<size_t>(bytesRead);
 #else
     inFile.read(reinterpret_cast<char*>(header), TGA_HEADER_LEN);
     if (!inFile)
@@ -1681,7 +1679,7 @@ HRESULT DirectX::LoadFromTGAMemory(
 
     const size_t remaining = size - offset - paletteOffset;
     if (remaining == 0)
-        return E_FAIL;
+        return HRESULT_E_HANDLE_EOF;
 
     const void* pPixels = static_cast<const uint8_t*>(pSource) + offset + paletteOffset;
 
@@ -1758,12 +1756,10 @@ HRESULT DirectX::LoadFromTGAFile(
     image.Release();
 
 #ifdef _WIN32
-#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
-    ScopedHandle hFile(safe_handle(CreateFile2(szFile, GENERIC_READ, FILE_SHARE_READ, OPEN_EXISTING, nullptr)));
-#else
-    ScopedHandle hFile(safe_handle(CreateFileW(szFile, GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING,
-        FILE_FLAG_SEQUENTIAL_SCAN, nullptr)));
-#endif
+    ScopedHandle hFile(safe_handle(CreateFile2(
+        szFile,
+        GENERIC_READ, FILE_SHARE_READ, OPEN_EXISTING,
+        nullptr)));
     if (!hFile)
     {
         return HRESULT_FROM_WIN32(GetLastError());
@@ -1818,7 +1814,7 @@ HRESULT DirectX::LoadFromTGAFile(
         return HRESULT_FROM_WIN32(GetLastError());
     }
 
-    auto const headerLen = static_cast<size_t>(bytesRead);
+    const auto headerLen = static_cast<size_t>(bytesRead);
 #else
     inFile.read(reinterpret_cast<char*>(header), TGA_HEADER_LEN);
     if (!inFile)
@@ -1838,7 +1834,7 @@ HRESULT DirectX::LoadFromTGAFile(
         return HRESULT_E_INVALID_DATA;
 
     // Read the pixels
-    auto const remaining = len - offset;
+    const auto remaining = len - offset;
     if (remaining == 0)
         return E_FAIL;
 
@@ -2131,6 +2127,12 @@ HRESULT DirectX::LoadFromTGAFile(
                 image.Release();
                 return hr;
             }
+
+            if ((remaining - paletteOffset) == 0)
+            {
+                image.Release();
+                return HRESULT_E_HANDLE_EOF;
+            }
         }
 
         if (convFlags & CONV_FLAGS_RLE)
@@ -2357,13 +2359,10 @@ HRESULT DirectX::SaveToTGAFile(
 
     // Create file and write header
 #ifdef _WIN32
-#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
-    ScopedHandle hFile(safe_handle(CreateFile2(szFile, GENERIC_WRITE, 0,
-        CREATE_ALWAYS, nullptr)));
-#else
-    ScopedHandle hFile(safe_handle(CreateFileW(szFile,
-        GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr)));
-#endif
+    ScopedHandle hFile(safe_handle(CreateFile2(
+        szFile,
+        GENERIC_WRITE, 0, CREATE_ALWAYS,
+        nullptr)));
     if (!hFile)
     {
         return HRESULT_FROM_WIN32(GetLastError());
