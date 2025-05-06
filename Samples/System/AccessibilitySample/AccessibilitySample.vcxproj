@@ -231,7 +231,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\OpenSource\imgui;..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories />
       <ForcedUsingFiles />
       <Optimization>MaxSpeed</Optimization>
@@ -258,7 +258,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\OpenSource\imgui;..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories />
       <ForcedUsingFiles />
       <Optimization>MaxSpeed</Optimization>
@@ -285,7 +285,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\OpenSource\imgui;..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories />
       <ForcedUsingFiles />
       <Optimization>MaxSpeed</Optimization>
@@ -312,7 +312,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\OpenSource\imgui;..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories />
       <ForcedUsingFiles />
       <Optimization>MaxSpeed</Optimization>
@@ -338,7 +338,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MinimalRebuild>false</MinimalRebuild>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\OpenSource\imgui;..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories />
       <ForcedUsingFiles />
       <WarningLevel>Level4</WarningLevel>
@@ -362,7 +362,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MinimalRebuild>false</MinimalRebuild>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\OpenSource\imgui;..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories />
       <ForcedUsingFiles />
       <WarningLevel>Level4</WarningLevel>
@@ -390,7 +390,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\OpenSource\imgui;..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>MaxSpeed</Optimization>
       <PreprocessorDefinitions>NDEBUG;__WRL_NO_DEFAULT_LIB__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level4</WarningLevel>
@@ -420,7 +420,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\OpenSource\imgui;..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>MaxSpeed</Optimization>
       <PreprocessorDefinitions>NDEBUG;__WRL_NO_DEFAULT_LIB__;PROFILE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level4</WarningLevel>
@@ -449,7 +449,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MinimalRebuild>false</MinimalRebuild>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\OpenSource\imgui;..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;__WRL_NO_DEFAULT_LIB__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -467,36 +467,52 @@
     <CopyFileToFolders>
       <DestinationFolders>$(OutDir)Assets</DestinationFolders>
     </CopyFileToFolders>
+    <ClCompile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">pch.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">pch.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">pch.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">pch.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">pch.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">pch.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">pch.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">pch.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">pch.h</ForcedIncludeFiles>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AccessibilitySample.h" />
-    <ClInclude Include="imgui_acc_gdk.h">
+    <ClInclude Include="ImGuiDx12Renderer.h" />
+    <ClInclude Include="ImGuiAcc.h" />
+    <ClInclude Include="ImGuiImplGdkDx12.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">true</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="imgui_acc_win32.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="imgui_impl_gdk_dx12.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">true</ExcludedFromBuild>
-    </ClInclude>
+    <ClInclude Include="Narrator.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="StepTimer.h" />
     <ClInclude Include="DeviceResources.h" />
-    <ClInclude Include="imconfig.h" />
-    <ClInclude Include="imgui.h" />
-    <ClInclude Include="imgui_impl_dx12.h">
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imconfig.h" />
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imgui.h">
+      <DisableSpecificWarnings>VCR001</DisableSpecificWarnings>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imgui_impl_dx12.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
@@ -504,7 +520,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="imgui_impl_win32.h">
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imgui_impl_win32.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">false</ExcludedFromBuild>
@@ -512,11 +528,15 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">false</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="imgui_internal.h" />
-    <ClInclude Include="imgui_stdlib.h" />
-    <ClInclude Include="imstb_rectpack.h" />
-    <ClInclude Include="imstb_textedit.h" />
-    <ClInclude Include="imstb_truetype.h" />
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imgui_internal.h">
+      <DisableSpecificWarnings>4365</DisableSpecificWarnings>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imgui_stdlib.h">
+      <DisableSpecificWarnings>4365</DisableSpecificWarnings>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imstb_rectpack.h" />
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imstb_textedit.h" />
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imstb_truetype.h" />
     <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h" />
     <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h" />
     <ClInclude Include="..\..\..\Kits\ATGTK\Json.h" />
@@ -526,102 +546,25 @@
     <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AccessibilitySample.cpp">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ClCompile>
-    <ClCompile Include="imgui_acc_gdk.cpp">
+    <ClCompile Include="AccessibilitySample.cpp" />
+    <ClCompile Include="ImGuiDx12Renderer.cpp" />
+    <ClCompile Include="ImGuiAcc.cpp" />
+    <ClCompile Include="ImGuiImplGdkDx12.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">true</ExcludedFromBuild>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="imgui_acc_win32.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">Use</PrecompiledHeader>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="imgui_impl_gdk_dx12.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">true</ExcludedFromBuild>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">NotUsing</PrecompiledHeader>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">shaders\$(Platform);$(ProjectDir)\AccessibilitySample\shaders\$(Platform);$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">shaders\$(Platform);$(ProjectDir)\AccessibilitySample\shaders\$(Platform);$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">shaders\$(Platform);$(ProjectDir)\AccessibilitySample\shaders\$(Platform);$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">shaders\$(Platform);$(ProjectDir)\AccessibilitySample\shaders\$(Platform);$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">shaders\$(Platform);$(ProjectDir)\AccessibilitySample\shaders\$(Platform);$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">shaders\$(Platform);$(ProjectDir)\AccessibilitySample\shaders\$(Platform);$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">shaders\$(Platform);$(ProjectDir)\AccessibilitySample\shaders\$(Platform);$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">shaders\$(Platform);$(ProjectDir)\AccessibilitySample\shaders\$(Platform);$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">shaders\$(Platform);$(ProjectDir)\AccessibilitySample\shaders\$(Platform);$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>shaders\$(Platform);$(ProjectDir)\AccessibilitySample\shaders\$(Platform);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="DeviceResources.cpp" />
-    <ClCompile Include="imgui.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">NotUsing</PrecompiledHeader>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui.cpp">
+      <DisableSpecificWarnings>4365</DisableSpecificWarnings>
     </ClCompile>
-    <ClCompile Include="imgui_draw.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">NotUsing</PrecompiledHeader>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_draw.cpp">
+      <DisableSpecificWarnings>4365</DisableSpecificWarnings>
     </ClCompile>
-    <ClCompile Include="imgui_impl_dx12.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">NotUsing</PrecompiledHeader>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_impl_dx12.cpp">
+      <DisableSpecificWarnings>4365;4191</DisableSpecificWarnings>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</ExcludedFromBuild>
@@ -629,16 +572,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="imgui_impl_win32.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">NotUsing</PrecompiledHeader>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_impl_win32.cpp">
+      <DisableSpecificWarnings>4365;4191</DisableSpecificWarnings>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">false</ExcludedFromBuild>
@@ -646,41 +581,18 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">false</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="imgui_stdlib.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">NotUsing</PrecompiledHeader>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_stdlib.cpp">
+      <DisableSpecificWarnings>4365</DisableSpecificWarnings>
     </ClCompile>
-    <ClCompile Include="imgui_tables.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">NotUsing</PrecompiledHeader>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_tables.cpp">
+      <DisableSpecificWarnings>4365</DisableSpecificWarnings>
     </ClCompile>
-    <ClCompile Include="imgui_widgets.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">NotUsing</PrecompiledHeader>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_widgets.cpp">
+      <DisableSpecificWarnings>4365</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp" />
     <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp" />
+    <ClCompile Include="Narrator.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">Create</PrecompiledHeader>

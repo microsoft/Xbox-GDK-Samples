@@ -617,12 +617,10 @@ HRESULT DirectX::GetMetadataFromHDRFile(const wchar_t* szFile, TexMetadata& meta
         return E_INVALIDARG;
 
 #ifdef _WIN32
-#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
-    ScopedHandle hFile(safe_handle(CreateFile2(szFile, GENERIC_READ, FILE_SHARE_READ, OPEN_EXISTING, nullptr)));
-#else
-    ScopedHandle hFile(safe_handle(CreateFileW(szFile, GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING,
-        FILE_FLAG_SEQUENTIAL_SCAN, nullptr)));
-#endif
+    ScopedHandle hFile(safe_handle(CreateFile2(
+        szFile,
+        GENERIC_READ, FILE_SHARE_READ, OPEN_EXISTING,
+        nullptr)));
     if (!hFile)
     {
         return HRESULT_FROM_WIN32(GetLastError());
@@ -677,9 +675,9 @@ HRESULT DirectX::GetMetadataFromHDRFile(const wchar_t* szFile, TexMetadata& meta
         return HRESULT_FROM_WIN32(GetLastError());
     }
 
-    auto const headerLen = static_cast<size_t>(bytesRead);
+    const auto headerLen = static_cast<size_t>(bytesRead);
 #else
-    auto const headerLen = std::min<size_t>(sizeof(header), len);
+    const auto headerLen = std::min<size_t>(sizeof(header), len);
 
     inFile.read(reinterpret_cast<char*>(header), headerLen);
     if (!inFile)
@@ -892,7 +890,7 @@ HRESULT DirectX::LoadFromHDRMemory(const uint8_t* pSource, size_t size, TexMetad
 
         for (size_t j = 0; j < image.GetPixelsSize(); j += 16)
         {
-            auto const exponent = static_cast<int>(fdata[3]);
+            const auto exponent = static_cast<int>(fdata[3]);
             fdata[0] = 1.0f / exposure*ldexpf((fdata[0] + 0.5f), exponent - (128 + 8));
             fdata[1] = 1.0f / exposure*ldexpf((fdata[1] + 0.5f), exponent - (128 + 8));
             fdata[2] = 1.0f / exposure*ldexpf((fdata[2] + 0.5f), exponent - (128 + 8));
@@ -921,12 +919,10 @@ HRESULT DirectX::LoadFromHDRFile(const wchar_t* szFile, TexMetadata* metadata, S
     image.Release();
 
 #ifdef _WIN32
-#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
-    ScopedHandle hFile(safe_handle(CreateFile2(szFile, GENERIC_READ, FILE_SHARE_READ, OPEN_EXISTING, nullptr)));
-#else
-    ScopedHandle hFile(safe_handle(CreateFileW(szFile, GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING,
-        FILE_FLAG_SEQUENTIAL_SCAN, nullptr)));
-#endif
+    ScopedHandle hFile(safe_handle(CreateFile2(
+        szFile,
+        GENERIC_READ, FILE_SHARE_READ, OPEN_EXISTING,
+        nullptr)));
     if (!hFile)
     {
         return HRESULT_FROM_WIN32(GetLastError());
@@ -1144,13 +1140,9 @@ HRESULT DirectX::SaveToHDRFile(const Image& image, const wchar_t* szFile) noexce
 
     // Create file and write header
 #ifdef _WIN32
-#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
-    ScopedHandle hFile(safe_handle(CreateFile2(szFile,
+    ScopedHandle hFile(safe_handle(CreateFile2(
+        szFile,
         GENERIC_WRITE, 0, CREATE_ALWAYS, nullptr)));
-#else
-    ScopedHandle hFile(safe_handle(CreateFileW(szFile,
-        GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr)));
-#endif
     if (!hFile)
     {
         return HRESULT_FROM_WIN32(GetLastError());
@@ -1182,7 +1174,7 @@ HRESULT DirectX::SaveToHDRFile(const Image& image, const wchar_t* szFile) noexce
 
         // Write blob
     #ifdef _WIN32
-        auto const bytesToWrite = static_cast<const DWORD>(blob.GetBufferSize());
+        const auto bytesToWrite = static_cast<const DWORD>(blob.GetBufferSize());
         DWORD bytesWritten;
         if (!WriteFile(hFile.get(), blob.GetConstBufferPointer(), bytesToWrite, &bytesWritten, nullptr))
         {
@@ -1215,7 +1207,7 @@ HRESULT DirectX::SaveToHDRFile(const Image& image, const wchar_t* szFile) noexce
         sprintf_s(header, g_Header, image.height, image.width);
 
     #ifdef _WIN32
-        auto const headerLen = static_cast<DWORD>(strlen(header));
+        const auto headerLen = static_cast<DWORD>(strlen(header));
 
         DWORD bytesWritten;
         if (!WriteFile(hFile.get(), header, headerLen, &bytesWritten, nullptr))

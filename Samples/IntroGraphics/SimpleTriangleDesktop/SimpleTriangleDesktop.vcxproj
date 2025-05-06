@@ -229,7 +229,7 @@
   <ItemGroup>
     <CustomBuild Include="MicrosoftGameConfig.mgc">
       <Command>copy %(Identity) "$(OutDir)MicrosoftGame.config"
-makepkg.exe localize /d "$(OutDir)" /pd "$(OutDir)" /gc "%(Identity)"</Command>
+makepkg.exe localize /d "$(OutDir)." /pd "$(OutDir)." /gc "%(Identity)"</Command>
       <Message>MGC Compile</Message>
       <Outputs>$(OutDir)MicrosoftGame.config</Outputs>
     </CustomBuild>

@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="HDR">
+      <UniqueIdentifier>{22faa73f-9aff-4fb9-8ef0-a945771f8d31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Standard Sample Files">
+      <UniqueIdentifier>{227e110c-200d-49d5-ab5c-941a003d99de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Standard Sample Files\Assets">
+      <UniqueIdentifier>37b2146b-118d-4f27-af98-af23a649eb63</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Standard Sample Files\Common">
+      <UniqueIdentifier>88a8f85d-0557-4bcd-9d49-239d12f6ed65</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Standard Sample Files\ATG Tool Kit">
+      <UniqueIdentifier>6d60d7aa-f330-4d80-88df-fe530b3aadca</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Standard Sample Files\ATG Tool Kit\FullScreenQuad">
+      <UniqueIdentifier>{05374549-b826-4591-bbe2-db1b301c14a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HDR\HDR Images">
+      <UniqueIdentifier>{9214abe5-f136-43bd-84b9-12f0e8f66be1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HDR\HDR Image">
+      <UniqueIdentifier>{909e4e85-347a-462c-96e8-644496a12d1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Standard Sample Files\Shaders">
+      <UniqueIdentifier>{e436640c-5b51-48b2-b054-3143b30f9b42}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="StepTimer.h">
+      <Filter>Standard Sample Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\HDR\HDRCommon.h">
+      <Filter>HDR</Filter>
+    </ClInclude>
+    <ClInclude Include="HDRDisplayMapping.h">
+      <Filter>HDR</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>Standard Sample Files\ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>Standard Sample Files\ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\Json.h">
+      <Filter>Standard Sample Files\ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h">
+      <Filter>Standard Sample Files\ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ReadData.h">
+      <Filter>Standard Sample Files\ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\RenderTexture.h">
+      <Filter>Standard Sample Files\ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuad.h">
+      <Filter>Standard Sample Files\ATG Tool Kit\FullScreenQuad</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Standard Sample Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Standard Sample Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>Standard Sample Files\ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\HDR\HDRImage.h">
+      <Filter>HDR\HDR Image</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="HDRDisplayMapping.cpp">
+      <Filter>HDR</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\RenderTexture.cpp">
+      <Filter>Standard Sample Files\ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuad.cpp">
+      <Filter>Standard Sample Files\ATG Tool Kit\FullScreenQuad</Filter>
+    </ClCompile>
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Standard Sample Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Standard Sample Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>Standard Sample Files\ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>Standard Sample Files\ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Standard Sample Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\HDR\HDRImage.cpp">
+      <Filter>HDR\HDR Image</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\Logo.png">
+      <Filter>Standard Sample Files\Assets</Filter>
+    </Image>
+    <Image Include="Assets\LargeLogo.png">
+      <Filter>Standard Sample Files\Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallLogo.png">
+      <Filter>Standard Sample Files\Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.png">
+      <Filter>Standard Sample Files\Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.png">
+      <Filter>Standard Sample Files\Assets</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Media\Fonts\Courier_36.spritefont">
+      <Filter>Standard Sample Files\Assets</Filter>
+    </None>
+    <None Include="..\..\..\Kits\ATGTK\HDR\HDRCommon.hlsli">
+      <Filter>HDR</Filter>
+    </None>
+    <None Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuad.hlsli">
+      <Filter>Standard Sample Files\ATG Tool Kit\FullScreenQuad</Filter>
+    </None>
+    <None Include="Readme.docx" />
+    <None Include="..\..\..\Media\HDR\blender_institute_2k.hdr">
+      <Filter>HDR\HDR Images</Filter>
+    </None>
+    <None Include="..\..\..\Media\HDR\georgentor_2k.hdr">
+      <Filter>HDR\HDR Images</Filter>
+    </None>
+    <None Include="..\..\..\Media\HDR\graffiti_shelter_2k.hdr">
+      <Filter>HDR\HDR Images</Filter>
+    </None>
+    <None Include="..\..\..\Media\HDR\HDR_029_Sky_Cloudy_Ref.hdr">
+      <Filter>HDR\HDR Images</Filter>
+    </None>
+    <None Include="..\..\..\Media\HDR\HDR_112_River_Road_2_Ref.hdr">
+      <Filter>HDR\HDR Images</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
+      <Filter>Standard Sample Files\Assets</Filter>
+    </None>
+    <None Include="HDRDisplayMapping_ReadMe_ja-jp.docx" />
+    <None Include="HDRDisplayMapping_ReadMe_ko-kr.docx" />
+    <None Include="HDRDisplayMapping_ReadMe_zh-cn.docx" />
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="PrepareSwapChainBuffersPS.hlsl">
+      <Filter>HDR</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuadPS.hlsl">
+      <Filter>Standard Sample Files\ATG Tool Kit\FullScreenQuad</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuadVS.hlsl">
+      <Filter>Standard Sample Files\ATG Tool Kit\FullScreenQuad</Filter>
+    </FxCompile>
+    <FxCompile Include="ColorPS.hlsl">
+      <Filter>Standard Sample Files\Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\Media\HDR\Readme.txt">
+      <Filter>HDR\HDR Images</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

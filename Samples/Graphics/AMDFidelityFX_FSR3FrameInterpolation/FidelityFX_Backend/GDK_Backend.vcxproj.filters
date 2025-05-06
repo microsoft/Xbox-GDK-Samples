@@ -1,0 +1,347 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="public_source">
+      <UniqueIdentifier>{f07378a1-d8ce-4ef1-be0b-858a16f820ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="public_shaders">
+      <UniqueIdentifier>{2f221b67-f05f-4f3c-949d-649f4e35cf0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="private_source">
+      <UniqueIdentifier>{9fc568c8-5412-4672-a0a8-7901d2a9dd83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="private_shaders">
+      <UniqueIdentifier>{82df8908-6dac-4da1-8d94-2ca12ee26ec5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\ffx_core.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\ffx_common_types.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\ffx_core_hlsl.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\ffx_core_gpu_common.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\ffx_core_gpu_common_half.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\ffx_core_portability.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\host\backends\gdk\ffx_gdk.h">
+      <Filter>public_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\host\backends\dx12\ffx_dx12.h">
+      <Filter>public_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\host\backends\dx12\d3dx12.h">
+      <Filter>public_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\frameinterpolation\ffx_frameinterpolation.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\frameinterpolation\ffx_frameinterpolation_callbacks_hlsl.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\frameinterpolation\ffx_frameinterpolation_common.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\frameinterpolation\ffx_frameinterpolation_compute_game_vector_field_inpainting_pyramid.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\frameinterpolation\ffx_frameinterpolation_compute_inpainting_pyramid.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\frameinterpolation\ffx_frameinterpolation_debug_view.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\frameinterpolation\ffx_frameinterpolation_disocclusion_mask.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\frameinterpolation\ffx_frameinterpolation_game_motion_vector_field.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\frameinterpolation\ffx_frameinterpolation_inpainting.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\frameinterpolation\ffx_frameinterpolation_optical_flow_vector_field.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\frameinterpolation\ffx_frameinterpolation_reconstruct_dilated_velocity_and_previous_depth.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\frameinterpolation\ffx_frameinterpolation_reconstruct_previous_depth.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\frameinterpolation\ffx_frameinterpolation_resources.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\frameinterpolation\ffx_frameinterpolation_setup.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\fsr3\ffx_fsr3_callbacks_hlsl.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\fsr3\ffx_fsr3_common.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\fsr3\ffx_fsr3_resources.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\fsr3upscaler\ffx_fsr3upscaler_accumulate.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\fsr3upscaler\ffx_fsr3upscaler_callbacks_hlsl.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\fsr3upscaler\ffx_fsr3upscaler_common.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\fsr3upscaler\ffx_fsr3upscaler_debug_view.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\fsr3upscaler\ffx_fsr3upscaler_luma_instability.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\fsr3upscaler\ffx_fsr3upscaler_luma_pyramid.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\fsr3upscaler\ffx_fsr3upscaler_prepare_inputs.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\fsr3upscaler\ffx_fsr3upscaler_prepare_reactivity.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\fsr3upscaler\ffx_fsr3upscaler_rcas.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\fsr3upscaler\ffx_fsr3upscaler_reproject.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\fsr3upscaler\ffx_fsr3upscaler_resources.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\fsr3upscaler\ffx_fsr3upscaler_sample.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\fsr3upscaler\ffx_fsr3upscaler_shading_change.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\fsr3upscaler\ffx_fsr3upscaler_shading_change_pyramid.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\fsr3upscaler\ffx_fsr3upscaler_upsample.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\opticalflow\ffx_opticalflow_callbacks_hlsl.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\opticalflow\ffx_opticalflow_common.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\opticalflow\ffx_opticalflow_compute_luminance_pyramid.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\opticalflow\ffx_opticalflow_compute_optical_flow_v5.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\opticalflow\ffx_opticalflow_compute_scd_divergence.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\opticalflow\ffx_opticalflow_filter_optical_flow_v5.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\opticalflow\ffx_opticalflow_generate_scd_histogram.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\opticalflow\ffx_opticalflow_prepare_luma.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\opticalflow\ffx_opticalflow_resources.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\opticalflow\ffx_opticalflow_scale_optical_flow_advanced_v5.h">
+      <Filter>public_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\FrameInterpolationSwapchain\FrameInterpolationSwapchainXbox.h">
+      <Filter>private_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\FrameInterpolationSwapchain\FrameInterpolationSwapchainXbox_Helpers.h">
+      <Filter>private_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\FrameInterpolationSwapchain\FrameInterpolationSwapchainDX12.h">
+      <Filter>private_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\FrameInterpolationSwapchain\FrameInterpolationSwapchainDX12_Helpers.h">
+      <Filter>private_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\FrameInterpolationSwapchain\FrameInterpolationSwapchainDX12_UiComposition.h">
+      <Filter>private_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\FrameInterpolationSwapchain\FrameInterpolationSwapchainUiCompositionVS.h">
+      <Filter>private_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\FrameInterpolationSwapchain\FrameInterpolationSwapchainUiCompositionPS.h">
+      <Filter>private_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\FrameInterpolationSwapchain\FrameInterpolationSwapchainUiCompositionPremulVS.h">
+      <Filter>private_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\FrameInterpolationSwapchain\FrameInterpolationSwapchainUiCompositionPremulPS.h">
+      <Filter>private_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\ffx_shader_blobs.h">
+      <Filter>private_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\blob_accessors\ffx_frameinterpolation_shaderblobs.h">
+      <Filter>private_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\blob_accessors\ffx_fsr3upscaler_shaderblobs.h">
+      <Filter>private_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\blob_accessors\ffx_opticalflow_shaderblobs.h">
+      <Filter>private_source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\shared\ffx_breadcrumbs_list.h">
+      <Filter>private_source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="BuildGDKShaders.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\frameinterpolation\ffx_frameinterpolation_compute_game_vector_field_inpainting_pyramid_pass.hlsl">
+      <Filter>private_shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\frameinterpolation\ffx_frameinterpolation_compute_inpainting_pyramid_pass.hlsl">
+      <Filter>private_shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\frameinterpolation\ffx_frameinterpolation_debug_view_pass.hlsl">
+      <Filter>private_shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\frameinterpolation\ffx_frameinterpolation_disocclusion_mask_pass.hlsl">
+      <Filter>private_shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\frameinterpolation\ffx_frameinterpolation_game_motion_vector_field_pass.hlsl">
+      <Filter>private_shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\frameinterpolation\ffx_frameinterpolation_inpainting_pass.hlsl">
+      <Filter>private_shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\frameinterpolation\ffx_frameinterpolation_optical_flow_vector_field_pass.hlsl">
+      <Filter>private_shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\frameinterpolation\ffx_frameinterpolation_pass.hlsl">
+      <Filter>private_shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\frameinterpolation\ffx_frameinterpolation_reconstruct_and_dilate_pass.hlsl">
+      <Filter>private_shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\frameinterpolation\ffx_frameinterpolation_reconstruct_previous_depth_pass.hlsl">
+      <Filter>private_shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\frameinterpolation\ffx_frameinterpolation_setup_pass.hlsl">
+      <Filter>private_shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\fsr3upscaler\ffx_fsr3upscaler_accumulate_pass.hlsl">
+      <Filter>private_shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\fsr3upscaler\ffx_fsr3upscaler_autogen_reactive_pass.hlsl">
+      <Filter>private_shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\fsr3upscaler\ffx_fsr3upscaler_debug_view_pass.hlsl">
+      <Filter>private_shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\fsr3upscaler\ffx_fsr3upscaler_luma_instability_pass.hlsl">
+      <Filter>private_shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\fsr3upscaler\ffx_fsr3upscaler_luma_pyramid_pass.hlsl">
+      <Filter>private_shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\fsr3upscaler\ffx_fsr3upscaler_prepare_inputs_pass.hlsl">
+      <Filter>private_shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\fsr3upscaler\ffx_fsr3upscaler_prepare_reactivity_pass.hlsl">
+      <Filter>private_shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\fsr3upscaler\ffx_fsr3upscaler_rcas_pass.hlsl">
+      <Filter>private_shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\fsr3upscaler\ffx_fsr3upscaler_shading_change_pass.hlsl">
+      <Filter>private_shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\fsr3upscaler\ffx_fsr3upscaler_shading_change_pyramid_pass.hlsl">
+      <Filter>private_shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\opticalflow\ffx_opticalflow_compute_luminance_pyramid_pass.hlsl">
+      <Filter>private_shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\opticalflow\ffx_opticalflow_compute_optical_flow_advanced_pass_v5.hlsl">
+      <Filter>private_shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\opticalflow\ffx_opticalflow_compute_scd_divergence_pass.hlsl">
+      <Filter>private_shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\opticalflow\ffx_opticalflow_filter_optical_flow_pass_v5.hlsl">
+      <Filter>private_shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\opticalflow\ffx_opticalflow_generate_scd_histogram_pass.hlsl">
+      <Filter>private_shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\opticalflow\ffx_opticalflow_prepare_luma_pass.hlsl">
+      <Filter>private_shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\shaders\opticalflow\ffx_opticalflow_scale_optical_flow_advanced_pass_v5.hlsl">
+      <Filter>private_shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\shared\ffx_assert.cpp">
+      <Filter>private_source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\shared\ffx_breadcrumbs_list.cpp">
+      <Filter>private_source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\ffx_gdk.cpp">
+      <Filter>private_source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\FrameInterpolationSwapchain\FrameInterpolationSwapchainXbox.cpp">
+      <Filter>private_source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\FrameInterpolationSwapchain\FrameInterpolationSwapchainXbox_Helpers.cpp">
+      <Filter>private_source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\ffx_dx12.cpp">
+      <Filter>private_source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\FrameInterpolationSwapchain\FrameInterpolationSwapchainDX12.cpp">
+      <Filter>private_source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\FrameInterpolationSwapchain\FrameInterpolationSwapchainDX12_Helpers.cpp">
+      <Filter>private_source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\FrameInterpolationSwapchain\FrameInterpolationSwapchainDX12_UiComposition.cpp">
+      <Filter>private_source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\ffx_shader_blobs.cpp">
+      <Filter>private_source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\blob_accessors\ffx_frameinterpolation_shaderblobs.cpp">
+      <Filter>private_source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\blob_accessors\ffx_fsr3upscaler_shaderblobs.cpp">
+      <Filter>private_source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\blob_accessors\ffx_opticalflow_shaderblobs.cpp">
+      <Filter>private_source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\Kits\AMDTK\fidelityfx\tools\binary_store\FidelityFX_SC.exe" />
+  </ItemGroup>
+</Project>

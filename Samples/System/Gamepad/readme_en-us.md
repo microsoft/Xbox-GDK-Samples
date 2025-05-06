@@ -34,7 +34,7 @@ from a gamepad, including buttons, thumbsticks and triggers.
 - October 2018: Initial GDK release
 - February 2020: Updated for changes to GameInput API.
 - June 2022: Added support for GameInput on PC (June 2022 GDK or later)
-- March 2025: Added support for GameInput v1 on PC via the
+- March 2025: Added support for GameInput v1.x on PC via the
   [GameInput NuGet package](https://www.nuget.org/packages/Microsoft.GameInput)
 
 # Privacy statement

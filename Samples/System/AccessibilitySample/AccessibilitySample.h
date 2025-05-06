@@ -5,21 +5,12 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.
 //--------------------------------------------------------------------------------------
 
-#pragma once
-
 #include "DeviceResources.h"
 #include "StepTimer.h"
 #include "imgui.h"
-
-#ifdef _GAMING_XBOX
-    #include "imgui_impl_win32.h"
-    #include "imgui_impl_gdk_dx12.h"
-    #include "imgui_acc_gdk.h"
-#else 
-    #include "imgui_impl_dx12.h"
-    #include "imgui_impl_win32.h"
-    #include "imgui_acc_win32.h"
-#endif
+#include "ImGuiDx12Renderer.h"
+#include "imgui_impl_win32.h"
+#include "ImGuiAcc.h"
 
 // A basic sample implementation that creates a D3D12 device and
 // provides a render loop.
@@ -65,7 +56,6 @@ private:
 
     void CreateDeviceDependentResources();
 
-
     // Device resources.
     std::unique_ptr<DX::DeviceResources>        m_deviceResources;
 
@@ -76,10 +66,5 @@ private:
     // DirectXTK objects.
     std::unique_ptr<DirectX::GraphicsMemory>    m_graphicsMemory;
 
-
-#ifdef _GAMING_XBOX
-    imgui_acc_gdk* imgAccGdk;
-#else
-    imgui_acc_win32* imgAccWin32;
-#endif
+    ImGuiAcc* imguiAcc;
 };

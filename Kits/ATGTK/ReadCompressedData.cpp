@@ -157,7 +157,14 @@ std::vector<uint8_t> DX::ReadCompressedData(_In_z_ const wchar_t* name)
 {
     std::ifstream inFile(name, std::ios::in | std::ios::binary | std::ios::ate);
     if (!inFile)
+    {
+#ifdef _DEBUG
+        wchar_t errorMessage[1024] = {};
+        swprintf_s(errorMessage, 1024, L"ERROR: ReadCompressedData file not open %ls\n", name);
+        OutputDebugStringW(errorMessage);
+#endif
         throw std::runtime_error("ReadCompressedData");
+    }
 
     const std::streampos compressedLen = inFile.tellg();
     if (!inFile)

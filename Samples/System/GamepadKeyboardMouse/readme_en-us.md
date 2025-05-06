@@ -62,7 +62,7 @@ advanced user topics, please see the UserManagement Sample.
 # Update history
 
 **Initial Release:** Microsoft Game Development Kit (March 2023)
-- March 2025: Added support for GameInput v1 on PC via the
+- March 2025: Added support for GameInput v1.x on PC via the
   [GameInput NuGet package](https://www.nuget.org/packages/Microsoft.GameInput)
 
 # Privacy Statement

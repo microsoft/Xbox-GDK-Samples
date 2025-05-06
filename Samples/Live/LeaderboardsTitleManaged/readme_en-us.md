@@ -60,6 +60,14 @@ Below are the stats defined for this sample.
 *NOTE: These images reflect the layout of Partner Center at the time
 this sample was written.*
 
+# Implementation notes
+
+- `LeaderboardsTitleManaged.cpp` contains code relevant to producing and querying stats and leaderboards
+- The Title-managed leaderboard API works differently from the Event-based leaderboard API. Due to these differences, it is recommended for your title to use Event-based stats if possible.
+  - For general documentation on the reasoning and differences between Title-managed stats and Event-based stats, refer to this [documentation](https://learn.microsoft.com/en-us/gaming/gdk/_content/gc/live/features/player-data/stats-leaderboards/live-stats-eb-vs-tm).
+  - __IMPORTANT:__ For Title-managed leaderboards, it's important to be aware that a player's statistic (accessible via `XblUserStatisticsGet*`) can differ from the value stored on the global leaderboard, resulting in mismatched outputs. For example, a mismatch can happen when updating a stat with a lower value when a global leaderboard will only maintain the highest recorded value it. Further reading is available on the page for [XblLeaderboardQuery](https://developer.microsoft.com/en-us/games/xbox/docs/gdk/xblleaderboardquery).
+- The sample also demonstrates querying of stat values directly.
+
 # Privacy statement
 
 When compiling and running a sample, the file name of the sample
@@ -78,3 +86,5 @@ Statement](https://privacy.microsoft.com/en-us/privacystatement/).
 **Update:** June 2022
 
 **Update:** July 2022
+
+**Update:** March 2025 - updated readme with additional notes on Title-managed vs Event-based stats

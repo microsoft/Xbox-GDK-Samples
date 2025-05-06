@@ -248,13 +248,11 @@ bool GameInputCollection::CheckInputAllDevices(std::function<bool(const DirectX:
 
 void GameInputCollection::AddDevice(IGameInputDevice* device)
 {
-#ifdef _DEBUG
-    // There should not be an instance of this device already
     for (auto& existingDevice : m_inputDevices)
     {
-        assert(existingDevice->GetGameInputDevice() != device);
+        if(existingDevice->GetGameInputDevice() == device)
+            return;
     }
-#endif
 
     std::unique_ptr<GameInputDevice> newDevice = std::make_unique<GameInputDevice>(device);
     m_inputDevices.push_back(std::move(newDevice));
@@ -273,9 +271,6 @@ void GameInputCollection::RemoveDevice(IGameInputDevice* device)
             return;
         }
     }
-
-    // Device must exist in list if it's being removed
-    assert(0);
 }
 
 void GameInputCollection::GameInputDeviceCallback(

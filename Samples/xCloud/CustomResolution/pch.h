@@ -67,6 +67,7 @@
 #include <exception>
 #include <iterator>
 #include <functional>
+#include <future>
 #include <memory>
 #include <stdexcept>
 #include <string>

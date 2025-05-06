@@ -28,11 +28,13 @@ Sample::Sample() noexcept(false) :
 
 Sample::~Sample()
 {
-#ifdef _GAMING_XBOX
-    imgui_acc_gdk::CleanUp();
-#else
-    imgui_acc_win32::CleanUp();
-#endif
+    // Clean up Imgui DX12 Renderer
+    ImGuiDx12RendererShutdown();
+
+    // Clean up Imgui Input handler
+    ImGui_ImplWin32_Shutdown();
+
+    ImGui::DestroyContext();
     if (m_deviceResources)
     {
         m_deviceResources->WaitForGpu();
@@ -60,40 +62,19 @@ void Sample::Initialize(HWND window, int width, int height)
     // Disable ImGui ini file
     io.IniFilename = nullptr;
 
-#ifdef _GAMING_XBOX
-    // Setup Platform/Renderer backends
-
     ImGui_ImplWin32_Init(window);
-
-    // No command queue for GDK. Xbox manages its own command queue.
-    ImGui_ImplGdkDX12_Init(m_deviceResources->GetD3DDevice(),
-               (int)m_deviceResources->GetBackBufferCount(),
-               (int)m_deviceResources->GetBackBufferFormat(),
-               m_deviceResources->GetSRVHeap(),
-               m_deviceResources->GetSRVHeapCPUHandle(),
-               m_deviceResources->GetSRVHeapGPUHandle());
-
-    // Grab the instance of the accessibility module
-    imgAccGdk = imgui_acc_gdk::GetInstance();
-
-    // Initialize the accessibility module.
-    imgAccGdk->Initialize();
-#else
-    // Setup Platform/Renderer backends
-    ImGui_ImplWin32_Init(window);
-
-    // Create the SRV descriptor heap for ImGui
-    ImGui_ImplDX12_Init(m_deviceResources->GetD3DDevice(),
+    ImGuiDx12RendererInit(m_deviceResources->GetD3DDevice(),
         (int)m_deviceResources->GetBackBufferCount(),
         m_deviceResources->GetBackBufferFormat(),
         m_deviceResources->GetSRVHeap(),
         m_deviceResources->GetSRVHeapCPUHandle(),
         m_deviceResources->GetSRVHeapGPUHandle());
 
-    // Initialize our accessibility module.
-    imgAccWin32 = imgui_acc_win32::GetInstance();
-    imgAccWin32->Initialize(window);
-#endif
+    imguiAcc = ImGuiAcc::GetInstance();
+
+#ifdef _GAMING_DESKTOP
+    imguiAcc->SetWindow(window);
+#endif // _GAMING_DESKTOP
 
     ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 }   
@@ -134,28 +115,24 @@ void Sample::Render()
 
     // Attach SRV descriptor heap to the command list
     auto commandList = m_deviceResources->GetCommandList();
-    ID3D12DescriptorHeap* descriptorHeaps[] = { m_deviceResources->GetSRVHeap() };
+    ID3D12DescriptorHeap* descriptorHeaps[]{ m_deviceResources->GetSRVHeap() };
     commandList->SetDescriptorHeaps(_countof(descriptorHeaps), descriptorHeaps);
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Render");
-#ifdef _GAMING_XBOX
 
-    ImGui_ImplGdkDX12_NewFrame(commandList);
+    ImGuiDx12RendererNewFrame(commandList);
     ImGui_ImplWin32_NewFrame();
     ImGui::NewFrame();
 
-    // Accessibility checks for new frame
-    imgAccGdk->NewFrame();
-
-    // ExampleUI Window
-    imgAccGdk->Begin("Example UI", 0, 0, ImVec2(700, 300));
-    imgAccGdk->WindowHeader("Example UI");
-    imgAccGdk->Button("Button 1");
-    imgAccGdk->Button("Button 2");
+    imguiAcc->NewFrame();
+    imguiAcc->Begin("Example UI", 0, 0, ImVec2(700, 300));
+    imguiAcc->WindowHeader("Example UI");
+    imguiAcc->Button("Button 1");
+    imguiAcc->Button("Button 2");
     static char inputText[256] = "";
-    imgAccGdk->InputText("Input Text", inputText, IM_ARRAYSIZE(inputText), ImGui_ImplWin32_ActiveGameInputKind());
+    imguiAcc->InputText("Input Text", inputText, IM_ARRAYSIZE(inputText), ImGui_ImplWin32_ActiveGameInputKind());
     static int sliderValue = 5;
-    imgAccGdk->SliderInt("Slider", &sliderValue, 0, 10);
-    imgAccGdk->End();
+    imguiAcc->SliderInt("Slider", &sliderValue, 0, 10);
+    imguiAcc->End();
 
     // Set the initial coordinates for the legend window
     static bool initialPlacement = false;
@@ -168,39 +145,35 @@ void Sample::Render()
         initialPlacement = true;
     }
 
-    // Legend Window
-    imgAccGdk->Begin("Legend", 0, 0, ImVec2(700, 300));
-    imgAccGdk->WindowHeader("Legend");
-    imgAccGdk->Text("Switch Window: X + LEFT SHOULDER, X + RIGHT SHOULDER");
-    imgAccGdk->Text("Next Widget: D-PAD DOWN");
-    imgAccGdk->Text("Previous Widget: D-PAD UP");
-    imgAccGdk->Text("Activate Widget: A");
-    imgAccGdk->Text("Text Input: Y");
-    imgAccGdk->Text("Un-focus Widget: B");
-    imgAccGdk->Text("Horizontal Scroll: THUMBSTICK");
+    imguiAcc->Begin("Legend", 0, 0, ImVec2(700, 300));
+    imguiAcc->WindowHeader("Legend");
+    imguiAcc->Text("Switch Window: CTRL + TAB");
+    imguiAcc->Text("Next Widget: TAB, DOWN ARROW");
+    imguiAcc->Text("Previous Widget: SHIFT + TAB, UP ARROW");
+    imguiAcc->Text("Activate Widget: ENTER");
+    imguiAcc->Text("Un-focus Widget: ESC");
+    imguiAcc->Text("Horizontal Scroll: LEFT ARROW, RIGHT ARROW");
     static bool enableNarration = true;
-    imgAccGdk->Checkbox(": Enable Narration ", &enableNarration);
+    imguiAcc->Checkbox(": Enable Narration ", &enableNarration);
     ImGui::Separator();
     ImGui::Text("");
-    imgAccGdk->Text("Theme control is automatically pulled from Windows settings.");
-    imgAccGdk->Text("Text scaling is automatically pulled from Windows settings.");
-    imgAccGdk->Text("Narration is automatic. Focusing on a widget will narrate that widget.");
+    imguiAcc->Text("Theme control is automatically pulled from Windows settings.");
+    imguiAcc->Text("Text scaling is automatically pulled from Windows settings.");
+    imguiAcc->Text("Narration is automatic. Focusing on a widget will narrate that widget.");
 
-    if (enableNarration)
+    if(enableNarration)
     {
-        imgAccGdk->EnableNarration();
+        imguiAcc->EnableNarration();
     }
     else
     {
-        imgAccGdk->DisableNarration();
+        imguiAcc->DisableNarration();
     }
-
-    imgAccGdk->End();
+    imguiAcc->End();
 
     ImGui::Render();
     ImDrawData* drawData = ImGui::GetDrawData();
-    ImGui_ImplGdkDX12_RenderDrawData(drawData, commandList);
-
+    ImGuiDx12RendererRenderDrawData(drawData, commandList);
     PIXEndEvent(commandList);
 
     // Show the new frame.
@@ -208,79 +181,6 @@ void Sample::Render()
     m_deviceResources->Present();
     m_graphicsMemory->Commit(m_deviceResources->GetCommandQueue());
     PIXEndEvent();
-
-#else
-
-    ImGui_ImplDX12_NewFrame();
-    ImGui_ImplWin32_NewFrame();
-    ImGui::NewFrame();
-
-    // Accessibility checks for new frame
-    imgAccWin32->NewFrame();
-
-    // ExampleUI Window
-    imgAccWin32->Begin("Example UI", 0, 0, ImVec2(700,300));
-    imgAccWin32->WindowHeader("Example UI");
-    imgAccWin32->Button("Button 1");
-    imgAccWin32->Button("Button 2");
-    static char inputText[256] = "";
-    imgAccWin32->InputText("Input Text", inputText, IM_ARRAYSIZE(inputText));
-    static int sliderValue = 5;
-    imgAccWin32->SliderInt("Slider", &sliderValue, 0, 10);
-    imgAccWin32->End();
-
-    // Set the initial coordinates for the legend window
-    static bool initialPlacement = false;
-    if (!initialPlacement)
-    {
-        ImVec2 windowPos = ImGui::GetWindowPos();
-        ImVec2 bottomLeftCorner(windowPos.x, windowPos.y + 320);
-
-        ImGui::SetNextWindowPos(ImVec2(bottomLeftCorner.x, bottomLeftCorner.y));
-        initialPlacement = true;
-    }
-
-    // Legend Window
-    imgAccWin32->Begin("Legend", 0, 0, ImVec2(700, 300));
-    imgAccWin32->WindowHeader("Legend");
-    imgAccWin32->Text("Switch Window: CTRL + TAB");
-    imgAccWin32->Text("Next Widget: TAB, DOWN ARROW");
-    imgAccWin32->Text("Previous Widget: SHIFT + TAB, UP ARROW");
-    imgAccWin32->Text("Activate Widget: ENTER");
-    imgAccWin32->Text("Un-focus Widget: ESC");
-    imgAccWin32->Text("Horizontal Scroll: LEFT ARROW, RIGHT ARROW");
-    static bool enableNarration = true;
-    imgAccWin32->Checkbox(": Enable Narration ", &enableNarration);
-    ImGui::Separator();
-    ImGui::Text("");
-    imgAccWin32->Text("Theme control is automatically pulled from Windows settings.");
-    imgAccWin32->Text("Text scaling is automatically pulled from Windows settings.");
-    imgAccWin32->Text("Narration is automatic. Focusing on a widget will narrate that widget.");
-
-    if (enableNarration)
-    {
-        imgAccWin32->EnableNarration();
-    }
-    else
-    {
-        imgAccWin32->DisableNarration();
-    }
-
-    imgAccWin32->End();
-
-    ImGui::Render();
-    ImDrawData* drawData = ImGui::GetDrawData();
-    ImGui_ImplDX12_RenderDrawData(drawData, commandList);
-
-    PIXEndEvent(commandList);
-
-    // Show the new frame.
-    PIXBeginEvent(PIX_COLOR_DEFAULT, L"Present");
-    m_deviceResources->Present();
-    m_graphicsMemory->Commit(m_deviceResources->GetCommandQueue());
-    PIXEndEvent();
-#endif
-
 }
 
 // Helper method to clear the back buffers.
@@ -347,7 +247,7 @@ void Sample::CreateDeviceDependentResources()
     auto device = m_deviceResources->GetD3DDevice();
 
 #ifdef _GAMING_DESKTOP
-    D3D12_FEATURE_DATA_SHADER_MODEL shaderModel = { D3D_SHADER_MODEL_6_0 };
+    D3D12_FEATURE_DATA_SHADER_MODEL shaderModel{ D3D_SHADER_MODEL_6_0 };
     if (FAILED(device->CheckFeatureSupport(D3D12_FEATURE_SHADER_MODEL, &shaderModel, sizeof(shaderModel)))
         || (shaderModel.HighestShaderModel < D3D_SHADER_MODEL_6_0))
     {

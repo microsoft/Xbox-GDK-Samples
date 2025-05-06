@@ -1,0 +1,124 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 15.0.28307.1778
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PlayFabLeaderboards", "PlayFabLeaderboards.vcxproj", "{0A418F35-938A-42BE-867E-42116818433B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTK12_GDK_2019", "..\..\..\Kits\DirectXTK12\DirectXTK12_GDK_2019.vcxproj", "{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UITK", "..\..\..\Kits\UITK\UITK.vcxitems", "{2BFC8F59-E285-4B88-949E-1009233B11E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayFabLeaderboardsTool", "PlayFabLeaderboardsTool\PlayFabLeaderboardsTool.csproj", "{07F95229-ACCB-8483-2B2D-8ADA75010D12}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Gaming.Desktop.x64 = Debug|Gaming.Desktop.x64
+		Debug|Gaming.Xbox.Scarlett.x64 = Debug|Gaming.Xbox.Scarlett.x64
+		Debug|Gaming.Xbox.XboxOne.x64 = Debug|Gaming.Xbox.XboxOne.x64
+		Profile|Any CPU = Profile|Any CPU
+		Profile|Gaming.Desktop.x64 = Profile|Gaming.Desktop.x64
+		Profile|Gaming.Xbox.Scarlett.x64 = Profile|Gaming.Xbox.Scarlett.x64
+		Profile|Gaming.Xbox.XboxOne.x64 = Profile|Gaming.Xbox.XboxOne.x64
+		Release|Any CPU = Release|Any CPU
+		Release|Gaming.Desktop.x64 = Release|Gaming.Desktop.x64
+		Release|Gaming.Xbox.Scarlett.x64 = Release|Gaming.Xbox.Scarlett.x64
+		Release|Gaming.Xbox.XboxOne.x64 = Release|Gaming.Xbox.XboxOne.x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0A418F35-938A-42BE-867E-42116818433B}.Debug|Any CPU.ActiveCfg = Debug|Gaming.Xbox.XboxOne.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Debug|Any CPU.Build.0 = Debug|Gaming.Xbox.XboxOne.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Debug|Any CPU.Deploy.0 = Debug|Gaming.Xbox.XboxOne.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Debug|Gaming.Desktop.x64.ActiveCfg = Debug|Gaming.Desktop.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Debug|Gaming.Desktop.x64.Build.0 = Debug|Gaming.Desktop.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Debug|Gaming.Desktop.x64.Deploy.0 = Debug|Gaming.Desktop.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Debug|Gaming.Xbox.Scarlett.x64.ActiveCfg = Debug|Gaming.Xbox.Scarlett.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Debug|Gaming.Xbox.Scarlett.x64.Build.0 = Debug|Gaming.Xbox.Scarlett.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Debug|Gaming.Xbox.Scarlett.x64.Deploy.0 = Debug|Gaming.Xbox.Scarlett.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Debug|Gaming.Xbox.XboxOne.x64.ActiveCfg = Debug|Gaming.Xbox.XboxOne.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Debug|Gaming.Xbox.XboxOne.x64.Build.0 = Debug|Gaming.Xbox.XboxOne.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Debug|Gaming.Xbox.XboxOne.x64.Deploy.0 = Debug|Gaming.Xbox.XboxOne.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Profile|Any CPU.ActiveCfg = Profile|Gaming.Xbox.XboxOne.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Profile|Any CPU.Build.0 = Profile|Gaming.Xbox.XboxOne.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Profile|Any CPU.Deploy.0 = Profile|Gaming.Xbox.XboxOne.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Profile|Gaming.Desktop.x64.ActiveCfg = Profile|Gaming.Desktop.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Profile|Gaming.Desktop.x64.Build.0 = Profile|Gaming.Desktop.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Profile|Gaming.Desktop.x64.Deploy.0 = Profile|Gaming.Desktop.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Profile|Gaming.Xbox.Scarlett.x64.ActiveCfg = Profile|Gaming.Xbox.Scarlett.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Profile|Gaming.Xbox.Scarlett.x64.Build.0 = Profile|Gaming.Xbox.Scarlett.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Profile|Gaming.Xbox.Scarlett.x64.Deploy.0 = Profile|Gaming.Xbox.Scarlett.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Profile|Gaming.Xbox.XboxOne.x64.ActiveCfg = Profile|Gaming.Xbox.XboxOne.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Profile|Gaming.Xbox.XboxOne.x64.Build.0 = Profile|Gaming.Xbox.XboxOne.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Profile|Gaming.Xbox.XboxOne.x64.Deploy.0 = Profile|Gaming.Xbox.XboxOne.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Release|Any CPU.ActiveCfg = Release|Gaming.Xbox.XboxOne.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Release|Any CPU.Build.0 = Release|Gaming.Xbox.XboxOne.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Release|Any CPU.Deploy.0 = Release|Gaming.Xbox.XboxOne.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Release|Gaming.Desktop.x64.ActiveCfg = Release|Gaming.Desktop.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Release|Gaming.Desktop.x64.Build.0 = Release|Gaming.Desktop.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Release|Gaming.Desktop.x64.Deploy.0 = Release|Gaming.Desktop.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Release|Gaming.Xbox.Scarlett.x64.ActiveCfg = Release|Gaming.Xbox.Scarlett.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Release|Gaming.Xbox.Scarlett.x64.Build.0 = Release|Gaming.Xbox.Scarlett.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Release|Gaming.Xbox.Scarlett.x64.Deploy.0 = Release|Gaming.Xbox.Scarlett.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Release|Gaming.Xbox.XboxOne.x64.ActiveCfg = Release|Gaming.Xbox.XboxOne.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Release|Gaming.Xbox.XboxOne.x64.Build.0 = Release|Gaming.Xbox.XboxOne.x64
+		{0A418F35-938A-42BE-867E-42116818433B}.Release|Gaming.Xbox.XboxOne.x64.Deploy.0 = Release|Gaming.Xbox.XboxOne.x64
+		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Debug|Any CPU.ActiveCfg = Debug|Gaming.Xbox.XboxOne.x64
+		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Debug|Any CPU.Build.0 = Debug|Gaming.Xbox.XboxOne.x64
+		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Debug|Gaming.Desktop.x64.ActiveCfg = Debug|Gaming.Desktop.x64
+		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Debug|Gaming.Desktop.x64.Build.0 = Debug|Gaming.Desktop.x64
+		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Debug|Gaming.Xbox.Scarlett.x64.ActiveCfg = Debug|Gaming.Xbox.Scarlett.x64
+		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Debug|Gaming.Xbox.Scarlett.x64.Build.0 = Debug|Gaming.Xbox.Scarlett.x64
+		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Debug|Gaming.Xbox.XboxOne.x64.ActiveCfg = Debug|Gaming.Xbox.XboxOne.x64
+		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Debug|Gaming.Xbox.XboxOne.x64.Build.0 = Debug|Gaming.Xbox.XboxOne.x64
+		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Profile|Any CPU.ActiveCfg = Profile|Gaming.Xbox.XboxOne.x64
+		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Profile|Any CPU.Build.0 = Profile|Gaming.Xbox.XboxOne.x64
+		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Profile|Gaming.Desktop.x64.ActiveCfg = Profile|Gaming.Desktop.x64
+		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Profile|Gaming.Desktop.x64.Build.0 = Profile|Gaming.Desktop.x64
+		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Profile|Gaming.Xbox.Scarlett.x64.ActiveCfg = Profile|Gaming.Xbox.Scarlett.x64
+		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Profile|Gaming.Xbox.Scarlett.x64.Build.0 = Profile|Gaming.Xbox.Scarlett.x64
+		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Profile|Gaming.Xbox.XboxOne.x64.ActiveCfg = Profile|Gaming.Xbox.XboxOne.x64
+		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Profile|Gaming.Xbox.XboxOne.x64.Build.0 = Profile|Gaming.Xbox.XboxOne.x64
+		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Release|Any CPU.ActiveCfg = Release|Gaming.Xbox.XboxOne.x64
+		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Release|Any CPU.Build.0 = Release|Gaming.Xbox.XboxOne.x64
+		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Release|Gaming.Desktop.x64.ActiveCfg = Release|Gaming.Desktop.x64
+		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Release|Gaming.Desktop.x64.Build.0 = Release|Gaming.Desktop.x64
+		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Release|Gaming.Xbox.Scarlett.x64.ActiveCfg = Release|Gaming.Xbox.Scarlett.x64
+		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Release|Gaming.Xbox.Scarlett.x64.Build.0 = Release|Gaming.Xbox.Scarlett.x64
+		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Release|Gaming.Xbox.XboxOne.x64.ActiveCfg = Release|Gaming.Xbox.XboxOne.x64
+		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Release|Gaming.Xbox.XboxOne.x64.Build.0 = Release|Gaming.Xbox.XboxOne.x64
+		{07F95229-ACCB-8483-2B2D-8ADA75010D12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07F95229-ACCB-8483-2B2D-8ADA75010D12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07F95229-ACCB-8483-2B2D-8ADA75010D12}.Debug|Gaming.Desktop.x64.ActiveCfg = Debug|Any CPU
+		{07F95229-ACCB-8483-2B2D-8ADA75010D12}.Debug|Gaming.Desktop.x64.Build.0 = Debug|Any CPU
+		{07F95229-ACCB-8483-2B2D-8ADA75010D12}.Debug|Gaming.Xbox.Scarlett.x64.ActiveCfg = Debug|Any CPU
+		{07F95229-ACCB-8483-2B2D-8ADA75010D12}.Debug|Gaming.Xbox.Scarlett.x64.Build.0 = Debug|Any CPU
+		{07F95229-ACCB-8483-2B2D-8ADA75010D12}.Debug|Gaming.Xbox.XboxOne.x64.ActiveCfg = Debug|Any CPU
+		{07F95229-ACCB-8483-2B2D-8ADA75010D12}.Debug|Gaming.Xbox.XboxOne.x64.Build.0 = Debug|Any CPU
+		{07F95229-ACCB-8483-2B2D-8ADA75010D12}.Profile|Any CPU.ActiveCfg = Release|Any CPU
+		{07F95229-ACCB-8483-2B2D-8ADA75010D12}.Profile|Any CPU.Build.0 = Release|Any CPU
+		{07F95229-ACCB-8483-2B2D-8ADA75010D12}.Profile|Gaming.Desktop.x64.ActiveCfg = Release|Any CPU
+		{07F95229-ACCB-8483-2B2D-8ADA75010D12}.Profile|Gaming.Desktop.x64.Build.0 = Release|Any CPU
+		{07F95229-ACCB-8483-2B2D-8ADA75010D12}.Profile|Gaming.Xbox.Scarlett.x64.ActiveCfg = Release|Any CPU
+		{07F95229-ACCB-8483-2B2D-8ADA75010D12}.Profile|Gaming.Xbox.Scarlett.x64.Build.0 = Release|Any CPU
+		{07F95229-ACCB-8483-2B2D-8ADA75010D12}.Profile|Gaming.Xbox.XboxOne.x64.ActiveCfg = Release|Any CPU
+		{07F95229-ACCB-8483-2B2D-8ADA75010D12}.Profile|Gaming.Xbox.XboxOne.x64.Build.0 = Release|Any CPU
+		{07F95229-ACCB-8483-2B2D-8ADA75010D12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07F95229-ACCB-8483-2B2D-8ADA75010D12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07F95229-ACCB-8483-2B2D-8ADA75010D12}.Release|Gaming.Desktop.x64.ActiveCfg = Release|Any CPU
+		{07F95229-ACCB-8483-2B2D-8ADA75010D12}.Release|Gaming.Desktop.x64.Build.0 = Release|Any CPU
+		{07F95229-ACCB-8483-2B2D-8ADA75010D12}.Release|Gaming.Xbox.Scarlett.x64.ActiveCfg = Release|Any CPU
+		{07F95229-ACCB-8483-2B2D-8ADA75010D12}.Release|Gaming.Xbox.Scarlett.x64.Build.0 = Release|Any CPU
+		{07F95229-ACCB-8483-2B2D-8ADA75010D12}.Release|Gaming.Xbox.XboxOne.x64.ActiveCfg = Release|Any CPU
+		{07F95229-ACCB-8483-2B2D-8ADA75010D12}.Release|Gaming.Xbox.XboxOne.x64.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {10681E8D-688C-4AAD-8A77-F2D2A1583B0B}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\..\..\Kits\UITK\UITK.vcxitems*{0a418f35-938a-42be-867e-42116818433b}*SharedItemsImports = 4
+		..\..\..\Kits\UITK\UITK.vcxitems*{2bfc8f59-e285-4b88-949e-1009233b11e1}*SharedItemsImports = 9
+	EndGlobalSection
+EndGlobal

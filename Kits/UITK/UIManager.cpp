@@ -262,7 +262,7 @@ UIElementPtr UIManager::LoadLayoutFromData(const ID& contextId, UIDataPtr root)
         m_dataDefinitions.ReplaceAllDefinitionReferences(styles);
 
         auto styleCount = styles->GetArrayCount();
-        for (uint32_t styleIndex = 0; styleIndex < styleCount; ++styleIndex)
+        for (size_t styleIndex = 0; styleIndex < styleCount; ++styleIndex)
         {
             auto style = styles->GetArrayValue(styleIndex);
             m_styleManager.LoadStyleFromData(contextId, style);
@@ -300,7 +300,7 @@ UIElementPtr UIManager::LoadLayoutFromData(const ID& contextId, UIDataPtr root)
         if (subElements && subElements->IsArray())
         {
             UILOG_SCOPE("AddSubElements");
-            for (uint32_t subElementIndex = 0; subElementIndex < subElements->GetArrayCount(); ++subElementIndex)
+            for (size_t subElementIndex = 0; subElementIndex < subElements->GetArrayCount(); ++subElementIndex)
             {
                 auto subElementData = subElements->GetArrayValue(subElementIndex);
                 auto subElement = MakeElementFromData(element->GetID(), subElementData);
@@ -372,7 +372,7 @@ UIElementPtr UIManager::LoadLayoutFromFile(const std::string& layoutFilePath)
     if (includes && includes->IsArray())
     {
         auto includeRoot = UIDataPtr();
-        for (uint32_t includeIndex = 0; includeIndex < includes->GetArrayCount(); ++includeIndex)
+        for (size_t includeIndex = 0; includeIndex < includes->GetArrayCount(); ++includeIndex)
         {
             auto includePath = includes->Get<std::string>(includeIndex);
 
@@ -461,7 +461,7 @@ UIElementPtr UIManager::InstantiatePrefab(const std::string& prefabFilePath)
         auto subElements = elementJson->GetObjectValue(UITK_FIELD(subElements));
         if (subElements && subElements->IsArray())
         {
-            for (uint32_t subElementIndex = 0; subElementIndex < subElements->GetArrayCount(); ++subElementIndex)
+            for (size_t subElementIndex = 0; subElementIndex < subElements->GetArrayCount(); ++subElementIndex)
             {
                 auto subElementData = subElements->GetArrayValue(subElementIndex);
                 auto subElement = MakeElementFromData(element->GetID(), subElementData);
@@ -1041,7 +1041,7 @@ UIDataPtr UIManager::LoadPrefabDataFromFile(const std::string& prefabFilePath)
         m_dataDefinitions.ReplaceAllDefinitionReferences(styles);
 
         auto styleCount = styles->GetArrayCount();
-        for (uint32_t styleIndex = 0; styleIndex < styleCount; ++styleIndex)
+        for (size_t styleIndex = 0; styleIndex < styleCount; ++styleIndex)
         {
             auto style = styles->GetArrayValue(styleIndex);
             auto styleId = style->GetIfExists(UITK_FIELD(id), ID::Default);

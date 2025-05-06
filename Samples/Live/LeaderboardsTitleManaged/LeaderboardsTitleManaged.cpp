@@ -21,10 +21,11 @@ using Microsoft::WRL::ComPtr;
 
 constexpr int c_maxItemsPerQuery = 5; // Deliberately set low in this sample to demonstrate querying multiple pages
 
+// [Title-managed Leaderboards]
 // Initiates a leaderboard query
 void Sample::QueryLeaderboards(
     const std::string& statName,        // Stat Name the leaderboard is based off of from Partner Center
-    XblSocialGroupType queryGroupType  // Should the query use the Global or Social leaderboards
+    XblSocialGroupType queryGroupType   // Should the query use the Global or Social leaderboards
 )
 {
     if (!m_liveResources->GetLiveContext())
@@ -43,15 +44,17 @@ void Sample::QueryLeaderboards(
     query.maxItems = c_maxItemsPerQuery;
     query.statName = statName.c_str();
     query.queryType = XblLeaderboardQueryType::TitleManagedStatBackedGlobal;
-    // Setting skipToXboxUserId as a non-zero value will compare the given user's stored stat against the global leaderboard.
-    // When a player's stored stat and their score on the global leaderboard are not the same, this can result in mismatched outputs.
+    // [Title-managed Leaderboards]
+    // Setting skipToXboxUserId as a non-zero value will compare the given user's stat (accessible via XblUserStatisticsGet*) against the global leaderboard.
+    // Be aware that a player's stat and their score on the global leaderboard may not be the same. More info in the readme's Implementation Notes section.
     query.skipToXboxUserId = s_skipToUser ? m_liveResources->GetXuid() : 0;
 
     if (queryGroupType != XblSocialGroupType::None)
     {
+        // [Title-managed Leaderboards]
         // Social queries must include a valid XUID
         // If the user has no friends or favorited people who have played this sample, only this user's results will be returned
-        // Setting socialGroup as People or Favorites will compare the stats of the associated users. It will not use values of the global leaderboard.
+        // Setting socialGroup as People or Favorites will compare the stats of the associated users to the player's stat. It will not use values of the global leaderboard.
         query.socialGroup = XblSocialGroupType::People;
         query.queryType = XblLeaderboardQueryType::TitleManagedStatBackedSocial;
         query.xboxUserId = m_liveResources->GetXuid();
@@ -216,10 +219,12 @@ double Sample::CalculateRandomScore()
 }
 
 
-// Sends some stat data to the stats service
+// [Title-managed Leaderboards]
 // Stat data can be strings or numbers, but only numbers can be used as leaderboards
+// If the sent score is lower than what is already there, the stat will update, but NOT the corresponding entry in global leaderboard, as it would remain the highest recorded value.
+
+// Sends some stat data to the stats service
 // The score that is sent for the number is random, and may not be higher than what is already there.
-// If it is lower than what is already there, the leaderboard value will still show the highest recorded stat.
 void Sample::SendStats()
 {
     std::vector<XblTitleManagedStatistic> statList;

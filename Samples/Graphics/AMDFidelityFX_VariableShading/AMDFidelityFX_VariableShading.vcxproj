@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.props" Condition="Exists('..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.props')" />
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Gaming.Desktop.x64">
+      <Configuration>Debug</Configuration>
+      <Platform>Gaming.Desktop.x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Gaming.Xbox.Scarlett.x64">
+      <Configuration>Debug</Configuration>
+      <Platform>Gaming.Xbox.Scarlett.x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Profile|Gaming.Desktop.x64">
+      <Configuration>Profile</Configuration>
+      <Platform>Gaming.Desktop.x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Profile|Gaming.Xbox.Scarlett.x64">
+      <Configuration>Profile</Configuration>
+      <Platform>Gaming.Xbox.Scarlett.x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Gaming.Desktop.x64">
+      <Configuration>Release</Configuration>
+      <Platform>Gaming.Desktop.x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Gaming.Xbox.Scarlett.x64">
+      <Configuration>Release</Configuration>
+      <Platform>Gaming.Xbox.Scarlett.x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <RootNamespace>AMDFidelityFX_VariableShading</RootNamespace>
+    <ProjectGuid>{C4B54E0A-5EBB-4407-AD1C-EE6F071C1288}</ProjectGuid>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <Keyword>Win32Proj</Keyword>
+    <!-- - - - -->
+    <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
+    <TargetRuntime>Native</TargetRuntime>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+    <ProjectName>AMDFidelityFX_VariableShading</ProjectName>
+    <GDKExtLibNames>Xbox.Services.API.C</GDKExtLibNames>
+  </PropertyGroup>
+  <Import Condition="Exists($(ATGBuildProps))" Project="$(ATGBuildProps)" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <!-- Base Configuration properties -->
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <EmbedManifest>false</EmbedManifest>
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <!-- Extra Profile/Release Configuration properties -->
+  <PropertyGroup Condition="'$(Configuration)'!='Debug'" Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <!-- Extra Debug Configuration properties -->
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <!-- Scarlett/Xbox One paths -->
+  <PropertyGroup Condition="'$(Platform)'!='Gaming.Desktop.x64'">
+    <ReferencePath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</ReferencePath>
+    <LibraryPath>$(Console_SdkLibPath)</LibraryPath>
+    <LibraryWPath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</LibraryWPath>
+    <IncludePath>$(Console_SdkIncludeRoot)</IncludePath>
+    <ExecutablePath>$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
+  </PropertyGroup>
+  <!-- Desktop paths -->
+  <PropertyGroup Condition="'$(Platform)'=='Gaming.Desktop.x64'">
+    <ReferencePath>$(VC_ReferencesPath_x64);</ReferencePath>
+    <LibraryPath>$(WindowsSDK_LibraryPath_x64);$(Console_SdkLibPath);$(LibraryPath)</LibraryPath>
+    <LibraryWPath>$(WindowsSDK_MetadataPath);</LibraryWPath>
+    <IncludePath>$(WindowsSDK_IncludePath);$(Console_SdkIncludeRoot);$(IncludePath)</IncludePath>
+    <ExecutablePath>$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
+  </PropertyGroup>
+  <!-- Extra Profile/Release properties -->
+  <PropertyGroup Condition="'$(Configuration)'!='Debug'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <!-- Extra Debug properties -->
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <!-- Extra Xbox.Scarlett properties -->
+  <PropertyGroup Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64'">
+    <TargetName>$(ProjectName)_XBS</TargetName>
+  </PropertyGroup>
+  <!-- Base properties -->
+  <ItemDefinitionGroup>
+    <Link>
+      <AdditionalDependencies>$(Console_Libs);$(SolutionDir)$(Platform)\$(Configuration)\GDK_Backend.lib;$(SolutionDir)$(Platform)\$(Configuration)\VRS_GDK.lib;%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level4</WarningLevel>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>5204</DisableSpecificWarnings>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\AMDTK\FidelityFX\include;..\..\..\Kits\AMDTK;..\..\..\Kits\ATGTK;..\..\..\Kits\ATGTelemetry\GDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <FXCompile>
+      <!-- Set SM 6.0 as minimal, otherwise 5.1 will be chosen which will lead to shaders being compiled with fxc.exe on PC -->
+      <ShaderModel>6.0</ShaderModel>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTK\FullScreenQuad</AdditionalIncludeDirectories>
+    </FXCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Platform)'!='Gaming.Desktop.x64'">
+    <FXCompile>
+      <AdditionalOptions>/Zs /Fd "$(OutDir)%(Filename).pdb" %(AdditionalOptions)</AdditionalOptions>
+      <!-- Disable this property because it adds /Zi option which is conflicting with /Zs we already set above -->
+      <EnableDebuggingInformation>false</EnableDebuggingInformation>
+    </FXCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Platform)'=='Gaming.Desktop.x64'">
+    <FXCompile>
+      <AdditionalOptions>/Fd "$(OutDir)%(Filename).pdb" %(AdditionalOptions)</AdditionalOptions>
+      <EnableDebuggingInformation>true</EnableDebuggingInformation>
+    </FXCompile>
+  </ItemDefinitionGroup>
+  <!-- Extra Profile/Release properties -->
+  <ItemDefinitionGroup Condition="'$(Configuration)'!='Debug'">
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <!-- Extra Profile properties -->
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Profile'">
+    <ClCompile>
+      <PreprocessorDefinitions>PROFILE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <!-- Extra Debug properties -->
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
+    <ClCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup>
+    <CopyFileToFolders>
+      <DestinationFolders>$(OutDir)Assets</DestinationFolders>
+    </CopyFileToFolders>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Kits\AMDTK\GLTF\GltfMotionVectorsPass.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuad.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\MSAAHelper.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\PerformanceTimers.h">
+      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\PerformanceTimersXbox.h">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ReadData.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\RenderTexture.h" />
+    <ClInclude Include="..\..\..\Kits\AMDTK\GLTF\GltfDepthPass.h" />
+    <ClInclude Include="..\..\..\Kits\AMDTK\GLTF\GltfFile.h" />
+    <ClInclude Include="..\..\..\Kits\AMDTK\GLTF\GltfHelpers.h" />
+    <ClInclude Include="..\..\..\Kits\AMDTK\GLTF\GltfPbrMaterial.h" />
+    <ClInclude Include="..\..\..\Kits\AMDTK\GLTF\GltfPbrPass.h" />
+    <ClInclude Include="..\..\..\Kits\AMDTK\GLTF\GLTFResources.h" />
+    <ClInclude Include="..\..\..\Kits\AMDTK\GLTF\GltfStructures.h" />
+    <ClInclude Include="..\..\..\Kits\AMDTK\GLTF\ShaderCompiler.h" />
+    <ClInclude Include="..\..\..\Kits\AMDTK\GLTF\Shaders\common.h" />
+    <ClInclude Include="..\..\..\Kits\AMDTK\GLTF\Shaders\perFrameStruct.h" />
+    <ClInclude Include="..\..\..\Kits\AMDTK\GLTF\Shaders\shadowFiltering.h" />
+    <ClInclude Include="..\..\..\Kits\AMDTK\json\json.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="StepTimer.h" />
+    <ClInclude Include="DeviceResources.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\Json.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h" />
+    <ClInclude Include="VariableShading.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Kits\AMDTK\GLTF\GltfMotionVectorsPass.cpp" />
+    <ClCompile Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuad.cpp" />
+    <ClCompile Include="..\..\..\Kits\ATGTK\MSAAHelper.cpp" />
+    <ClCompile Include="..\..\..\Kits\ATGTK\PerformanceTimers.cpp">
+      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\PerformanceTimersXbox.cpp">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\RenderTexture.cpp" />
+    <ClCompile Include="..\..\..\Kits\AMDTK\GLTF\GltfDepthPass.cpp" />
+    <ClCompile Include="..\..\..\Kits\AMDTK\GLTF\GltfFile.cpp" />
+    <ClCompile Include="..\..\..\Kits\AMDTK\GLTF\glTFHelpers.cpp" />
+    <ClCompile Include="..\..\..\Kits\AMDTK\GLTF\GltfPbrMaterial.cpp" />
+    <ClCompile Include="..\..\..\Kits\AMDTK\GLTF\GltfPbrPass.cpp" />
+    <ClCompile Include="..\..\..\Kits\AMDTK\GLTF\GLTFResources.cpp" />
+    <ClCompile Include="..\..\..\Kits\AMDTK\GLTF\ShaderCompiler.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="DeviceResources.cpp" />
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp" />
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="VariableShading.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Kits\DirectXTK12\DirectXTK12_GDK_2019.vcxproj">
+      <Project>{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\Logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\LargeLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\SmallLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\SplashScreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\StoreLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuad.hlsli" />
+    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneController.spritefont">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\Kits\AMDTK\GLTF\Shaders\functions.hlsi" />
+    <None Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPBRLighting.hlsi" />
+    <None Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-IO.hlsi" />
+    <None Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-PS.hlsi" />
+    <None Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-VS.hlsi" />
+    <None Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFVertexFactory.hlsi" />
+    <None Include="..\..\..\Kits\AMDTK\GLTF\Shaders\PixelParams.hlsi" />
+    <None Include="..\..\..\Kits\AMDTK\GLTF\Shaders\Skinning.hlsi" />
+    <None Include="..\..\..\Kits\AMDTK\GLTF\Shaders\textures.hlsi" />
+    <None Include="..\..\..\Media\Meshes\AMDCorridor\Corridor.bin">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\Media\Meshes\AMDCorridor\Corridor.gltf">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="packages.config" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
+    <None Include="readme.md" />
+    <None Include="..\..\NuGet.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFMotionVectorsPass-PS.hlsl">
+      <ShaderType>Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFMotionVectorsPass-VS.hlsl">
+      <ShaderType>Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-PS_Permutation_0x1c884106.hlsl">
+      <ShaderType>Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-VS_Permutation_0x1c884106.hlsl">
+      <ShaderType>Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuadPS.hlsl">
+      <ShaderType>Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuadVS.hlsl">
+      <ShaderType>Vertex</ShaderType>
+    </FxCompile>
+    <None Include="Shaders\VRS_ImageGen_Overlay_Base.hlsli">
+      <FileType>Document</FileType>
+    </None>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFDepthPass-PS.hlsl">
+      <ShaderType>Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFDepthPass-VS.hlsl">
+      <ShaderType>Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-PS_Permutation_0x069e6584.hlsl">
+      <ShaderType>Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-PS_Permutation_0x0bb20f93.hlsl">
+      <ShaderType>Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-PS_Permutation_0x42605758.hlsl">
+      <ShaderType>Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-PS_Permutation_0x4f00251a.hlsl">
+      <ShaderType>Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-PS_Permutation_0x73e82104.hlsl">
+      <ShaderType>Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-PS_Permutation_0x77848696.hlsl">
+      <ShaderType>Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-PS_Permutation_0x9323aacc.hlsl">
+      <ShaderType>Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-PS_Permutation_0x99c515f3.hlsl">
+      <ShaderType>Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-PS_Permutation_0xde6c2a3a.hlsl">
+      <ShaderType>Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-VS_Permutation_0x069e6584.hlsl">
+      <ShaderType>Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-VS_Permutation_0x0bb20f93.hlsl">
+      <ShaderType>Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-VS_Permutation_0x42605758.hlsl">
+      <ShaderType>Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-VS_Permutation_0x4f00251a.hlsl">
+      <ShaderType>Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-VS_Permutation_0x73e82104.hlsl">
+      <ShaderType>Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-VS_Permutation_0x77848696.hlsl">
+      <ShaderType>Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-VS_Permutation_0x9323aacc.hlsl">
+      <ShaderType>Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-VS_Permutation_0x99c515f3.hlsl">
+      <ShaderType>Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-VS_Permutation_0xde6c2a3a.hlsl">
+      <ShaderType>Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Shaders\VRS_ImageGen_Overlay_PS.hlsl">
+      <ShaderType>Pixel</ShaderType>
+      <EntryPointName>mainPS</EntryPointName>
+    </FxCompile>
+    <FxCompile Include="Shaders\VRS_ImageGen_Overlay_VS.hlsl">
+      <ShaderType>Vertex</ShaderType>
+      <EntryPointName>mainVS</EntryPointName>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Box_prop_color.jpg" />
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Box_prop_normal.png" />
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Box_prop_roughness_metallic.jpg" />
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Cockpit-LP_BaseColor.jpg" />
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Cockpit-LP_Normal.jpg" />
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Cockpit-LP_Roughness_Metallic.jpg" />
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-LP_2_BaseColor.jpg" />
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-LP_2_Normal.jpg" />
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-LP_2_Roughness_Metallic.jpg" />
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-v2-1_BaseColor.jpg" />
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-v2-1_Emissive.jpg" />
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-v2-1_Normal.jpg" />
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-v2-1_Roughness_Metallic.jpg" />
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\MI_Trims_B_Roughness_green_channel.png" />
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\T_Metal_Scratches_M7_green_channel.png" />
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\T_Terminal_UI_alpha.png" />
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\T_Terminal_UI_alpha_orig.png" />
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Weapon_Shelf_prop_color.jpg" />
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Weapon_Shelf_prop_normal.jpg" />
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Weapon_Shelf_prop_roughness_metallic.jpg" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\..\packages\WinPixEventRuntime.1.0.240308001\build\WinPixEventRuntime.targets" Condition="Exists('..\..\packages\WinPixEventRuntime.1.0.240308001\build\WinPixEventRuntime.targets')" />
+    <Import Project="..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.targets" Condition="Exists('..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\WinPixEventRuntime.1.0.240308001\build\WinPixEventRuntime.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\WinPixEventRuntime.1.0.240308001\build\WinPixEventRuntime.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.props'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.targets'))" />
+  </Target>
+</Project>

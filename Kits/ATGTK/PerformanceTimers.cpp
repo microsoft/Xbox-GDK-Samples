@@ -102,8 +102,8 @@ void CPUTimer::Update()
 {
     for (uint32_t j = 0; j < c_maxTimers; ++j)
     {
-        auto const start = static_cast<uint64_t>(m_start[j].QuadPart);
-        auto const end = static_cast<uint64_t>(m_end[j].QuadPart);
+        const auto start = static_cast<uint64_t>(m_start[j].QuadPart);
+        const auto end = static_cast<uint64_t>(m_end[j].QuadPart);
 
         DebugWarnings(j, start, end);
 
@@ -122,8 +122,8 @@ double CPUTimer::GetElapsedMS(uint32_t timerid) const
     if (timerid >= c_maxTimers)
         return 0.0;
 
-    auto const start = static_cast<uint64_t>(m_start[timerid].QuadPart);
-    auto const end = static_cast<uint64_t>(m_end[timerid].QuadPart);
+    const auto start = static_cast<uint64_t>(m_start[timerid].QuadPart);
+    const auto end = static_cast<uint64_t>(m_end[timerid].QuadPart);
 
     return double(end - start) * m_qpfFreqInv;
 }
@@ -274,9 +274,9 @@ void GPUTimer::RestoreDevice(_In_ ID3D12Device* device, _In_ ID3D12CommandQueue*
     ThrowIfFailed(device->CreateQueryHeap(&desc, IID_GRAPHICS_PPV_ARGS(m_heap.ReleaseAndGetAddressOf())));
     m_heap->SetName(L"GPUTimer");
 
-    auto const readBack = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_READBACK);
+    const auto readBack = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_READBACK);
 
-    auto const bufferDesc = CD3DX12_RESOURCE_DESC::Buffer(c_timerSlots * sizeof(UINT64));
+    const auto bufferDesc = CD3DX12_RESOURCE_DESC::Buffer(c_timerSlots * sizeof(UINT64));
     ThrowIfFailed(device->CreateCommittedResource(
         &readBack,
         D3D12_HEAP_FLAG_NONE,

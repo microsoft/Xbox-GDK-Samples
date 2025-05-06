@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Game configVersion="0">
+  <!-- Version "1" is supported by March 2022 GDK or later -->
+  <Identity Name="153A8D57-46FE-43F8-8BDA-24A4251F3394"
+            Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+            Version="1.0.0.0"/>
+  
+  <ExecutableList>
+    <Executable Name="AMDFidelityFX_CAS.exe" TargetDeviceFamily="PC" Id="GameP"/>
+    <Executable Name="AMDFidelityFX_CAS_XB1.exe" TargetDeviceFamily="XboxOne" Id="GameD"/>
+    <Executable Name="AMDFidelityFX_CAS_XBS.exe" TargetDeviceFamily="Scarlett" Id="GameS"/>
+  </ExecutableList>
+
+  
+  <ShellVisuals DefaultDisplayName="AMD FidelityFX CAS"
+                PublisherDisplayName="AMD GPUOPEN"
+                StoreLogo="Assets\StoreLogo.png"
+                Square150x150Logo="Assets\Logo.png"
+                Square44x44Logo="Assets\SmallLogo.png"
+                Square480x480Logo="Assets\LargeLogo.png"
+                Description="Contrast Adaptive Sharpening"
+                ForegroundText="dark"
+                BackgroundColor="#000000"
+                SplashScreenImage="Assets\SplashScreen.png"/>
+</Game>

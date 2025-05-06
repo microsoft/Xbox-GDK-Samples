@@ -168,11 +168,11 @@ void UIStaticText::ProcessText()
     if (m_staticTextDataProperties.m_vertTextTruncation == VerticalTextTruncation::Truncate)
     {
         // Index all line beginnings
-        for (uint32_t i = 0; i < m_wordWrappedText.size(); ++i)
+        for (size_t i = 0; i < m_wordWrappedText.size(); ++i)
         {
             if (m_wordWrappedText.at(i) == '\n')
             {
-                m_lineStartIndices.push_back(i + 1);
+                m_lineStartIndices.push_back(static_cast<unsigned int>(i + 1));
             }
         }
 

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Game configVersion="1">
+
+  <Identity Name="b05e05d5-7fa3-4aac-8aaa-17cc2860662a"
+            Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+            Version="1.0.0.0"/>
+  
+  <ExecutableList>
+    <Executable Name="DirectStorageTextureShuffling.exe"
+                Id="Game"/>
+  </ExecutableList>
+
+  <MSAAppId>PleaseChangeMe</MSAAppId>
+  <TitleId>FFFFFFFF</TitleId>
+
+  <ShellVisuals DefaultDisplayName="DirectStorageTextureShuffling"
+                PublisherDisplayName="Xbox Advanced Technology Group"
+                StoreLogo="Assets\StoreLogo.png"
+                Square480x480Logo="Assets\LargeLogo.png"
+                Square150x150Logo="Assets\Logo.png"
+                Square44x44Logo="Assets\SmallLogo.png"
+                Description="DirectStorageTextureShuffling"
+                ForegroundText="dark"
+                BackgroundColor="#000000"
+                SplashScreenImage="Assets\SplashScreen.png"/>
+</Game>

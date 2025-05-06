@@ -38,6 +38,7 @@ Sample::Sample() noexcept(false) :
     m_userHandle(nullptr),
     m_providerHandle(nullptr),
     m_userAddInProgress(false),
+    m_containerHandle(nullptr),
     m_isDataDisplayable(false)
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>();
@@ -59,9 +60,9 @@ Sample::~Sample()
     XTaskQueueDispatch(m_taskQueue, XTaskQueuePort::Completion, INFINITE);
     XTaskQueueCloseHandle(m_taskQueue);
 
-    XUserCloseHandle(m_userHandle);
-    XGameSaveCloseProvider(m_providerHandle);
     XGameSaveCloseContainer(m_containerHandle);
+    XGameSaveCloseProvider(m_providerHandle);
+    XUserCloseHandle(m_userHandle);
 }
 
 #pragma region XGameSave
@@ -69,43 +70,48 @@ Sample::~Sample()
 HRESULT Sample::GetProviderHandle()
 {
     // Setup async block and function
-    XAsyncBlock* asyncBlock = new XAsyncBlock{};
+    std::unique_ptr<XAsyncBlock> asyncBlock = std::make_unique<XAsyncBlock>();
     asyncBlock->queue = m_taskQueue;
     asyncBlock->context = this;
     asyncBlock->callback = [](XAsyncBlock* asyncBlock)
     {
-        Sample* pThis = static_cast<Sample*>(asyncBlock->context);
+        std::unique_ptr<XAsyncBlock> owner = std::unique_ptr<XAsyncBlock>(asyncBlock);
+        Sample* sampleContext = static_cast<Sample*>(owner->context);
 
         XGameSaveProviderHandle providerHandle = nullptr;
         HRESULT hr = XGameSaveInitializeProviderResult(asyncBlock, &providerHandle);
 
         if (SUCCEEDED(hr))
         {
-            if (pThis->m_providerHandle)
+            if (sampleContext->m_providerHandle)
             {
                 // If switching out the provider handle, close the current handle.
-                XGameSaveCloseProvider(pThis->m_providerHandle);
+                XGameSaveCloseProvider(sampleContext->m_providerHandle);
             }
-            pThis->m_providerHandle = providerHandle;
-            pThis->Log("Successfully obtained Provider Handle");
-            pThis->InitializeData();
+            sampleContext->m_providerHandle = providerHandle;
+            sampleContext->Log("Successfully obtained Provider Handle");
+            sampleContext->InitializeData();
+            sampleContext->EnableProviderReqButtons();
         }
         else
         {
-            pThis->LogFailedHR("XGameSaveInitializeProviderResult", hr);
+            sampleContext->LogFailedHR("XGameSaveInitializeProviderResult", hr);
+            sampleContext->DisableProviderReqButtons();
         }
-
-        delete asyncBlock;
     };
 
     // Obtain the provider handle for the user. This handle is required in order for a user
     // to manipulate XGameSave data with a specific title(scid).
-    HRESULT hr = XGameSaveInitializeProviderAsync(m_userHandle, c_scid, false, asyncBlock);
-    if (FAILED(hr))
+    HRESULT hr = XGameSaveInitializeProviderAsync(m_userHandle, c_scid, false, asyncBlock.get());
+    if (SUCCEEDED(hr))
     {
-        // Failed, so be sure to clean async block
-        delete asyncBlock;
+        // Release the unique-ptr so that callback can own it.
+        asyncBlock.release();
+    }
+    else
+    {
         LogFailedHR("XGameSaveInitializeProviderAsync", hr);
+        DisableProviderReqButtons();
     }
     return hr;
 }
@@ -117,11 +123,11 @@ HRESULT Sample::InitializeData()
     struct ContainerInfoContext
     {
         uint8_t containerCount;
-        Sample* pThis;
+        Sample* sampleContext;
     };
 
     ContainerInfoContext context;
-    context.pThis = this;
+    context.sampleContext = this;
     context.containerCount = 0;
 
     // Iterate through all containers that match the passed in container name.
@@ -147,54 +153,62 @@ HRESULT Sample::InitializeData()
         else
         {
             Log("Container found! Downloading blobs.");
-            CreateContainer(true);
+            hr = LoadBlobsFromDisk();
+            if (FAILED(hr))
+            {
+                LogFailedHR("LoadBlobsFromDisk", hr);
+            }
         }
     }
 
     return hr;
 }
 
-// Create a container handle under a specific title. The container
-// may already exist, and if so, we just load the data.
-// If it doesn't then we create a new container with new blob data.
-HRESULT Sample::CreateContainer(bool containerExists)
+HRESULT Sample::AddModifyContainer()
 {
-    HRESULT hr = XGameSaveCreateContainer(m_providerHandle, c_containerName, &m_containerHandle);
-
+    HRESULT hr = E_FAIL;
     XGameSaveUpdateHandle updateHandle = nullptr;
 
-    if (containerExists)
+    // If there is no container handle, create one.
+    if (m_containerHandle == nullptr)
     {
-        if (SUCCEEDED(hr))
+        hr = XGameSaveCreateContainer(m_providerHandle, c_containerName, &m_containerHandle);
+        if (FAILED(hr))
         {
-            hr = LoadBlobsFromDisk();
+            return hr;
         }
     }
-    else
+
+    // Create an update handle. All changes to this container will happen through
+    // this update handle.
+    hr = XGameSaveCreateUpdate(m_containerHandle, c_containerName, &updateHandle);
+    if (FAILED(hr))
     {
-        if (SUCCEEDED(hr))
-        {
-            // Create an update handle. All changes to this container will happen through
-            // this update handle.
-            hr = XGameSaveCreateUpdate(m_containerHandle, c_containerName, &updateHandle);
-        }
-        if (SUCCEEDED(hr))
-        {
-            hr = GenerateBlobData(updateHandle);
-        }
-        if (SUCCEEDED(hr))
-        {
-            // Write all of our changes in our update context to the container.
-            hr = XGameSaveSubmitUpdate(updateHandle);
-        }
-        if (SUCCEEDED(hr))
-        {
-            XGameSaveCloseUpdate(updateHandle);
-        }
+        LogFailedHR("XGameSaveCreateUpdate:", hr);
+        return hr;
     }
-    if (SUCCEEDED(hr))
+    // Helper function to generate some random data for our blobs and writes to them with XGameSaveSubmitBlobWrite.
+    hr = GenerateBlobData(updateHandle);
+    if (FAILED(hr))
     {
-        Log("Successfully created/loaded a container with blob data");
+        LogFailedHR("XGameSaveSubmitBlobWrite", hr);
+        return hr;
+    }
+
+    // Write all of our changes in our update context to the container.
+    hr = XGameSaveSubmitUpdate(updateHandle);
+    if (FAILED(hr))
+    {
+        LogFailedHR("XGameSaveSubmitUpdate", hr);
+        return hr;
+    }
+
+    // Close the update handle
+    XGameSaveCloseUpdate(updateHandle);
+    if (FAILED(hr))
+    {
+        LogFailedHR("XGameSaveCloseUpdate", hr);
+        return hr;
     }
 
     return hr;
@@ -202,7 +216,7 @@ HRESULT Sample::CreateContainer(bool containerExists)
 
 HRESULT Sample::GenerateBlobData(XGameSaveUpdateHandle updateHandle)
 {
-    HRESULT hr = S_OK;
+    HRESULT hr = E_FAIL;
     json characterStatData;
     json worldData;
 
@@ -247,6 +261,17 @@ HRESULT Sample::GenerateBlobData(XGameSaveUpdateHandle updateHandle)
 
 HRESULT Sample::LoadBlobsFromDisk()
 {
+    HRESULT hr = E_FAIL;
+    // If there is no container handle, create one.
+    if (m_containerHandle == nullptr)
+    {
+        hr = XGameSaveCreateContainer(m_providerHandle, c_containerName, &m_containerHandle);
+        if (FAILED(hr))
+        {
+            return hr;
+        }
+    }
+
     SetDataDisplayable(false);
 
     const char* blobNames[] = {
@@ -254,13 +279,15 @@ HRESULT Sample::LoadBlobsFromDisk()
         c_characterStatDataBlobName
     };
 
-    XAsyncBlock* asyncBlock = new XAsyncBlock{};
+    std::unique_ptr<XAsyncBlock> asyncBlock = std::make_unique<XAsyncBlock>();
     asyncBlock->queue = m_taskQueue;
     asyncBlock->context = this;
 
     asyncBlock->callback = [](XAsyncBlock* asyncBlock)
     {
-        Sample* pThis = reinterpret_cast<Sample*>(asyncBlock->context);
+        std::unique_ptr<XAsyncBlock> owner = std::unique_ptr<XAsyncBlock>(asyncBlock);
+        Sample* sampleContext = static_cast<Sample*>(owner->context);
+
         uint32_t blobCount = 0;
         size_t allocatedSize = 0;
         XAsyncGetResultSize(asyncBlock, &allocatedSize);
@@ -271,18 +298,24 @@ HRESULT Sample::LoadBlobsFromDisk()
         HRESULT hr = XGameSaveReadBlobDataResult(asyncBlock, allocatedSize, blobData, &blobCount);
         if (SUCCEEDED(hr))
         {
-            pThis->ParseBlobData(blobData, blobCount);
+            sampleContext->ParseBlobData(blobData, blobCount);
         }
+
         delete [] blobBuf;
-        delete asyncBlock;
     };
 
-    HRESULT hr = XGameSaveReadBlobDataAsync(m_containerHandle, blobNames, 2, asyncBlock);
+    // Read the blob data from the container.
+    hr = XGameSaveReadBlobDataAsync(m_containerHandle, blobNames, 2, asyncBlock.get());
 
-    if (FAILED(hr))
+    if (SUCCEEDED(hr))
     {
-        delete asyncBlock;
+        asyncBlock.release();
     }
+    else
+    {
+        LogFailedHR("XGameSaveReadBlobDataAsync", hr);
+    }
+
     return hr;
 }
 
@@ -295,6 +328,8 @@ HRESULT Sample::DeleteContainer()
         Log("Deleted Container!");
         SetDataDisplayable(false);
     }
+    XGameSaveCloseContainer(m_containerHandle);
+    m_containerHandle = nullptr;
     return hr;
 }
 
@@ -318,35 +353,7 @@ void Sample::Initialize(HWND window, int width, int height)
     m_deviceResources->CreateWindowSizeDependentResources();
     CreateWindowSizeDependentResources();
 
-    UIElementPtr layout = m_uiManager.LoadLayoutFromFile("Assets/Layouts/sample_layout.json");
-    m_uiManager.AttachTo(layout, m_uiManager.GetRootElement());
-
-    m_loadButton = layout->GetTypedChildById<UIButton>(ID("Load_Button"));
-    m_addContainerButton = layout->GetTypedChildById<UIButton>(ID("Add_Container_Button"));
-    m_deleteContainerButton = layout->GetTypedChildById<UIButton>(ID("Delete_Container_Button"));
-    m_switchUserButton = layout->GetTypedChildById<UIButton>(ID("Switch_User_Button"));
-    m_consoleWindow = layout->GetTypedChildById<UIPanel>(ID("Output_Console_Window_Outer_Panel"))
-        ->GetTypedChildById<UIConsoleWindow>(ID("Output_Console_Window"));
-    m_containerLabel = layout->GetTypedChildById<UIStaticText>(ID("Container_Label"));
-    m_userInfoPanel = layout->GetTypedChildById<UIStackPanel>(ID("Sample_Title_Panel"))->
-        GetTypedChildById<UIStackPanel>(ID("User_Info_Panel"));
-    m_gamertagText = m_userInfoPanel->GetTypedChildById<UIStaticText>(ID("Gamertag_Label"));
-    m_gamerpicImage = m_userInfoPanel->GetTypedChildById<UIImage>(ID("Gamerpic"));
-
-    m_characterDataNameLabel = layout->GetTypedChildById<UIPanel>(ID("Input_Panel"))
-        ->GetTypedChildById<UIStaticText>(ID("Character_Data_Name"));
-    m_characterDataLevelLabel = layout->GetTypedChildById<UIPanel>(ID("Input_Panel"))
-        ->GetTypedChildById<UIStaticText>(ID("Character_Data_Level"));
-    m_characterDataCombatClassLabel = layout->GetTypedChildById<UIPanel>(ID("Input_Panel"))
-        ->GetTypedChildById<UIStaticText>(ID("Character_Data_CombatClass"));
-    m_worldDataIsDayTimeLabel = layout->GetTypedChildById<UIPanel>(ID("Input_Panel"))
-        ->GetTypedChildById<UIStaticText>(ID("World_Data_IsDayTime"));
-    m_worldDataXPositionLabel = layout->GetTypedChildById<UIPanel>(ID("Input_Panel"))
-        ->GetTypedChildById<UIStaticText>(ID("World_Data_XPosition"));
-    m_worldDataYPositionLabel = layout->GetTypedChildById<UIPanel>(ID("Input_Panel"))
-        ->GetTypedChildById<UIStaticText>(ID("World_Data_YPosition"));
-
-    m_consoleWindow = m_uiManager.FindTypedById<UIConsoleWindow>(ID("Output_Console_Window"));
+    LoadLayout();
 
     DX::ThrowIfFailed(XTaskQueueCreate(
         XTaskQueueDispatchMode::ThreadPool,
@@ -366,7 +373,8 @@ void Sample::RegisterUIEventHandlers()
         m_loadButton->ButtonState().AddListenerWhen(UIButton::State::Pressed,
             [this](UIButton*)
             {
-                DX::ThrowIfFailed(this->InitializeData());
+                if(m_providerHandle != nullptr)
+                    DX::ThrowIfFailed(this->InitializeData());
             });
     }
     if (m_addContainerButton)
@@ -374,7 +382,8 @@ void Sample::RegisterUIEventHandlers()
         m_addContainerButton->ButtonState().AddListenerWhen(UIButton::State::Pressed,
             [this](UIButton*)
             {
-                DX::ThrowIfFailed(this->CreateContainer(false));
+                if (m_providerHandle != nullptr)
+                    DX::ThrowIfFailed(this->AddModifyContainer());
             });
     }
     if (m_deleteContainerButton)
@@ -382,7 +391,8 @@ void Sample::RegisterUIEventHandlers()
         m_deleteContainerButton->ButtonState().AddListenerWhen(UIButton::State::Pressed,
             [this](UIButton*)
             {
-                DX::ThrowIfFailed(this->DeleteContainer());
+                if (m_providerHandle != nullptr)
+                    DX::ThrowIfFailed(this->DeleteContainer());
             });
     }
     if (m_switchUserButton)
@@ -525,6 +535,8 @@ void Sample::OnSuspending()
 {
     XGameSaveCloseProvider(m_providerHandle);
     XGameSaveCloseContainer(m_containerHandle);
+    m_providerHandle = nullptr;
+    m_containerHandle = nullptr;
     m_deviceResources->Suspend();
 }
 
@@ -555,8 +567,8 @@ void Sample::OnWindowSizeChanged(int width, int height)
 // Properties
 void Sample::GetDefaultSize(int& width, int& height) const noexcept
 {
-    width = 1280;
-    height = 720;
+    width = 1600;
+    height = 900;
 }
 
 #pragma endregion
@@ -615,46 +627,46 @@ HRESULT Sample::GetUserHandle(XUserAddOptions userAddOption)
         return S_FALSE;
     }
 
-    XAsyncBlock* asyncBlock = new XAsyncBlock{};
+    std::unique_ptr<XAsyncBlock> asyncBlock = std::make_unique<XAsyncBlock>();
     asyncBlock->queue = m_taskQueue;
     asyncBlock->context = this;
     asyncBlock->callback = [](XAsyncBlock* asyncBlock)
     {
-        Sample* pThis = static_cast<Sample*>(asyncBlock->context);
+        std::unique_ptr<XAsyncBlock> owner = std::unique_ptr<XAsyncBlock>(asyncBlock);
+        Sample* sampleContext = static_cast<Sample*>(owner->context);
 
         XUserHandle newUser = nullptr;
         HRESULT hr = XUserAddResult(asyncBlock, &newUser);
 
         if (SUCCEEDED(hr))
         {
-            if (pThis->m_userHandle)
+            if (sampleContext->m_userHandle)
             {
-                XUserCloseHandle(pThis->m_userHandle);
+                XUserCloseHandle(sampleContext->m_userHandle);
             }
-            pThis->m_userHandle = newUser;
-            pThis->Log("Successfully obtained User Handle");
+            sampleContext->m_userHandle = newUser;
+            sampleContext->Log("Successfully obtained User Handle");
 
-            DX::ThrowIfFailed(pThis->GetProviderHandle());
-            pThis->UpdateUserUIData();
+            DX::ThrowIfFailed(sampleContext->GetProviderHandle());
+            sampleContext->UpdateUserUIData();
         }
         else
         {
-            pThis->LogFailedHR("XUserAddResult", hr);
+            sampleContext->LogFailedHR("XUserAddResult", hr);
         }
 
-        pThis->m_userAddInProgress = false;
-        delete asyncBlock;
+        sampleContext->m_userAddInProgress = false;
     };
 
-    HRESULT hr = XUserAddAsync(userAddOption, asyncBlock);
+    HRESULT hr = XUserAddAsync(userAddOption, asyncBlock.get());
     if (SUCCEEDED(hr))
     {
         m_userAddInProgress = true;
+        asyncBlock.release();
     }
     else
     {
         LogFailedHR("XUserAddAsync", hr);
-        delete asyncBlock;
     }
 
     return hr;
@@ -665,7 +677,7 @@ HRESULT Sample::UpdateUserUIData()
     //Reset UI
     SetDataDisplayable(false);
 
-    char gamertagBuffer[XUserGamertagComponentUniqueModernMaxBytes + 1] = {};
+    char gamertagBuffer[XUserGamertagComponentUniqueModernMaxBytes + 1]{};
     size_t gamertagSize = 0;
     DX::ThrowIfFailed(XUserGetGamertag(m_userHandle, XUserGamertagComponent::UniqueModern, sizeof(gamertagBuffer), gamertagBuffer, &gamertagSize));
     m_gamertagText->SetDisplayText(gamertagBuffer);
@@ -673,42 +685,54 @@ HRESULT Sample::UpdateUserUIData()
     struct AsyncBlockContext
     {
         GamerPicBytes* gamerPicBytes;
-        Sample* pThis;
+        Sample* sampleContext;
     };
     AsyncBlockContext* ctx = new AsyncBlockContext();
     ctx->gamerPicBytes = &m_gamerPic;
-    ctx->pThis = this;
+    ctx->sampleContext = this;
 
     // Setup gamerpic request
-    XAsyncBlock* asyncBlock = new XAsyncBlock{};
+    std::unique_ptr<XAsyncBlock> asyncBlock = std::make_unique<XAsyncBlock>();
     asyncBlock->queue = m_taskQueue;
     asyncBlock->context = ctx;
     asyncBlock->callback = [](XAsyncBlock* asyncBlock)
     {
-        AsyncBlockContext* ctx = static_cast<AsyncBlockContext*>(asyncBlock->context);
-        Sample* pThis = ctx->pThis;
+        std::unique_ptr<XAsyncBlock> owner = std::unique_ptr<XAsyncBlock>(asyncBlock);
+        AsyncBlockContext* ctx = static_cast<AsyncBlockContext*>(owner->context);
+
+        Sample* sampleContext = ctx->sampleContext;
         // Get buffer size
         size_t bufferSize = 0;
-        DX::ThrowIfFailed(XUserGetGamerPictureResultSize(asyncBlock, &bufferSize));
 
-        size_t bufferUsed = 0;
+        HRESULT hr = XUserGetGamerPictureResultSize(asyncBlock, &bufferSize);
+        if ((hr != S_OK) && (hr != HRESULT_FROM_WIN32(ERROR_PATH_NOT_FOUND)))
+        {
+            sampleContext->LogFailedHR("XUserGetGamerPictureResultSize", hr);
+            delete ctx;
+            DX::ThrowIfFailed(hr);
+        }
+        if (hr == S_OK)
+        {
+            size_t bufferUsed = 0;
+            ctx->gamerPicBytes->size = bufferSize;
+            ctx->gamerPicBytes->data.reset(new uint8_t[bufferSize]);
+            DX::ThrowIfFailed(XUserGetGamerPictureResult(asyncBlock, ctx->gamerPicBytes->size, ctx->gamerPicBytes->data.get(), &bufferUsed));
+        }
 
-        ctx->gamerPicBytes->size = bufferSize;
-        ctx->gamerPicBytes->data.reset(new uint8_t[bufferSize]);
-
-        DX::ThrowIfFailed(XUserGetGamerPictureResult(asyncBlock, ctx->gamerPicBytes->size, ctx->gamerPicBytes->data.get(), &bufferUsed));
-
-        // Set in UI
-        pThis->Log("Got the gamer pic.");
         delete ctx;
-        delete asyncBlock;
     };
 
     // Request gamerpic
-    HRESULT hr = XUserGetGamerPictureAsync(m_userHandle, XUserGamerPictureSize::Medium, asyncBlock);
-    if (FAILED(hr))
+    HRESULT hr = XUserGetGamerPictureAsync(m_userHandle, XUserGamerPictureSize::Medium, asyncBlock.get());
+
+    if (SUCCEEDED(hr))
+    {
+        asyncBlock.release();
+    }
+    else
     {
         LogFailedHR("XUserGetGamerPictureAsync", hr);
+        delete ctx;
     }
     return hr;
 }
@@ -718,7 +742,7 @@ HRESULT Sample::UpdateUserUIData()
 
 void Sample::UpdateView()
 {
-    char buffer[256] = {};
+    char buffer[256]{};
     if (m_isDataDisplayable)
     {
         m_containerLabel->SetDisplayText(c_containerName);
@@ -756,12 +780,47 @@ void Sample::UpdateView()
 
 void Sample::SetDataDisplayable(bool value)
 {
-    if (value != m_isDataDisplayable)
-    {
-        m_isDataDisplayable = value;
-    }
+    m_isDataDisplayable = value;
 }
 
+void Sample::LoadLayout()
+{
+    UIElementPtr layout = m_uiManager.LoadLayoutFromFile("Assets/Layouts/sample_layout.json");
+    m_uiManager.AttachTo(layout, m_uiManager.GetRootElement());
+
+    m_loadButton = layout->GetTypedChildById<UIButton>(ID("Load_Button"));
+    m_addContainerButton = layout->GetTypedChildById<UIButton>(ID("Add_Container_Button"));
+    m_deleteContainerButton = layout->GetTypedChildById<UIButton>(ID("Delete_Container_Button"));
+    m_switchUserButton = layout->GetTypedChildById<UIButton>(ID("Switch_User_Button"));
+    m_containerLabel = layout->GetTypedChildById<UIStaticText>(ID("Container_Label"));
+    m_consoleWindow = layout->GetTypedChildById<UIPanel>(ID("Output_Console_Window_Outer_Panel"))->GetTypedChildById<UIConsoleWindow>(ID("Output_Console_Window"));
+
+    std::shared_ptr<ATG::UITK::UIStackPanel>userInfoPanel = layout->GetTypedChildById<UIStackPanel>(ID("Sample_Title_Panel"))->GetTypedChildById<UIStackPanel>(ID("User_Info_Panel"));
+    m_gamertagText = userInfoPanel->GetTypedChildById<UIStaticText>(ID("Gamertag_Label"));
+    m_gamerpicImage = userInfoPanel->GetTypedChildById<UIImage>(ID("Gamerpic"));
+
+    std::shared_ptr<ATG::UITK::UIPanel> inputPanel = layout->GetTypedChildById<UIPanel>(ID("Input_Panel"));
+    m_characterDataNameLabel = inputPanel->GetTypedChildById<UIStaticText>(ID("Character_Data_Name"));
+    m_characterDataLevelLabel = inputPanel->GetTypedChildById<UIStaticText>(ID("Character_Data_Level"));
+    m_characterDataCombatClassLabel = inputPanel->GetTypedChildById<UIStaticText>(ID("Character_Data_CombatClass"));
+    m_worldDataIsDayTimeLabel = inputPanel->GetTypedChildById<UIStaticText>(ID("World_Data_IsDayTime"));
+    m_worldDataXPositionLabel = inputPanel->GetTypedChildById<UIStaticText>(ID("World_Data_XPosition"));
+    m_worldDataYPositionLabel = inputPanel->GetTypedChildById<UIStaticText>(ID("World_Data_YPosition"));
+}
+
+void Sample::DisableProviderReqButtons()
+{
+    m_addContainerButton->SetEnabled(false);
+    m_deleteContainerButton->SetEnabled(false);
+    m_loadButton->SetEnabled(false);
+}
+
+void Sample::EnableProviderReqButtons()
+{
+    m_addContainerButton->SetEnabled(true);
+    m_deleteContainerButton->SetEnabled(true);
+    m_loadButton->SetEnabled(true);
+}
 #pragma endregion
 
 void Sample::ParseBlobData(XGameSaveBlob* blobData, uint32_t blobCount)
@@ -788,7 +847,7 @@ void Sample::ParseBlobData(XGameSaveBlob* blobData, uint32_t blobCount)
 
 void Sample::LogFailedHR(const char* functionName, HRESULT hr )
 {
-    char buffer[256] = {};
+    char buffer[256]{};
     sprintf_s(buffer, 256, u8"%s failed with hr=%08X", functionName, hr);
     Log(buffer);
 }

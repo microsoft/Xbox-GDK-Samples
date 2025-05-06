@@ -70,6 +70,7 @@
 #include <algorithm>
 #include <atomic>
 #include <cassert>
+#include <chrono>
 #include <cmath>
 #include <cstddef>
 #include <cstdint>
@@ -77,6 +78,8 @@
 #include <cstring>
 #include <cwchar>
 #include <exception>
+#include <functional>
+#include <future>
 #include <iterator>
 #include <memory>
 #include <stdexcept>

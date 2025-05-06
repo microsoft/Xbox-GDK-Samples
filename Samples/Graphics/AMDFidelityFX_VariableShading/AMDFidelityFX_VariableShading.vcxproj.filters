@@ -1,0 +1,416 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>3f60fb08-b332-44e1-80cb-fc27e5ada94d</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>7d35b638-cedc-49cc-84ad-bf9f64003115</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>2ece895f-67c3-4c65-ae53-803e98849678</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>f4e56e02-e603-4357-8879-06942c241dac</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts">
+      <UniqueIdentifier>{37397362-830e-420c-94f3-c66c704a4a54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ATG Tool Kit\FullScreenQuad">
+      <UniqueIdentifier>{25e86f88-ea98-442d-a426-a78bcec4d9b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{baf92b15-985c-4a14-bc9a-b5dcf085d5a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AMD Tool Kit">
+      <UniqueIdentifier>{07abb0fc-11a8-4f66-ba9a-2ba3756f62e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AMD Tool Kit\Shaders">
+      <UniqueIdentifier>{afe587c8-4b80-4945-b799-14aa16019ff1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AMD Tool Kit\json">
+      <UniqueIdentifier>{e2760788-414d-4ec9-88a7-d64697185a96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Corridor">
+      <UniqueIdentifier>{e1aec866-955c-4b57-9f42-0a44147354f4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\MSAAHelper.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ReadData.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\RenderTexture.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuad.h">
+      <Filter>ATG Tool Kit\FullScreenQuad</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\PerformanceTimers.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\PerformanceTimersXbox.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\AMDTK\GLTF\GltfFile.h">
+      <Filter>AMD Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\AMDTK\GLTF\GltfHelpers.h">
+      <Filter>AMD Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\AMDTK\GLTF\GltfPbrMaterial.h">
+      <Filter>AMD Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\AMDTK\GLTF\GltfPbrPass.h">
+      <Filter>AMD Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\AMDTK\GLTF\GLTFResources.h">
+      <Filter>AMD Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\AMDTK\GLTF\GltfStructures.h">
+      <Filter>AMD Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\AMDTK\GLTF\ShaderCompiler.h">
+      <Filter>AMD Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\AMDTK\GLTF\Shaders\common.h">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\AMDTK\GLTF\Shaders\perFrameStruct.h">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\AMDTK\GLTF\Shaders\shadowFiltering.h">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\AMDTK\json\json.h">
+      <Filter>AMD Tool Kit\json</Filter>
+    </ClInclude>
+    <ClInclude Include="VariableShading.h" />
+    <ClInclude Include="..\..\..\Kits\AMDTK\GLTF\GltfDepthPass.h">
+      <Filter>AMD Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\AMDTK\GLTF\GltfMotionVectorsPass.h">
+      <Filter>AMD Tool Kit</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\MSAAHelper.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\RenderTexture.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuad.cpp">
+      <Filter>ATG Tool Kit\FullScreenQuad</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\PerformanceTimers.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\PerformanceTimersXbox.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\AMDTK\GLTF\GltfFile.cpp">
+      <Filter>AMD Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\AMDTK\GLTF\glTFHelpers.cpp">
+      <Filter>AMD Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\AMDTK\GLTF\GltfPbrMaterial.cpp">
+      <Filter>AMD Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\AMDTK\GLTF\GltfPbrPass.cpp">
+      <Filter>AMD Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\AMDTK\GLTF\GLTFResources.cpp">
+      <Filter>AMD Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\AMDTK\GLTF\ShaderCompiler.cpp">
+      <Filter>AMD Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="VariableShading.cpp" />
+    <ClCompile Include="..\..\..\Kits\AMDTK\GLTF\GltfDepthPass.cpp">
+      <Filter>AMD Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\AMDTK\GLTF\GltfMotionVectorsPass.cpp">
+      <Filter>AMD Tool Kit</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneController.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuad.hlsli">
+      <Filter>ATG Tool Kit\FullScreenQuad</Filter>
+    </None>
+    <None Include="Shaders\VRS_ImageGen_Overlay_Base.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Kits\AMDTK\GLTF\Shaders\functions.hlsi">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPBRLighting.hlsi">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-IO.hlsi">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-PS.hlsi">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-VS.hlsi">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFVertexFactory.hlsi">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Kits\AMDTK\GLTF\Shaders\PixelParams.hlsi">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Kits\AMDTK\GLTF\Shaders\Skinning.hlsi">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Kits\AMDTK\GLTF\Shaders\textures.hlsi">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\AMDCorridor\Corridor.bin">
+      <Filter>Assets\Corridor</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\AMDCorridor\Corridor.gltf">
+      <Filter>Assets\Corridor</Filter>
+    </None>
+    <None Include="..\..\NuGet.config" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
+    <None Include="readme.md" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuadPS.hlsl">
+      <Filter>ATG Tool Kit\FullScreenQuad</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuadVS.hlsl">
+      <Filter>ATG Tool Kit\FullScreenQuad</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\VRS_ImageGen_Overlay_PS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\VRS_ImageGen_Overlay_VS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-PS_Permutation_0x0bb20f93.hlsl">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-PS_Permutation_0x4f00251a.hlsl">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-PS_Permutation_0x069e6584.hlsl">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-PS_Permutation_0x73e82104.hlsl">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-PS_Permutation_0x99c515f3.hlsl">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-PS_Permutation_0x9323aacc.hlsl">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-PS_Permutation_0x42605758.hlsl">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-PS_Permutation_0x77848696.hlsl">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-PS_Permutation_0xde6c2a3a.hlsl">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-VS_Permutation_0x0bb20f93.hlsl">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-VS_Permutation_0x4f00251a.hlsl">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-VS_Permutation_0x069e6584.hlsl">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-VS_Permutation_0x73e82104.hlsl">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-VS_Permutation_0x99c515f3.hlsl">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-VS_Permutation_0x9323aacc.hlsl">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-VS_Permutation_0x42605758.hlsl">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-VS_Permutation_0x77848696.hlsl">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-VS_Permutation_0xde6c2a3a.hlsl">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFDepthPass-PS.hlsl">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFDepthPass-VS.hlsl">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-PS_Permutation_0x1c884106.hlsl">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-VS_Permutation_0x1c884106.hlsl">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFMotionVectorsPass-PS.hlsl">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFMotionVectorsPass-VS.hlsl">
+      <Filter>AMD Tool Kit\Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Box_prop_color.jpg">
+      <Filter>Assets\Corridor</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Box_prop_normal.png">
+      <Filter>Assets\Corridor</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Box_prop_roughness_metallic.jpg">
+      <Filter>Assets\Corridor</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Cockpit-LP_BaseColor.jpg">
+      <Filter>Assets\Corridor</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Cockpit-LP_Normal.jpg">
+      <Filter>Assets\Corridor</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Cockpit-LP_Roughness_Metallic.jpg">
+      <Filter>Assets\Corridor</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-LP_2_BaseColor.jpg">
+      <Filter>Assets\Corridor</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-LP_2_Normal.jpg">
+      <Filter>Assets\Corridor</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-LP_2_Roughness_Metallic.jpg">
+      <Filter>Assets\Corridor</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-v2-1_BaseColor.jpg">
+      <Filter>Assets\Corridor</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-v2-1_Emissive.jpg">
+      <Filter>Assets\Corridor</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-v2-1_Normal.jpg">
+      <Filter>Assets\Corridor</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-v2-1_Roughness_Metallic.jpg">
+      <Filter>Assets\Corridor</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\MI_Trims_B_Roughness_green_channel.png">
+      <Filter>Assets\Corridor</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\T_Metal_Scratches_M7_green_channel.png">
+      <Filter>Assets\Corridor</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\T_Terminal_UI_alpha.png">
+      <Filter>Assets\Corridor</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\T_Terminal_UI_alpha_orig.png">
+      <Filter>Assets\Corridor</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Weapon_Shelf_prop_color.jpg">
+      <Filter>Assets\Corridor</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Weapon_Shelf_prop_normal.jpg">
+      <Filter>Assets\Corridor</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Weapon_Shelf_prop_roughness_metallic.jpg">
+      <Filter>Assets\Corridor</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

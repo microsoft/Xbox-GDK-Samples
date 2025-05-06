@@ -73,6 +73,8 @@
 #include <cstring>
 #include <cwchar>
 #include <exception>
+#include <functional>
+#include <future>
 #include <iterator>
 #include <memory>
 #include <stdexcept>

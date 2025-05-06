@@ -169,7 +169,7 @@ namespace DX
             const size_t slot = EffectTextureFactory::ResourceCount() + m_resources.size();
             m_resources.push_back(textureEntry);
 
-            auto const textureDescriptor = m_descriptorHeap.GetCpuHandle(static_cast<size_t>(descriptorIndex));
+            const auto textureDescriptor = m_descriptorHeap.GetCpuHandle(static_cast<size_t>(descriptorIndex));
             DirectX::CreateShaderResourceView(m_device.Get(), textureEntry.mResource.Get(), textureDescriptor, textureEntry.mIsCubeMap);
 
             return slot;

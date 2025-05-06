@@ -8,6 +8,7 @@
 #include "pch.h"
 #include "FileLogger.h"
 
+#include <chrono>
 #include <ctime>
 #include <cstdarg>
 #include <iomanip>
@@ -178,7 +179,7 @@ void FileLogger::OpenLogFile()
     fullFileName += baseFilePath;
     {
         std::wstring pathAsString = fullFileName;
-        auto const findLoc = pathAsString.find_last_not_of(L' ');
+        const auto findLoc = pathAsString.find_last_not_of(L' ');
         if (findLoc != std::wstring::npos)
             pathAsString = pathAsString.substr(0, findLoc + 1);
         fullFileName = pathAsString;

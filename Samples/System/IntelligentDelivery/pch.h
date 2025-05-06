@@ -79,8 +79,9 @@
 #include <cstring>
 #include <cwchar>
 #include <exception>
-#include <iterator>
 #include <functional>
+#include <future>
+#include <iterator>
 #include <map>
 #include <memory>
 #include <stdexcept>

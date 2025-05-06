@@ -175,18 +175,10 @@
     <None Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
       <Filter>Assets</Filter>
     </None>
-    <None Include="Achievements_Readme.docx">
-      <Filter>ReadMe</Filter>
-    </None>
-    <None Include="Achievements_Readme_ja-jp.docx">
-      <Filter>ReadMe</Filter>
-    </None>
-    <None Include="Achievements_Readme_ko-kr.docx">
-      <Filter>ReadMe</Filter>
-    </None>
-    <None Include="Achievements_Readme_zh-cn.docx">
-      <Filter>ReadMe</Filter>
-    </None>
+    <None Include="readme.md" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="..\..\..\Media\Textures\GamerPic.png">

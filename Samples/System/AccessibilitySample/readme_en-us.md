@@ -39,3 +39,9 @@ settings.
 For more information about Microsoft's privacy policies in general, see
 the [Microsoft Privacy
 Statement](https://privacy.microsoft.com/en-us/privacystatement/).
+
+# Third Party Notice
+
+This sample demonstrates using the ImGui library which is available under the MIT license.
+
+For more information, see https://github.com/ocornut/imgui

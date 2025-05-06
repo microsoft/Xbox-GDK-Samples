@@ -1,0 +1,68 @@
+{
+  "prefab": {
+    "classId": "ConsoleWindow",
+    "maxConsoleLines": 100,
+    "viewportPanelSubElementId": "Console_Panel",
+    "verticalSliderSubElementId": "Console_Slider",
+    "size": [ 1380, 220 ],
+    "styleId": "Basic_Console_Style",
+    "focusable": false,
+    "subElements": [
+      {
+        "classId": "Panel",
+        "id": "Console_Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 0, 0 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 1380, 220 ],
+        "style": {
+          "classId": "SpriteStyle",
+          "color": [ 0, 0, 0, 0 ],
+          "colorUsage": "override"
+        }
+      },
+      {
+        "classId": "Slider",
+        "id": "Console_Slider",
+        "size": [ 35, 220 ],
+        "style": {
+          "classId": "NullStyle"
+        },
+        "thumbButtonSubElementId": "Console_Slider_Thumb",
+        "backgroundSubElementId": "Console_Slider_Background",
+        "sliderOrientation": "TopToBottom",
+        "sliderType": "discrete",
+        "numDiscreteSteps": 1,
+        "initialValue": 0,
+        "sizingAnchor": [ "right", "top" ],
+        "positioningAnchor": [ "left", "top" ],
+        "focusable": false,
+        "subElements": [
+          {
+            "classId": "Image",
+            "id": "Console_Slider_Background",
+            "size": [ 35, 220 ],
+            "position": [ 55, 0 ],
+            "style": {
+              "classId": "SpriteStyle",
+              "color": "#808080",
+              "colorUsage": "override"
+            }
+          },
+          {
+            "classId": "Button",
+            "id": "Console_Slider_Thumb",
+            "size": [ 35, 100 ],
+            "position": [ 55, 0 ],
+            "styleId": "Basic_Button_Style",
+            "focusable": true,
+            "focusedStyleId": "Focused_Button_Style",
+            "hoveredStyleId": "Hovered_Button_Style",
+            "pressedStyleId": "Pressed_Button_Style",
+            "disabledStyleId": "Disabled_Button_Style"
+          }
+        ]
+      }
+    ]
+  }
+}

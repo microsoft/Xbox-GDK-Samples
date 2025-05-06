@@ -122,6 +122,50 @@
         ]
       },
       {
+        "id": "Generate_Button",
+        "classId": "Button",
+        "styleId": "button_default_style",
+        "focusedStyleId": "button_focused_style",
+        "pressedStyleId": "button_pressed_style",
+        "hoveredStyleId": "button_focused_style",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 0, 665 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 400, 75 ],
+        "focusable": true,
+        "subElements": [
+          {
+            "id": "button_label",
+            "classId": "StaticText",
+            "styleId": "button_default_text_style",
+            "text": "Generate File",
+            "size": [ 400, 75 ]
+          }
+        ]
+      },
+      {
+        "id": "Read_Button",
+        "classId": "Button",
+        "styleId": "button_default_style",
+        "focusedStyleId": "button_focused_style",
+        "pressedStyleId": "button_pressed_style",
+        "hoveredStyleId": "button_focused_style",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 0, 765 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 400, 75 ],
+        "focusable": true,
+        "subElements": [
+          {
+            "id": "button_label",
+            "classId": "StaticText",
+            "styleId": "button_default_text_style",
+            "text": "Read File",
+            "size": [ 400, 75 ]
+          }
+        ]
+      },
+      {
         "id": "Switch_User_Button",
         "classId": "Button",
         "styleId": "button_default_style",

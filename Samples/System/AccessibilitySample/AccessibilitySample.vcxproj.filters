@@ -20,6 +20,9 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{2367bad5-8b59-4ddd-902a-b5786ac52654}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ImGui">
+      <UniqueIdentifier>{5539f2d3-8b11-4cc9-bde1-83d577be9448}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -51,18 +54,37 @@
     <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
       <Filter>External</Filter>
     </ClInclude>
-    <ClInclude Include="imconfig.h" />
-    <ClInclude Include="imgui.h" />
-    <ClInclude Include="imgui_impl_dx12.h" />
-    <ClInclude Include="imgui_impl_win32.h" />
-    <ClInclude Include="imgui_internal.h" />
-    <ClInclude Include="imgui_stdlib.h" />
-    <ClInclude Include="imstb_rectpack.h" />
-    <ClInclude Include="imstb_textedit.h" />
-    <ClInclude Include="imstb_truetype.h" />
-    <ClInclude Include="imgui_acc_win32.h" />
-    <ClInclude Include="imgui_impl_gdk_dx12.h" />
-    <ClInclude Include="imgui_acc_gdk.h" />
+    <ClInclude Include="ImGuiImplGdkDx12.h" />
+    <ClInclude Include="ImGuiAcc.h" />
+    <ClInclude Include="ImGuiDx12Renderer.h" />
+    <ClInclude Include="Narrator.h" />
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imconfig.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imgui.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imgui_impl_dx12.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imgui_internal.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imgui_stdlib.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imstb_rectpack.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imstb_textedit.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imstb_truetype.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imgui_impl_win32.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -77,16 +99,31 @@
     <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
       <Filter>ATG Tool Kit</Filter>
     </ClCompile>
-    <ClCompile Include="imgui.cpp" />
-    <ClCompile Include="imgui_draw.cpp" />
-    <ClCompile Include="imgui_impl_dx12.cpp" />
-    <ClCompile Include="imgui_impl_win32.cpp" />
-    <ClCompile Include="imgui_stdlib.cpp" />
-    <ClCompile Include="imgui_tables.cpp" />
-    <ClCompile Include="imgui_widgets.cpp" />
-    <ClCompile Include="imgui_acc_win32.cpp" />
-    <ClCompile Include="imgui_impl_gdk_dx12.cpp" />
-    <ClCompile Include="imgui_acc_gdk.cpp" />
+    <ClCompile Include="ImGuiImplGdkDx12.cpp" />
+    <ClCompile Include="ImGuiAcc.cpp" />
+    <ClCompile Include="ImGuiDx12Renderer.cpp" />
+    <ClCompile Include="Narrator.cpp" />
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_draw.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_impl_dx12.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_stdlib.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_tables.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_widgets.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_impl_win32.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <MGCCompile Include="MicrosoftGameConfig.mgc" />

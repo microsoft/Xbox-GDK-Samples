@@ -1,0 +1,32 @@
+{  
+  "definitions": {
+    "#leaderboardbuttonsize": [ 290, 50 ]
+  },
+  "prefab": {
+    "classId": "button",
+    "styleId": "Nonfocusable_Button_Style",
+    "button": {
+      "focusable": true,
+      "positioningAnchor": [ "left", "top" ],
+      "sizingAnchor": [ "left", "top" ],
+      "size": "#leaderboardbuttonsize",
+      "disabledStyleId": "Disabled_Button_Style",
+      "focusedStyleId": "Focused_Button_Style",
+      "hoveredStyleId": "Hovered_Button_Style",
+      "pressedStyleId": "Pressed_Button_Style"
+    },
+    "subElements": [
+      {
+        "classId": "staticText",
+        "id": "Label",
+        "styleId": "leaderboard_button_label_style",
+        "staticText": {
+          "positioningAnchor": [ "left", "top" ],
+          "sizingAnchor": [ "left", "top" ],
+          "size": "#leaderboardbuttonsize",
+          "text": "<MENU BUTTON>"
+        }
+      }
+    ]
+  }
+}

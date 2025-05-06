@@ -388,6 +388,7 @@ namespace
         VS2019,
         VS2019_16_2,
         VS2019_16_8,
+        VS2022_17_8,
         Ignore,
     };
 
@@ -450,12 +451,12 @@ namespace
     const char* c_mfcRegExRelease = "((mfcm?[0-9]+u?)|(mfc[0-9]+[A-Za-z]{3}))\\.dll";
 
     // Matches all Visual C++ Runtime (CRT) Debug DLLs and the debug version of the Unified CRT from the Windows 10 SDK.
-    const char* c_crtRegExDebug = "(((concrt|msvcp|vccorlib|vcruntime|vcamp|vcomp)[0-9]+(_[0-9])?d(_[A-Za-z_]*)?)|(libomp[0-9]+d\\.x86_64)|ucrtbased|vcruntime140_threadsd)\\.dll";
-    const wchar_t* c_crtRegExDebugW = L"(((concrt|msvcp|vccorlib|vcruntime|vcamp|vcomp)[0-9]+(_[0-9])?d(_[A-Za-z_]*)?)|(libomp[0-9]+d\\.x86_64)|ucrtbased|vcruntime140_threadsd)\\.dll";
+    const char* c_crtRegExDebug = "(((concrt|msvcp|vccorlib|vcruntime|vcamp|vcomp)[0-9]+(_[0-9])?d(_[A-Za-z_]*)?)|(libomp[0-9]+d\\.x86_64)|ucrtbased|vcruntime140_threadsd|clang_rt.asan_dbg_dynamic-x86_64)\\.dll";
+    const wchar_t* c_crtRegExDebugW = L"(((concrt|msvcp|vccorlib|vcruntime|vcamp|vcomp)[0-9]+(_[0-9])?d(_[A-Za-z_]*)?)|(libomp[0-9]+d\\.x86_64)|ucrtbased|vcruntime140_threadsd|clang_rt.asan_dbg_dynamic-x86_64)\\.dll";
 
     // Matches all Visual C++ Runtime (CRT) Release DLLs (ucrtbase.dll is part of the OS).
-    const char* c_crtRegExRelease = "(((concrt|msvcp|msvcr|vccorlib|vcruntime|vcamp|vcomp)[0-9]+(_[0-9])?(_[A-Za-z_]+)?)|(libomp[0-9]+\\.x86_64))\\.dll";
-    const wchar_t* c_crtRegExReleaseW = L"(((concrt|msvcp|msvcr|vccorlib|vcruntime|vcamp|vcomp)[0-9]+(_[0-9])?(_[A-Za-z_]+)?)|(libomp[0-9]+\\.x86_64))\\.dll";
+    const char* c_crtRegExRelease = "(((concrt|msvcp|msvcr|vccorlib|vcruntime|vcamp|vcomp)[0-9]+(_[0-9])?(_[A-Za-z_]+)?)|(libomp[0-9]+\\.x86_64)|clang_rt.asan_dynamic-x86_64)\\.dll";
+    const wchar_t* c_crtRegExReleaseW = L"(((concrt|msvcp|msvcr|vccorlib|vcruntime|vcamp|vcomp)[0-9]+(_[0-9])?(_[A-Za-z_]+)?)|(libomp[0-9]+\\.x86_64)|clang_rt.asan_dynamic-x86_64)\\.dll";
 
     // Matches all the Xbox Transport DLLs.
     const char* c_xtfRegEx = "xtf[A-Za-z]+\\.dll";
@@ -976,6 +977,11 @@ namespace
                 {
                     ver = VCMinimumVersion::VS2019_16_8;
                 }
+
+                if (_stricmp(libname, "vcruntime140_threads.dll") == 0)
+                {
+                    ver = VCMinimumVersion::VS2022_17_8;
+                }
             }
 
             if (cppcxx)
@@ -991,6 +997,12 @@ namespace
     {
         if (minVer == VCMinimumVersion::Ignore)
             return true;
+
+        if (minVer >= VCMinimumVersion::VS2022_17_8)
+        {
+            if (foundDLLs.find("vcruntime140_threads.dll") == foundDLLs.end())
+                return false;
+        }
 
         if (minVer >= VCMinimumVersion::VS2019_16_8)
         {
@@ -1642,6 +1654,7 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
         case VCMinimumVersion::VS2019: minVer = L"VS 2019 (16.0)"; break;
         case VCMinimumVersion::VS2019_16_2: minVer = L"VS 2019 (16.2)"; break;
         case VCMinimumVersion::VS2019_16_8: minVer = L"VS 2019 (16.8)"; break;
+        case VCMinimumVersion::VS2022_17_8: minVer = L"VS 2022 (17.8)"; break;
         default: break;
         }
 

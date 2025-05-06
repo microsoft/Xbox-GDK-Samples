@@ -32,11 +32,14 @@ namespace
         _In_ IGameInputDevice* device,
         _In_ uint64_t,
         _In_ GameInputDeviceStatus currentStatus,
-        _In_ GameInputDeviceStatus) noexcept
+        _In_ GameInputDeviceStatus previousStatus) noexcept
     {
         auto sample = reinterpret_cast<Sample*>(context);
 
-        if (currentStatus & GameInputDeviceConnected)
+        bool wasConnected = (previousStatus & GameInputDeviceConnected) != 0;
+        bool isConnected = (currentStatus & GameInputDeviceConnected) != 0;
+
+        if (isConnected && !wasConnected)
         {
             size_t i = 0;
 
@@ -51,7 +54,7 @@ namespace
                 i++;
             }
         }
-        else
+        else if(!isConnected && wasConnected) // [SAMPLE] Device disconnected
         {
             for (size_t k = 0; k < c_maxDevices; ++k)
             {
@@ -871,8 +874,8 @@ void Sample::OnWindowSizeChanged(int width, int height)
 // Properties
 void Sample::GetDefaultSize(int& width, int& height) const noexcept
 {
-    width = 1280;
-    height = 720;
+    width = 1920;
+    height = 1080;
 }
 #pragma endregion
 

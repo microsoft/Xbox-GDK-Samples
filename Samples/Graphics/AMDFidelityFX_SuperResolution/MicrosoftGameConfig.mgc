@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Game configVersion="0">
+  <!-- Version "1" is supported by March 2022 GDK or later -->
+
+  <Identity Name="b7724832-dbee-44ac-b022-3b085826a516"
+            Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+            Version="1.0.0.0"/>
+
+  <ExecutableList>
+    <Executable Name="AMDFidelityFX_SuperResolution.exe" TargetDeviceFamily="PC" Id="GameP"/>
+    <Executable Name="AMDFidelityFX_SuperResolution_XB1.exe" TargetDeviceFamily="XboxOne" Id="GameD"/>
+    <Executable Name="AMDFidelityFX_SuperResolution_XBS.exe" TargetDeviceFamily="Scarlett" Id="GameS"/>
+  </ExecutableList>
+
+
+  <ShellVisuals DefaultDisplayName="AMD FidelityFX Super Resolution" 
+                PublisherDisplayName="AMD GPUOPEN"
+                StoreLogo="Assets\StoreLogo.png"
+                Square150x150Logo="Assets\Logo.png"
+                Square44x44Logo="Assets\SmallLogo.png"
+                Square480x480Logo="Assets\LargeLogo.png"
+                Description="AMD FidelityFX Super Resolution"
+                ForegroundText="dark"
+                BackgroundColor="#000000"
+                SplashScreenImage="Assets\SplashScreen.png"/>
+</Game>

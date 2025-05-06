@@ -93,7 +93,7 @@ void RenderTexture::SizeResources(size_t width, size_t height)
 
     m_width = m_height = 0;
 
-    auto const heapProperties = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
+    const auto heapProperties = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
 
     const D3D12_RESOURCE_DESC desc = CD3DX12_RESOURCE_DESC::Tex2D(m_format,
         static_cast<UINT64>(width),
@@ -290,8 +290,8 @@ void RenderTexture::EndScene(_In_ ID3D11DeviceContextX* context)
 void RenderTexture::SetWindow(const RECT& output)
 {
     // Determine the render target size in pixels.
-    auto const width = size_t(std::max<LONG>(output.right - output.left, 1));
-    auto const height = size_t(std::max<LONG>(output.bottom - output.top, 1));
+    const auto width = size_t(std::max<LONG>(output.right - output.left, 1));
+    const auto height = size_t(std::max<LONG>(output.bottom - output.top, 1));
 
     SizeResources(width, height);
 }

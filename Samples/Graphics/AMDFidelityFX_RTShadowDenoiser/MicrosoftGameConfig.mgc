@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Game configVersion="0">
+  <!-- Version "1" is supported by March 2022 GDK or later -->
+
+  <Identity Name="40feac39-2851-45e0-baa8-53c06c6fb83b"
+            Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+            Version="1.0.0.0"/>
+
+  <ExecutableList>
+    <Executable Name="AMDFidelityFX_RTShadowDenoiser.exe" TargetDeviceFamily="PC" Id="GameP"/>
+    <Executable Name="AMDFidelityFX_RTShadowDenoiser_XBS.exe" TargetDeviceFamily="Scarlett" Id="GameS"/>
+  </ExecutableList>
+
+
+  <ShellVisuals DefaultDisplayName="FidelityFX Shadow RT Denoiser" 
+                PublisherDisplayName="AMD GPUOPEN"
+                StoreLogo="Assets\StoreLogo.png"
+                Square150x150Logo="Assets\Logo.png"
+                Square44x44Logo="Assets\SmallLogo.png"
+                Description="Raytraced Shadow Denoising"
+                ForegroundText="dark"
+                BackgroundColor="#000000"
+                SplashScreenImage="Assets\SplashScreen.png"/>
+</Game>
