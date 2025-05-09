@@ -7,8 +7,7 @@
 // Licensed under the MIT License.
 //--------------------------------------------------------------------------------------
 
-//Uncomment if you add DirectXTexEXR to your copy of the DirectXTex library
-//#include "DirectXTexP.h"
+#include "DirectXTexP.h"
 
 #include "DirectXTexEXR.h"
 
@@ -46,7 +45,12 @@
 #pragma warning(disable : 4244 4996)
 #include <ImfRgbaFile.h>
 #include <ImfIO.h>
+
+// https://openexr.com/en/latest/PortingGuide.html
+#include <OpenEXRConfig.h>
 #pragma warning(pop)
+
+#define COMBINED_OPENEXR_VERSION ((10000*OPENEXR_VERSION_MAJOR) + (100*OPENEXR_VERSION_MINOR) +  OPENEXR_VERSION_PATCH)
 
 #ifdef __clang__
 #pragma clang diagnostic pop
@@ -56,45 +60,6 @@ static_assert(sizeof(Imf::Rgba) == 8, "Mismatch size");
 
 using namespace DirectX;
 using PackedVector::XMHALF4;
-
-// Comment out this first anonymous namespace if you add the include of DirectXTexP.h above
-#ifdef _WIN32
-namespace
-{
-    struct handle_closer { void operator()(HANDLE h) noexcept { assert(h != INVALID_HANDLE_VALUE); if (h) CloseHandle(h); } };
-
-    using ScopedHandle = std::unique_ptr<void, handle_closer>;
-
-    inline HANDLE safe_handle(HANDLE h) noexcept { return (h == INVALID_HANDLE_VALUE) ? nullptr : h; }
-
-    class auto_delete_file
-    {
-    public:
-        auto_delete_file(HANDLE hFile) noexcept : m_handle(hFile) {}
-
-        auto_delete_file(const auto_delete_file&) = delete;
-        auto_delete_file& operator=(const auto_delete_file&) = delete;
-
-        auto_delete_file(auto_delete_file&&) = delete;
-        auto_delete_file& operator=(auto_delete_file&&) = delete;
-
-        ~auto_delete_file()
-        {
-            if (m_handle)
-            {
-                FILE_DISPOSITION_INFO info = {};
-                info.DeleteFile = TRUE;
-                std::ignore = SetFileInformationByHandle(m_handle, FileDispositionInfo, &info, sizeof(info));
-            }
-        }
-
-        void clear() noexcept { m_handle = nullptr; }
-
-    private:
-        HANDLE m_handle;
-    };
-}
-#endif
 
 #ifdef _WIN32
 namespace
@@ -188,6 +153,13 @@ namespace
             SetLastError(0);
         }
 
+#if COMBINED_OPENEXR_VERSION >= 30300
+        int64_t read(void *buf, uint64_t sz, uint64_t offset) override
+        {
+            return Imf::IStream::read(buf, sz, offset);
+        }
+#endif
+
     private:
         HANDLE m_hFile;
         LONGLONG m_EOF;
@@ -260,7 +232,7 @@ HRESULT DirectX::GetMetadataFromEXRFile(const wchar_t* szFile, TexMetadata& meta
     const int nameLength = WideCharToMultiByte(CP_UTF8, 0, szFile, -1, nullptr, 0, nullptr, nullptr);
     if (nameLength > 0)
     {
-        fileName.resize(nameLength);
+        fileName.resize(static_cast<size_t>(nameLength));
         const int result = WideCharToMultiByte(CP_UTF8, 0, szFile, -1, fileName.data(), nameLength, nullptr, nullptr);
         if (result <= 0)
         {
@@ -268,19 +240,10 @@ HRESULT DirectX::GetMetadataFromEXRFile(const wchar_t* szFile, TexMetadata& meta
         }
     }
 
-#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
     ScopedHandle hFile(safe_handle(CreateFile2(
         szFile,
         GENERIC_READ, FILE_SHARE_READ, OPEN_EXISTING,
         nullptr)));
-#else
-    ScopedHandle hFile(safe_handle(CreateFileW(
-        szFile,
-        GENERIC_READ, FILE_SHARE_READ,
-        nullptr,
-        OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN,
-        nullptr)));
-#endif
     if (!hFile)
     {
         return HRESULT_FROM_WIN32(GetLastError());
@@ -378,7 +341,7 @@ HRESULT DirectX::LoadFromEXRFile(const wchar_t* szFile, TexMetadata* metadata, S
     const int nameLength = WideCharToMultiByte(CP_UTF8, 0, szFile, -1, nullptr, 0, nullptr, nullptr);
     if (nameLength > 0)
     {
-        fileName.resize(nameLength);
+        fileName.resize(static_cast<size_t>(nameLength));
         const int result = WideCharToMultiByte(CP_UTF8, 0, szFile, -1, fileName.data(), nameLength, nullptr, nullptr);
         if (result <= 0)
         {
@@ -386,19 +349,10 @@ HRESULT DirectX::LoadFromEXRFile(const wchar_t* szFile, TexMetadata* metadata, S
         }
     }
 
-#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
     ScopedHandle hFile(safe_handle(CreateFile2(
         szFile,
         GENERIC_READ, FILE_SHARE_READ, OPEN_EXISTING,
         nullptr)));
-#else
-    ScopedHandle hFile(safe_handle(CreateFileW(
-        szFile,
-        GENERIC_READ, FILE_SHARE_READ,
-        nullptr,
-        OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN,
-        nullptr)));
-#endif
     if (!hFile)
     {
         return HRESULT_FROM_WIN32(GetLastError());
@@ -420,7 +374,7 @@ HRESULT DirectX::LoadFromEXRFile(const wchar_t* szFile, TexMetadata* metadata, S
         Imf::RgbaInputFile file(fileName.c_str());
 #endif
 
-        auto const dw = file.dataWindow();
+        const auto dw = file.dataWindow();
 
         const int width = dw.max.x - dw.min.x + 1;
         int height = dw.max.y - dw.min.y + 1;
@@ -527,7 +481,7 @@ HRESULT DirectX::SaveToEXRFile(const Image& image, const wchar_t* szFile)
     const int nameLength = WideCharToMultiByte(CP_UTF8, 0, szFile, -1, nullptr, 0, nullptr, nullptr);
     if (nameLength > 0)
     {
-        fileName.resize(nameLength);
+        fileName.resize(static_cast<size_t>(nameLength));
         const int result = WideCharToMultiByte(CP_UTF8, 0, szFile, -1, fileName.data(), nameLength, nullptr, nullptr);
         if (result <= 0)
         {
@@ -536,19 +490,10 @@ HRESULT DirectX::SaveToEXRFile(const Image& image, const wchar_t* szFile)
     }
 
     // Create file and write header
-#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
     ScopedHandle hFile(safe_handle(CreateFile2(
         szFile,
         GENERIC_WRITE, 0, CREATE_ALWAYS,
         nullptr)));
-#else
-    ScopedHandle hFile(safe_handle(CreateFileW(
-        szFile,
-        GENERIC_WRITE, 0,
-        nullptr,
-        CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL,
-        nullptr)));
-#endif
     if (!hFile)
     {
         return HRESULT_FROM_WIN32(GetLastError());
@@ -566,8 +511,8 @@ HRESULT DirectX::SaveToEXRFile(const Image& image, const wchar_t* szFile)
 
     try
     {
-        const int width = static_cast<int>(image.width);
-        const int height = static_cast<int>(image.height);
+        const auto width = static_cast<int>(image.width);
+        const auto height = static_cast<int>(image.height);
 
 #ifdef _WIN32
         Imf::RgbaOutputFile file(stream, Imf::Header(width, height), Imf::WRITE_RGBA);
@@ -582,7 +527,7 @@ HRESULT DirectX::SaveToEXRFile(const Image& image, const wchar_t* szFile)
         }
         else
         {
-            const uint64_t bytes = image.width * image.height;
+            const auto bytes = static_cast<uint64_t>(image.width) * static_cast<uint64_t>(image.height);
 
             if (bytes > static_cast<uint64_t>(UINT32_MAX))
             {
