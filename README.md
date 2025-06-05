@@ -4,14 +4,14 @@ This repo contains game development samples written by the Microsoft Xbox Advanc
 
 * [Kits](/Kits) contains support code used by the samples
 * [Media](/Media) contains media files used by the samples
-* [Samples](../../wiki/SampleList) contains samples
-  * [Audio](../../wiki/SampleList#Audio)
-  * [IntroGraphics](../../wiki/SampleList#Intro-Graphics)
-  * [Graphics](../../wiki/SampleList#Graphics)
-  * [Live](../../wiki/SampleList#Live)
-  * [System](../../wiki/SampleList#System)
-  * [Tools](../../wiki/SampleList#Tools)
-  * [xCloud](../../wiki/SampleList#xCloud)
+* [Samples](gdk-samples-list.md) contains samples
+  * [Audio](gdk-samples-list.md#Audio)
+  * [Graphics](gdk-samples-list.md#Graphics)
+  * [IntroGraphics](gdk-samples-list.md#IntroGraphics)
+  * [Live](gdk-samples-list.md#Live)
+  * [System](gdk-samples-list.md#System)
+  * [Tools](gdk-samples-list.md#Tools)
+  * [xCloud](gdk-samples-list.md#xCloud)
 
 # Requirements
 
@@ -39,4 +39,4 @@ For more ATG samples, see [DirectML Samples](https://github.com/microsoft/Direct
 
 ## Samples list by category
 
-[Samples List Wiki](../../wiki/SampleList)
+[Samples List](gdk-samples-list.md)
