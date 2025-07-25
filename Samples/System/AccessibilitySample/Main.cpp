@@ -315,8 +315,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 RegCloseKey(hKey);
             }
             float newScaleFactor = ((static_cast<float>(scaleFactor)) / 100.0f);
-            ImGui::GetStyle().ScaleAllSizes(newScaleFactor);
-            ImGui::GetIO().FontGlobalScale = newScaleFactor;
+            ImGuiStyle& currentStyle = ImGui::GetStyle();
+            ImGuiStyle originalStyle = currentStyle;
+
+            // clear out the style and scale a default style + font
+            currentStyle = ImGuiStyle();
+            currentStyle.ScaleAllSizes(newScaleFactor);
+            currentStyle.FontScaleDpi = newScaleFactor;
+
+            // replace the colors we saved off
+            memcpy(currentStyle.Colors, originalStyle.Colors, sizeof(currentStyle.Colors));
         }
         break;
     case WM_PAINT:

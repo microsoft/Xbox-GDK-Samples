@@ -14,15 +14,13 @@
 
 namespace DirectX
 {
-    DIRECTX_TEX_API HRESULT __cdecl GetMetadataFromEXRFile(
+    HRESULT __cdecl GetMetadataFromEXRFile(
         _In_z_ const wchar_t* szFile,
         _Out_ TexMetadata& metadata);
 
-    DIRECTX_TEX_API HRESULT __cdecl LoadFromEXRFile(
+    HRESULT __cdecl LoadFromEXRFile(
         _In_z_ const wchar_t* szFile,
         _Out_opt_ TexMetadata* metadata, _Out_ ScratchImage& image);
 
-    DIRECTX_TEX_API HRESULT __cdecl SaveToEXRFile(
-        _In_ const Image& image,
-        _In_z_ const wchar_t* szFile);
+    HRESULT __cdecl SaveToEXRFile(_In_ const Image& image, _In_z_ const wchar_t* szFile);
 }

@@ -262,7 +262,7 @@ void Sample::CreateDeviceDependentResources()
 
     m_graphicsMemory = std::make_unique<GraphicsMemory>(device);
 
-    auto styleRenderer = std::make_unique<UIStyleRendererD3D>(*this);
+    auto styleRenderer = std::make_unique<UIStyleRendererD3D>(*this, 1280, 720);
     m_uiManager.GetStyleManager().InitializeStyleRenderer(std::move(styleRenderer));
 }
 

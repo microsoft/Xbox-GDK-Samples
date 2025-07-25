@@ -23,6 +23,8 @@ using Microsoft::WRL::ComPtr;
 
 #if defined(GAMEINPUT_API_VERSION) && (GAMEINPUT_API_VERSION == 1)
 using namespace GameInput::v1;
+#elif defined(GAMEINPUT_API_VERSION) && (GAMEINPUT_API_VERSION == 2)
+using namespace GameInput::v2;
 #endif
 
 //======================================================================================
@@ -125,7 +127,7 @@ public:
         {
             if (mGameInput)
             {
-            #if defined(GAMEINPUT_API_VERSION) && (GAMEINPUT_API_VERSION == 1)
+            #if defined(GAMEINPUT_API_VERSION) && (GAMEINPUT_API_VERSION >= 1)
                 if (!mGameInput->UnregisterCallback(mDeviceToken))
             #else
                 if (!mGameInput->UnregisterCallback(mDeviceToken, UINT64_MAX))
@@ -320,18 +322,15 @@ private:
         _In_ IGameInputDevice *,
         _In_ uint64_t,
         _In_ GameInputDeviceStatus currentStatus,
-        _In_ GameInputDeviceStatus previousStatus) noexcept
+        _In_ GameInputDeviceStatus) noexcept
     {
         auto impl = reinterpret_cast<Mouse::Impl*>(context);
 
-        const bool wasConnected = (previousStatus & GameInputDeviceConnected) != 0;
-        const bool isConnected = (currentStatus & GameInputDeviceConnected) != 0;
-
-        if (isConnected && !wasConnected)
+        if (currentStatus & GameInputDeviceConnected)
         {
             ++impl->mConnected;
         }
-        else if (!isConnected && wasConnected && impl->mConnected > 0)
+        else if (impl->mConnected > 0)
         {
             --impl->mConnected;
         }

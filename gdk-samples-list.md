@@ -8,10 +8,12 @@ Following is a list of categories for the samples.
   - [Categories](#categories)
     - [Audio](#audio)
     - [Graphics](#graphics)
+    - [Handheld](#handheld)
     - [IntroGraphics](#intrographics)
     - [Live](#live)
     - [System](#system)
     - [Tools](#tools)
+    - [Unity](#unity)
     - [xCloud](#xcloud)
 
 <a id="audio"></a> 
@@ -75,6 +77,14 @@ Following is a list of categories for the samples.
 | __SmokeSimulation__ | This sample demonstrates how to use Compute Shader 6.0 and 3D textures to implement basic 3D Navier-Stokes flow simulation. | ✓ |  | 
 | __TemporalAntialiasing__ | This sample demonstrates how to implement Temporal Antialiasing (TAA), plus a series of other techniques which help improve the algoritm stability and fix some of its inherent issues. | ✓ | ✓ | 
 | __VisibilityBuffer__ | Demonstrates a visibility buffer (deferred) rendering technique, making use of Mesh Shaders and HLSL 6.6 Dynamic Resources. | ✓ | ✓ | 
+ 
+<a id="handheld"></a> 
+ 
+### Handheld 
+ 
+| Sample | Description | Console | PC | 
+| ------ | ----------- | ------- | -- | 
+| __HandheldBestPractices__ | This sample demonstrates the best practices for running a title on handheld devices. |  | ✓ | 
  
 <a id="intrographics"></a> 
  
@@ -182,6 +192,14 @@ Following is a list of categories for the samples.
 | __xbdepends__ | This is a command-line for Windows 10 machines intended to help diagnose build and launch issues for GDKX titles. | ✓ | ✓ | 
 | __xbgamepad__ | This testing tool forwards XINPUT gamepad input on PC to a Xbox console. |  | ✓ | 
 | __xtexconv__ | This sample is a PC side command-line tool which extends the standard TexConv command-line tool for texture conversion and preparation to support Xbox offline texture tiling for use with the CreatePlacedResourceX APIs in DirectX 12.X. | ✓ | ✓ | 
+ 
+<a id="unity"></a> 
+ 
+### Unity 
+ 
+| Sample | Description | Console | PC | 
+| ------ | ----------- | ------- | -- | 
+| __UnityHandheldBestPractices__ | This sample demonstrates the best practices for running a title on handheld devices in Unity. |  | ✓ | 
  
 <a id="xcloud"></a> 
  

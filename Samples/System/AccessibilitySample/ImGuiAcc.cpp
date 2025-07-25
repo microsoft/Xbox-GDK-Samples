@@ -574,9 +574,16 @@ void ImGuiAcc::UpdateScaleFactor()
 
 void ImGuiAcc::AdjustForDisplayScaling()
 {
-    ImGui::GetStyle().ScaleAllSizes(m_scaleFactor);
-    ImGuiIO& io = ImGui::GetIO();
-    io.FontGlobalScale = m_scaleFactor;
+    ImGuiStyle& currentStyle = ImGui::GetStyle();
+    ImGuiStyle originalStyle = currentStyle;
+
+    // clear out the style and scale a default style + font
+    currentStyle = ImGuiStyle();
+    currentStyle.ScaleAllSizes(m_scaleFactor);
+    currentStyle.FontScaleDpi = m_scaleFactor;
+
+    // replace the colors we saved off
+    memcpy(currentStyle.Colors, originalStyle.Colors, sizeof(currentStyle.Colors));
 }
 
 void ImGuiAcc::DetectHighContrastTheme()

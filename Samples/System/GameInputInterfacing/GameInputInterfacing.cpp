@@ -96,7 +96,24 @@ void Sample::Initialize(HWND window, int width, int height)
     m_deviceResources->CreateWindowSizeDependentResources();
     CreateWindowSizeDependentResources();
 
-    DX::ThrowIfFailed(GameInputCreate(&m_gameInput));
+    HRESULT hr = GameInputCreate(&m_gameInput);
+
+#ifdef _GAMING_XBOX
+    DX::ThrowIfFailed(hr);
+#else
+    extern LPCWSTR g_szAppName;
+
+    if (FAILED(hr))
+    {
+        wchar_t buff[256] = {};
+        swprintf_s(buff,
+            L"GameInput creation failed with error: %08X\n\nVerify that GameInputRedist.msi has been installed as noted in the README.",
+            static_cast<unsigned int>(hr));
+        std::ignore = MessageBoxW(window, buff, g_szAppName, MB_ICONERROR | MB_OK);
+        ExitSample();
+    }
+#endif
+
     DX::ThrowIfFailed(m_gameInput->RegisterDeviceCallback(nullptr, SupportedGameInputKinds, GameInputDeviceConnected, GameInputBlockingEnumeration, this, OnGameInputDeviceAddedRemoved, &m_deviceToken));
 
     m_uiManager.GetRootElement()->AddChildFromLayout("Assets/layout.json");
@@ -896,7 +913,7 @@ void Sample::CreateDeviceDependentResources()
 
     m_graphicsMemory = std::make_unique<GraphicsMemory>(device);
 
-    auto styleRenderer = std::make_unique<UIStyleRendererD3D>(*this);
+    auto styleRenderer = std::make_unique<UIStyleRendererD3D>(*this, 1920, 1080);
     m_uiManager.GetStyleManager().InitializeStyleRenderer(std::move(styleRenderer));
 }
 
