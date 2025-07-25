@@ -408,7 +408,22 @@ void Sample::Initialize(HWND window, int width, int height)
 
     // [SAMPLE] create the GameInput stack
     HRESULT hr = GameInputCreate(&m_gameInput);
+
+ #ifdef _GAMING_XBOX
     DX::ThrowIfFailed(hr);
+#else
+    extern LPCWSTR g_szAppName;
+
+    if (FAILED(hr))
+    {
+        wchar_t buff[256] = {};
+        swprintf_s(buff,
+            L"GameInput creation failed with error: %08X\n\nVerify that GameInputRedist.msi has been installed as noted in the README.",
+            static_cast<unsigned int>(hr));
+        std::ignore = MessageBoxW(window, buff, g_szAppName, MB_ICONERROR | MB_OK);
+        ExitSample();
+    }
+#endif
 
     // [SAMPLE] setup callback when a Racing Wheel is connected or disconnected
     // Note: Racing wheels that use HID drivers may not report as a GameInputKindRacingWheel, so

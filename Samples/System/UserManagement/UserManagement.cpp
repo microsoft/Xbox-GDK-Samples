@@ -221,7 +221,7 @@ void Sample::CreateDeviceDependentResources()
     m_resourceDescriptors = std::make_unique<DescriptorHeap>(device, Descriptors::Count);
 
     // create the style renderer for the UI manager to use for rendering the UI scene styles
-    auto styleRenderer = std::make_unique<ATG::UITK::UIStyleRendererD3D>(*this);
+    auto styleRenderer = std::make_unique<ATG::UITK::UIStyleRendererD3D>(*this, 1920, 1080);
     m_uiManager.GetStyleManager().InitializeStyleRenderer(std::move(styleRenderer));
 }
 

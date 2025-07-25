@@ -14,6 +14,8 @@
 #include <GameInput.h>
 #if GAMEINPUT_API_VERSION == 1
 using namespace GameInput::v1;
+#elif GAMEINPUT_API_VERSION == 2
+using namespace GameInput::v2;
 #endif
 
 constexpr size_t COMBOCOUNT = 4;

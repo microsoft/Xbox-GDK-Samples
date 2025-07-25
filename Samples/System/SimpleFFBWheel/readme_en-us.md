@@ -14,13 +14,21 @@ This sample demonstrates how to use a force feedback steering wheel with the GDK
 - If building for Xbox Series X|S, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
 - If building for PC, set the active solution platform to Gaming.Desktop.x64.\
 **NOTE: This requires the [GameInput NuGet package](https://www.nuget.org/packages/Microsoft.GameInput) and its 
-included redistributable to be installed.  Please see [GameInput on PC](https://learn.microsoft.com/gaming/gdk/_content/gc/input/overviews/input-nuget) for more information.**.
+included redistributable to be installed.  Please see 
+[GameInput on PC](https://learn.microsoft.com/gaming/gdk/_content/gc/input/overviews/input-nuget) for more information.**.
 
 *For more information, see* __Running samples__, *in the GDK documentation.*
 
+# Running the sample
+
+Ensure the GameInput Redistributable (GameInputRedist.msi) is installed.  This installer can be found in the NuGet package,
+or it can be installed separately using WinGet via a command prompt with the following command:
+
+`winget install Microsoft.GameInput`
+
 # Using the sample
 
-Ensure you have a wheel with force feedback connected.  Use the wheel's pedals or dpad to acclerate and brake.
+Ensure you have a wheel with force feedback connected.  Use the wheel's pedals or dpad to accelerate and brake.
 You should feel the force feedback on the wheel change based on the simulated vehicle's speed.
 
 Additionally, press the Menu button on the wheel simulate temporarily driving over gravel or other rough surface.
@@ -57,6 +65,8 @@ detected as a GameInputKindRacingWheel.
 # Version History
 
 - March 2025: Added support for GameInput v1.x on PC via the
+  [GameInput NuGet package](https://www.nuget.org/packages/Microsoft.GameInput)
+- July 2025: Added support for GameInput v2.x on PC via the
   [GameInput NuGet package](https://www.nuget.org/packages/Microsoft.GameInput)
 
 # Privacy statement

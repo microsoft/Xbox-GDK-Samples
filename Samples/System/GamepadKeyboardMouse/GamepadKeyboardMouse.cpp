@@ -68,7 +68,22 @@ void Sample::Initialize(HWND window, int width, int height)
     // [GameInput]
     // Initializes GameInput and is called once for the lifetime of the application
     HRESULT hr = GameInputCreate(&m_gameInput);
+
+#ifdef _GAMING_XBOX
     DX::ThrowIfFailed(hr);
+#else
+    extern LPCWSTR g_szAppName;
+
+    if (FAILED(hr))
+    {
+        wchar_t buff[256] = {};
+        swprintf_s(buff,
+            L"GameInput creation failed with error: %08X\n\nVerify that GameInputRedist.msi has been installed as noted in the README.",
+            static_cast<unsigned int>(hr));
+        std::ignore = MessageBoxW(window, buff, g_szAppName, MB_ICONERROR | MB_OK);
+        ExitSample();
+    }
+#endif
 
     // [GameInput]
     // Tells GameInput to listen for device events. Several filters can be used for different use cases

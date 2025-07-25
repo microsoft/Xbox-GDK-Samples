@@ -62,12 +62,9 @@ void Sample::Initialize(HWND window, int width, int height)
 
     if (FAILED(hr))
     {
-        // For PC, the only failures are when there are problems with the GameInput service.
-        // The only recourse is to have someone with administrator privs restart the service
-        // or to reboot the machine. Otherwise, no input will be received using the GameInput API.
-        wchar_t buff[128] = {};
+        wchar_t buff[256] = {};
         swprintf_s(buff,
-            L"GameInput creation failed with error: %08X\n\nVerify that the GameInput Service is running on this system.",
+            L"GameInput creation failed with error: %08X\n\nVerify that GameInputRedist.msi has been installed as noted in the README.",
             static_cast<unsigned int>(hr));
         std::ignore = MessageBoxW(window, buff, g_szAppName, MB_ICONERROR | MB_OK);
         ExitSample();
