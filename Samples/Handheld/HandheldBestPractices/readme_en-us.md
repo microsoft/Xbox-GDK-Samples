@@ -67,6 +67,13 @@ functionality behind a form factor check.  This will ensure that future devices,
 that are not not handhelds, such as laptops, tablets, and 2-in-1s, also benefit in UI scaling, 
 power consumption, and performance characteristics.
 
+There are two implementations provided for virtual keyboard display.  `VirtualKeyboard.cpp` uses
+cppwinrt and requires exception support (/EHsc) and will only compile where WinRT is available.
+`VirtualKebyoardAlt.cpp` is an implementation that will compile down-level to Windows 7 and dynamically
+loads/creates the necessary WinRT types for keyboard display, and will silently fail on OSes where
+WinRT and the Gamepad keyboard do not exist.  Either way is supported, use what is appropriate
+for your title's needs with regard to compiling with exceptions and down-level Windows support.
+
 # Known Issues/Expectations
 
 - If a device is in desktop or mouse/keyboard mode, Gamepad inputs will not be recognized. Ensure
@@ -81,4 +88,5 @@ power consumption, and performance characteristics.
 
 # Update history
 
+- 09/2025 -- Updated Virtual Keyboard snippets for downlevel/non-CppWinRT compilation
 - 07/2025 -- Initial release

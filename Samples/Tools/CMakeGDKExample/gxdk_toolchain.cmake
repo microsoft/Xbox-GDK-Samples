@@ -30,9 +30,6 @@ set(CMAKE_VS_PLATFORM_TOOLSET_HOST_ARCHITECTURE "x64" CACHE STRING "" FORCE)
 # Let the GDK MSBuild rules decide the WindowsTargetPlatformVersion
 set(CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION "" CACHE STRING "" FORCE)
 
-# Propagate GDK version to MSBuild
-set(CMAKE_VS_GLOBALS "XdkEditionTarget=${XdkEditionTarget}" CACHE STRING "" FORCE)
-
 if(${CMAKE_VERSION} GREATER_EQUAL "3.30")
     set(CMAKE_VS_USE_DEBUG_LIBRARIES "$<CONFIG:Debug>" CACHE STRING "" FORCE)
 endif()

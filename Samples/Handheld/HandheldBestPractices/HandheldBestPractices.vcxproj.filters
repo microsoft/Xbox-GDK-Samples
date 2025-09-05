@@ -175,6 +175,9 @@
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_sample.cpp">
       <Filter>imgui\atg</Filter>
     </ClCompile>
+    <ClCompile Include="..\Snippets\VirtualKeyboardAlt.cpp">
+      <Filter>Snippets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

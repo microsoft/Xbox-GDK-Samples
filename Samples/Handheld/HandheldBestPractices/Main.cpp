@@ -37,7 +37,7 @@ int WINAPI wWinMain(_In_ HINSTANCE /*hInstance*/, _In_opt_ HINSTANCE /*hPrevInst
                                 CW_USEDEFAULT, CW_USEDEFAULT, windowed ? 1920 : CW_USEDEFAULT, windowed ? 1080 : CW_USEDEFAULT, nullptr, nullptr, wc.hInstance, nullptr);
 
     // Initialize Direct3D
-    if (!CreateDeviceD3D(hWnd))
+    if (!CreateDeviceD3D(hWnd, 1920, 1080))
     {
         CleanupDeviceD3D();
         UnregisterClassW(wc.lpszClassName, wc.hInstance);
@@ -83,10 +83,8 @@ int WINAPI wWinMain(_In_ HINSTANCE /*hInstance*/, _In_opt_ HINSTANCE /*hPrevInst
 
         Sample_Update();
 
-        if(ImGui_Sample_DX12_PreRender())
-            continue;
-
         // Start the Dear ImGui frame
+        ImGui_Sample_DX12_PreRender();
         ImGui_ImplDX12_NewFrame();
         ImGui_ImplWin32_NewFrame();
         ImGui::NewFrame();

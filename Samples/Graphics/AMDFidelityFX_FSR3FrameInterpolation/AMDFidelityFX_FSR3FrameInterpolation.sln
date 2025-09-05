@@ -1,5 +1,5 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
+# Visual Studio Version 17
 VisualStudioVersion = 16.0.31911.196
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AMDFidelityFX_FSR3FrameInterpolation", "AMDFidelityFX_FSR3FrameInterpolation.vcxproj", "{40FEAC39-2851-45E0-BAA8-53C06C6FB83B}"
@@ -12,7 +12,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AMDFidelityFX_FSR3FrameInte
 		{1CF8F9C7-82A0-4512-84DD-5D2018ECF5A4} = {1CF8F9C7-82A0-4512-84DD-5D2018ECF5A4}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTK12", "..\..\..\Kits\DirectXTK12\DirectXTK12_GDK_2019.vcxproj", "{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTK12", "..\..\..\Kits\DirectXTK12\DirectXTK12_GDK_2022.vcxproj", "{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FSR3_GDK", "..\..\..\Kits\AMDTK\FidelityFX\src\components\fsr3\FSR3_GDK\FSR3_GDK.vcxproj", "{C4CB5758-ACBA-4824-BB6C-5B0DB013B1D2}"
 EndProject

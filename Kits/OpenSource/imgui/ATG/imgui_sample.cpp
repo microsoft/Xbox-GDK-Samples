@@ -26,14 +26,13 @@
 #include "imgui_allocator.h"
 #include "imgui_sample.h"
 
-// Config for example app
-static const int APP_NUM_FRAMES_IN_FLIGHT = 2;
-static const int APP_NUM_BACK_BUFFERS = 2;
-static const int APP_SRV_HEAP_SIZE = 64;
+static constexpr ImVec4 ClearColor = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+static constexpr float  ClearColorWithAlpha[4] = { ClearColor.x * ClearColor.w, ClearColor.y * ClearColor.w, ClearColor.z * ClearColor.w, ClearColor.w };
+static constexpr int APP_NUM_BACK_BUFFERS = 2;
 
-// Data
-static FrameContext                   g_frameContext[APP_NUM_FRAMES_IN_FLIGHT] = {};
-static UINT                           g_frameIndex = 0;
+// D3D device is handled by modified ATG DeviceResources object
+static std::unique_ptr<DX::DeviceResources> g_deviceResources;
+static DescriptorHeapAllocator              g_pd3dSrvDescHeapAlloc;
 
 static ID3D12Device*                  g_pd3dDevice = nullptr;
 static ID3D12DescriptorHeap*          g_pd3dRtvDescHeap = nullptr;
@@ -266,16 +265,33 @@ void ImGui_Sample_DX12_Init()
     ImGui_ImplDX12_Init(&init_info);
 }
 
-bool ImGui_Sample_DX12_PreRender()
+void ImGui_Sample_DX12_PreRender()
 {
-    // Handle window screen locked
-    if (g_SwapChainOccluded && g_pSwapChain->Present(0, DXGI_PRESENT_TEST) == DXGI_STATUS_OCCLUDED)
-    {
-        Sleep(10);
-        return true;
-    }
-    g_SwapChainOccluded = false;
-    return false;
+#ifdef _GAMING_XBOX
+    g_deviceResources->WaitForOrigin();
+#endif
+
+    g_deviceResources->Prepare();
+
+    auto commandList = g_deviceResources->GetCommandList();
+
+    // Clear the views.
+    auto const rtvDescriptor = g_deviceResources->GetRenderTargetView();
+    auto const dsvDescriptor = g_deviceResources->GetDepthStencilView();
+
+    commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, &dsvDescriptor);
+    commandList->ClearRenderTargetView(rtvDescriptor, ClearColorWithAlpha, 0, nullptr);
+    commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+
+    // Set the viewport and scissor rect.
+    auto const viewport = g_deviceResources->GetScreenViewport();
+    auto const scissorRect = g_deviceResources->GetScissorRect();
+    commandList->RSSetViewports(1, &viewport);
+    commandList->RSSetScissorRects(1, &scissorRect);
+
+    commandList = g_deviceResources->GetCommandList();
+    ID3D12DescriptorHeap* descriptorHeaps[]{ g_deviceResources->GetSRVHeap() };
+    commandList->SetDescriptorHeaps(_countof(descriptorHeaps), descriptorHeaps);
 }
 
 void ImGui_Sample_DX12_PostRender()
@@ -321,13 +337,14 @@ void ImGui_Sample_DX12_PostRender()
 
 void ImGui_Sample_DX12_Resize(LPARAM lParam, WPARAM wParam)
 {
-    if (g_pd3dDevice != nullptr && wParam != SIZE_MINIMIZED)
-    {
-        WaitForLastSubmittedFrame();
-        CleanupRenderTarget();
-        HRESULT result = g_pSwapChain->ResizeBuffers(0, (UINT)LOWORD(lParam), (UINT)HIWORD(lParam), DXGI_FORMAT_UNKNOWN, DXGI_SWAP_CHAIN_FLAG_FRAME_LATENCY_WAITABLE_OBJECT);
-        UNREFERENCED_PARAMETER(result);
-        assert(SUCCEEDED(result) && "Failed to resize swapchain.");
-        CreateRenderTarget();
-    }
+    // it's possible to get a WM_SIZE on the CreateWindowEx before this has been initialized
+    if(g_deviceResources == nullptr)
+        return;
+
+    g_deviceResources->WindowSizeChanged(LOWORD(lParam), HIWORD(lParam));
+}
+
+void ImGui_Sample_DX12_Shutdown()
+{
+    g_deviceResources->WaitForGpu();
 }

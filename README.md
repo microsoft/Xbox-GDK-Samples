@@ -7,10 +7,12 @@ This repo contains game development samples written by the Microsoft Xbox Advanc
 * [Samples](gdk-samples-list.md) contains samples
   * [Audio](gdk-samples-list.md#Audio)
   * [Graphics](gdk-samples-list.md#Graphics)
+  * [Handheld](gdk-samples-list.md#Handheld)
   * [IntroGraphics](gdk-samples-list.md#IntroGraphics)
   * [Live](gdk-samples-list.md#Live)
   * [System](gdk-samples-list.md#System)
   * [Tools](gdk-samples-list.md#Tools)
+  * [Unity](gdk-samples-list.md#Unity)
   * [xCloud](gdk-samples-list.md#xCloud)
 
 # Requirements
@@ -18,6 +20,14 @@ This repo contains game development samples written by the Microsoft Xbox Advanc
 * Visual Studio 2019 (16.9 update or later) or Visual Studio 2022
 * Microsoft Game Development Kit ([GDK](https://aka.ms/gdk))
 * -or- Microsoft Game Development Kit with Xbox Extensions ([GDKX](https://aka.ms/gdkx))
+
+# Opening samples
+
+To open most samples, open the Visual Studio `.sln` file included in the sample's directory.
+
+For Unity samples, use Unity Hub's '+ New project' option and select the Unity sample's directory that contains the `Assets` directory.
+
+Each sample has a readme markdown file which provides directions on how to run it and other important information.
 
 ## Privacy Statement
 

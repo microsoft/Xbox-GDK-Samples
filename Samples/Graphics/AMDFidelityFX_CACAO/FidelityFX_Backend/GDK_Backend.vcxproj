@@ -250,7 +250,7 @@ call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Comma
       <DisableSpecificWarnings>4324;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
     </ClCompile>
-	<ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\shared\ffx_breadcrumbs_list.cpp">
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\shared\ffx_breadcrumbs_list.cpp">
       <DisableSpecificWarnings>4324;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
     </ClCompile>
@@ -307,7 +307,7 @@ call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Comma
   <!-- Base Configuration properties -->
   <PropertyGroup Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <EmbedManifest>false</EmbedManifest>
     <GenerateManifest>false</GenerateManifest>
@@ -366,6 +366,7 @@ call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Comma
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\Kits\AMDTK\fidelityfx\include;$(SolutionDir)..\..\..\Kits\AMDTK\fidelityfx\src\shared;$(SolutionDir)..\..\..\Kits\AMDTK\fidelityfx\src\components;$(SolutionDir)..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared;$(SolutionDir)..\..\..\Kits\AMDTK\fidelityfx\sc_bin\$(PlatformName);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <!-- Extra Profile/Release properties -->
@@ -379,12 +380,14 @@ call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Comma
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+      <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <!-- Extra Profile properties -->
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Profile'">
     <ClCompile>
       <PreprocessorDefinitions>PROFILE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <!-- Extra Debug properties -->
@@ -392,12 +395,14 @@ call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Comma
     <ClCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Optimization>Disabled</Optimization>
+      <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <!-- Exttra Desktop properties -->
   <ItemDefinitionGroup Condition="'$(Platform)'=='Gaming.Desktop.x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\Kits\ATGTK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

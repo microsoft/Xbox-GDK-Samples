@@ -1,6 +1,9 @@
-// disable C4365 for cppwinrt happiness
+// disable wanrings
+#pragma warning(disable:4191)
 #pragma warning(disable:4265)
 #pragma warning(disable:4365)
+
+#include <functional>
 
 // Virtual keyboard WinRT items are in the ViewManagement namespace
 #include <winrt/windows.ui.viewmanagement.core.h>
@@ -29,57 +32,53 @@ bool IsVirtualKeyboardOverlayed()
 {
     // https://learn.microsoft.com/uwp/api/windows.ui.viewmanagement.core.coreinputview.getcoreinputviewocclusions
     auto occlusions = CoreInputView::GetForCurrentView().GetCoreInputViewOcclusions();
-    return (occlusions.Size() > 0);
+    return (occlusions.Size() > 0); // if there is any occlusion, the keyboard must be displayed
 }
 
 static winrt::event_token g_primaryViewShowingToken, g_primaryViewHidingToken;
 
-void RegisterKeyboardShowingEvent()
+void RegisterKeyboardShowingEvent(std::function<void()> callback)
 {
     // Unregister this token in shutodwn with
     // CoreInputView::GetForCurrentView().PrimaryViewShowing(g_primaryViewShowingToken);
+    // https://learn.microsoft.com/uwp/api/windows.ui.viewmanagement.core.coreinputview.primaryviewshowing
     g_primaryViewShowingToken = CoreInputView::GetForCurrentView().PrimaryViewShowing(
-        [](CoreInputView const& /*sender*/, CoreInputViewShowingEventArgs const& /*args*/)
+        [=](CoreInputView const& /*sender*/, CoreInputViewShowingEventArgs const& /*args*/)
         {
             // Event Handler here...
+            callback();
         }
     );
 }
 
-void RegisterKeyboardHidingEvent()
+void RegisterKeyboardHidingEvent(std::function<void()> callback)
 {
     // Unregister this token in shutodwn with
     // CoreInputView::GetForCurrentView().PrimaryViewHiding(g_primaryViewHidingToken);
+    // https://learn.microsoft.com/uwp/api/windows.ui.viewmanagement.core.coreinputview.primaryviewhiding
     g_primaryViewHidingToken = CoreInputView::GetForCurrentView().PrimaryViewHiding(
-        [](CoreInputView const& /*sender*/, CoreInputViewHidingEventArgs const& /*args*/)
+        [=](CoreInputView const& /*sender*/, CoreInputViewHidingEventArgs const& /*args*/)
         {
             // Event Handler here...
+            callback();
         }
     );
 }
 
-// These event handlers can be used for callbacks when a virtual keyboard
-// is shown or hidden:
-//
-// https://learn.microsoft.com/uwp/api/windows.ui.viewmanagement.core.coreinputview.primaryviewshowing
-// CoreInputView::GetForCurrentView().PrimaryViewShowing
-// https://learn.microsoft.com/uwp/api/windows.ui.viewmanagement.core.coreinputview.primaryviewhiding
-// CoreInputView::GetForCurrentView().PrimaryViewHiding
-
-bool Test_VirtualKeyboard()
+void UnregisterKeyboardShowingEvent()
 {
-    try
+    if(g_primaryViewShowingToken.value)
     {
-        ShowVirtualKeyboard();
-        Sleep(1000);
-        HideVirtualKeyboard();
+        CoreInputView::GetForCurrentView().PrimaryViewShowing(g_primaryViewShowingToken);
+        g_primaryViewShowingToken.value = 0;
     }
-    catch (const winrt::hresult_error& ex)
-    {
-        std::wstring msg = ex.message().c_str();
-        OutputDebugString(msg.c_str());
-        return false;
-    }
+}
 
-    return true;
+void UnregisterKeyboardHidingEvent()
+{
+    if(g_primaryViewHidingToken.value)
+    {
+        CoreInputView::GetForCurrentView().PrimaryViewShowing(g_primaryViewHidingToken);
+        g_primaryViewHidingToken.value = 0;
+    }
 }
