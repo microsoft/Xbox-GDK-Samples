@@ -21,7 +21,7 @@ struct FrameContext
 
 // Forward declarations of helper functions
 void ImGui_Sample_DX12_Init();
-bool ImGui_Sample_DX12_PreRender();
+void ImGui_Sample_DX12_PreRender();
 void ImGui_Sample_DX12_PostRender();
 void ImGui_Sample_DX12_Resize(LPARAM lParam, WPARAM wParam);
 

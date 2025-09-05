@@ -1,11 +1,11 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
+# Visual Studio Version 17
 VisualStudioVersion = 15.0.28307.271
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xtexconv", "xtexconv.vcxproj", "{119CCACE-ACD8-4691-8665-FC78B9CE141D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTex", "..\..\..\Kits\DirectXTex\DirectXTex_GXDK_PC_2019.vcxproj", "{9E4D1C18-9E5E-4B35-83BE-74830B9B3C34}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTex", "..\..\..\Kits\DirectXTex\DirectXTex_GXDK_PC_2022.vcxproj", "{9E4D1C18-9E5E-4B35-83BE-74830B9B3C34}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

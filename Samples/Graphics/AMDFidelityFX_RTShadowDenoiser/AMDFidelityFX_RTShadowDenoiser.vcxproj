@@ -43,18 +43,16 @@
   <!-- Base Configuration properties -->
   <PropertyGroup Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <EmbedManifest>false</EmbedManifest>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
-
   <!-- Extra Profile/Release Configuration properties -->
   <PropertyGroup Condition="'$(Configuration)'!='Debug'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
-
   <!-- Extra Debug Configuration properties -->
   <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
@@ -74,7 +72,6 @@
     <IncludePath>$(Console_SdkIncludeRoot)</IncludePath>
     <ExecutablePath>$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
-
   <!-- Desktop paths -->
   <PropertyGroup Condition="'$(Platform)'=='Gaming.Desktop.x64'">
     <ReferencePath>$(VC_ReferencesPath_x64);</ReferencePath>
@@ -83,22 +80,18 @@
     <IncludePath>$(WindowsSDK_IncludePath);$(Console_SdkIncludeRoot);$(IncludePath)</IncludePath>
     <ExecutablePath>$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
-
   <!-- Extra Profile/Release properties -->
   <PropertyGroup Condition="'$(Configuration)'!='Debug'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
-
   <!-- Extra Debug properties -->
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
-
   <!-- Extra Xbox.Scarlett properties -->
   <PropertyGroup Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64'">
     <TargetName>$(ProjectName)_XBS</TargetName>
   </PropertyGroup>
-
   <!-- Base properties -->
   <ItemDefinitionGroup>
     <Link>
@@ -113,7 +106,7 @@
       <WarningLevel>Level4</WarningLevel>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
-      <DisableSpecificWarnings>5204</DisableSpecificWarnings>
+      <DisableSpecificWarnings>5204;5204</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\AMDTK;..\..\..\Kits\ATGTK;..\..\..\Kits\ATGTelemetry\GDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <FXCompile>
@@ -122,7 +115,6 @@
       <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTK\FullScreenQuad;$(Console_SdkIncludeRoot)Scarlett</AdditionalIncludeDirectories>
     </FXCompile>
   </ItemDefinitionGroup>
-
   <ItemDefinitionGroup Condition="'$(Platform)'!='Gaming.Desktop.x64'">
     <FXCompile>
       <AdditionalOptions>/Zs /Fd "$(OutDir)%(Filename).pdb" %(AdditionalOptions)</AdditionalOptions>
@@ -130,14 +122,12 @@
       <EnableDebuggingInformation>false</EnableDebuggingInformation>
     </FXCompile>
   </ItemDefinitionGroup>
-
   <ItemDefinitionGroup Condition="'$(Platform)'=='Gaming.Desktop.x64'">
     <FXCompile>
       <AdditionalOptions>/Fd "$(OutDir)%(Filename).pdb" %(AdditionalOptions)</AdditionalOptions>
       <EnableDebuggingInformation>true</EnableDebuggingInformation>
     </FXCompile>
   </ItemDefinitionGroup>
-
   <!-- Extra Profile/Release properties -->
   <ItemDefinitionGroup Condition="'$(Configuration)'!='Debug'">
     <Link>
@@ -149,25 +139,25 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+      <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
-
   <!-- Extra Profile properties -->
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Profile'">
     <ClCompile>
       <PreprocessorDefinitions>PROFILE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
-
   <!-- Extra Debug properties -->
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
     <ClCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <Optimization>Disabled</Optimization>
+      <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
-
   <ItemDefinitionGroup>
     <CopyFileToFolders>
       <DestinationFolders>$(OutDir)Assets</DestinationFolders>
@@ -256,7 +246,7 @@
     <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Kits\DirectXTK12\DirectXTK12_GDK_2019.vcxproj">
+    <ProjectReference Include="..\..\..\Kits\DirectXTK12\DirectXTK12_GDK_2022.vcxproj">
       <Project>{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}</Project>
     </ProjectReference>
   </ItemGroup>

@@ -50,7 +50,10 @@ using namespace GameInput::v2;
 // Input snippets
 #include "GetActiveInput.cpp"
 #include "IsDeviceTouchEnabled.cpp"
-#include "VirtualKeyboard.cpp"
+
+// NOTE: Only include one of these
+#include "VirtualKeyboard.cpp"        // CppWinRT-based implementation
+//#include "VirtualKeyboardAlt.cpp"   // Downlevel-compatible with no exceptions implementation
 
 // Audio snippets
 #include "AudioDeviceManager.cpp"
@@ -79,8 +82,7 @@ namespace
     static HWND               g_hWnd = nullptr;
     static HANDLE             g_connectivityChangedHandle = nullptr;
     static HDEVNOTIFY         g_deviceNotifyHandle = nullptr;
-    static winrt::event_token g_showingToken{}, g_hidingToken{};
-
+    
     // string backing the edit box
     static char g_inputText[1024] = "Enter text here...";
 
@@ -93,7 +95,7 @@ namespace
     static size_t g_totalMemory = 0, g_availableMemory = 0;
     static DWORD  g_pageFaultCount = 0;
     static size_t g_workingSetSize = 0;
-    static std::wstring g_manufacturer{}, g_productName{}, g_systemFamily{};
+    static std::wstring g_manufacturer{}, g_productName{}, g_systemFamily{}, g_baseboardProduct{};
     static std::vector<ResolutionInfo> g_resolutions;
 
     // display information
@@ -140,7 +142,7 @@ void Sample_Initialize(HWND hWnd)
     LOG_IF_FAILED(GetProcessMemory(&g_pageFaultCount, &g_workingSetSize));
 
     // retrieve make/model of device, if available
-    GetDeviceOEMInfo(g_manufacturer, g_productName, g_systemFamily);
+    GetDeviceOEMInfo(g_manufacturer, g_productName, g_systemFamily, g_baseboardProduct);
 
     // get audio devices and setup callbacks for changes
     LOG_IF_FAILED(StartAudioDeviceMonitoring());   // see AudioDeviceManager.cpp for setting up callbacks on default audio endpoint changes
@@ -170,23 +172,10 @@ void Sample_Initialize(HWND hWnd)
     g_deviceNotifyHandle = RegisterDeviceNotification(hWnd, &ndi, DEVICE_NOTIFY_WINDOW_HANDLE);
 
     // setup virtual keyboard show/hide events
-    // https://learn.microsoft.com/uwp/api/windows.ui.viewmanagement.core.coreinputview.primaryviewshowing
-    // https://learn.microsoft.com/uwp/api/windows.ui.viewmanagement.core.coreinputview.primaryviewhiding
-    g_showingToken = CoreInputView::GetForCurrentView().PrimaryViewShowing(
-        [](CoreInputView const& /*sender*/, CoreInputViewShowingEventArgs const& /*args*/)
-        {
-            LOG("Virtual keyboard showing\n");
-        }
-    );
+    RegisterKeyboardShowingEvent([]() { LOG("VK Showing\n"); });
+    RegisterKeyboardHidingEvent([]()  { LOG("VK Hiding\n");  });
 
-    g_hidingToken = CoreInputView::GetForCurrentView().PrimaryViewHiding(
-        [](CoreInputView const& /*sender*/, CoreInputViewHidingEventArgs const& /*args*/)
-        {
-            LOG("Virtual keyboard hiding\n");
-        }
-    );
-
-    // For internal debugging purposes only
+     // For internal debugging purposes only
     std::wstring build = GetWindowsBuildInfo();
     LOG("%ws\n", build.c_str());
 }
@@ -267,7 +256,7 @@ void Sample_Draw()
     if(g_dpiChange || g_resetUI)
     {
         ImGui::SetNextWindowPos(ImVec2(5, 455 * g_uiScale), ImGuiCond_None);
-        ImGui::SetNextWindowSize(ImVec2(FirstColWidth * g_uiScale, 250 * g_uiScale), ImGuiCond_None);
+        ImGui::SetNextWindowSize(ImVec2(FirstColWidth * g_uiScale, 260 * g_uiScale), ImGuiCond_None);
     }
 
     g_appLog->Draw("Log");
@@ -275,7 +264,7 @@ void Sample_Draw()
     if(g_dpiChange || g_resetUI)
     {
         ImGui::SetNextWindowPos(ImVec2((FirstColWidth+5) * g_uiScale, 5), ImGuiCond_None);
-        ImGui::SetNextWindowSize(ImVec2(800 * g_uiScale, 700 * g_uiScale), ImGuiCond_None);
+        ImGui::SetNextWindowSize(ImVec2(800 * g_uiScale, 710 * g_uiScale), ImGuiCond_None);
     }
 
     ImGui::Begin("Device Properties", nullptr, ImGuiWindowFlags_NoCollapse);
@@ -287,6 +276,7 @@ void Sample_Draw()
                 DrawNameValueTable("Manufacturer",             "%ws",             g_manufacturer.c_str());
                 DrawNameValueTable("Product Name",             "%ws",             g_productName.c_str());
                 DrawNameValueTable("System Family",            "%ws",             g_systemFamily.c_str());
+                DrawNameValueTable("Baseboard Product",        "%ws",             g_baseboardProduct.c_str());
                 DrawNameValueTable("Total / Available Memory", "%zu MB / %zu MB", g_totalMemory / OneMegabyte, g_availableMemory / OneMegabyte);
                 DrawNameValueTable("Working Set Size",         "%zu MB",          g_workingSetSize / OneMegabyte);
                 DrawNameValueTable("Page Faults",              "%d",              g_pageFaultCount);
@@ -308,13 +298,12 @@ void Sample_Draw()
         if(ImGui::CollapsingHeader("GPU Info", ImGuiTreeNodeFlags_DefaultOpen))
         {
             ImGui::BeginTable("GPUInfo", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg);
-                DrawNameValueTable("GPU Name",        "%ws",              g_displayAdapterName.c_str());
-                DrawNameValueTable("VEN / DEV / Rev", "%04X / %04X / %d", g_vendorId, g_deviceId, g_revision);
-                DrawNameValueTable("Dedicated VRAM",  "%zu MB",           g_dedicatedVideoRAM / OneMegabyte);
-                DrawNameValueTable("Shared VRAM",     "%zu MB",           g_sharedVideoRAM / OneMegabyte);
-                DrawNameValueTable("Min Wave Size",   "%d",               g_minWave);
-                DrawNameValueTable("Max Wave Size",   "%d",               g_maxWave);
-                DrawNameValueTable("Total Lanes",     "%d",               g_lanes);
+                DrawNameValueTable("GPU Name",            "%ws",              g_displayAdapterName.c_str());
+                DrawNameValueTable("VEN / DEV / Rev",     "%04X / %04X / %d", g_vendorId, g_deviceId, g_revision);
+                DrawNameValueTable("Dedicated VRAM",      "%zu MB",           g_dedicatedVideoRAM / OneMegabyte);
+                DrawNameValueTable("Shared VRAM",         "%zu MB",           g_sharedVideoRAM / OneMegabyte);
+                DrawNameValueTable("Min / Max Wave Size", "%d / %d",          g_minWave, g_maxWave);
+                DrawNameValueTable("Total Lanes",         "%d",               g_lanes);
             ImGui::EndTable();
         }
 
@@ -483,18 +472,9 @@ void Sample_Shutdown()
         g_deviceNotifyHandle = nullptr;
     }
 
-    // unregister keyboard events
-    if(g_showingToken.value)
-    {
-        CoreInputView::GetForCurrentView().PrimaryViewShowing(g_showingToken);
-        g_showingToken.value = 0;
-    }
-
-    if(g_hidingToken.value)
-    {
-        CoreInputView::GetForCurrentView().PrimaryViewHiding(g_hidingToken);
-        g_hidingToken.value = 0;
-    }
+    // remove keyboard show/hide event callbacks
+    UnregisterKeyboardShowingEvent();
+    UnregisterKeyboardHidingEvent();
 
     // stop audio device callbacks
     StopAudioDeviceMonitoring();

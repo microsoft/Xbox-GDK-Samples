@@ -13,7 +13,7 @@ if NOT EXIST "%VSInstallDir%\MSBuild" goto :missingvsinstalldir
 
 :define_vs_2022_bwoi
 
-if NOT EXIST "%VSInstallDir%\MSBuild\Microsoft\VC\v170\Microsoft.cpp.Default.props" goto :define_vs_2019_bwoi
+if NOT EXIST "%VSInstallDir%\MSBuild\Microsoft\VC\v170\Microsoft.cpp.Default.props" goto :missingvsinstalldir
 
 if NOT EXIST "%ExtractedFolder%\Microsoft GDK\%XDKEditionTarget%\GXDK\VS2022" goto :needsvs2022gdk
 if NOT EXIST "%ExtractedFolder%\Microsoft GDK\%XDKEditionTarget%\GRDK\VS2022" goto :needsvs2022gdk
@@ -47,31 +47,6 @@ echo Set up VS 2022 150 VC Targets (Platform Toolset v141)
 robocopy /NJH /NJS /NDL /NC /NS /S "%VSInstallDir%\MSBuild\Microsoft\VC\v150" %ExtractedFolder%\VCTargets150
 robocopy /NJH /NJS /NDL /NC /NS /S "%ExtractedFolder%\Microsoft GDK\%XDKEditionTarget%\GRDK\VS2022\flatDeployment\MSBuild\Microsoft\VC\v150" "%ExtractedFolder%\VCTargets150"
 robocopy /NJH /NJS /NDL /NC /NS /S "%ExtractedFolder%\Microsoft GDK\%XDKEditionTarget%\GXDK\VS2022\flatDeployment\MSBuild\Microsoft\VC\v150" "%ExtractedFolder%\VCTargets150"
-
-goto :eof
-
-:define_vs_2019_bwoi
-if NOT EXIST "%VSInstallDir%\MSBuild\Microsoft\VC\v160\Microsoft.cpp.Default.props" goto :missingvsinstalldir
-
-if EXIST "%ExtractedFolder%\VCTargets170" goto :mismatchVCTargets
-if NOT EXIST "%ExtractedFolder%\VCTargets160" md "%ExtractedFolder%\VCTargets160"
-
-echo Set up VS 2019 160 VC Targets (Platform Toolset v142)
-
-robocopy /NJH /NJS /NDL /NC /NS /S "%VSInstallDir%\MSBuild\Microsoft\VC\v160" %ExtractedFolder%\VCTargets160
-robocopy /NJH /NJS /NDL /NC /NS /S "%ExtractedFolder%\Microsoft GDK\%XDKEditionTarget%\GRDK\VS2019\flatDeployment\MSBuild\Microsoft\VC\v160" "%ExtractedFolder%\VCTargets160"
-robocopy /NJH /NJS /NDL /NC /NS /S "%ExtractedFolder%\Microsoft GDK\%XDKEditionTarget%\GXDK\VS2019\flatDeployment\MSBuild\Microsoft\VC\v160" "%ExtractedFolder%\VCTargets160"
-
-if NOT EXIST "%VSInstallDir%\MSBuild\Microsoft\VC\v150\Microsoft.Cpp.Default.props" goto :eof
-if %XDKEditionTarget% LSS 241000 goto :eof
-
-if NOT EXIST "%ExtractedFolder%\VCTargets150" md "%ExtractedFolder%\VCTargets150"
-
-echo Set up VS 2019 150 VC Targets (Platform Toolset v141)
-
-robocopy /NJH /NJS /NDL /NC /NS /S "%VSInstallDir%\MSBuild\Microsoft\VC\v150" %ExtractedFolder%\VCTargets150
-robocopy /NJH /NJS /NDL /NC /NS /S "%ExtractedFolder%\Microsoft GDK\%XDKEditionTarget%\GRDK\VS2019\flatDeployment\MSBuild\Microsoft\VC\v150" "%ExtractedFolder%\VCTargets150"
-robocopy /NJH /NJS /NDL /NC /NS /S "%ExtractedFolder%\Microsoft GDK\%XDKEditionTarget%\GXDK\VS2019\flatDeployment\MSBuild\Microsoft\VC\v150" "%ExtractedFolder%\VCTargets150"
 
 goto :eof
 
