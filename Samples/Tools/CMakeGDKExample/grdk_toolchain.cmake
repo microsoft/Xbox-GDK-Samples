@@ -53,4 +53,8 @@ endif()
 # The MicrosoftGame.Config file needs to be in the directory with the project to enable deploy for Gaming.Desktop.x64
 file(GENERATE OUTPUT MicrosoftGame.Config INPUT ${CMAKE_CURRENT_LIST_DIR}/MicrosoftGameConfig.mgc)
 
+# Fix issue with Threads package
+set(CMAKE_USE_WIN32_THREADS_INIT 1)
+set(Threads_FOUND TRUE)
+
 set(_GRDK_TOOLCHAIN_ ON)
