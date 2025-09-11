@@ -92,6 +92,9 @@
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_deviceresources.h">
       <Filter>ImGui\ATG</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\atg\d3dx12.h">
+      <Filter>ImGui\ATG</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />

@@ -160,6 +160,7 @@
     </FXCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\atg\d3dx12.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_allocator.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_applog.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_atg.h" />
