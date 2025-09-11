@@ -72,8 +72,4 @@ if(NOT GDK_DXCTool)
   mark_as_advanced(GDK_DXCTool)
 endif()
 
-# Fix issue with Threads package
-set(CMAKE_USE_WIN32_THREADS_INIT 1)
-set(Threads_FOUND TRUE)
-
 set(_GXDK_TOOLCHAIN_ ON)

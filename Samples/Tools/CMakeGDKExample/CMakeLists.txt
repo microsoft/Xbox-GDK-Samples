@@ -55,8 +55,9 @@ set_source_files_properties(PixelShader.hlsl PROPERTIES ShaderType "ps")
 foreach(FILE VertexShader.hlsl PixelShader.hlsl)
   get_filename_component(FILE_WE ${FILE} NAME_WE)
   get_source_file_property(shadertype ${FILE} ShaderType)
-  add_custom_command(TARGET shaders POST_BUILD
+  add_custom_command(TARGET shaders
                      COMMAND ${GDK_DXCTool} /nologo /Emain /T${shadertype}_6_0 $<$<CONFIG:DEBUG>:/Od> /Zi /Fo ${CMAKE_CURRENT_BINARY_DIR}/${FILE_WE}.cso /Fd ${CMAKE_BINARY_DIR}/${FILE_WE}.pdb ${FILE}
+                     MAIN_DEPENDENCY ${FILE}
                      COMMENT "HLSL ${FILE}"
                      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
                      VERBATIM)

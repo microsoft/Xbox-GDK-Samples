@@ -75,7 +75,7 @@ std::vector<NetworkAdapterInfo> ListNetworkAdapters()
 
         // Get the connectivity hint for the adapter
         // https://learn.microsoft.com/windows/win32/api/netioapi/nf-netioapi-getnetworkconnectivityhintforinterface
-        NL_NETWORK_CONNECTIVITY_HINT hint;
+        NL_NETWORK_CONNECTIVITY_HINT hint{};
         result = GetNetworkConnectivityHintForInterface(adapter.index, &hint);
 
         if (result == ERROR_SUCCESS)

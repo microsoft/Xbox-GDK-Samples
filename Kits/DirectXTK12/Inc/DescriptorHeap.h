@@ -29,9 +29,17 @@
 
 #ifndef DIRECTX_TOOLKIT_API
 #ifdef DIRECTX_TOOLKIT_EXPORT
+#ifdef __GNUC__
+#define DIRECTX_TOOLKIT_API __attribute__ ((dllexport))
+#else
 #define DIRECTX_TOOLKIT_API __declspec(dllexport)
+#endif
 #elif defined(DIRECTX_TOOLKIT_IMPORT)
+#ifdef __GNUC__
+#define DIRECTX_TOOLKIT_API __attribute__ ((dllimport))
+#else
 #define DIRECTX_TOOLKIT_API __declspec(dllimport)
+#endif
 #else
 #define DIRECTX_TOOLKIT_API
 #endif
@@ -60,8 +68,7 @@ namespace DirectX
             DescriptorHeap(device,
                 D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV,
                 D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE, count)
-        {
-        }
+        {}
 
         DescriptorHeap(DescriptorHeap&&) = default;
         DescriptorHeap& operator=(DescriptorHeap&&) = default;
@@ -206,8 +213,7 @@ namespace DirectX
             DescriptorPile(device,
                 D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV,
                 D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE, count, reserve)
-        {
-        }
+        {}
 
         DescriptorPile(DescriptorPile&&) = default;
         DescriptorPile& operator=(DescriptorPile&&) = default;

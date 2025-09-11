@@ -44,11 +44,3 @@ bool GetDeviceOEMInfo(std::wstring& manufacturer, std::wstring& productName, std
 
     return true;
 }
-
-bool Test_GetDeviceOEMInfo()
-{
-    std::wstring manufacturer, productName, systemFamily;
-    GetDeviceOEMInfo(manufacturer, productName, systemFamily);
-
-    return true;
-}

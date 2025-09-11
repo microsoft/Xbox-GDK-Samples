@@ -37,9 +37,17 @@ namespace ABI { namespace Windows { namespace UI { namespace Core { struct ICore
 
 #ifndef DIRECTX_TOOLKIT_API
 #ifdef DIRECTX_TOOLKIT_EXPORT
+#ifdef __GNUC__
+#define DIRECTX_TOOLKIT_API __attribute__ ((dllexport))
+#else
 #define DIRECTX_TOOLKIT_API __declspec(dllexport)
+#endif
 #elif defined(DIRECTX_TOOLKIT_IMPORT)
+#ifdef __GNUC__
+#define DIRECTX_TOOLKIT_API __attribute__ ((dllimport))
+#else
 #define DIRECTX_TOOLKIT_API __declspec(dllimport)
+#endif
 #else
 #define DIRECTX_TOOLKIT_API
 #endif
@@ -436,11 +444,11 @@ namespace DirectX
             bool OemClear : 1;          // VK_OEM_CLEAR, 0xFE
             bool Reserved26 : 1;
 
-#ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunknown-warning-option"
-#pragma clang diagnostic ignored "-Wunsafe-buffer-usage"
-#endif
+        #ifdef __clang__
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Wunknown-warning-option"
+        #pragma clang diagnostic ignored "-Wunsafe-buffer-usage"
+        #endif
 
             bool __cdecl IsKeyDown(Keys key) const noexcept
             {
@@ -464,9 +472,9 @@ namespace DirectX
                 return false;
             }
 
-#ifdef __clang__
-#pragma clang diagnostic pop
-#endif
+        #ifdef __clang__
+        #pragma clang diagnostic pop
+        #endif
         };
 
         class DIRECTX_TOOLKIT_API KeyboardStateTracker

@@ -23,5 +23,5 @@ class AppLog
         AppLog();
         void Clear();
         void AddLog(const char* fmt, ...);
-        void Draw(const char* title);
+        void Draw(const char* title, float width = -200.0f);
 };

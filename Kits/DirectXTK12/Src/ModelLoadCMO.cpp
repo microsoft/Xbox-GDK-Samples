@@ -55,7 +55,7 @@ namespace
         static const D3D12_INPUT_ELEMENT_DESC InputElements[InputElementCount];
     };
 
-    static_assert(sizeof(VertexPositionNormalTangentColorTexture) == sizeof(VSD3DStarter::VertexPositionNormalTangentColorTexture), "mismatch with CMO vertex type");
+    static_assert(sizeof(VertexPositionNormalTangentColorTexture) == sizeof(VSD3DStarter::Vertex), "mismatch with CMO vertex type");
 
     const D3D12_INPUT_ELEMENT_DESC VertexPositionNormalTangentColorTexture::InputElements[] =
     {
@@ -132,7 +132,8 @@ namespace
         MaterialRecordCMO() noexcept :
             pMaterial(nullptr),
             materialIndex(0),
-            texture{} {}
+            texture{}
+        {}
     };
 
     // Shared VB input element description
@@ -182,7 +183,7 @@ namespace
 //======================================================================================
 
 _Use_decl_annotations_
-std::unique_ptr<Model> DirectX::Model::CreateFromCMO(
+std::unique_ptr<Model> Model::CreateFromCMO(
     ID3D12Device* device,
     const uint8_t* meshData, size_t dataSize,
     ModelLoaderFlags flags,
@@ -208,6 +209,9 @@ std::unique_ptr<Model> DirectX::Model::CreateFromCMO(
     if (!*nMesh)
         throw std::runtime_error("No meshes found");
 
+    if (*nMesh > UINT16_MAX)
+        throw std::runtime_error("Too many meshes in a file");
+
     std::map<std::wstring, int> textureDictionary;
     std::vector<ModelMaterialInfo> modelmats;
 
@@ -224,7 +228,7 @@ std::unique_ptr<Model> DirectX::Model::CreateFromCMO(
         if (dataSize < usedSize)
             throw std::runtime_error("End of file");
 
-        auto meshName = reinterpret_cast<const wchar_t*>(static_cast<const void*>(meshData + usedSize)); // [CodeQL.SM02986]: The cast here is intentional.
+        auto meshName = reinterpret_cast<const wchar_t*>(static_cast<const void*>(meshData + usedSize)); // CodeQL [SM02986] The cast here is intentional to interpret the string in the buffer.
 
         usedSize += sizeof(wchar_t)*(*nName);
         if (dataSize < usedSize)
@@ -238,6 +242,9 @@ std::unique_ptr<Model> DirectX::Model::CreateFromCMO(
         usedSize += sizeof(uint32_t);
         if (dataSize < usedSize)
             throw std::runtime_error("End of file");
+
+        if (*nMats > UINT16_MAX)
+            throw std::overflow_error("Too many materials");
 
         std::vector<MaterialRecordCMO> materials;
         materials.reserve(*nMats);
@@ -253,7 +260,7 @@ std::unique_ptr<Model> DirectX::Model::CreateFromCMO(
             if (dataSize < usedSize)
                 throw std::runtime_error("End of file");
 
-            auto matName = reinterpret_cast<const wchar_t*>(static_cast<const void*>(meshData + usedSize)); // [CodeQL.SM02986]: The cast here is intentional.
+            auto matName = reinterpret_cast<const wchar_t*>(static_cast<const void*>(meshData + usedSize)); // CodeQL [SM02986] The cast here is intentional to interpret the string in the buffer.
 
             usedSize += sizeof(wchar_t)*(*nName);
             if (dataSize < usedSize)
@@ -275,7 +282,7 @@ std::unique_ptr<Model> DirectX::Model::CreateFromCMO(
             if (dataSize < usedSize)
                 throw std::runtime_error("End of file");
 
-            auto psName = reinterpret_cast<const wchar_t*>(static_cast<const void*>(meshData + usedSize)); // [CodeQL.SM02986]: The cast here is intentional.
+            auto psName = reinterpret_cast<const wchar_t*>(static_cast<const void*>(meshData + usedSize)); // CodeQL [SM02986] The cast here is intentional to interpret the string in the buffer.
 
             usedSize += sizeof(wchar_t)*(*nName);
             if (dataSize < usedSize)
@@ -290,7 +297,7 @@ std::unique_ptr<Model> DirectX::Model::CreateFromCMO(
                 if (dataSize < usedSize)
                     throw std::runtime_error("End of file");
 
-                auto txtName = reinterpret_cast<const wchar_t*>(static_cast<const void*>(meshData + usedSize)); // [CodeQL.SM02986]: The cast here is intentional.
+                auto txtName = reinterpret_cast<const wchar_t*>(static_cast<const void*>(meshData + usedSize)); // CodeQL [SM02986] The cast here is intentional to interpret the string in the buffer.
 
                 usedSize += sizeof(wchar_t)*(*nName);
                 if (dataSize < usedSize)
@@ -342,6 +349,9 @@ std::unique_ptr<Model> DirectX::Model::CreateFromCMO(
 
         if (!*nIBs)
             throw std::runtime_error("No index buffers found\n");
+
+        if (*nIBs > UINT16_MAX)
+            throw std::overflow_error("Too many index buffers");
 
         struct IBData
         {
@@ -403,6 +413,9 @@ std::unique_ptr<Model> DirectX::Model::CreateFromCMO(
 
         if (!*nVBs)
             throw std::runtime_error("No vertex buffers found\n");
+
+        if (*nVBs > UINT16_MAX)
+            throw std::overflow_error("Too many vertex buffers");
 
         struct VBData
         {
@@ -514,7 +527,7 @@ std::unique_ptr<Model> DirectX::Model::CreateFromCMO(
                 if (dataSize < usedSize)
                     throw std::runtime_error("End of file");
 
-                auto boneName = reinterpret_cast<const wchar_t*>(static_cast<const void*>(meshData + usedSize)); // [CodeQL.SM02986]: The cast here is intentional.
+                auto boneName = reinterpret_cast<const wchar_t*>(static_cast<const void*>(meshData + usedSize)); // CodeQL [SM02986] The cast here is intentional to interpret the string in the buffer.
 
                 usedSize += sizeof(wchar_t) * (*nName);
                 if (dataSize < usedSize)
@@ -820,7 +833,7 @@ std::unique_ptr<Model> DirectX::Model::CreateFromCMO(
 
 //--------------------------------------------------------------------------------------
 _Use_decl_annotations_
-std::unique_ptr<Model> DirectX::Model::CreateFromCMO(
+std::unique_ptr<Model> Model::CreateFromCMO(
     ID3D12Device* device,
     const wchar_t* szFileName,
     ModelLoaderFlags flags,
@@ -855,7 +868,7 @@ std::unique_ptr<Model> DirectX::Model::CreateFromCMO(
 #if defined(_MSC_VER) && !defined(_NATIVE_WCHAR_T_DEFINED)
 
 _Use_decl_annotations_
-std::unique_ptr<Model> DirectX::Model::CreateFromCMO(
+std::unique_ptr<Model> Model::CreateFromCMO(
     ID3D12Device* device,
     const __wchar_t* szFileName,
     ModelLoaderFlags flags,

@@ -259,7 +259,7 @@ void Sample_Draw()
         ImGui::SetNextWindowSize(ImVec2(FirstColWidth * g_uiScale, 260 * g_uiScale), ImGuiCond_None);
     }
 
-    g_appLog->Draw("Log");
+    g_appLog->Draw("Log", -200.0f * g_uiScale);
 
     if(g_dpiChange || g_resetUI)
     {

@@ -18,9 +18,9 @@ This sample demonstrates the best practices for running a title on handheld devi
 
 Build with Visual Studio 2022 (or greater) and copy to a handheld device.
 
-**NOTE: This sample requires the [GameInput NuGet package](https://www.nuget.org/packages/Microsoft.GameInput) 
-and its included redistributable to be installed.  Please see 
-[GameInput on PC](https://learn.microsoft.com/gaming/gdk/_content/gc/input/overviews/input-nuget) for more information.**.
+This sample uses the [GameInput NuGet package](https://www.nuget.org/packages/Microsoft.GameInput) which
+will be restored during the build process.  Also ensure the GameInput Redistributable is installed as
+described below.
 
 # Running the sample
 
@@ -77,7 +77,7 @@ for your title's needs with regard to compiling with exceptions and down-level W
 # Known Issues/Expectations
 
 - If a device is in desktop or mouse/keyboard mode, Gamepad inputs will not be recognized. Ensure
-  the device is set to Gamepad mode via Armory Crate or other OEM software.
+  the device is set to Gamepad mode via Armoury Crate or other OEM software.
 - The Gamepad virtual keyboard requires Windows 11 24H2 26100.3613 or greater.  If the device is running
   an older version of Windows, the sample will not display the virtual keyboard.
 - When running on a device that isn't a handheld, you may see errors regarding

@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="imgui">
-      <UniqueIdentifier>{7781f369-e9b8-4da0-8a11-1b22527d3e00}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Snippets">
       <UniqueIdentifier>{e6ed0bb6-ae53-4315-a906-3d45ce26e35f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="imgui\backends">
+    <Filter Include="ImGui">
+      <UniqueIdentifier>{7781f369-e9b8-4da0-8a11-1b22527d3e00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGui\Backends">
       <UniqueIdentifier>{29251d6d-9a1d-4194-8148-a1dde63526fb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="imgui\atg">
-      <UniqueIdentifier>{789c1aee-df0e-4532-b822-0646878649d3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="imgui\backends\shaders">
+    <Filter Include="ImGui\Backends\Shaders">
       <UniqueIdentifier>{41d027b8-64c1-4fe6-91fc-2a07af43e841}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGui\ATG">
+      <UniqueIdentifier>{789c1aee-df0e-4532-b822-0646878649d3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -24,70 +24,73 @@
       <Filter>Snippets</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imconfig.h">
-      <Filter>imgui</Filter>
+      <Filter>ImGui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imgui.h">
-      <Filter>imgui</Filter>
+      <Filter>ImGui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imgui_internal.h">
-      <Filter>imgui</Filter>
+      <Filter>ImGui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imstb_rectpack.h">
-      <Filter>imgui</Filter>
+      <Filter>ImGui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imstb_textedit.h">
-      <Filter>imgui</Filter>
+      <Filter>ImGui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imstb_truetype.h">
-      <Filter>imgui</Filter>
+      <Filter>ImGui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_dx12.h">
-      <Filter>imgui\backends</Filter>
+      <Filter>ImGui\Backends</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_win32.h">
-      <Filter>imgui\backends</Filter>
+      <Filter>ImGui\Backends</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_ps.h">
-      <Filter>imgui\backends\shaders</Filter>
+      <Filter>ImGui\Backends\Shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_rs.h">
-      <Filter>imgui\backends\shaders</Filter>
+      <Filter>ImGui\Backends\Shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_vs.h">
-      <Filter>imgui\backends\shaders</Filter>
+      <Filter>ImGui\Backends\Shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_ps.h">
-      <Filter>imgui\backends\shaders</Filter>
+      <Filter>ImGui\Backends\Shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_rs.h">
-      <Filter>imgui\backends\shaders</Filter>
+      <Filter>ImGui\Backends\Shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_vs.h">
-      <Filter>imgui\backends\shaders</Filter>
+      <Filter>ImGui\Backends\Shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_ps.h">
-      <Filter>imgui\backends\shaders</Filter>
+      <Filter>ImGui\Backends\Shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_rs.h">
-      <Filter>imgui\backends\shaders</Filter>
+      <Filter>ImGui\Backends\Shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_vs.h">
-      <Filter>imgui\backends\shaders</Filter>
+      <Filter>ImGui\Backends\Shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_allocator.h">
-      <Filter>imgui\atg</Filter>
+      <Filter>ImGui\ATG</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_applog.h">
-      <Filter>imgui\atg</Filter>
+      <Filter>ImGui\ATG</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_atg.h">
-      <Filter>imgui\atg</Filter>
+      <Filter>ImGui\ATG</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_atg_file.h">
-      <Filter>imgui\atg</Filter>
+      <Filter>ImGui\ATG</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_sample.h">
-      <Filter>imgui\atg</Filter>
+      <Filter>ImGui\ATG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_deviceresources.h">
+      <Filter>ImGui\ATG</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -130,9 +133,6 @@
     <ClCompile Include="..\Snippets\VirtualKeyboard.cpp">
       <Filter>Snippets</Filter>
     </ClCompile>
-    <ClCompile Include="..\Snippets\WhatIsStoragePerformance.cpp">
-      <Filter>Snippets</Filter>
-    </ClCompile>
     <ClCompile Include="..\Snippets\IsDeviceTouchEnabled.cpp">
       <Filter>Snippets</Filter>
     </ClCompile>
@@ -152,28 +152,31 @@
       <Filter>Snippets</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui.cpp">
-      <Filter>imgui</Filter>
+      <Filter>ImGui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_draw.cpp">
-      <Filter>imgui</Filter>
+      <Filter>ImGui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_tables.cpp">
-      <Filter>imgui</Filter>
+      <Filter>ImGui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_widgets.cpp">
-      <Filter>imgui</Filter>
+      <Filter>ImGui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_dx12.cpp">
-      <Filter>imgui\backends</Filter>
+      <Filter>ImGui\Backends</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_win32.cpp">
-      <Filter>imgui\backends</Filter>
+      <Filter>ImGui\Backends</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_applog.cpp">
-      <Filter>imgui\atg</Filter>
+      <Filter>ImGui\ATG</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_sample.cpp">
-      <Filter>imgui\atg</Filter>
+      <Filter>ImGui\ATG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_deviceresources.cpp">
+      <Filter>ImGui\ATG</Filter>
     </ClCompile>
     <ClCompile Include="..\Snippets\VirtualKeyboardAlt.cpp">
       <Filter>Snippets</Filter>

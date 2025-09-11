@@ -12,7 +12,7 @@ Removed support for Visual Studio 2019, which is deprecated.
 
 ## July 9, 2025
 
-This package contains the "DirectX Tool Kit", a collection of helper classes for writing Direct3D 12 C++ code for Universal Windows Platform (UWP) apps for Windows 11 and Windows 10, game titles for Xbox Series X\|S and Xbox One, and Win32 desktop applications for Windows 11 and Windows 10.
+This package contains the "DirectX Tool Kit", a collection of helper classes for writing Direct3D 12 C++ code for Win32 desktop applications for Windows 11 and Windows 10, game titles for Xbox Series X\|S and Xbox One, and Universal Windows Platform (UWP) apps for Windows 11 and Windows 10.
 
 This code is designed to build with Visual Studio 2022, clang for Windows v12 or later, or MinGW 12.2. Use of the Windows 10 May 2020 Update SDK ([19041](https://walbourn.github.io/windows-10-may-2020-update-sdk/)) or later is required for Visual Studio.
 
@@ -22,7 +22,7 @@ These components are designed to work without requiring any content from the leg
 
 * ``Inc\``
 
-  + Public Header Files (in the DirectX C++ namespace):
+  * Public Header Files (in the DirectX C++ namespace):
 
     * Audio.h - low-level audio API using XAudio2 (DirectXTK for Audio public header)
     * BufferHelpers.h - C++ helpers for creating D3D resources from CPU data
@@ -52,17 +52,17 @@ These components are designed to work without requiring any content from the leg
 
 * ``Src\``
 
-  + DirectXTK source files and internal implementation headers
+  * DirectXTK12 source files and internal implementation headers
 
 * ``Audio\``
 
-  + DirectXTK for Audio source files and internal implementation headers
+  * DirectXTK12 for Audio source files and internal implementation headers
 
 * ``build\``
 
-  + Contains YAML files for the build pipelines along with some miscellaneous build files and scripts.
+  * Contains miscellaneous build files and scripts.
 
-> MakeSpriteFont and XWBTool can be found in the [DirectX Tool Kit for DirectX 11](https://github.com/microsoft/DirectXTK)
+> MakeSpriteFont and XWBTool can be found in the [DirectX Tool Kit for DirectX 11](https://github.com/microsoft/DirectXTK). Audio, GamePad, Keyboard, Mouse, and SimpleMath are identical between both versions of the toolkit.
 
 ## Documentation
 
@@ -76,7 +76,7 @@ For the latest version of DirectXTK12, bug reports, etc. please visit the projec
 
 ## Comparisons to DirectX 11 Version
 
-* No support for Visual Studio Directed Graph Shader Language (DGSL) effect shaders (i.e. *DGSLEffect*). CMO files are loaded using BasicEffect or SkinnedEffect materials.
+* No support for Visual Studio Directed Graph Shader Language (DGSL) effect shaders (i.e. _DGSLEffect_). CMO files are loaded using BasicEffect or SkinnedEffect materials.
 
 * VertexTypes does not include VertexPositionNormalTangentColorTexture or VertexPositionNormalTangentColorTextureSkinning which were intended for use with the DGSL pipeline.
 
@@ -92,15 +92,15 @@ FOR SECURITY ADVISORIES, see [GitHub](https://github.com/microsoft/DirectXTK12/s
 
 For a full change history, see [CHANGELOG.md](https://github.com/microsoft/DirectXTK12/blob/main/CHANGELOG.md).
 
-* In the June 2024 release, the defaulted parameter `initialState` for the ``CreateUploadBuffer`` function in *BufferHelpers* was removed. Per the DirectX 12 validation layer, the only valid initial state for an upload buffer is ``D3D12_RESOURCE_STATE_GENERIC_READ``.
+* In the June 2024 release, the defaulted parameter `initialState` for the ``CreateUploadBuffer`` function in _BufferHelpers_ was removed. Per the DirectX 12 validation layer, the only valid initial state for an upload buffer is ``D3D12_RESOURCE_STATE_GENERIC_READ``.
 
 * Starting with the February 2023 release, the Mouse class implementation of relative mouse movement was updated to accumulate changes between calls to ``GetState``. By default, each time you call ``GetState`` the deltas are reset which works for scenarios where you use relative movement but only call the method once per frame. If you call it more than once per frame, then add an explicit call to ``EndOfInputFrame`` to use an explicit reset model instead.
 
-* As of the September 2022 release, the library makes use of C++11 inline namespaces for differing types that have the same names in the DirectX 11 and DirectX 12 version of the *DirectX Tool Kit*. This provides a link-unique name such as ``DirectX::DX12::SpriteBatch`` that will appear in linker output messages. In most use cases, however, there is no need to add explicit ``DX12`` namespace resolution in client code.
+* As of the September 2022 release, the library makes use of C++11 inline namespaces for differing types that have the same names in the DirectX 11 and DirectX 12 version of the _DirectX Tool Kit_. This provides a link-unique name such as ``DirectX::DX12::SpriteBatch`` that will appear in linker output messages. In most use cases, however, there is no need to add explicit ``DX12`` namespace resolution in client code.
 
 * Starting with the June 2021 release, this library builds the HLSL shaders with Shader Model 6 via DXC. See [this wiki page](https://github.com/microsoft/DirectXTK12/wiki/Shader-Model-6) for more information. The Microsoft GDK projects have always used Shader Model 6.
 
-* Starting with the June 2020 release, this library makes use of [typed enum bitmask flags](https://walbourn.github.io/modern-c++-bitmask-types/) per the recommendation of the _C++ Standard_ section *17.5.2.1.3 Bitmask types*. This may have *breaking change* impacts to client code:
+* Starting with the June 2020 release, this library makes use of [typed enum bitmask flags](https://walbourn.github.io/modern-c++-bitmask-types/) per the recommendation of the _C++ Standard_ section _17.5.2.1.3 Bitmask types_. This may have _breaking change impacts to client code:
 
   * You cannot pass the ``0`` literal as your flags value. Instead you must make use of the appropriate default enum value: ``AudioEngine_Default``, ``SoundEffectInstance_Default``, ``ModelLoader_Clockwise``, ``DDS_LOADER_DEFAULT``, or ``WIC_LOADER_DEFAULT``.
 
@@ -114,11 +114,11 @@ For a full change history, see [CHANGELOG.md](https://github.com/microsoft/Direc
 
 * The ``CompileShaders.cmd`` script must have Windows-style (CRLF) line-endings. If it is changed to Linux-style (LF) line-endings, it can fail to build all the required shaders.
 
-* Support for targeting Xbox One using the legacy Xbox One XDK was retired in March 2023. See the February 2023 or earlier releases of *DirectX Tool Kit* for the required MSBuild project files. It can also be built using the current CMake projects from an *Xbox One XDK Developer Command Prompt* with the addition of CMake 3.20 or later to the path via the `x64-Debug-Durango` or `x64-Release-Durango` CMake preset.
+* Support for targeting Xbox One using the legacy Xbox One XDK was retired in March 2023. See the February 2023 or earlier releases of _DirectX Tool Kit_ for the required MSBuild project files. It can also be built using the current CMake projects from an _Xbox One XDK Developer Command Prompt_ with the addition of CMake 3.20 or later to the path via the `x64-Debug-Durango` or `x64-Release-Durango` CMake preset.
 
 ## Support
 
-For questions, consider using [Stack Overflow](https://stackoverflow.com/questions/tagged/directxtk) with the *directxtk* tag, or the [DirectX Discord Server](https://discord.gg/directx) in the *dx12-developers* channel.
+For questions, consider using [Stack Overflow](https://stackoverflow.com/questions/tagged/directxtk) with the _directxtk_ tag, or the [DirectX Discord Server](https://discord.gg/directx) in the _dx12-developers_ channel.
 
 For bug reports and feature requests, please use GitHub [issues](https://github.com/microsoft/DirectXTK12/issues) for this project.
 
@@ -129,6 +129,8 @@ This project welcomes contributions and suggestions. Most contributions require 
 When you submit a pull request, a CLA bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
 
 Tests for new features should also be submitted as a PR to the [Test Suite](https://github.com/walbourn/directxtk12test/wiki) repository.
+
+Information on coding-style can be found [here](https://github.com/microsoft/DirectXTK12/wiki/Implementation).
 
 ## Code of Conduct
 

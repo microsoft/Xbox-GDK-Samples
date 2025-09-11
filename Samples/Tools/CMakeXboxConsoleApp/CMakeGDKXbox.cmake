@@ -21,7 +21,7 @@ message("XdkEditionTarget = ${XdkEditionTarget}")
 set(CMAKE_TRY_COMPILE_PLATFORM_VARIABLES XdkEditionTarget BUILD_USING_BWOI)
 
 #--- Windows SDK
-set(SDKVersion "10.0.22000.0" CACHE STRING "Windows SDK Version")
+set(SDKVersion 10.0.22000.0)
 
 set(CMAKE_SYSTEM_NAME WINDOWS)
 set(CMAKE_SYSTEM_VERSION 10.0)

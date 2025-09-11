@@ -166,8 +166,7 @@ public:
     }
 
     void Reset() noexcept
-    {
-    }
+    {}
 
     bool IsConnected() const
     {
@@ -193,15 +192,18 @@ private:
         _In_ IGameInputDevice *,
         _In_ uint64_t,
         _In_ GameInputDeviceStatus currentStatus,
-        _In_ GameInputDeviceStatus) noexcept
+        _In_ GameInputDeviceStatus previousStatus) noexcept
     {
         auto impl = reinterpret_cast<Keyboard::Impl*>(context);
 
-        if (currentStatus & GameInputDeviceConnected)
+        const bool wasConnected = (previousStatus & GameInputDeviceConnected) != 0;
+        const bool isConnected = (currentStatus & GameInputDeviceConnected) != 0;
+
+        if (isConnected && !wasConnected)
         {
             ++impl->mConnected;
         }
-        else if (impl->mConnected > 0)
+        else if (!isConnected && wasConnected && impl->mConnected > 0)
         {
             --impl->mConnected;
         }
@@ -607,8 +609,7 @@ void Keyboard::ProcessMessage(UINT message, WPARAM wParam, LPARAM lParam)
 // Public constructor.
 Keyboard::Keyboard() noexcept(false)
     : pImpl(std::make_unique<Impl>(this))
-{
-}
+{}
 
 
 // Move constructor.

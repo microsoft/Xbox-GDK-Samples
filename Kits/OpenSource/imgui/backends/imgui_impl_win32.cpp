@@ -95,14 +95,14 @@
 #include <tchar.h>
 #include <dwmapi.h>
 #include <wrl.h>
+using Microsoft::WRL::ComPtr;
+
 #include <GameInput.h>
 #if GAMEINPUT_API_VERSION == 1
 using namespace GameInput::v1;
 #elif GAMEINPUT_API_VERSION == 2
 using namespace GameInput::v2;
 #endif
-
-using Microsoft::WRL::ComPtr;
 
 // Clang/GCC warnings with -Weverything
 #if defined(__clang__)
@@ -340,7 +340,14 @@ static void ImGui_ImplWin32_UpdateGamepads(ImGuiIO& io)
     if(bd->GameInput == nullptr)
         return;
 
+#if GAMEINPUT_API_VERSION == 1
+    ComPtr<GameInput::v1::IGameInputReading> reading;
+#elif GAMEINPUT_API_VERSION == 2
+    ComPtr<GameInput::v2::IGameInputReading> reading;
+#else
     ComPtr<IGameInputReading> reading;
+#endif
+
     HRESULT hr = bd->GameInput->GetCurrentReading(GameInputKindGamepad, nullptr, &reading);
     bd->HasGamepad = hr == S_OK;
 
