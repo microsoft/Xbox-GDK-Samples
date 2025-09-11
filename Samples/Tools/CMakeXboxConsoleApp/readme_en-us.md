@@ -28,6 +28,8 @@ If needed, edit the CMake **XdkEditionTarget** variable (either in the
 CMakePresets.json or CMakeList.txt) to ensure you have the correct GDK
 edition referenced.
 
+Edit **SDKVersion** as well if you have a newer Windows SDK than 10.0.22000.0 installed.
+
 The CMake tool should generate the cache automatically upon opening.
 Otherwise select the CMakeList.txt and select "Generate Cache" from the
 right-button menu. Then use the "Build -\> Rebuild All" menu command.
@@ -204,3 +206,4 @@ details.
 |March 2023|Updated to add new target for Playfab.Services.C extension library.|
 |June 2023|Xbox One titles need to use `/d2vzeroupper-` with VS 2022 or later as the default behavior has flipped from VS 2019|
 |October 2023|The Microsoft GDK now requires Windows 11 SDK (22000) or later.|
+|April 2025|Made SDKVersion a cache variable|
