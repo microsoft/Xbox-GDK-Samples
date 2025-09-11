@@ -250,7 +250,7 @@ namespace
             fmt->wNumCoef = MSADPCM_NUM_COEFFICIENTS;
 
             static ADPCMCOEFSET aCoef[7] = { { 256, 0}, {512, -256}, {0,0}, {192,64}, {240,0}, {460, -208}, {392,-232} };
-            memcpy(&fmt->aCoef, aCoef, sizeof(aCoef));
+            memcpy(&fmt->aCoef, aCoef, sizeof(aCoef)); // CodeQL [SM01947] Code scanner doesn't understand the 0-length MSVC array extension. MSADPCM_FORMAT_EXTRA_BYTES includes this memory.
         }
     };
 
@@ -448,8 +448,7 @@ public:
     #ifdef DIRECTX_ENABLE_XMA2
         , m_xmaMemory(nullptr)
     #endif
-    {
-    }
+    {}
 
     Impl(Impl&&) = default;
     Impl& operator= (Impl&&) = default;
@@ -1207,13 +1206,11 @@ bool WaveBankReader::Impl::UpdatePrepared() noexcept
 //--------------------------------------------------------------------------------------
 WaveBankReader::WaveBankReader() noexcept(false) :
     pImpl(std::make_unique<Impl>())
-{
-}
+{}
 
 
 WaveBankReader::~WaveBankReader()
-{
-}
+{}
 
 
 _Use_decl_annotations_

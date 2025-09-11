@@ -16,7 +16,9 @@
 
 #ifdef __clang__
 #pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunknown-warning-option"
 #pragma clang diagnostic ignored "-Wcovered-switch-default"
+#pragma clang diagnostic ignored "-Wnan-infinity-disabled"
 #endif
 
 #pragma warning(push)

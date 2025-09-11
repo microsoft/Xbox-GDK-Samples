@@ -48,8 +48,8 @@ class UIStyleRendererD3D final : public UIStyleRenderer
 {
     DECLARE_CLASS_LOG();
 public:
-    UIStyleRendererD3D(D3DResourcesProvider& d3dResourcesProvider) : UIStyleRendererD3D(d3dResourcesProvider, c_descriptorPileSize) {};
-    UIStyleRendererD3D(D3DResourcesProvider& d3dResourcesProvider, const size_t descriptorPilesize);
+    UIStyleRendererD3D(D3DResourcesProvider& d3dResourcesProvider, int w, int h) : UIStyleRendererD3D(d3dResourcesProvider, c_descriptorPileSize,w,h) {};
+    UIStyleRendererD3D(D3DResourcesProvider& d3dResourcesProvider, const size_t descriptorPilesize, int w, int h);
     ~UIStyleRendererD3D();
 
     void SetupRender() override;

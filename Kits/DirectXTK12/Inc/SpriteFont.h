@@ -17,9 +17,17 @@
 
 #ifndef DIRECTX_TOOLKIT_API
 #ifdef DIRECTX_TOOLKIT_EXPORT
+#ifdef __GNUC__
+#define DIRECTX_TOOLKIT_API __attribute__ ((dllexport))
+#else
 #define DIRECTX_TOOLKIT_API __declspec(dllexport)
+#endif
 #elif defined(DIRECTX_TOOLKIT_IMPORT)
+#ifdef __GNUC__
+#define DIRECTX_TOOLKIT_API __attribute__ ((dllimport))
+#else
 #define DIRECTX_TOOLKIT_API __declspec(dllimport)
+#endif
 #else
 #define DIRECTX_TOOLKIT_API
 #endif
@@ -162,7 +170,7 @@ namespace DirectX
                 float XAdvance;
             };
 
-#if defined(_MSC_VER) && !defined(_NATIVE_WCHAR_T_DEFINED)
+        #if defined(_MSC_VER) && !defined(_NATIVE_WCHAR_T_DEFINED)
             DIRECTX_TOOLKIT_API SpriteFont(
                 ID3D12Device* device, ResourceUploadBatch& upload,
                 _In_z_ __wchar_t const* fileName,
@@ -212,7 +220,7 @@ namespace DirectX
             DIRECTX_TOOLKIT_API bool __cdecl ContainsCharacter(__wchar_t character) const;
 
             DIRECTX_TOOLKIT_API Glyph const* __cdecl FindGlyph(__wchar_t character) const;
-#endif // !_NATIVE_WCHAR_T_DEFINED
+        #endif // !_NATIVE_WCHAR_T_DEFINED
 
         private:
             // Private implementation.

@@ -74,7 +74,7 @@
 #else
 #define TEXTURE_PITCH D3D12_TEXTURE_DATA_PITCH_ALIGNMENT
 #ifdef _GAMING_DESKTOP
-#include "d3dx12.h"
+#include "atg/d3dx12.h"
 #endif
 #include <d3d12.h>
 #include <dxgi1_6.h>
@@ -288,9 +288,8 @@ void ImGui_ImplDX12_RenderDrawData(ImDrawData* draw_data, ID3D12GraphicsCommandL
         return;
     ImDrawVert* vtx_dst = (ImDrawVert*)vtx_resource;
     ImDrawIdx* idx_dst = (ImDrawIdx*)idx_resource;
-    for (int n = 0; n < draw_data->CmdListsCount; n++)
+    for (const ImDrawList* draw_list : draw_data->CmdLists)
     {
-        const ImDrawList* draw_list = draw_data->CmdLists[n];
         memcpy(vtx_dst, draw_list->VtxBuffer.Data, draw_list->VtxBuffer.Size * sizeof(ImDrawVert));
         memcpy(idx_dst, draw_list->IdxBuffer.Data, draw_list->IdxBuffer.Size * sizeof(ImDrawIdx));
         vtx_dst += draw_list->VtxBuffer.Size;
@@ -320,9 +319,8 @@ void ImGui_ImplDX12_RenderDrawData(ImDrawData* draw_data, ID3D12GraphicsCommandL
     int global_vtx_offset = 0;
     int global_idx_offset = 0;
     ImVec2 clip_off = draw_data->DisplayPos;
-    for (int n = 0; n < draw_data->CmdListsCount; n++)
+    for (const ImDrawList* draw_list : draw_data->CmdLists)
     {
-        const ImDrawList* draw_list = draw_data->CmdLists[n];
         for (int cmd_i = 0; cmd_i < draw_list->CmdBuffer.Size; cmd_i++)
         {
             const ImDrawCmd* pcmd = &draw_list->CmdBuffer[cmd_i];

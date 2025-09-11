@@ -42,13 +42,14 @@ namespace
 
 /*public:*/
 
-UIStyleRendererD3D::UIStyleRendererD3D(D3DResourcesProvider& d3dResourcesProvider, const size_t descriptorPileSize) :
+UIStyleRendererD3D::UIStyleRendererD3D(D3DResourcesProvider& d3dResourcesProvider, const size_t descriptorPileSize, int w, int h) :
     m_d3dResourcesProvider(d3dResourcesProvider),
     m_defaultTexture(0, nullptr, uint32_t(-1)),
     m_currentFontTextScale(1.0f),
     m_fenceValue(++AvailableFenceValue)
 {
     UILOG_TRACE("Initializing D3D Renderer.");
+
     auto device = m_d3dResourcesProvider.GetD3DDevice();
 
     device->CreateFence(
@@ -97,6 +98,8 @@ UIStyleRendererD3D::UIStyleRendererD3D(D3DResourcesProvider& d3dResourcesProvide
     m_lineEffect = std::make_unique<BasicEffect>(device,
         EffectFlags::VertexColor,
         epd);
+
+    SetWindowSize(w, h);
 
     m_lineEffect->SetProjection(XMMatrixOrthographicOffCenterRH(0,
         m_d3dViewport.Width, m_d3dViewport.Height, 0, 0, 1));

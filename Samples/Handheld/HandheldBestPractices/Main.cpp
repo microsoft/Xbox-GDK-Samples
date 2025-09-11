@@ -33,8 +33,11 @@ int WINAPI wWinMain(_In_ HINSTANCE /*hInstance*/, _In_opt_ HINSTANCE /*hPrevInst
     WNDCLASSEXW wc = { sizeof(wc), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(nullptr), nullptr, nullptr, nullptr, nullptr, L"Handheld Best Practices", nullptr };
     RegisterClassExW(&wc);
 
+    int width = windowed ? 1920 : CW_USEDEFAULT;
+    int height = windowed ? 1080 : CW_USEDEFAULT;
+
     HWND hWnd   = CreateWindowW(wc.lpszClassName, L"Handheld Best Practices", windowed ? WS_OVERLAPPEDWINDOW : WS_POPUP | WS_MINIMIZEBOX,
-                                CW_USEDEFAULT, CW_USEDEFAULT, windowed ? 1920 : CW_USEDEFAULT, windowed ? 1080 : CW_USEDEFAULT, nullptr, nullptr, wc.hInstance, nullptr);
+                                CW_USEDEFAULT, CW_USEDEFAULT, width, height, nullptr, nullptr, wc.hInstance, nullptr);
 
     // Initialize Direct3D
     if (!CreateDeviceD3D(hWnd, 1920, 1080))
@@ -97,7 +100,7 @@ int WINAPI wWinMain(_In_ HINSTANCE /*hInstance*/, _In_opt_ HINSTANCE /*hPrevInst
         ImGui_Sample_DX12_PostRender();
     }
 
-    WaitForLastSubmittedFrame();
+    ImGui_Sample_DX12_Shutdown();
 
     Sample_Shutdown();
 

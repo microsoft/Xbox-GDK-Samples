@@ -1576,8 +1576,7 @@ GamePad::Impl* GamePad::Impl::s_gamePad = nullptr;
 // Public constructor.
 GamePad::GamePad() noexcept(false)
     : pImpl(std::make_unique<Impl>(this))
-{
-}
+{}
 
 
 // Move constructor.

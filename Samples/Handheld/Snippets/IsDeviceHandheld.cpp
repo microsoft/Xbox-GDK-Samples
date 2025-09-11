@@ -13,8 +13,3 @@ bool IsDeviceHandheld()
     RtlGetDeviceFamilyInfoEnum(nullptr, nullptr, &deviceForm);
     return (deviceForm == DEVICEFAMILYDEVICEFORM_GAMING_HANDHELD);
 }
-
-bool Test_IsDeviceHandheld()
-{
-    return true;
-}

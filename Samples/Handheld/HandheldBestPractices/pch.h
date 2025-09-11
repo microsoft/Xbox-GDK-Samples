@@ -52,10 +52,41 @@
 #include "backends/imgui_impl_dx12.h"
 #include "atg/imgui_sample.h"
 #include "atg/imgui_applog.h"
+#include "atg/imgui_deviceresources.h"
 
 // To use graphics and CPU markup events with the latest version of PIX, change this to include <pix3.h>
 // then add the NuGet package WinPixEventRuntime to the project.
 #include <pix.h>
+
+namespace DX
+{
+    // Helper class for COM exceptions
+    class com_exception : public std::exception
+    {
+    public:
+        com_exception(HRESULT hr) noexcept : result(hr) {}
+
+        const char* what() const override
+        {
+            static char s_str[64] = {};
+            sprintf_s(s_str, "Failure with HRESULT of %08X", static_cast<unsigned int>(result));
+            return s_str;
+        }
+
+    private:
+        HRESULT result;
+    };
+
+    // Helper utility converts D3D API failures into exceptions.
+    inline void ThrowIfFailed(HRESULT hr)
+    {
+        if (FAILED(hr))
+        {
+            // Set a breakpoint on this line to catch DirectX API errors
+            throw com_exception(hr);
+        }
+    }
+}
 
 // Enable off by default warnings to improve code conformance
 #pragma warning(default : 4061 4062 4191 4263 4264 4265 4266 4289 4365 4746 4826 4841 4986 4987 5029 5038 5042)

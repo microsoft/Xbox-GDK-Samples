@@ -31,7 +31,7 @@
 #include <d3dx12_x.h>
 #else
 #ifdef _GAMING_DESKTOP
-#include "d3dx12.h"
+#include "atg/d3dx12.h"
 #endif
 #include <d3d12.h>
 #include <dxgi1_6.h>

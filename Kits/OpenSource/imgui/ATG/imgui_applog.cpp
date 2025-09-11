@@ -42,16 +42,16 @@ void AppLog::AddLog(const char* fmt, ...)
             m_lineOffsets.push_back(old_size + 1);
 }
 
-void AppLog::Draw(const char* title)
+void AppLog::Draw(const char* title, float width)
 {
     ImGui::Begin(title, nullptr, ImGuiWindowFlags_NoCollapse);
 
     // Main window
     bool clear = ImGui::Button("Clear");
-    //ImGui::SameLine();
-    //bool copy = ImGui::Button("Copy");
-    //ImGui::SameLine();
-    //Filter.Draw("Filter", -100.0f);
+    ImGui::SameLine();
+    bool copy = ImGui::Button("Copy");
+    ImGui::SameLine();
+    m_filter.Draw("Filter", width);
 
     // Options menu
     ImGui::SameLine();
@@ -63,8 +63,8 @@ void AppLog::Draw(const char* title)
 
     if (clear)
         Clear();
-    //if (copy)
-    //    ImGui::LogToClipboard();
+    if (copy)
+        ImGui::LogToClipboard();
 
     ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 0));
     const char* buf = m_buffer.begin();

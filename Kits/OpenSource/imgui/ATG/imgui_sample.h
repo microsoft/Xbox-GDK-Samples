@@ -9,25 +9,15 @@
 
 #pragma once
 
-#include <d3d12.h>
 #include "imgui_sample.h"
 #include "../imgui.h"
-
-struct FrameContext
-{
-    ID3D12CommandAllocator*     CommandAllocator;
-    UINT64                      FenceValue;
-};
 
 // Forward declarations of helper functions
 void ImGui_Sample_DX12_Init();
 void ImGui_Sample_DX12_PreRender();
 void ImGui_Sample_DX12_PostRender();
 void ImGui_Sample_DX12_Resize(LPARAM lParam, WPARAM wParam);
+void ImGui_Sample_DX12_Shutdown();
 
-bool CreateDeviceD3D(HWND hWnd);
+bool CreateDeviceD3D(HWND hWnd, int width, int height);
 void CleanupDeviceD3D();
-void CreateRenderTarget();
-void CleanupRenderTarget();
-void WaitForLastSubmittedFrame();
-FrameContext* WaitForNextFrameResources();
