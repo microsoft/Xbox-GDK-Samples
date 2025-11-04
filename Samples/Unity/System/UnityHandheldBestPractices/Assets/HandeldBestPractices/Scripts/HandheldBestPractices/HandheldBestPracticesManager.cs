@@ -14,6 +14,12 @@ namespace WindowsSample_HandheldBestPractices
 {
     public sealed class HandheldBestPracticesManager : MonoBehaviour
     {
+        public delegate void KeyboardCallback();
+
+        [DllImport("HandheldHelper")] static extern IntPtr GetDeviceManufacturer();
+        [DllImport("HandheldHelper")] static extern IntPtr GetDeviceProductName();
+        [DllImport("HandheldHelper")] static extern IntPtr GetDeviceSystemFamily();
+        [DllImport("HandheldHelper")] static extern IntPtr GetDeviceBaseboardProductName();
         [DllImport("HandheldHelper")] static extern uint GetPageFaultCount();
         [DllImport("HandheldHelper")] static extern UIntPtr GetWorkingSetSize();
         [DllImport("HandheldHelper")] static extern double GetScreenSize();
@@ -21,6 +27,11 @@ namespace WindowsSample_HandheldBestPractices
         [DllImport("HandheldHelper")] static extern bool IsBluetoothEnabled();
         [DllImport("HandheldHelper")] static extern bool ShowVirtualKeyboard();
         [DllImport("HandheldHelper")] static extern bool HideVirtualKeyboard();
+        [DllImport("HandheldHelper")] static extern bool IsVirtualKeyboardOverlayed();
+        [DllImport("HandheldHelper")] static extern void RegisterKeyboardShowingEvent(KeyboardCallback callback);
+        [DllImport("HandheldHelper")] static extern void RegisterKeyboardHidingEvent(KeyboardCallback callback);
+        [DllImport("HandheldHelper")] static extern void UnregisterKeyboardShowingEvent();
+        [DllImport("HandheldHelper")] static extern void UnregisterKeyboardHidingEvent();
 
         NetworkInterfaceType[] ACCEPTED_NETWORK_INTERFACE_TYPES = {
             NetworkInterfaceType.Ethernet,
@@ -37,7 +48,10 @@ namespace WindowsSample_HandheldBestPractices
         const float RECOMMENDED_MIN_PIXEL_HEIGHT = 12f; // 12 pixels on a 720p display
 
         public static HandheldBestPracticesManager Instance { get; private set; }
-        public static bool ShowingKeyboard { get; private set; } = false;
+
+        // Callback delegates - keep references to prevent garbage collection
+        private static KeyboardCallback keyboardShowingCallback;
+        private static KeyboardCallback keyboardHidingCallback;
 
         [Header("Set In Inspector")]
         [SerializeField]
@@ -94,6 +108,7 @@ namespace WindowsSample_HandheldBestPractices
         void OnDestroy()
         {
             AudioSettings.OnAudioConfigurationChanged -= OnAudioConfigurationChanged;
+            UnregisterKeyboardCallbacks();
         }
 
         private void Awake()
@@ -111,7 +126,11 @@ namespace WindowsSample_HandheldBestPractices
             AudioSettings.OnAudioConfigurationChanged += OnAudioConfigurationChanged;
             UpdateMemoryInfo();
             UpdateNetworkInfo();
+            RefreshInfoText();
+
             UpdateTextScaling(TextScalingMode.original);
+
+            RegisterKeyboardCallbacks();
         }
 
         void Update()
@@ -130,7 +149,6 @@ namespace WindowsSample_HandheldBestPractices
                 lastInputDeviceType = InputDeviceType.mouse;
             }
 
-            deviceInfo.text = GetInfo();
             supportedResolutions.text = GetSupportedResolutionsString();
             networkAdapters.text = GetNetworkAdaptersString();
         }
@@ -138,24 +156,97 @@ namespace WindowsSample_HandheldBestPractices
         public static void ShowKeyboard()
         {
             bool b = ShowVirtualKeyboard();
-            ShowingKeyboard = b;
-            Debug.Log($"Show virtual keyboard: {b}");
+            Debug.Log($"Virtual keyboard: {b}");
         }
 
         public static void HideKeyboard()
         {
-            bool b = HideVirtualKeyboard();
-            ShowingKeyboard = !b;
-            Debug.Log($"Hide virtual keyboard: {b}");
+            HideVirtualKeyboard();
         }
 
-        private string GetInfo()
+        // Register callbacks for virtual keyboard show/hide events
+        private void RegisterKeyboardCallbacks()
+        {
+            try
+            {
+                keyboardShowingCallback = OnKeyboardShowing;
+                keyboardHidingCallback = OnKeyboardHiding;
+
+                // Register the callbacks with the DLL
+                RegisterKeyboardShowingEvent(keyboardShowingCallback);
+                RegisterKeyboardHidingEvent(keyboardHidingCallback);
+
+                Debug.Log("Virtual keyboard callbacks registered successfully");
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"Failed to register keyboard callbacks: {ex.Message}");
+            }
+        }
+
+        // Unregister callbacks for virtual keyboard show/hide events
+        private void UnregisterKeyboardCallbacks()
+        {
+            try
+            {
+                UnregisterKeyboardShowingEvent();
+                UnregisterKeyboardHidingEvent();
+
+                keyboardShowingCallback = null;
+                keyboardHidingCallback = null;
+
+                Debug.Log("Virtual keyboard callbacks unregistered successfully");
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"Failed to unregister keyboard callbacks: {ex.Message}");
+            }
+        }
+
+        // Callback method called when virtual keyboard is showing
+        [AOT.MonoPInvokeCallback(typeof(KeyboardCallback))]
+        private static void OnKeyboardShowing()
+        {
+            Debug.Log("VK Showing");
+        }
+
+        // Callback method called when virtual keyboard is hiding
+        [AOT.MonoPInvokeCallback(typeof(KeyboardCallback))]
+        private static void OnKeyboardHiding()
+        {
+            Debug.Log("VK Hiding");
+        }
+
+        // Check if virtual keyboard is currently overlayed (polling method)
+        public static bool IsKeyboardOverlayed()
+        {
+            try
+            {
+                return IsVirtualKeyboardOverlayed();
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"Failed to check keyboard overlay status: {ex.Message}");
+                return false;
+            }
+        }
+
+        private string GetInfoStr()
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("<b>Device Info</b>");
             string[] deviceModelExtract = SystemInfo.deviceModel.Split('(', ')');
+
+            // OEM Info
             sb.AppendLine($"  Manufacturer: {(deviceModelExtract.Length > 1 ? deviceModelExtract[1].Trim() : "N/A")}");
             sb.AppendLine($"  Product Name: {(deviceModelExtract.Length > 0 ? deviceModelExtract[0].Trim() : "N/A")}");
+            IntPtr familyPtr = GetDeviceSystemFamily();
+            IntPtr baseboardPtr = GetDeviceBaseboardProductName();
+            string systemFamily = familyPtr != IntPtr.Zero ? Marshal.PtrToStringUni(familyPtr) : "N/A";
+            string baseboardProductName = baseboardPtr != IntPtr.Zero ? Marshal.PtrToStringUni(baseboardPtr) : "N/A";
+            sb.AppendLine($"  System Family: {systemFamily}");
+            sb.AppendLine($"  Baseboard Product Name: {baseboardProductName}");
+
             sb.AppendLine($"  Total / Available Memory: {totalMemory} MB / {availableMemory} MB");
             sb.AppendLine($"  Working Set Size: {workingSetSize} MB");
             sb.AppendLine($"  Page Faults: {pageFaults}");
@@ -189,7 +280,7 @@ namespace WindowsSample_HandheldBestPractices
 
             sb.AppendLine("<b>Input Info</b>");
             sb.AppendLine($"  LThumbstick X/Y: {(Gamepad.current == null ? "no gamepad connected" : $"{Gamepad.current.leftStick.x.value}, {Gamepad.current.leftStick.y.value}")}");
-            sb.AppendLine($"  Key Pressed: {(Keyboard.current == null ? "no keyboard connected" : Keyboard.current.allKeys.FirstOrDefault(k => k.isPressed))}");
+            sb.AppendLine($"  Key Pressed: {(Keyboard.current == null ? "no keyboard connected" : Keyboard.current.allKeys.FirstOrDefault(k => k == null ? false : k.isPressed))}");
             sb.AppendLine($"  Mouse X/Y: {(Mouse.current == null ? "no mouse connected" : $"{Mouse.current.position.x.value}, {Screen.height - Mouse.current.position.y.value}")}");
             sb.AppendLine($"  Active Input: {lastInputDeviceType.ToString()}");
 
@@ -225,6 +316,11 @@ namespace WindowsSample_HandheldBestPractices
             return sb.ToString();
         }
 
+        public void RefreshInfoText()
+        {
+            deviceInfo.text = GetInfoStr();
+        }
+
         public void UpdateMemoryInfo()
         {
             totalMemory = SystemInfo.systemMemorySize;
@@ -250,10 +346,13 @@ namespace WindowsSample_HandheldBestPractices
         {
             float pixelHeight;
             float fontSizeInPoints;
+            float actualPixelHeight;
+
             if (textScalingMode == TextScalingMode.original)
             {
                 pixelHeight = (ORIGINAL_FONT_SIZE / 72f) * Screen.dpi;
                 fontSizeInPoints = ORIGINAL_FONT_SIZE;
+                actualPixelHeight = pixelHeight;
             }
             else {
                 if (textScalingMode == TextScalingMode.minScaling)
@@ -265,12 +364,15 @@ namespace WindowsSample_HandheldBestPractices
                     pixelHeight = RECOMMENDED_MIN_PIXEL_HEIGHT;
                 }
                 fontSizeInPoints = pixelHeight / Screen.dpi * 72f; // 72 points per inch
+                // Calculate actual pixel height at current resolution
+                // The constants are based on 720p, so scale proportionally
+                actualPixelHeight = pixelHeight * (Screen.currentResolution.height / 720f);
             }
             foreach (TMP_Text textbox in scalableTextboxes)
             {
                 textbox.fontSize = fontSizeInPoints;
             }
-            textScalingInfo.text = $"{pixelHeight} pixels (at 720p), {fontSizeInPoints/72f:N2} inches, {fontSizeInPoints} points";
+            textScalingInfo.text = $"{actualPixelHeight:F1} pixels (at {Screen.currentResolution.height}p), {fontSizeInPoints/72f:N2} inches, {fontSizeInPoints} points";
 
             Debug.Log($"Updated text scaling mode to {textScalingMode}");
         }

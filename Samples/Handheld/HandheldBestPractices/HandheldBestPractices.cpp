@@ -27,6 +27,8 @@ using Microsoft::WRL::ComPtr;
 using namespace GameInput::v1;
 #elif GAMEINPUT_API_VERSION == 2
 using namespace GameInput::v2;
+#elif GAMEINPUT_API_VERSION == 3
+using namespace GameInput::v3;
 #endif
 
 // Device snippets
@@ -49,7 +51,7 @@ using namespace GameInput::v2;
 
 // Input snippets
 #include "GetActiveInput.cpp"
-#include "IsDeviceTouchEnabled.cpp"
+#include "IsDeviceTouchEnabled.cpp" // This snippet contains a downlevle-compilable version of this feature
 
 // NOTE: Only include one of these
 #include "VirtualKeyboard.cpp"        // CppWinRT-based implementation
@@ -132,7 +134,7 @@ void Sample_Initialize(HWND hWnd)
     LOG_IF_FAILED(GameInputCreate(&g_gameInput));
 
     // get device properties
-    g_isHandheld         = IsDeviceHandheld();
+    g_isHandheld         = IsDeviceHandheld();     // see IsDeviceHandheld.cpp for a downlevel-compilable version of this function
     g_isPowered          = IsDevicePowered();      // see Sample_WndProcHandler and WM_POWERBROADCAST handler for power state change handling
     g_isTouchEnabled     = IsDeviceTouchEnabled(); // see Sample_WndProcHandler and WM_POINTERDEVICECHANGE handler for touch capability change handling
     g_isBluetoothEnabled = IsBluetoothEnabled();   // see below for event registration, and Sample_WndProcHandler and WM_DEVICECHANGE handler for bluetooth capability change handling

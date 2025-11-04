@@ -24,8 +24,11 @@
 
 #endif // !USING_XINPUT && !USING_GAMEINPUT && !USING_WINDOWS_GAMING_INPUT
 
-#if defined(USING_GAMEINPUT) && !defined(_GAMING_XBOX) && defined(_MSC_VER)
+#ifdef USING_GAMEINPUT
+#include <GameInput.h>
+#if defined(_MSC_VER) && (defined(_GAMING_XBOX) || defined(GAMEINPUT_API_VERSION))
 #pragma comment(lib,"gameinput.lib")
+#endif
 #endif
 
 #include <cstdint>
@@ -531,7 +534,7 @@ namespace DirectX
         }
     #endif
     #elif defined(WM_USER)
-        DIRECTX_TOOLKIT_API static void __cdecl ProcessMessage(UINT message, WPARAM wParam, LPARAM lParam);
+        DIRECTX_TOOLKIT_API static void __cdecl ProcessMessage(UINT message, WPARAM wParam, LPARAM lParam) noexcept;
     #endif
 
         // Singleton

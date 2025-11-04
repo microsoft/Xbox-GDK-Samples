@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Game configVersion="1">
-  <!-- Version "1" is supported by March 2022 GDK or later -->
 
     <Identity Name="41336MicrosoftATG.ATGSimpleLiveSample"
               Version="1.0.0.0"

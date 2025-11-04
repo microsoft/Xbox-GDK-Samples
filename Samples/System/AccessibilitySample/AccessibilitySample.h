@@ -8,8 +8,9 @@
 #include "DeviceResources.h"
 #include "StepTimer.h"
 #include "imgui.h"
-#include "ImGuiDx12Renderer.h"
-#include "imgui_impl_win32.h"
+#include "backends/imgui_impl_dx12.h"
+#include "backends/imgui_impl_win32.h"
+#include "atg/imgui_allocator.h"
 #include "ImGuiAcc.h"
 
 // A basic sample implementation that creates a D3D12 device and
@@ -63,8 +64,8 @@ private:
     uint64_t                                    m_frame;
     DX::StepTimer                               m_timer;
 
-    // DirectXTK objects.
-    std::unique_ptr<DirectX::GraphicsMemory>    m_graphicsMemory;
+    // Descriptor heap for ImGui
+    DescriptorHeapAllocator                     m_pd3dSrvDescHeapAlloc;
 
     ImGuiAcc* imguiAcc;
 };

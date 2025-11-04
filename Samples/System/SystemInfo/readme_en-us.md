@@ -40,7 +40,7 @@ The important code is in the switch case within the **Render** function.
 
 October 2018: Initial GDK release
 
-April 2020 -- Updated to support Gaming.Desktop.x64
+April 2020 -- Updated to support x64
 
 June 2020 -- Added use of GetLogicalProcessorInformation / Get
 LogicalProcessorInformationEx

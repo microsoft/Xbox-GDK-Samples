@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Game configVersion="1">
 
-  <Identity Name="41336MicrosoftATG.ATGPlayFabStore" Version="2022.7.14.0" Publisher="CN=A4954634-DF4B-47C7-AB70-D3215D246AF1" />
+  <Identity Name="41336MicrosoftATG.ATGPlayFabStore" Version="2025.10.0.0" Publisher="CN=A4954634-DF4B-47C7-AB70-D3215D246AF1" />
 
   <ExecutableList>
-    <Executable Name="PlayFabStore.exe"
-                Id="Game"/>
+    <Executable Name="PlayFabStore.exe" Id="Game"/>
   </ExecutableList>
 
   <TitleId>62a18058</TitleId>
   <StoreId>9N4J3231RQJT</StoreId>
   <MSAAppId>0000000048801338</MSAAppId>
-
-  <DevelopmentOnly>
-    <ContentIdOverride>c75842a8-5f09-4729-ad28-4930cfb59c11</ContentIdOverride>
-    <EKBIDOverride>00000000-0000-0000-0000-000000000001</EKBIDOverride>
-  </DevelopmentOnly>
 
   <ShellVisuals DefaultDisplayName="ATG PlayFab Store"
                 PublisherDisplayName="Xbox ATG"

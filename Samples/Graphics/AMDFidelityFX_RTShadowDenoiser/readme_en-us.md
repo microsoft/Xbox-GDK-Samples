@@ -13,7 +13,7 @@
 
 # Building the sample
 
-If using Windows Desktop, set the active solution platform to `Gaming.Desktop.x64`.
+If using Windows Desktop, set the active solution platform to `x64`.
 
 If using Xbox Series X|S, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
 

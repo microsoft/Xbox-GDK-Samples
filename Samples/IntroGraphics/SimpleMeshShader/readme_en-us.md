@@ -22,7 +22,7 @@ and as such no build configuration is available for that platform.
 If using a Xbox Series X|S devkit, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
 
 If using PC with appropriate hardware and Windows 10 release, set the
-active solution platform to Gaming.Desktop.x64.
+active solution platform to x64.
 
 This sample does not support Xbox One.
 

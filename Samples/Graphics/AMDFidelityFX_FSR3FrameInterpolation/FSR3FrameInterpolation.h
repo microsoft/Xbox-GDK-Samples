@@ -343,6 +343,7 @@ private:
     ffx::Context                                    m_upscalingContext;
     ffx::Context                                    m_frameGenContext;
     ffx::ConfigureDescFrameGeneration               m_frameGenerationConfig{};
+    wchar_t                                         m_upscalingVersion[16] = L"FSR 3.1.4";
 #endif // _GAMING_XBOX
 
     bool                                            m_doublebufferInSwapchain = false;

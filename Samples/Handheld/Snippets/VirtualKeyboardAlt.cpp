@@ -6,7 +6,7 @@
 // The following alternative snippet will compile all the way down to Windows 7 and dynamically load/create what is needed
 // on current versions of Windows.  Where WinRT and the Gamepad keyboard are not available, this code will silently fail
 
-// disable wanrings
+// disable warnings
 #pragma warning(disable:4191)
 #pragma warning(disable:4265)
 #pragma warning(disable:4365)

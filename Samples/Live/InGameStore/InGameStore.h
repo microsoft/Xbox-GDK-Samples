@@ -42,7 +42,8 @@ namespace
         { "ALL", XStoreProductKind::Game | XStoreProductKind::Durable | XStoreProductKind::Consumable },
         { "DLC", XStoreProductKind::Durable},
         { "DURABLES", XStoreProductKind::Durable},
-        { "CONSUMABLES", XStoreProductKind::Consumable }
+        { "CONSUMABLES", XStoreProductKind::Consumable },
+        { "GAMES", XStoreProductKind::Game }
     };
 
     std::string ProductKindToString(XStoreProductKind& kind) 

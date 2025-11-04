@@ -10,11 +10,6 @@
 #include "pch.h"
 #include "SimpleTriangleDesktop.h"
 
-#include <XGameRuntimeInit.h>
-#include <XGameErr.h>
-
-#include "ATGTelemetry.h"
-
 using namespace DirectX;
 
 #ifdef __clang__
@@ -46,49 +41,6 @@ void ExitSample() noexcept;
 // Entry point
 int WINAPI SampleMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR, _In_ int nCmdShow)
 {
-    if (!XMVerifyCPUSupport())
-    {
-#ifdef _DEBUG
-        OutputDebugStringA("ERROR: This hardware does not support the required instruction set.\n");
-#endif
-        return 1;
-    }
-
-#ifdef USING_WINDOWS_GAMING_INPUT
-    // The following Windows Runtime initialization is only needed for scenarios where DirectX Tool Kit's GamePad is
-    // using Windows.Gaming.Input instead of GameInput or XINPUT. GRTS does not require it.
-    Microsoft::WRL::Wrappers::RoInitializeWrapper initialize(RO_INIT_MULTITHREADED);
-    if (FAILED(initialize))
-        return 1;
-#endif
-
-#ifdef _GAMING_DESKTOP
-    // NOTE: When running the app from the Start Menu (required for
-    //    Store API's to work) the Current Working Directory will be
-    //    returned as C:\Windows\system32 unless you overwrite it.
-    //    The sample relies on the font and image files in the .exe's
-    //    directory and so we do the following to set the working
-    //    directory to what we want.
-    char dir[_MAX_PATH] = {};
-    if (GetModuleFileNameA(nullptr, dir, _MAX_PATH) > 0)
-    {
-        std::string exe = dir;
-        exe = exe.substr(0, exe.find_last_of("\\"));
-        std::ignore = SetCurrentDirectoryA(exe.c_str());
-    }
-#endif
-
-    // Initialize the GameRuntime
-    HRESULT hr = XGameRuntimeInitialize();
-    if (FAILED(hr))
-    {
-        if (hr == E_GAMERUNTIME_DLL_NOT_FOUND || hr == E_GAMERUNTIME_VERSION_MISMATCH)
-        {
-            std::ignore = MessageBoxW(nullptr, L"Game Runtime is not installed on this system or needs updating.", g_szAppName, MB_ICONERROR | MB_OK);
-        }
-        return 1;
-    }
-
     g_sample = std::make_unique<Sample>();
 
     // Register class and create window
@@ -125,11 +77,6 @@ int WINAPI SampleMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR,
 
         ShowWindow(hwnd, nCmdShow);
 
-        // Sample Usage Telemetry
-        //
-        // Disable or remove this code block to opt-out of sample usage telemetry
-        ATG::SendLaunchTelemetry();
-
         GetClientRect(hwnd, &rc);
 
         g_sample->Initialize(hwnd, rc.right - rc.left, rc.bottom - rc.top);
@@ -152,8 +99,6 @@ int WINAPI SampleMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR,
     }
 
     g_sample.reset();
-
-    XGameRuntimeUninitialize();
 
     return static_cast<int>(msg.wParam);
 }

@@ -42,12 +42,12 @@
 #include <grdk.h>
 
 #ifdef _GAMING_DESKTOP
-#if _GRDK_EDITION < 220600
-#error The Desktop version of this sample requires the June 2022 GDK or later
+#if _GRDK_EDITION < 251000
+#error The Desktop version of this sample requires the October 2025 GDK or later
 #endif
 #else
-#if _GRDK_VER < 0x55F0110A /* GDK Edition 220600 */
-#error This sample requires the June 2022 GDK or later
+#if _GRDK_VER < 0x65F41800 /* GDK Edition 251000 */
+#error This sample requires the October 2025 GDK or later
 #endif
 #endif
 
@@ -156,4 +156,4 @@ namespace DX
 }
 
 // Enable off by default warnings to improve code conformance
-#pragma warning(default : 4061 4062 4191 4242 4263 4264 4265 4266 4289 4365 4746 4826 4841 4986 4987 5029 5038 5042)
+#pragma warning(default : 4061 4062 4191 4263 4264 4265 4266 4289 4365 4746 4826 4841 4986 4987 5029 5038 5042)

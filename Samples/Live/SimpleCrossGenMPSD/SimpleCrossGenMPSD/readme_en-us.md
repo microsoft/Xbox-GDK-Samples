@@ -17,7 +17,7 @@ If using an Xbox One devkit, set the active solution platform to `Gaming.Xbox.Xb
 
 If using an Xbox Series X|S devkit, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
 
-If using PC, set the active solution platform to Gaming.Desktop.x64.
+If using PC, set the active solution platform to x64.
 
 If you desire to run the Xbox One version of the sample on a Xbox Series
 X|S devkit, set the active solution platform to Gaming.Xbox.XboxOne.x64.

@@ -62,5 +62,8 @@
     <ClInclude Include="..\..\..\shared\ffx_object_management.h">
       <Filter>shared_source</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\FidelityFX\host\ffx_message.h">
+      <Filter>public_source</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

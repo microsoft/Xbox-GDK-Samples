@@ -177,7 +177,10 @@ void PlayFabPartyManager::Initialize()
     if (m_partyInitialized == false)
     {
         // Initialize PlayFab Party
-        err = partyManager.Initialize(c_pfTitleId);
+        PartyInitializationConfiguration config = {};
+        config.titleId = c_pfTitleId;
+        
+        err = partyManager.Initialize(&config);
         if (PARTY_FAILED(err))
         {
             DebugTrace("Initialize failed: %hs", GetErrorMessage(err));
@@ -212,8 +215,7 @@ void PlayFabPartyManager::CreateLocalUser()
 
         // Create a local user object
         err = partyManager.CreateLocalUser(
-            m_localEntityId.c_str(),                    // User id
-            m_localEntityToken.c_str(),                 // User entity token
+            reinterpret_cast<PFEntityHandle>(m_localChatUser),  // Entity handle
             &m_localUser                                // OUT local user object
             );
 
@@ -927,8 +929,7 @@ void PlayFabPartyManager::OnLoginToPlayFabCompleted(const PartyXblStateChange* c
 
                 // Create a local user object
                 PartyError err = PartyManager::GetSingleton().CreateLocalUser(
-                    m_localEntityId.c_str(),                    // User id
-                    m_localEntityToken.c_str(),                 // User entity token
+                    reinterpret_cast<PFEntityHandle>(m_localChatUser),  // Entity handle
                     &m_localUser                                // OUT local user object
                     );
 

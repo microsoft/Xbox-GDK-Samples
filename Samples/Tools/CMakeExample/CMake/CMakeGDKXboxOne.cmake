@@ -13,14 +13,14 @@ endif()
 set(XBOX_CONSOLE_TARGET "xboxone" CACHE STRING "")
 
 #--- Microsoft Game Development Kit
-set(XdkEditionTarget "220300" CACHE STRING "Microsoft GDK Edition")
+set(XdkEditionTarget "251000" CACHE STRING "Microsoft GDK Edition")
 
 message("XdkEditionTarget = ${XdkEditionTarget}")
 
 set(CMAKE_TRY_COMPILE_PLATFORM_VARIABLES XdkEditionTarget BUILD_USING_BWOI)
 
 #--- Windows SDK
-set(SDKVersion "10.0.22000.0" CACHE STRING "Windows SDK Version")
+set(SDKVersion "10.0.22621.0" CACHE STRING "Windows SDK Version")
 
 set(CMAKE_SYSTEM_NAME WINDOWS)
 set(CMAKE_SYSTEM_VERSION 10.0)
@@ -109,10 +109,17 @@ else()
 endif()
 
 #--- Headers
-set(Console_EndpointIncludeRoot
-    "${DurangoXdkInstallPath}/GXDK/gameKit/Include"
-    "${DurangoXdkInstallPath}/GXDK/gameKit/Include/XboxOne"
-    "${DurangoXdkInstallPath}/GRDK/gameKit/Include")
+if(XdkEditionTarget GREATER_EQUAL 251000)
+    set(Console_EndpointIncludeRoot
+        "${DurangoXdkInstallPath}/xbox/include"
+        "${DurangoXdkInstallPath}/xbox/include/gen8"
+        "${DurangoXdkInstallPath}/windows/include")
+else()
+    set(Console_EndpointIncludeRoot
+        "${DurangoXdkInstallPath}/GXDK/gameKit/Include"
+        "${DurangoXdkInstallPath}/GXDK/gameKit/Include/XboxOne"
+        "${DurangoXdkInstallPath}/GRDK/gameKit/Include")
+endif()
 set(Console_WindowsIncludeRoot ${WindowsSdkDir}/Include/${SDKVersion})
 set(Console_SdkIncludeRoot
     "${Console_EndpointIncludeRoot}"
@@ -134,10 +141,17 @@ if(NOT EXISTS ${VC_OneCore_LibPath}/msvcrt.lib)
 endif()
 
 set(Console_LibRoot ${WindowsSdkDir}/Lib/${SDKVersion})
-set(Console_EndpointLibRoot
-    "${DurangoXdkInstallPath}/GXDK/gameKit/Lib/amd64"
-    "${DurangoXdkInstallPath}/GXDK/gameKit/Lib/amd64/XboxOne"
-    "${DurangoXdkInstallPath}/GRDK/gameKit/Lib/amd64")
+if(XdkEditionTarget GREATER_EQUAL 251000)
+    set(Console_EndpointLibRoot
+        "${DurangoXdkInstallPath}/xbox/lib/x64"
+        "${DurangoXdkInstallPath}/xbox/lib/gen8"
+        "${DurangoXdkInstallPath}/windows/lib/x64")
+else()
+    set(Console_EndpointLibRoot
+        "${DurangoXdkInstallPath}/GXDK/gameKit/Lib/amd64"
+        "${DurangoXdkInstallPath}/GXDK/gameKit/Lib/amd64/XboxOne"
+        "${DurangoXdkInstallPath}/GRDK/gameKit/Lib/amd64")
+endif()
 set(Console_SdkLibPath
     "${Console_EndpointLibRoot}"
     "${Console_LibRoot}/ucrt/x64"
@@ -146,7 +160,11 @@ set(Console_SdkLibPath
 set(Console_Libs pixevt.lib d3d12_x.lib xgameplatform.lib xgameruntime.lib xmem.lib xg_x.lib)
 
 #--- Binaries
-set(GameOSFilePath ${DurangoXdkInstallPath}/GXDK/sideload/gameos.xvd)
+if(XdkEditionTarget GREATER_EQUAL 251000)
+    set(GameOSFilePath ${DurangoXdkInstallPath}/xbox/redist/GameOS.Xvd)
+else()
+    set(GameOSFilePath ${DurangoXdkInstallPath}/GXDK/sideload/gameos.xvd)
+endif()
 
 set(Console_UCRTRedistDebug ${WindowsSdkDir}/bin/${SDKVersion}/x64/ucrt)
 if(NOT EXISTS ${Console_UCRTRedistDebug}/ucrtbased.dll)
@@ -172,9 +190,15 @@ find_program(MAKEPKG_TOOL makepkg.exe
 
 message("MGC Tool = ${MAKEPKG_TOOL}")
 
-find_program(DIRECTX_DXC_TOOL dxc.exe
-    REQUIRED NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_DEFAULT_PATH
-    HINTS "${DurangoXdkInstallPath}/GXDK/bin/XboxOne")
+if(XdkEditionTarget GREATER_EQUAL 251000)
+    find_program(DIRECTX_DXC_TOOL dxc.exe
+        REQUIRED NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_DEFAULT_PATH
+        HINTS "${DurangoXdkInstallPath}/xbox/bin/gen8")
+else()
+    find_program(DIRECTX_DXC_TOOL dxc.exe
+        REQUIRED NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_DEFAULT_PATH
+        HINTS "${DurangoXdkInstallPath}/GXDK/bin/XboxOne")
+endif()
 
 message("DXC Compiler = ${DIRECTX_DXC_TOOL}")
 

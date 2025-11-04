@@ -23,7 +23,7 @@ set HLSL_WAVE32_ARGS=-DFFX_HLSL_SM=62 -T cs_6_2
 set HLSL_16BIT_ARGS=
 set FFX_GDK_OPTION=
 
-if %platformname% == Gaming.Desktop.x64 (
+if %platformname% == x64 (
     set HLSL_16BIT_ARGS=-DFFX_HALF=1 -enable-16bit-types
     set FFX_GDK_OPTION=-compiler=dxc -Zs
 )

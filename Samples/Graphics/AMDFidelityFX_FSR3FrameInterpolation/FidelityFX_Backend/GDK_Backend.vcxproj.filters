@@ -210,6 +210,9 @@
     <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\shared\ffx_breadcrumbs_list.h">
       <Filter>private_source</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\host\ffx_message.h">
+      <Filter>private_source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="BuildGDKShaders.bat" />
@@ -338,6 +341,9 @@
       <Filter>private_source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\blob_accessors\ffx_opticalflow_shaderblobs.cpp">
+      <Filter>private_source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\shared\ffx_message.cpp">
       <Filter>private_source</Filter>
     </ClCompile>
   </ItemGroup>

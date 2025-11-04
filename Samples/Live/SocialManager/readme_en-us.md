@@ -28,7 +28,7 @@ This sample includes scenarios for:
     to **Gaming.Xbox.Scarlett.x64**.
 
 -   If using a PC, set the active solution platform to
-    **Gaming.Desktop.x64**.
+    **x64**.
 
 *For more information, see* __Running samples__, *in the GDK documentation.*
 

@@ -16,6 +16,8 @@
 using namespace GameInput::v1;
 #elif GAMEINPUT_API_VERSION == 2
 using namespace GameInput::v2;
+#elif GAMEINPUT_API_VERSION == 3
+using namespace GameInput::v3;
 #endif
 
 using namespace ATG::UITK;

@@ -20,9 +20,7 @@ using Microsoft::WRL::ComPtr;
 
 // Get and parse input for almost all supported kinds
 // Note that in a real title, this would be far more narrowly scoped
-static GameInputKind SupportedGameInputKinds = GameInputKindKeyboard | GameInputKindMouse |
-                                               GameInputKindArcadeStick | GameInputKindFlightStick | GameInputKindGamepad | GameInputKindRacingWheel |
-                                               GameInputKindUiNavigation;
+static GameInputKind SupportedGameInputKinds = GameInputKindKeyboard | GameInputKindMouse | GameInputKindArcadeStick | GameInputKindFlightStick | GameInputKindGamepad | GameInputKindRacingWheel;
 
 namespace
 {
@@ -88,6 +86,11 @@ Sample::~Sample()
 // Initialize the Direct3D resources required to run.
 void Sample::Initialize(HWND window, int width, int height)
 {
+    // UI navigation is not suported with GameInput v3 and higher
+#if GAMEINPUT_API_VERSION < 3
+    SupportedGameInputKinds |= GameInputKindUiNavigation;
+#endif
+
     m_deviceResources->SetWindow(window, width, height);
 
     m_deviceResources->CreateDeviceResources();
@@ -600,9 +603,10 @@ void Sample::Update(DX::StepTimer const& timer)
                     currentElement->GetTypedSubElementById<UIStaticText>(ID("Handbrake Value"))->SetDisplayText(std::to_string(racingWheelstate.handbrake));
                 }
 
+#if GAMEINPUT_API_VERSION < 3
                 //UI navigation states
                 GameInputUiNavigationState uiNavigationstate;
-                if (m_reading->GetUiNavigationState(&uiNavigationstate) && ((uiNavigationstate.buttons | GameInputUiNavigationNone) != 0))
+                if (m_reading->GetUiNavigationState(&uiNavigationstate))
                 {
                     int currentIndex = 1;
                     currentElement = GetUINavigationUI(i);
@@ -714,6 +718,7 @@ void Sample::Update(DX::StepTimer const& timer)
                         currentIndex++;
                     }
                 }
+#endif
 
                 //Gamepad states
                 GameInputGamepadState gamepadState;

@@ -102,6 +102,8 @@ using Microsoft::WRL::ComPtr;
 using namespace GameInput::v1;
 #elif GAMEINPUT_API_VERSION == 2
 using namespace GameInput::v2;
+#elif GAMEINPUT_API_VERSION == 3
+using namespace GameInput::v3;
 #endif
 
 // Clang/GCC warnings with -Weverything
@@ -344,6 +346,8 @@ static void ImGui_ImplWin32_UpdateGamepads(ImGuiIO& io)
     ComPtr<GameInput::v1::IGameInputReading> reading;
 #elif GAMEINPUT_API_VERSION == 2
     ComPtr<GameInput::v2::IGameInputReading> reading;
+#elif GAMEINPUT_API_VERSION == 3
+    ComPtr<GameInput::v3::IGameInputReading> reading;
 #else
     ComPtr<IGameInputReading> reading;
 #endif

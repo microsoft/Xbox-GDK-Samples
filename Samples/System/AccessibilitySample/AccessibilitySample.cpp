@@ -7,21 +7,21 @@
 
 #include "pch.h"
 #include "AccessibilitySample.h"
+#include "GameInputManager.h"
 
 #include "ATGColors.h"
 #include "FindMedia.h"
 
-using namespace DirectX::DX12;
-
 extern void ExitSample() noexcept;
 
-
 using Microsoft::WRL::ComPtr;
+
+static constexpr int APP_NUM_FRAMES_IN_FLIGHT = 2;
 
 Sample::Sample() noexcept(false) :
     m_frame(0)
 {
-    m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_D32_FLOAT, 2);
+    m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_D32_FLOAT, 2);
     m_deviceResources->SetClearColor(ATG::Colors::Background);
     m_deviceResources->RegisterDeviceNotify(this);
 }
@@ -29,7 +29,7 @@ Sample::Sample() noexcept(false) :
 Sample::~Sample()
 {
     // Clean up Imgui DX12 Renderer
-    ImGuiDx12RendererShutdown();
+    ImGui_ImplDX12_Shutdown();
 
     // Clean up Imgui Input handler
     ImGui_ImplWin32_Shutdown();
@@ -39,6 +39,9 @@ Sample::~Sample()
     {
         m_deviceResources->WaitForGpu();
     }
+
+    // Clean up the GameInputManager
+    GameInputManager::Shutdown();
 }
 
 // Initialize the Direct3D resources required to run.
@@ -50,6 +53,8 @@ void Sample::Initialize(HWND window, int width, int height)
     CreateDeviceDependentResources();
 
     m_deviceResources->CreateWindowSizeDependentResources();
+
+    m_pd3dSrvDescHeapAlloc.Create(m_deviceResources->GetD3DDevice(), m_deviceResources->GetSRVHeap());
 
     // IMGUI initialization
     // Setup Dear ImGui context
@@ -63,12 +68,21 @@ void Sample::Initialize(HWND window, int width, int height)
     io.IniFilename = nullptr;
 
     ImGui_ImplWin32_Init(window);
-    ImGuiDx12RendererInit(m_deviceResources->GetD3DDevice(),
-        (int)m_deviceResources->GetBackBufferCount(),
-        m_deviceResources->GetBackBufferFormat(),
-        m_deviceResources->GetSRVHeap(),
-        m_deviceResources->GetSRVHeapCPUHandle(),
-        m_deviceResources->GetSRVHeapGPUHandle());
+
+    ImGui_ImplDX12_InitInfo init_info = {};
+    init_info.UserData = this;
+    init_info.Device = m_deviceResources->GetD3DDevice();
+    init_info.CommandQueue = m_deviceResources->GetCommandQueue();
+    init_info.NumFramesInFlight = APP_NUM_FRAMES_IN_FLIGHT;
+    init_info.RTVFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
+    init_info.DSVFormat = DXGI_FORMAT_UNKNOWN;
+    // Allocating SRV descriptors (for textures) is up to the application, so we provide callbacks.
+    // (current version of the backend will only allocate one descriptor, future versions will need to allocate more)
+    init_info.SrvDescriptorHeap = m_deviceResources->GetSRVHeap();
+    init_info.SrvDescriptorAllocFn = [](ImGui_ImplDX12_InitInfo* info, D3D12_CPU_DESCRIPTOR_HANDLE* out_cpu_handle, D3D12_GPU_DESCRIPTOR_HANDLE* out_gpu_handle) { return reinterpret_cast<Sample*>(info->UserData)->m_pd3dSrvDescHeapAlloc.Alloc(out_cpu_handle, out_gpu_handle); };
+    init_info.SrvDescriptorFreeFn =  [](ImGui_ImplDX12_InitInfo* info, D3D12_CPU_DESCRIPTOR_HANDLE cpu_handle, D3D12_GPU_DESCRIPTOR_HANDLE gpu_handle)           { return reinterpret_cast<Sample*>(info->UserData)->m_pd3dSrvDescHeapAlloc.Free(cpu_handle, gpu_handle); };
+
+    ImGui_ImplDX12_Init(&init_info);
 
     imguiAcc = ImGuiAcc::GetInstance();
 
@@ -77,6 +91,8 @@ void Sample::Initialize(HWND window, int width, int height)
 #endif // _GAMING_DESKTOP
 
     ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+
+    GameInputManager::Init();
 }   
 
 #pragma region Frame Update
@@ -119,7 +135,7 @@ void Sample::Render()
     commandList->SetDescriptorHeaps(_countof(descriptorHeaps), descriptorHeaps);
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Render");
 
-    ImGuiDx12RendererNewFrame(commandList);
+    ImGui_ImplDX12_NewFrame();
     ImGui_ImplWin32_NewFrame();
     ImGui::NewFrame();
 
@@ -129,7 +145,7 @@ void Sample::Render()
     imguiAcc->Button("Button 1");
     imguiAcc->Button("Button 2");
     static char inputText[256] = "";
-    imguiAcc->InputText("Input Text", inputText, IM_ARRAYSIZE(inputText), ImGui_ImplWin32_ActiveGameInputKind());
+    imguiAcc->InputText("Input Text", inputText, IM_ARRAYSIZE(inputText), GameInputManager::GetActiveGameInputKind());
     static int sliderValue = 5;
     imguiAcc->SliderInt("Slider", &sliderValue, 0, 10);
     imguiAcc->End();
@@ -173,13 +189,12 @@ void Sample::Render()
 
     ImGui::Render();
     ImDrawData* drawData = ImGui::GetDrawData();
-    ImGuiDx12RendererRenderDrawData(drawData, commandList);
+    ImGui_ImplDX12_RenderDrawData(drawData, commandList);
     PIXEndEvent(commandList);
 
     // Show the new frame.
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Present");
     m_deviceResources->Present();
-    m_graphicsMemory->Commit(m_deviceResources->GetCommandQueue());
     PIXEndEvent();
 }
 
@@ -244,9 +259,9 @@ void Sample::GetDefaultSize(int& width, int& height) const noexcept
 // These are the resources that depend on the device.
 void Sample::CreateDeviceDependentResources()
 {
+#ifdef _GAMING_DESKTOP
     auto device = m_deviceResources->GetD3DDevice();
 
-#ifdef _GAMING_DESKTOP
     D3D12_FEATURE_DATA_SHADER_MODEL shaderModel{ D3D_SHADER_MODEL_6_0 };
     if (FAILED(device->CheckFeatureSupport(D3D12_FEATURE_SHADER_MODEL, &shaderModel, sizeof(shaderModel)))
         || (shaderModel.HighestShaderModel < D3D_SHADER_MODEL_6_0))
@@ -257,14 +272,11 @@ void Sample::CreateDeviceDependentResources()
         throw std::runtime_error("Shader Model 6.0 is not supported!");
     }
 #endif
-
-    m_graphicsMemory = std::make_unique<GraphicsMemory>(device);
 }
 
 
 void Sample::OnDeviceLost()
 {
-    m_graphicsMemory.reset();
 }
 
 void Sample::OnDeviceRestored()

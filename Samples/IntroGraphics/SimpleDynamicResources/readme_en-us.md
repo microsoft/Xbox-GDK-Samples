@@ -18,7 +18,7 @@ If using an Xbox One devkit, set the active solution platform to `Gaming.Xbox.Xb
 
 If using Xbox Series X|S, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
 
-Building for PC (Gaming.Desktop.x64) requires the [DirectX Agility
+Building for PC (x64) requires the [DirectX Agility
 SDK](https://devblogs.microsoft.com/directx/gettingstarted-dx12agility/)
 due to the usage of HLSL SM 6.6 features. The Agility SDK is included as
 a NuGet package in the sample. It also makes use of

@@ -146,7 +146,7 @@ bool ImGuiAcc::Button(const char* label)
     return pressed;
 }
 
-bool ImGuiAcc::InputText(const char* label, char* buf, size_t bufSize, ImGuiInputTextFlags flags, ImGuiInputTextCallback callback, void* userData, GameInputKind activeGameInputKind)
+bool ImGuiAcc::InputText(const char* label, char* buf, size_t bufSize, GameInputKind activeGameInputKind, ImGuiInputTextFlags flags, ImGuiInputTextCallback callback, void* userData)
 {
     // Currently unused for desktop builds.
     UNREFERENCED_PARAMETER(activeGameInputKind);
@@ -475,9 +475,9 @@ void ImGuiAcc::ApplyHighContrastDarkTheme()
     colors[ImGuiCol_ResizeGripActive] = ImVec4(0.46f, 0.67f, 1.00f, 1.00f);    // Even lighter blue when active
     colors[ImGuiCol_Tab] = ImVec4(0.15f, 0.231f, 0.313f, 1.00f);                // Dark blue-grey background for tab
     colors[ImGuiCol_TabHovered] = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);          // White on hover
-    colors[ImGuiCol_TabActive] = ImVec4(0.56f, 0.89f, 0.94f, 1.00f);           // Lighter blue for active tab
-    colors[ImGuiCol_TabUnfocused] = ImVec4(0.15f, 0.231f, 0.313f, 1.00f);       // Dark blue-grey background for unfocused tab
-    colors[ImGuiCol_TabUnfocusedActive] = ImVec4(0.28f, 0.56f, 1.00f, 1.00f);  // Blue for active unfocused tab
+    colors[ImGuiCol_TabSelected] = ImVec4(0.56f, 0.89f, 0.94f, 1.00f);           // Lighter blue for active tab
+    colors[ImGuiCol_TabDimmed] = ImVec4(0.15f, 0.231f, 0.313f, 1.00f);       // Dark blue-grey background for unfocused tab
+    colors[ImGuiCol_TabDimmedSelected] = ImVec4(0.28f, 0.56f, 1.00f, 1.00f);  // Blue for active unfocused tab
     colors[ImGuiCol_PlotLines] = ImVec4(0.61f, 0.61f, 0.61f, 1.00f);           // Grey plot lines
     colors[ImGuiCol_PlotLinesHovered] = ImVec4(1.00f, 0.43f, 0.35f, 1.00f);    // Orange plot lines on hover
     colors[ImGuiCol_PlotHistogram] = ImVec4(0.61f, 0.61f, 0.61f, 1.00f);       // Grey plot histogram
@@ -489,7 +489,7 @@ void ImGuiAcc::ApplyHighContrastDarkTheme()
     colors[ImGuiCol_TableRowBgAlt] = ImVec4(0.15f, 0.231f, 0.313f, 1.00f);      // Dark blue-grey background for table row background (odd rows)
     colors[ImGuiCol_TextSelectedBg] = ImVec4(0.15f, 0.231f, 0.313f, 1.00f);    // Medium Blue background for selected text #263B50
     colors[ImGuiCol_DragDropTarget] = ImVec4(0.56f, 0.89f, 0.94f, 1.00f);      // Lighter blue for drag drop target
-    colors[ImGuiCol_NavHighlight] = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);        // White for navigation highlight
+    colors[ImGuiCol_NavCursor] = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);        // White for navigation highlight
     colors[ImGuiCol_NavWindowingHighlight] = ImVec4(1.00f, 1.00f, 1.00f, 0.70f); // White for windowing highlight with transparency
     colors[ImGuiCol_NavWindowingDimBg] = ImVec4(0.20f, 0.25f, 0.29f, 0.20f);   // Dark blue-grey background with transparency for dim background
     colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.20f, 0.25f, 0.29f, 0.35f);    // Dark blue-grey background with transparency for modal dim background
@@ -536,9 +536,9 @@ void ImGuiAcc::ApplyHighContrastLightTheme()
     colors[ImGuiCol_ResizeGripActive] = ImVec4(0.45f, 0.30f, 0.10f, 1.00f);    // Dark brown when active
     colors[ImGuiCol_Tab] = ImVec4(0.80f, 0.80f, 0.75f, 1.00f);                 // Light background for tab
     colors[ImGuiCol_TabHovered] = ImVec4(0.90f, 0.90f, 0.85f, 1.00f);          // Lighter shade on hover
-    colors[ImGuiCol_TabActive] = ImVec4(0.70f, 0.70f, 0.65f, 1.00f);           // Slightly darker for active tab
-    colors[ImGuiCol_TabUnfocused] = ImVec4(0.80f, 0.80f, 0.75f, 1.00f);        // Light background for unfocused tab
-    colors[ImGuiCol_TabUnfocusedActive] = ImVec4(0.70f, 0.70f, 0.65f, 1.00f);  // Slightly darker for active unfocused tab
+    colors[ImGuiCol_TabSelected] = ImVec4(0.70f, 0.70f, 0.65f, 1.00f);           // Slightly darker for active tab
+    colors[ImGuiCol_TabDimmed] = ImVec4(0.80f, 0.80f, 0.75f, 1.00f);        // Light background for unfocused tab
+    colors[ImGuiCol_TabDimmedSelected] = ImVec4(0.70f, 0.70f, 0.65f, 1.00f);  // Slightly darker for active unfocused tab
     colors[ImGuiCol_PlotLines] = ImVec4(0.50f, 0.50f, 0.50f, 1.00f);           // Grey plot lines
     colors[ImGuiCol_PlotLinesHovered] = ImVec4(0.60f, 0.60f, 0.60f, 1.00f);    // Slightly lighter on hover
     colors[ImGuiCol_PlotHistogram] = ImVec4(0.50f, 0.50f, 0.50f, 1.00f);       // Grey plot histogram
@@ -551,7 +551,7 @@ void ImGuiAcc::ApplyHighContrastLightTheme()
     colors[ImGuiCol_TableRowBgAlt] = ImVec4(0.90f, 0.90f, 0.85f, 1.00f);      // Slightly darker for table row background (odd rows)
     colors[ImGuiCol_TextSelectedBg] = ImVec4(0.80f, 0.80f, 0.75f, 1.00f);     // Light background for selected text
     colors[ImGuiCol_DragDropTarget] = ImVec4(0.70f, 0.70f, 0.65f, 1.00f);     // Slightly darker for drag drop target
-    colors[ImGuiCol_NavHighlight] = ImVec4(0.45f, 0.30f, 0.10f, 1.00f);       // Dark brown for navigation highlight
+    colors[ImGuiCol_NavCursor] = ImVec4(0.45f, 0.30f, 0.10f, 1.00f);       // Dark brown for navigation highlight
     colors[ImGuiCol_NavWindowingHighlight] = ImVec4(0.70f, 0.70f, 0.65f, 1.00f); // Slightly darker for windowing highlight
     colors[ImGuiCol_NavWindowingDimBg] = ImVec4(0.80f, 0.80f, 0.75f, 0.50f);  // Light background with transparency for dim background
     colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.80f, 0.80f, 0.75f, 0.50f);   // Light background with transparency for modal dim background

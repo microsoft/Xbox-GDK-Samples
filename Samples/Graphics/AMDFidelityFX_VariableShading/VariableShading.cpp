@@ -125,8 +125,8 @@ void Sample::UpdateVRSContext(bool enabled)
             void* scratchBuffer = calloc(scratchBufferSize, 1u);
             FfxErrorCode errorCode = ffxGetInterfaceDX12(&m_vrsInitParams.backendInterface, m_deviceResources->GetD3DDevice(), scratchBuffer, scratchBufferSize, FFX_VRS_CONTEXT_COUNT);
             FFX_ASSERT(errorCode == FFX_OK);
-            FFX_ASSERT_MESSAGE(m_vrsInitParams.backendInterface.fpGetSDKVersion(&m_vrsInitParams.backendInterface) == FFX_SDK_MAKE_VERSION(1, 1, 2),
-                "FidelityFX VRS sample requires linking with a 1.1.2 version SDK backend");
+            FFX_ASSERT_MESSAGE(m_vrsInitParams.backendInterface.fpGetSDKVersion(&m_vrsInitParams.backendInterface) == FFX_SDK_MAKE_VERSION(1, 1, 4),
+                "FidelityFX VRS sample requires linking with a 1.1.4 version SDK backend");
             FFX_ASSERT_MESSAGE(ffxVrsGetEffectVersion() == FFX_SDK_MAKE_VERSION(1, 2, 0),
                 "FidelityFX VRS sample requires linking with a 1.2 version FidelityFX VRS library");
         }

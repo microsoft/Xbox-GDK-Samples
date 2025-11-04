@@ -45,7 +45,7 @@ the Console as well as the Desktop.
 
 This sample supports the following platforms
 
--   Gaming.Desktop.x64
+-   x64
 
     -   Using the DirectStorage on PC API set.
 

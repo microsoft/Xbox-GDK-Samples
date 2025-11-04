@@ -27,7 +27,7 @@ folder.
 
 If needed, edit the **XdkEditionTarget** variable (either in the
 CMakePresets.json or CMakeList.txt) to ensure you have the correct GDK
-edition referenced. Edit **SDKVersion** as well if you have a newer SDK than 10.0.22000.0 installed.
+edition referenced. Edit **SDKVersion** as well if you have a newer SDK than 10.0.22621.0 installed.
 
 The CMake tool should generate the cache automatically upon opening.
 Otherwise select the CMakeList.txt and select "Generate Cache" from the
@@ -251,3 +251,4 @@ See the **BWOIExample** for more details.
 |June 2024|Minor update for multi-config generators.|
 |October 2024|Updated for changes to Extension Libraries directory layout.|
 |April 2025|Updated for CMake 3.31 add_custom_command warning.<br />Made SDKVersion a cache variable|
+|October 2025|Updated for 2510 GDK and new layout |

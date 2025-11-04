@@ -112,7 +112,7 @@ You will need a copy of the standard GDK installer.
     such as exceeding MAX_PATH.
 
 ```
-setenv vs2022 240300 [path-for-extracted-sdks]
+setenv vs2022 251000 [path-for-extracted-sdks]
 ```
 
 4.  Extract the GDK from the installer image:
@@ -142,7 +142,7 @@ Center](https://developer.microsoft.com/windows/downloads/windows-sdk/).
     extracted GDK.
 
 ```
-setenv vs2022 240300 [path-for-extracted-sdks]
+setenv vs2022 251000 [path-for-extracted-sdks]
 ```
 
 3.  Extract the Windows 10 SDK from the installer image:
@@ -165,7 +165,7 @@ alongside the extracted GDK.
     downloaded or manually extracted GDK.
 
 ```
-setenv vs2022 240300 [path-for-extracted-sdks]
+setenv vs2022 251000 [path-for-extracted-sdks]
 ```
 
 3.  Build the merged VC++ MSBuild targets directories and place them
@@ -196,7 +196,7 @@ installed.
 3.  Run **setenv** for VS 2022 or 2019 and your GDK edition target:
 
 ```
-setenv vs2022 240300 [path-for-extracted-sdks]
+setenv vs2022 251000 [path-for-extracted-sdks]
 ```
 
 > If you don't run setenv, the build will fall back to default values specified in Directory.Build.props. You can modify these directly in the file if you prefer. You will also need to make sure MSBuild is on the path if not using setenv.
@@ -204,7 +204,7 @@ setenv vs2022 240300 [path-for-extracted-sdks]
 4.  Build the project on the command-line:
 
 ```
-msbuild BWOIExample.vcxproj /p:Configuration=Debug /p:Platform=Gaming.Desktop.x64
+msbuild BWOIExample.vcxproj /p:Configuration=Debug /p:Platform=x64
 
 msbuild BWOIExample.vcxproj /p:Configuration=Debug /p:Platform=Gaming.Xbox.XboxOne.x64
 
@@ -253,7 +253,7 @@ Visual Studio on the host machine.
 ```
 docker build -t gdkbwoi:latest -m 2GB --build-arg
 ExtractedSDKDir="sdks" --build-arg ScriptDir="BWOIExample"
---build-arg GDKVer="240300" .
+--build-arg GDKVer="251000" .
 ```
 
 > To allow your container to use additional CPU cores, use the ``--cpus=N`` flag. To use additional memory, change the value in the ``-m 2GB`` flag.
@@ -333,7 +333,7 @@ The workaround is to add an override to **Directory.Build.props**
 <_AlternativeVCTargetsPath160>$(ExtractedFolder)VCTargets160\</_AlternativeVCTargetsPath160>
 <_AlternativeVCTargetsPath150>$(ExtractedFolder)VCTargets150\</_AlternativeVCTargetsPath150>
 <!-- Workaround for VS bug -->
-<MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
+<MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
 </PropertyGroup>
 ```
 
@@ -355,3 +355,4 @@ in Visual Studio 2019 version 16.11.
 |October 2022|Removed VS 2017 / MSBuild 15.0 support.|
 |March 2023|Added NuGet instructions.|
 |October 2023|GDK now requires Windows SDK (20000)|
+|October 2025|Updated for 2510 GDK and new layout, replacing `Gaming.Desktop.x64` with `x64`|

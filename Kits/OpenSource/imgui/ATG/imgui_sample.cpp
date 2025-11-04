@@ -1,5 +1,5 @@
 //--------------------------------------------------------------------------------------
-// imgui_sample_dx12.cpp
+// imgui_sample.cpp
 //
 // ImGui sample-specific code
 //

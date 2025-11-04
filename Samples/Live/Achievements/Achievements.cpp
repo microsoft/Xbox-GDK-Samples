@@ -61,6 +61,7 @@ Sample::Sample() noexcept(false) :
     ATG::UIConfig uiconfig;
     m_ui = std::make_unique<ATG::UIManager>(uiconfig);
     m_log = std::make_unique<DX::TextConsoleImage>();
+    m_log->SetDebugOutput(true);
     m_display = std::make_unique<DX::TextConsoleImage>();
 }
 
@@ -81,7 +82,7 @@ Sample::~Sample()
 // Initialize the Direct3D resources required to run.
 void Sample::Initialize(HWND window, int width, int height)
 {
-    m_gamePad = std::make_unique<GamePad>();
+    m_gamePad = std::make_unique<ATGGamePad>();
 
     m_keyboard = std::make_unique<Keyboard>();
 
@@ -99,6 +100,8 @@ void Sample::Initialize(HWND window, int width, int height)
 
     m_deviceResources->CreateWindowSizeDependentResources();
     CreateWindowSizeDependentResources();
+
+    TestInitialize();
 
     m_liveResources->SetUserChangedCallback([this](XUserHandle user)
     {
@@ -319,6 +322,7 @@ void Sample::GetAchievement(const std::string& achievementId)
             }
         }
 
+        XblAchievementsResultCloseHandle(result);
         delete async;
     };
 
@@ -404,6 +408,7 @@ void Sample::GetAchievements()
         // Reuse the async block unless there's no more results to get
         if (!hasNext)
         {
+            XblAchievementsResultCloseHandle(result);
             delete ctx;
             delete async;
         }
@@ -448,6 +453,8 @@ void Sample::Tick()
     m_mouse->EndOfInputFrame();
 
     Render();
+
+    TestTick();
 
     PIXEndEvent();
     m_frame++;

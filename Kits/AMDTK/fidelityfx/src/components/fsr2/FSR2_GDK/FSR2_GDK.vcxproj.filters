@@ -77,5 +77,8 @@
     <ClInclude Include="..\ffx_fsr2_private.h">
       <Filter>private_source</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\FidelityFX\host\ffx_message.h">
+      <Filter>public_source</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

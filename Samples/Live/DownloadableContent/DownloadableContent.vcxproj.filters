@@ -144,6 +144,7 @@
     <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
+    <ClInclude Include="FileReader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -167,6 +168,7 @@
     <ClCompile Include="..\..\..\Kits\ATGTK\Texture.cpp">
       <Filter>ATG Tool Kit</Filter>
     </ClCompile>
+    <ClCompile Include="FileReader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="makescarlettpkg.cmd" />
@@ -436,6 +438,8 @@
       <Filter>DLCExePackagePC\Package\Assets</Filter>
     </None>
     <None Include="BuildAllDlc.cmd" />
+    <None Include="..\..\NuGet.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Assets\LargeLogo.png">

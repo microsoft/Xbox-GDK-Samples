@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.props" Condition="Exists('..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.props')" />
+  <Import Project="..\..\packages\Microsoft.Direct3D.D3D12.1.615.1\build\native\Microsoft.Direct3D.D3D12.props" Condition="Exists('..\..\packages\Microsoft.Direct3D.D3D12.1.615.1\build\native\Microsoft.Direct3D.D3D12.props')" />
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|Gaming.Desktop.x64">
+    <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
-      <Platform>Gaming.Desktop.x64</Platform>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Gaming.Xbox.Scarlett.x64">
       <Configuration>Debug</Configuration>
@@ -14,9 +14,9 @@
       <Configuration>Debug</Configuration>
       <Platform>Gaming.Xbox.XboxOne.x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Profile|Gaming.Desktop.x64">
+    <ProjectConfiguration Include="Profile|x64">
       <Configuration>Profile</Configuration>
-      <Platform>Gaming.Desktop.x64</Platform>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Profile|Gaming.Xbox.Scarlett.x64">
       <Configuration>Profile</Configuration>
@@ -26,9 +26,9 @@
       <Configuration>Profile</Configuration>
       <Platform>Gaming.Xbox.XboxOne.x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Gaming.Desktop.x64">
+    <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
-      <Platform>Gaming.Desktop.x64</Platform>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Gaming.Xbox.Scarlett.x64">
       <Configuration>Release</Configuration>
@@ -45,14 +45,18 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <Keyword>Win32Proj</Keyword>
     <!-- - - - -->
-    <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
+    <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
     <TargetRuntime>Native</TargetRuntime>
-    <GDKExtLibNames>Xbox.Services.API.C</GDKExtLibNames>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
     <ProjectName>AMDFidelityFX_CAS</ProjectName>
+    <GDKCrossPlatform>true</GDKCrossPlatform>
   </PropertyGroup>
   <Import Condition="Exists($(ATGBuildProps))" Project="$(ATGBuildProps)" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup>
+    <GDKCrossPlatformPath Condition="'$(GDKCrossPlatformPath)'==''">$(GameDKCoreLatest)</GDKCrossPlatformPath>
+    <GDKCrossPlatformPath Condition="'$(GDKCrossPlatformPath)'==''">$(GameDKXboxLatest)</GDKCrossPlatformPath>
+  </PropertyGroup>
   <!-- Base Configuration properties -->
   <PropertyGroup Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -78,7 +82,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <!-- Scarlett/Xbox One paths -->
-  <PropertyGroup Condition="'$(Platform)'!='Gaming.Desktop.x64'">
+  <PropertyGroup Condition="'$(Platform)'!='x64'">
     <ReferencePath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</ReferencePath>
     <LibraryPath>$(Console_SdkLibPath)</LibraryPath>
     <LibraryWPath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</LibraryWPath>
@@ -86,12 +90,12 @@
     <ExecutablePath>$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <!-- Desktop paths -->
-  <PropertyGroup Condition="'$(Platform)'=='Gaming.Desktop.x64'">
+  <PropertyGroup Condition="'$(Platform)'=='x64'">
     <ReferencePath>$(VC_ReferencesPath_x64);</ReferencePath>
-    <LibraryPath>$(WindowsSDK_LibraryPath_x64);$(Console_SdkLibPath);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(GDKCrossPlatformPath)windows\lib\x64;$(WindowsSDK_LibraryPath_x64);$(Console_SdkLibPath);$(LibraryPath)</LibraryPath>
     <LibraryWPath>$(WindowsSDK_MetadataPath);</LibraryWPath>
-    <IncludePath>$(WindowsSDK_IncludePath);$(Console_SdkIncludeRoot);$(IncludePath)</IncludePath>
-    <ExecutablePath>$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
+    <IncludePath>$(GDKCrossPlatformPath)windows\include;$(WindowsSDK_IncludePath);$(Console_SdkIncludeRoot);$(IncludePath)</IncludePath>
+    <ExecutablePath>$(GameDK)bin;$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <!-- Extra Profile/Release properties -->
   <PropertyGroup Condition="'$(Configuration)'!='Debug'">
@@ -112,7 +116,7 @@
   <!-- Base properties -->
   <ItemDefinitionGroup>
     <Link>
-      <AdditionalDependencies>$(Console_Libs);$(SolutionDir)$(Platform)\$(Configuration)\GDK_Backend.lib;$(SolutionDir)$(Platform)\$(Configuration)\CAS_GDK.lib;%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libHttpClient.lib;$(Console_Libs);$(SolutionDir)$(Platform)\$(Configuration)\GDK_Backend.lib;$(SolutionDir)$(Platform)\$(Configuration)\CAS_GDK.lib;%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
     </Link>
@@ -132,14 +136,14 @@
       <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTK\FullScreenQuad;..\..\..\Kits\ATGTK\HDR</AdditionalIncludeDirectories>
     </FXCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'!='Gaming.Desktop.x64'">
+  <ItemDefinitionGroup Condition="'$(Platform)'!='x64'">
     <FXCompile>
       <AdditionalOptions>/Zs /Fd "$(OutDir)%(Filename).pdb" %(AdditionalOptions)</AdditionalOptions>
       <!-- Disable this property because it adds /Zi option which is conflicting with /Zs we already set above -->
       <EnableDebuggingInformation>false</EnableDebuggingInformation>
     </FXCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'=='Gaming.Desktop.x64'">
+  <ItemDefinitionGroup Condition="'$(Platform)'=='x64'">
     <FXCompile>
       <AdditionalOptions>/Fd "$(OutDir)%(Filename).pdb" %(AdditionalOptions)</AdditionalOptions>
       <EnableDebuggingInformation>true</EnableDebuggingInformation>
@@ -175,6 +179,34 @@
       <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
+  <!-- Extra Debug properties for x64 platform -->
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug' AND '$(Platform)'=='x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_GAMING_DESKTOP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <!-- Extra Release properties for x64 platform -->
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release' AND '$(Platform)'=='x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_GAMING_DESKTOP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <!-- Extra Profile properties for x64 platform -->
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Profile' AND '$(Platform)'=='x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_GAMING_DESKTOP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <!-- Extra x64 Desktop platform link dependencies -->
+  <ItemDefinitionGroup Condition="'$(Platform)'=='x64'">
+    <Link>
+      <AdditionalDependencies>uuid.lib;xgameruntime.lib;gameinput.lib;d3d12.lib;dxgi.lib;dxguid.lib;kernel32.lib;user32.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <Manifest>
+      <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
+    </Manifest>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup>
     <CopyFileToFolders>
       <DestinationFolders>$(OutDir)Assets</DestinationFolders>
@@ -186,10 +218,10 @@
     <ClInclude Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuad.h" />
     <ClInclude Include="..\..\..\Kits\ATGTK\MSAAHelper.h" />
     <ClInclude Include="..\..\..\Kits\ATGTK\PerformanceTimers.h">
-      <ExcludedFromBuild Condition="'$(Platform)'=='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\ATGTK\PerformanceTimersXbox.h">
-      <ExcludedFromBuild Condition="'$(Platform)'=='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\ATGTK\ReadCompressedData.h" />
     <ClInclude Include="..\..\..\Kits\ATGTK\ReadData.h" />
@@ -209,10 +241,10 @@
     <ClCompile Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuad.cpp" />
     <ClCompile Include="..\..\..\Kits\ATGTK\MSAAHelper.cpp" />
     <ClCompile Include="..\..\..\Kits\ATGTK\PerformanceTimers.cpp">
-      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\ATGTK\PerformanceTimersXbox.cpp">
-      <ExcludedFromBuild Condition="'$(Platform)'=='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\ATGTK\ReadCompressedData.cpp" />
     <ClCompile Include="..\..\..\Kits\ATGTK\RenderTexture.cpp" />
@@ -231,8 +263,8 @@
     </MGCCompile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Kits\DirectXTK12\DirectXTK12_GDK_2022.vcxproj">
-      <Project>{b47a013a-4de2-4183-a279-a363289e19b8}</Project>
+    <ProjectReference Include="..\..\..\Kits\DirectXTK12\DirectXTK12_GDKX_2022.vcxproj">
+      <Project>{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -316,17 +348,28 @@
     <Image Include="..\..\..\Media\Meshes\AbstractCathedral\Sky.dds" />
     <Image Include="..\..\..\Media\Meshes\AbstractCathedral\StripeConcrete.dds" />
   </ItemGroup>
+  <ItemGroup Condition="'$(Platform)'=='x64'">
+    <ReferenceCopyLocalPaths Include="$(GDKCrossPlatformPath)windows\bin\x64\libHttpClient.dll" />
+  </ItemGroup>
+  <ItemGroup Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(Platform)', 'Gaming\.Xbox\..+\.x64'))">
+    <ReferenceCopyLocalPaths Include="$(GDKCrossPlatformPath)xbox\bin\x64\libHttpClient.dll" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\..\packages\WinPixEventRuntime.1.0.240308001\build\WinPixEventRuntime.targets" Condition="Exists('..\..\packages\WinPixEventRuntime.1.0.240308001\build\WinPixEventRuntime.targets')" />
-    <Import Project="..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.targets" Condition="Exists('..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.targets')" />
+    <Import Project="..\..\packages\Microsoft.Direct3D.D3D12.1.615.1\build\native\Microsoft.Direct3D.D3D12.targets" Condition="Exists('..\..\packages\Microsoft.Direct3D.D3D12.1.615.1\build\native\Microsoft.Direct3D.D3D12.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\WinPixEventRuntime.1.0.240308001\build\WinPixEventRuntime.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\WinPixEventRuntime.1.0.240308001\build\WinPixEventRuntime.targets'))" />
-    <Error Condition="!Exists('..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.props'))" />
-    <Error Condition="!Exists('..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.Direct3D.D3D12.1.615.1\build\native\Microsoft.Direct3D.D3D12.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Direct3D.D3D12.1.615.1\build\native\Microsoft.Direct3D.D3D12.props'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.Direct3D.D3D12.1.615.1\build\native\Microsoft.Direct3D.D3D12.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Direct3D.D3D12.1.615.1\build\native\Microsoft.Direct3D.D3D12.targets'))" />
+  </Target>
+  <Target Name="BuildMGC" AfterTargets="Build" Condition="!$([System.Text.RegularExpressions.Regex]::IsMatch('$(Platform)', 'Gaming\..+\.x64'))"
+          Inputs="@(MGCCompile)" Outputs="$(OutDir)MicrosoftGame.config">
+    <Exec ConsoleToMsBuild="true" Command="copy &quot;%(MGCCompile.Identity)&quot; &quot;$(OutDir)MicrosoftGame.config&quot;" />
+    <Exec ConsoleToMsBuild="true" Command="makepkg.exe localize /d &quot;$(OutDir).&quot; /pd &quot;$(OutDir).&quot; /gc &quot;%(MGCCompile.Identity)&quot;" />
   </Target>
 </Project>

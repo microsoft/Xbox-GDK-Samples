@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|Gaming.Desktop.x64">
+    <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
-      <Platform>Gaming.Desktop.x64</Platform>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Profile|Gaming.Desktop.x64">
+    <ProjectConfiguration Include="Profile|x64">
       <Configuration>Profile</Configuration>
-      <Platform>Gaming.Desktop.x64</Platform>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Gaming.Desktop.x64">
+    <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
-      <Platform>Gaming.Desktop.x64</Platform>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Gaming.Xbox.Scarlett.x64">
       <Configuration>Debug</Configuration>
@@ -88,40 +88,41 @@
     <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\opticalflow\ffx_opticalflow_resources.h" />
     <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\opticalflow\ffx_opticalflow_scale_optical_flow_advanced_v5.h" />
     <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\host\backends\gdk\ffx_gdk.h">
-      <ExcludedFromBuild Condition="'$(Platform)'=='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\host\ffx_message.h" />
     <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\FrameInterpolationSwapchain\FrameInterpolationSwapchainXbox.h">
-      <ExcludedFromBuild Condition="'$(Platform)'=='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\FrameInterpolationSwapchain\FrameInterpolationSwapchainXbox_Helpers.h">
-      <ExcludedFromBuild Condition="'$(Platform)'=='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\host\backends\dx12\ffx_dx12.h">
-      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\host\backends\dx12\d3dx12.h">
-      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\FrameInterpolationSwapchain\FrameInterpolationSwapchainDX12.h">
-      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\FrameInterpolationSwapchain\FrameInterpolationSwapchainDX12_Helpers.h">
-      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\FrameInterpolationSwapchain\FrameInterpolationSwapchainDX12_UiComposition.h">
-      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\FrameInterpolationSwapchain\FrameInterpolationSwapchainUiCompositionVS.h">
-      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\FrameInterpolationSwapchain\FrameInterpolationSwapchainUiCompositionPS.h">
-      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\FrameInterpolationSwapchain\FrameInterpolationSwapchainUiCompositionPremulVS.h">
-      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\FrameInterpolationSwapchain\FrameInterpolationSwapchainUiCompositionPremulPS.h">
-      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\blob_accessors\ffx_frameinterpolation_shaderblobs.h" />
     <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\blob_accessors\ffx_fsr3upscaler_shaderblobs.h" />
@@ -136,11 +137,48 @@
       <FileType>Document</FileType>
       <Command>set GDKEDITION=$(XdkEdition)
 set GXDKLatest=$(Console_SdkToolPath)..\..\
+set GameDKXboxLatest=$(GameDKXboxLatest)
 call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Command>
       <Message>Precompiling FidelityFX Shader Permutations</Message>
       <Outputs>$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_compute_game_vector_field_inpainting_pyramid_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_compute_game_vector_field_inpainting_pyramid_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_compute_game_vector_field_inpainting_pyramid_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_compute_game_vector_field_inpainting_pyramid_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_compute_inpainting_pyramid_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_compute_inpainting_pyramid_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_compute_inpainting_pyramid_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_debug_view_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_debug_view_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_debug_view_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_debug_view_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_disocclusion_mask_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_disocclusion_mask_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_disocclusion_mask_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_disocclusion_mask_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_game_motion_vector_field_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_game_motion_vector_field_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_game_motion_vector_field_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_game_motion_vector_field_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_inpainting_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_inpainting_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_inpainting_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_inpainting_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_optical_flow_vector_field_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_optical_flow_vector_field_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_optical_flow_vector_field_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_optical_flow_vector_field_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_reconstruct_and_dilate_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_reconstruct_and_dilate_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_reconstruct_and_dilate_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_reconstruct_and_dilate_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_reconstruct_previous_depth_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_reconstruct_previous_depth_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_reconstruct_previous_depth_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_reconstruct_previous_depth_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_setup_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_setup_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_setup_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_frameinterpolation_setup_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_accumulate_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_accumulate_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_accumulate_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_accumulate_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_autogen_reactive_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_autogen_reactive_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_autogen_reactive_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_autogen_reactive_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_debug_view_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_debug_view_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_debug_view_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_debug_view_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_luma_instability_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_luma_instability_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_luma_instability_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_luma_instability_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_luma_pyramid_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_luma_pyramid_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_luma_pyramid_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_luma_pyramid_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_prepare_inputs_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_prepare_inputs_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_prepare_inputs_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_prepare_inputs_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_prepare_reactivity_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_prepare_reactivity_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_prepare_reactivity_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_prepare_reactivity_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_rcas_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_rcas_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_rcas_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_rcas_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_shading_change_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_shading_change_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_shading_change_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_shading_change_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_shading_change_pyramid_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_shading_change_pyramid_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_shading_change_pyramid_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr3upscaler_shading_change_pyramid_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_opticalflow_compute_luminance_pyramid_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_opticalflow_compute_luminance_pyramid_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_opticalflow_compute_luminance_pyramid_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_opticalflow_compute_luminance_pyramid_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_opticalflow_compute_optical_flow_advanced_pass_v5_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_opticalflow_compute_optical_flow_advanced_pass_v5_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_opticalflow_compute_optical_flow_advanced_pass_v5_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_opticalflow_compute_optical_flow_advanced_pass_v5_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_opticalflow_compute_scd_divergence_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_opticalflow_compute_scd_divergence_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_opticalflow_compute_scd_divergence_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_opticalflow_compute_scd_divergence_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_opticalflow_filter_optical_flow_pass_v5_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_opticalflow_filter_optical_flow_pass_v5_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_opticalflow_filter_optical_flow_pass_v5_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_opticalflow_filter_optical_flow_pass_v5_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_opticalflow_generate_scd_histogram_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_opticalflow_generate_scd_histogram_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_opticalflow_generate_scd_histogram_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_opticalflow_generate_scd_histogram_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_opticalflow_prepare_luma_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_opticalflow_prepare_luma_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_opticalflow_prepare_luma_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_opticalflow_prepare_luma_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_opticalflow_scale_optical_flow_advanced_pass_v5_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_opticalflow_scale_optical_flow_advanced_pass_v5_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_opticalflow_scale_optical_flow_advanced_pass_v5_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_opticalflow_scale_optical_flow_advanced_pass_v5_wave64_16bit_permutations.h;%(Outputs)</Outputs>
       <LinkObjects>false</LinkObjects>
       <VerifyInputsAndOutputsExist>false</VerifyInputsAndOutputsExist>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">for %%F in ("$(GameDKCoreLatest).") do set GDKEDITION=%%~nxF
+set GXDKLatest=$(Console_SdkToolPath)..\..\
+set GameDKXboxLatest=$(GameDKXboxLatest)
+call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">for %%F in ("$(GameDKCoreLatest).") do set GDKEDITION=%%~nxF
+set GXDKLatest=$(Console_SdkToolPath)..\..\
+set GameDKXboxLatest=$(GameDKXboxLatest)
+call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">for %%F in ("$(GameDKCoreLatest).") do set GDKEDITION=%%~nxF
+set GXDKLatest=$(Console_SdkToolPath)..\..\
+set GameDKXboxLatest=$(GameDKXboxLatest)
+call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">for %%F in ("$(GameDKXboxLatest).") do set GDKEDITION=%%~nxF
+set GXDKLatest=$(Console_SdkToolPath)..\..\
+set GameDKXboxLatest=$(GameDKXboxLatest)
+call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">for %%F in ("$(GameDKXboxLatest).") do set GDKEDITION=%%~nxF
+set GXDKLatest=$(Console_SdkToolPath)..\..\
+set GameDKXboxLatest=$(GameDKXboxLatest)
+call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">for %%F in ("$(GameDKXboxLatest).") do set GDKEDITION=%%~nxF
+set GXDKLatest=$(Console_SdkToolPath)..\..\
+set GameDKXboxLatest=$(GameDKXboxLatest)
+call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">for %%F in ("$(GameDKXboxLatest).") do set GDKEDITION=%%~nxF
+set GXDKLatest=$(Console_SdkToolPath)..\..\
+set GameDKXboxLatest=$(GameDKXboxLatest)
+call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">for %%F in ("$(GameDKXboxLatest).") do set GDKEDITION=%%~nxF
+set GXDKLatest=$(Console_SdkToolPath)..\..\
+set GameDKXboxLatest=$(GameDKXboxLatest)
+call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">for %%F in ("$(GameDKXboxLatest).") do set GDKEDITION=%%~nxF
+set GXDKLatest=$(Console_SdkToolPath)..\..\
+set GameDKXboxLatest=$(GameDKXboxLatest)
+call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -231,25 +269,25 @@ call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Comma
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\ffx_gdk.cpp">
-      <ExcludedFromBuild Condition="'$(Platform)'=='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\FrameInterpolationSwapchain\FrameInterpolationSwapchainXbox.cpp">
-      <ExcludedFromBuild Condition="'$(Platform)'=='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\FrameInterpolationSwapchain\FrameInterpolationSwapchainXbox_Helpers.cpp">
-      <ExcludedFromBuild Condition="'$(Platform)'=='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\ffx_dx12.cpp">
-      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\FrameInterpolationSwapchain\FrameInterpolationSwapchainDX12.cpp">
-      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\FrameInterpolationSwapchain\FrameInterpolationSwapchainDX12_Helpers.cpp">
-      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\FrameInterpolationSwapchain\FrameInterpolationSwapchainDX12_UiComposition.cpp">
-      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\blob_accessors\ffx_frameinterpolation_shaderblobs.cpp" />
     <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\blob_accessors\ffx_fsr3upscaler_shaderblobs.cpp" />
@@ -257,6 +295,7 @@ call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Comma
     <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\ffx_shader_blobs.cpp" />
     <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\shared\ffx_assert.cpp" />
     <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\shared\ffx_breadcrumbs_list.cpp" />
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\shared\ffx_message.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\Kits\AMDTK\fidelityfx\tools\binary_store\FidelityFX_SC.exe" />
@@ -267,7 +306,7 @@ call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Comma
     <DefaultLanguage>en-US</DefaultLanguage>
     <Keyword>Win32Proj</Keyword>
     <!-- - - - -->
-    <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
+    <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
     <TargetRuntime>Native</TargetRuntime>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
@@ -298,20 +337,20 @@ call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Comma
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <!-- Scarlett/Xbox One paths -->
-  <PropertyGroup Condition="'$(Platform)'!='Gaming.Desktop.x64'">
+  <PropertyGroup Condition="'$(Platform)'!='x64'">
     <ReferencePath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</ReferencePath>
     <LibraryPath>$(Console_SdkLibPath)</LibraryPath>
     <LibraryWPath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</LibraryWPath>
     <IncludePath>$(Console_SdkIncludeRoot)</IncludePath>
-    <ExecutablePath>$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
+    <ExecutablePath>$(GameDK)bin;$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <!-- Desktop paths -->
-  <PropertyGroup Condition="'$(Platform)'=='Gaming.Desktop.x64'">
+  <PropertyGroup Condition="'$(Platform)'=='x64'">
     <ReferencePath>$(VC_ReferencesPath_x64);</ReferencePath>
     <LibraryPath>$(WindowsSDK_LibraryPath_x64);$(Console_SdkLibPath);$(LibraryPath)</LibraryPath>
     <LibraryWPath>$(WindowsSDK_MetadataPath);</LibraryWPath>
     <IncludePath>$(WindowsSDK_IncludePath);$(Console_SdkIncludeRoot);$(IncludePath)</IncludePath>
-    <ExecutablePath>$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
+    <ExecutablePath>$(GameDK)bin;$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <!-- Extra Profile/Release properties -->
   <PropertyGroup Condition="'$(Configuration)'!='Debug'">
@@ -369,7 +408,7 @@ call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Comma
       <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'=='Gaming.Desktop.x64'">
+  <ItemDefinitionGroup Condition="'$(Platform)'=='x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\Kits\ATGTK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>

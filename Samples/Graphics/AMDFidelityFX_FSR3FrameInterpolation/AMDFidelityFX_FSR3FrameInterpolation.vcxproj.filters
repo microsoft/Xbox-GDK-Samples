@@ -47,9 +47,6 @@
     <Filter Include="AMD Tool Kit\ffx-api\PrebuiltSignedDLL">
       <UniqueIdentifier>{a14ed6c9-606b-420c-b24a-036334b8ee96}</UniqueIdentifier>
     </Filter>
-    <Filter Include="AMD Tool Kit\ffx-api\bin">
-      <UniqueIdentifier>{3f95611b-8ef7-409f-ae47-b9471f0d274e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="AMD Tool Kit\ffx-api\include">
       <UniqueIdentifier>{71c29af5-9be0-4995-9b23-6dd2b7ca3247}</UniqueIdentifier>
     </Filter>
@@ -344,18 +341,6 @@
     </None>
     <None Include="..\..\..\Kits\AMDTK\ffx-api\PrebuiltSignedDLL\amd_fidelityfx_dx12.lib">
       <Filter>AMD Tool Kit\ffx-api\PrebuiltSignedDLL</Filter>
-    </None>
-    <None Include="..\..\..\Kits\AMDTK\ffx-api\bin\amd_fidelityfx_dx12d.dll">
-      <Filter>AMD Tool Kit\ffx-api\bin</Filter>
-    </None>
-    <None Include="..\..\..\Kits\AMDTK\ffx-api\bin\amd_fidelityfx_dx12d.lib">
-      <Filter>AMD Tool Kit\ffx-api\bin</Filter>
-    </None>
-    <None Include="..\..\..\Kits\AMDTK\ffx-api\bin\amd_fidelityfx_dx12drel.dll">
-      <Filter>AMD Tool Kit\ffx-api\bin</Filter>
-    </None>
-    <None Include="..\..\..\Kits\AMDTK\ffx-api\bin\amd_fidelityfx_dx12drel.lib">
-      <Filter>AMD Tool Kit\ffx-api\bin</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

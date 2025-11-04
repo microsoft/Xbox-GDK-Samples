@@ -238,7 +238,8 @@ void Sample::CreateDeviceDependentResources()
     m_graphicsMemory = std::make_unique<GraphicsMemory>(device);
 
     // Create the style renderer for the UI manager to use for rendering the UI scene styles
-    auto styleRenderer = std::make_unique<UIStyleRendererD3D>(*this);
+    auto os = m_deviceResources->GetOutputSize();
+    auto styleRenderer = std::make_unique<UIStyleRendererD3D>(*this,os.right-os.left,os.bottom-os.top);
     m_uiManager.GetStyleManager().InitializeStyleRenderer(std::move(styleRenderer));
 }
 

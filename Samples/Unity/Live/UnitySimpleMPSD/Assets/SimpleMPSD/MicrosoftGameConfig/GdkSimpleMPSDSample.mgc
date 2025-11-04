@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Game configVersion="1">
+  <Identity
+    Name="41336MicrosoftATG.SimpleCrossGenMPSD"
+    Publisher="CN=A4954634-DF4B-47C7-AB70-D3215D246AF1"
+    Version="1.2.0.0" />
+  <ExecutableList>
+    <Executable
+      Name="SimpleMPSD.exe"
+      Id="Game" />
+  </ExecutableList>
+  <StoreId>9N659P9449HR</StoreId>
+  <MSAAppId>000000004C5CA94C</MSAAppId>
+  <TitleId>799A2E03</TitleId>
+  <ExtendedAttributeList>
+    <ExtendedAttribute
+      Name="SandboxIds"
+      Value="XDKS.1" />
+    <ExtendedAttribute
+      Name="Scid"
+      Value="00000000-0000-0000-0000-0000799a2e03" />
+  </ExtendedAttributeList>
+  <DesktopRegistration>
+    <DependencyList>
+      <KnownDependency
+        Name="VC14" />
+    </DependencyList>
+    <MultiplayerProtocol
+      Executable="SimpleMPSD.exe">true</MultiplayerProtocol>
+  </DesktopRegistration>
+  <DevelopmentOnly />
+  <AdvancedUserModel>true</AdvancedUserModel>
+</Game>

@@ -23,7 +23,8 @@ using Microsoft::WRL::ComPtr;
 #pragma message( __FILE__  ": TODO update SAMPLE_SERVICE_HOST to be your deployed Service Sample" )
 // The host address where you have deployed your version of the Microsoft.StoreServices Sample
 // https://github.com/microsoft/Microsoft-Store-Services-Sample
-#define SAMPLE_SERVICE_HOST "atgstoreservicedev.azurewebsites.net"
+#define SAMPLE_SERVICE_HOST "atgstoreservicedev.azurewebsites.net"  // For local debugging change this to "localhost:5001" or the specific port
+                                                                    // the server sample is running on locally
 
 //  Use the V9 version of the Collections Query, this means we need to provide
 //  the list of Ids for the query to specifically look at.
@@ -50,7 +51,7 @@ namespace
     constexpr char c_viewUserBalancesURL[] = "https://" SAMPLE_SERVICE_HOST "/collections/ViewUserBalances";
     constexpr char c_recurrenceQueryURL[] = "https://" SAMPLE_SERVICE_HOST "/purchase/RecurrenceQuery";
     constexpr char c_recurrenceChangeURL[] = "https://" SAMPLE_SERVICE_HOST "/purchase/RecurrenceChange";
-    constexpr char c_clawbackQueryURL[] = "https://" SAMPLE_SERVICE_HOST "/purchase/ClawbackQuery";
+    constexpr char c_clawbackQueryURL[] = "https://" SAMPLE_SERVICE_HOST "/Clawback/ClawbackV1Query";
     constexpr char c_viewClawbackQueueURL[] = "https://" SAMPLE_SERVICE_HOST "/purchase/ViewClawbackQueue";
     constexpr char c_runClawbackValidationURL[] = "https://" SAMPLE_SERVICE_HOST "/purchase/RunClawbackValidation";
     //constexpr char c_viewClawbackActionItemsURL[] = "https://" SAMPLE_SERVICE_HOST "/purchase/ViewClawbackActionItems";
@@ -212,7 +213,10 @@ void Sample::Initialize(HWND window, int width, int height)
         //  Add the Game Pass subscription Ids to reveal those if our service is authorized for them
         m_enumeratedProducts.push_back("CFQ7TTC0K6L8"); //  Xbox Game Pass
         m_enumeratedProducts.push_back("CFQ7TTC0KGQ8"); //  PC Game Pass
+        m_enumeratedProducts.push_back("CFQ7TTC0K5DJ"); //  Game Pass Essential
+        m_enumeratedProducts.push_back("CFQ7TTC0P85B"); //  Game Pass Premium
         m_enumeratedProducts.push_back("CFQ7TTC0KHS0"); //  Game Pass Ultimate
+        
 
         //  TODO: Update to include the ProductIds for your Publisher / Title that 
         //        you want to look for when calling PublisherQuery
@@ -235,6 +239,8 @@ void Sample::Initialize(HWND window, int width, int height)
         m_enumeratedProducts.push_back("9PFL4RQTB1P6"); //  ATG Sample Consumable 1
         m_enumeratedProducts.push_back("9NCX1H100M18"); //  ATG Sample Consumable 2
         m_enumeratedProducts.push_back("9MT5TGW893HV"); //  ATG Sample Consumable 3
+
+        m_enumeratedProducts.push_back("9N0297GK108W"); //  ATG Dev managed consumable 1
     }
 #endif
 
@@ -695,7 +701,8 @@ void Sample::CreateDeviceDependentResources()
     auto uploadResourcesFinished = resourceUpload.End(m_deviceResources->GetCommandQueue());
     uploadResourcesFinished.wait();
 
-    auto styleRenderer = std::make_unique<UIStyleRendererD3D>(*this);
+    auto const os = m_deviceResources->GetOutputSize();
+    auto styleRenderer = std::make_unique<UIStyleRendererD3D>(*this, 200, os.right, os.bottom);
     m_uiManager.GetStyleManager().InitializeStyleRenderer(std::move(styleRenderer));
 }
 

@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Game configVersion="1">
-  
-  <Identity Name="41336MicrosoftATG.ATGMicrosoft.StoreServicesClient" 
-            Version="1.1.0.0" 
-            Publisher="CN=A4954634-DF4B-47C7-AB70-D3215D246AF1" />
-  
+
+  <Identity Name="41336MicrosoftATG.ATGMicrosoft.StoreServicesClient" Version="2025.10.28.0" Publisher="CN=A4954634-DF4B-47C7-AB70-D3215D246AF1"/>
+
+  <StoreId>9MXL21XPWWWK</StoreId>
   <TitleId>798223a4</TitleId>
   <MSAAppId>000000004C736570</MSAAppId>
-  <StoreId>9MXL21XPWWWK</StoreId>
 
   <DevelopmentOnly>
     <ContentIdOverride>B8EAB5D1-DE92-4A60-A398-866E51F58532</ContentIdOverride>

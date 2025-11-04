@@ -571,7 +571,8 @@ void Sample::CreateDeviceDependentResources()
 
     RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
 
-    auto styleRenderer = std::make_unique<UIStyleRendererD3D>(*this);
+    auto const size = m_deviceResources->GetOutputSize();
+    auto styleRenderer = std::make_unique<UIStyleRendererD3D>(*this, size.right, size.bottom);
     m_uiManager.GetStyleManager().InitializeStyleRenderer(std::move(styleRenderer));
 }
 

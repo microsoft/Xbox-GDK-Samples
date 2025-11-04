@@ -15,6 +15,10 @@ using Microsoft::WRL::ComPtr;
 #pragma clang diagnostic ignored "-Wswitch-enum"
 #endif
 
+#ifndef IID_GRAPHICS_PPV_ARGS
+#define IID_GRAPHICS_PPV_ARGS(x) IID_PPV_ARGS(x)
+#endif
+
 #pragma warning(disable : 4061)
 
 #ifdef _GAMING_DESKTOP

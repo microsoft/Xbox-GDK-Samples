@@ -887,8 +887,9 @@ void Sample::CreateDeviceDependentResources()
     #pragma message( __FILE__  ": TODO in CreateDeviceDependentResources" )
     // TODO: Initialize device dependent objects here (independent of window size).
     device;
-
-    auto styleRenderer = std::make_unique<UIStyleRendererD3D>(*this);
+    
+    auto const os = m_deviceResources->GetOutputSize();
+    auto styleRenderer = std::make_unique<UIStyleRendererD3D>(*this, 200, os.right, os.bottom);
     m_uiManager.GetStyleManager().InitializeStyleRenderer(std::move(styleRenderer));
 }
 

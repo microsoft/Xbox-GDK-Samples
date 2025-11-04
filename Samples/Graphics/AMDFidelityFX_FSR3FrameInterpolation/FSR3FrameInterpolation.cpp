@@ -673,7 +673,7 @@ void Sample::UpdateFSRContext(bool enabled)
                 FfxErrorCode localErr = ffxGetInterfaceDX12(&m_ffxFsr3Backends[i], m_deviceResources->GetD3DDevice(), scratchBuffer, scratchBufferSize, size_t(effectCounts[i]));
 
                 SAMPLE_ASSERT_MESSAGE(m_ffxFsr3Backends[i].fpGetSDKVersion(&m_ffxFsr3Backends[i]) ==
-                    FFX_SDK_MAKE_VERSION(1, 1, 2), "FidelityFX Frame Interpolation sample requires linking with a 1.1.2 version SDK backend");
+                    FFX_SDK_MAKE_VERSION(1, 1, 4), "FidelityFX Frame Interpolation sample requires linking with a 1.1.4 version SDK backend");
 
                 errorCode |= localErr;
             }
@@ -754,12 +754,12 @@ void Sample::UpdateFSRContext(bool enabled)
                 m_fsr3ContextDescription.backendInterfaceUpscaling.fpRegisterConstantBufferAllocator(&m_fsr3ContextDescription.backendInterfaceUpscaling, Sample::ffxAllocateConstantBuffer);
                 m_fsr3ContextDescription.backendInterfaceFrameInterpolation.fpRegisterConstantBufferAllocator(&m_fsr3ContextDescription.backendInterfaceFrameInterpolation, Sample::ffxAllocateConstantBuffer);
 
-                SAMPLE_ASSERT_MESSAGE(ffxFsr3UpscalerGetEffectVersion() == FFX_SDK_MAKE_VERSION(3, 1, 3),
-                    "FidelityFX Frame Interpolation sample requires linking with a 3.1.3 version FidelityFX FSR3Upscaler library");
-                SAMPLE_ASSERT_MESSAGE(ffxFsr3GetEffectVersion() == FFX_SDK_MAKE_VERSION(3, 1, 3),
-                    "FidelityFX Frame Interpolation sample requires linking with a 3.1.3 version FidelityFX FSR3 library");
-                SAMPLE_ASSERT_MESSAGE(ffxFrameInterpolationGetEffectVersion() == FFX_SDK_MAKE_VERSION(1, 1, 2),
-                    "FidelityFX Frame Interpolation sample requires linking with a 1.1.2 version FidelityFX FrameInterpolation library");
+                SAMPLE_ASSERT_MESSAGE(ffxFsr3UpscalerGetEffectVersion() == FFX_SDK_MAKE_VERSION(3, 1, 4),
+                    "FidelityFX Frame Interpolation sample requires linking with a 3.1.4 version FidelityFX FSR3Upscaler library");
+                SAMPLE_ASSERT_MESSAGE(ffxFsr3GetEffectVersion() == FFX_SDK_MAKE_VERSION(3, 1, 4),
+                    "FidelityFX Frame Interpolation sample requires linking with a 3.1.4 version FidelityFX FSR3 library");
+                SAMPLE_ASSERT_MESSAGE(ffxFrameInterpolationGetEffectVersion() == FFX_SDK_MAKE_VERSION(1, 1, 3),
+                    "FidelityFX Frame Interpolation sample requires linking with a 1.1.3 version FidelityFX FrameInterpolation library");
                 SAMPLE_ASSERT_MESSAGE(ffxOpticalflowGetEffectVersion() == FFX_SDK_MAKE_VERSION(1, 1, 2),
                     "FidelityFX Frame Interpolation sample requires linking with a 1.1.2 version FidelityFX OpticalFlow library");
 
@@ -859,6 +859,17 @@ void Sample::UpdateFSRContext(bool enabled)
 
                 // Couldn't create the ffxapi upscaling context
                 SAMPLE_ASSERT(retCode == ffx::ReturnCode::Ok);
+
+                // get the version ID
+                //Query created version
+                ffxQueryGetProviderVersion getVersion = { 0 };
+                getVersion.header.type = FFX_API_QUERY_DESC_TYPE_GET_PROVIDER_VERSION;
+
+                ffxReturnCode_t retCode_t = ffxQuery(&m_upscalingContext, &getVersion.header);
+                SAMPLE_ASSERT(retCode_t == FFX_API_RETURN_OK);
+
+                int requiredSize = MultiByteToWideChar(CP_UTF8, 0, getVersion.versionName, -1, NULL, 0);
+                MultiByteToWideChar(CP_UTF8, 0, getVersion.versionName, -1, &m_upscalingVersion[4], requiredSize);
             }
 
             FfxApiEffectMemoryUsage gpuMemoryUsageUpscaler;
@@ -2024,7 +2035,11 @@ void Sample::RenderUI(ID3D12GraphicsCommandList* commandList)
     y += yLineSpacing;
 
     wchar_t effectName[64];
-    swprintf_s(effectName, L"FSR 3.1.3");
+#ifdef _GAMING_XBOX
+    swprintf_s(effectName, L"FSR 3.1.4");
+#else
+    swprintf_s(effectName, m_upscalingVersion);
+#endif // _GAMING_XBOX
 
     m_font->DrawString(pBatchPtr, effectName, XMFLOAT2(float(safe.left), y), ATG::Colors::White, 0.f, XMFLOAT2(0, 0), textScale);
     y += yLineSpacing;

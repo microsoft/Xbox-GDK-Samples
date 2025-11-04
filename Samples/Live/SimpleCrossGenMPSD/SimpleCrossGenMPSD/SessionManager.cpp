@@ -81,7 +81,7 @@ void SessionManager::RegisterSubscriptionLostEvent()
 
     auto SubscriptionLost = [](void* context)
     {
-        if (auto pThis = reinterpret_cast<SessionManager*>(context))
+        if (context)
         {
             DEBUGLOG("MPSD Subscription Lost");
         }

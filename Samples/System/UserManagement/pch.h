@@ -148,4 +148,4 @@ inline bool operator!=(const APP_LOCAL_DEVICE_ID& deviceId1, const APP_LOCAL_DEV
 }
 
 // Enable off by default warnings to improve code conformance
-#pragma warning(default : 4061 4062 4191 4242 4263 4264 4265 4266 4289 4365 4746 4826 4841 4986 4987 5029 5038 5042)
+#pragma warning(default : 4061 4062 4191 4263 4264 4265 4266 4289 4365 4746 4826 4841 4986 4987 5029 5038 5042)

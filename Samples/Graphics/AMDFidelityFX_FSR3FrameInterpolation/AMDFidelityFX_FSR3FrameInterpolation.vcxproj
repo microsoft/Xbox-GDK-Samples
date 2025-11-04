@@ -1,25 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|Gaming.Desktop.x64">
+    <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
-      <Platform>Gaming.Desktop.x64</Platform>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Gaming.Xbox.Scarlett.x64">
       <Configuration>Debug</Configuration>
       <Platform>Gaming.Xbox.Scarlett.x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Profile|Gaming.Desktop.x64">
+    <ProjectConfiguration Include="Profile|x64">
       <Configuration>Profile</Configuration>
-      <Platform>Gaming.Desktop.x64</Platform>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Profile|Gaming.Xbox.Scarlett.x64">
       <Configuration>Profile</Configuration>
       <Platform>Gaming.Xbox.Scarlett.x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Gaming.Desktop.x64">
+    <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
-      <Platform>Gaming.Desktop.x64</Platform>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Gaming.Xbox.Scarlett.x64">
       <Configuration>Release</Configuration>
@@ -32,14 +32,18 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <Keyword>Win32Proj</Keyword>
     <!-- - - - -->
-    <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
+    <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
     <TargetRuntime>Native</TargetRuntime>
-    <GDKExtLibNames>Xbox.Services.API.C</GDKExtLibNames>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
     <ProjectName>AMDFidelityFX_FSR3FrameInterpolation</ProjectName>
+    <GDKCrossPlatform>true</GDKCrossPlatform>
   </PropertyGroup>
   <Import Condition="Exists($(ATGBuildProps))" Project="$(ATGBuildProps)" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup>
+    <GDKCrossPlatformPath Condition="'$(GDKCrossPlatformPath)'==''">$(GameDKCoreLatest)</GDKCrossPlatformPath>
+    <GDKCrossPlatformPath Condition="'$(GDKCrossPlatformPath)'==''">$(GameDKXboxLatest)</GDKCrossPlatformPath>
+  </PropertyGroup>
   <!-- Base Configuration properties -->
   <PropertyGroup Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -65,7 +69,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <!-- Scarlett/Xbox One paths -->
-  <PropertyGroup Condition="'$(Platform)'!='Gaming.Desktop.x64'">
+  <PropertyGroup Condition="'$(Platform)'!='x64'">
     <ReferencePath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</ReferencePath>
     <LibraryPath>$(Console_SdkLibPath)</LibraryPath>
     <LibraryWPath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</LibraryWPath>
@@ -73,12 +77,12 @@
     <ExecutablePath>$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <!-- Desktop paths -->
-  <PropertyGroup Condition="'$(Platform)'=='Gaming.Desktop.x64'">
+  <PropertyGroup Condition="'$(Platform)'=='x64'">
     <ReferencePath>$(VC_ReferencesPath_x64);</ReferencePath>
-    <LibraryPath>$(WindowsSDK_LibraryPath_x64);$(Console_SdkLibPath);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(GDKCrossPlatformPath)windows\lib\x64;$(WindowsSDK_LibraryPath_x64);$(Console_SdkLibPath);$(LibraryPath)</LibraryPath>
     <LibraryWPath>$(WindowsSDK_MetadataPath);</LibraryWPath>
-    <IncludePath>$(WindowsSDK_IncludePath);$(Console_SdkIncludeRoot);$(IncludePath)</IncludePath>
-    <ExecutablePath>$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
+    <IncludePath>$(GDKCrossPlatformPath)windows\include;$(WindowsSDK_IncludePath);$(Console_SdkIncludeRoot);$(IncludePath)</IncludePath>
+    <ExecutablePath>$(GameDK)bin;$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <!-- Extra Profile/Release properties -->
   <PropertyGroup Condition="'$(Configuration)'!='Debug'">
@@ -96,7 +100,7 @@
   <!-- Base properties -->
   <ItemDefinitionGroup>
     <Link>
-      <AdditionalDependencies>$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libHttpClient.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
     </Link>
@@ -116,7 +120,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTK\FullScreenQuad</AdditionalIncludeDirectories>
     </FXCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'!='Gaming.Desktop.x64'">
+  <ItemDefinitionGroup Condition="'$(Platform)'!='x64'">
     <Link>
       <AdditionalDependencies>$(SolutionDir)$(Platform)\$(Configuration)\GDK_Backend.lib;$(SolutionDir)$(Platform)\$(Configuration)\FrameInterpolation_GDK.lib;$(SolutionDir)$(Platform)\$(Configuration)\FSR3_GDK.lib;$(SolutionDir)$(Platform)\$(Configuration)\FSR3Upscaler_GDK.lib;$(SolutionDir)$(Platform)\$(Configuration)\OpticalFlow_GDK.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -127,28 +131,31 @@
       <EnableDebuggingInformation>false</EnableDebuggingInformation>
     </FXCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'=='Gaming.Desktop.x64'">
+  <ItemDefinitionGroup Condition="'$(Platform)'=='x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_GAMING_DESKTOP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
     <FXCompile>
       <AdditionalOptions>/Fd "$(OutDir)%(Filename).pdb" %(AdditionalOptions)</AdditionalOptions>
       <EnableDebuggingInformation>true</EnableDebuggingInformation>
     </FXCompile>
   </ItemDefinitionGroup>
   <!-- DLL linking for Desktop -->
-  <ItemDefinitionGroup Condition="'$(Platform)'=='Gaming.Desktop.x64' And '$(Configuration)'=='Debug'">
+  <ItemDefinitionGroup Condition="'$(Platform)'=='x64' And '$(Configuration)'=='Debug'">
     <Link>
-      <AdditionalDependencies>$(SolutionDir)..\..\..\Kits\AMDTK\ffx-api\bin\amd_fidelityfx_dx12d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d12.lib;dxgi.lib;dxguid.lib;xgameruntime.lib;$(SolutionDir)..\..\..\Kits\AMDTK\ffx-api\PrebuiltSignedDLL\amd_fidelityfx_dx12.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'=='Gaming.Desktop.x64' And '$(Configuration)'=='Profile'">
+  <ItemDefinitionGroup Condition="'$(Platform)'=='x64' And '$(Configuration)'=='Profile'">
     <Link>
-      <AdditionalDependencies>$(SolutionDir)..\..\..\Kits\AMDTK\ffx-api\bin\amd_fidelityfx_dx12drel.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d12.lib;dxgi.lib;dxguid.lib;xgameruntime.lib;$(SolutionDir)..\..\..\Kits\AMDTK\ffx-api\PrebuiltSignedDLL\amd_fidelityfx_dx12.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'=='Gaming.Desktop.x64' And '$(Configuration)'=='Release'">
+  <ItemDefinitionGroup Condition="'$(Platform)'=='x64' And '$(Configuration)'=='Release'">
     <Link>
-      <AdditionalDependencies>$(SolutionDir)..\..\..\Kits\AMDTK\ffx-api\PrebuiltSignedDLL\amd_fidelityfx_dx12.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d12.lib;dxgi.lib;dxguid.lib;xgameruntime.lib;$(SolutionDir)..\..\..\Kits\AMDTK\ffx-api\PrebuiltSignedDLL\amd_fidelityfx_dx12.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -187,18 +194,18 @@
       <DestinationFolders>$(OutDir)Assets</DestinationFolders>
     </CopyFileToFolders>
     <PostBuildEvent>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">copy /Y "$(SolutionDir)..\..\..\Kits\AMDTK\ffx-api\bin\amd_fidelityfx_dx12d.dll" "$(OutDir)amd_fidelityfx_dx12d.dll"</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">Copy FidelityFX API DLL</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">copy /Y "$(SolutionDir)..\..\..\Kits\AMDTK\ffx-api\PrebuiltSignedDLL\amd_fidelityfx_dx12.dll" "$(OutDir)amd_fidelityfx_dx12.dll"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Copy FidelityFX API DLL</Message>
     </PostBuildEvent>
     <PostBuildEvent>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">copy /Y "$(SolutionDir)..\..\..\Kits\AMDTK\ffx-api\bin\amd_fidelityfx_dx12drel.dll" "$(OutDir)amd_fidelityfx_dx12drel.dll"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">copy /Y "$(SolutionDir)..\..\..\Kits\AMDTK\ffx-api\PrebuiltSignedDLL\amd_fidelityfx_dx12.dll" "$(OutDir)amd_fidelityfx_dx12.dll"</Command>
     </PostBuildEvent>
     <PostBuildEvent>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">Copy FidelityFX API DLL</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">Copy FidelityFX API DLL</Message>
     </PostBuildEvent>
     <PostBuildEvent>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">copy /Y "$(SolutionDir)..\..\..\Kits\AMDTK\ffx-api\PrebuiltSignedDLL\amd_fidelityfx_dx12.dll" "$(OutDir)amd_fidelityfx_dx12.dll"</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Desktop.x64'">Copy FidelityFX API DLL</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">copy /Y "$(SolutionDir)..\..\..\Kits\AMDTK\ffx-api\PrebuiltSignedDLL\amd_fidelityfx_dx12.dll" "$(OutDir)amd_fidelityfx_dx12.dll"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Copy FidelityFX API DLL</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -209,39 +216,39 @@
     <ClInclude Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuad.h" />
     <ClInclude Include="..\..\..\Kits\ATGTK\MSAAHelper.h" />
     <ClInclude Include="..\..\..\Kits\ATGTK\PerformanceTimers.h">
-      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\ATGTK\PerformanceTimersXbox.h">
-      <ExcludedFromBuild Condition="'$(Platform)'=='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\ATGTK\ReadData.h" />
     <ClInclude Include="..\..\..\Kits\ATGTK\RenderTexture.h" />
     <ClInclude Include="..\..\..\Kits\AMDTK\ffx-api\include\ffx_api\dx12\ffx_api_dx12.h">
-      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\AMDTK\ffx-api\include\ffx_api\dx12\ffx_api_dx12.hpp">
-      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\AMDTK\ffx-api\include\ffx_api\ffx_api.h">
-      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\AMDTK\ffx-api\include\ffx_api\ffx_api.hpp">
-      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\AMDTK\ffx-api\include\ffx_api\ffx_api_types.h">
-      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\AMDTK\ffx-api\include\ffx_api\ffx_upscale.h">
-      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\AMDTK\ffx-api\include\ffx_api\ffx_upscale.hpp">
-      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\AMDTK\ffx-api\include\ffx_api\ffx_framegeneration.h">
-      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\AMDTK\ffx-api\include\ffx_api\ffx_framegeneration.hpp">
-      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\AMDTK\GLTF\GltfDepthPass.h" />
     <ClInclude Include="..\..\..\Kits\AMDTK\GLTF\GltfFile.h" />
@@ -274,10 +281,10 @@
     <ClCompile Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuad.cpp" />
     <ClCompile Include="..\..\..\Kits\ATGTK\MSAAHelper.cpp" />
     <ClCompile Include="..\..\..\Kits\ATGTK\PerformanceTimers.cpp">
-      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\ATGTK\PerformanceTimersXbox.cpp">
-      <ExcludedFromBuild Condition="'$(Platform)'=='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\ATGTK\RenderTexture.cpp" />
     <ClCompile Include="..\..\..\Kits\AMDTK\GLTF\GltfDepthPass.cpp" />
@@ -303,8 +310,8 @@
     <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Kits\DirectXTK12\DirectXTK12_GDK_2022.vcxproj">
-      <Project>{b47a013a-4de2-4183-a279-a363289e19b8}</Project>
+    <ProjectReference Include="..\..\..\Kits\DirectXTK12\DirectXTK12_GDKX_2022.vcxproj">
+      <Project>{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -365,24 +372,8 @@
     <None Include="Particles\ComputeCommon.hlsli" />
     <None Include="Particles\ParticleCommon.hlsli" />
     <None Include="Shaders\Tonemappers.hlsli" />
-    <None Include="..\..\..\Kits\AMDTK\ffx-api\PrebuiltSignedDLL\amd_fidelityfx_dx12.lib">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'!='Release|Gaming.Desktop.x64'">true</ExcludedFromBuild>
-    </None>
-    <None Include="..\..\..\Kits\AMDTK\ffx-api\bin\amd_fidelityfx_dx12d.lib">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'!='Debug|Gaming.Desktop.x64'">true</ExcludedFromBuild>
-    </None>
-    <None Include="..\..\..\Kits\AMDTK\ffx-api\bin\amd_fidelityfx_dx12drel.lib">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'!='Profile|Gaming.Desktop.x64'">true</ExcludedFromBuild>
-    </None>
-    <None Include="..\..\..\Kits\AMDTK\ffx-api\PrebuiltSignedDLL\amd_fidelityfx_dx12.dll">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'!='Release|Gaming.Desktop.x64'">true</ExcludedFromBuild>
-    </None>
-    <None Include="..\..\..\Kits\AMDTK\ffx-api\bin\amd_fidelityfx_dx12d.dll">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'!='Debug|Gaming.Desktop.x64'">true</ExcludedFromBuild>
-    </None>
-    <None Include="..\..\..\Kits\AMDTK\ffx-api\bin\amd_fidelityfx_dx12drel.dll">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'!='Profile|Gaming.Desktop.x64'">true</ExcludedFromBuild>
-    </None>
+    <None Include="..\..\..\Kits\AMDTK\ffx-api\PrebuiltSignedDLL\amd_fidelityfx_dx12.lib" />      
+    <None Include="..\..\..\Kits\AMDTK\ffx-api\PrebuiltSignedDLL\amd_fidelityfx_dx12.dll" />          
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-PS_Permutation_0x1c884106.hlsl">
@@ -621,6 +612,12 @@
       <DestinationFolders>$(OutDir)</DestinationFolders>
     </CopyFileToFolders>
   </ItemGroup>
+  <ItemGroup Condition="'$(Platform)'=='x64'">
+    <ReferenceCopyLocalPaths Include="$(GDKCrossPlatformPath)windows\bin\x64\libHttpClient.dll" />
+  </ItemGroup>
+  <ItemGroup Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(Platform)', 'Gaming\.Xbox\..+\.x64'))">
+    <ReferenceCopyLocalPaths Include="$(GDKCrossPlatformPath)xbox\bin\x64\libHttpClient.dll" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\..\packages\WinPixEventRuntime.1.0.240308001\build\WinPixEventRuntime.targets" Condition="Exists('..\..\packages\WinPixEventRuntime.1.0.240308001\build\WinPixEventRuntime.targets')" />
@@ -630,5 +627,10 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\WinPixEventRuntime.1.0.240308001\build\WinPixEventRuntime.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\WinPixEventRuntime.1.0.240308001\build\WinPixEventRuntime.targets'))" />
+  </Target>
+  <Target Name="BuildMGC" AfterTargets="Build" Condition="!$([System.Text.RegularExpressions.Regex]::IsMatch('$(Platform)', 'Gaming\..+\.x64'))"
+          Inputs="@(MGCCompile)" Outputs="$(OutDir)MicrosoftGame.config">
+    <Exec ConsoleToMsBuild="true" Command="copy &quot;%(MGCCompile.Identity)&quot; &quot;$(OutDir)MicrosoftGame.config&quot;" />
+    <Exec ConsoleToMsBuild="true" Command="makepkg.exe localize /d &quot;$(OutDir).&quot; /pd &quot;$(OutDir).&quot; /gc &quot;%(MGCCompile.Identity)&quot;" />
   </Target>
 </Project>

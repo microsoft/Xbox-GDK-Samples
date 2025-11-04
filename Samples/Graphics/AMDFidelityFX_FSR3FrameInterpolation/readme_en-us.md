@@ -12,7 +12,7 @@ This sample demonstrates the use of AMD FidelityFX Super Resolution 3.1.3 for up
 
 # Building the sample
 
-<span style="color:grey">If using Windows Desktop, set the active solution platform to `Gaming.Desktop.x64`.</span> (Coming soon)
+<span style="color:grey">If using Windows Desktop, set the active solution platform to `x64`.</span> (Coming soon)
 
 If using Xbox Series X|S, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
 

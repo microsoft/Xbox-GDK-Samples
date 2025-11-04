@@ -521,6 +521,9 @@ void DirectX::CreateIntegerPCM(
     int channels,
     int sampleBits) noexcept
 {
+    if (!wfx)
+        return;
+
     const int blockAlign = channels * sampleBits / 8;
 
     wfx->wFormatTag = WAVE_FORMAT_PCM;
@@ -541,6 +544,9 @@ void DirectX::CreateFloatPCM(
     int sampleRate,
     int channels) noexcept
 {
+    if (!wfx)
+        return;
+
     const int blockAlign = channels * 4;
 
     wfx->wFormatTag = WAVE_FORMAT_IEEE_FLOAT;
@@ -563,6 +569,9 @@ void DirectX::CreateADPCM(
     int channels,
     int samplesPerBlock) noexcept(false)
 {
+    if (!wfx)
+        return;
+
     if (wfxSize < (sizeof(WAVEFORMATEX) + MSADPCM_FORMAT_EXTRA_BYTES))
     {
         DebugTrace("CreateADPCM needs at least %zu bytes for the result\n",
@@ -608,6 +617,9 @@ void DirectX::CreateXWMA(
     int avgBytes,
     bool wma3) noexcept
 {
+    if (!wfx)
+        return;
+
     wfx->wFormatTag = static_cast<WORD>((wma3) ? WAVE_FORMAT_WMAUDIO3 : WAVE_FORMAT_WMAUDIO2);
     wfx->nChannels = static_cast<WORD>(channels);
     wfx->nSamplesPerSec = static_cast<DWORD>(sampleRate);
@@ -895,7 +907,7 @@ void AudioListener::SetCone(const X3DAUDIO_CONE& listenerCone)
     pCone = &ListenerCone;
 }
 
-bool AudioListener::IsValid() const
+bool AudioListener::IsValid() const noexcept
 {
     if (!std::isfinite(OrientFront.x))
         return false;
@@ -943,7 +955,7 @@ void AudioEmitter::SetCone(const X3DAUDIO_CONE& emitterCone)
     pCone = &EmitterCone;
 }
 
-bool AudioEmitter::IsValid() const
+bool AudioEmitter::IsValid() const noexcept
 {
     if (!std::isfinite(OrientFront.x))
         return false;

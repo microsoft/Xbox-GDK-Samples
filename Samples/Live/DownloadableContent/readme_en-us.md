@@ -19,7 +19,7 @@ If using an Xbox One devkit, set the active solution platform to `Gaming.Xbox.Xb
 If using Xbox Series X|S Dev Kit, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
 
 If using a Windows PC, set the active solution platform to
-Gaming.Desktop.x64
+x64
 
 *For more information, see* __Running samples__, *in the GDK documentation.*
 
@@ -147,6 +147,10 @@ combinations.
 # Known issues
 
 # Update history
+
+**Update:** June 2024
+
+Add DirectStorage support.
 
 **Update:** June 2023
 

@@ -27,6 +27,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <cwchar>
+#include <cwctype>
 #include <fstream>
 #include <iterator>
 #include <list>
@@ -83,7 +84,7 @@ struct SConversion
 
 struct SValue
 {
-    const wchar_t*  name;
+    const wchar_t* name;
     uint32_t        value;
 };
 
@@ -115,7 +116,7 @@ namespace
 #pragma prefast(disable : 26018, "Only used with static internal arrays")
 #endif
 
-    uint32_t LookupByName(const wchar_t *name, const SValue *pArray)
+    uint32_t LookupByName(const wchar_t* name, const SValue* pArray)
     {
         while (pArray->name)
         {
@@ -239,7 +240,8 @@ namespace
                     else
                     {
                         std::wstring name = (fname + 1);
-                        std::transform(name.begin(), name.end(), name.begin(), ::towlower);
+                        std::transform(name.begin(), name.end(), name.begin(),
+                            [](wchar_t c) { return std::towlower(c); });
                         excludes.insert(name);
                     }
                 }
@@ -266,7 +268,8 @@ namespace
             for (auto it = flist.begin(); it != flist.end();)
             {
                 std::wstring name = it->szSrc;
-                std::transform(name.begin(), name.end(), name.begin(), towlower);
+                std::transform(name.begin(), name.end(), name.begin(),
+                    [](wchar_t c) { return std::towlower(c); });
                 auto item = it;
                 ++it;
                 if (excludes.find(name) != excludes.end())
@@ -398,7 +401,7 @@ namespace
         {
         case XBMODULE_CATEGORY::OS: return L"OS";
         case XBMODULE_CATEGORY::GameOS: return L"GameOS";
-        case XBMODULE_CATEGORY::D3D : return L"D3D";
+        case XBMODULE_CATEGORY::D3D: return L"D3D";
         case XBMODULE_CATEGORY::CRT: return L"CRT";
         case XBMODULE_CATEGORY::GDK: return L"GDK";
         case XBMODULE_CATEGORY::DXSDK: return L"DXSDK";
@@ -413,9 +416,9 @@ namespace
     struct XBModuleInfo
     {
         XBMODULE_CATEGORY                   category;
-        const char*                         fileName;
-        const IMAGE_IMPORT_DESCRIPTOR*      importDesc;
-        const IMAGE_DELAYLOAD_DESCRIPTOR*   delayImportDesc;
+        const char* fileName;
+        const IMAGE_IMPORT_DESCRIPTOR* importDesc;
+        const IMAGE_DELAYLOAD_DESCRIPTOR* delayImportDesc;
     };
 
     // https://stackoverflow.com/questions/15960437/how-to-read-import-directory-table-in-c
@@ -1054,7 +1057,6 @@ namespace
     };
 }
 
-
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -1187,7 +1189,7 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
             wcscpy_s(dllpath, pArg);
             wcscat_s(dllpath, L"\\*.dll");
 
-            SearchForFiles(dllpath, conversion, (options& (1 << OPT_RECURSIVE)) != 0);
+            SearchForFiles(dllpath, conversion, (options & (1 << OPT_RECURSIVE)) != 0);
 
             if (conversion.size() <= count)
             {
@@ -1303,7 +1305,7 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
         auto ntHeader = reinterpret_cast<const IMAGE_NT_HEADERS64*>(
             static_cast<const uint8_t*>(fileBase) + peHeader->e_lfanew);
 
-        if ((ntHeader+1) > endPtr)
+        if ((ntHeader + 1) > endPtr)
         {
             constexpr HRESULT hr = HRESULT_FROM_WIN32(ERROR_BAD_EXE_FORMAT);
             wprintf(L" FAILED (%08X%ls)\n", static_cast<unsigned int>(hr), GetErrorDesc(hr));
@@ -1520,9 +1522,9 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
 
         std::sort(moduleInfo.get(), moduleInfo.get() + totalModuleCount,
             [](const XBModuleInfo& a, const XBModuleInfo& b) -> bool
-            {
-                return _stricmp(a.fileName, b.fileName) < 0;
-            });
+        {
+            return _stricmp(a.fileName, b.fileName) < 0;
+        });
 
         wprintf(L"INFO: Found %zu import modules\n", totalModuleCount);
 
@@ -1543,7 +1545,7 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
         };
 
         // Process imports from modules.
-        std::vector<std::pair<const char*,const char*>> disallowedAPIs;
+        std::vector<std::pair<const char*, const char*>> disallowedAPIs;
 
         if (minVSVer == VCMinimumVersion::Ignore)
         {
@@ -1702,8 +1704,8 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
                 {
                     std::string name = moduleInfo[index].fileName;
 
-#pragma warning(suppress : 4244)
-                    std::transform(name.begin(), name.end(), name.begin(), ::tolower);
+                    std::transform(name.begin(), name.end(), name.begin(),
+                        [](char c) { return static_cast<char>(std::tolower(c)); });
 
                     missingDLLs.insert(name);
                     ++unresolvedhard;
@@ -1712,7 +1714,8 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
                 {
                     std::string name = moduleInfo[index].fileName;
 
-                    std::transform(name.begin(), name.end(), name.begin(), ::tolower);
+                    std::transform(name.begin(), name.end(), name.begin(),
+                        [](char c) { return static_cast<char>(std::tolower(c)); });
 
                     missingDelayLoadDLLs.insert(name);
                     ++unresolvedsoft;

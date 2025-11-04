@@ -159,8 +159,8 @@ void Sample::CreateCacaoContexts()
     FfxErrorCode errorCode = ffxGetInterfaceDX12(&m_ffxInterface, m_deviceResources->GetD3DDevice(), scratchBuffer,
         scratchBufferSize, FFX_CACAO_CONTEXT_COUNT * 2);
     FFX_ASSERT_MESSAGE(errorCode == FFX_OK, "Could not initialize FidelityFX SDK backend context.");
-    FFX_ASSERT_MESSAGE(m_ffxInterface.fpGetSDKVersion(&m_ffxInterface) == FFX_SDK_MAKE_VERSION(1, 1, 2),
-        "FidelityFX CACAO sample requires linking with a 1.1.2 version SDK backend");
+    FFX_ASSERT_MESSAGE(m_ffxInterface.fpGetSDKVersion(&m_ffxInterface) == FFX_SDK_MAKE_VERSION(1, 1, 4),
+        "FidelityFX CACAO sample requires linking with a 1.1.4 version SDK backend");
     FFX_ASSERT_MESSAGE(ffxCacaoGetEffectVersion() == FFX_SDK_MAKE_VERSION(1, 4, 0),
         "FidelityFX Cacao sample requires linking with a 1.4 version FidelityFX Cacao library");
 

@@ -23,7 +23,7 @@ If using an Xbox Series X|S devkit, set the active solution platform to `Gaming.
 
 If using an Xbox One devkit, set the active solution platform to `Gaming.Xbox.XboxOne.x64`.
 
-If using a Windows PC, set the active solution platform to `Gaming.Desktop.x64`.
+If using a Windows PC, set the active solution platform to `x64`.
 Note while the code should compile, Franchise Game Hub is primarily a console feature and some functionality may not work.
 
 *For more information, see* __Running samples__, *in the GDK documentation.*

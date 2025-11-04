@@ -14,14 +14,17 @@
     <Filter Include="External">
       <UniqueIdentifier>fb9b9d9a-4f9b-4446-8e38-b608a33e8737</UniqueIdentifier>
     </Filter>
-    <Filter Include="PrecompiledShaders">
-      <UniqueIdentifier>{76937e9c-5fe7-4b5f-b255-06e9db327429}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Shaders">
-      <UniqueIdentifier>{2367bad5-8b59-4ddd-902a-b5786ac52654}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ImGui">
       <UniqueIdentifier>{5539f2d3-8b11-4cc9-bde1-83d577be9448}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGui\ATG">
+      <UniqueIdentifier>{a74d5981-df07-4232-b6c3-518e027f55f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGui\Backends">
+      <UniqueIdentifier>{c715808d-3324-4b99-aecd-ab120743da99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGui\Backends\Shaders">
+      <UniqueIdentifier>{83199e07-dff2-4569-83c5-43f08286201e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -54,9 +57,6 @@
     <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
       <Filter>External</Filter>
     </ClInclude>
-    <ClInclude Include="ImGuiImplGdkDx12.h" />
-    <ClInclude Include="ImGuiAcc.h" />
-    <ClInclude Include="ImGuiDx12Renderer.h" />
     <ClInclude Include="Narrator.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imconfig.h">
       <Filter>ImGui</Filter>
@@ -64,13 +64,7 @@
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imgui.h">
       <Filter>ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imgui_impl_dx12.h">
-      <Filter>ImGui</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imgui_internal.h">
-      <Filter>ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imgui_stdlib.h">
       <Filter>ImGui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imstb_rectpack.h">
@@ -82,9 +76,50 @@
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imstb_truetype.h">
       <Filter>ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imgui_impl_win32.h">
-      <Filter>ImGui</Filter>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_win32.h">
+      <Filter>ImGui\Backends</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_dx12.h">
+      <Filter>ImGui\Backends</Filter>
+    </ClInclude>
+    <ClInclude Include="ImguiAcc.h" />
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_allocator.h">
+      <Filter>ImGui\ATG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_atg.h">
+      <Filter>ImGui\ATG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_atg_file.h">
+      <Filter>ImGui\ATG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_ps.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_rs.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_vs.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_ps.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_rs.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_vs.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_ps.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_rs.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_vs.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="GameInputManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -99,20 +134,11 @@
     <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
       <Filter>ATG Tool Kit</Filter>
     </ClCompile>
-    <ClCompile Include="ImGuiImplGdkDx12.cpp" />
-    <ClCompile Include="ImGuiAcc.cpp" />
-    <ClCompile Include="ImGuiDx12Renderer.cpp" />
     <ClCompile Include="Narrator.cpp" />
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui.cpp">
       <Filter>ImGui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_draw.cpp">
-      <Filter>ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_impl_dx12.cpp">
-      <Filter>ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_stdlib.cpp">
       <Filter>ImGui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_tables.cpp">
@@ -121,9 +147,14 @@
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_widgets.cpp">
       <Filter>ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_impl_win32.cpp">
-      <Filter>ImGui</Filter>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_win32.cpp">
+      <Filter>ImGui\Backends</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_dx12.cpp">
+      <Filter>ImGui\Backends</Filter>
+    </ClCompile>
+    <ClCompile Include="ImguiAcc.cpp" />
+    <ClCompile Include="GameInputManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MGCCompile Include="MicrosoftGameConfig.mgc" />
@@ -144,27 +175,8 @@
     <CopyFileToFolders Include="Assets\StoreLogo.png">
       <Filter>Assets</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="PrecompiledShaders\XboxGamingXboxOneimgui_shaders_vertex_main_vs.inc">
-      <Filter>PrecompiledShaders</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="PrecompiledShaders\XboxGamingXboxOneimgui_shaders_pixel_main_ps.inc">
-      <Filter>PrecompiledShaders</Filter>
-    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
     <None Include="readme.md" />
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="shaders\ps.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="shaders\vs.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="shaders\rs_and_vsps_params.hlsl">
-      <Filter>Shaders</Filter>
-    </CustomBuild>
   </ItemGroup>
 </Project>

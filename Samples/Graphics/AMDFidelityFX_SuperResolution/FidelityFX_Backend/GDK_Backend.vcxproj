@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\..\packages\Microsoft.Direct3D.DXC.1.8.2407.12\build\native\Microsoft.Direct3D.DXC.props" Condition="Exists('..\..\..\packages\Microsoft.Direct3D.DXC.1.8.2407.12\build\native\Microsoft.Direct3D.DXC.props')" />
-  <Import Project="..\..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.props" Condition="Exists('..\..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.props')" />
+  <Import Project="..\..\..\packages\Microsoft.Direct3D.DXC.1.8.2502.8\build\native\Microsoft.Direct3D.DXC.props" Condition="Exists('..\..\..\packages\Microsoft.Direct3D.DXC.1.8.2502.8\build\native\Microsoft.Direct3D.DXC.props')" />
+  <Import Project="..\..\..\packages\Microsoft.Direct3D.D3D12.1.615.1\build\native\Microsoft.Direct3D.D3D12.props" Condition="Exists('..\..\..\packages\Microsoft.Direct3D.D3D12.1.615.1\build\native\Microsoft.Direct3D.D3D12.props')" />
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|Gaming.Desktop.x64">
+    <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
-      <Platform>Gaming.Desktop.x64</Platform>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Profile|Gaming.Desktop.x64">
+    <ProjectConfiguration Include="Profile|x64">
       <Configuration>Profile</Configuration>
-      <Platform>Gaming.Desktop.x64</Platform>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Gaming.Desktop.x64">
+    <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
-      <Platform>Gaming.Desktop.x64</Platform>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Gaming.Xbox.Scarlett.x64">
       <Configuration>Debug</Configuration>
@@ -47,9 +47,46 @@
       <FileType>Document</FileType>
       <Command>set GDKEDITION=$(XdkEdition)
 set GXDKLatest=$(Console_SdkToolPath)..\..\
+set GameDKXboxLatest=$(GameDKXboxLatest)
 call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Command>
       <Message>Precompiling FidelityFX Shader Permutations</Message>
       <Outputs>$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr1_easu_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr1_easu_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr1_easu_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr1_easu_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr1_rcas_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr1_rcas_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr1_rcas_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr1_rcas_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_accumulate_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_accumulate_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_accumulate_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_accumulate_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_autogen_reactive_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_autogen_reactive_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_autogen_reactive_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_autogen_reactive_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_compute_luminance_pyramid_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_compute_luminance_pyramid_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_compute_luminance_pyramid_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_compute_luminance_pyramid_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_depth_clip_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_depth_clip_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_depth_clip_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_depth_clip_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_lock_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_lock_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_lock_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_lock_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_rcas_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_rcas_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_rcas_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_rcas_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_reconstruct_previous_depth_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_reconstruct_previous_depth_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_reconstruct_previous_depth_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_reconstruct_previous_depth_pass_wave64_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_tcr_autogen_pass_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_tcr_autogen_pass_wave64_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_tcr_autogen_pass_16bit_permutations.h;$(ProjectDir)..\..\..\..\Kits\AMDTK\FidelityFX\sc_bin\$(PlatformName)\ffx_fsr2_tcr_autogen_pass_wave64_16bit_permutations.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">for %%F in ("$(GameDKCoreLatest).") do set GDKEDITION=%%~nxF
+set GXDKLatest=$(Console_SdkToolPath)..\..\
+set GameDKXboxLatest=$(GameDKXboxLatest)
+call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">for %%F in ("$(GameDKCoreLatest).") do set GDKEDITION=%%~nxF
+set GXDKLatest=$(Console_SdkToolPath)..\..\
+set GameDKXboxLatest=$(GameDKXboxLatest)
+call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">for %%F in ("$(GameDKCoreLatest).") do set GDKEDITION=%%~nxF
+set GXDKLatest=$(Console_SdkToolPath)..\..\
+set GameDKXboxLatest=$(GameDKXboxLatest)
+call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">for %%F in ("$(GameDKXboxLatest).") do set GDKEDITION=%%~nxF
+set GXDKLatest=$(Console_SdkToolPath)..\..\
+set GameDKXboxLatest=$(GameDKXboxLatest)
+call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">for %%F in ("$(GameDKXboxLatest).") do set GDKEDITION=%%~nxF
+set GXDKLatest=$(Console_SdkToolPath)..\..\
+set GameDKXboxLatest=$(GameDKXboxLatest)
+call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">for %%F in ("$(GameDKXboxLatest).") do set GDKEDITION=%%~nxF
+set GXDKLatest=$(Console_SdkToolPath)..\..\
+set GameDKXboxLatest=$(GameDKXboxLatest)
+call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">for %%F in ("$(GameDKXboxLatest).") do set GDKEDITION=%%~nxF
+set GXDKLatest=$(Console_SdkToolPath)..\..\
+set GameDKXboxLatest=$(GameDKXboxLatest)
+call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">for %%F in ("$(GameDKXboxLatest).") do set GDKEDITION=%%~nxF
+set GXDKLatest=$(Console_SdkToolPath)..\..\
+set GameDKXboxLatest=$(GameDKXboxLatest)
+call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">for %%F in ("$(GameDKXboxLatest).") do set GDKEDITION=%%~nxF
+set GXDKLatest=$(Console_SdkToolPath)..\..\
+set GameDKXboxLatest=$(GameDKXboxLatest)
+call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -117,15 +154,15 @@ call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Comma
   <ItemGroup>
     <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\gdk\ffx_gdk.cpp">
       <DisableSpecificWarnings>4324;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <ExcludedFromBuild Condition="'$(Platform)'=='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\dx12\ffx_dx12.cpp">
       <DisableSpecificWarnings>4324;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\shared\ffx_breadcrumbs_list.cpp">
       <DisableSpecificWarnings>4324;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\blob_accessors\ffx_fsr1_shaderblobs.cpp">
       <DisableSpecificWarnings>4201;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -135,6 +172,7 @@ call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Comma
     </ClCompile>
     <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\ffx_shader_blobs.cpp" />
     <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\shared\ffx_assert.cpp" />
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\shared\ffx_message.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\ffx_core.h" />
@@ -164,13 +202,13 @@ call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Comma
     <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\fsr2\ffx_fsr2_tcr_autogen.h" />
     <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\gpu\fsr2\ffx_fsr2_upsample.h" />
     <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\host\backends\gdk\ffx_gdk.h">
-      <ExcludedFromBuild Condition="'$(Platform)'=='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\host\backends\dx12\ffx_dx12.h">
-      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\include\FidelityFX\host\backends\dx12\d3dx12.h">
-      <ExcludedFromBuild Condition="'$(Platform)'!='Gaming.Desktop.x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\blob_accessors\ffx_fsr1_shaderblobs.h" />
     <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\blob_accessors\ffx_fsr2_shaderblobs.h" />
@@ -185,7 +223,7 @@ call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Comma
     <DefaultLanguage>en-US</DefaultLanguage>
     <Keyword>Win32Proj</Keyword>
     <!-- - - - -->
-    <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
+    <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
     <TargetRuntime>Native</TargetRuntime>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
@@ -216,20 +254,20 @@ call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Comma
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <!-- Scarlett/Xbox One paths -->
-  <PropertyGroup Condition="'$(Platform)'!='Gaming.Desktop.x64'">
+  <PropertyGroup Condition="'$(Platform)'!='x64'">
     <ReferencePath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</ReferencePath>
     <LibraryPath>$(Console_SdkLibPath)</LibraryPath>
     <LibraryWPath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</LibraryWPath>
     <IncludePath>$(Console_SdkIncludeRoot)</IncludePath>
-    <ExecutablePath>$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
+    <ExecutablePath>$(GameDK)bin;$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <!-- Desktop paths -->
-  <PropertyGroup Condition="'$(Platform)'=='Gaming.Desktop.x64'">
+  <PropertyGroup Condition="'$(Platform)'=='x64'">
     <ReferencePath>$(VC_ReferencesPath_x64);</ReferencePath>
     <LibraryPath>$(WindowsSDK_LibraryPath_x64);$(Console_SdkLibPath);$(LibraryPath)</LibraryPath>
     <LibraryWPath>$(WindowsSDK_MetadataPath);</LibraryWPath>
     <IncludePath>$(WindowsSDK_IncludePath);$(Console_SdkIncludeRoot);$(IncludePath)</IncludePath>
-    <ExecutablePath>$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
+    <ExecutablePath>$(GameDK)bin;$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <!-- Extra Profile/Release properties -->
   <PropertyGroup Condition="'$(Configuration)'!='Debug'">
@@ -285,7 +323,7 @@ call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Comma
       <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'=='Gaming.Desktop.x64'">
+  <ItemDefinitionGroup Condition="'$(Platform)'=='x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\Kits\ATGTK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -294,13 +332,13 @@ call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Comma
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\..\..\packages\WinPixEventRuntime.1.0.240308001\build\WinPixEventRuntime.targets" Condition="Exists('..\..\..\packages\WinPixEventRuntime.1.0.240308001\build\WinPixEventRuntime.targets')" />
-    <Import Project="..\..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.targets" Condition="Exists('..\..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.targets')" />
-    <Import Project="..\..\..\packages\Microsoft.Direct3D.DXC.1.8.2407.12\build\native\Microsoft.Direct3D.DXC.targets" Condition="Exists('..\..\..\packages\Microsoft.Direct3D.DXC.1.8.2407.12\build\native\Microsoft.Direct3D.DXC.targets')" />
+    <Import Project="..\..\..\packages\Microsoft.Direct3D.D3D12.1.615.1\build\native\Microsoft.Direct3D.D3D12.targets" Condition="Exists('..\..\..\packages\Microsoft.Direct3D.D3D12.1.615.1\build\native\Microsoft.Direct3D.D3D12.targets')" />
+    <Import Project="..\..\..\packages\Microsoft.Direct3D.DXC.1.8.2502.8\build\native\Microsoft.Direct3D.DXC.targets" Condition="Exists('..\..\..\packages\Microsoft.Direct3D.DXC.1.8.2502.8\build\native\Microsoft.Direct3D.DXC.targets')" />
   </ImportGroup>
   <Target Name="EnsureGDKX" BeforeTargets="_CheckForInvalidConfigurationAndPlatform" Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(Platform)', 'Gaming\..+\.x64'))">
     <PropertyGroup>
-      <ErrorText Condition="'$(Platform)'=='Gaming.Desktop.x64'">This project requires the Microsoft GDK to be installed. If you have already installed the GDK, then run Repair to ensure proper integration with Visual Studio. The missing platform is {0}.</ErrorText>
-      <ErrorText Condition="'$(Platform)'!='Gaming.Desktop.x64'">This project requires the Microsoft GDK with Xbox Extensions to be installed. If you have already installed the GDK, then run Repair to ensure proper integration with Visual Studio. The missing platform is {0}.</ErrorText>
+      <ErrorText Condition="'$(Platform)'=='x64'">This project requires the Microsoft GDK to be installed. If you have already installed the GDK, then run Repair to ensure proper integration with Visual Studio. The missing platform is {0}.</ErrorText>
+      <ErrorText Condition="'$(Platform)'!='x64'">This project requires the Microsoft GDK with Xbox Extensions to be installed. If you have already installed the GDK, then run Repair to ensure proper integration with Visual Studio. The missing platform is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(VCTargetsPath)\Platforms\$(Platform)\Platform.props')" Text="$([System.String]::Format('$(ErrorText)', '$(Platform)'))" />
   </Target>
@@ -309,10 +347,10 @@ call "$(ProjectDir)BuildGDKShaders.bat" "$(ProjectDir)" "$(PlatformName)"</Comma
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\..\..\packages\WinPixEventRuntime.1.0.240308001\build\WinPixEventRuntime.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\WinPixEventRuntime.1.0.240308001\build\WinPixEventRuntime.targets'))" />
-    <Error Condition="!Exists('..\..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.props'))" />
-    <Error Condition="!Exists('..\..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.Direct3D.D3D12.1.615.0\build\native\Microsoft.Direct3D.D3D12.targets'))" />
-    <Error Condition="!Exists('..\..\..\packages\Microsoft.Direct3D.DXC.1.8.2407.12\build\native\Microsoft.Direct3D.DXC.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.Direct3D.DXC.1.8.2407.12\build\native\Microsoft.Direct3D.DXC.props'))" />
-    <Error Condition="!Exists('..\..\..\packages\Microsoft.Direct3D.DXC.1.8.2407.12\build\native\Microsoft.Direct3D.DXC.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.Direct3D.DXC.1.8.2407.12\build\native\Microsoft.Direct3D.DXC.targets'))" />
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.Direct3D.D3D12.1.615.1\build\native\Microsoft.Direct3D.D3D12.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.Direct3D.D3D12.1.615.1\build\native\Microsoft.Direct3D.D3D12.props'))" />
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.Direct3D.D3D12.1.615.1\build\native\Microsoft.Direct3D.D3D12.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.Direct3D.D3D12.1.615.1\build\native\Microsoft.Direct3D.D3D12.targets'))" />
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.Direct3D.DXC.1.8.2502.8\build\native\Microsoft.Direct3D.DXC.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.Direct3D.DXC.1.8.2502.8\build\native\Microsoft.Direct3D.DXC.props'))" />
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.Direct3D.DXC.1.8.2502.8\build\native\Microsoft.Direct3D.DXC.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.Direct3D.DXC.1.8.2502.8\build\native\Microsoft.Direct3D.DXC.targets'))" />
   </Target>
   <!-- We don't distribute those binaries as a package, so we need to place them properly for FidelityFX_SC.exe -->
   <Target Name="EnsureFXMSFTBinaries" AfterTargets="EnsureNuGetPackageBuildImports">

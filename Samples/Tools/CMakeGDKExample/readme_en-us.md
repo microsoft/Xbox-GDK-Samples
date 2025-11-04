@@ -17,7 +17,7 @@ an alternative method of utilizing CMake via the Ninja generator, see
 
 # Building the sample (Visual Studio)
 
-Using Visual Studio 2019 or 2022 select "Open a local folder..." from
+Using Visual Studio 2022 select "Open a local folder..." from
 the New Project Dialog or the "File -\> Open -\> Folder..." menu command
 and open the sample folder.
 
@@ -32,7 +32,7 @@ Otherwise select the CMakeList.txt and select "Generate Cache" from the
 right-button menu. Then use the "Build -\> Rebuild All" menu command.
 
 Choose which platform to build for in the combo box which will be
-populated as follows using VS 2019 (16.11) or VS 2022 [CMake Preset
+populated as follows using VS 2022 [CMake Preset
 integration](https://devblogs.microsoft.com/cppblog/cmake-presets-integration-in-visual-studio-and-visual-studio-code/):
 
 ![Graphical user interface, text, application Description automatically generated](./media/image2.png)
@@ -44,7 +44,7 @@ for more information on CMake in Visual Studio.
 > If using Visual Studio 2022, edit CMakePresets.json to change this line from:
 
 ```
-"generator": "Visual Studio 16 2019",
+"generator": "Visual Studio 17 2022",
 ```
 
 to:
@@ -133,7 +133,7 @@ change to the sample directory:
 To run the 'loose' build, go to:
 
 ```
-cd CMakeGDKExample\out\build\x64-Desktop\bin\Gaming.Desktop.x64\Debug
+cd CMakeGDKExample\out\build\x64-Desktop\bin\x64\Debug
 ```
 
 For Desktop packaging:
@@ -142,7 +142,7 @@ For Desktop packaging:
 cd CMakeGDKExample\out\build\x64-Desktop
 ```
 
-Edit ``bin\Gaming.Desktop.x64\Debug\MicrosoftGame.config`` to add the
+Edit ``bin\x64\Debug\MicrosoftGame.config`` to add the
 ``TargetDeviceFamily``.
 
 ```
@@ -152,8 +152,8 @@ Edit ``bin\Gaming.Desktop.x64\Debug\MicrosoftGame.config`` to add the
 ```
 
 ```
-makepkg genmap /f chunks.xml /d bin\Gaming.Desktop.x64\Debug
-makepkg pack /pc /f chunks.xml /lt /d bin\Gaming.Desktop.x64\Debug /pd .
+makepkg genmap /f chunks.xml /d bin\x64\Debug
+makepkg pack /pc /f chunks.xml /lt /d bin\x64\Debug /pd .
 ```
 
 ## Targeting Xbox One or Xbox Series X|S
@@ -222,16 +222,15 @@ triangle. It has no controls or other behavior.
 # Implementation Details
 
 The **CMakeExample** uses the "Ninja" generator so does not make use of
-the Microsoft GDK MSBuild rules. This version uses the "Visual Studio 16
-2019 Win64" or "Visual Studio 17 2022 Win64" generator instead which
-makes use of the Microsoft GDK MSBuild instructions.
+the Microsoft GDK MSBuild rules. This version uses the "Visual Studio 17 2022 Win64"
+generator instead which makes use of the Microsoft GDK MSBuild instructions.
 
 The CMake generation makes use of a toolchain file passed as a
 command-line:
 
 | Platform | CMake Toolchain |
 |-----------------------|----------------------------------------------|
-| Gaming.Desktop.x64  |  `-DCMAKE_TOOLCHAIN_FILE="grdk_toolchain.cmake"` |
+| x64  |  `-DCMAKE_TOOLCHAIN_FILE="grdk_toolchain.cmake"` |
 | Gaming.Xbox.XboxOne.x64 |  `-DCMAKE_TOOLCHAIN_FILE="gxdk_toolchain.cmake"` |
 | Gaming.Xbox.Scarlett.x64 |  `-DCMAKE_TOOLCHAIN_FILE="gxdk_xs_toolchain.cmake"` |
 
@@ -287,8 +286,8 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY VS_GLOBAL_VCToolsVersion "14.20.275
 |June 2020|Updated for the 2006 GDK FAL release.|
 |August 2020|Add explicitly set VS startup project.<br /> Updated with side-by-side details.|
 |November 2020|Extension libraries require explicitly references to .lib files.<br /> Add xmem.lib and xg_*.lib to link for Gaming.Xbox.*.x64.|
-|February 2021|Fix for Gaming.Desktop.x64 deployment.|
-|April 2021|Add appnotify.lib to resolve link issues with Gaming.Desktop.x64.<br />Add LargeLogo.png.|
+|February 2021|Fix for x64 deployment.|
+|April 2021|Add appnotify.lib to resolve link issues with x64.<br />Add LargeLogo.png.|
 |June 2021|Fixed bug to explicitly set edition number in generated vcxproj for side-by-side scenarios.<br />General code cleanup.|
 |August 2021|Improvements for toolchain files.<br />Additional notes for BWOI scenarios.|
 |October 2021|Further notes for BWOI scenarios.|
@@ -301,3 +300,4 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY VS_GLOBAL_VCToolsVersion "14.20.275
 |October 2024|Updated for changes to Extension Libraries directory layout.<br /> CMake 3.30 fixed the generation of UseDebugLibraries which is more robust than my workaround.|
 |February 2025|Updated to use `XBOX_CONSOLE_TARGET` variable with 'xboxone' or 'scarlett' to match VCPKG.|
 |April 2025|Updated for CMake 3.31 add_custom_command warning.|
+|October 2025|Updated for 2510 GDK and new layout, replacing `Gaming.Desktop.x64` with `x64`|

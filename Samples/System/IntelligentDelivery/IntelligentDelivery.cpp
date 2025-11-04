@@ -568,7 +568,8 @@ void Sample::CreateDeviceDependentResources()
     m_console->SetForegroundColor(DirectX::Colors::Yellow);
 
     // Create the style renderer for the UI manager to use for rendering the UI scene styles
-    auto styleRenderer = std::make_unique<UIStyleRendererD3D>(*this);
+    auto const os = m_deviceResources->GetOutputSize();
+    auto styleRenderer = std::make_unique<UIStyleRendererD3D>(*this, 200, os.right, os.bottom);
     m_uiManager.GetStyleManager().InitializeStyleRenderer(std::move(styleRenderer));
 
     upload.End(commandQueue);

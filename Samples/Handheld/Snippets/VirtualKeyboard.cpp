@@ -3,6 +3,9 @@
 #pragma warning(disable:4265)
 #pragma warning(disable:4365)
 
+// required lib for WinRT
+#pragma comment(lib, "runtimeobject.lib")
+
 #include <functional>
 
 // Virtual keyboard WinRT items are in the ViewManagement namespace

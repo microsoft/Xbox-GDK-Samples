@@ -165,7 +165,7 @@ Version : 1.0.0.0
 PackageFullName :
 41336MicrosoftATG.InGameStoreXS_1.0.0.0_x64\_\_dspnxghe87tn0
 InstallLocation :
-E:\\Repos\\ATGgit\\gx_dev\\Samples\\Live\\InGameStore\\Gaming.Desktop.x64\\Debug
+E:\\Repos\\ATGgit\\gx_dev\\Samples\\Live\\InGameStore\\x64\\Debug
 IsFramework : False
 PackageFamilyName : 41336MicrosoftATG.InGameStoreXS_dspnxghe87tn0
 PublisherId : dspnxghe87tn0

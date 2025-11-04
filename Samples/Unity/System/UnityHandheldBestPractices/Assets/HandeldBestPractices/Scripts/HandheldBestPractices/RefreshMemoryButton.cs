@@ -7,6 +7,7 @@ namespace WindowsSample_HandheldBestPractices
         public void Refresh()
         {
             HandheldBestPracticesManager.Instance.UpdateMemoryInfo();
+            HandheldBestPracticesManager.Instance.RefreshInfoText();
         }
     }
 }

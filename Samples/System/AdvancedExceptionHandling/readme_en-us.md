@@ -34,7 +34,7 @@ If using an Xbox One devkit, set the active solution platform to `Gaming.Xbox.Xb
 
 If using Xbox Series X|S, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
 
-If using the Desktop, set the active solution platform to `Gaming.Desktop.x64`.
+If using the Desktop, set the active solution platform to `x64`.
 
 *For more information, see* __Running samples__, *in the GDK documentation.*
 
