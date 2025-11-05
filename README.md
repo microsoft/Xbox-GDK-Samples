@@ -17,9 +17,30 @@ This repo contains game development samples written by the Microsoft Xbox Advanc
 
 # Requirements
 
-* Visual Studio 2019 (16.9 update or later) or Visual Studio 2022
-* Microsoft Game Development Kit ([GDK](https://aka.ms/gdk))
+* Visual Studio 2022 or later
+* __October 2025__ Microsoft Game Development Kit ([GDK](https://aka.ms/gdk))
 * -or- Microsoft Game Development Kit with Xbox Extensions ([GDKX](https://aka.ms/gdkx))
+
+https://aka.ms/gdkdl
+ 
+https://github.com/microsoft/Xbox-GDK-Samples
+ 
+## ATTN: Samples Now Require the October 2025 GDK
+
+### What is the new GDK layout?
+
+With the release of the October 2025 (2510) GDK comes the new GDK layout. The new layout is an updated directory structure for the GDK installation that replaces the **Gaming.Desktop.x64** build target with classic **x64**. It also reorganizes the resources available in the GDK install, requiring updated path and dependency configurations.
+The old layout (pre-2510) will be deprecated some time in 2026. To get ahead of this, the samples were proactively converted to use the new layout and removing support for the old one.
+ 
+### What does this mean for developers?
+ 
+Going forward, the samples distributions will only use the new GDK layout, requiring a 2510 GDK or later installation. If developers can’t upgrade, older sample releases can be used instead.
+
+*Note that the 2510 GDK includes the option to install the old layout next to the new one to prevent immediate breaks for existing titles. Unity samples currently still use the old layout, so be sure to use this option if you are developing with Unity.*
+ 
+### Why not keep both layouts for the samples?
+1. Clarity: Supporting both layouts would require samples to have both an **x64** and a **Gaming.Desktop.x64** configuration, which would negatively affect the clarity of sample configurations.
+2. Planning ahead: Since the old layout will be deprecated some time in 2026, doing a full conversion to the new layout is a better long-term solution.
 
 # Opening samples
 
