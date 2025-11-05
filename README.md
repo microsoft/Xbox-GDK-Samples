@@ -30,11 +30,11 @@ https://github.com/microsoft/Xbox-GDK-Samples
 ### What is the new GDK layout?
 
 With the release of the October 2025 (2510) GDK comes the new GDK layout. The new layout is an updated directory structure for the GDK installation that replaces the **Gaming.Desktop.x64** build target with classic **x64**. It also reorganizes the resources available in the GDK install, requiring updated path and dependency configurations.
-The old layout (pre-2510) will be deprecated some time in 2026. To get ahead of this, the samples were proactively converted to use the new layout and removing support for the old one.
+The old layout (pre-2510) will be deprecated some time in 2026. To get ahead of this, the samples were proactively converted to use the new layout while removing support for the old one.
  
 ### What does this mean for developers?
  
-Going forward, the samples distributions will only use the new GDK layout, requiring a 2510 GDK or later installation. If developers can’t upgrade, older sample releases can be used instead.
+Going forward, the samples distributions will only use the new GDK layout, requiring a 2510 GDK or later installation. If developers can’t upgrade, [older sample releases](https://github.com/microsoft/Xbox-GDK-Samples/releases/tag/jul2025) can be used instead.
 
 *Note that the 2510 GDK includes the option to install the old layout next to the new one to prevent immediate breaks for existing titles. Unity samples currently still use the old layout, so be sure to use this option if you are developing with Unity.*
  
