@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug_Scarlett|x64">
@@ -23,9 +23,15 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>xtexconv</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <GDKCrossPlatform>true</GDKCrossPlatform>
+    <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
   </PropertyGroup>
   <Import Condition="Exists($(ATGBuildProps))" Project="$(ATGBuildProps)" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup>
+    <GDKCrossPlatformPath Condition="'$(GDKCrossPlatformPath)'==''">$(GameDKCoreLatest)</GDKCrossPlatformPath>
+    <GDKCrossPlatformPath Condition="'$(GDKCrossPlatformPath)'==''">$(GameDKXboxLatest)</GDKCrossPlatformPath>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
@@ -52,6 +58,13 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
@@ -69,24 +82,49 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_Scarlett|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Profile|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(GameDKXboxLatest)'!=''">
+    <XboxOneIncludePath>$(GameDKXboxLatest)xbox\include\devpctools;$(GameDKXboxLatest)xbox\include\devpctools\gen8</XboxOneIncludePath>
+    <XboxOneLibPath>$(GameDKXboxLatest)xbox\lib\devpctools\gen8</XboxOneLibPath>
+    <XboxOneBinPath>$(GameDKXboxLatest)xbox\bin\devpctools\gen8</XboxOneBinPath>
+    <ScarlettIncludePath>$(GameDKXboxLatest)xbox\include\devpctools;$(GameDKXboxLatest)xbox\include\devpctools\gen9</ScarlettIncludePath>
+    <ScarlettLibPath>$(GameDKXboxLatest)xbox\lib\devpctools\gen9</ScarlettLibPath>
+    <ScarlettBinPath>$(GameDKXboxLatest)xbox\bin\devpctools\gen9</ScarlettBinPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(GameDKXboxLatest)'==''">
+    <XboxOneIncludePath>$(GameDKLatest)GXDK\toolKit\include;$(GameDKLatest)GXDK\toolKit\include\XboxOne</XboxOneIncludePath>
+    <XboxOneLibPath>$(GameDKLatest)GXDK\toolKit\lib\amd64\XboxOne</XboxOneLibPath>
+    <XboxOneBinPath>$(GameDKLatest)GXDK\bin\XboxOne</XboxOneBinPath>
+    <ScarlettIncludePath>$(GameDKLatest)GXDK\toolKit\include;$(GameDKLatest)GXDK\toolKit\include\Scarlett</ScarlettIncludePath>
+    <ScarlettLibPath>$(GameDKLatest)GXDK\toolKit\lib\amd64\Scarlett</ScarlettLibPath>
+    <ScarlettBinPath>$(GameDKLatest)GXDK\bin\Scarlett</ScarlettBinPath>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(GameDKLatest)GXDK\toolKit\include;$(GameDKLatest)GXDK\toolKit\include\XboxOne;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>$(GameDKLatest)GXDK\toolKit\lib\amd64\XboxOne;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
+    <IncludePath>$(XboxOneIncludePath);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(XboxOneLibPath);$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Scarlett|x64'">
-    <IncludePath>$(GameDKLatest)GXDK\toolKit\include;$(GameDKLatest)GXDK\toolKit\include\Scarlett;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>$(GameDKLatest)GXDK\toolKit\lib\amd64\Scarlett;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
+    <IncludePath>$(ScarlettIncludePath);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(ScarlettLibPath);$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
     <TargetName>$(ProjectName)_xs</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(GameDKLatest)GXDK\toolKit\include;$(GameDKLatest)GXDK\toolKit\include\XboxOne;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>$(GameDKLatest)GXDK\toolKit\lib\amd64\XboxOne;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
+    <IncludePath>$(XboxOneIncludePath);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(XboxOneLibPath);$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Scarlett|x64'">
-    <IncludePath>$(GameDKLatest)GXDK\toolKit\include;$(GameDKLatest)GXDK\toolKit\include\Scarlett;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>$(GameDKLatest)GXDK\toolKit\lib\amd64\Scarlett;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
+    <IncludePath>$(ScarlettIncludePath);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(ScarlettLibPath);$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
     <TargetName>$(ProjectName)_xs</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">
+    <ExecutablePath>$(GameDK)bin;$(ExecutablePath)</ExecutablePath>
+    <IncludePath>$(GDKCrossPlatformPath)windows\include;$(IncludePath);</IncludePath>
+    <LibraryPath>$(GDKCrossPlatformPath)windows\lib\x64;$(LibraryPath)</LibraryPath>
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -107,7 +145,7 @@
       <AdditionalDependencies>xg.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
-      <Command>copy "$(GameDKLatest)GXDK\bin\XboxOne\xg.dll" "$(TargetDir)xg.dll"</Command>
+      <Command>copy "$(XboxOneBinPath)\xg.dll" "$(TargetDir)xg.dll"</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Message>Copying XG.DLL</Message>
@@ -116,7 +154,7 @@
       <Outputs>$(TargetDir)xg.dll</Outputs>
     </CustomBuildStep>
     <CustomBuildStep>
-      <Inputs>$(GameDKLatest)GXDK\bin\XboxOne\xg.dll</Inputs>
+      <Inputs>$(XboxOneBinPath)\xg.dll</Inputs>
     </CustomBuildStep>
     <CustomBuildStep>
       <TreatOutputAsContent>true</TreatOutputAsContent>
@@ -141,7 +179,7 @@
       <AdditionalDependencies>xg_xs.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
-      <Command>copy "$(GameDKLatest)GXDK\bin\Scarlett\xg_xs.dll" "$(TargetDir)xg_xs.dll"</Command>
+      <Command>copy "$(ScarlettBinPath)\xg_xs.dll" "$(TargetDir)xg_xs.dll"</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Message>Copying XG_XS.DLL</Message>
@@ -150,7 +188,7 @@
       <Outputs>$(TargetDir)xg_xs.dll</Outputs>
     </CustomBuildStep>
     <CustomBuildStep>
-      <Inputs>$(GameDKLatest)GXDK\bin\Scarlett\xg_xs.dll</Inputs>
+      <Inputs>$(ScarlettBinPath)\xg_xs.dll</Inputs>
     </CustomBuildStep>
     <CustomBuildStep>
       <TreatOutputAsContent>true</TreatOutputAsContent>
@@ -178,7 +216,7 @@
       <AdditionalDependencies>xg.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
-      <Command>copy "$(GameDKLatest)GXDK\bin\XboxOne\xg.dll" "$(TargetDir)xg.dll"</Command>
+      <Command>copy "$(XboxOneBinPath)\xg.dll" "$(TargetDir)xg.dll"</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Message>Copying XG.DLL</Message>
@@ -187,7 +225,7 @@
       <Outputs>$(TargetDir)xg.dll</Outputs>
     </CustomBuildStep>
     <CustomBuildStep>
-      <Inputs>$(GameDKLatest)GXDK\bin\XboxOne\xg.dll</Inputs>
+      <Inputs>$(XboxOneBinPath)\xg.dll</Inputs>
     </CustomBuildStep>
     <CustomBuildStep>
       <TreatOutputAsContent>true</TreatOutputAsContent>
@@ -215,7 +253,7 @@
       <AdditionalDependencies>xg_xs.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
-      <Command>copy "$(GameDKLatest)GXDK\bin\Scarlett\xg_xs.dll" "$(TargetDir)xg_xs.dll"</Command>
+      <Command>copy "$(ScarlettBinPath)\xg_xs.dll" "$(TargetDir)xg_xs.dll"</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Message>Copying XG_XS.DLL</Message>
@@ -224,11 +262,44 @@
       <Outputs>$(TargetDir)xg_xs.dll</Outputs>
     </CustomBuildStep>
     <CustomBuildStep>
-      <Inputs>$(GameDKLatest)GXDK\bin\Scarlett\xg_xs.dll</Inputs>
+      <Inputs>$(ScarlettBinPath)\xg_xs.dll</Inputs>
     </CustomBuildStep>
     <CustomBuildStep>
       <TreatOutputAsContent>true</TreatOutputAsContent>
     </CustomBuildStep>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">
+    <Link>
+      <AdditionalDependencies>Microsoft.Xbox.Services.142.C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;uuid.lib;xgameruntime.lib;gameinput.lib;d3d12.lib;dxgi.lib;dxguid.lib;kernel32.lib;user32.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <Manifest>
+      <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
+    </Manifest>
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\DirectXTex</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>PROFILE;_GAMING_DESKTOP;_WINDOWS;WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <AdditionalOptions>/Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <WarningLevel>Level4</WarningLevel>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ConformanceMode>true</ConformanceMode>
+      <DisableSpecificWarnings>5204;5204</DisableSpecificWarnings>
+    </ClCompile>
+    <FXCompile>
+      <ShaderModel>6.0</ShaderModel>
+      <EnableDebuggingInformation>true</EnableDebuggingInformation>
+      <AdditionalOptions>/Fd "$(OutDir)%(Filename).pdb" %(AdditionalOptions)</AdditionalOptions>
+    </FXCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DirectXTexEXR.cpp" />
@@ -256,6 +327,14 @@
   <ItemGroup>
     <Manifest Include="settings.manifest" />
   </ItemGroup>
+  <ItemGroup Condition="'$(Platform)'=='x64'">
+    <ReferenceCopyLocalPaths Include="$(GDKCrossPlatformPath)windows\bin\x64\libHttpClient.dll" />
+    <ReferenceCopyLocalPaths Include="$(GDKCrossPlatformPath)windows\bin\x64\XCurl.dll" />
+  </ItemGroup>
+  <ItemGroup Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(Platform)', 'Gaming\.Xbox\..+\.x64'))">
+    <ReferenceCopyLocalPaths Include="$(GDKCrossPlatformPath)xbox\bin\x64\libHttpClient.dll" />
+    <ReferenceCopyLocalPaths Include="$(GDKCrossPlatformPath)xbox\bin\x64\XCurl.dll" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\..\packages\openexr-msvc-x64.2.3.0.8788\build\native\OpenEXR-msvc-x64.targets" Condition="Exists('..\..\packages\openexr-msvc-x64.2.3.0.8788\build\native\OpenEXR-msvc-x64.targets')" />
@@ -267,5 +346,8 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\openexr-msvc-x64.2.3.0.8788\build\native\OpenEXR-msvc-x64.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\openexr-msvc-x64.2.3.0.8788\build\native\OpenEXR-msvc-x64.targets'))" />
     <Error Condition="!Exists('..\..\packages\zlib-msvc-x64.1.2.11.8900\build\native\zlib-msvc-x64.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\zlib-msvc-x64.1.2.11.8900\build\native\zlib-msvc-x64.targets'))" />
+  </Target>
+  <Target Name="GDKEditionCheck" BeforeTargets="PrepareForBuild">
+    <Error Condition="'$(GameDKXboxLatest)'=='' AND '$(GameDKLatest)'=='' " Text="GameDKXboxLatest or GameDKLatest property is required" />
   </Target>
 </Project>

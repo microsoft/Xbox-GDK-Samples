@@ -18,7 +18,7 @@ primitive culling inside of mesh shaders.
 If using Xbox Series X|S, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
 
 If using PC with appropriate hardware and Windows 10 release, set the
-active solution platform to Gaming.Desktop.x64.
+active solution platform to x64.
 
 This sample does not support Xbox One.
 

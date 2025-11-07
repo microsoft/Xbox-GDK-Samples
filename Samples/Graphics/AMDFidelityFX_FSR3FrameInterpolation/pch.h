@@ -41,9 +41,9 @@
 
 #include <grdk.h>
 
-#if _GRDK_VER < 0x55F00C58 /* GDK Edition 220300 */ 
-#error This sample requires the March 2022 GDK or later 
-#endif 
+#if _GRDK_VER < 0x65F41800 /* GDK Edition 251000 */
+#error This sample requires the October 2025 GDK or later
+#endif
 
 #include <algorithm>
 #include <atomic>

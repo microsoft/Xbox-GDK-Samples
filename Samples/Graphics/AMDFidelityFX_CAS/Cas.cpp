@@ -131,7 +131,7 @@ void Sample::UpdateFfxCasContext(bool enabled)
         FFX_ASSERT_MESSAGE(errorCode == FFX_OK, "Could not initialize the FidelityFX SDK backend");
 
         FFX_ASSERT_MESSAGE(m_InitializationParameters.backendInterface.fpGetSDKVersion(&m_InitializationParameters.backendInterface) ==
-            FFX_SDK_MAKE_VERSION(1, 1, 2), "FidelityFX CAS sample requires linking with a 1.1.2 version SDK backend");
+            FFX_SDK_MAKE_VERSION(1, 1, 4), "FidelityFX CAS sample requires linking with a 1.1.4 version SDK backend");
 
         if (GetUpscaleMode() == UpscaleMode::NativeRender) {
             m_InitializationParameters.flags |= FFX_CAS_SHARPEN_ONLY;

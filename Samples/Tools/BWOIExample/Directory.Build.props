@@ -2,8 +2,9 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <!-- TODO: Change this value to your target Microsoft GDK edition (currently the March 2024 GDK) -->
-    <XDKEditionTarget Condition="'$(XDKEditionTarget)'==''">240300</XDKEditionTarget>
+    <!-- TODO: Change this value to your target Microsoft GDK edition (currently the October 2025 GDK) -->
+    <GDKEditionNumber Condition="'$(GDKEditionNumber)'==''">251000</GDKEditionNumber>
+    <XDKEditionTarget Condition="'$(XDKEditionTarget)'==''">$(GDKEditionNumber)</XDKEditionTarget>
 
     <!-- TODO: Change this to the value for your extracted Microsoft GDK / Windows 10 SDK -->
     <ExtractedFolder Condition="'$(ExtractedFolder)'==''">d:\xtrctd.sdks\BWOIExample\</ExtractedFolder>
@@ -12,40 +13,8 @@
     <_ExtractedMicrosoftGDK>$(ExtractedFolder)Microsoft GDK\</_ExtractedMicrosoftGDK>
     <_ExtractedWindowsSDKDir>$(ExtractedFolder)Windows Kits\10\</_ExtractedWindowsSDKDir>
 
-    <!-- TODO: Change these to the location for your temporary VCTargets folders for VS 2022 BWOI -->
+    <!-- TODO: Change these to the location for your temporary VCTargets folders for VS 2022 / v143 BWOI -->
     <_AlternativeVCTargetsPath170>$(ExtractedFolder)VCTargets170\</_AlternativeVCTargetsPath170>
-
-    <!-- TODO: Change these to the location for your temporary VCTargets folders for VS 2019 BWOI -->
-    <_AlternativeVCTargetsPath160>$(ExtractedFolder)VCTargets160\</_AlternativeVCTargetsPath160>
-
-    <!-- Comment out setting the _AlternativeVCTargetsPath150 property if you do not have Microsoft.VisualStudio.Component.VC.v141.x86.x64 installed -->
-    <_AlternativeVCTargetsPath150 Condition="'$(XDKEditionTarget)' &lt; '241000'">$(ExtractedFolder)VCTargets150\</_AlternativeVCTargetsPath150>
-
-    <!-- Workaround for VS bug -->
-    <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
-  </PropertyGroup>
-
-  <!--
-  ****************************************************************************************************
-  VCTargetsPath redirection (VS 2019)
-  ****************************************************************************************************
-  -->
-  <PropertyGroup Condition="'$(Platform)' == 'Gaming.Xbox.XboxOne.x64' and '$(VisualStudioVersion)' == '16.0'">
-    <DisableInstalledVCTargetsUse>true</DisableInstalledVCTargetsUse>
-    <VCTargetsPath15 Condition="'$(_AlternativeVCTargetsPath150)'!=''">$(_AlternativeVCTargetsPath150)</VCTargetsPath15>
-    <VCTargetsPath16>$(_AlternativeVCTargetsPath160)</VCTargetsPath16>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Platform)' == 'Gaming.Xbox.Scarlett.x64' and '$(VisualStudioVersion)' == '16.0'">
-    <DisableInstalledVCTargetsUse>true</DisableInstalledVCTargetsUse>
-    <VCTargetsPath15 Condition="'$(_AlternativeVCTargetsPath150)'!=''">$(_AlternativeVCTargetsPath150)</VCTargetsPath15>
-    <VCTargetsPath16>$(_AlternativeVCTargetsPath160)</VCTargetsPath16>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Platform)' == 'Gaming.Desktop.x64' and '$(VisualStudioVersion)' == '16.0'">
-    <DisableInstalledVCTargetsUse>true</DisableInstalledVCTargetsUse>
-    <VCTargetsPath15 Condition="'$(_AlternativeVCTargetsPath150)'!=''">$(_AlternativeVCTargetsPath150)</VCTargetsPath15>
-    <VCTargetsPath16>$(_AlternativeVCTargetsPath160)</VCTargetsPath16>
   </PropertyGroup>
 
   <!--
@@ -55,23 +24,20 @@
   -->
   <PropertyGroup Condition="'$(Platform)' == 'Gaming.Xbox.XboxOne.x64' and '$(VisualStudioVersion)' == '17.0'">
     <DisableInstalledVCTargetsUse>true</DisableInstalledVCTargetsUse>
-    <VCTargetsPath15 Condition="'$(_AlternativeVCTargetsPath150)'!=''">$(_AlternativeVCTargetsPath150)</VCTargetsPath15>
-    <VCTargetsPath16 Condition="'$(_AlternativeVCTargetsPath160)'!=''">$(_AlternativeVCTargetsPath160)</VCTargetsPath16>
     <VCTargetsPath17>$(_AlternativeVCTargetsPath170)</VCTargetsPath17>
+    <VCTargetsPath>$(_AlternativeVCTargetsPath170)</VCTargetsPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Platform)' == 'Gaming.Xbox.Scarlett.x64' and '$(VisualStudioVersion)' == '17.0'">
     <DisableInstalledVCTargetsUse>true</DisableInstalledVCTargetsUse>
-    <VCTargetsPath15 Condition="'$(_AlternativeVCTargetsPath150)'!=''">$(_AlternativeVCTargetsPath150)</VCTargetsPath15>
-    <VCTargetsPath16 Condition="'$(_AlternativeVCTargetsPath160)'!=''">$(_AlternativeVCTargetsPath160)</VCTargetsPath16>
     <VCTargetsPath17>$(_AlternativeVCTargetsPath170)</VCTargetsPath17>
+    <VCTargetsPath>$(_AlternativeVCTargetsPath170)</VCTargetsPath>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Platform)' == 'Gaming.Desktop.x64' and '$(VisualStudioVersion)' == '17.0'">
+  <PropertyGroup Condition="'$(Platform)' == 'x64' and '$(VisualStudioVersion)' == '17.0'">
     <DisableInstalledVCTargetsUse>true</DisableInstalledVCTargetsUse>
-    <VCTargetsPath15 Condition="'$(_AlternativeVCTargetsPath150)'!=''">$(_AlternativeVCTargetsPath150)</VCTargetsPath15>
-    <VCTargetsPath16 Condition="'$(_AlternativeVCTargetsPath160)'!=''">$(_AlternativeVCTargetsPath160)</VCTargetsPath16>
     <VCTargetsPath17>$(_AlternativeVCTargetsPath170)</VCTargetsPath17>
+    <VCTargetsPath>$(_AlternativeVCTargetsPath170)</VCTargetsPath>
   </PropertyGroup>
 
   <!--
@@ -79,7 +45,7 @@
   Using extracted Windows 10 SDK (optional)
   ****************************************************************************************************
   -->
-  <PropertyGroup Condition="Exists('$(_ExtractedWindowsSDKDir)') AND ('$(Platform)' == 'Gaming.Xbox.XboxOne.x64' OR '$(Platform)' == 'Gaming.Xbox.Scarlett.x64' OR '$(Platform)' == 'Gaming.Desktop.x64')">
+  <PropertyGroup Condition="Exists('$(_ExtractedWindowsSDKDir)') AND ('$(Platform)' == 'Gaming.Xbox.XboxOne.x64' OR '$(Platform)' == 'Gaming.Xbox.Scarlett.x64' OR '$(Platform)' == 'x64')">
     <WindowsSDKDir Condition="'$(WindowsSDKDir)' == ''">$(_ExtractedWindowsSDKDir)</WindowsSDKDir>
     <WindowsSdkDir Condition="'$(WindowsSdkDir)' == ''">$(_ExtractedWindowsSDKDir)</WindowsSdkDir>
     <WindowsSdkDir_10 Condition="'$(WindowsSdkDir_10)' == ''">$(_ExtractedWindowsSDKDir)</WindowsSdkDir_10>
@@ -96,7 +62,7 @@
   Properties for Gaming.*.x64
   ****************************************************************************************************
   -->
-  <PropertyGroup Condition="'$(Platform)' == 'Gaming.Xbox.XboxOne.x64' OR '$(Platform)' == 'Gaming.Xbox.Scarlett.x64' OR '$(Platform)' == 'Gaming.Desktop.x64'">
+  <PropertyGroup Condition="'$(Platform)' == 'Gaming.Xbox.XboxOne.x64' OR '$(Platform)' == 'Gaming.Xbox.Scarlett.x64' OR '$(Platform)' == 'x64'">
     <ClearDevCommandPromptEnvVars>false</ClearDevCommandPromptEnvVars>
     <VCToolsVersion />
     <DurangoXdkInstallPath>$(_ExtractedMicrosoftGDK)</DurangoXdkInstallPath>
@@ -110,6 +76,12 @@
   <PropertyGroup>
     <GameDK>$(_ExtractedMicrosoftGDK)</GameDK>
     <GameDKLatest>$(GameDK)$(XDKEditionTarget)\</GameDKLatest>
+
+    <!-- New layout variables -->
+    <GameDKCoreLatest Condition="'$(XDKEditionTarget)' &gt;= '251000'">$(GameDKLatest)</GameDKCoreLatest>
+    <GameDKXboxLatest Condition="'$(XDKEditionTarget)' &gt;= '251000'">$(GameDKLatest)</GameDKXboxLatest>
+
+    <!-- Old layout variables -->
     <GRDKLatest>$(GameDKLatest)GRDK\</GRDKLatest>
     <GXDKLatest>$(GameDKLatest)GXDK\</GXDKLatest>
     <GDKPCEditionPath>$(GameDKLatest)GRDK\</GDKPCEditionPath>

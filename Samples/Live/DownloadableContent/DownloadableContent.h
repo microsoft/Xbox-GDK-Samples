@@ -158,7 +158,6 @@ public:
             nullptr;
     }
 
-    template <size_t bufferSize = 2048>
     void ErrorMessage(std::string_view format, ...);
 
 private:
@@ -177,7 +176,6 @@ private:
     void UpdateDownloadProgress(std::shared_ptr<UIButton> button, UINT64 installedBytes, UINT64 totalBytes);
     void SetBackgroundImage(const char* filename);
     void ExecuteDLLFunction(const char* filename);
-    void ErrorMessage(std::string_view format, ...);
 
     HRESULT AcquireLicense(TrackedPackage& package);
     HRESULT Mount(TrackedPackage& package);

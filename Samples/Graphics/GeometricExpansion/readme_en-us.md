@@ -25,7 +25,7 @@ to local geometry data.
 If using a Xbox Series X|S devkit, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
 
 If using a PC with the appropriate hardware and Windows 10 release, set
-the active solution platform to `Gaming.Desktop.x64`.
+the active solution platform to `x64`.
 
 This sample does not support Xbox One.
 

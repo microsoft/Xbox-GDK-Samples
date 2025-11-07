@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Game
+  configVersion="1">
+  <Identity
+    Name="41336MicrosoftATG.62675ADFD4B32"
+    Publisher="CN=A4954634-DF4B-47C7-AB70-D3215D246AF1"
+    Version="1.1.0.0" />
+  <ExecutableList>
+    <Executable
+      Name="SocialManager.exe"
+      Id="Game" />
+  </ExecutableList>
+  <StoreId>9P99RMP3BVG3</StoreId>
+  <MSAAppId>000000004C2AB424</MSAAppId>
+  <TitleId>75CC8DA7</TitleId>
+  <ShellVisuals DefaultDisplayName="Xbox Social Manager"/>
+  <ExtendedAttributeList>
+    <ExtendedAttribute
+      Name="SandboxIds"
+      Value="XDKS.1" />
+    <ExtendedAttribute
+      Name="Scid"
+      Value="00000000-0000-0000-0000-000075cc8da7" />
+  </ExtendedAttributeList>
+  <DevelopmentOnly />
+  <AdvancedUserModel>true</AdvancedUserModel>
+</Game>

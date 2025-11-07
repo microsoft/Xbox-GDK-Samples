@@ -1,0 +1,5 @@
+sceneSetups:
+- path: Assets/Achievements/Achievements.unity
+  isLoaded: 1
+  isActive: 1
+  isSubScene: 0

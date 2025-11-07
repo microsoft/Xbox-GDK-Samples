@@ -1,0 +1,77 @@
+fileFormatVersion: 2
+guid: 1226c95de5403fc42a954d968f6bf3fa
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 3e8e5a87a551bfc45aa0ac07bcf83cf4, type: 3}
+  titleId: 62ab3c24
+  sCID: 00000000-0000-0000-0000-000062ab3c24
+  mSAAppId: 000000004C2690C8
+  identityName: 41336MicrosoftATG.InGameStoreXS
+  identityPublisher: CN=A4954634-DF4B-47C7-AB70-D3215D246AF1
+  identityVersion: 2025.1.20.0
+  storeId: 9NTL0QDWZ4FS
+  languagePairResources:
+    keys:
+    - en_US
+    - en_CA
+    - en_AU
+    - en_GB
+    - en_NZ
+    - en_IE
+    - en_CZ
+    - en_GR
+    - en_HK
+    - en_HU
+    - en_IN
+    - en_IL
+    - en_SA
+    - en_SG
+    - en_SK
+    - en_ZA
+    - en_AE
+    - ar_AE
+    - ar_SA
+    - cs_CZ
+    - nl_BE
+    - nl_NL
+    - fr_FR
+    - fr_CA
+    - fr_BE
+    - fr_CH
+    - it_IT
+    - es_AR
+    - es_ES
+    - es_MX
+    - es_CL
+    - es_CO
+    - de_DE
+    - de_AT
+    - de_CH
+    - he_IL
+    - hu_HU
+    - pt_PT
+    - pt_BR
+    - ru_RU
+    - pl_PL
+    - zh_CN
+    - zh_HK
+    - zh_SG
+    - zh_TW
+    - da_DK
+    - fi_FI
+    - ja_JP
+    - nb_NO
+    - ko_KR
+    - sk_SK
+    - sv_SE
+    - tr_TR
+    values: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  shellVisualsResourcePath: {fileID: 102900000, guid: 68bd07d294977dd4e9e122c9bee54a36, type: 3}
+  builtResourcesPriPath: {fileID: 102900000, guid: 68bd07d294977dd4e9e122c9bee54a36, type: 3}
+  contentIdOverride: 2797FA46-A93B-494C-AD80-B67C9FCA939F
+  eKBIDOverride: 00000000-0000-0000-0000-000000000001

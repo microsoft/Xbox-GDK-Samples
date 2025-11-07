@@ -95,7 +95,7 @@ If using an Xbox Series X|S devkit, set the active solution platform to `Gaming.
 
 If using an Xbox One devkit, set the active solution platform to `Gaming.Xbox.XboxOne.x64`.
 
-If using PC, set the active solution platform to Gaming.Desktop.x64.
+If using PC, set the active solution platform to x64.
 
 *For more information, see* __Running samples__, *in the GDK documentation.*
 
@@ -153,8 +153,8 @@ Xbox Series X|S Device Family:
 PC:
 
 > makepkg.exe pack /pc /v /f Chunks_PC.xml /d
-> .\\Gaming.Desktop.x64\\Layout\\Image\\Loose /pd
-> .\\Gaming.Desktop.x64\\Layout\\Image \[/lk \<filename\>.lekb\]
+> .\\x64\\Layout\\Image\\Loose /pd
+> .\\x64\\Layout\\Image \[/lk \<filename\>.lekb\]
 
 Be aware that if running the command directly, refer to the .bat to
 ensure all the files are staged to the right location, especially if

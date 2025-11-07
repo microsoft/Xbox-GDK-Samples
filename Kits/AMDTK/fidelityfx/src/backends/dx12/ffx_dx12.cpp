@@ -43,11 +43,7 @@
 #define USE_PIX  // Should enable it at anytime, as we already have a runtime switch for this purpose
 #endif           // #ifndef USE_PIX
 
-#ifdef _GAMING_DESKTOP
-	#include <pix3.h>
-#else
-	#include "pix/pix3.h"
-#endif // _GAMING_DESKTOP
+#include <pix3.h>
 
 
 #ifdef __clang__
@@ -553,6 +549,8 @@ D3D12_RESOURCE_STATES ffxGetDX12StateFromResourceState(FfxResourceStates state)
             return D3D12_RESOURCE_STATE_COMMON;
         case FFX_RESOURCE_STATE_RENDER_TARGET:
             return D3D12_RESOURCE_STATE_RENDER_TARGET;
+        case FFX_RESOURCE_STATE_DEPTH_ATTACHEMENT:
+            return D3D12_RESOURCE_STATE_DEPTH_WRITE;
         default:
             FFX_ASSERT_MESSAGE(false, "Resource state not yet supported");
             return D3D12_RESOURCE_STATE_COMMON;
@@ -2711,7 +2709,7 @@ FfxErrorCode CreatePipelineDX12(
             D3D12SerializeRootSignatureType dx12SerializeRootSignatureType = (D3D12SerializeRootSignatureType)GetProcAddress(d3d12ModuleHandle, "D3D12SerializeRootSignature");
 
             if (nullptr != dx12SerializeRootSignatureType) {
-
+                
                 HRESULT result = dx12SerializeRootSignatureType(&dx12RootSignatureDescription, D3D_ROOT_SIGNATURE_VERSION_1, &outBlob, &errorBlob);
                 if (errorBlob != nullptr) {
 
@@ -3734,7 +3732,7 @@ void BreadcrumbsPrintDeviceInfoDX12(
                 FFX_BREADCRUMBS_APPEND_STRING(buff, buffSize, FFX_BREADCRUMBS_PRINTING_INDENT "Description: ");
                 const size_t descLength = wcslen(desc.Description);
                 buff = (char*)ffxBreadcrumbsAppendList(buff, buffSize, 1, descLength + 1, allocs);
-                for (size_t i = 0; i < descLength; ++i)
+                for (uint8_t i = 0; i < descLength; ++i)
                     buff[buffSize++] = (char)desc.Description[i];
                 buff[buffSize++] = '\n';
 

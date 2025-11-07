@@ -13,11 +13,11 @@
 #include "StepTimer.h"
 #include "SampleGUI.h"
 #include "TextConsole.h"
-
+#include "TestFramework.h"
 
 // A basic sample implementation that creates a D3D12 device and
 // provides a render loop.
-class Sample final : public DX::IDeviceNotify
+class Sample final : public DX::IDeviceNotify, public ATG::TestFramework
 {
 public:
 
@@ -84,7 +84,7 @@ private:
     DX::StepTimer                               m_timer;
 
     // Input devices.
-    std::unique_ptr<DirectX::GamePad>           m_gamePad;
+    std::unique_ptr<ATGGamePad>                 m_gamePad;
     std::unique_ptr<DirectX::Keyboard>          m_keyboard;
     std::unique_ptr<DirectX::Mouse>             m_mouse;
 
@@ -116,4 +116,9 @@ private:
         Reserve,
         Count = 32,
     };
+
+    // TestFramework
+    ID3D12CommandQueue* GetCommandQueue() { return m_deviceResources->GetCommandQueue(); }
+    ID3D12Resource*     GetRenderTarget() { return m_deviceResources->GetRenderTarget(); }
+    ATGGamePad*         GetGamePad()      { return m_gamePad.get(); }
 };

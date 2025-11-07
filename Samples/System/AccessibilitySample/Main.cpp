@@ -250,9 +250,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_ACTIVATEAPP:
         if (sample)
         {
-            Keyboard::ProcessMessage(message, wParam, lParam);
-            Mouse::ProcessMessage(message, wParam, lParam);
-
             if (wParam)
             {
                 sample->OnActivated();
@@ -262,24 +259,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 sample->OnDeactivated();
             }
         }
-        break;
-
-    case WM_ACTIVATE:
-        Keyboard::ProcessMessage(message, wParam, lParam);
-        Mouse::ProcessMessage(message, wParam, lParam);
-        break;
-
-    case WM_MOUSEMOVE:
-    case WM_LBUTTONDOWN:
-    case WM_LBUTTONUP:
-    case WM_RBUTTONDOWN:
-    case WM_RBUTTONUP:
-    case WM_MBUTTONDOWN:
-    case WM_MBUTTONUP:
-    case WM_MOUSEWHEEL:
-    case WM_XBUTTONDOWN:
-    case WM_XBUTTONUP:
-        Mouse::ProcessMessage(message, wParam, lParam);
         break;
 
 #ifdef _GAMING_XBOX
@@ -419,17 +398,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         PostQuitMessage(0);
         break;
 
-    case WM_INPUT:
-    case WM_MOUSEHOVER:
-        Mouse::ProcessMessage(message, wParam, lParam);
-        break;
-
-    case WM_KEYDOWN:
-    case WM_KEYUP:
-    case WM_SYSKEYUP:
-        Keyboard::ProcessMessage(message, wParam, lParam);
-        break;
-
     case WM_SYSKEYDOWN:
         if (wParam == VK_RETURN && (lParam & 0x60000000) == 0x20000000)
         {
@@ -460,7 +428,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             s_fullscreen = !s_fullscreen;
         }
-        Keyboard::ProcessMessage(message, wParam, lParam);
         break;
 
     case WM_MOUSEACTIVATE:

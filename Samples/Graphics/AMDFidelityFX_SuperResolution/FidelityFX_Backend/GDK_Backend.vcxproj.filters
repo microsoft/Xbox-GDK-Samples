@@ -107,6 +107,9 @@
     <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\shared\ffx_breadcrumbs_list.cpp">
       <Filter>private_source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\shared\ffx_message.cpp">
+      <Filter>private_source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Kits\AMDTK\fidelityfx\src\backends\shared\ffx_shader_blobs.h">

@@ -23,7 +23,7 @@ with Events-Based stats (previously referred to as Stats 2013).
     to Gaming.Xbox.Scarlett.x64.
 
 -   If build and run for desktop, set the active solution platform to
-    Gaming.Desktop.x64.
+    x64.
 
 *For more information, see* __Running samples__, *in the GDK documentation.*
 

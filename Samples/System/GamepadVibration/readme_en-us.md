@@ -15,7 +15,7 @@ One.
 
 - If building for Xbox One, set the active solution platform to `Gaming.Xbox.XboxOne.x64`.
 - If building for Xbox Series X|S, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
-- If building for PC, set the active solution platform to Gaming.Desktop.x64.\
+- If building for PC, set the active solution platform to x64.\
 **NOTE: This requires the [GameInput NuGet package](https://www.nuget.org/packages/Microsoft.GameInput) and its 
 included redistributable to be installed.  Please see 
 [GameInput on PC](https://learn.microsoft.com/gaming/gdk/_content/gc/input/overviews/input-nuget) for more information.**.

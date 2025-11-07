@@ -270,8 +270,6 @@ void Sample::Update(DX::StepTimer const& timer)
     else
     {
         m_gamePadButtons.Reset();
-
-        m_sceneCamera.Update(elapsedTime, *m_mouse.get(), *m_keyboard.get());
     }
 
 #ifdef _GAMING_DESKTOP
@@ -360,6 +358,8 @@ void Sample::Update(DX::StepTimer const& timer)
         m_JitterDeltaX = (BlueNoise_16[m_frame % 16][0]) * 0.5f - 0.5f;
         m_JitterDeltaY = (BlueNoise_16[m_frame % 16][1]) * 0.5f - 0.5f;
     }
+
+    m_sceneCamera.Update(elapsedTime, *m_mouse.get(), *m_keyboard.get());
 
     // Jitter is in pixel space, centered around 0 going from -0.5f to 0.5f.
     // Needs to be in NDC space, so we scale it by (2.0f / resolution).

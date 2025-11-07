@@ -20,18 +20,18 @@
   <ItemGroup>
     <BWOIVCFolders Include="$(ExtractedFolder)VCTargets150\" />
     <BWOIVCFolders Include="$(ExtractedFolder)VCTargets150\Platforms\" />
-    <BWOIVCFolders Include="$(ExtractedFolder)VCTargets150\Platforms\gaming.desktop.x64" />
+    <BWOIVCFolders Include="$(ExtractedFolder)VCTargets150\Platforms\x64
     <BWOIVCFolders Include="$(ExtractedFolder)VCTargets150\Platforms\gaming.xbox.xboxone.x64" />
     <BWOIVCFolders Include="$(ExtractedFolder)VCTargets160\" />
     <BWOIVCFolders Include="$(ExtractedFolder)VCTargets160\Platforms\" />
-    <BWOIVCFolders Include="$(ExtractedFolder)VCTargets160\Platforms\gaming.desktop.x64" />
+    <BWOIVCFolders Include="$(ExtractedFolder)VCTargets160\Platforms\x64" />
     <BWOIVCFolders Include="$(ExtractedFolder)VCTargets160\Platforms\gaming.xbox.xboxone.x64" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(VisualStudioVersion)' == '17.0'">
     <BWOIVCFolders Include="$(ExtractedFolder)VCTargets170\" />
     <BWOIVCFolders Include="$(ExtractedFolder)VCTargets170\Platforms\" />
-    <BWOIVCFolders Include="$(ExtractedFolder)VCTargets170\Platforms\gaming.desktop.x64" />
+    <BWOIVCFolders Include="$(ExtractedFolder)VCTargets170\Platforms\x64" />
     <BWOIVCFolders Include="$(ExtractedFolder)VCTargets170\Platforms\gaming.xbox.xboxone.x64" />
   </ItemGroup>
 
@@ -115,4 +115,3 @@
 
   <Target Name="SetupVCTargets" DependsOnTargets="_ProbeForExtractedVCTargets;_CreateVCTargetsFolder" />
 </Project>
-

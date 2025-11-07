@@ -107,12 +107,17 @@ namespace
     template<class T>
     std::wstring FormatWithCommas(T value)
     {
-        static std::locale l("");
-
-        std::wstringstream ss;
-        ss.imbue(l);
-        ss << std::fixed << value;
-        return ss.str();
+        std::wstring str = std::to_wstring(value);
+        
+        // Add commas for thousands separator
+        int insertPosition = static_cast<int>(str.length()) - 3;
+        while (insertPosition > 0)
+        {
+            str.insert(insertPosition, L",");
+            insertPosition -= 3;
+        }
+        
+        return str;
     }
 }
 

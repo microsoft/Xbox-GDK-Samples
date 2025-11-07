@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ImGui">
+      <UniqueIdentifier>{3d34b4bd-ea46-406c-9824-0dda6444b99f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{d5a2c484-cdc8-4e8d-ac54-8dee8d52bd08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media">
+      <UniqueIdentifier>{474d2779-f286-4074-841b-641a4e0942d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGui\ATG">
+      <UniqueIdentifier>{ab96ee58-26a3-423c-ba2d-95106afc4757}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGui\Backends">
+      <UniqueIdentifier>{41afdda5-4535-4267-8a66-027442e5e840}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGui\Backends\Shaders">
+      <UniqueIdentifier>{fcae9164-8ac1-425d-b241-30e5c18546a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>{bc7472e0-fe60-4401-bc5d-a20209e93581}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Audio\WASAPIManager.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio\WAVFileReader.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio\WaveSampleGenerator.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Audio\XAudio2Manager.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="haptics.cpp" />
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_draw.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_tables.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_widgets.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_applog.cpp">
+      <Filter>ImGui\ATG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_dx12.cpp">
+      <Filter>ImGui\Backends</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_win32.cpp">
+      <Filter>ImGui\Backends</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_deviceresources.cpp">
+      <Filter>ImGui\ATG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_sample.cpp">
+      <Filter>ImGui\ATG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Audio\WASAPIManager.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio\WAVFileReader.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio\WaveSampleGenerator.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio\RenderBuffer.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Audio\IGenerator.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio\XAudio2Manager.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="haptics.h" />
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imconfig.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imgui.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imgui_internal.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imstb_rectpack.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imstb_textedit.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imstb_truetype.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_allocator.h">
+      <Filter>ImGui\ATG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_applog.h">
+      <Filter>ImGui\ATG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_atg.h">
+      <Filter>ImGui\ATG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_atg_file.h">
+      <Filter>ImGui\ATG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_ps.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_rs.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_vs.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_ps.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_rs.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_vs.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_ps.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_rs.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_vs.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_dx12.h">
+      <Filter>ImGui\Backends</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_win32.h">
+      <Filter>ImGui\Backends</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_deviceresources.h">
+      <Filter>ImGui\ATG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_sample.h">
+      <Filter>ImGui\ATG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\atg\d3dx12.h">
+      <Filter>ImGui\ATG</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Media\car.wav">
+      <Filter>Media</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Media\fireworks.wav">
+      <Filter>Media</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Media\gun_shot.wav">
+      <Filter>Media</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Media\AhoogaHorn.wav">
+      <Filter>Media</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Media\PenScratch.wav">
+      <Filter>Media</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Media\ShakeEffect.wav">
+      <Filter>Media</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Media\TommyGun.wav">
+      <Filter>Media</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="readme.md" />
+    <None Include="packages.config" />
+    <None Include="..\..\NuGet.config" />
+  </ItemGroup>
+</Project>

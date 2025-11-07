@@ -7,7 +7,7 @@ rem
 rem Advanced Technology Group ( ATG )
 rem Copyright (C) Microsoft Corporation. All rights reserved.
 
-@IF NOT EXIST .\Gaming.Desktop.x64\NUL GOTO NOLOOSEDIR
+@IF NOT EXIST .\x64\NUL GOTO NOLOOSEDIR
 
 echo Creating a 1K filler file to be used to test streaming install. 
 echo/|set /P ="1234567890abcdef" > filler.txt
@@ -24,31 +24,31 @@ copy /b filler4096.txt + filler4096.txt + filler4096.txt + filler4096.txt filler
 copy /b filler16384.txt + filler16384.txt + filler16384.txt + filler16384.txt filler65536.txt
 copy /b filler65536.txt + filler65536.txt + filler65536.txt + filler65536.txt filler262144.txt
 
-@IF NOT EXIST .\Gaming.Desktop.x64\Layout\Image\Loose\NUL mkdir .\Gaming.Desktop.x64\Layout\Image\Loose
+@IF NOT EXIST .\x64\Layout\Image\Loose\NUL mkdir .\x64\Layout\Image\Loose
 
 echo Creating 17 copies of the 256MB filler file to be used as filler across 8 different chunks
 echo on
-copy /b filler262144.txt .\Gaming.Desktop.x64\Layout\Image\Loose\filler256mb1.txt
-copy /b filler262144.txt .\Gaming.Desktop.x64\Layout\Image\Loose\filler256mb2.txt
-copy /b filler262144.txt .\Gaming.Desktop.x64\Layout\Image\Loose\filler256mb3.txt
-copy /b filler262144.txt .\Gaming.Desktop.x64\Layout\Image\Loose\filler256mb4.txt
-copy /b filler262144.txt .\Gaming.Desktop.x64\Layout\Image\Loose\filler256mb5.txt
-copy /b filler262144.txt .\Gaming.Desktop.x64\Layout\Image\Loose\filler256mb6.txt
-copy /b filler262144.txt .\Gaming.Desktop.x64\Layout\Image\Loose\filler256mb7.txt
-copy /b filler262144.txt .\Gaming.Desktop.x64\Layout\Image\Loose\filler256mb8.txt
-copy /b filler262144.txt .\Gaming.Desktop.x64\Layout\Image\Loose\filler256mb9.txt
-copy /b filler262144.txt .\Gaming.Desktop.x64\Layout\Image\Loose\filler256mb10.txt
-copy /b filler262144.txt .\Gaming.Desktop.x64\Layout\Image\Loose\filler256mb11.txt
-copy /b filler262144.txt .\Gaming.Desktop.x64\Layout\Image\Loose\filler256mb12.txt
-copy /b filler262144.txt .\Gaming.Desktop.x64\Layout\Image\Loose\filler256mb13.txt
-copy /b filler262144.txt .\Gaming.Desktop.x64\Layout\Image\Loose\filler256mb14.txt
-copy /b filler262144.txt .\Gaming.Desktop.x64\Layout\Image\Loose\filler256mb15.txt
-copy /b filler262144.txt .\Gaming.Desktop.x64\Layout\Image\Loose\filler256mb16.txt
-copy /b filler262144.txt .\Gaming.Desktop.x64\Layout\Image\Loose\filler256mb17.txt
+copy /b filler262144.txt .\x64\Layout\Image\Loose\filler256mb1.txt
+copy /b filler262144.txt .\x64\Layout\Image\Loose\filler256mb2.txt
+copy /b filler262144.txt .\x64\Layout\Image\Loose\filler256mb3.txt
+copy /b filler262144.txt .\x64\Layout\Image\Loose\filler256mb4.txt
+copy /b filler262144.txt .\x64\Layout\Image\Loose\filler256mb5.txt
+copy /b filler262144.txt .\x64\Layout\Image\Loose\filler256mb6.txt
+copy /b filler262144.txt .\x64\Layout\Image\Loose\filler256mb7.txt
+copy /b filler262144.txt .\x64\Layout\Image\Loose\filler256mb8.txt
+copy /b filler262144.txt .\x64\Layout\Image\Loose\filler256mb9.txt
+copy /b filler262144.txt .\x64\Layout\Image\Loose\filler256mb10.txt
+copy /b filler262144.txt .\x64\Layout\Image\Loose\filler256mb11.txt
+copy /b filler262144.txt .\x64\Layout\Image\Loose\filler256mb12.txt
+copy /b filler262144.txt .\x64\Layout\Image\Loose\filler256mb13.txt
+copy /b filler262144.txt .\x64\Layout\Image\Loose\filler256mb14.txt
+copy /b filler262144.txt .\x64\Layout\Image\Loose\filler256mb15.txt
+copy /b filler262144.txt .\x64\Layout\Image\Loose\filler256mb16.txt
+copy /b filler262144.txt .\x64\Layout\Image\Loose\filler256mb17.txt
 @echo off
 
 echo Copying over the MicrosoftGame.config file for PC
-copy /b MicrosoftGameConfig_PC.mgc .\Gaming.Desktop.x64\Layout\Image\Loose\MicrosoftGame.config
+copy /b MicrosoftGameConfig_PC.mgc .\x64\Layout\Image\Loose\MicrosoftGame.config
 
 echo Deleting temporary filler files
 del filler.txt

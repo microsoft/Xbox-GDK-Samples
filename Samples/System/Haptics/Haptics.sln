@@ -1,0 +1,28 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35013.160
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Haptics", "Haptics.vcxproj", "{05BE229F-8345-468F-9B78-36966862B1F8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Profile|x64 = Profile|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{05BE229F-8345-468F-9B78-36966862B1F8}.Debug|x64.ActiveCfg = Debug|x64
+		{05BE229F-8345-468F-9B78-36966862B1F8}.Debug|x64.Build.0 = Debug|x64
+		{05BE229F-8345-468F-9B78-36966862B1F8}.Profile|x64.ActiveCfg = Profile|x64
+		{05BE229F-8345-468F-9B78-36966862B1F8}.Profile|x64.Build.0 = Profile|x64
+		{05BE229F-8345-468F-9B78-36966862B1F8}.Release|x64.ActiveCfg = Release|x64
+		{05BE229F-8345-468F-9B78-36966862B1F8}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {01A821B7-A353-422C-8FB8-A5F3C53D44BD}
+	EndGlobalSection
+EndGlobal

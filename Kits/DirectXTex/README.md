@@ -6,7 +6,7 @@ http://go.microsoft.com/fwlink/?LinkId=248926
 
 Copyright (c) Microsoft Corporation.
 
-## July 9, 2025
+## October 27, 2025
 
 This package contains DirectXTex, a shared source library for reading and writing ``.DDS`` files, and performing various texture content processing operations including resizing, format conversion, mip-map generation, block compression for Direct3D runtime texture resources, and height-map to normal-map conversion. This library makes use of the Windows Image Component (WIC) APIs. It also includes ``.TGA`` and ``.HDR`` readers and writers since these image file formats are commonly used for texture content processing pipelines, but are not currently supported by a built-in WIC codec.
 
@@ -82,6 +82,10 @@ For the latest version of DirectXTex, bug reports, etc. please visit the project
 FOR SECURITY ADVISORIES, see [GitHub](https://github.com/microsoft/DirectXTex/security/advisories).
 
 For a full change history, see [CHANGELOG.md](https://github.com/microsoft/DirectXTex/blob/main/CHANGELOG.md).
+
+* The CMake projects require 3.21 or later. VS 2019 users will need to install a standalone version of CMake 3.21 or later and add it to their PATH.
+
+* Starting with the October 2025 release, the _Auxiliary_ functions for loading and saving JPEG and PNG files now take a flag parameter after the filename.
 
 * Starting with the March 2025 release, Windows 7 and Windows 8.0 support has been retired.
 

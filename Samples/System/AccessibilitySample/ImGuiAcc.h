@@ -54,7 +54,7 @@ public:
     }
 
     bool Button(const char* label);
-    bool InputText(const char* label, char* buf, size_t bufSize, ImGuiInputTextFlags flags = 0, ImGuiInputTextCallback callback = NULL, void* userData = NULL, GameInputKind activeGameInputKind = (GameInputKind)0);
+    bool InputText(const char* label, char* buf, size_t bufSize, GameInputKind activeGameInputKind = (GameInputKind)0, ImGuiInputTextFlags flags = 0, ImGuiInputTextCallback callback = NULL, void* userData = NULL);
     bool Checkbox(const char* label, bool* isChecked);
 
     // Format is unused as slider value is place OUTSIDE of the widget

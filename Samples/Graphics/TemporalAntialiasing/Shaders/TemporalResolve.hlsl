@@ -279,17 +279,9 @@ float4 ClipAABB(in float4 historyColor, in float3 currentColor, in float3 minCol
     const float3 intersection = ((AABBCenter - sign(direction) * AABBExtents) - historyColor.xyz) / direction;
 
     // clip unexpected T values.
-#if defined(__XBOX_SCARLETT) || defined(__XBOX_ONE)
     const float3 possibleT = select(intersection > 0.0f.xxx, intersection, VARIANCE_INTERSECTION_MAX_T + 1.0f);
-#else
-    const float3 possibleT = (intersection > 0.0f.xxx) ? intersection : VARIANCE_INTERSECTION_MAX_T + 1.0f;
-#endif
     const float t = min(VARIANCE_INTERSECTION_MAX_T, min(possibleT.x, min(possibleT.y, possibleT.z)));
 
     // final history color.
-#if defined(__XBOX_SCARLETT) || defined(__XBOX_ONE)
     return float4(select(t < VARIANCE_INTERSECTION_MAX_T, historyColor.xyz + direction * t, historyColor.xyz), 1.0f);
-#else
-    return float4((t < VARIANCE_INTERSECTION_MAX_T) ? historyColor.xyz + direction * t : historyColor.xyz, 1.0f);
-#endif
 }

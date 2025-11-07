@@ -15,6 +15,7 @@
     <FileGroup DestinationPath="\" SourcePath="." Include="*.spritefont"/>
     <FileGroup DestinationPath="\" SourcePath="." Include="MicrosoftGame.config"/>
     <FileGroup DestinationPath="\" SourcePath="." Include="XCurl.dll"/>
+    <FileGroup DestinationPath="\" SourcePath="." Include="libHttpClient.dll"/>
     <FileGroup DestinationPath="\Assets"    SourcePath=".\Assets"    Include="*.*"/>
     <FileGroup DestinationPath="\Assets\Fonts"    SourcePath=".\Assets\Fonts"    Include="*.*"/>
     <FileGroup DestinationPath="\Assets\Textures"    SourcePath=".\Assets\Textures"    Include="*.*"/>

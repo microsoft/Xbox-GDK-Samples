@@ -39,7 +39,7 @@ This sample has many projects, and in order to work properly, is set up in the f
 
 - All required files to run on console will end up in .\\DefaultExperience\\%TARGET%\\Layout\\Image\\Loose
 
-- All required files to run on desktop will end up in .\\Gaming.Desktop.x64\\%CONFIG%
+- All required files to run on desktop will end up in .\\x64\\%CONFIG%
 
   
 
@@ -55,22 +55,22 @@ This sample has many projects, and in order to work properly, is set up in the f
 
 #### Method 2: Run from package creation
 
-    1. Build the project.
+ï¿½ ï¿½ 1. Build the project.
 
-    2. Run GenScarlettXVCPackage.bat, GenXboxOneXVCPackage, or GenDesktopMSIXVCPackage.bat within a terminal that supports Makepkg. There are 3 batch files, one for each platform.
+ï¿½ ï¿½ 2. Run GenScarlettXVCPackage.bat, GenXboxOneXVCPackage, or GenDesktopMSIXVCPackage.bat within a terminal that supports Makepkg. There are 3 batch files, one for each platform.
 
-        The console package files can be found in the .\\DefaultExperience\\%Target%\\Layout\\Image
+ï¿½ ï¿½ ï¿½ ï¿½ The console package files can be found in the .\\DefaultExperience\\%Target%\\Layout\\Image
 
-        The desktop package files can be found in .\\Gaming.Desktop.x64\\Layout\\Image
+ï¿½ ï¿½ ï¿½ ï¿½ The desktop package files can be found in .\\x64\\Layout\\Image
 
 ##### Installing and running the package.
 
-    1. If running on Xbox, copy the .xvc file from the directory containing the console package files into your devkit through Xbox Manager. You can also install the package with xbapp install. The install command will look similar to:
-	    
+ï¿½ ï¿½ 1. If running on Xbox, copy the .xvc file from the directory containing the console package files into your devkit through Xbox Manager. You can also install the package with xbapp install. The install command will look similar to:
+	ï¿½ ï¿½ 
 	```xbapp install 41336MicrosoftATG.MultiExecutablePackage_1.0.0.0_neutral__dspnxghe87tn0_xs.xvc```
 
-    2. If running on desktop, install the .MSIXVC file from the directory containing the desktop package files with WDAPP install. The install command will look similar to: 
-	    
+ï¿½ ï¿½ 2. If running on desktop, install the .MSIXVC file from the directory containing the desktop package files with WDAPP install. The install command will look similar to: 
+	ï¿½ ï¿½ 
 	```wdapp install 41336MicrosoftATG.MultiExecutablePackage_1.0.0.0_x64__dspnxghe87tn0.msixv```
 
 

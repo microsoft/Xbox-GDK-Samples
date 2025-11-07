@@ -120,6 +120,7 @@ Following is a list of categories for the samples.
 | __LeaderboardsTitleManaged__ | The leaderboards sample demonstrates the usage of Xbox Live Leaderboards with Title-Managed stats. | ✓ | ✓ | 
 | __mDNS__ | This sample demonstrates using mDNS to register a game service and broadcasting it across your local network, as well as demonstrating network discovery and resolving on Xbox. | ✓ | ✓ | 
 | __MicrosoftStoreServicesClient__ | This sample works with the Microsoft.StoreServices Sample and demonstrates the client side call pattern to do service-to-service auth with the Store Services | ✓ | ✓ | 
+| __MsQuicEcho__ | This sample is to demonstrate how to implement MsQuic using a simple Echo Server as an example. |  | ✓ | 
 | __PlayFabLeaderboards__ | This sample displays the data of the leaderboard registered in PlayFab Leaderboards (v2). As an option, a tool is provided to create PlayFab Leaderboards and write any number of player entities and scores to them. | ✓ | ✓ | 
 | __PlayFabStore__ | This sample demonstrates the client-based operations used in presenting and operating an in-game economy with PlayFab Economy v2. | ✓ | ✓ | 
 | __SimpleCrossGenMPSD__ | This sample demonstrates how to use MPSD to implement sessions and matchmaking for both cross generation and single generation games. | ✓ | ✓ | 
@@ -153,6 +154,7 @@ Following is a list of categories for the samples.
 | __GamepadVibration__ | This sample demonstrates how to use vibration with a gamepad on an Xbox. | ✓ | ✓ | 
 | __GameSaveCombo__ | This sample demonstrates the use of the XGameSave APIs to save and load game save data on Xbox. | ✓ | ✓ | 
 | __GameSaveFilesCombo__ | This sample demonstrates the use of the XGameSaveFiles APIs to access folders on Xbox. | ✓ | ✓ | 
+| __Haptics__ | This sample demonstrates Advanced Haptics APIs. |  | ✓ | 
 | __IntelligentDelivery__ | This sample demonstrates Intelligent Delivery APIs. | ✓ | ✓ | 
 | __Lighting__ | This sample shows how to use the LampArray API. | ✓ | ✓ | 
 | __LocalStorage__ | This sample shows how to use different local storage locations in a title for both Xbox and PC platforms. | ✓ | ✓ | 
@@ -185,7 +187,6 @@ Following is a list of categories for the samples.
 | __CMakeXboxConsoleApp__ | This is an example of using the CMake cross-platform build system to produce a 'Win32 console' application that can be executed on the Xbox hardware using the Microsoft GDK. | ✓ |  | 
 | __DumpTool__ | DumpTool runs in the Xbox Game OS and generates a crash dump for another process that you specify by name as an argument to the tool. | ✓ |  | 
 | __MeshletConverter__ | The meshlet converter is a command line tool for use on PC. |  | ✓ | 
-| __OSPrimitiveTestCombo__ | This sample works with the Costs for Synchronization Primitives entry in the Microsoft GDK documentation. | ✓ | ✓ | 
 | __PlayInputMacro__ | This tool allows play back of recorded XBOM macros to a console from the command line. |  | ✓ | 
 | __WPAProfiles__ | These are WPA profiles for the Windows Performance Analyzer tool. | ✓ | ✓ | 
 | __xbcompress__ | This samples demonstrates the Compression API introduced with Windows 8 which is supported for all Gaming.*.x64 platforms. | ✓ | ✓ | 
@@ -199,7 +200,16 @@ Following is a list of categories for the samples.
  
 | Sample | Description | Console | PC | 
 | ------ | ----------- | ------- | -- | 
+| __HandheldHelper__ | Helper project for UnityHandheldBestPractices. |  | ✓ | 
+| __UnityAchievements__ | This sample demonstrates using the Title-Managed Achievements C# API provided by the Unity GDK Wrapper. | ✓ | ✓ | 
 | __UnityHandheldBestPractices__ | This sample demonstrates the best practices for running a title on handheld devices in Unity. |  | ✓ | 
+| __UnityInGameStore__ | This sample demonstrates the client-based operations used in presenting and operating an in-game storefront in Unity. | ✓ | ✓ | 
+| __UnityLeaderboardsTitleManaged__ | The leaderboards sample demonstrates the usage of Xbox Live Leaderboards with Title-Managed stats in Unity. | ✓ | ✓ | 
+| __UnitySimpleHttpCall__ | This sample demonstrates usage of Xbox Live Http Calls using Unity. |  | ✓ | 
+| __UnitySimpleMPSD__ | This sample demonstrates how to use MPSD to implement sessions and matchmaking for Unity games. | ✓ | ✓ | 
+| __UnitySimplePLM__ | This sample shows behavior of the Process Lifetime Management (PLM) events on Xbox in Unity. | ✓ | ✓ | 
+| __UnitySimpleWebSockets__ | This sample demonstrates usage of Http Client Web Sockets using the Unity game engine. | ✓ | ✓ | 
+| __UnitySocialManager__ | This sample demonstrates usage of Xbox Live Social Manager using the Unity game engine. | ✓ | ✓ | 
  
 <a id="xcloud"></a> 
  

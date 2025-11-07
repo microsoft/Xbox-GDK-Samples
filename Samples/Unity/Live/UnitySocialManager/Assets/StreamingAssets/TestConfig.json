@@ -1,0 +1,109 @@
+{
+	"Configuration":
+	{
+		"Version": 1,
+		"ExcludedPlatforms": [ ]
+	},
+	"TestActions":
+	[
+		{
+			"Frame": 500,
+			"Action": "Screenshot",
+			"ScreenshotParams":
+			{
+				"Filename": "screenshot1.png"
+			}
+		},
+		{
+			"Frame": 600,
+			"Action": "Input",
+			"InputParams":
+			{
+				"Inputs": [ "Down" ],
+				"State": "Press"
+			}
+		},
+        {
+			"Frame": 700,
+			"Action": "Input",
+			"InputParams":
+			{
+				"Inputs": [ "Down" ],
+				"State": "Press"
+			}
+		},
+		{
+			"Frame": 800,
+			"Action": "Input",
+			"InputParams":
+			{
+				"Inputs": [ "A" ] ,
+				"State": "Press"
+			}
+		},
+		{
+			"Frame": 1000,
+			"Action": "Screenshot",
+			"ScreenshotParams":
+			{
+				"Filename": "screenshot2.png"
+			}
+		},
+		{
+			"Frame": 1220,
+			"Action": "Input",
+			"InputParams":
+			{
+				"Inputs": [ "View" ],
+				"State": "Press"
+			}
+		}
+	],
+	"TestPostActions":
+	[
+		{
+			"Action": "OutputStringMatch",
+			"StringMatchParams":
+			{
+				"Type": "Exact",
+				"MatchString": "Opening profile card for",
+				"Success": true
+			}
+		},
+		{
+			"Action": "OutputStringMatch",
+			"StringMatchParams":
+			{
+				"Type": "RegEx",
+				"MatchString": "Opening profile card for",
+				"Success": true
+			}
+		},
+		{
+			"Action": "OCRStringMatch",
+			"OCRParams":
+			{
+				"Filename": "screenshot2.png"
+			},
+			"StringMatchParams":
+			{
+				"Type": "Exact",
+				"MatchString": "Failed",
+				"Success": false
+			}
+		},
+		{
+			"Action": "ScreenshotCompare",
+			"ScreenshotCompareParams":
+			{
+				"Filename": "screenshot1.png",
+				"BaselineFilename": "screenshot1.png",
+				"Region": [ 0, 0, 712, 1080 ], 
+				"Metric": "PSNR",
+				"FuzzPercentage": 25,
+				"Threshold": 80,
+				"ComparisonOperator": ">"
+			}
+		}
+	]
+}

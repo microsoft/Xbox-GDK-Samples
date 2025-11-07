@@ -30,26 +30,17 @@
 // WinHelp is deprecated
 #define NOHELP
 
-#ifndef WIN32_LEAN_AND_MEAN
-#define WIN32_LEAN_AND_MEAN
-#endif
-
 #include <Windows.h>
 
 #include <wrl/client.h>
 #include <wrl/event.h>
 
-#include <grdk.h>
-
-#if _GRDK_VER < 0x55F00C58 /* GDK Edition 220300 */
-#error This sample requires the March 2022 GDK or later
-#endif
-
 #ifdef _GAMING_XBOX_SCARLETT
 #include <d3d12_xs.h>
 #include <d3dx12_xs.h>
 #elif defined(_GAMING_XBOX)
-#error This sample does not support Xbox One
+#include <d3d12_x.h>
+#include <d3dx12_x.h>
 #else
 #include <d3d12.h>
 #include <dxgi1_6.h>
@@ -61,12 +52,21 @@
 #include "d3dx12.h"
 #endif
 
+#ifdef _GAMING_XBOX
+#include <pix3.h>
+#else
+// To use graphics markup events with the latest version of PIX, change this to include <pix3.h>
+// then add the NuGet package WinPixEventRuntime to the project.
+#include <pix.h>
+#endif
+
 #define _XM_NO_XMVECTOR_OVERLOADS_
 
 #include <DirectXMath.h>
 #include <DirectXColors.h>
 
 #include <algorithm>
+#include <atomic>
 #include <cassert>
 #include <cmath>
 #include <cstddef>
@@ -78,27 +78,16 @@
 #include <functional>
 #include <future>
 #include <iterator>
+#include <map>
 #include <memory>
 #include <stdexcept>
 #include <string>
 #include <system_error>
+#include <thread>
 #include <tuple>
 
-#ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunused-but-set-variable"
-#endif
-
-#include <pix3.h>
-
-#ifdef __clang__
-#pragma clang diagnostic pop
-#endif
-
-#include <XGame.h>
-#include <XSystem.h>
-
 #include "CommonStates.h"
+#include "DDSTextureLoader.h"
 #include "DescriptorHeap.h"
 #include "DirectXHelpers.h"
 #include "GamePad.h"
@@ -151,4 +140,4 @@ namespace DX
 }
 
 // Enable off by default warnings to improve code conformance
-#pragma warning(default : 4061 4062 4191 4242 4263 4264 4265 4266 4289 4365 4826 4841 4986 4987 5029 5038 5042)
+#pragma warning(default : 4061 4062 4191 4263 4264 4265 4266 4289 4365 4746 4826 4841 4986 4987 5029 5038 5042)

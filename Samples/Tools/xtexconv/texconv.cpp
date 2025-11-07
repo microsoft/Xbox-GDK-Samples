@@ -117,6 +117,7 @@ namespace
         OPT_TGAZEROALPHA,
         OPT_WIC_LOSSLESS,
         OPT_WIC_MULTIFRAME,
+        OPT_WIC_UNCOMPRESSED,
         OPT_NOLOGO,
         OPT_TIMING,
         OPT_SEPALPHA,
@@ -140,6 +141,7 @@ namespace
         OPT_INVERT_Y,
         OPT_RECONSTRUCT_Z,
         OPT_BCNONMULT4FIX,
+        OPT_IGNORE_SRGB_METADATA,
     #ifdef USE_XBOX_EXTS
         OPT_USE_XBOX,
         OPT_XGMODE,
@@ -187,6 +189,7 @@ namespace
     {
         FORMAT_DXT5_NM = 1,
         FORMAT_DXT5_RXGB,
+        FORMAT_24BPP_LEGACY,
     };
 
     static_assert(OPT_FLAGS_MAX <= 64, "dwOptions is a unsigned int bitfield");
@@ -282,6 +285,7 @@ namespace
         { L"help",                  OPT_HELP },
         { L"horizontal-flip",       OPT_HFLIP },
         { L"ignore-mips",           OPT_DDS_IGNORE_MIPS },
+        { L"ignore-srgb",           OPT_IGNORE_SRGB_METADATA },
         { L"image-filter",          OPT_FILTER },
         { L"invert-y",              OPT_INVERT_Y },
         { L"keep-coverage",         OPT_PRESERVE_ALPHA_COVERAGE },
@@ -311,6 +315,7 @@ namespace
         { L"vertical-flip",         OPT_VFLIP },
         { L"wic-lossless",          OPT_WIC_LOSSLESS },
         { L"wic-multiframe",        OPT_WIC_MULTIFRAME },
+        { L"wic-uncompressed",      OPT_WIC_UNCOMPRESSED },
         { L"wic-quality",           OPT_WIC_QUALITY },
         { L"width",                 OPT_WIDTH },
         { L"x2-bias",               OPT_X2_BIAS },
@@ -320,7 +325,7 @@ namespace
         { nullptr,                  0 }
     };
 
-    #define DEFFMT(fmt) { L## #fmt, DXGI_FORMAT_ ## fmt }
+#define DEFFMT(fmt) { L## #fmt, DXGI_FORMAT_ ## fmt }
 
     const SValue<DXGI_FORMAT> g_pFormats[] =
     {
@@ -446,6 +451,7 @@ namespace
         { L"BC3n", FORMAT_DXT5_NM },
         { L"DXT5nm", FORMAT_DXT5_NM },
         { L"RXGB", FORMAT_DXT5_RXGB },
+        { L"RGB24", FORMAT_24BPP_LEGACY },
 
         { nullptr, 0 }
     };
@@ -506,7 +512,7 @@ namespace
         { nullptr, DXGI_FORMAT_UNKNOWN }
     };
 
-    #undef DEFFMT
+#undef DEFFMT
 
     const SValue<uint32_t> g_pFilters[] =
     {
@@ -552,15 +558,15 @@ namespace
     constexpr uint32_t CODEC_PPM = 0xFFFF0006;
     constexpr uint32_t CODEC_PFM = 0xFFFF0007;
 
-    #ifdef USE_OPENEXR
+#ifdef USE_OPENEXR
     constexpr uint32_t CODEC_EXR = 0xFFFF0008;
-    #endif
-    #ifdef USE_LIBJPEG
+#endif
+#ifdef USE_LIBJPEG
     constexpr uint32_t CODEC_JPEG = 0xFFFF0009;
-    #endif
-    #ifdef USE_LIBPNG
+#endif
+#ifdef USE_LIBPNG
     constexpr uint32_t CODEC_PNG = 0xFFFF000A;
-    #endif
+#endif
 
     const SValue<uint32_t> g_pSaveFileTypes[] =   // valid formats to write to
     {
@@ -591,7 +597,6 @@ namespace
     #ifdef USE_OPENEXR
         { L"exr",   CODEC_EXR      },
     #endif
-        { L"heic",  WIC_CODEC_HEIF },
         { L"heif",  WIC_CODEC_HEIF },
         { nullptr,  CODEC_DDS      }
     };
@@ -818,16 +823,20 @@ namespace
             L"                       Tile/swizzle using provided memory layout mode\n"
         #endif
             L"\n"
+            L"                       (PNG, JPG, TIF, TGA input only)\n"
+            L"   --ignore-srgb       Ignores any gamma setting in the metadata\n"
+            L"\n"
             L"                       (TGA input only)\n"
             L"   --tga-zero-alpha    Allow all zero alpha channel files to be loaded 'as is'\n"
             L"\n"
             L"                       (TGA output only)\n"
             L"   -tga20              Write file including TGA 2.0 extension area\n"
             L"\n"
-            L"                       (BMP, PNG, JPG, TIF, WDP output only)\n"
+            L"                       (BMP, PNG, JPG, TIF, WDP, and HIEF output only)\n"
             L"   -wicq <quality>, --wic-quality <quality>\n"
             L"                       When writing images with WIC use quality (0.0 to 1.0)\n"
             L"   --wic-lossless      When writing images with WIC use lossless mode\n"
+            L"   --wic-uncompressed  When writing images with WIC use uncompressed mode\n"
             L"   --wic-multiframe    When writing images with WIC encode multiframe images\n"
             L"\n"
             L"   -nologo             suppress copyright message\n"
@@ -1264,6 +1273,7 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
     bool keepRecursiveDirs = false;
     bool dxt5nm = false;
     bool dxt5rxgb = false;
+    bool use24bpp = false;
     uint32_t swizzleElements[4] = { 0, 1, 2, 3 };
     uint32_t zeroElements[4] = {};
     uint32_t oneElements[4] = {};
@@ -1414,10 +1424,10 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
             case OPT_PAPER_WHITE_NITS:
             case OPT_PRESERVE_ALPHA_COVERAGE:
             case OPT_SWIZZLE:
-        #ifdef USE_XBOX_EXTS
+            #ifdef USE_XBOX_EXTS
             case OPT_XGMODE:
-        #endif
-                // These support either "-arg:value" or "-arg value"
+            #endif
+                    // These support either "-arg:value" or "-arg value"
                 if (!*pValue)
                 {
                     if ((iArg + 1 >= argc))
@@ -1479,6 +1489,11 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
                         case FORMAT_DXT5_RXGB:
                             format = DXGI_FORMAT_BC3_UNORM;
                             dxt5rxgb = true;
+                            break;
+
+                        case FORMAT_24BPP_LEGACY:
+                            format = DXGI_FORMAT_B8G8R8X8_UNORM;
+                            use24bpp = true;
                             break;
 
                         default:
@@ -1888,7 +1903,7 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
                 }
                 break;
 
-        #ifdef USE_XBOX_EXTS
+            #ifdef USE_XBOX_EXTS
             case OPT_XGMODE:
                 {
                 #ifdef _USE_SCARLETT
@@ -1920,7 +1935,7 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
                     XGSetHardwareVersion(static_cast<XG_HARDWARE_VERSION>(mode));
                     break;
                 }
-        #endif // USE_XBOX_EXTS
+            #endif // USE_XBOX_EXTS
             }
         }
         else if (wcspbrk(pArg, L"?*") != nullptr)
@@ -2003,12 +2018,12 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
         }
 
         std::filesystem::path curpath(pConv->szSrc);
-        auto const ext = curpath.extension();
+        const auto ext = curpath.extension();
 
     #ifndef USE_XBOX_EXTS
         constexpr
-    #endif
-        bool isXbox = false;
+        #endif
+            bool isXbox = false;
         if (_wcsicmp(ext.c_str(), L".dds") == 0 || _wcsicmp(ext.c_str(), L".ddx") == 0)
         {
         #ifdef USE_XBOX_EXTS
@@ -2031,7 +2046,7 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
                 }
             }
             else
-        #endif // USE_XBOX_EXTS
+            #endif // USE_XBOX_EXTS
             {
                 DDS_FLAGS ddsFlags = DDS_FLAGS_ALLOW_LARGE_FILES;
                 if (dwOptions & (UINT64_C(1) << OPT_DDS_DWORD_ALIGN))
@@ -2088,6 +2103,10 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
         else if (_wcsicmp(ext.c_str(), L".tga") == 0)
         {
             TGA_FLAGS tgaFlags = (IsBGR(format)) ? TGA_FLAGS_BGR : TGA_FLAGS_NONE;
+            if (dwOptions & (UINT64_C(1) << OPT_IGNORE_SRGB_METADATA))
+            {
+                tgaFlags |= TGA_FLAGS_IGNORE_SRGB;
+            }
             if (dwOptions & (UINT64_C(1) << OPT_TGAZEROALPHA))
             {
                 tgaFlags |= TGA_FLAGS_ALLOW_ALL_ZERO_ALPHA;
@@ -2121,7 +2140,7 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
                 continue;
             }
         }
-        else if (_wcsicmp(ext.c_str(), L".pfm") == 0)
+        else if (_wcsicmp(ext.c_str(), L".pfm") == 0 || _wcsicmp(ext.c_str(), L".phm") == 0)
         {
             hr = LoadFromPortablePixMapHDR(curpath.c_str(), &info, *image);
             if (FAILED(hr))
@@ -2146,7 +2165,13 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
     #ifdef USE_LIBJPEG
         else if (_wcsicmp(ext.c_str(), L".jpg") == 0 || _wcsicmp(ext.c_str(), L".jpeg") == 0)
         {
-            hr = LoadFromJPEGFile(curpath.c_str(), &info, *image);
+            JPEG_FLAGS jpegFlags = JPEG_FLAGS_NONE;
+            if (dwOptions & (UINT64_C(1) << OPT_IGNORE_SRGB_METADATA))
+            {
+                jpegFlags |= JPEG_FLAGS_DEFAULT_LINEAR;
+            }
+
+            hr = LoadFromJPEGFile(curpath.c_str(), jpegFlags, &info, *image);
             if (FAILED(hr))
             {
                 wprintf(L" FAILED (%08X%ls)\n", static_cast<unsigned int>(hr), GetErrorDesc(hr));
@@ -2158,7 +2183,13 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
     #ifdef USE_LIBPNG
         else if (_wcsicmp(ext.c_str(), L".png") == 0)
         {
-            hr = LoadFromPNGFile(curpath.c_str(), &info, *image);
+            PNG_FLAGS pngFlags = (IsBGR(format)) ? PNG_FLAGS_BGR : PNG_FLAGS_NONE;
+            if (dwOptions & (UINT64_C(1) << OPT_IGNORE_SRGB_METADATA))
+            {
+                pngFlags |= PNG_FLAGS_IGNORE_SRGB;
+            }
+
+            hr = LoadFromPNGFile(curpath.c_str(), pngFlags, &info, *image);
             if (FAILED(hr))
             {
                 wprintf(L" FAILED (%08X%ls)\n", static_cast<unsigned int>(hr), GetErrorDesc(hr));
@@ -2179,7 +2210,13 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
 
             WIC_FLAGS wicFlags = WIC_FLAGS_NONE | dwFilter;
             if (FileType == CODEC_DDS)
+            {
                 wicFlags |= WIC_FLAGS_ALL_FRAMES;
+            }
+            if (dwOptions & (UINT64_C(1) << OPT_IGNORE_SRGB_METADATA))
+            {
+                wicFlags |= WIC_FLAGS_IGNORE_SRGB;
+            }
 
             hr = LoadFromWICFile(curpath.c_str(), wicFlags, &info, *image);
             if (FAILED(hr))
@@ -2194,7 +2231,7 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
                     }
                     else if (_wcsicmp(ext.c_str(), L".webp") == 0)
                     {
-                        wprintf(L"INFO: This format requires installing the WEBP Image Extensions - https://www.microsoft.com/p/webp-image-extensions/9pg2dk419drg\n");
+                        wprintf(L"INFO: This format requires installing the WEBP Image Extensions - https://apps.microsoft.com/detail/9PG2DK419DRG\n");
                     }
                 }
                 continue;
@@ -3676,7 +3713,7 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
                     continue;
                 }
 
-                auto const err = static_cast<DWORD>(SHCreateDirectoryExW(nullptr, apath.c_str(), nullptr));
+                const auto err = static_cast<DWORD>(SHCreateDirectoryExW(nullptr, apath.c_str(), nullptr));
                 if (err != ERROR_SUCCESS && err != ERROR_ALREADY_EXISTS)
                 {
                     wprintf(L" directory creation FAILED (%08X%ls)\n",
@@ -3733,7 +3770,7 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
                     }
                 }
                 else
-            #endif // USE_XBOX_EXTS
+                #endif // USE_XBOX_EXTS
                 {
                     DDS_FLAGS ddsFlags = DDS_FLAGS_NONE;
                     if (dwOptions & (UINT64_C(1) << OPT_USE_DX10))
@@ -3745,6 +3782,10 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
                         if (dxt5rxgb)
                         {
                             ddsFlags |= DDS_FLAGS_FORCE_DXT5_RXGB;
+                        }
+                        else if (use24bpp)
+                        {
+                            ddsFlags |= DDS_FLAGS_FORCE_24BPP_RGB;
                         }
 
                         ddsFlags |= DDS_FLAGS_FORCE_DX9_LEGACY;
@@ -3777,12 +3818,12 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
             #endif
             #ifdef USE_LIBJPEG
             case CODEC_JPEG:
-                hr = SaveToJPEGFile(img[0], destName.c_str());
+                hr = SaveToJPEGFile(img[0], JPEG_FLAGS_NONE, destName.c_str());
                 break;
             #endif
             #ifdef USE_LIBPNG
             case CODEC_PNG:
-                hr = SaveToPNGFile(img[0], destName.c_str());
+                hr = SaveToPNGFile(img[0], PNG_FLAGS_NONE, destName.c_str());
                 break;
             #endif
 
@@ -3793,18 +3834,20 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
                     hr = SaveToWICFile(img, nimages, WIC_FLAGS_NONE, GetWICCodec(codec), destName.c_str(), nullptr,
                         [&](IPropertyBag2* props)
                         {
-                            const bool wicLossless = (dwOptions & (UINT64_C(1) << OPT_WIC_LOSSLESS)) != 0;
+                            const bool lossless = (dwOptions & (UINT64_C(1) << OPT_WIC_LOSSLESS)) != 0;
+                            const bool uncompressed = (dwOptions & (UINT64_C(1) << OPT_WIC_UNCOMPRESSED)) != 0;
 
                             switch (FileType)
                             {
+                            default:
                             case WIC_CODEC_JPEG:
-                                if (wicLossless || wicQuality >= 0.f)
+                                if (wicQuality >= 0.f)
                                 {
                                     PROPBAG2 options = {};
                                     VARIANT varValues = {};
                                     options.pstrName = const_cast<wchar_t*>(L"ImageQuality");
                                     varValues.vt = VT_R4;
-                                    varValues.fltVal = (wicLossless) ? 1.f : wicQuality;
+                                    varValues.fltVal = wicQuality;
                                     std::ignore = props->Write(1, &options, &varValues);
                                 }
                                 break;
@@ -3813,7 +3856,7 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
                                 {
                                     PROPBAG2 options = {};
                                     VARIANT varValues = {};
-                                    if (wicLossless)
+                                    if (uncompressed)
                                     {
                                         options.pstrName = const_cast<wchar_t*>(L"TiffCompressionMethod");
                                         varValues.vt = VT_UI1;
@@ -3829,13 +3872,37 @@ int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
                                 }
                                 break;
 
+                            case WIC_CODEC_HEIF:
+                                {
+                                    PROPBAG2 options = {};
+                                    VARIANT varValues = {};
+                                    if (uncompressed)
+                                    {
+                                        options.pstrName = const_cast<wchar_t*>(L"HeifCompressionMethod");
+                                        varValues.vt = VT_UI1;
+                                    #if defined(NTDDI_WIN10_CU) && !defined(__MINGW32__)
+                                        varValues.bVal = WICHeifCompressionNone;
+                                    #else
+                                        varValues.bVal = 0x1 /* WICHeifCompressionNone */;
+                                    #endif
+                                    }
+                                    else if (wicQuality >= 0.f)
+                                    {
+                                        options.pstrName = const_cast<wchar_t*>(L"ImageQuality");
+                                        varValues.vt = VT_R4;
+                                        varValues.fltVal = wicQuality;
+                                    }
+                                    std::ignore = props->Write(1, &options, &varValues);
+                                }
+                                break;
+
                             case WIC_CODEC_WMP:
                             case CODEC_HDP:
                             case CODEC_JXR:
                                 {
                                     PROPBAG2 options = {};
                                     VARIANT varValues = {};
-                                    if (wicLossless)
+                                    if (lossless)
                                     {
                                         options.pstrName = const_cast<wchar_t*>(L"Lossless");
                                         varValues.vt = VT_BOOL;

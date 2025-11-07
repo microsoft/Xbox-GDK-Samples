@@ -30,9 +30,6 @@
     <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
-      <Filter>ATG Tool Kit</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Kits\ATGTK\Json.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
@@ -45,9 +42,6 @@
     <ClCompile Include="SimpleTriangleDesktop.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
-      <Filter>ATG Tool Kit</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
       <Filter>ATG Tool Kit</Filter>
     </ClCompile>
     <ClCompile Include="DeviceResources.cpp">
@@ -84,9 +78,6 @@
     <None Include="readme_ko-kr.md" />
     <None Include="readme_zh-cn.md" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Assets\LargeLogo.png">

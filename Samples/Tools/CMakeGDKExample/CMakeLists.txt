@@ -173,15 +173,17 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY VS_SOLUTION_DEPLOY ON)
 # Xbox.Services.API.C Xbox.XCurl.API Xbox.Game.Chat.2.Cpp.API PlayFab.Multiplayer.Cpp PlayFab.Party.Cpp PlayFab.PartyXboxLive.Cpp PlayFab.Services.C
 set_property(TARGET ${PROJECT_NAME} PROPERTY VS_GLOBAL_GDKExtLibNames Xbox.Services.API.C)
 
-# VC++ binary compatibility means we can use the VS 2019 version with VS 2019 or VS 2022
+# VC++ binary compatibility means we can use the VS 2019 version with VS 2022
 set(ExtensionPlatformToolset 142)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE "Microsoft.Xbox.Services.${ExtensionPlatformToolset}.GDK.C.lib" winhttp.lib crypt32.lib)
+target_link_libraries(${PROJECT_NAME} PRIVATE "Microsoft.Xbox.Services.${ExtensionPlatformToolset}.C.lib" winhttp.lib crypt32.lib)
 
-if(XdkEditionTarget GREATER_EQUAL 240600)
+if(XdkEditionTarget GREATER_EQUAL 251000)
+    target_link_libraries(${PROJECT_NAME} PRIVATE "libHttpClient.lib")
+elseif(XdkEditionTarget GREATER_EQUAL 240600)
     target_link_libraries(${PROJECT_NAME} PRIVATE "libHttpClient.GDK.lib")
 else()
-    target_link_libraries(${PROJECT_NAME} PRIVATE "libHttpClient.${ExtensionPlatformToolset}.GDK.C.lib")
+    target_link_libraries(${PROJECT_NAME} PRIVATE "libHttpClient.${ExtensionPlatformToolset}.C.lib")
 endif()
 
 # target_link_libraries(${PROJECT_NAME} PRIVATE XCurl.lib GameChat2.lib PlayFabMultiplayerGDK.lib Party.lib PartyXboxLive.lib PlayFabCore.GDK.lib PlayFabServices.GDK.lib)

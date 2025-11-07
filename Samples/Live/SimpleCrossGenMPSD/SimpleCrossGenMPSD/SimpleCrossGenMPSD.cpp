@@ -770,7 +770,8 @@ void Sample::CreateDeviceDependentResources()
     auto uploadResourcesFinished = resourceUpload.End(m_deviceResources->GetCommandQueue());
     uploadResourcesFinished.wait();
 
-    auto styleRenderer = std::make_unique<UIStyleRendererD3D>(*this);
+    auto const os = m_deviceResources->GetOutputSize();
+    auto styleRenderer = std::make_unique<UIStyleRendererD3D>(*this, 200, os.right, os.bottom);
     m_uiManager.GetStyleManager().InitializeStyleRenderer(std::move(styleRenderer));
 }
 

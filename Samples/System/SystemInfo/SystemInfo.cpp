@@ -45,7 +45,7 @@ namespace
     inline float XM_CALLCONV DrawStringCenter(SpriteBatch* batch, SpriteFont* font, const wchar_t* text, float mid, float y, FXMVECTOR color, float scale)
     {
         XMVECTOR size = font->MeasureString(text);
-        XMFLOAT2 pos(mid - XMVectorGetX(size)*scale / 2.f, y);
+        XMFLOAT2 pos(mid - XMVectorGetX(size) * scale / 2.f, y);
         font->DrawString(batch, text, pos, color, 0.f, Vector2::Zero, scale);
         return font->GetLineSpacing() * scale;
     }
@@ -53,7 +53,7 @@ namespace
     inline void DrawStringLeft(SpriteBatch* batch, SpriteFont* font, const wchar_t* text, float mid, float y, float scale)
     {
         XMVECTOR size = font->MeasureString(text);
-        XMFLOAT2 pos(mid - XMVectorGetX(size)*scale, y);
+        XMFLOAT2 pos(mid - XMVectorGetX(size) * scale, y);
         font->DrawString(batch, text, pos, ATG::Colors::Blue, 0.f, Vector2::Zero, scale);
     }
 
@@ -61,7 +61,7 @@ namespace
     {
         XMFLOAT2 pos(mid, y);
         font->DrawString(batch, text, pos, ATG::Colors::White, 0.f, Vector2::Zero, scale);
-        return font->GetLineSpacing()*scale;
+        return font->GetLineSpacing() * scale;
     }
 
 #ifdef _GAMING_DESKTOP
@@ -187,9 +187,9 @@ void Sample::Tick()
 #endif
 
     m_timer.Tick([&]()
-        {
-            Update(m_timer);
-        });
+    {
+        Update(m_timer);
+    });
 
     Render();
 
@@ -253,6 +253,7 @@ void Sample::Update(DX::StepTimer const&)
 
 #pragma region Frame Render
 // Draws the scene.
+
 void Sample::Render()
 {
     // Don't try to render anything before the first Update.
@@ -482,20 +483,10 @@ void Sample::Render()
         // Standard GetVersionEx
         y += m_smallFont->GetLineSpacing() * 2;
 
-        OSVERSIONINFO osVer = {};
-        osVer.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
 
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 #endif
-
-#pragma warning(suppress : 4996)
-        GetVersionEx(&osVer);
-
-        DrawStringLeft(m_batch.get(), m_smallFont.get(), L"GetVersionEx", left, y, m_scale);
-
-        swprintf_s(buff, L"%u.%u.%u", osVer.dwMajorVersion, osVer.dwMinorVersion, osVer.dwBuildNumber);
-        y += DrawStringRight(m_batch.get(), m_smallFont.get(), buff, right, y, m_scale);
     }
     break;
 
@@ -720,11 +711,11 @@ void Sample::Render()
         case D3D12XBOX_HARDWARE_VERSION_XBOX_ONE_S: hwver = L"Xbox One S"; break;
         case D3D12XBOX_HARDWARE_VERSION_XBOX_ONE_X: hwver = L"Xbox One X"; break;
         case D3D12XBOX_HARDWARE_VERSION_XBOX_ONE_X_DEVKIT: hwver = L"Xbox One X (DevKit)"; break;
-    #ifdef _GAMING_XBOX_SCARLETT
+#ifdef _GAMING_XBOX_SCARLETT
         case D3D12XBOX_HARDWARE_VERSION_XBOX_SCARLETT_LOCKHART: hwver = L"Xbox Series S"; break;
         case D3D12XBOX_HARDWARE_VERSION_XBOX_SCARLETT_ANACONDA: hwver = L"Xbox Series X"; break;
         case D3D12XBOX_HARDWARE_VERSION_XBOX_SCARLETT_DEVKIT: hwver = L"Xbox Series X (DevKit)"; break;
-    #endif
+#endif
         }
 
         DrawStringLeft(m_batch.get(), m_smallFont.get(), L"Hardware Version", left, y, m_scale);
@@ -1604,7 +1595,7 @@ void Sample::Render()
                 y += DrawStringRight(m_batch.get(), m_smallFont.get(), d3d12opts13.TextureCopyBetweenDimensionsSupported ? L"true" : L"false", right, y, m_scale);
 
                 DrawStringLeft(m_batch.get(), m_smallFont.get(), L"AlphaBlendFactorSupported", left, y, m_scale);
-                y += DrawStringRight(m_batch.get(), m_smallFont.get(), d3d12opts13.AlphaBlendFactorSupported  ? L"true" : L"false", right, y, m_scale);
+                y += DrawStringRight(m_batch.get(), m_smallFont.get(), d3d12opts13.AlphaBlendFactorSupported ? L"true" : L"false", right, y, m_scale);
             }
 #endif
 
@@ -1736,7 +1727,7 @@ void Sample::Render()
 #endif // _GAMING_DESKTOP
 
     case InfoPage::MAX:
-    break;
+        break;
     }
 
     m_batch->End();

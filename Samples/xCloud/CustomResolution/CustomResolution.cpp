@@ -663,7 +663,8 @@ void Sample::CreateDeviceDependentResources()
     }
 
     // UI
-    auto styleRenderer = std::make_unique<UIStyleRendererD3D>(*this);
+    auto const os = m_deviceResources->GetOutputSize();
+    auto styleRenderer = std::make_unique<UIStyleRendererD3D>(*this, 200, os.right, os.bottom);
     m_uiManager.GetStyleManager().InitializeStyleRenderer(std::move(styleRenderer));
 
     auto backBufferRts = RenderTargetState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());

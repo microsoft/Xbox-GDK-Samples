@@ -10,10 +10,12 @@
 
 #include "ATGColors.h"
 #include "FindMedia.h"
+#include "FileReader.h"
 
 #include <XGameErr.h>
 
 extern void ExitSample() noexcept;
+extern std::unique_ptr<Sample> g_sample;
 
 using namespace DirectX;
 
@@ -21,8 +23,6 @@ using Microsoft::WRL::ComPtr;
 
 namespace
 {
-    Sample* s_sample;
-
     template <size_t bufferSize = 2048>
     void debugPrint(std::string_view format, ...)
     {
@@ -37,9 +37,9 @@ namespace
 
         OutputDebugStringA(buffer);
 
-        if (s_sample)
+        if (g_sample)
         {
-            auto console = s_sample->GetConsole();
+            auto console = g_sample->GetConsole();
             if (console)
             {
                 console->AppendLineOfText(buffer);
@@ -120,8 +120,6 @@ Sample::~Sample()
 // Initialize the Direct3D resources required to run.
 void Sample::Initialize(HWND window, int width, int height)
 {
-    s_sample = this;
-
     m_gamePad = std::make_unique<GamePad>();
     m_keyboard = std::make_unique<Keyboard>();
     m_mouse = std::make_unique<Mouse>();
@@ -1026,40 +1024,24 @@ void Sample::UpdateDownloadProgress(std::shared_ptr<UIButton> button, UINT64 ins
 
 void Sample::SetBackgroundImage(const char* filename)
 {
-    HANDLE hFile = CreateFileA(filename, GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN, NULL);
-
-    if (hFile == INVALID_HANDLE_VALUE)
-    {
-        ErrorMessage("Failed to open %s\n", filename);
-        return;
-    }
-
-    // Get file size
-    FILE_STANDARD_INFO fileInfo;
-    if (GetFileInformationByHandleEx(hFile, FileStandardInfo, &fileInfo, sizeof(fileInfo)) == FALSE)
-    {
-        ErrorMessage("Failed to get the file size %s\n", filename);
-        CloseHandle(hFile);
-        return;
-    }
-
-    LARGE_INTEGER fileSize = fileInfo.EndOfFile;
-
-    // Allocate the buffer
+    FileReader reader;
+    UINT32 filesize = 0;
     std::unique_ptr<uint8_t[]> buffer;
-    buffer.reset(new uint8_t[fileSize.LowPart]);
 
-    DWORD bytesRead;
-    if (ReadFile(hFile, buffer.get(), fileSize.LowPart, &bytesRead, nullptr) == FALSE)
+    if (SUCCEEDED(reader.Open(filename)))
     {
-        ErrorMessage("ReadFile Failed %s\n", filename);
-        CloseHandle(hFile);
-        return;
+        if (SUCCEEDED(reader.GetSize(&filesize)))
+        {
+            // Allocate the buffer
+            buffer.reset(new uint8_t[filesize]);
+
+            if (SUCCEEDED(reader.Read(buffer.get(), filesize)))
+            {
+                m_backgroundImage->UseTextureData(buffer.get(), filesize);
+            }
+        }
     }
-
-    CloseHandle(hFile);
-
-    m_backgroundImage->UseTextureData(buffer.get(), fileSize.LowPart);
+    reader.Close();
 }
 
 void Sample::ExecuteDLLFunction(const char* filename)
@@ -1366,12 +1348,13 @@ void Sample::CreateDeviceDependentResources()
 
     m_liveInfoHUD->RestoreDevice(device, rtState, resourceUpload, *m_resourceDescriptors);
 
-    // Create the style renderer for the UI manager to use for rendering the UI scene styles.
-    auto styleRenderer = std::make_unique<UIStyleRendererD3D>(*this);
-    m_uiManager.GetStyleManager().InitializeStyleRenderer(std::move(styleRenderer));
-
     auto uploadResourcesFinished = resourceUpload.End(m_deviceResources->GetCommandQueue());
     uploadResourcesFinished.wait();
+
+    // Create the style renderer for the UI manager to use for rendering the UI scene styles.
+    auto const os = m_deviceResources->GetOutputSize();
+    auto styleRenderer = std::make_unique<UIStyleRendererD3D>(*this, 200, os.right, os.bottom);
+    m_uiManager.GetStyleManager().InitializeStyleRenderer(std::move(styleRenderer));
 }
 
 // Allocate all memory resources that change on a window SizeChanged event.

@@ -1,7 +1,6 @@
 # Simple Triangle Sample
 
-*This sample is compatible with the Microsoft Game Development Kit (June
-2020)*
+*This sample is compatible with the Microsoft Game Development Kit (October 2024 or later)*
 
 # Description
 

@@ -7,6 +7,7 @@ namespace WindowsSample_HandheldBestPractices
         public void Refresh()
         {
             HandheldBestPracticesManager.Instance.UpdateNetworkInfo();
+            HandheldBestPracticesManager.Instance.RefreshInfoText();
         }
     }
 }

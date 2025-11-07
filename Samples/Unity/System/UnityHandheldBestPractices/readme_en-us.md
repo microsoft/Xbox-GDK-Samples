@@ -37,7 +37,7 @@ This sample does not use the GDK, so it can simply be run from the editor or bui
 
 This sample uses as many of Unity's built-in functionalities as possible to obtain system information. However, at the time of writing, certain functionalities such as identifying if Bluetooth is enabled or using the WinRT virtual keyboard (without building for UWP) are not available. To expose these capabilities, the _HandheldHelper_ DLL project was created.
 
-The exported DLL's from this project are included in the `Plugins` directory for `x64` and `x86`. If further functionality is required, the source was included in the `HandheldHelper` directory and can be extended. Simply rebuild the DLL's for both `x64` and `x86` targets, and replace the ones in the `Plugins` directory to update.
+The exported DLL's from this project are included in the `Plugins` directory for `x64` and `x86`. If further functionality is required, the source was included in the `HandheldHelper` project and can be extended. Simply rebuild the DLL's for both `x64` and `x86` targets, and replace the ones in the `Plugins` directory to update.
 
 ## UI Scaling
 
@@ -47,6 +47,8 @@ Check [Unity's documentation](https://docs.unity3d.com/Packages/com.unity.ugui@2
 
 # Known Issues/Expectations
 
+- If a device is in desktop or mouse/keyboard mode, Gamepad inputs will not be recognized. Ensure
+the device is set to Gamepad mode via Armoury Crate or other OEM software.
 - The Gamepad virtual keyboard requires Windows 11 24H2 or greater. If the device is running
 an older version of Windows, the sample will not display the virtual keyboard.
 - When running on a device that isn't a handheld, you may see errors regarding

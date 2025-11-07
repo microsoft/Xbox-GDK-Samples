@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|Gaming.Desktop.x64">
+    <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
-      <Platform>Gaming.Desktop.x64</Platform>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Profile|Gaming.Desktop.x64">
+    <ProjectConfiguration Include="Profile|x64">
       <Configuration>Profile</Configuration>
-      <Platform>Gaming.Desktop.x64</Platform>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Gaming.Desktop.x64">
+    <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
-      <Platform>Gaming.Desktop.x64</Platform>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Gaming.Xbox.Scarlett.x64">
       <Configuration>Debug</Configuration>
@@ -41,7 +41,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\shared\ffx_assert.cpp" />
     <ClCompile Include="..\..\..\shared\ffx_object_management.cpp" />
-    <ClCompile Include="..\ffx_cas.cpp" >
+    <ClCompile Include="..\ffx_cas.cpp">
       <DisableSpecificWarnings>4505;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
   </ItemGroup>
@@ -54,6 +54,7 @@
     <ClInclude Include="..\..\..\..\include\FidelityFX\host\ffx_error.h" />
     <ClInclude Include="..\..\..\..\include\FidelityFX\host\ffx_fx.h" />
     <ClInclude Include="..\..\..\..\include\FidelityFX\host\ffx_interface.h" />
+    <ClInclude Include="..\..\..\..\include\FidelityFX\host\ffx_message.h" />
     <ClInclude Include="..\..\..\..\include\FidelityFX\host\ffx_types.h" />
     <ClInclude Include="..\..\..\..\include\FidelityFX\host\ffx_util.h" />
     <ClInclude Include="..\..\..\shared\ffx_object_management.h" />
@@ -73,7 +74,6 @@
   </PropertyGroup>
   <Import Condition="Exists($(ATGBuildProps))" Project="$(ATGBuildProps)" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-
   <!-- Base Configuration properties -->
   <PropertyGroup Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -82,18 +82,15 @@
     <EmbedManifest>false</EmbedManifest>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
-
   <!-- Extra Profile/Release Configuration properties -->
   <PropertyGroup Condition="'$(Configuration)'!='Debug'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
-
   <!-- Extra Debug Configuration properties -->
   <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
   </PropertyGroup>
-
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
@@ -101,35 +98,30 @@
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-
   <!-- Scarlett/Xbox One paths -->
-  <PropertyGroup Condition="'$(Platform)'!='Gaming.Desktop.x64'">
+  <PropertyGroup Condition="'$(Platform)'!='x64'">
     <ReferencePath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</ReferencePath>
     <LibraryPath>$(Console_SdkLibPath)</LibraryPath>
     <LibraryWPath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</LibraryWPath>
     <IncludePath>$(Console_SdkIncludeRoot)</IncludePath>
     <ExecutablePath>$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
-
   <!-- Desktop paths -->
-  <PropertyGroup Condition="'$(Platform)'=='Gaming.Desktop.x64'">
+  <PropertyGroup Condition="'$(Platform)'=='x64'">
     <ReferencePath>$(VC_ReferencesPath_x64);</ReferencePath>
     <LibraryPath>$(WindowsSDK_LibraryPath_x64);$(Console_SdkLibPath);$(LibraryPath)</LibraryPath>
     <LibraryWPath>$(WindowsSDK_MetadataPath);</LibraryWPath>
     <IncludePath>$(WindowsSDK_IncludePath);$(Console_SdkIncludeRoot);$(IncludePath)</IncludePath>
     <ExecutablePath>$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
-
   <!-- Extra Profile/Release properties -->
   <PropertyGroup Condition="'$(Configuration)'!='Debug'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
-
   <!-- Extra Debug properties -->
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
-
   <!-- Base properties -->
   <ItemDefinitionGroup>
     <Link>
@@ -146,7 +138,6 @@
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\include\;$(ProjectDir)..\..\..\..\src\shared\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
-
   <!-- Extra Profile/Release properties -->
   <ItemDefinitionGroup Condition="'$(Configuration)'!='Debug'">
     <Link>
@@ -160,14 +151,12 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
     </ClCompile>
   </ItemDefinitionGroup>
-
   <!-- Extra Profile properties -->
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Profile'">
     <ClCompile>
       <PreprocessorDefinitions>PROFILE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
-
   <!-- Extra Debug properties -->
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
     <ClCompile>
@@ -175,7 +164,6 @@
       <Optimization>Disabled</Optimization>
     </ClCompile>
   </ItemDefinitionGroup>
-
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

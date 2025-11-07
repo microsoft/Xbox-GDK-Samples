@@ -27,12 +27,13 @@ using namespace DirectX;
 
 namespace
 {
-    std::unique_ptr<Sample> g_sample;
 #ifdef _GAMING_XBOX
     HANDLE g_plmSuspendComplete = nullptr;
     HANDLE g_plmSignalResume = nullptr;
 #endif
 }
+
+std::unique_ptr<Sample> g_sample;
 
 LPCWSTR g_szAppName = L"DownloadableContent";
 

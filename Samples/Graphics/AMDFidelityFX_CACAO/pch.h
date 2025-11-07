@@ -20,6 +20,8 @@
 // Use the C++ standard templated min/max
 #define NOMINMAX
 
+#define _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
+
 // DirectX apps don't need GDI
 #define NODRAWTEXT
 #define NOGDI
@@ -45,8 +47,8 @@
 
 #include <grdk.h>
 
-#if _GRDK_VER < 0x55F00C58 /* GDK Edition 220300 */
-#error This sample requires the March 2022 GDK or later
+#if _GRDK_VER < 0x65F41800 /* GDK Edition 251000 */
+#error This sample requires the October 2025 GDK or later
 #endif
 
 #include <algorithm>
@@ -75,7 +77,6 @@
 #ifdef _GAMING_XBOX_SCARLETT
 #include <d3d12_xs.h>
 #include <d3dx12_xs.h>
-
 #include "PerformanceTimersXbox.h"
 #elif defined(_GAMING_XBOX)
 #include <d3d12_x.h>
@@ -84,13 +85,11 @@
 #else
 #include <d3d12.h>
 #include <dxgi1_6.h>
-
-#include "d3dx12.h"
-#include "PerformanceTimers.h"
 #ifdef _DEBUG
 #include <dxgidebug.h>
 #endif
-
+#include "d3dx12.h"
+#include "PerformanceTimers.h"
 #endif
 
 #define _XM_NO_XMVECTOR_OVERLOADS_

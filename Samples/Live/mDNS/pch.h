@@ -41,8 +41,8 @@
 
 #include <grdk.h>
 
-#if _GRDK_VER < 0x55F00C58 /* GDK Edition 220300 */
-#error This sample requires the March 2022 GDK or later
+#if _GRDK_VER < 0x65F41800 /* GDK Edition 251000 */
+#error This sample requires the October 2025 GDK or later
 #endif
 
 #ifdef _GAMING_XBOX_SCARLETT
@@ -150,4 +150,4 @@ namespace DX
 }
 
 // Enable off by default warnings to improve code conformance
-#pragma warning(default : 4061 4062 4191 4242 4263 4264 4265 4266 4289 4365 4746 4826 4841 4986 4987 5029 5038 5042)
+#pragma warning(default : 4061 4062 4191 4263 4264 4265 4266 4289 4365 4746 4826 4841 4986 4987 5029 5038 5042)

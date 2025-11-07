@@ -420,7 +420,7 @@ void Sample::EnableFSR(bool enable)
             FFX_ASSERT_MESSAGE(errorCode == FFX_OK, "Could not initialize the FidelityFX SDK backend");
 
             FFX_ASSERT_MESSAGE(m_fsr1ContextDescription.backendInterface.fpGetSDKVersion(&m_fsr1ContextDescription.backendInterface) ==
-                FFX_SDK_MAKE_VERSION(1, 1, 2), "FidelityFX Super Resolution sample requires linking with a 1.1.2 version SDK backend");
+                FFX_SDK_MAKE_VERSION(1, 1, 4), "FidelityFX Super Resolution sample requires linking with a 1.1.4 version SDK backend");
         }
 
         // setup FSR2 FidelityFX interface.
@@ -432,7 +432,7 @@ void Sample::EnableFSR(bool enable)
             FFX_ASSERT_MESSAGE(errorCode == FFX_OK, "Could not initialize the FidelityFX SDK backend");
 
             FFX_ASSERT_MESSAGE(m_fsr2ContextDescription.backendInterface.fpGetSDKVersion(&m_fsr2ContextDescription.backendInterface) ==
-                FFX_SDK_MAKE_VERSION(1, 1, 2), "FidelityFX Super Resolution sample requires linking with a 1.1.2 version SDK backend");
+                FFX_SDK_MAKE_VERSION(1, 1, 4), "FidelityFX Super Resolution sample requires linking with a 1.1.4 version SDK backend");
         }
 
         // create the new FSR context as needed
@@ -494,8 +494,8 @@ void Sample::UpdateFSRContext(bool enabled)
             errorCode = ffxFsr2ContextCreate(&m_fsr2Context, &m_fsr2ContextDescription);
             FFX_ASSERT(errorCode == FFX_OK);
 
-            FFX_ASSERT_MESSAGE(ffxFsr2GetEffectVersion() == FFX_SDK_MAKE_VERSION(2, 3, 2),
-                "FidelityFX Super Resolution sample requires linking with a 2.3.2 version FidelityFX FSR2 library");
+            FFX_ASSERT_MESSAGE(ffxFsr2GetEffectVersion() == FFX_SDK_MAKE_VERSION(2, 3, 3),
+                "FidelityFX Super Resolution sample requires linking with a 2.3.3 version FidelityFX FSR2 library");
 
             // use our thread-safe buffer allocator instead of the default one (this needs to be done after the backend context created -- i.e. have 1 effect context created)
             m_fsr2ContextDescription.backendInterface.fpRegisterConstantBufferAllocator(&m_fsr2ContextDescription.backendInterface, Sample::ffxAllocateConstantBuffer);
@@ -1372,7 +1372,7 @@ void Sample::RenderUI(ID3D12GraphicsCommandList* commandList)
         y += m_font->GetLineSpacing();
         y += m_font->GetLineSpacing();
 
-        m_font->DrawString(m_batch.get(), L"FSR 2.3.2 Upscale", XMFLOAT2(float(safe.left), y), ATG::Colors::White);
+        m_font->DrawString(m_batch.get(), L"FSR 2.3.3 Upscale", XMFLOAT2(float(safe.left), y), ATG::Colors::White);
 
         y += m_font->GetLineSpacing();
 

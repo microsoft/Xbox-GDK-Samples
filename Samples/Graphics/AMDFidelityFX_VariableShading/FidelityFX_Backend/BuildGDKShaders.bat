@@ -16,7 +16,7 @@ set outputdir="%sdkdir%\sc_bin\%platformname%"
 set FFX_BASE_INCLUDE_ARGS=-I "%sdkdir%\include\FidelityFX\gpu"
 set FFX_SC="%sdkdir%\tools\binary_store\FidelityFX_SC.exe"
 set FFX_API_BASE_ARGS=-embed-arguments -E CS -Wno-for-redefinition -Wno-ambig-lit-shift -DFFX_HLSL=1
-if %platformname% == Gaming.Desktop.x64 (
+if %platformname% == x64 (
     set FFX_API_BASE_ARGS=-E CS -Wno-for-redefinition -Wno-ambig-lit-shift -DFFX_HLSL=1
 )
 
@@ -27,7 +27,7 @@ set HLSL_WAVE32_ARGS=-DFFX_HLSL_SM=62 -T cs_6_2
 set HLSL_16BIT_ARGS=
 set FFX_GDK_OPTION=
 
-if %platformname% == Gaming.Desktop.x64 (
+if %platformname% == x64 (
     set HLSL_16BIT_ARGS=-DFFX_HALF=1 -enable-16bit-types
     set FFX_GDK_OPTION=-compiler=dxc -Zs
 )
@@ -42,7 +42,7 @@ if %platformname% == Gaming.Xbox.XboxOne.x64 (
 
 :: VRS shaders
 set VRS_API_BASE_ARGS=%FFX_API_BASE_ARGS% -DFFX_VRS_EMBED_ROOTSIG=1
-if %platformname% == Gaming.Desktop.x64 (
+if %platformname% == x64 (
     set VRS_API_BASE_ARGS=%FFX_API_BASE_ARGS%
 )
 set VRS_BASE_ARGS=%FFX_BASE_ARGS%
@@ -51,7 +51,7 @@ set VRS_INCLUDE_ARGS=%FFX_BASE_INCLUDE_ARGS% -I "%sdkdir%\include\FidelityFX\gpu
 set VRS_SC_ARGS=%VRS_BASE_ARGS% %VRS_API_BASE_ARGS% %VRS_PERMUTATION_ARGS%
 
 set BACKEND_SHADER_DIR=%sdkdir%\src\backends\gdk\shaders
-if %platformname% == Gaming.Desktop.x64 (
+if %platformname% == x64 (
     set BACKEND_SHADER_DIR=%sdkdir%\src\backends\dx12\shaders
 )
 

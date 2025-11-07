@@ -1600,7 +1600,8 @@ void Sample::CreateDeviceDependentResources()
 
     // create the style renderer for the UI manager to use for rendering the UI scene styles
     // 200 = bump up number of descriptor piles to accomodate many simultaneously displayed textures
-    auto styleRenderer = std::make_unique<UIStyleRendererD3D>(*this, 200);
+    auto const os = m_deviceResources->GetOutputSize();
+    auto styleRenderer = std::make_unique<UIStyleRendererD3D>(*this, 200, os.right, os.bottom);
     m_uiManager.GetStyleManager().InitializeStyleRenderer(std::move(styleRenderer));
 
     m_showConsole = false;
@@ -1854,7 +1855,10 @@ void Sample::UpdateProductList()
             addToList = item.productKind == XStoreProductKind::Consumable ||
                 item.productKind == XStoreProductKind::UnmanagedConsumable;
             break;
-        case 4: // Bundles
+        case 4: // Games
+            addToList = item.productKind == XStoreProductKind::Game;
+            break;
+        case 5: // Bundles
             for (auto& sku : item.skus)
             {
                 if (sku.bundledSkus.size() > 0)
@@ -1864,10 +1868,11 @@ void Sample::UpdateProductList()
                 }
             }
             break;
-        case 5: // Other
+        case 6: // Other
             addToList = item.productKind != XStoreProductKind::Durable &&
                 item.productKind != XStoreProductKind::Consumable &&
-                item.productKind != XStoreProductKind::UnmanagedConsumable;
+                item.productKind != XStoreProductKind::UnmanagedConsumable &&
+                item.productKind != XStoreProductKind::Game;
             break;
         }
 

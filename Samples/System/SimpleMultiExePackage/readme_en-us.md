@@ -12,12 +12,12 @@ If using an Xbox One devkit, set the active solution platform to `Gaming.Xbox.Xb
 
 If using Xbox Series X|S, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
 
-If running on PC, set the active solution platform to `Gaming.Xbox.Desktop.x64`.
+If running on PC, set the active solution platform to `x64`.
 
 ### Running the sample.
 
 #### Method 1, Run from Visual Studio
-- You can run the sample simply by clicking F5. The default experience will be the first to load.
+- You can run the sample building the solution and then clicking F5. The default experience will be the first to load.
 
 #### Method 2, Run from Package creation
 - You can also generate a package for this sample, and run it from there.
@@ -25,7 +25,7 @@ If running on PC, set the active solution platform to `Gaming.Xbox.Desktop.x64`.
 	1. Build the project.
 	2. Run GenConsoleXVCPackage.bat or GenDesktopMSIXVCPackage.bat within a terminal that supports Makepkg.
 		1. The console package files can be found in the .\\DefaultExperience\\$Target\\Layout\\Image\\.
-		2. The desktop package files can be found in .\\Gaming.Desktop.x64\\Layout\\Image
+		2. The desktop package files can be found in .\\x64\\Layout\\Image
 - Installing and running the package.
 	1. If running on Xbox, copy the .xvc file into your devkit through Xbox Manager. You can also install the package with xbapp install.
 	2. If running on desktop, install the .MSIXVC file through WDAPP install.
@@ -36,6 +36,7 @@ If running on PC, set the active solution platform to `Gaming.Xbox.Desktop.x64`.
 **Initial Release:** Microsoft Game Development Kit (June 2023)
 
 June 2023: Initial release
+October 2025: Fixed a bug that broke the XLaunchNewGame when running with f5.
 
 ## Privacy Statement
 
