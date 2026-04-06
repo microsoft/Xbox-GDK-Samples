@@ -85,6 +85,9 @@ private:
     double          m_leftStickY;
     double          m_rightStickX;
     double          m_rightStickY;
+    float           m_accelX, m_accelY, m_accelZ;
+    float           m_angularX, m_angularY, m_angularZ;
+    float           m_orientationX, m_orientationY, m_orientationZ, m_orientationW;
 
     // DirectXTK objects.
     std::unique_ptr<DirectX::GraphicsMemory>    m_graphicsMemory;
