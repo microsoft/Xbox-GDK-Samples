@@ -31,11 +31,16 @@ or it can be installed separately using WinGet via a command prompt with the fol
 # Using the sample
 
 Press buttons to see them displayed and move the thumbsticks and triggers to see their readings.
+Move the controller around to see the motion sensor readings.
 
 # Implementation notes
 
 This sample demonstrates how to use the new GameInput API to read input
-from a gamepad, including buttons, thumbsticks and triggers.
+from a gamepad, including buttons, thumbsticks, triggers, and motion sensors.
+
+# Known Issues/Expectations
+
+At present, the only motion-enabled controller supported by GameInput is the PlayStation®5 DualSense® controller.
 
 # Version History
 
@@ -46,6 +51,7 @@ from a gamepad, including buttons, thumbsticks and triggers.
   [GameInput NuGet package](https://www.nuget.org/packages/Microsoft.GameInput)
 - July 2025: Added support for GameInput v2.x on PC via the
   [GameInput NuGet package](https://www.nuget.org/packages/Microsoft.GameInput)
+- April 2026: Added motion sensor readings for supported devices
 
 # Privacy statement
 

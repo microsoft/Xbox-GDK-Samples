@@ -27,7 +27,17 @@ Sample::Sample() noexcept(false) :
     m_leftStickX(0),
     m_leftStickY(0),
     m_rightStickX(0),
-    m_rightStickY(0)
+    m_rightStickY(0),
+    m_accelX(0),
+    m_accelY(0),
+    m_accelZ(0),
+    m_angularX(0),
+    m_angularY(0),
+    m_angularZ(0),
+    m_orientationX(0),
+    m_orientationY(0),
+    m_orientationZ(0),
+    m_orientationW(0)
 {
     // Renders only 2D, so no need for a depth buffer.
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_UNKNOWN);
@@ -66,6 +76,7 @@ void Sample::Initialize(HWND window, int width, int height)
         swprintf_s(buff,
             L"GameInput creation failed with error: %08X\n\nVerify that GameInputRedist.msi has been installed as noted in the README.",
             static_cast<unsigned int>(hr));
+        _Analysis_assume_nullterminated_(g_szAppName);
         std::ignore = MessageBoxW(window, buff, g_szAppName, MB_ICONERROR | MB_OK);
         ExitSample();
     }
@@ -98,7 +109,8 @@ void Sample::Update(DX::StepTimer const&)
 {
     PIXBeginEvent(PIX_COLOR_DEFAULT, L"Update");
 
-    if (FAILED(m_gameInput->GetCurrentReading(GameInputKindGamepad, nullptr, &m_reading)))
+    // request Gamepad and Sensor input in readings
+    if (FAILED(m_gameInput->GetCurrentReading(GameInputKindGamepad | GameInputKindSensors, nullptr, &m_reading)))
     {
         // Failure indicates no gamepad is connected
         m_buttonString.clear();
@@ -221,6 +233,25 @@ void Sample::Update(DX::StepTimer const&)
             if (exitComboPressed == 4)
                 ExitSample();
         }
+
+        // get current sensor state for display. Note that not all gamepads have sensors,
+        // so this may fail even if a gamepad is connected.
+        GameInputSensorsState sensorsState = {};
+        if (m_reading->GetSensorsState(&sensorsState))
+        {
+            m_accelX = sensorsState.accelerationInGX;
+            m_accelY = sensorsState.accelerationInGY;
+            m_accelZ = sensorsState.accelerationInGZ;
+
+            m_angularX = sensorsState.angularVelocityInRadPerSecX;
+            m_angularY = sensorsState.angularVelocityInRadPerSecY;
+            m_angularZ = sensorsState.angularVelocityInRadPerSecZ;
+
+            m_orientationX = sensorsState.orientationX;
+            m_orientationY = sensorsState.orientationY;
+            m_orientationZ = sensorsState.orientationZ;
+            m_orientationW = sensorsState.orientationW;
+        }
     }
 
     PIXEndEvent();
@@ -280,8 +311,34 @@ void Sample::Render()
 
         swprintf(tempString, 255, L"[RThumb]  X: %1.3f  Y: %1.3f", m_rightStickX, m_rightStickY);
         DX::DrawControllerString(m_batch.get(), m_font.get(), m_ctrlFont.get(), tempString, pos);
+        pos.y += m_font->GetLineSpacing() * 5.0f;
 
-        pos.y += m_font->GetLineSpacing() * 2.f;
+#ifdef _GAMING_XBOX
+        pos.x = 1430;
+#else
+        pos.x = 930;
+#endif
+        pos.y = (float)safeRect.top;
+
+        m_font->DrawString(m_batch.get(), "Acceleration", pos, Colors::Green);
+        pos.y += m_font->GetLineSpacing();
+
+        swprintf(tempString, 255, L"  X: %1.2f\n  Y: %1.2f\n  Z: %1.2f", m_accelX, m_accelY, m_accelZ);
+        DX::DrawControllerString(m_batch.get(), m_font.get(), m_ctrlFont.get(), tempString, pos);
+        pos.y += m_font->GetLineSpacing() * 3.0f;
+
+        m_font->DrawString(m_batch.get(), "Angular Velocity", pos, Colors::Green);
+        pos.y += m_font->GetLineSpacing();
+
+        swprintf(tempString, 255, L"  X: %1.2f\n  Y: %1.2f\n  Z: %1.2f", m_angularX, m_angularY, m_angularZ);
+        DX::DrawControllerString(m_batch.get(), m_font.get(), m_ctrlFont.get(), tempString, pos);
+        pos.y += m_font->GetLineSpacing() * 3.0f;
+
+        m_font->DrawString(m_batch.get(), "Orientation", pos, Colors::Green);
+        pos.y += m_font->GetLineSpacing();
+
+        swprintf(tempString, 255, L"  X: %1.2f\n  Y: %1.2f\n  Z: %1.2f", m_orientationX, m_orientationY, m_orientationZ);
+        DX::DrawControllerString(m_batch.get(), m_font.get(), m_ctrlFont.get(), tempString, pos);
     }
     else
     {
