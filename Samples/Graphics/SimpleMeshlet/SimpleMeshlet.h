@@ -21,8 +21,8 @@ struct SceneObject
 {
     using EffectList = DirectX::Model::EffectCollection;
 
-    DirectX::SimpleMath::Matrix             World;
-    uint32_t                                ModelIndex;
+    DirectX::SimpleMath::Matrix             World       = {};
+    uint32_t                                ModelIndex  = 0;
     Microsoft::WRL::ComPtr<ID3D12Resource>  ConstantBuffer;
     EffectList                              Effects;
 };

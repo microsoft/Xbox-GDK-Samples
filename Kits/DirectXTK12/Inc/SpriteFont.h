@@ -4,7 +4,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 //
-// http://go.microsoft.com/fwlink/?LinkID=615561
+// https://go.microsoft.com/fwlink/?LinkID=615561
 //--------------------------------------------------------------------------------------
 
 #pragma once
@@ -147,7 +147,9 @@ namespace DirectX
 
             // Spacing properties
             DIRECTX_TOOLKIT_API float __cdecl GetLineSpacing() const noexcept;
-            DIRECTX_TOOLKIT_API void __cdecl SetLineSpacing(float spacing);
+            DIRECTX_TOOLKIT_API void __cdecl SetLineSpacing(float spacing) noexcept;
+
+            DIRECTX_TOOLKIT_API void __cdecl SetPixelAlignment(bool enable) noexcept;
 
             // Font properties
             DIRECTX_TOOLKIT_API wchar_t __cdecl GetDefaultCharacter() const noexcept;

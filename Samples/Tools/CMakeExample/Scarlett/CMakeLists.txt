@@ -1,7 +1,7 @@
 ﻿# Copyright (c) Microsoft Corporation.
 # Licensed under the MIT License.
 
-cmake_minimum_required (VERSION 3.20)
+cmake_minimum_required (VERSION 3.21)
 
 project(CMakeExampleScarlett
   DESCRIPTION "CMake example for a Microsoft GDK Gaming.Xbox.Scarlett.x64 project"
@@ -83,7 +83,7 @@ endif()
 # /Zi (Debug Information Format)
 target_compile_options(${PROJECT_NAME} PRIVATE /W4 /EHsc /GR- /fp:fast /GS /Gy)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE ${Console_Libs} Xbox::XSAPI Xbox::XCurl)
+target_link_libraries(${PROJECT_NAME} PRIVATE ${Console_Libs} Xbox::XSAPI Xbox::HTTPClient Xbox::XCurl)
 # uuid.lib if using Windows Imaging Component (WIC)
 # dloadhelper.lib if using /DELAYLOAD
 # optional additional extension libraries: Xbox::GameChat2 Xbox::PlayFabMultiplayer Xbox::PlayFabParty Xbox::PlayFabPartyLIVE Xbox::PlayFabServices
@@ -213,13 +213,11 @@ if((CMAKE_BUILD_TYPE MATCHES "Debug") OR is_multi_config)
         )
 endif()
 
-if (${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.21")
-   add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-      COMMAND ${CMAKE_COMMAND} -E copy
-      $<TARGET_RUNTIME_DLLS:${PROJECT_NAME}> $<TARGET_FILE_DIR:${PROJECT_NAME}>
-      COMMAND_EXPAND_LISTS
-      )
-endif()
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy
+  $<TARGET_RUNTIME_DLLS:${PROJECT_NAME}> $<TARGET_FILE_DIR:${PROJECT_NAME}>
+  COMMAND_EXPAND_LISTS
+  )
 
 # Use of OpenMP requires also copying the files from Microsoft.VC14?.OpenMP
 # See ${OpenMPRuntimeFilesPath}, ${DebugOpenMPRuntimeFilesPath} in CMakeGDKScarlett.cmake

@@ -268,7 +268,7 @@ void Sample::DownloadBlob(MetadataBlobDetail* blob)
 {
     struct DownloadContext
     {
-        Sample* sample;
+        Sample* sample = nullptr;
         std::unique_ptr<std::vector<uint8_t>> contextBuffer;
     };
 
@@ -380,7 +380,7 @@ void Sample::UploadBlob(XblTitleStorageBlobType blobType, char* blobpath, char* 
 {
     struct UploadBlobContext
     {
-        Sample* sample;
+        Sample* sample = nullptr;
         std::unique_ptr<std::vector<uint8_t>> blob;
     };
     auto ctx = new UploadBlobContext();

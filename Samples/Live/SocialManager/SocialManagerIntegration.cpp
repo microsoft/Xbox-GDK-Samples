@@ -208,53 +208,54 @@ void Sample::UpdateSocialManager()
         m_console->Format(L"Failed to DoWork: 0x%08X\n", hr);
         return;
     }
-
-    for (uint32_t i=0; i<socialManagerEventCount; i++)
-    {
-        std::wstring text;
-
-        DisplayUsersAffected(socialManagerEvents->usersAffected);
-
-        switch (socialManagerEvents[i].eventType)
+    if (socialManagerEvents){
+        for (uint32_t i=0; i<socialManagerEventCount; i++)
         {
-            case XblSocialManagerEventType::LocalUserAdded:
-                text = L"LocalUserAdded";
-                break;
-            case XblSocialManagerEventType::PresenceChanged:
-                text = L"PresenceChanged";
-                RefreshUserList();
-                break;
-            case XblSocialManagerEventType::ProfilesChanged:
-                text = L"ProfilesChanged";
-                break;
-            case XblSocialManagerEventType::SocialRelationshipsChanged:
-                text = L"SocialRelationshipsChanged";
-                break;
-            case XblSocialManagerEventType::SocialUserGroupLoaded:
-                text = L"SocialUserGroupLoaded";
-                RefreshUserList();
-                break;
-            case XblSocialManagerEventType::SocialUserGroupUpdated:
-                text = L"SocialUserGroupUpdated";
-                RefreshUserList();
-                break;
-            case XblSocialManagerEventType::UnknownEvent:
-                text = L"UnknownEvent";
-                break;
-            case XblSocialManagerEventType::UsersAddedToSocialGraph:
-                text = L"UsersAddedToSocialGraph";
-                RefreshUserList();
-                break;
-            case XblSocialManagerEventType::UsersRemovedFromSocialGraph:
-                text = L"UsersRemovedFromSocialGraph";
-                RefreshUserList();
-                break;
-        }
+            std::wstring text;
 
-        m_console->Format(L"SocialManager event: %ws\n", text.c_str());
-        if (FAILED(socialManagerEvents[i].hr))
-        {
-            m_console->Format(L" Error: 0x%08X\n", socialManagerEvents[i].hr);
+            DisplayUsersAffected(socialManagerEvents->usersAffected);
+
+            switch (socialManagerEvents[i].eventType)
+            {
+                case XblSocialManagerEventType::LocalUserAdded:
+                    text = L"LocalUserAdded";
+                    break;
+                case XblSocialManagerEventType::PresenceChanged:
+                    text = L"PresenceChanged";
+                    RefreshUserList();
+                    break;
+                case XblSocialManagerEventType::ProfilesChanged:
+                    text = L"ProfilesChanged";
+                    break;
+                case XblSocialManagerEventType::SocialRelationshipsChanged:
+                    text = L"SocialRelationshipsChanged";
+                    break;
+                case XblSocialManagerEventType::SocialUserGroupLoaded:
+                    text = L"SocialUserGroupLoaded";
+                    RefreshUserList();
+                    break;
+                case XblSocialManagerEventType::SocialUserGroupUpdated:
+                    text = L"SocialUserGroupUpdated";
+                    RefreshUserList();
+                    break;
+                case XblSocialManagerEventType::UnknownEvent:
+                    text = L"UnknownEvent";
+                    break;
+                case XblSocialManagerEventType::UsersAddedToSocialGraph:
+                    text = L"UsersAddedToSocialGraph";
+                    RefreshUserList();
+                    break;
+                case XblSocialManagerEventType::UsersRemovedFromSocialGraph:
+                    text = L"UsersRemovedFromSocialGraph";
+                    RefreshUserList();
+                    break;
+            }
+
+            m_console->Format(L"SocialManager event: %ws\n", text.c_str());
+            if (FAILED(socialManagerEvents[i].hr))
+            {
+                m_console->Format(L" Error: 0x%08X\n", socialManagerEvents[i].hr);
+            }
         }
     }
 #if PERF_COUNTERS

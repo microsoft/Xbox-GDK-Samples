@@ -57,10 +57,10 @@ private:
     void CaptureThreadProc();
     uint32_t m_captureStartFrame;
     std::vector<std::pair<uint32_t, uint32_t>> m_lastCaptureRanges;
-    uint32_t m_captureIdx;
+    uint32_t m_captureIdx = 0;
     std::atomic<bool> m_discardCapture;
-    std::thread* m_captureThread;
-    HANDLE m_saveCaptureEvent;
+    std::thread* m_captureThread = nullptr;
+    HANDLE m_saveCaptureEvent = nullptr;
 
     // Device resources.
     std::unique_ptr<DX::DeviceResources>        m_deviceResources;

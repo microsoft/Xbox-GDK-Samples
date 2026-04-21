@@ -665,7 +665,7 @@ void Sample::Render()
                 DrawStringLeft(m_batch.get(), m_smallFont.get(), L"Group Mask", left, y, m_scale);
                 y += DrawStringRight(m_batch.get(), m_smallFont.get(), L"L1 / L2 / L3 Cache", right, y, m_scale);
 
-                for (auto it : cacheInformation)
+                for (const auto& it : cacheInformation)
                 {
                     wchar_t buff[128] = {};
 

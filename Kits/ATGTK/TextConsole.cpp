@@ -398,7 +398,8 @@ void TextConsole::IncrementLine()
 TextConsoleImage::TextConsoleImage() noexcept :
     TextConsole(),
     m_bgGpuDescriptor{},
-    m_bgSize{}
+    m_bgSize{},
+    m_fullscreen{}
 {
 }
 #else
@@ -420,7 +421,8 @@ TextConsoleImage::TextConsoleImage(
     D3D12_CPU_DESCRIPTOR_HANDLE cpuDescriptorImage, D3D12_GPU_DESCRIPTOR_HANDLE gpuDescriptorImage) noexcept(false) :
     TextConsole(),
     m_bgGpuDescriptor{},
-    m_bgSize{}
+    m_bgSize{},
+    m_fullscreen{}
 {
     RestoreDevice(device, upload, rtState, fontName, image,
         cpuDescriptorFont, gpuDescriptorFont,
@@ -429,7 +431,8 @@ TextConsoleImage::TextConsoleImage(
 #else
 _Use_decl_annotations_
 TextConsoleImage::TextConsoleImage(ID3D11DeviceContext* context, const wchar_t* fontName, const wchar_t* image) noexcept(false) :
-    TextConsole()
+    TextConsole(),
+    m_fullscreen{}
 {
     RestoreDevice(context, fontName, image);
 }

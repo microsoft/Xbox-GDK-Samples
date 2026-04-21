@@ -128,11 +128,11 @@ void Sample::Update(DX::StepTimer const&)
                 else
                 {
                     //Select mode
-                    if (mouseState.buttons == GameInputMouseLeftButton)
+                    if (mouseState.buttons & GameInputMouseLeftButton)
                     {
                         SetMode(RELATIVE_MOUSE);
                     }
-                    else if (mouseState.buttons == GameInputMouseRightButton)
+                    else if (mouseState.buttons & GameInputMouseRightButton)
                     {
                         SetMode(EDGECURSOR_MOUSE);
                     }

@@ -1,6 +1,6 @@
 # CMake Example
 
-*This sample is compatible with the Microsoft Game Development Kit (March 2023)*
+*This sample is compatible with the Microsoft Game Development Kit (October 2024)*
 
 # Description
 
@@ -18,7 +18,7 @@ via the Visual Studio generator, see **CMakeGDKExample***.
 
 # Building the sample (Visual Studio)
 
-Using Visual Studio 2019 (16.11) or Visual Studio 2022 select "Open a
+Using Visual Studio 2022 or Visual Studio 2026 select "Open a
 local folder..." from the New Project Dialog or the "File -\> Open -\>
 Folder..." menu command and open the Desktop, XboxOne, or Scarlett
 folder.
@@ -51,8 +51,8 @@ run successfully.*
 
 # Building the sample (command-line)
 
-You can also generate and build from the command line using a *VS 2019
-or 2022 Developer Command Prompt*. For a complete list of available
+You can also generate and build from the command line using a *VS 2022
+or 2026 Developer Command Prompt*. For a complete list of available
 presets, use:
 
 ```
@@ -77,7 +77,7 @@ cmake --build out\build\x64-Debug
 
 *You may need to edit the CMakePresets.json to match your GDK edition.*
 
-*Verify you are using CMake 3.20 or later with:*
+*Verify you are using CMake 3.21 or later with:*
 
 ```
 cmake --version
@@ -250,5 +250,7 @@ See the **BWOIExample** for more details.
 |October 2023|The Microsoft GDK now requires Windows 11 SDK (22000) or later.|
 |June 2024|Minor update for multi-config generators.|
 |October 2024|Updated for changes to Extension Libraries directory layout.|
-|April 2025|Updated for CMake 3.31 add_custom_command warning.<br />Made SDKVersion a cache variable|
-|October 2025|Updated for 2510 GDK and new layout |
+|April 2025|Updated for CMake 3.31 add_custom_command warning.<br />Made SDKVersion a cache variable.|
+|October 2025|Updated for 2510 GDK and new layout. Trimmed support older than October 2024 GDK which are now out of service.|
+|February 2026|Updated to require CMake 3.21 or later.|
+|April 2026|Drop VS 2019, add VS 2026.<br />Updated to use Microsoft.Xbox.Services.143.C.lib in 2604.|

@@ -40,6 +40,8 @@ namespace
 
 Sample::Sample() noexcept(false)
     : m_deviceResources(std::make_unique<DX::DeviceResources>())
+    , m_displayWidth(0)
+    , m_displayHeight(0)
     , m_frame(0)
 {
     m_deviceResources->RegisterDeviceNotify(this);

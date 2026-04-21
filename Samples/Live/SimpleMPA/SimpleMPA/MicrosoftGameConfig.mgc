@@ -2,14 +2,15 @@
 <Game configVersion="1">
   <!-- Version "1" is supported by March 2022 GDK or later -->
 
-  <Identity Name="41336MicrosoftATG.SimpleMPA" Version="1.1.0.0" Publisher="CN=A4954634-DF4B-47C7-AB70-D3215D246AF1" />
+  <Identity Name="41336MicrosoftATG.SimpleMPASample" Version="1.1.0.0" Publisher="CN=A4954634-DF4B-47C7-AB70-D3215D246AF1" />
 
   <ExecutableList>
     <Executable Name="SimpleMPA.exe" Id="Game"/>
   </ExecutableList>
 
-  <TitleId>7a03b038</TitleId>
-  <MSAAppId>0000000044BC1A4C</MSAAppId>
+  <StoreId>9NBBBZX73V4D</StoreId>
+  <TitleId>630d5604</TitleId>
+  <MSAAppId>000000004D7A0824</MSAAppId>
 
   <ShellVisuals DefaultDisplayName="SimpleMPA"
                 PublisherDisplayName="Xbox Advanced Technology Group"

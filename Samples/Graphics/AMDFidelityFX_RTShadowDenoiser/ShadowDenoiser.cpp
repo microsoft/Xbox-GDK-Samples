@@ -68,7 +68,30 @@ Sample::Sample() noexcept(false) :
     m_pitch(c_pitch),
     m_yaw(c_yaw),
     m_eye(c_eye),
+    m_gltfPBR(nullptr),
+    m_gltfMotionVectors(nullptr),
+    m_gltfRTShadows(nullptr),
+    m_gltfModel(nullptr),
     m_currentCamera(0),
+    m_shadowAtlasIdx(0),
+    m_normalsState(D3D12_RESOURCE_STATE_COMMON),
+    m_finalSceneOutputState(D3D12_RESOURCE_STATE_COMMON),
+    m_motionVectorsState(D3D12_RESOURCE_STATE_COMMON),
+    m_motionVectorDepthState(D3D12_RESOURCE_STATE_COMMON),
+    m_previousDepthState(D3D12_RESOURCE_STATE_COMMON),
+    m_historyMomentsBufferState(D3D12_RESOURCE_STATE_COMMON),
+    m_momentsBufferState(D3D12_RESOURCE_STATE_COMMON),
+    m_historyBuffer0State(D3D12_RESOURCE_STATE_COMMON),
+    m_historyBuffer1State(D3D12_RESOURCE_STATE_COMMON),
+    m_reprojectionResultIntermediateBufferState(D3D12_RESOURCE_STATE_COMMON),
+    m_intermediateFilterResultState(D3D12_RESOURCE_STATE_COMMON),
+    m_intermediateFilterResult2State(D3D12_RESOURCE_STATE_COMMON),
+    m_tileMetadataState(D3D12_RESOURCE_STATE_COMMON),
+    m_raytraceResultState(D3D12_RESOURCE_STATE_COMMON),
+    m_noisyRTResultState(D3D12_RESOURCE_STATE_COMMON),
+    m_denoisedOutputState(D3D12_RESOURCE_STATE_COMMON),
+    m_sobolBufferState(D3D12_RESOURCE_STATE_COMMON),
+    m_scramblingTileBufferState(D3D12_RESOURCE_STATE_COMMON),
     m_useInlineRT(false)
 {
     // Use gamma-correct rendering.
@@ -402,7 +425,7 @@ void Sample::Render()
             auto cbHandle = m_graphicsMemory->AllocateConstant(cb2);
 
 
-            ID3D12GraphicsCommandList6* dxrCommandList; 
+            ID3D12GraphicsCommandList6* dxrCommandList = nullptr; 
             DX::ThrowIfFailed(commandList->QueryInterface(IID_GRAPHICS_PPV_ARGS(&dxrCommandList)));
 
             dxrCommandList->SetComputeRootSignature(m_gltfRTShadows->GetRootSignature());

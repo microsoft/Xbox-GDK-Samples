@@ -31,6 +31,8 @@ namespace
 
 Sample::Sample() noexcept(false)
     : m_frame(0)
+    , m_vertexBufferView{}
+    , m_indexBufferView{}
     , m_mappedConstantBufferData(nullptr)
     , m_constantBufferDataGpuAddr(0)
     , m_feedbackMapStagingTexture{}

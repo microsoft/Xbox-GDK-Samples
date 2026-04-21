@@ -61,7 +61,17 @@ namespace
 
 Sample::Sample() noexcept(false) :
     m_frame(0),
-    m_bIsDisplayInHDRMode(false)
+    m_bUseObjectiveCalibration{},
+    m_bShowCalibrationScreen{},
+    m_bApplyCalibration{},
+    m_calibrationScreen{},
+    m_calibrationData{},
+    m_savedCalibrationData{},
+    m_calibrationDataCB{},
+    m_calibrationDataFromSystem{},
+    m_bIsDisplayInHDRMode(false),
+    m_flashContrastTimer{},
+    m_currentHDRImage{}
 {
     // Renders only 2D, so no need for a depth buffer.
     m_deviceResources = std::make_unique<DX::DeviceResources>(

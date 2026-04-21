@@ -141,7 +141,10 @@ namespace
             {
                 s_hmod = LoadLibraryW(L"api-ms-win-core-windowserrorreporting-l1-1-0.dll");
             }
-            assert(s_hmod != nullptr);
+            if (!s_hmod)
+            {
+                throw std::runtime_error("Failed to load WER API set");
+            }
             auto proc = reinterpret_cast<PF_WerRegisterMemoryBlock>(reinterpret_cast<void*>(GetProcAddress(s_hmod, "WerRegisterMemoryBlock")));
             assert(proc != nullptr);
             hr = proc(g_savedMemoryBlock, c_memoryBlockSize);

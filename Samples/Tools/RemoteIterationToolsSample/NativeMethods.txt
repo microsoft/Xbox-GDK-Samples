@@ -1,0 +1,9 @@
+WdCreateCancellationHandle
+WdDuplicateCancellationHandle
+WdCloseCancellationHandle
+WdRemoteCopy
+WdCancelRemoteCopy
+WdLaunchRemoteGame
+WdResumeRemoteGame
+WdTerminateRemoteGame
+WdRegisterRemoteXboxGame

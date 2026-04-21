@@ -235,6 +235,7 @@ void PerfRun::RunTests(TestType whichTest, uint64_t coreMask, uint64_t numIterat
             m_singleTimePerThread[0] = 0;
             testFunction(temp);
             m_totalTimePerThread[0][i] = m_singleTimePerThread[0];
+#pragma warning(suppress: 6386) // Array bounds are validated by the FirstTestExecuted/LastTestExecuted range checks above
             m_combinedTimePerThread[coreMaskIndex][whichTest][0][coreId][i] = m_singleTimePerThread[0];
             _aligned_free(m_workerData);
         }

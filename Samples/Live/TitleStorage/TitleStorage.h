@@ -35,14 +35,14 @@ struct MetadataBlobDetail
     }
 
     std::string blobPath;
-    XblTitleStorageBlobType blobType;
-    XblTitleStorageType storageType;
+    XblTitleStorageBlobType blobType = {};
+    XblTitleStorageType storageType = {};
     std::string displayName;
     std::string eTag;
-    time_t clientTimestamp;
-    size_t length;
+    time_t clientTimestamp = 0;
+    size_t length = 0;
     std::string serviceConfigurationId;
-    uint64_t xboxUserId;
+    uint64_t xboxUserId = 0;
 };
 
 class Sample;
@@ -59,12 +59,12 @@ public:
     MetadataBlobDetail metadataBlob;
 
 private:
-    ATG::Button* m_selectBtn;
-    ATG::TextLabel* m_blobPath;
-    ATG::TextLabel* m_blobType;
-    ATG::TextLabel* m_displayName;
-    ATG::TextLabel* m_length;
-    ATG::TextLabel* m_XUID;
+    ATG::Button* m_selectBtn = nullptr;
+    ATG::TextLabel* m_blobPath = nullptr;
+    ATG::TextLabel* m_blobType = nullptr;
+    ATG::TextLabel* m_displayName = nullptr;
+    ATG::TextLabel* m_length = nullptr;
+    ATG::TextLabel* m_XUID = nullptr;
 };
 
 // A basic sample implementation that creates a D3D12 device and

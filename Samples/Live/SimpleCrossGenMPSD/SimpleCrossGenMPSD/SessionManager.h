@@ -100,7 +100,7 @@ private:
     XblFunctionContext m_connectionIdChangedHandlerContext = 0;
     XblFunctionContext m_subscriptionLostHandlerContext = 0;
     XblFunctionContext m_sessionChangedHandlerContext = 0;
-    XTaskQueueRegistrationToken m_gameInviteEventToken;
+    XTaskQueueRegistrationToken m_gameInviteEventToken = {};
 
     std::vector<uint64_t> m_sessionXuids;
 

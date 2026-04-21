@@ -53,7 +53,7 @@ static void DrawNameValueTableHRESULT(const char* name, HRESULT hr, const char* 
     else
     {
         ImGui::PushStyleColor(ImGuiCol_Text, COLOR_ERROR);
-        ImGui::Text("Error %08X", hr);
+        ImGui::Text("Error %08X", static_cast<unsigned int>(hr));
         ImGui::PopStyleColor();
     }
 }
@@ -62,7 +62,11 @@ template<typename... Args>
 static void DrawNameValueTable(const char* name, const char* fmt, const Args&... args)
 {
     ImGui::TableNextColumn(); ImGui::Text("%s", name);
-    ImGui::TableNextColumn(); ImGui::Text(fmt, args...);
+    ImGui::TableNextColumn();
+    if constexpr (sizeof...(Args) == 0)
+        ImGui::Text("%s", fmt);
+    else
+        ImGui::Text(fmt, args...);
 }
 
 template<typename... Args>
@@ -78,5 +82,4 @@ void Sample_Draw();
 void Sample_Shutdown();
 LRESULT Sample_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-static void LoadFont();
-static void SetUIScale(float scale);
+

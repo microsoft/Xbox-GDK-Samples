@@ -32,14 +32,13 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <Keyword>Win32Proj</Keyword>
     <!-- - - - -->
-    <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
+    <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
     <TargetRuntime>Native</TargetRuntime>
-    <GDKExtLibNames>Xbox.Services.API.C</GDKExtLibNames>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <Import Condition="Exists($(ATGBuildProps))" Project="$(ATGBuildProps)" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup  Condition="'$(GDKCrossPlatform)'=='true'">
+  <PropertyGroup Condition="'$(GDKCrossPlatform)'=='true'">
     <GDKCrossPlatformPath Condition="'$(GDKCrossPlatformPath)'==''">$(GameDKXboxLatest)</GDKCrossPlatformPath>
     <ATGTelemetryLibs>libHttpClient.lib</ATGTelemetryLibs>
   </PropertyGroup>

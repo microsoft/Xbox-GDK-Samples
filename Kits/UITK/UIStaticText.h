@@ -133,7 +133,7 @@ class UIStaticTextFactory : public UIElementFactory<UIStaticText>
 {
     static void DeserializeDataProperties(
         _In_ UIDataPtr data,
-        _Out_ StaticTextDataProperties& staticTextDataProperties);
+        _Inout_ StaticTextDataProperties& staticTextDataProperties);
 
 protected:
     /*virtual*/ UIStaticText* Create(UIManager& manager, ID id, UIDataPtr data);

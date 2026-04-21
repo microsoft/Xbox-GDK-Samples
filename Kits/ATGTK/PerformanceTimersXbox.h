@@ -71,7 +71,8 @@ namespace DX
 
         GPUCommandListTimer() :
             m_currentFrame(0),
-            m_frame{}
+            m_frame{},
+            m_lastUpdatedValues{}
         {}
 
         GPUCommandListTimer(ID3D12Device* device, ID3D12CommandQueue* commandQueue) :

@@ -49,7 +49,11 @@ private:
 WaveSampleReader::WaveSampleReader( const BYTE* pWaveData, DWORD waveSize, WAVEFORMATEXTENSIBLE* pWfx ) :
     m_pBase( pWaveData ),
     m_pCurrent( pWaveData ),
-    m_nSize( waveSize )
+    m_nSize( waveSize ),
+    m_nBitsPerSample( 0 ),
+    m_nChannels( 0 ),
+    m_nBlockAlign( 0 ),
+    m_bIsFloat( false )
 {
     if ( ( pWfx->Format.wFormatTag == WAVE_FORMAT_PCM ) ||
             ( pWfx->Format.wFormatTag == WAVE_FORMAT_EXTENSIBLE && pWfx->SubFormat == KSDATAFORMAT_SUBTYPE_PCM ) )
@@ -184,7 +188,11 @@ private:
 WaveSampleWriter::WaveSampleWriter( BYTE* pBuffer, DWORD bufferSize, WAVEFORMATEX* pWfx ) :
     m_pBase( pBuffer ),
     m_pCurrent( pBuffer ),
-    m_nSize( bufferSize )
+    m_nSize( bufferSize ),
+    m_nBitsPerSample( 0 ),
+    m_nChannels( 0 ),
+    m_nBlockAlign( 0 ),
+    m_bIsFloat( false )
 {
     if ( ( pWfx->wFormatTag == WAVE_FORMAT_PCM ) ||
         ( pWfx->wFormatTag == WAVE_FORMAT_EXTENSIBLE && ((WAVEFORMATEXTENSIBLE*)pWfx)->SubFormat == KSDATAFORMAT_SUBTYPE_PCM ) )

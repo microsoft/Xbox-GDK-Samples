@@ -1,0 +1,229 @@
+{
+  "styles": [
+    {
+      "classId": "TextStyle",
+      "id": "button_label_style",
+      "verticalAlign": "middle",
+      "horizontalAlign": "center",
+      "colorUsage": "override",
+      "color": [ 0, 0, 0, 1 ]
+    },
+    {
+      "id": "PlayfabPanel",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 255, 109, 33, 1.0 ]
+    },
+    {
+      "id": "menu_title_text_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": "#primary_color",
+      "font": "Assets/Fonts/segoeUI",
+      "size": 48,
+      "horizontalAlign": "left",
+      "verticalAlign": "middle"
+    },
+    {
+      "id": "log_label_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1 ],
+      "font": "Assets/Fonts/segoeUI",
+      "size": 24,
+      "weight": "bold",
+      "verticalAlign": "top",
+      "horizontalAlign": "left"
+    },
+    {
+      "id": "guide_label_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 1 ],
+      "font": "Assets/Fonts/segoeUI",
+      "size": 18,
+      "weight": "bold",
+      "verticalAlign": "top",
+      "horizontalAlign": "left"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "ATG_Logo_Style",
+      "spriteStyle": {
+        "colorUsage": "override",
+        "color": [ 195, 181, 152, 1.0 ],
+        "texture": "Assets/Textures/LOGO_ATG.png"
+      }
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "User_Info_Panel_Style",
+      "horizontalAlign": "right",
+      "colorUsage": "override",
+      "color": [ 160, 50, 50, 1.0 ]
+    },
+    {
+      "id": "gamerpic_style",
+      "classId": "SpriteStyle"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Gamer_Tag_Style",
+      "colorUsage": "override",
+      "color": [ 195, 181, 152, 1.0 ],
+      "verticalAlign": "top",
+      "horizontalAlign": "middle"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Description_Label",
+      "colorUsage": "override",
+      "color": "#primary_color_opaque76",
+      "horizontalAlign": "center",
+      "verticalAlign": "middle"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Sample_Text_Style",
+      "colorUsage": "override",
+      "color": [ 195, 181, 152, 1.0 ],
+      "verticalAlign": "bottom",
+      "horizontalAlign": "left"
+    },
+    {
+      "id": "button_default_style",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#primary_color_opaque10"
+    },
+    {
+      "id": "button_focused_style",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#primary_color_opaque30"
+    },
+    {
+      "id": "button_pressed_style",
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#primary_color_opaque76"
+    },
+    {
+      "id": "button_default_text_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": "#primary_color_opaque80",
+      "font": "Assets/Fonts/segoeUI",
+      "size": 24,
+      "weight": "bold",
+      "horizontalAlign": "center",
+      "verticalAlign": "middle"
+    },
+    {
+      "id": "button_focused_text_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": "#black",
+      "font": "Assets/Fonts/segoeUI",
+      "size": 24,
+      "weight": "bold",
+      "horizontalAlign": "center",
+      "verticalAlign": "middle"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Dark_Panel_Style",
+      "colorUsage": "override",
+      "color": [ 38, 38, 38, 1.0 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Invisible_Panel_Style",
+      "colorUsage": "override",
+      "color": [ 255, 255, 255, 0.0 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Basic_Panel_Style",
+      "colorUsage": "override",
+      "color": [ 0, 0, 192, 1.0 ]
+    },
+    {
+      "classId": "TextStyle",
+      "id": "Basic_Console_Style",
+      "font": "Assets/Fonts/segoeUI",
+      "size": 24,
+      "weight": "bold",
+      "colorUsage": "override",
+      "color": [ 192, 192, 192, 1.0 ],
+      "verticalAlign": "top",
+      "horizontalAlign": "left"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Basic_Button_Style",
+      "inheritsFromId": "Basic_Panel_Style",
+      "colorUsage": "setExisting",
+      "color": "#E9DDC3",
+      "padding": [ 0, 0, 0, 0 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Focused_Button_Style",
+      "inheritsFromId": "Basic_Button_Style",
+      "color": "#FFFFFF",
+      "texture": "Assets/Textures/focused_button.png",
+      "spriteType": "nineSliced",
+      "innerUVExtents": [ 0.25, 0.25, 0.75, 0.75 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Disabled_Button_Style",
+      "inheritsFromId": "Basic_Button_Style",
+      "color": "#808080"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Pressed_Button_Style",
+      "inheritsFromId": "Basic_Button_Style",
+      "color": "#B7CDBB"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "Hovered_Button_Style",
+      "inheritsFromId": "Basic_Button_Style",
+      "color": "#8CC6C7"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "ScrollbarBackgroundStyle",
+      "colorUsage": "override",
+      "color": [ 64, 64, 64, 1.0 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "BasicButtonStyle",
+      "inheritsFromId": "Basic_Button_Style"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "FocusedButtonStyle",
+      "inheritsFromId": "Focused_Button_Style"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "HoveredButtonStyle",
+      "inheritsFromId": "Hovered_Button_Style"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "PressedButtonStyle",
+      "inheritsFromId": "Pressed_Button_Style"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "DisabledButtonStyle",
+      "inheritsFromId": "Disabled_Button_Style"
+    }
+  ]
+}

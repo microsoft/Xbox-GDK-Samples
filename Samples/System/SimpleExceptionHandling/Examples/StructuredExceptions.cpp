@@ -18,8 +18,9 @@ void Sample::ExecuteStructuredException()
     // If the parameter evaluates EXCEPTION_EXECUTE_HANDLER the code within the handler is called
     __try
     {
-        uint32_t *nullPointer = nullptr;
-        *nullPointer = 5;
+        uint32_t* nullPointer = nullptr;
+#pragma warning(suppress : 6011) // Dereferencing null pointer (possible crash)
+        * nullPointer = 5;
     }
 
     // when the null pointer is dereferenced the exception system will determine what to do based on the parameter to __except

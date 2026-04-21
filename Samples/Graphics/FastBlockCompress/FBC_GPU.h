@@ -31,8 +31,8 @@ public:
         _Outptr_ ID3D12Resource** bcTexture,
         _Outptr_ void** bcTextureMem,
         _Outptr_ ID3D12Resource** intermediateUAV,
-        _Outptr_ ID3D12Resource** p2x2intermediateUAV,
-        _Outptr_ ID3D12Resource** p1x1intermediateUAV,
+        _Outptr_result_maybenull_ ID3D12Resource** p2x2intermediateUAV,
+        _Outptr_result_maybenull_ ID3D12Resource** p1x1intermediateUAV,
         bool generateMips = false);
 
     HRESULT Compress(

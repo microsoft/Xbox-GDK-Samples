@@ -11,7 +11,12 @@
 #include "InGameChat.h"
 #include "PlayFabPartyManager.h"
 #include "PartyImpl.h"
+
+// Suppress warnings from PlayFab Party Xbox Live header
+#pragma warning(push)
+#pragma warning(disable : 28285) // SAL syntax error in partyxboxlive.h
 #include "PartyXboxLiveImpl.h"
+#pragma warning(pop)
 
 #include <ctime>
 
@@ -229,7 +234,7 @@ void PlayFabPartyManager::CreateLocalUser()
 
 void PlayFabPartyManager::SetLocalUser(uint64_t xuid, std::function<void(PartyError)> callback)
 {
-    DebugTrace("PlayFabPartyManager::SetLocalUser(%lu)", xuid);
+    DebugTrace("PlayFabPartyManager::SetLocalUser(%llu)", xuid);
 
     if (m_localChatUser != nullptr)
     {
@@ -511,7 +516,7 @@ void PlayFabPartyManager::LookupEntityIdsForXuids(size_t count, uint64_t* xuids,
             // Only query it if we don't already have it
             xuidsToQuery.push_back(xuid);
 
-            DebugTrace("Looking up EntityId for %lu", xuid);
+            DebugTrace("Looking up EntityId for %llu", xuid);
         }
     }
 
@@ -984,7 +989,7 @@ void PlayFabPartyManager::OnGetEntityIdsFromXboxLiveUserIdsCompleted(const Party
                 m_xuidToEntityId[result->entityIdMappings[x].xboxLiveUserId] = result->entityIdMappings[x].playfabEntityId;
                 m_entityIdToXuid[result->entityIdMappings[x].playfabEntityId] = result->entityIdMappings[x].xboxLiveUserId;
 
-                DebugTrace("Received EntityId for %lu", result->entityIdMappings[x].xboxLiveUserId);
+                DebugTrace("Received EntityId for %llu", result->entityIdMappings[x].xboxLiveUserId);
             }
 
             if (context && context->callback)

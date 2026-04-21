@@ -37,7 +37,9 @@ namespace
 }
 
 Sample::Sample() noexcept(false)
-    : m_frame(0)
+    : m_displayWidth(0)
+    , m_displayHeight(0)
+    , m_frame(0)
     , m_orbitRadius(40.0f)
     , m_orbitAngle(XM_PI * 1.75f)
     , m_cameraHeight(6.0f)
@@ -189,7 +191,8 @@ void Sample::Render()
             ScopedPixEvent scene(commandList, PIX_COLOR_DEFAULT, L"Scene");
             for (auto& obj : m_scene)
             {
-                obj.Model->DrawOpaque(commandList, obj.Effects.begin());
+                auto it = obj.Effects.cbegin();
+                obj.Model->DrawOpaque(commandList, it);
             }
         }
 

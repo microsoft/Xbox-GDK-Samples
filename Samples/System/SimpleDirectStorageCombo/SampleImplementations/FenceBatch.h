@@ -22,7 +22,7 @@ private:
     static const uint32_t c_readsPerBatch = 7;
 
     Microsoft::WRL::ComPtr<ID3D12Fence> m_fence;		// only one fence is needed since batches complete inorder, each batch gets a constantly incrementing number
-    HANDLE m_fenceEvent;
+    HANDLE m_fenceEvent = nullptr;
 
 public:
     FenceBatch() : m_fence(nullptr) {}

@@ -687,6 +687,7 @@ HRESULT Sample::UpdateUserUIData()
         {
             sampleContext->LogFailedHR("XUserGetGamerPictureResultSize", hr);
             delete ctx;
+            ctx = nullptr;
             DX::ThrowIfFailed(hr);
         }
 

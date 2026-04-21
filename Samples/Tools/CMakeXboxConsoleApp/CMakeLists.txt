@@ -5,7 +5,7 @@
 # Use of Direct3D is not supported, and the resulting EXE is not supported for retail.
 #
 
-cmake_minimum_required (VERSION 3.20)
+cmake_minimum_required (VERSION 3.21)
 
 project(CMakeXboxConsoleApp
   DESCRIPTION "CMake example for a Microsoft GDK 'console' project"

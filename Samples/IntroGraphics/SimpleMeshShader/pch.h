@@ -35,6 +35,12 @@
 #include <wrl/client.h>
 #include <wrl/event.h>
 
+#include <grdk.h>
+
+#if _GRDK_VER < 0x65F41800 /* GDK Edition 251000 */
+#error This sample requires the October 2025 GDK or later
+#endif
+
 #ifdef _GAMING_XBOX_SCARLETT
 #include <d3d12_xs.h>
 #include <d3dx12_xs.h>

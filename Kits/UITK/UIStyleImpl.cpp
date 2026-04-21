@@ -1002,7 +1002,7 @@ ENUM_LOOKUP_TABLE(SpriteType,
 
 /*static*/ void UITextStyleFactory::DeserializeDataProperties(
     _In_ UIDataPtr data,
-    _Out_ StyleTextProperties& styleProperties)
+    _Inout_ StyleTextProperties& styleProperties)
 {
     ID tempID;
 
@@ -1053,7 +1053,7 @@ ENUM_LOOKUP_TABLE(SpriteType,
 
 /*static*/ void UISpriteStyleFactory::DeserializeDataProperties(
     _In_ UIDataPtr data,
-    _Out_ StyleSpriteProperties& styleProperties)
+    _Inout_ StyleSpriteProperties& styleProperties)
 {
     ID tempID;
     if (data->GetTo(UITK_FIELD(texture), styleProperties.m_textureFilename))
@@ -1169,7 +1169,7 @@ Rectangle UIStyle::SubtractPaddingFromRect(const Rectangle& rectangle) const
 
 /*static*/ void UIStyleFactoryBase::DeserializeDataProperties(
     _In_ UIDataPtr data,
-    _Out_ StyleProperties& styleProperties)
+    _Inout_ StyleProperties& styleProperties)
 {
     ID temp;
     Color color;

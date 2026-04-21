@@ -104,8 +104,8 @@ private:
     std::unique_ptr<DirectX::GraphicsMemory>        m_graphicsMemory;
 
     // Custom Protocol.
-    XTaskQueueHandle                                m_taskQueue;
-    XTaskQueueRegistrationToken                     m_protocolRegistrationToken;
+    XTaskQueueHandle                                m_taskQueue = nullptr;
+    XTaskQueueRegistrationToken                     m_protocolRegistrationToken = {};
 
     // Logging
     std::unique_ptr<UserManager>                    m_userManager;

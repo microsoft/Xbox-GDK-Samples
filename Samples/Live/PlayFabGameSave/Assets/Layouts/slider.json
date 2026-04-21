@@ -1,0 +1,39 @@
+{
+	"prefab": {
+		"classId": "Slider",
+		"positioningAnchor": [ "left", "top" ],
+		"sizingAnchor": [ "left", "top" ],
+		"sliderOrientation": "toptobottom",
+		"sliderType": "discrete",
+		"valueRange": [ 0.0, 1.0 ],
+		"initialValue": 0.0,
+		"numDiscreteSteps": 1,
+		"style": {
+			"classId": "NullStyle"
+		},
+		"backgroundSubElementId": "ScrollbarBackground",
+		"thumbButtonSubElementId": "ScrollbarSelector",
+		"subElements": [
+			{
+				"id": "ScrollbarBackground",
+				"classId": "Image",
+				"styleId": "ScrollbarBackgroundStyle",
+				"position": [ 10, 0 ],
+				"size": [ 30, 100 ]
+			},
+			{
+				"id": "ScrollbarSelector",
+				"classId": "Button",
+				"positioningAnchor": [ "left", "top" ],
+				"sizingAnchor": [ "left", "top" ],
+				"size": [ 50, 50 ],
+				"styleId": "Basic_Button_Style",
+				"focusable": true,
+				"focusedStyleId": "Focused_Button_Style",
+				"hoveredStyleId": "Hovered_Button_Style",
+				"pressedStyleId": "Pressed_Button_Style",
+				"disabledStyleId": "Disabled_Button_Style"
+			}
+		]
+	}
+}

@@ -29,9 +29,6 @@
 
 #include <Windows.h>
 
-#include <wrl/client.h>
-#include <wrl/event.h>
-
 #include <d3d12.h>
 #include <dxgi1_6.h>
 
@@ -43,22 +40,6 @@
 
 #include <DirectXMath.h>
 #include <DirectXColors.h>
-
-#include <wrl.h>
-#include <appnotify.h>
-#include <initguid.h>
-#include <mmreg.h>
-#include <mmdeviceapi.h>
-#include <Audioclient.h>
-
-#include <GameInput.h>
-#if GAMEINPUT_API_VERSION == 1
-using namespace GameInput::v1;
-#elif GAMEINPUT_API_VERSION == 2
-using namespace GameInput::v2;
-#elif GAMEINPUT_API_VERSION == 3
-using namespace GameInput::v3;
-#endif
 
 #include <algorithm>
 #include <atomic>
@@ -85,9 +66,9 @@ using namespace GameInput::v3;
 #include "imgui.h"
 #include "backends/imgui_impl_win32.h"
 #include "backends/imgui_impl_dx12.h"
-#include "atg/imgui_sample.h"
-#include "atg/imgui_applog.h"
-#include "atg/imgui_deviceresources.h"
+#include "ATG/imgui_sample.h"
+#include "ATG/imgui_applog.h"
+#include "ATG/imgui_deviceresources.h"
 
 // To use graphics markup events with the latest version of PIX, change this to include <pix3.h>
 // then add the NuGet package WinPixEventRuntime to the project.

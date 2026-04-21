@@ -159,6 +159,7 @@ class AudioDeviceNotificationClient : public IMMNotificationClient
 
 public:
     AudioDeviceNotificationClient() : _refCount(1) {}
+    virtual ~AudioDeviceNotificationClient() = default;
 
     ULONG STDMETHODCALLTYPE AddRef() override { return InterlockedIncrement(&_refCount); }
     ULONG STDMETHODCALLTYPE Release() override

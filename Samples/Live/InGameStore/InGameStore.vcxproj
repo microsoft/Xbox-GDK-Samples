@@ -372,7 +372,9 @@
     <ClInclude Include="..\..\..\Kits\ATGTK\Texture.h" />
     <ClInclude Include="..\..\..\Kits\LiveTK\LiveInfoHUD.h" />
     <ClInclude Include="..\..\..\Kits\LiveTK\LiveResources.h" />
+    <ClInclude Include="DebugLog.h" />
     <ClInclude Include="InGameStore.h" />
+    <ClInclude Include="LicenseManager.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="StepTimer.h" />
     <ClInclude Include="DeviceResources.h" />
@@ -387,6 +389,7 @@
     <ClCompile Include="..\..\..\Kits\LiveTK\LiveInfoHUD.cpp" />
     <ClCompile Include="..\..\..\Kits\LiveTK\LiveResources.cpp" />
     <ClCompile Include="InGameStore.cpp" />
+    <ClCompile Include="LicenseManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="DeviceResources.cpp" />
     <ClCompile Include="pch.cpp">
@@ -685,8 +688,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(VCTargetsPath)\Platforms\$(Platform)\Platform.props')" Text="$([System.String]::Format('$(ErrorText)', '$(Platform)'))" />
   </Target>
-  <Target Name="BuildMGC" AfterTargets="Build" Condition="!$([System.Text.RegularExpressions.Regex]::IsMatch('$(Platform)', 'Gaming\..+\.x64'))"
-          Inputs="@(MGCCompile)" Outputs="$(OutDir)MicrosoftGame.config">
+  <Target Name="BuildMGC" AfterTargets="Build" Condition="!$([System.Text.RegularExpressions.Regex]::IsMatch('$(Platform)', 'Gaming\..+\.x64'))" Inputs="@(MGCCompile)" Outputs="$(OutDir)MicrosoftGame.config">
     <Exec ConsoleToMsBuild="true" Command="copy &quot;%(MGCCompile.Identity)&quot; &quot;$(OutDir)MicrosoftGame.config&quot;" />
     <Exec ConsoleToMsBuild="true" Command="makepkg.exe localize /d &quot;$(OutDir).&quot; /pd &quot;$(OutDir).&quot; /gc &quot;%(MGCCompile.Identity)&quot;" />
   </Target>

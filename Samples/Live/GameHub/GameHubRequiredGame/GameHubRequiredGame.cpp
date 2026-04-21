@@ -410,6 +410,11 @@ void Sample::ReadPLS()
         }
 
         char* mountPath = new (std::nothrow) char[pathSize];
+        if (!mountPath)
+        {
+            XPackageCloseMountHandle(mountHandle);
+            return;
+        }
 
         hr = XPackageGetMountPath(mountHandle, pathSize, mountPath);
 
@@ -434,7 +439,7 @@ void Sample::ReadPLS()
             return;
         }
 
-        char sharedData[100];
+        char sharedData[100] = {};
         DWORD readSize = 0;
 
         if (ReadFile(hFile, (void*)sharedData, 100, &readSize, NULL))
@@ -446,7 +451,7 @@ void Sample::ReadPLS()
             m_plsText->SetDisplayText(outputText);
         }
 
-        CloseHandle(hFile);
+        std::ignore = CloseHandle(hFile);
 
         XPackageCloseMountHandle(mountHandle);
 

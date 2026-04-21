@@ -137,7 +137,7 @@ namespace DX
         Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>        m_dsvDescriptorHeap;
         UINT                                                m_rtvDescriptorSize;
         Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>        m_srvDescriptorHeap;
-        UINT                                                m_srvDescriptorSize;
+        UINT                                                m_srvDescriptorSize = 0;
         D3D12_VIEWPORT                                      m_screenViewport;
         D3D12_RECT                                          m_scissorRect;
 

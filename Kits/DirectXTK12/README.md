@@ -2,15 +2,15 @@
 
 # DirectX Tool Kit for DirectX 12
 
-http://go.microsoft.com/fwlink/?LinkID=615561
+https://go.microsoft.com/fwlink/?LinkID=615561
 
 Copyright (c) Microsoft Corporation.
 
-# October 27, 2025
+## March 31, 2026
 
 This package contains the "DirectX Tool Kit", a collection of helper classes for writing Direct3D 12 C++ code for Win32 desktop applications for Windows 11 and Windows 10, game titles for Xbox Series X\|S and Xbox One, and Universal Windows Platform (UWP) apps for Windows 11 and Windows 10.
 
-This code is designed to build with Visual Studio 2019 (16.11), Visual Studio 2022, clang for Windows v12 or later, or MinGW 12.2. Use of the Windows 10 May 2020 Update SDK ([19041](https://walbourn.github.io/windows-10-may-2020-update-sdk/)) or later is required for Visual Studio.
+This code is designed to build with Visual Studio 2022, Visual Studio 2026, clang for Windows v12 or later, or MinGW 12.2. Use of the Windows 10 May 2020 Update SDK ([19041](https://walbourn.github.io/windows-10-may-2020-update-sdk/)) or later is required for Visual Studio.
 
 These components are designed to work without requiring any content from the legacy DirectX SDK. For details, see [Where is the DirectX SDK?](https://aka.ms/dxsdk).
 
@@ -88,7 +88,7 @@ FOR SECURITY ADVISORIES, see [GitHub](https://github.com/microsoft/DirectXTK12/s
 
 For a full change history, see [CHANGELOG.md](https://github.com/microsoft/DirectXTK12/blob/main/CHANGELOG.md).
 
-* The CMake projects require 3.21 or later. VS 2019 users will need to install a standalone version of CMake 3.21 or later and add it to their PATH.
+* The CMake projects require 3.21 or later.
 
 * In the June 2024 release, the defaulted parameter `initialState` for the ``CreateUploadBuffer`` function in _BufferHelpers_ was removed. Per the DirectX 12 validation layer, the only valid initial state for an upload buffer is ``D3D12_RESOURCE_STATE_GENERIC_READ``.
 
@@ -106,13 +106,11 @@ For a full change history, see [CHANGELOG.md](https://github.com/microsoft/Direc
 
 * The UWP projects and the Win10 classic desktop project include configurations for the ARM64 platform. Building these requires installing the ARM64 toolset.
 
-* For ARM64/AArch64 development, the VS 2022 compiler is strongly recommended over the VS 2019 toolset. The Windows SDK (26100 or later) is not compatible with VS 2019 for Win32 on ARM64 development. _Note that the ARM32/AArch32 platform is [deprecated](https://learn.microsoft.com/windows/arm/arm32-to-arm64)_.
-
 * When using clang/LLVM for the ARM64/AArch64 platform, the Windows 11 SDK ([22000](https://walbourn.github.io/windows-sdk-for-windows-11/)) or later is required.
 
 * The ``CompileShaders.cmd`` script must have Windows-style (CRLF) line-endings. If it is changed to Linux-style (LF) line-endings, it can fail to build all the required shaders.
 
-* Support for targeting Xbox One using the legacy Xbox One XDK was retired in March 2023. See the February 2023 or earlier releases of _DirectX Tool Kit_ for the required MSBuild project files. It can also be built using the current CMake projects from an _Xbox One XDK Developer Command Prompt_ with the addition of CMake 3.20 or later to the path via the `x64-Debug-Durango` or `x64-Release-Durango` CMake preset.
+* Support for targeting Xbox One using the legacy Xbox One XDK was retired in March 2023. See the February 2023 or earlier releases of _DirectX Tool Kit_ for the required MSBuild project files. It can also be built using the current CMake projects from an _Xbox One XDK Developer Command Prompt_ with the addition of CMake 3.21 or later to the path via the `x64-Debug-Durango` or `x64-Release-Durango` CMake preset.
 
 ## Support
 

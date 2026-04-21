@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -33,6 +34,7 @@ namespace GdkSample_SocialManager
             m_SocialGroupsTitle.text = XboxSocialManager.Instance.CurrentSocialGroup.ToString();
 
             // Update user buttons
+            Array.Sort(users, (a, b) => a.Gamertag.CompareTo(b.Gamertag));
             for (int i = 0; i < C_USER_SOCIAL_BUTTON_COUNT; i++)
             {
                 m_SocialManagerUserButtons[i].Clear();

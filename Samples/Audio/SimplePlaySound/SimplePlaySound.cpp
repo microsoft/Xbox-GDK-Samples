@@ -404,7 +404,10 @@ void Sample::Play(const wchar_t* szFilename)
         //
         DX::ThrowIfFailed(ApuAlloc(&m_xmaMemory, nullptr, static_cast<UINT32>(waveData.audioBytes), SHAPE_XMA_INPUT_BUFFER_ALIGNMENT));
 
-        memcpy(m_xmaMemory, waveData.startAudio, waveData.audioBytes);
+        if (m_xmaMemory)
+        {
+            memcpy(m_xmaMemory, waveData.startAudio, waveData.audioBytes);
+        }
 
         buffer.pAudioData = static_cast<BYTE*>(m_xmaMemory);
         DX::ThrowIfFailed(m_pSourceVoice->SubmitSourceBuffer(&buffer));

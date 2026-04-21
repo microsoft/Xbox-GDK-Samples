@@ -1,5 +1,9 @@
 ﻿{
-  "version": 2,
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 21
+  },
   "configurePresets": [
     {
       "name": "base",
@@ -12,7 +16,7 @@
       },
       "hidden": true,
       "binaryDir": "${sourceDir}/out/build/${presetName}",
-      "cacheVariables": { "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}" }
+      "installDir": "${sourceDir}/out/install/${presetName}"
     },
 
     {

@@ -15,8 +15,21 @@ namespace
 {
     VOID CALLBACK RenderWorkCallback(_Inout_ PTP_CALLBACK_INSTANCE, _Inout_opt_ PVOID Context, _Inout_ PTP_WORK)
     {
-        CoInitializeEx(nullptr, COINIT_MULTITHREADED);
         auto Manager = reinterpret_cast<WASAPIManager*>(Context);
+        
+        if (!Manager)
+        {
+            return;
+        }
+        
+        HRESULT hrCo = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
+        if (FAILED(hrCo))
+        {
+            Manager->m_threadActive = false;
+            Manager->StopDevice();
+            Manager->m_state = DeviceState::DeviceStateInError;
+            return;
+        }
 
         while (Manager->m_threadActive)
         {

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "RemoteIterationToolsSample": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

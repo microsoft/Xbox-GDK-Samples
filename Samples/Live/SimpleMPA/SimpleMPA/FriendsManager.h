@@ -36,8 +36,8 @@ private:
     XblSocialManagerUserGroupHandle allFavorites = nullptr;
 
     std::map<uint64_t, std::string> m_xuidToDisplayNameMap;
-    XblContextHandle m_xblContext;
-    XUserHandle m_user;
+    XblContextHandle m_xblContext = nullptr;
+    XUserHandle m_user = nullptr;
 
     uint64_t GetXuidForXUserHandle(XUserHandle user);
     void UpdateFriendDisplayNames(const XblSocialManagerEvent& socialEvent);

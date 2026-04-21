@@ -516,6 +516,10 @@ void CALLBACK GameUserManager::UserChangeEventCallback(
     }
 
     GameUserManager* pThis = static_cast<GameUserManager*>(context);
+    if (!pThis)
+    {
+        return;
+    }
 
     // Find out the associated user handle
     XUserHandle userHandle = nullptr;
@@ -573,6 +577,10 @@ void CALLBACK GameUserManager::UserDeviceAssociationChangedCallback(
     }
 
     GameUserManager* pThis = static_cast<GameUserManager*>(context);
+    if (!pThis)
+    {
+        return;
+    }
 
     pThis->HandleUserDeviceAssociationChangedEvent(change->deviceId, change->oldUser, change->newUser);
 }

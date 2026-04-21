@@ -109,40 +109,48 @@ void Sample::PerformTests()
     }
 #endif
 
-    PerfRun perf(coreTestNames);
-
-    uint32_t currentMask = 0;
-    for (const auto& iter : coreMasks)
+    try
     {
-        if (__popcnt64(iter) > PerfRun::c_maxNumWorkerThreads)
+        auto perf = std::make_unique<PerfRun>(coreTestNames);
+
+        uint32_t currentMask = 0;
+        for (const auto& iter : coreMasks)
         {
+            if (__popcnt64(iter) > PerfRun::c_maxNumWorkerThreads)
+            {
+                currentMask++;
+                continue;
+            }
+
+            wchar_t buffer[128];
+            swprintf(buffer, 128, L"%s - %s", ATG::GetProcessorMaskString(iter).c_str(), coreTestNames[currentMask].c_str());
+            m_testRunningOutputText = L"Raw Read: ";
+            m_testRunningOutputText += buffer;
+            perf->RunTests(PerfRun::PERFORM_RAW_READ, iter, PerfRun::c_NumCoreIterations, currentMask);
+
+            m_testRunningOutputText = L"Raw Write: ";
+            m_testRunningOutputText += buffer;
+            perf->RunTests(PerfRun::PERFORM_RAW_WRITE, iter, PerfRun::c_NumCoreIterations, currentMask);
+
+            m_testRunningOutputText = L"Atomic Read: ";
+            m_testRunningOutputText += buffer;
+            perf->RunTests(PerfRun::PERFORM_ATOMIC_READ, iter, PerfRun::c_NumCoreIterations, currentMask);
+
+            m_testRunningOutputText = L"Atomic Write: ";
+            m_testRunningOutputText += buffer;
+            perf->RunTests(PerfRun::PERFORM_ATOMIC_WRITE, iter, PerfRun::c_NumCoreIterations, currentMask);
+
+            m_testRunningOutputText = L"Atomic CAS: ";
+            m_testRunningOutputText += buffer;
+            perf->RunTests(PerfRun::PERFORM_ATOMIC_CAS, iter, PerfRun::c_NumCoreIterations, currentMask);
+
             currentMask++;
-            continue;
         }
-
-        wchar_t buffer[128];
-        swprintf(buffer, 128, L"%s - %s", ATG::GetProcessorMaskString(iter).c_str(), coreTestNames[currentMask].c_str());
-        m_testRunningOutputText = L"Raw Read: ";
-        m_testRunningOutputText += buffer;
-        perf.RunTests(PerfRun::PERFORM_RAW_READ, iter, PerfRun::c_NumCoreIterations, currentMask);
-
-        m_testRunningOutputText = L"Raw Write: ";
-        m_testRunningOutputText += buffer;
-        perf.RunTests(PerfRun::PERFORM_RAW_WRITE, iter, PerfRun::c_NumCoreIterations, currentMask);
-
-        m_testRunningOutputText = L"Atomic Read: ";
-        m_testRunningOutputText += buffer;
-        perf.RunTests(PerfRun::PERFORM_ATOMIC_READ, iter, PerfRun::c_NumCoreIterations, currentMask);
-
-        m_testRunningOutputText = L"Atomic Write: ";
-        m_testRunningOutputText += buffer;
-        perf.RunTests(PerfRun::PERFORM_ATOMIC_WRITE, iter, PerfRun::c_NumCoreIterations, currentMask);
-
-        m_testRunningOutputText = L"Atomic CAS: ";
-        m_testRunningOutputText += buffer;
-        perf.RunTests(PerfRun::PERFORM_ATOMIC_CAS, iter, PerfRun::c_NumCoreIterations, currentMask);
-
-        currentMask++;
+    }
+    catch (...)
+    {
+        // Intentionally empty: m_finishedTestRun is set below to ensure the
+        // destructor does not call TerminateThread on an already-exited thread.
     }
 
     m_finishedTestRun = true;
@@ -169,6 +177,7 @@ Sample::~Sample()
     {
         m_shutdownThread = true;
         if (!m_finishedTestRun)
+#pragma warning(suppress: 6258) // TerminateThread is intentional, the test thread can run for 30+ minutes
             TerminateThread(m_workerThread->native_handle(), 0);
         m_workerThread->join();
         delete m_workerThread;

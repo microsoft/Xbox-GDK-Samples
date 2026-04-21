@@ -39,15 +39,12 @@ bool DesktopGPUDecompression::RunSample(const std::wstring& fileName, ID3D12Devi
             return false;
 
         DWORD actualRead;
-        ReadFile(dataFile.get(), &numChunks, 8, &actualRead, nullptr);
-        if (actualRead != 8)
+        if (!ReadFile(dataFile.get(), &numChunks, 8, &actualRead, nullptr) || actualRead != 8)
             return false;
-        ReadFile(dataFile.get(), &chunkUncompressedSize, 8, &actualRead, nullptr);
-        if (actualRead != 8)
+        if (!ReadFile(dataFile.get(), &chunkUncompressedSize, 8, &actualRead, nullptr) || actualRead != 8)
             return false;
         headerData.reset(new ChunkMetaData[numChunks]);
-        ReadFile(dataFile.get(), headerData.get(), static_cast<uint32_t>(numChunks * sizeof(ChunkMetaData)), &actualRead, nullptr);
-        if (actualRead != numChunks * sizeof(ChunkMetaData))
+        if (!ReadFile(dataFile.get(), headerData.get(), static_cast<uint32_t>(numChunks * sizeof(ChunkMetaData)), &actualRead, nullptr) || actualRead != numChunks * sizeof(ChunkMetaData))
             return false;
     }
 

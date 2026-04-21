@@ -16,12 +16,12 @@ enum class ConnectionType
 
 struct NetworkAdapterInfo
 {
-    DWORD index;
+    DWORD index = 0;
     std::wstring name;
     std::wstring description;
-    bool operStatus;
-    ConnectionType type;
-    NL_NETWORK_CONNECTIVITY_LEVEL_HINT connectionLevel;
+    bool operStatus = false;
+    ConnectionType type = {};
+    NL_NETWORK_CONNECTIVITY_LEVEL_HINT connectionLevel = {};
 };
 
 // This function will enumerate all network adapters on the system and return their information, specifically only returing the connected Ethernet and WiFi adapters.

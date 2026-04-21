@@ -102,7 +102,14 @@ Sample::Sample() noexcept(false) :
     m_masteringVoice(nullptr),
     m_sourceVoice(nullptr),
     m_submixVoice(nullptr),
+    m_volumePoints{},
+    m_volumeCurve{},
+    m_reverbPoints{},
+    m_reverbCurve{},
+    m_emitterCone{},
     m_reverbIndex(0),
+    m_listenerAngle(0.0f),
+    m_emitterAngle(0.0f),
     m_CritErrorOccurred(false)
 {
     // Renders only 2D, so no need for a depth buffer.

@@ -1,13 +1,15 @@
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
+using System.Collections.Generic;
 using Unity.XGamingRuntime;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace GdkSample_InGameStore
 {
     public sealed class MainMenu : MonoBehaviour
     {
         [SerializeField] private Button InGameStoreButton;
+        [SerializeField] private Button AcquireDurableLicensesButton;
         [SerializeField] private Button ShowGameButton;
         [SerializeField] private Button PurchaseGameButton;
         [SerializeField] private Button ShowAddonsButton;
@@ -22,6 +24,8 @@ namespace GdkSample_InGameStore
         public static MainMenu Instance { get; private set; }
 
         private GameObject _previousSelected;
+
+        private readonly List<Button> _buttons = new();
 
         private void Awake()
         {
@@ -60,8 +64,11 @@ namespace GdkSample_InGameStore
             XboxManager.Instance.UserSignedOut += OnStoreChangeDetected;
             XStoreManager.Instance.StoreInitializationSucceeded += OnStoreChangeDetected;
             XStoreManager.Instance.StoreInitializationFailed += OnStoreInitializationFailed;
+            XNetworkManager.Instance.NetworkConnectionEstablished += OnNetworkChangeDetected;
+            XNetworkManager.Instance.NetworkConnectionLost += OnNetworkChangeDetected;
 
             InGameStoreButton.onClick.AddListener(() => ShowInGameStore());
+            AcquireDurableLicensesButton.onClick.AddListener(() => AcquireDurableLicenses());
             ShowGameButton.onClick.AddListener(() => ShowGamePage());
             PurchaseGameButton.onClick.AddListener(() => PurchaseGame());
             ShowAddonsButton.onClick.AddListener(() => ShowAddonsPage());
@@ -73,6 +80,7 @@ namespace GdkSample_InGameStore
             QueryAddonLicensesButton.onClick.AddListener(() => QueryAddonLicenses());
 
             InGameStoreButton.interactable = false;
+            AcquireDurableLicensesButton.interactable = false;
             ShowGameButton.interactable = false;
             PurchaseGameButton.interactable = false;
             ShowAddonsButton.interactable = false;
@@ -84,7 +92,22 @@ namespace GdkSample_InGameStore
             QueryAddonLicensesButton.interactable = false;
             SignInButton.interactable = false;
 
+            InitializeVerticalNavigationButtons();
+
             ShowMenu();
+        }
+
+        private void InitializeVerticalNavigationButtons()
+        {
+            _buttons.Add(InGameStoreButton);
+            _buttons.Add(AcquireDurableLicensesButton);
+            _buttons.Add(ShowGameButton);
+            _buttons.Add(ShowAddonsButton);
+            _buttons.Add(RedeemTokenButton);
+            _buttons.Add(QueryCatalogButton);
+            _buttons.Add(QueryGameLicenseButton);
+            _buttons.Add(QueryAddonLicensesButton);
+            _buttons.Add(SignInButton);
         }
 
         private void Update()
@@ -100,7 +123,7 @@ namespace GdkSample_InGameStore
         /// Toggles button interactable state based on if the store is fully initialized.
         /// Whenever the active user is signed-out or a new user is signed-in, the store will be
         /// re-initialized and all buttons disabled. 
-        /// When store initialization is complete, store-related butons are re-enabled.
+        /// When store initialization is complete, store-related buttons are re-enabled.
         /// </summary>
         private void OnStoreChangeDetected()
         {
@@ -118,10 +141,54 @@ namespace GdkSample_InGameStore
             QueryAddonLicensesButton.interactable = interactable;
             SignInButton.interactable = interactable;
 
-            if (!interactable && gameObject.activeInHierarchy)
+            if (interactable && gameObject.activeInHierarchy)
+            {
+                EventSystem.current.SetSelectedGameObject(InGameStoreButton.gameObject);
+                RefreshVerticalNavigationButtons();
+            }
+            else
+            {
+                // Enable buttons based on network state
+                OnNetworkChangeDetected();
+            }
+        }
+
+        private void OnNetworkChangeDetected()
+        {
+            bool interactable = false;
+
+            if (XNetworkManager.Instance.IsNetworkAvailable && XStoreManager.Instance.IsStoreReady)
+            {
+                interactable = true;
+            }
+
+            InGameStoreButton.interactable = interactable;
+            AcquireDurableLicensesButton.interactable = true;
+            ShowGameButton.interactable = interactable;
+            PurchaseGameButton.interactable = interactable;
+            ShowAddonsButton.interactable = interactable;
+            ShowRateAndReviewButton.interactable = interactable;
+            RedeemTokenButton.interactable = interactable;
+            QueryCatalogButton.interactable = interactable;
+            QueryCollectionsButton.interactable = interactable;
+            QueryGameLicenseButton.interactable = true;
+            QueryAddonLicensesButton.interactable = true;
+            SignInButton.interactable = true;
+
+            if (_previousSelected != null && _previousSelected.GetComponent<Button>().interactable)
+            {
+                EventSystem.current.SetSelectedGameObject(_previousSelected);
+            }
+            else if (interactable && gameObject.activeInHierarchy)
             {
                 EventSystem.current.SetSelectedGameObject(InGameStoreButton.gameObject);
             }
+            else if (gameObject.activeInHierarchy)
+            {
+                EventSystem.current.SetSelectedGameObject(AcquireDurableLicensesButton.gameObject);
+            }
+
+            RefreshVerticalNavigationButtons();
         }
 
         /// <summary>
@@ -135,6 +202,58 @@ namespace GdkSample_InGameStore
             if (gameObject.activeInHierarchy)
             {
                 EventSystem.current.SetSelectedGameObject(SignInButton.gameObject);
+            }
+        }
+
+        private void RefreshVerticalNavigationButtons()
+        {
+            List<Button> enabledButtons = new();
+            List<Button> disabledButtons = new();
+
+            foreach (Button button in _buttons)
+            {
+                if (button.interactable)
+                {
+                    enabledButtons.Add(button);
+                }
+                else
+                {
+                    disabledButtons.Add(button);
+                }
+            }
+
+            foreach (Button button in disabledButtons)
+            {
+                var nav = button.navigation;
+                nav.selectOnUp = null;
+                nav.selectOnDown = null;
+                button.navigation = nav;
+            }
+
+            for (var i = 0; i < enabledButtons.Count; i++)
+            {
+                var enabledButton = enabledButtons[i];
+                var nav = enabledButton.navigation;
+
+                if (i == 0)
+                {
+                    nav.selectOnUp = null;
+                }
+                else
+                {
+                    nav.selectOnUp = enabledButtons[i - 1];
+                }
+
+                if (i == enabledButtons.Count - 1)
+                {
+                    nav.selectOnDown = enabledButtons[0];
+                }
+                else
+                {
+                    nav.selectOnDown = enabledButtons[i + 1];
+                }
+
+                enabledButton.navigation = nav;
             }
         }
 
@@ -170,12 +289,24 @@ namespace GdkSample_InGameStore
 
         private void QueryCatalog()
         {
+            if (XStoreManager.Instance.IsCatalogRefreshInProgress)
+            {
+                Logger.Instance.Log("Catalog refresh in progress. Please wait before querying the catalog.", color: LogColor.Warning);
+                return;
+            }
+
             Logger.Instance.Log("Calling QueryAssociatedProducts", color: LogColor.Event);
             XStoreManager.Instance.QueryAssociatedProducts(true);
         }
 
         private void QueryCollections()
         {
+            if (XStoreManager.Instance.IsCollectionsRefreshInProgress)
+            {
+                Logger.Instance.Log("Collections refresh in progress. Please wait before querying collections.", color: LogColor.Warning);
+                return;
+            }
+
             Logger.Instance.Log("Calling QueryEntitledProducts", color: LogColor.Event);
             XStoreManager.Instance.QueryEntitledProducts(true);
         }
@@ -184,6 +315,12 @@ namespace GdkSample_InGameStore
         {
             _previousSelected = InGameStoreButton.gameObject;
             MenuManager.Instance.ShowProductListMenu();
+        }
+
+        private void AcquireDurableLicenses()
+        {
+            Logger.Instance.Log("Calling AcquireDurableLicenses", color: LogColor.Event);
+            XStoreLicenseManager.Instance.AcquireDurableLicenses();
         }
 
         private void QueryGameLicense()
@@ -197,6 +334,5 @@ namespace GdkSample_InGameStore
             Logger.Instance.Log("Calling QueryAddOnLicenses", color: LogColor.Event);
             XStoreLicensing.QueryAddOnLicenses(XStoreManager.Instance.StoreContext);
         }
-
     }
 }

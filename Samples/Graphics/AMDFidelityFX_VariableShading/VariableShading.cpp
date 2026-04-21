@@ -52,11 +52,17 @@ Sample::Sample() noexcept(false) :
     m_variableShadingImgGenMode{VariableShadingImageGenMode::Enable},
     m_variableShadingImgGenTileSize{VariableShadingImageGenTileSize::TileSize_Disable},
     m_variableShadingImgGenAdditionalSizesSupported{VariableShadingImageGenAdditionalSizesSupported::Disable},
+    m_vrsContext{},
     m_variableShadingOverlayEnable(false),
     m_variableShadingEnable(true),
     m_variableShadingCombinerState{D3D12_SHADING_RATE_COMBINER_PASSTHROUGH,D3D12_SHADING_RATE_COMBINER_PASSTHROUGH},
+    m_gltfPBR{},
+    m_gltfDepth{},
+    m_gltfMotionVectors{},
+    m_gltfModel{},
     m_eye(c_eye),
-    m_currentCamera(0)
+    m_currentCamera(0),
+    m_shadowAtlasIdx(0)
 {
     // store the sample instance to use in the allocator callback
     g_pSampleInstance = this;
@@ -157,7 +163,7 @@ void Sample::UpdateVRSContext(bool enabled)
 bool Sample::DeviceSupportsAdditionalShadingRates() const
 {
     auto device = m_deviceResources->GetD3DDevice();
-    D3D12_FEATURE_DATA_D3D12_OPTIONS6 featureData6;
+    D3D12_FEATURE_DATA_D3D12_OPTIONS6 featureData6 = {};
     HRESULT hr = device->CheckFeatureSupport(D3D12_FEATURE_D3D12_OPTIONS6, &featureData6, sizeof(featureData6));
     if (FAILED(hr))
     {
@@ -173,7 +179,7 @@ bool Sample::DeviceSupportsAdditionalShadingRates() const
 unsigned int Sample::DeviceDefaultShadingRateImageTileSize() const
 {
     auto device = m_deviceResources->GetD3DDevice();
-    D3D12_FEATURE_DATA_D3D12_OPTIONS6 featureData6;
+    D3D12_FEATURE_DATA_D3D12_OPTIONS6 featureData6 = {};
     HRESULT hr = device->CheckFeatureSupport(D3D12_FEATURE_D3D12_OPTIONS6, &featureData6, sizeof(featureData6));
     if (FAILED(hr))
     {

@@ -1,5 +1,9 @@
 ﻿{
-  "version": 2,
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 21
+  },
   "configurePresets": [
     {
       "name": "base",
@@ -12,9 +16,9 @@
       },
       "hidden": true,
       "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "installDir": "${sourceDir}/out/install/${presetName}",
       "cacheVariables": {
-        "XdkEditionTarget": "251000",
-        "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+        "XdkEditionTarget": "260400",
         "CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELEASE": true
       }
     },

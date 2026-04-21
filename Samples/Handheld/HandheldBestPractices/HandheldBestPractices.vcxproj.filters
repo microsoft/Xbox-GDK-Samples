@@ -95,6 +95,9 @@
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\atg\d3dx12.h">
       <Filter>ImGui\ATG</Filter>
     </ClInclude>
+    <ClInclude Include="..\Snippets\TextEntry.h">
+      <Filter>Snippets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -182,6 +185,9 @@
       <Filter>ImGui\ATG</Filter>
     </ClCompile>
     <ClCompile Include="..\Snippets\VirtualKeyboardAlt.cpp">
+      <Filter>Snippets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Snippets\TextEntry.cpp">
       <Filter>Snippets</Filter>
     </ClCompile>
   </ItemGroup>

@@ -61,7 +61,7 @@ namespace TextRenderer
         if (SUCCEEDED(hr))
         {
             assert(m_textureAtlasResource.GetAddressOf() != nullptr && *m_textureAtlasResource.GetAddressOf() != nullptr);
-            _Analysis_assume_(outTexture != nullptr && *outTexture != nullptr);
+            _Analysis_assume_(m_textureAtlasResource.Get() != nullptr);
 
             SetDebugObjectName(*m_textureAtlasResource.GetAddressOf(), L"Multifont Texture Atlas");
         }
@@ -328,6 +328,11 @@ namespace TextRenderer
             // is added to the texture atlas.
             // If this is the case, we can also be certain that the shaped string were adding WILL fit.
             AtlasPartitionRow* currentRow = rowIterator->get();
+
+            if (currentRow == nullptr)
+            {
+                continue;
+            }
 
             bool rowIsEmpty = currentRow->m_children.size() == 1 && currentRow->m_children[0]->IsEvicted();
 

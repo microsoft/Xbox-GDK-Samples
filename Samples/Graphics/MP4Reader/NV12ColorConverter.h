@@ -10,7 +10,7 @@
 class CXboxNV12ToRGBConverter
 {
 public:
-    HRESULT Initialize(_In_ ID3D12Device* pDevice, _In_ _In_opt_ IMFAttributes* pProperty);
+    HRESULT Initialize(_In_ ID3D12Device* pDevice, _In_opt_ IMFAttributes* pProperty);
     void Release() { delete this; }
 
     static HRESULT CreateInstance(_In_ ID3D12Device* pDevice,  _In_opt_ IMFAttributes* pProperty, _Outptr_ void** ppvObject);       

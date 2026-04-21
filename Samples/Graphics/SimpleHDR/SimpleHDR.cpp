@@ -39,8 +39,10 @@ namespace
 }
 
 Sample::Sample() noexcept(false) :
-    m_frame(0)
-    , m_bIsDisplayInHDRMode(false)
+    m_frame(0),
+    m_bIsDisplayInHDRMode(false),
+    m_width{},
+    m_height{}
 {
 #ifdef _GAMING_XBOX_SCARLETT
     // On Scarlett, it is recommended to use 999e5 as a swap buffer format, since it gives better precision than 10:10:10:2,

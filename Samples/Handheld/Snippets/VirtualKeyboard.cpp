@@ -1,4 +1,4 @@
-// disable wanrings
+// disable warnings
 #pragma warning(disable:4191)
 #pragma warning(disable:4265)
 #pragma warning(disable:4365)
@@ -25,10 +25,10 @@ bool ShowVirtualKeyboard()
     return CoreInputView::GetForCurrentView().TryShow(CoreInputViewKind::Gamepad);
 }
 
-void HideVirtualKeyboard()
+bool HideVirtualKeyboard()
 {
     // https://learn.microsoft.com/uwp/api/windows.ui.viewmanagement.core.coreinputview.tryhide
-    CoreInputView::GetForCurrentView().TryHide();
+    return CoreInputView::GetForCurrentView().TryHide();
 }
 
 bool IsVirtualKeyboardOverlayed()
@@ -81,7 +81,7 @@ void UnregisterKeyboardHidingEvent()
 {
     if(g_primaryViewHidingToken.value)
     {
-        CoreInputView::GetForCurrentView().PrimaryViewShowing(g_primaryViewHidingToken);
+        CoreInputView::GetForCurrentView().PrimaryViewHiding(g_primaryViewHidingToken);
         g_primaryViewHidingToken.value = 0;
     }
 }

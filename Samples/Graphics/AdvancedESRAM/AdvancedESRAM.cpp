@@ -143,6 +143,10 @@ Sample::Sample() noexcept(false)
     , m_theta(0.0f)
     , m_phi(c_defaultPhi)
     , m_radius(c_defaultRadius)
+    , m_colorDesc()
+    , m_depthDesc()
+    , m_outlineDesc()
+    , m_bloomDesc()
     , m_esramRatios{}
     , m_esramChangeRate(0.5f)
     , m_outlineObjectIndex(0)
@@ -402,7 +406,8 @@ void Sample::Render()
             {
                 if (i != m_outlineObjectIndex)
                 {
-                    m_scene[i].model->DrawOpaque(commandList, m_scene[i].effects.begin());
+                    auto it = m_scene[i].effects.cbegin();
+                    m_scene[i].model->DrawOpaque(commandList, it);
                 }
             }
 
@@ -418,7 +423,7 @@ void Sample::Render()
 
             // Acquire resource instances that we'll use to render out the outline effect.
             TransientResource outlineTex[2];
-            D3D12_GPU_DESCRIPTOR_HANDLE srvHandles[2];
+            D3D12_GPU_DESCRIPTOR_HANDLE srvHandles[2] = { {0}, {0} };
 
             for (size_t i = 0; i < std::size(outlineTex); ++i)
             {
@@ -460,7 +465,8 @@ void Sample::Render()
             m_fullScreenTri->Draw(commandList);
 
             commandList->OMSetRenderTargets(1, &colorTex.RTV, false, &depthTex.DSV);
-            obj.model->DrawOpaque(commandList, obj.effects.begin());
+            auto it = obj.effects.begin();
+            obj.model->DrawOpaque(commandList, it);
 
             // Release the outline textures' memory pages back to the allocator.
             for (size_t i = 0; i < std::size(outlineTex); ++i)
@@ -483,7 +489,7 @@ void Sample::Render()
 
             // Acquire resource instances that we'll use to render out the bloom effect.
             TransientResource bloomTex[2];
-            D3D12_GPU_DESCRIPTOR_HANDLE srvHandles[2];
+            D3D12_GPU_DESCRIPTOR_HANDLE srvHandles[2] = { {0}, {0} };
 
             for (size_t i = 0; i < std::size(bloomTex); ++i)
             {

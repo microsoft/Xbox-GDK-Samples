@@ -148,8 +148,8 @@ inline void from_json(const json& j, RECT& rect)
 NAMESPACE_ATG_UITK_BEGIN
 
 struct Anchor;
-void to_json(json& j, const Anchor& anchor);
-void from_json(const json& j, Anchor& anchor);
+void to_json(json& j, _In_ const Anchor& anchor);
+void from_json(const json& j, _Out_ Anchor& anchor);
 
 class UISerializedObject;
 

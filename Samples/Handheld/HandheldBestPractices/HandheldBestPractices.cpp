@@ -21,7 +21,7 @@ using Microsoft::WRL::ComPtr;
 #include <dbt.h>
 #include <bthdef.h>
 
-// GameInput header + namespace for v1+
+// GameInput header + namespaces for v1+
 #include <GameInput.h>
 #if GAMEINPUT_API_VERSION == 1
 using namespace GameInput::v1;
@@ -51,16 +51,21 @@ using namespace GameInput::v3;
 
 // Input snippets
 #include "GetActiveInput.cpp"
-#include "IsDeviceTouchEnabled.cpp" // This snippet contains a downlevle-compilable version of this feature
+#include "IsDeviceTouchEnabled.cpp"
 
 // NOTE: Only include one of these
 #include "VirtualKeyboard.cpp"        // CppWinRT-based implementation
 //#include "VirtualKeyboardAlt.cpp"   // Downlevel-compatible with no exceptions implementation
 
+// Text entry via dialog box
+#include "TextEntry.cpp"
+
 // Audio snippets
 #include "AudioDeviceManager.cpp"
 
 // Forward decls
+static void LoadFont();
+static void SetUIScale(float scale);
 static void ConnectivityHintChangedCallback(PVOID, NL_NETWORK_CONNECTIVITY_HINT);
 static std::wstring ActiveInputTypeToString(ActiveInputType t);
 static std::wstring GetWindowsBuildInfo();
@@ -107,7 +112,6 @@ namespace
     static UINT         g_vendorId = 0, g_deviceId = 0, g_revision = 0;
     static float        g_uiScale = 1.0f;
     static bool         g_dpiChange = true, g_resetUI = false;
-    static bool         g_isFullScreen = false;
     static bool         g_hdrAvailable = false, g_hdrEnabled = false;
     static UINT         g_dpiX = 0, g_dpiY = 0;
     static DWORD        g_resWidth = 0, g_resHight = 0, g_refresh = 0;
@@ -188,7 +192,7 @@ void Sample_Draw()
     if(g_dpiChange || g_resetUI)
     {
         ImGui::SetNextWindowPos(ImVec2(5, 5), ImGuiCond_None);
-        ImGui::SetNextWindowSize(ImVec2(FirstColWidth * g_uiScale, 450 * g_uiScale), ImGuiCond_None);
+        ImGui::SetNextWindowSize(ImVec2(FirstColWidth * g_uiScale, 485 * g_uiScale), ImGuiCond_None);
         g_resetUI = false;
     }
 
@@ -203,6 +207,28 @@ void Sample_Draw()
         {
             bool b = ShowVirtualKeyboard();
             LOG("Virtual keyboard: %d\n", b);
+        }
+
+        if (ImGui::Button("Open Text Entry Dialog", ImVec2(300 * g_uiScale, 50 * g_uiScale)))
+        {
+            // disable gamepad input for main window
+            ImGui::GetIO().ConfigFlags &= ~ImGuiConfigFlags_NavEnableGamepad;
+
+            ATG::ShowTextEntry("A Simple Text Entry Dialog", "This is an area to enter some text.  Try it!", "Default Text", 0,
+                               [](void* /*userContext*/, bool confirmed, const char* resultTextBuffer, uint32_t resultTextBufferUsed)
+            {
+                if(confirmed)
+                {
+                    LOG("Entered text: %s - Buffer Size: %d\n", resultTextBuffer, resultTextBufferUsed);
+                }
+                else
+                {
+                    LOG("Text entry canceled\n");
+                }
+
+                // re-enable gamepad input for main window
+                ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+            }, nullptr);
         }
 
         ImGui::Dummy(ImVec2(0, 5 * g_uiScale));
@@ -257,8 +283,8 @@ void Sample_Draw()
 
     if(g_dpiChange || g_resetUI)
     {
-        ImGui::SetNextWindowPos(ImVec2(5, 455 * g_uiScale), ImGuiCond_None);
-        ImGui::SetNextWindowSize(ImVec2(FirstColWidth * g_uiScale, 260 * g_uiScale), ImGuiCond_None);
+        ImGui::SetNextWindowPos(ImVec2(5, 485 * g_uiScale), ImGuiCond_None);
+        ImGui::SetNextWindowSize(ImVec2(FirstColWidth * g_uiScale, 229 * g_uiScale), ImGuiCond_None);
     }
 
     g_appLog->Draw("Log", -200.0f * g_uiScale);
@@ -336,7 +362,7 @@ void Sample_Draw()
             {
                 for(auto& r : g_resolutions)
                 {
-                    ImGui::Text("%dx%d @ %dHz", r.Width, r.Height, r.Refresh);
+                    ImGui::Text("%lux%lu @ %luHz", r.Width, r.Height, r.Refresh);
                 }
                 ImGui::EndListBox();
             }

@@ -118,19 +118,19 @@ private:
     struct CollisionSphere
     {
         BoundingSphere sphere;
-        ContainmentType collision;
+        ContainmentType collision = {};
     };
 
     struct CollisionBox
     {
         BoundingOrientedBox obox;
-        ContainmentType collision;
+        ContainmentType collision = {};
     };
 
     struct CollisionAABox
     {
         BoundingBox aabox;
-        ContainmentType collision;
+        ContainmentType collision = {};
     };
 
     struct CollisionFrustum
@@ -144,7 +144,7 @@ private:
         Vector3 pointa;
         Vector3 pointb;
         Vector3 pointc;
-        ContainmentType collision;
+        ContainmentType collision = {};
     };
 
     struct CollisionRay

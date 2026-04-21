@@ -159,10 +159,19 @@ private:
 
         char line[Size];
 
+        uint32_t levelIndex = uint32_t(level);
+        if (levelIndex >= _countof(c_levelNames)) { levelIndex = 0; }
+
         int written = sprintf_s(line,
             "!> %5d %7d %s %s: ",                                                           // Format the log line context
-            counter, time, c_levelNames[uint32_t(level)], m_tag.GetTag().data());
-        written += sprintf_s(line + written, Size - written, format.data(), args...);       // [CodeQL.SM01734]: Format string always comes from internal code.
+            counter, time, c_levelNames[levelIndex], m_tag.GetTag().data());
+        if (written < 0) { return; }
+
+        int additionalWritten = sprintf_s(line + written, Size - written, format.data(), args...);       // [CodeQL.SM01734]: Format string always comes from internal code.
+        if (additionalWritten < 0) { return; }
+        written += additionalWritten;
+
+        if (written + 2 > static_cast<int>(Size)) { return; }
         line[written] = '\n';                                                               // Append a newline
         ++written;
         line[written] = '\0';                                                               // Terminate the string

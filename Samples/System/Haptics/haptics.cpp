@@ -10,10 +10,12 @@
 #include <commdlg.h>
 
 #include "haptics.h"
-#include "Audio/WASAPIManager.h"
-#include "Audio/XAudio2Manager.h"
+#include "HapticsManager/HapticsManager.h"
+#include "HapticsManager/Audio/WASAPIManager.h"
+#include "HapticsManager/Audio/XAudio2Manager.h"
 
 using namespace Microsoft::WRL;
+using namespace ATG;
 
 struct MediaItem
 {
@@ -21,13 +23,10 @@ struct MediaItem
     std::wstring title {};
 };
 
-struct DeviceData
+struct DeviceContext
 {
-    IGameInputDevice* device {};
-    GameInputGamepadState lastState {};
-    MediaItem mediaItem {};
-    std::unique_ptr<WASAPIManager> wasapi {};
-    std::unique_ptr<XAudio2Manager> xaudio {};
+    MediaItem mediaItem;
+    GameInputGamepadState lastGamepadState = {};
 };
 
 extern HWND g_hWnd;
@@ -37,7 +36,10 @@ static bool g_firstDraw = true;
 
 ComPtr<IGameInput> g_gameInput {};
 GameInputCallbackToken g_deviceCallbackToken {};
-std::map<IGameInputDevice*, DeviceData> g_devices {};
+
+std::unique_ptr<HapticsManager> g_hapticsManager;
+std::vector<IGameInputDevice*> g_devices {};
+std::map<IGameInputDevice*, DeviceContext> g_deviceContext {};
 
 std::vector<MediaItem> g_mediaList =
 {
@@ -48,40 +50,7 @@ std::vector<MediaItem> g_mediaList =
     { L"media\\PenScratch.wav",  L"Pen Scratch" },
     { L"media\\ShakeEffect.wav", L"Shake" },
     { L"media\\TommyGun.wav",    L"Tommy Gun" },
-
 };
-
-static void InitializeHaptics(IGameInputDevice* device, wchar_t* endpoint, uint32_t locationCount, GUID* locations)
-{
-    const GameInputDeviceInfo* di = nullptr;
-    LOG_IF_FAILED_AND_RETURN(device->GetDeviceInfo(&di));
-
-    LOG("Initialize Haptics\n  VID / PID: %04X / %04X\n  Device Id: %s\n  Audio Endpoint: %ws\n  Location Count: %d\n", di->vendorId, di->productId, StringifyDeviceId(di->deviceId), endpoint, locationCount);
-
-    // create a WASAPI engine for the device
-    auto wm = std::make_unique<WASAPIManager>();
-    HRESULT hr = wm->InitializeDevice(endpoint, locationCount, locations);
-    if (FAILED(hr))
-    {
-        LOG("Failed to initialize WASAPI endpoint: %08X\n", hr);
-    }
-    else
-    {
-        g_devices[device].wasapi = std::move(wm);
-    }
-
-    // create an XAudio2 engine for the device
-    auto xm = std::make_unique<XAudio2Manager>();
-    hr = xm->InitializeDevice(endpoint, locationCount, locations);
-    if (FAILED(hr))
-    {
-        LOG("Failed to initialize XAudio2 endpoint: %08X\n", hr);
-    }
-    else
-    {
-        g_devices[device].xaudio = std::move(xm);
-    }
-}
 
 static void DeviceCallback(GameInputCallbackToken, void*, IGameInputDevice* device, uint64_t, GameInputDeviceStatus currentStatus, GameInputDeviceStatus previousStatus) noexcept
 {
@@ -96,74 +65,22 @@ static void DeviceCallback(GameInputCallbackToken, void*, IGameInputDevice* devi
     // newly connected device, add to our list
     if(isConnected && !wasConnected)
     {
-        DeviceData dd;
-        dd.device = device;
-        dd.mediaItem = g_mediaList[0];
-        g_devices[device] = std::move(dd);
-    }
-
-    // newly connected haptics device, initialize haptics
-    if(isConnected && currentStatus & GameInputDeviceStatus::GameInputDeviceHapticInfoReady)
-    {
-        GameInputHapticInfo hapticInfo;
-        LOG_IF_FAILED_AND_RETURN(device->GetHapticInfo(&hapticInfo));
-        InitializeHaptics(device, hapticInfo.audioEndpointId, hapticInfo.locationCount, hapticInfo.locations);
+        g_devices.push_back(device);
     }
 
     // newly disconnected device, remove from our list
-    if(wasConnected && !isConnected && g_devices[device].device != nullptr)
+    if(wasConnected && !isConnected)
     {
-        g_devices[device].wasapi.reset();
-        g_devices[device].xaudio.reset();
-        g_devices.erase(device);
-    }
-}
-
-static void PlayWasapiEffect(DeviceData* dd)
-{
-    if(!dd)
-    {
-        return;
-    }
-
-    LOG_IF_FAILED_AND_RETURN(dd->wasapi->ConfigureWaveSource(dd->mediaItem.filename.c_str()));
-    LOG_IF_FAILED_AND_RETURN(dd->wasapi->Play());
-}
-
-static void PlayXAudioEffect(DeviceData* dd)
-{
-    if(!dd)
-    {
-        return;
-    }
-
-    LOG_IF_FAILED_AND_RETURN(dd->xaudio->ConfigureWaveSource(dd->mediaItem.filename.c_str()));
-    LOG_IF_FAILED_AND_RETURN(dd->xaudio->Play());
-}
-
-static void StopHapticEffect(DeviceData* dd)
-{
-    if(!dd)
-    {
-        return;
-    }
-    
-    if(dd->wasapi)
-    {
-        LOG_IF_FAILED_AND_RETURN(dd->wasapi->Stop());
-    }
-
-    if(dd->xaudio)
-    {
-        LOG_IF_FAILED_AND_RETURN(dd->xaudio->Stop());
+        g_devices.erase(std::remove(g_devices.begin(), g_devices.end(), device), g_devices.end());
     }
 }
 
 static void StopAllHapticEffects()
 {
-    for(auto& dd : g_devices)
+    for(auto& giDevice : g_devices)
     {
-        StopHapticEffect(&dd.second);
+        auto hd = g_hapticsManager->GetHapticsDevice(giDevice);
+        hd->Stop();
     }
 }
 
@@ -190,14 +107,18 @@ void Sample_Initialize()
         LOG("Unable to get current exe path\n");
     }
 
-    // initialize GameInput and setup callbacks for all controller devices
+    // initialize GameInput and setup callbacks for all gamepad devices
     LOG_IF_FAILED_AND_RETURN(GameInputCreate(&g_gameInput));
     LOG_IF_FAILED_AND_RETURN(g_gameInput->RegisterDeviceCallback(nullptr,
-        GameInputKind::GameInputKindController,
+        GameInputKind::GameInputKindGamepad,
         GameInputDeviceStatus::GameInputDeviceAnyStatus,
         GameInputEnumerationKind::GameInputBlockingEnumeration,
         nullptr,
         DeviceCallback, &g_deviceCallbackToken));
+
+    // initialize our HapticsManager class
+    g_hapticsManager = std::make_unique<HapticsManager>();
+    LOG_IF_FAILED_AND_RETURN(g_hapticsManager->Initialize(g_gameInput.Get()));
 }
 
 void Sample_Draw(float uiScale)
@@ -214,109 +135,106 @@ void Sample_Draw(float uiScale)
     else
     {
         // draw a section for each device attached
-        for(auto& dd : g_devices)
+        for(auto& giDevice : g_devices)
         {
-            char header[512];
             ComPtr<IGameInputReading> reading;
             GameInputGamepadState state;
-
-            g_gameInput->GetCurrentReading(GameInputKindGamepad, dd.first, &reading);
-            reading->GetGamepadState(&state);
-
             const GameInputDeviceInfo* di = nullptr;
-            LOG_IF_FAILED_AND_RETURN(dd.first->GetDeviceInfo(&di));
 
-            sprintf_s(header, "VID/PID:  %04X / %04X\nDeviceID: %s", di->vendorId, di->productId, StringifyDeviceId(di->deviceId));
-    
-            static bool isSelected = false;
-
-            if(ImGui::CollapsingHeader(header, ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Leaf))
+            // get the current GameInput device info and state
+            if(FAILED(g_gameInput->GetCurrentReading(GameInputKindGamepad, giDevice, &reading)))
             {
-                ImGui::Dummy(ImVec2(0, 16.0f));
-                ImGui::Indent(16.0f);
-                ImGui::PushID(dd.first);
+                continue;
+            }
+            reading->GetGamepadState(&state);
+            LOG_IF_FAILED_AND_RETURN(giDevice->GetDeviceInfo(&di));
 
-                if(dd.second.wasapi == nullptr && dd.second.xaudio == nullptr)
+            // get the last state for this device that our sample uses
+            DeviceContext& context = g_deviceContext[giDevice];
+
+            // get the haptics device for this controller
+            const HapticsDevice* hapticsDevice = g_hapticsManager->GetHapticsDevice(giDevice);
+
+            char header[512]{};
+            sprintf_s(header, "Name: %s\nVID/PID:  %04X / %04X\nDeviceID: %s", di->displayName, di->vendorId, di->productId, StringifyDeviceId(di->deviceId));
+            ImGui::CollapsingHeader(header, ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Leaf);
+            ImGui::Dummy(ImVec2(0, 16.0f));
+            ImGui::Indent(16.0f);
+            ImGui::PushID(giDevice);
+
+            if(!hapticsDevice)
+            {
+                ImGui::Text("No haptic device found for this controller");
+            }
+            else
+            {
+                ImGui::Text("Select a haptic effect to play...");
+                if(ImGui::BeginCombo("##effect", DX::WideToUtf8(context.mediaItem.title).c_str()))
                 {
-                    ImGui::Text("No haptic device(s) found for this controller");
+                    for(auto& mi : g_mediaList)
+                    {
+                        bool isSelected = (context.mediaItem.filename == mi.filename);
+                        if(ImGui::Selectable(DX::WideToUtf8(mi.title).c_str(), &isSelected))
+                        {
+                            context.mediaItem = mi;
+                        }
+
+                        if(isSelected)
+                        {
+                            ImGui::SetItemDefaultFocus();
+                        }
+                    }
+                    ImGui::EndCombo();
                 }
-                else
+
+                if (ImGui::Button("Browse for file...", ImVec2(160*uiScale, 50*uiScale)))
                 {
-                    ImGui::Text("Select a haptic effect to play");
-                    if(ImGui::BeginCombo("##effect", DX::WideToUtf8(dd.second.mediaItem.title).c_str()))
+                    std::wstring selectedFile = OpenWavFileDialog(g_hWnd);
+                    if (!selectedFile.empty())
                     {
-                        for(auto& mi : g_mediaList)
-                        {
-                            isSelected = (dd.second.mediaItem.filename == mi.filename);
-                            if(ImGui::Selectable(DX::WideToUtf8(mi.title).c_str(), &isSelected))
-                            {
-                                dd.second.mediaItem = mi;
-                            }
-
-                            if(isSelected)
-                            {
-                                ImGui::SetItemDefaultFocus();
-                            }
-                        }
-                        ImGui::EndCombo();
+                        MediaItem mi;
+                        mi.filename = selectedFile;
+                        mi.title = selectedFile;
+                        g_mediaList.push_back(mi);
+                        context.mediaItem = mi;
                     }
+                }
 
-                    if (ImGui::Button("Browse for file...", ImVec2(160*uiScale, 50*uiScale)))
+                ImGui::Dummy(ImVec2(0, 20));
+
+                ImGui::BeginDisabled(hapticsDevice->IsPlaying());
+                    if(ImGui::Button("Play WASAPI (L1)", ImVec2(160*uiScale, 50*uiScale)) || IsButtonPressed(state.buttons, context.lastGamepadState.buttons, GameInputGamepadButtons::GameInputGamepadLeftShoulder))
                     {
-                        std::wstring selectedFile = OpenWavFileDialog(g_hWnd);
-                        if (!selectedFile.empty())
-                        {
-                            MediaItem mi;
-                            mi.filename = selectedFile;
-                            mi.title = selectedFile;
-                            g_mediaList.push_back(mi);
-                            dd.second.mediaItem = mi;
-                        }
+                        hapticsDevice->PlayWAVFile(context.mediaItem.filename.c_str(), HapticPlaybackEngine::WASAPI);
                     }
-
-                    ImGui::Dummy(ImVec2(0, 20));
-
-                    ImGui::BeginDisabled(dd.second.wasapi->IsPlaying() || (dd.second.xaudio && dd.second.xaudio->IsPlaying()));
-                        if(ImGui::Button("Play WASAPI (L1)", ImVec2(160*uiScale, 50*uiScale)) || IsButtonPressed(state.buttons, dd.second.lastState.buttons, GameInputGamepadButtons::GameInputGamepadLeftShoulder))
-                        {
-                            PlayWasapiEffect(&dd.second);
-                        }
-                        ImGui::SameLine();
-
-                        if(ImGui::Button("Play XAudio2 (R1)", ImVec2(160*uiScale, 50*uiScale)) || IsButtonPressed(state.buttons, dd.second.lastState.buttons, GameInputGamepadButtons::GameInputGamepadRightShoulder))
-                        {
-                            PlayXAudioEffect(&dd.second);
-                        }
-                    ImGui::EndDisabled();
-
                     ImGui::SameLine();
 
-                    if (ImGui::Button("Stop (B/Square)", ImVec2(160*uiScale, 50*uiScale)) || IsButtonPressed(state.buttons, dd.second.lastState.buttons, GameInputGamepadButtons::GameInputGamepadB))
+                    if(ImGui::Button("Play XAudio2 (R1)", ImVec2(160*uiScale, 50*uiScale)) || IsButtonPressed(state.buttons, context.lastGamepadState.buttons, GameInputGamepadButtons::GameInputGamepadRightShoulder))
                     {
-                        StopHapticEffect(&dd.second);
+                        hapticsDevice->PlayWAVFile(context.mediaItem.filename.c_str(), HapticPlaybackEngine::XAudio2);
                     }
-                }
+                ImGui::EndDisabled();
 
-                ImGui::PopID();
-                ImGui::Unindent(16.0f);
-                ImGui::Dummy(ImVec2(0, 16.0f));
+                ImGui::SameLine();
+
+                if (ImGui::Button("Stop (B/Circle)", ImVec2(160*uiScale, 50*uiScale)) || IsButtonPressed(state.buttons, context.lastGamepadState.buttons, GameInputGamepadButtons::GameInputGamepadB))
+                {
+                    hapticsDevice->Stop();
+                }
             }
 
-            dd.second.lastState = state;
+            ImGui::PopID();
+            ImGui::Unindent(16.0f);
+            ImGui::Dummy(ImVec2(0, 16.0f));
+
+            context.lastGamepadState = state;
         }
 
         ImGui::Separator();
-        ImGui::Dummy(ImVec2(0, 16.0f));
+        ImGui::Dummy(ImVec2(0, 16));
 
-        // don't show Stop All if we have no haptics devices
-        auto it = std::find_if(g_devices.begin(), g_devices.end(),
-            []( const std::pair<IGameInputDevice* const, DeviceData>& d)
-            {
-                return d.second.wasapi != nullptr && d.second.xaudio != nullptr;
-            }
-        );
-
-        if(it != g_devices.end() && g_devices.size() > 1)
+        // Only show Stop All if we have more than 1 haptics device
+        if(g_hapticsManager->GetDeviceCount() > 1)
         {
             ImGui::Indent(16.0f);
             if(ImGui::Button("Stop All", ImVec2(120*uiScale, 50*uiScale)))
@@ -338,7 +256,6 @@ void Sample_Draw(float uiScale)
         ImGui::SetWindowFocus("Advanced Haptics");
         g_firstDraw = false;
     }
-
 }
 
 void Sample_Shutdown()

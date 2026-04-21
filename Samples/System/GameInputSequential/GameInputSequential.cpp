@@ -88,7 +88,7 @@ namespace
             sample->m_device = device;
 
             //We have a new device, so get the current reading as a frame of reference for future readings
-            sample->m_gameInput->GetCurrentReading(GameInputKindGamepad, sample->m_device.Get(), &sample->m_lastReading);
+            std::ignore = sample->m_gameInput->GetCurrentReading(GameInputKindGamepad, sample->m_device.Get(), &sample->m_lastReading);
         }
         else if(!isConnected && wasConnected && sample->m_device.Get() == device) // [SAMPLE] Device disconnected
         {
@@ -310,7 +310,7 @@ void Sample::Update(DX::StepTimer const&)
             // so reset our state if any of those happen.
             if (hr != GAMEINPUT_E_READING_NOT_FOUND)
             {
-                m_gameInput->GetCurrentReading(GameInputKindGamepad, m_device.Get(), &m_lastReading);
+                std::ignore = m_gameInput->GetCurrentReading(GameInputKindGamepad, m_device.Get(), &m_lastReading);
             }
 
             break;

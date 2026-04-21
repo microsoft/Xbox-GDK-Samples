@@ -175,7 +175,11 @@ namespace
 namespace ATG
 {
     ParticleSystem::ParticleSystem()
-        : m_posMul{}
+        : m_direction{}
+        , m_dirVariance{}
+        , m_color0{}
+        , m_color1{}
+        , m_posMul{}
         , m_dirMul{}
         , m_center{}
         , m_flashColor{}
@@ -192,8 +196,11 @@ namespace ATG
         , m_fadeExponent(0.0f)
         , m_rollAmount(0.0f)
         , m_windFalloff(0.0f)
+        , m_numStreamers(0)
+        , m_speedVariance(0.0f)
         , m_currentTime(0.0f)
         , m_startTime(0.0f)
+        , m_hasStarted(false)
     { }
 
     HRESULT ParticleSystem::CreateParticleSystem(ParticleWorld* pWorld, int NumParticles)

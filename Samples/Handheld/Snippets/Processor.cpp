@@ -105,6 +105,8 @@ std::wstring ATG::GetMemorySizeString(uint64_t memorySize)
         swprintf(buf, 128, L"%llu MB", memorySize / (1024 * 1024));
     else if (memorySize < (1024ULL * 1024ULL * 1024ULL * 1024ULL))
         swprintf(buf, 128, L"%llu GB", memorySize / (1024 * 1024 * 1024));
+    else
+        swprintf(buf, 128, L"\0");
     return std::wstring(buf);
 }
 
@@ -250,6 +252,8 @@ bool ATG::SetupProcessorData()
         wchar_t processorName[256];
         DWORD dataSize = sizeof(wchar_t) * 256;
         RegGetValueW(HKEY_LOCAL_MACHINE, L"HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0", L"ProcessorNameString", RRF_RT_REG_SZ, nullptr, processorName, &dataSize);
+        // Ensure null termination (defensive)
+        processorName[dataSize / sizeof(wchar_t) - 1] = L'\0';
         g_trueProcessorName = processorName;
     }
 
@@ -395,6 +399,8 @@ namespace
                     break;
                 case CacheTrace:
                     cacheType = ATG::CacheType::CacheTrace;
+                    break;
+                default:
                     break;
                 }
                 if (procInfo->Cache.Level > topLevelCache)

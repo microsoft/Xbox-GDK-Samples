@@ -1,6 +1,6 @@
 ﻿# Copyright (C) Microsoft Corporation. All rights reserved.
 
-cmake_minimum_required (VERSION 3.20)
+cmake_minimum_required (VERSION 3.21)
 
 project(xbdepends
   DESCRIPTION "Microsoft Xbox Binary Dependencies Tool"

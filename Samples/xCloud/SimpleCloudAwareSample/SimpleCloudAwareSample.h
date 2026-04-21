@@ -105,11 +105,11 @@ private:
     std::mutex							        m_touchListLock;
     bool										m_overlayDown;
     CurrentOverlay                              m_currentOverlay;
-    double                                      m_resetTime;
+    double                                      m_resetTime = 0;
     bool                                        m_streaming;
     bool                                        m_validOverlay;
-    XTaskQueueRegistrationToken                 m_token;
-    XTaskQueueHandle                            m_queue;
+    XTaskQueueRegistrationToken                 m_token = {};
+    XTaskQueueHandle                            m_queue = nullptr;
 
     // DirectXTK objects.
     std::unique_ptr<DirectX::GraphicsMemory>    m_graphicsMemory;
@@ -117,7 +117,7 @@ private:
 
     // UI
     std::unique_ptr<DirectX::SpriteBatch>       m_batch;
-    DirectX::SpriteFont*                        m_font;
+    DirectX::SpriteFont*                        m_font = nullptr;
     std::unique_ptr<DirectX::SpriteFont>        m_localFont;
     std::unique_ptr<DirectX::SpriteFont>        m_remoteFont;
     std::unique_ptr<DirectX::SpriteFont>        m_ctrlFont;

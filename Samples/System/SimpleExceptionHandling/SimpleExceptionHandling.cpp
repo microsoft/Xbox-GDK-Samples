@@ -32,7 +32,7 @@ void GenerateDump(EXCEPTION_POINTERS* exceptionPointers)
     HANDLE dumpFile;
     MINIDUMP_EXCEPTION_INFORMATION expParam;
     // Saving the minidump to the system scratch drive to allow an easy copy back to a development PC even if the title is not running
-    swprintf(buffer, 128, L"d:\\SimpleExceptionHandling_%d.dmp", callCount++);
+    swprintf(buffer, 128, L"d:\\SimpleExceptionHandling_%u.dmp", callCount++);
 
     dumpFile = CreateFileW(buffer, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_WRITE | FILE_SHARE_READ, 0, CREATE_ALWAYS, 0, 0);
 
@@ -102,9 +102,9 @@ void Sample::Tick()
 #endif
 
     m_timer.Tick([&]()
-    {
-        Update(m_timer);
-    });
+        {
+            Update(m_timer);
+        });
 
     Render();
 
@@ -288,7 +288,7 @@ void Sample::Render()
 
 void Sample::DrawHelpText(DirectX::XMFLOAT2& pos, ExceptionTest whichTest, const std::wstring& button)
 {
-    static const wchar_t *helpText[] = {
+    static const wchar_t* helpText[] = {
     L"Unhandled Exception Filter sample",
     L"    Using an Unhandled Exception Filter to catch general exceptions in the title, this is the recommended pattern",
     L"Unhandled Exception Filter that ignores the exception sample",

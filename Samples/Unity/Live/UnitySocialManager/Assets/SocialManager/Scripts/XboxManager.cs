@@ -27,6 +27,9 @@ namespace GdkSample_SocialManager
         private void Awake()
         {
             InitializeOrDestroyInstance(this);
+#if ATG_TESTING
+            TestsRunner tr = gameObject.AddComponent<TestsRunner>();
+#endif
         }
 
         private static bool InitializeOrDestroyInstance(XboxManager newInstance)

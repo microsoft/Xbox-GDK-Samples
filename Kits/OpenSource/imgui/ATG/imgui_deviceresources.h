@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <wrl.h>
+
 #ifndef _GAMING_XBOX
 #include "d3dx12.h"
 #endif

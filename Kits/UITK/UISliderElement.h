@@ -223,7 +223,7 @@ class UISliderFactory : public UIElementFactory<UISlider>
 protected:
     static void DeserializeDataProperties(
         _In_ UIDataPtr data,
-        _Out_ SliderDataProperties&);
+        _Inout_ SliderDataProperties&);
 
 protected:
     UISlider* Create(UIManager& manager, ID id, UIDataPtr data) override

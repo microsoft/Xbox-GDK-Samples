@@ -85,19 +85,19 @@ private:
     };
 
     // Front panel information
-    uint32_t                                         m_screenWidth;
-    uint32_t                                         m_screenHeight;
+    uint32_t                                         m_screenWidth = 0;
+    uint32_t                                         m_screenHeight = 0;
 
     // Tracks the buttons states from the previous update in order to facilitate "button held" events
-    XFrontPanelButton                                m_rememberedButtons; 
+    XFrontPanelButton                                m_rememberedButtons = {}; 
     std::unique_ptr<uint8_t>                         m_panelBuffer;
 
     // The m_dirty member will be set whenever there are changes to front panel pixels.
     // This way we will only call IXboxFrontPanelControl::PresentBuffer() when there
     // are changes to pixels. Note that it is only necessary to present to the front
     // panel when there are changes to the pixels.
-    bool                                             m_dirty;
-    bool                                             m_checkerboard;
+    bool                                             m_dirty = false;
+    bool                                             m_checkerboard = false;
 
     // Remember availability of the Front Panel
     bool                                             m_available;

@@ -43,7 +43,7 @@ Sample::Sample() noexcept(false) :
 
 Sample::~Sample()
 {
-    XGameInviteUnregisterForEvent(m_inviteRegistration, false);
+    XGameActivationUnregisterForEvent(m_inviteRegistration, false);
 
     if (m_deviceResources)
     {
@@ -81,13 +81,18 @@ void Sample::Initialize(HWND window, int width, int height)
     m_userManager->Initialize();
 
     // Handle the invite accepted event
-    auto hr = XGameInviteRegisterForEvent(
+    auto hr = XGameActivationRegisterForEvent(
         nullptr,
         this,
-        [](void* context, const char* inviteUri)
+        [](void* context, const XGameActivationInfo* activationInfo)
         {
+            if (activationInfo->type != XGameActivationType::AcceptedGameInvite)
+            {
+                return;
+            }
+
             // ms-xbl-76b1590e://inviteHandleAccept/?invitedXuid=2814645439730606&handle=27a705f6-f080-4aa7-8bd7-ec8c51befd3d&senderXuid=2814626418925179
-            std::string uri = inviteUri;
+            std::string uri = activationInfo->inviteUri;
 
             auto pos = uri.find("handle=") + 7;
             auto end = uri.find('&', pos);
@@ -608,7 +613,7 @@ void Sample::LeaveChatSession()
 
 void Sample::LocalUserAdded(XUserHandle user)
 {
-    DebugTrace("New local user added: %lu", user);
+    DebugTrace("New local user added: %p", user);
     m_liveManager->AddLocalUser(user);
 }
 

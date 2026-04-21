@@ -8,6 +8,7 @@
 #include "pch.h"
 #include "InGameStore.h"
 #include "ATGColors.h"
+#include "DebugLog.h"
 #include <XUser.h>
 
 extern void ExitSample();
@@ -25,37 +26,12 @@ namespace
 {
     Sample* s_sample;
 
-    template <size_t bufferSize = 2048>
-    void ConsoleWriteLine(std::string_view format, ...)
-    {
-        assert(format.size() < bufferSize && "format string is too large, split up the string or increase the buffer size");
-
-        static char buffer[bufferSize] = "";
-
-        va_list args;
-        va_start(args, format);
-        vsprintf_s(buffer, format.data(), args);
-        va_end(args);
-
-        OutputDebugStringA(buffer);
-        OutputDebugStringA("\n");
-
-        if (s_sample)
-        {
-            auto console = s_sample->GetConsole();
-            if (console)
-            {
-                console->AppendLineOfText(buffer);
-            }
-        }
-    }
-
     template <size_t bufferSize = 512>
     void ShowPopup(std::string_view format, ...)
     {
         assert(format.size() < bufferSize && "format string is too large, split up the string or increase the buffer size");
 
-        static char buffer[bufferSize] = "";
+        char buffer[bufferSize] = "";
 
         va_list args;
         va_start(args, format);
@@ -201,6 +177,7 @@ Sample::Sample() noexcept(false) :
     m_asyncQueue(nullptr),
     m_closeMenu(false),
     m_showConsole(false),
+    m_durablesToLicense{},
     m_baseGameStoreId(""),
     m_selectedStoreId("")
 {
@@ -219,6 +196,20 @@ Sample::Sample() noexcept(false) :
 
     m_liveResources = std::make_shared<ATG::LiveResources>(m_asyncQueue);
     m_liveInfoHUD = std::make_unique<ATG::LiveInfoHUD>("");
+
+    m_licenseManager = std::make_shared<ATG::LicenseManager>(m_asyncQueue);
+
+    // Collection of durable add-ons to always check licensing for.
+    // Licenses can be acquired without an online connection, but only if the storeId of the product is already known.
+    // If running as a different title, replace with storeIds for durables relevant to your title.
+    m_durablesToLicense = {
+        "9N30KZZF4BR9", // DWOB1
+        "9P23V43P0XZZ", // DWOB2
+        "9P8S15PJTB0P", // DWOB3
+        "9PLRFWZWWF91", // DWOB4
+        "9NC3H6CSGCPK", // DWOB5
+        "9PLNMXRKNM4C"  // DurableContent1 (durable with package)
+    };
 }
 
 Sample::~Sample()
@@ -239,6 +230,13 @@ Sample::~Sample()
         XStoreCloseContextHandle(m_xStoreContext);
         m_xStoreContext = nullptr;
     }
+
+    if(m_licenseManager)
+    {
+        m_licenseManager->Shutdown();
+    }
+
+    m_durablesToLicense.clear();
 
     if (m_asyncQueue)
     {
@@ -270,6 +268,19 @@ void Sample::Initialize(HWND window, int width, int height)
 {
     s_sample = this;
 
+    // Route ConsoleWriteLine output to the on-screen UITK console
+    GetDebugLogCallback() = [](const char* line)
+    {
+        if (s_sample)
+        {
+            auto console = s_sample->GetConsole();
+            if (console)
+            {
+                console->AppendLineOfText(line);
+            }
+        }
+    };
+
     m_gamePad = std::make_unique<GamePad>();
     m_gamePadButtons = std::make_unique<GamePad::ButtonStateTracker>();
     m_keyboard = std::make_unique<Keyboard>();
@@ -285,7 +296,47 @@ void Sample::Initialize(HWND window, int width, int height)
 
     m_deviceResources->CreateWindowSizeDependentResources();
     CreateWindowSizeDependentResources();
-    
+
+    // Register for durable licensing callbacks
+    m_licenseManager->SetDurableLicenseAcquiredCallback(
+        [this](const char* storeId, bool isLicenseValid)
+        {
+            if(isLicenseValid)
+            {
+                ShowPopup("License acquired for %s", storeId);
+                // Handle new license
+            }
+            else
+            {
+                ShowPopup("License for %s is invalid", storeId);
+                // Handle invalid license case, possibly attempt to reacquire
+            }
+        });
+
+    m_licenseManager->SetDurableLicenseLostCallback(
+        [this](const char* storeId)
+        {
+            ShowPopup("License lost for %s", storeId);
+
+            // Handle lost license
+            ConsoleWriteLine("Attempting to reacquire license for durable %s", storeId);
+            m_licenseManager->AcquireDurableLicense(m_xStoreContext, storeId);
+        });
+
+    m_licenseManager->SetDurablePreviewResultCallback(
+        [this](const char* storeId, bool isLicensable, uint32_t status, const char* licensableSku)
+        {
+            ShowPopup("%s %s", storeId, isLicensable ? "is licensable" : "is NOT licensable");
+            ShowPopup("Status: %u, LicensableSku: %s", status, licensableSku);
+        });
+
+    m_licenseManager->SetErrorHandler(
+        [this](const char* apiName, HRESULT hr)
+        {
+            ShowPopup("Error calling %s: 0x%08x", apiName, hr);
+        });
+
+    // Register for Xbox service events
     m_liveResources->SetUserChangedCallback([this](XUserHandle user)
     {
         m_liveInfoHUD->SetUser(user, m_asyncQueue);
@@ -615,8 +666,34 @@ struct QueryContext
     XStoreProductQueryHandle handle;     // handle to reuse for paged operations
 };
 
+static void CleanupProductQuery(XAsyncBlock* async)
+{
+    if (!async) return;
+
+    auto* ctx = static_cast<QueryContext*>(async->context);
+    if (ctx)
+    {
+        if (ctx->handle)
+        {
+            XStoreCloseProductsQueryHandle(ctx->handle);
+            ctx->handle = nullptr;
+        }
+
+        delete ctx;
+        async->context = nullptr;
+    }
+
+    delete async;
+}
+
 bool CALLBACK ProductEnumerationCallback(const XStoreProduct* product, void* context)
 {
+    if(!product)
+    {
+        // Skip empty products and continue enumeration.
+        return true;
+    }
+
     auto& [pThis, queryType, count, queryHandle] = *reinterpret_cast<QueryContext*>(context);
 
     UIProductDetails productCopy = CopyToUIProduct(product);
@@ -624,8 +701,8 @@ bool CALLBACK ProductEnumerationCallback(const XStoreProduct* product, void* con
     std::string quantity = {};
 
     if (productCopy.isInUserCollection &&
-        (productCopy.productKind == XStoreProductKind::Consumable ||
-            productCopy.productKind == XStoreProductKind::UnmanagedConsumable))
+        ((productCopy.productKind & XStoreProductKind::Consumable) == XStoreProductKind::Consumable ||
+            (productCopy.productKind & XStoreProductKind::UnmanagedConsumable) == XStoreProductKind::UnmanagedConsumable))
     {
         quantity += "Quantity: " + std::to_string(productCopy.aggregateQuantity);
     }
@@ -664,9 +741,10 @@ void Sample::QueryGameProduct()
     {
         auto&[pThis, queryType, count, queryHandle] = *reinterpret_cast<QueryContext*>(async->context);
 
-        if (SUCCEEDED(XStoreQueryProductForCurrentGameResult(async, &queryHandle)))
+        HRESULT hr = XStoreQueryProductForCurrentGameResult(async, &queryHandle);
+        if (SUCCEEDED(hr))
         {
-            auto hr = XStoreEnumerateProductsQuery(queryHandle, async->context, ProductEnumerationCallback);
+            hr = XStoreEnumerateProductsQuery(queryHandle, async->context, ProductEnumerationCallback);
             if (FAILED(hr))
             {
                 ShowPopup("Error calling XStoreEnumerateProductsQuery for current game : 0x%08X", hr);
@@ -693,16 +771,20 @@ void Sample::QueryGameProduct()
                 }
             }
         }
+        else
+        {
+            ShowPopup("Error calling XStoreQueryProductForCurrentGameResult: 0x%08X", hr);
+        }
 
-        delete async;
+        CleanupProductQuery(async);
     };
 
     HRESULT hr = XStoreQueryProductForCurrentGameAsync(m_xStoreContext, async);
 
     if (FAILED(hr))
     {
-        delete async;
         ShowPopup("Error calling XStoreQueryProductForCurrentGameAsync : 0x%08X", hr);
+        CleanupProductQuery(async);
     }
 }
 
@@ -711,38 +793,46 @@ void CALLBACK QueryProductsCallback(XAsyncBlock* async)
     auto&[pThis, queryType, count, queryHandle] = *reinterpret_cast<QueryContext*>(async->context);
 
     HRESULT hr = XStoreQueryProductsResult(async, &queryHandle);
-    if (SUCCEEDED(hr))
+    if (FAILED(hr))
     {
-        hr = XStoreEnumerateProductsQuery(queryHandle, async->context, ProductEnumerationCallback);
+        ShowPopup("Error calling XStoreQueryProductsResult : 0x%08X", hr);
+        CleanupProductQuery(async);
+        return;
+    }
 
-        if (SUCCEEDED(hr))
-        {
-            if (XStoreProductsQueryHasMorePages(queryHandle))
-            {
-                ConsoleWriteLine("Has more pages!");
-                pThis->QueryNextPage(async);
-            }
-            else
-            {
-                ShowPopup((queryType == ProductQueryType::Catalog) ? "%u catalog products found" : "You own %u products", count);
+    hr = XStoreEnumerateProductsQuery(queryHandle, async->context, ProductEnumerationCallback);
+    if (FAILED(hr))
+    {
+        ShowPopup("Error calling XStoreEnumerateProductsQuery : 0x%08X", hr);
+        CleanupProductQuery(async);
+        return;
+    }
 
-                pThis->UpdateProductList();
+    if (XStoreProductsQueryHasMorePages(queryHandle))
+    {
+        ConsoleWriteLine("Has more pages!");
+        pThis->QueryNextPage(async);
+        return;
+    }
+    else // No more pages available, query results are complete.
+    {
+        ShowPopup((queryType == ProductQueryType::Catalog) ? "%u catalog products found" : "You own %u products", count);
 
-                XStoreCloseProductsQueryHandle(queryHandle);
-                delete async;
-            }
-        }
-        else
-        {
-            delete async;
-            ShowPopup("Error calling XStoreEnumerateProductsQuery : 0x%08X", hr);
-        }
+        pThis->UpdateProductList();
+
+        ConsoleWriteLine("No more pages to query. Closing query handle");
+        CleanupProductQuery(async);
     }
 }
 
 void Sample::QueryCatalog()
 {
-    // Returns products associated to the title available for purchase
+    // Returns products associated with the title that are available for purchase.
+    // XStoreQueryAssociatedProductsAsync uses paging.
+    // In RETAIL, catalog products return across multiple pages, often with 0-1 items per page. 
+    // In sandbox, all catalog products often return within a single page (or full pages are returned for very large catalogs).
+    // To test paging in sandbox, set maxItemsToReturnPerPage to a value lower than the number of products published to the sandbox.
+    // Paging is not complete until XStoreProductsQueryHasMorePages returns false.
 
     ConsoleWriteLine("Calling XStoreQueryAssociatedProductsAsync");
 
@@ -761,7 +851,7 @@ void Sample::QueryCatalog()
     HRESULT hr = XStoreQueryAssociatedProductsAsync(
         m_xStoreContext,
         typeFilter,     // Product filter types
-        25,             // Products per page (25 is good default)
+        25,             // Max products returned per page (25 is a good default but can be set lower to verify paging)
         async);
 
     //// Example of how to use XStoreQueryProducts to query specific products
@@ -781,14 +871,19 @@ void Sample::QueryCatalog()
 
     if (FAILED(hr))
     {
-        delete async;
         ShowPopup("Error calling XStoreQueryAssociatedProductsAsync : 0x%08X", hr);
+        CleanupProductQuery(async);
     }
 }
 
 void Sample::QueryCollections()
 {
-    // Returns products the store user owns
+    // Returns products the store account owns.
+    // XStoreQueryEntitledProductsAsync uses paging.
+    // In RETAIL, entitled products return across multiple pages, often with 0-1 items per page. 
+    // In sandbox, entitled products often return in a single page.
+    // To test paging in sandbox, set maxItemsToReturnPerPage to a value lower than the number of entitled products that the account owns.
+    // Paging is not complete until XStoreProductsQueryHasMorePages returns false.
 
     ConsoleWriteLine("Calling XStoreQueryEntitledProductsAsync");
 
@@ -807,13 +902,13 @@ void Sample::QueryCollections()
     HRESULT hr = XStoreQueryEntitledProductsAsync(
         m_xStoreContext,
         typeFilter,     // Product filter types
-        25,             // Products per page (25 is good default)
+        25,             // Max products returned per page (25 is a good default, but can be set lower to verify paging)
         async);
 
     if (FAILED(hr))
     {
-        delete async;
         ShowPopup("Error calling XStoreQueryEntitledProductsAsync : 0x%08X", hr);
+        CleanupProductQuery(async);
     }
 }
 
@@ -823,36 +918,51 @@ void Sample::QueryNextPage(XAsyncBlock *async)
     {
         auto&[pThis, queryType, count, queryHandle] = *reinterpret_cast<QueryContext*>(async->context);
 
-        if (SUCCEEDED(XStoreProductsQueryNextPageResult(async, &queryHandle)))
+        XStoreProductQueryHandle nextQueryHandle = nullptr;
+        HRESULT hr = XStoreProductsQueryNextPageResult(async, &nextQueryHandle);
+        if (FAILED(hr))
         {
-            ConsoleWriteLine("Enumerating Page...");
-            HRESULT hr = XStoreEnumerateProductsQuery(queryHandle, async->context, ProductEnumerationCallback);
+            ShowPopup("Error calling XStoreProductsQueryNextPageResult : 0x%08X", hr);
+            CleanupProductQuery(async);
+            return;
+        }
 
-            if (SUCCEEDED(hr))
+        // Safe swap: avoids leaks if 'next' is a new handle, avoids double-close if identical
+        if (nextQueryHandle && nextQueryHandle != queryHandle)
+        {
+            if (queryHandle)
             {
-                // IMPORTANT! Always check if there are more pages to enumerate
-                // Results may return in a single page in development environment
-                // but may be split up in retail environment
-                if (XStoreProductsQueryHasMorePages(queryHandle))
-                {
-                    ConsoleWriteLine("Has more pages!");
-                    pThis->QueryNextPage(async);
-                }
-                else
-                {
-                    ShowPopup((queryType == ProductQueryType::Catalog) ? "%u catalog products found" : "You own %u products", count);
-
-                    pThis->UpdateProductList();
-
-                    XStoreCloseProductsQueryHandle(queryHandle);
-                    delete async;
-                }
+                XStoreCloseProductsQueryHandle(queryHandle);
             }
-            else
-            {
-                delete async;
-                ShowPopup("Error calling XStoreEnumerateProductsQuery : 0x%08X", hr);
-            }
+            queryHandle = nextQueryHandle;
+        }
+        else
+        {
+            queryHandle = nextQueryHandle; // covers null or same-handle cases
+        }
+
+        hr = XStoreEnumerateProductsQuery(queryHandle, async->context, ProductEnumerationCallback);
+        if (FAILED(hr))
+        {
+            ShowPopup("Error calling XStoreEnumerateProductsQuery : 0x%08X", hr);
+            CleanupProductQuery(async);
+            return;
+        }
+
+        if (XStoreProductsQueryHasMorePages(queryHandle))
+        {
+            ConsoleWriteLine("Has more pages!");
+            pThis->QueryNextPage(async);
+            return;
+        }
+        else
+        {
+            ShowPopup((queryType == ProductQueryType::Catalog) ? "%u catalog products found" : "You own %u products", count);
+
+            pThis->UpdateProductList();
+
+            ConsoleWriteLine("No more pages to query. Closing query handle");
+            CleanupProductQuery(async);
         }
     };
 
@@ -861,8 +971,8 @@ void Sample::QueryNextPage(XAsyncBlock *async)
     HRESULT result = XStoreProductsQueryNextPageAsync(queryHandle, async);
     if (FAILED(result))
     {
-        delete async;
         ShowPopup("Error calling XStoreProductsQueryNextPageAsync : 0x%08X", result);
+        CleanupProductQuery(async);
     }
 }
 
@@ -914,146 +1024,15 @@ void Sample::Download(const char* storeId)
 
 void Sample::PreviewLicense(const char* storeId)
 {
-    // Answers, do I have a license for this product?
-
-    ConsoleWriteLine("Calling XStoreCanAcquireLicenseForStoreIdAsync for %s", storeId);
-
-    auto async = new XAsyncBlock{};
-    async->queue = m_asyncQueue;
-    async->callback = [](XAsyncBlock* async)
-    {
-        XStoreCanAcquireLicenseResult result;
-
-        // for unapplicable product types, result.status can be 2
-        HRESULT hr = XStoreCanAcquireLicenseForStoreIdResult(
-            async,
-            &result);
-
-        if (FAILED(hr))
-        {
-            ShowPopup("Error calling XStoreCanAcquireLicenseForStoreIdResult: 0x%x", hr);
-        }
-        else
-        {
-            ShowPopup("Status: %u LicensableSku: %s", result.status, result.licensableSku);
-        }
-
-        delete async;
-    };
-
-    HRESULT hr = XStoreCanAcquireLicenseForStoreIdAsync(
-        m_xStoreContext,
-        storeId,
-        async);
-
-    if (FAILED(hr))
-    {
-        delete async;
-
-        ShowPopup("Error calling XStoreCanAcquireLicenseForStoreIdAsync: 0x%x", hr);
-        return;
-    }
+    m_licenseManager->PreviewDurableLicense(m_xStoreContext, storeId);
 }
 
 void Sample::AcquireLicense(const char* storeId)
 {
-    // This switches on hasDigitalDownload which is populated if Durable has a package
-    // Depending on this, different API must be used to acquire license
+    auto& product = m_catalogDetails[storeId];
+    auto hasDigitalDownload = product.hasDigitalDownload;
 
-    auto &product = m_catalogDetails[storeId];
-
-    auto isDlc = product.hasDigitalDownload;
-
-    const char* apiName = isDlc ? "XStoreAcquireLicenseForPackageAsync" : "XStoreAcquireLicenseForDurablesAsync";
-
-    ConsoleWriteLine("Calling %s for %s", apiName, storeId);
-
-    struct Ctx
-    {
-        bool isDlc;
-    };
-
-    auto async = new XAsyncBlock{};
-    async->queue = m_asyncQueue;
-    async->callback = [](XAsyncBlock* async)
-    {
-        XStoreLicenseHandle handle = {};
-
-        auto&[isDlc] = *reinterpret_cast<Ctx*>(async->context);
-
-        HRESULT hr = (isDlc) ?
-            XStoreAcquireLicenseForPackageResult(async, &handle) :
-            XStoreAcquireLicenseForDurablesResult(async, &handle);
-
-        if (FAILED(hr))
-        {
-            const char* apiName = isDlc ? "XStoreAcquireLicenseForPackageResult" : "XStoreAcquireLicenseForDurablesResult";
-
-            ConsoleWriteLine("Error calling %s: 0x%x", apiName, hr);
-
-            if (static_cast<uint32_t>(hr) == 0x87e10bc6 /*LM_E_CONTENT_NOT_IN_CATALOG*/)
-            {
-                ShowPopup("This API only works with durables without packages");
-            }
-            if (static_cast<uint32_t>(hr) == 0x803f9006 /*LM_E_ENTITLED_USER_SIGNED_OUT*/)
-            {
-                ShowPopup("User that owns this DLC is signed out");
-            }
-        }
-        else
-        {
-            bool isValid = XStoreIsLicenseValid(handle);
-
-            ShowPopup("Is valid license: %s", isValid ? "yes" : "no");
-
-            if (isValid)
-            {
-                XTaskQueueRegistrationToken token = {};
-                hr = XStoreRegisterPackageLicenseLost(handle, async->queue, async->context,
-                    [](void *)
-                    {
-                        ConsoleWriteLine("License lost event received: %s");
-                    },
-                    &token);
-
-                if (FAILED(hr))
-                {
-                    ConsoleWriteLine("XStoreRegisterPackageLicenseLost failed : 0x%08x", hr);
-                }
-            }
-        }
-
-        delete reinterpret_cast<Ctx*>(async->context);
-        delete async;
-    };
-
-    char packageId[XPACKAGE_IDENTIFIER_MAX_LENGTH] = {};
-
-    if (isDlc)
-    {
-        XStoreQueryPackageIdentifier(storeId, XPACKAGE_IDENTIFIER_MAX_LENGTH, packageId);
-    }
-
-    async->context = new Ctx{ isDlc };
-
-    HRESULT hr = isDlc ?
-        XStoreAcquireLicenseForPackageAsync(m_xStoreContext, packageId, async) :
-        XStoreAcquireLicenseForDurablesAsync(m_xStoreContext, storeId, async);
-
-    if (FAILED(hr))
-    {
-        if (hr == E_GAMEPACKAGE_NO_PACKAGE_IDENTIFIER)
-        {
-            ShowPopup("Error calling %s: 0x%x (Check if DLC is installed)", apiName, hr);
-        }
-        else
-        {
-            ShowPopup("Error calling %s: 0x%x", apiName, hr);
-        }
-        delete async;
-
-        return;
-    }
+    m_licenseManager->AcquireDurableLicense(m_xStoreContext, storeId, hasDigitalDownload);
 }
 
 void Sample::ShowAssociatedProducts()
@@ -1434,6 +1413,9 @@ void Sample::Update(DX::StepTimer const& timer)
 
     m_liveInfoHUD->Update(m_deviceResources->GetCommandQueue());
 
+    // Process lost durable licenses
+    m_licenseManager->Update();
+
     PIXEndEvent();
 }
 #pragma endregion
@@ -1599,7 +1581,7 @@ void Sample::CreateDeviceDependentResources()
 
 
     // create the style renderer for the UI manager to use for rendering the UI scene styles
-    // 200 = bump up number of descriptor piles to accomodate many simultaneously displayed textures
+    // 200 = bump up number of descriptor piles to accommodate many simultaneously displayed textures
     auto const os = m_deviceResources->GetOutputSize();
     auto styleRenderer = std::make_unique<UIStyleRendererD3D>(*this, 200, os.right, os.bottom);
     m_uiManager.GetStyleManager().InitializeStyleRenderer(std::move(styleRenderer));
@@ -1693,14 +1675,14 @@ void Sample::AddOrUpdateProductToCatalog(XStoreProductKind kind, UIProductDetail
 
             std::string itemInfo = "";
 
-            if ((item.productKind == XStoreProductKind::Consumable ||
-                item.productKind == XStoreProductKind::UnmanagedConsumable) &&
+            if (((item.productKind & XStoreProductKind::Consumable) == XStoreProductKind::Consumable ||
+                (item.productKind & XStoreProductKind::UnmanagedConsumable) == XStoreProductKind::UnmanagedConsumable) &&
                 item.isInUserCollection)
             {
                 itemInfo += "Quantity: " + std::to_string(item.aggregateQuantity);
             }
 
-            if (item.productKind == XStoreProductKind::Game && item.isInUserCollection)
+            if ((item.productKind & XStoreProductKind::Game) == XStoreProductKind::Game && item.isInUserCollection)
             {
                 itemInfo += OwnsFullGameSku(item.storeId.c_str()) ? "" : "Upgrade available";
             }
@@ -1809,7 +1791,7 @@ void Sample::DownloadProductImage(const UIProductDetails& product, const char* t
                 delete async;
             };
 
-            // image uris just start with //
+            // image URIs start with //
             std::string uri = "https:" + image.uri;
 
             GetFileDownloader().DownloadFileAsync(uri, product.storeId + tag, async);
@@ -1846,17 +1828,17 @@ void Sample::UpdateProductList()
             addToList = true;
             break;
         case 1: // Durables
-            addToList = item.productKind == XStoreProductKind::Durable && item.hasDigitalDownload == false;
+            addToList = (item.productKind & XStoreProductKind::Durable) == XStoreProductKind::Durable && item.hasDigitalDownload == false;
             break;
         case 2: // DLC
-            addToList = item.productKind == XStoreProductKind::Durable && item.hasDigitalDownload;
+            addToList = (item.productKind & XStoreProductKind::Durable) == XStoreProductKind::Durable && item.hasDigitalDownload;
             break;
         case 3: // Consumables
-            addToList = item.productKind == XStoreProductKind::Consumable ||
-                item.productKind == XStoreProductKind::UnmanagedConsumable;
+            addToList = (item.productKind & XStoreProductKind::Consumable) == XStoreProductKind::Consumable ||
+                (item.productKind & XStoreProductKind::UnmanagedConsumable) == XStoreProductKind::UnmanagedConsumable;
             break;
         case 4: // Games
-            addToList = item.productKind == XStoreProductKind::Game;
+            addToList = (item.productKind & XStoreProductKind::Game) == XStoreProductKind::Game;
             break;
         case 5: // Bundles
             for (auto& sku : item.skus)
@@ -1898,8 +1880,8 @@ void Sample::ShowItemMenu(const char* storeId, long y)
     auto item = m_catalogDetails.at(storeId);
 
     if (!item.isInUserCollection ||
-        item.productKind == XStoreProductKind::Consumable || item.productKind == XStoreProductKind::UnmanagedConsumable
-        || (item.productKind == XStoreProductKind::Game && !OwnsFullGameSku(item.storeId.c_str())))
+        (item.productKind & XStoreProductKind::Consumable) == XStoreProductKind::Consumable || (item.productKind & XStoreProductKind::UnmanagedConsumable) == XStoreProductKind::UnmanagedConsumable
+        || ((item.productKind & XStoreProductKind::Game) == XStoreProductKind::Game && !OwnsFullGameSku(item.storeId.c_str())))
     {
         // Add purchase button for unpurchased items, consumables, and game upgrades
         auto button = CastPtr<UIButton>(m_itemMenu->AddChildFromPrefab("#menu_item_prefab"));
@@ -1912,7 +1894,7 @@ void Sample::ShowItemMenu(const char* storeId, long y)
         });
     }
 
-    if (item.productKind == XStoreProductKind::Durable)
+    if ((item.productKind & XStoreProductKind::Durable) == XStoreProductKind::Durable)
     {
         if (item.hasDigitalDownload)
         {
@@ -1964,7 +1946,7 @@ void Sample::ShowItemMenu(const char* storeId, long y)
     {
         auto button = CastPtr<UIButton>(m_itemMenu->GetChildByIndex(i));
         button->ButtonState().AddListenerWhen(UIButton::State::Normal,
-                [](UIButton* button)
+            [](UIButton* button)
         {
             button->GetTypedSubElementById<UIStaticText>(ID("MenuItemButtonLegend"))->SetVisible(false);
         });
@@ -2072,6 +2054,18 @@ void Sample::ShowGlobalMenu()
     {
         QueryLicenseToken();
         ShowPopup("Querying license token...");
+        CloseMenu();
+    });
+
+    button = CastPtr<UIButton>(m_itemMenu->AddChildFromPrefab("#menu_item_prefab"));
+    button->GetTypedSubElementById<UIStaticText>(ID("MenuItemButtonText"))->SetDisplayText("Acquire Durable licenses");
+    button->ButtonState().AddListenerWhen(UIButton::State::Pressed,
+        [this](UIButton*)
+    {
+        // Attempt to acquire licenses for all durables in the m_durablesToLicense vector.
+        // This is a hard-coded collection of storeIds, update values if running the sample as your own title.
+        m_licenseManager->AcquireDurableLicenses(m_xStoreContext, m_durablesToLicense.data(), m_durablesToLicense.size());
+        ShowPopup("Acquiring durable licenses...");
         CloseMenu();
     });
 

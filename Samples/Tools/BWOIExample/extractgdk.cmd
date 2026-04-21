@@ -21,6 +21,7 @@ for %%1 in ("%1\*Kits*.msi") do (echo "Extracting: %%1"
 msiexec.exe /quiet /a "%%1" TARGETDIR="%ExtractedFolder%"
 if errorlevel 1 goto :msifailed)
 
+REM Microsoft Gaming Runtime x86-x86_en-us.msi, Microsoft Gaming Signed XVD Installer-x86_en-us.msi are associated with old layouts (pre-October 2025)
 for %%1 in ("%1\*Gaming*.msi") do (echo "Extracting: %%1"
 msiexec.exe /quiet /a "%%1" TARGETDIR="%ExtractedFolder%"
 if errorlevel 1 goto :msifailed)
@@ -29,11 +30,21 @@ for %%1 in ("%1\*GDK*.msi") do (echo "Extracting: %%1"
 msiexec.exe /quiet /a "%%1" TARGETDIR="%ExtractedFolder%"
 if errorlevel 1 goto :msifailed)
 
+REM GRDK and GXDK are associated with old layouts (pre-October 2025)
 for %%1 in ("%1\*GRDK*.msi") do (echo "Extracting: %%1"
 msiexec.exe /quiet /a "%%1" TARGETDIR="%ExtractedFolder%"
 if errorlevel 1 goto :msifailed)
 
 for %%1 in ("%1\*GXDK*.msi") do (echo "Extracting: %%1"
+msiexec.exe /quiet /a "%%1" TARGETDIR="%ExtractedFolder%"
+if errorlevel 1 goto :msifailed)
+
+REM New layouts (October 2025 or later)
+for %%1 in ("%1\*PC Dev*.msi") do (echo "Extracting: %%1"
+msiexec.exe /quiet /a "%%1" TARGETDIR="%ExtractedFolder%"
+if errorlevel 1 goto :msifailed)
+
+for %%1 in ("%1\*Xbox Dev*.msi") do (echo "Extracting: %%1"
 msiexec.exe /quiet /a "%%1" TARGETDIR="%ExtractedFolder%"
 if errorlevel 1 goto :msifailed)
 

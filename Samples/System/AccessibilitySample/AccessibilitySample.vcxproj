@@ -564,24 +564,28 @@
     <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_dx12.cpp" />
-    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_win32.cpp" />
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_dx12.cpp">
+      <DisableSpecificWarnings>6011;6387;26819;28182;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_win32.cpp">
+      <DisableSpecificWarnings>6011;6387;26819;28182;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
     <ClCompile Include="AccessibilitySample.cpp" />
     <ClCompile Include="GameInputManager.cpp" />
     <ClCompile Include="ImguiAcc.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="DeviceResources.cpp" />
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui.cpp">
-      <DisableSpecificWarnings>4365</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4365;6011;6387;26819;28182;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_draw.cpp">
-      <DisableSpecificWarnings>4365</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4365;6011;6387;26819;28182;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_tables.cpp">
-      <DisableSpecificWarnings>4365</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4365;6011;6387;26819;28182;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_widgets.cpp">
-      <DisableSpecificWarnings>4365</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4365;6011;6387;26819;28182;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp" />
     <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp" />

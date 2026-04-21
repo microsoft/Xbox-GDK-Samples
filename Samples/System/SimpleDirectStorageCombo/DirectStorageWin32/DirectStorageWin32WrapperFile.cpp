@@ -56,7 +56,10 @@ void DirectStorageFile::Close()
 HRESULT STDMETHODCALLTYPE DirectStorageFile::QueryInterface(/* [in] */ REFIID riid,/* [iid_is][out] */ _COM_Outptr_ void __RPC_FAR* __RPC_FAR* ppvObject)
 {
 	if (riid != __uuidof(IDStorageFileWin32))
+	{
+		*ppvObject = nullptr;
 		return E_NOINTERFACE;
+	}
 	*ppvObject = this;
 	return S_OK;
 }

@@ -29,7 +29,7 @@ private:
 };
 
 
-HRESULT MD5Checksum(const void* data, size_t byteCount, uint8_t *digest)
+HRESULT MD5Checksum(_In_ const void* data, size_t byteCount, _Out_bytecap_x_(MD5_DIGEST_LENGTH) uint8_t *digest)
 {
     if (!data || !digest || byteCount == 0)
         return E_INVALIDARG;

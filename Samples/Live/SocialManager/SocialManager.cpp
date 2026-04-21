@@ -40,7 +40,9 @@ namespace
 }
 
 Sample::Sample() noexcept(false) :
-    m_frame(0)
+    m_frame(0),
+    m_userList{},
+    m_selectedFriendList{}
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>();
     m_deviceResources->SetClearColor(ATG::Colors::Background);
@@ -222,7 +224,7 @@ void Sample::RefreshUserList()
         m_console->Format(L"Error refreshing user list: 0x%08X\n", hr);
     }
 
-    m_console->Format(L"Group contains %d user(s)\n", count);
+    m_console->Format(L"Group contains %zu user(s)\n", count);
 
     auto profilePicsToGet = std::vector<uint64_t>();
     for (unsigned x = 0; x < c_listSize; x++)

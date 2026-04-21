@@ -8,9 +8,12 @@ class HeuristicsBase
 {
 public:
     HeuristicsBase()
+        : m_colorValuesPerBin(256 / NUM_BINS_PER_HISTOGRAM)
+        , m_pixelCount(0.0f)
+        , m_maxBin{}
+        , m_maxPixels{}
+        , m_avgBins{}
     {
-        // For 8bit per component, there are 256 values(0-255)
-        m_colorValuesPerBin = 256 / NUM_BINS_PER_HISTOGRAM;
     }
 
     virtual ~HeuristicsBase() { }

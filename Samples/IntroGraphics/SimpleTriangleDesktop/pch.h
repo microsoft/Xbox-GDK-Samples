@@ -41,6 +41,12 @@
 #include <wrl/client.h>
 #include <wrl/event.h>
 
+#include <grdk.h>
+
+#if _GRDK_VER < 0x65F41800 /* GDK Edition 251000 */
+#error This sample requires the October 2025 GDK or later
+#endif
+
 #include <d3d12.h>
 #include <dxgi1_6.h>
 
@@ -87,6 +93,11 @@
 #pragma clang diagnostic pop
 #endif
 
+#include <XGame.h>
+#include <XSystem.h>
+#include <XTaskQueue.h>
+
+#define USING_WINDOWS_GAMING_INPUT
 #include "GamePad.h"
 #include "GraphicsMemory.h"
 #include "Keyboard.h"

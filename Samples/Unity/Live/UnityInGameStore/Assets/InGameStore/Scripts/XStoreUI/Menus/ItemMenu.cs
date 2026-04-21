@@ -53,7 +53,7 @@ namespace GdkSample_InGameStore
         }
 
         /// <summary>
-        /// Intializes the menu and determines which buttons should
+        /// Initializes the menu and determines which buttons should
         /// be interactable based on the type of add-on content displayed.
         /// </summary>
         /// <param name="storeId">StoreId of product to show.</param>
@@ -135,8 +135,10 @@ namespace GdkSample_InGameStore
             XboxManager.Instance.UserSignInStarted += OnStoreChangeDetected;
             XboxManager.Instance.UserSignedIn += OnStoreChangeDetected;
             XboxManager.Instance.UserSignedOut += OnStoreChangeDetected;
-            XStoreManager.Instance.DurableLicenseLost += SetProductDetails;
-            ProductUIManager.Instance.UIProductsUpdated += SetProductDetails;
+            ProductUIManager.Instance.UIProductsUpdated += () => SetProductDetails();
+            XStoreLicenseManager.Instance.DurableLicenseAcquired += SetProductDetails;
+            XStoreLicenseManager.Instance.DurableLicenseLost += SetProductDetails;
+            XNetworkManager.Instance.NetworkConnectionLost += OnNetworkChangeDetected;
 
             PurchaseButton.onClick.AddListener(() => PurchaseProduct());
             ShowProductPageButton.onClick.AddListener(() => ShowProductPage());
@@ -182,11 +184,21 @@ namespace GdkSample_InGameStore
             }
         }
 
+        /// <summary>
+        /// Returns to Main Menu when no network connection is available.
+        /// </summary>
+        private void OnNetworkChangeDetected()
+        {
+            if (gameObject.activeInHierarchy && !XNetworkManager.Instance.IsNetworkAvailable)
+            {
+                MenuManager.Instance.ShowMainMenu();
+            }
+        }
 
         /// <summary>
         /// Displays details for the selected product.
         /// </summary>
-        private void SetProductDetails()
+        private void SetProductDetails(string storeId = null)
         {
             if (!XStoreManager.Instance.IsStoreReady)
             { return; }
@@ -201,7 +213,7 @@ namespace GdkSample_InGameStore
 
                 string detailsText = $"{attributes.StoreId}\n{attributes.ProductKind}\n{attributes.Ownership}\n{attributes.Quantity}";
 
-                if (_isDurable && XStoreManager.Instance.LicensedDurables.ContainsKey(_storeId))
+                if (_isDurable && XStoreLicenseManager.Instance.LicensedDurables.ContainsKey(_storeId))
                 {
                     detailsText = $"{detailsText}Licensed";
                 }
@@ -225,9 +237,9 @@ namespace GdkSample_InGameStore
         }
 
         /// <summary>
-        /// Calls XStoreReportConsumableFulfillmentAsync to remove quanity from the consumable entitlement in the Microsoft Store.
+        /// Calls XStoreReportConsumableFulfillmentAsync to remove quantity from the consumable entitlement in the Microsoft Store.
         /// https://learn.microsoft.com/en-us/gaming/gdk/_content/gc/reference/system/xstore/functions/xstorereportconsumablefulfillmentasync
-        /// Note: Calling consume from the client is not recommended, call collections.microsoft.com's consume API from a title service instead.
+        /// Note: Calling consume from the client is not recommended, call collections.mp.microsoft.com/v8.0/collections/consume from a title service instead.
         /// https://learn.microsoft.com/en-us/gaming/gdk/_content/gc/commerce/service-to-service/microsoft-store-apis/xstore-v8-consume
         /// https://learn.microsoft.com/en-us/gaming/gdk/_content/gc/commerce/fundamentals/xstore-consumable-based-ecosystems
         /// </summary>
@@ -278,7 +290,7 @@ namespace GdkSample_InGameStore
                     }
                     else if (balance < quantity)
                     {
-                        Debug.LogWarning("Insufficent quantity available.");
+                        Debug.LogWarning("Insufficient quantity available.");
                     }
                 });
         }
@@ -294,78 +306,19 @@ namespace GdkSample_InGameStore
 
         private void PreviewLicense()
         {
+            // Calls XStoreCanAcquireLicenseForStoreId for DWOBs, and XStoreCanAcquireLicenseForPackageAsync for DWIBs.
             Logger.Instance.Log($"Calling PreviewLicense for {_storeId}", color: LogColor.Event);
             XStoreLicensing.PreviewLicense(XStoreManager.Instance.StoreContext, _storeId, _hasDigitalDownload);
         }
 
         /// <summary>
-        /// Acquires a license for the durable product. If the license is valid, it will register the license
-        /// for LicenseLost events.
+        /// Attempts to acquire a license for the durable product.
         /// </summary>
         private void AcquireLicense()
         {
+            // Calls XStoreAcquireLicenseForDurablesAsync for DWOBs, and XStoreAcquireLicenseForPackageAsync for DWIBs.
             Logger.Instance.Log($"Calling AcquireLicense for {_storeId}", color: LogColor.Event);
-
-            XStoreLicensing.AcquireLicense(
-                XStoreManager.Instance.StoreContext,
-                _storeId,
-                _hasDigitalDownload,
-                (int hr, string storeId, XStoreLicense license) =>
-                {
-                    if (HR.SUCCEEDED(hr) && license != null)
-                    {
-                        // Check to see if the license is valid.
-                        bool isValid = SDK.XStoreIsLicenseValid(license);
-                        string licenseState = $"License for {storeId} is valid: {isValid}";
-                        if (isValid)
-                        {
-                            Logger.Instance.Log(licenseState, LogColor.Success);
-
-                            if (!XStoreManager.Instance.LicensedDurables.ContainsKey(storeId))
-                            {
-                                Logger.Instance.Log($"Registering durable {storeId} for license lost events.", LogColor.System);
-
-                                // Register the new license for LicenseLost events.
-                                // Note: XStoreRegisterPackageLicenseLost works for durables with and without a package.
-                                // https://developer.microsoft.com/en-us/games/xbox/docs/gdk/xstoreregisterpackagelicenselost
-                                hr = SDK.XStoreRegisterPackageLicenseLost(
-                                    license,
-                                    (IntPtr context) =>
-                                    {
-                                        Logger.Instance.Log($"License lost for durable {storeId}.", LogColor.System);
-
-                                        // Keep track of which license has been lost so we can unregister and close the handle.
-                                        XStoreManager.Instance.LostLicensesQueue.Enqueue(storeId);
-                                    },
-                                    out PackageLicenseLostCallbackToken token);
-
-                                if (HR.SUCCEEDED(hr))
-                                {
-                                    // Keep track of registered license and token.
-                                    // This info is required for unregistering from LicenseLost events later.
-                                    XStoreManager.Instance.LicensedDurables.Add(storeId, new Tuple<XStoreLicense, PackageLicenseLostCallbackToken>(license, token));
-
-                                    // Update UI with new 'Licensed' state.
-                                    SetProductDetails();
-                                }
-                                else
-                                {
-                                    SDK.XStoreCloseLicenseHandle(license);
-                                    Debug.Log($"{nameof(SDK.XStoreRegisterPackageLicenseLost)} for {storeId} returned: 0x{hr:X8}");
-                                }
-                            }
-                        }
-                        else
-                        {
-                            Debug.LogWarning(licenseState);
-                            SDK.XStoreCloseLicenseHandle(license);
-                        }                        
-                    }
-                    else if (license != null)
-                    {
-                        SDK.XStoreCloseLicenseHandle(license);
-                    }
-                });
+            XStoreLicenseManager.Instance.AcquireDurableLicense(_storeId, _hasDigitalDownload);
         }
     }
 }

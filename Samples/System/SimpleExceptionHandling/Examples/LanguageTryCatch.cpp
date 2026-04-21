@@ -71,6 +71,7 @@ void Sample::CatchLanguageExceptionWithStructured()
     {
         throw std::bad_alloc();
     }
+#pragma warning(suppress : 6320) // Empty __except block, this is intentional for the example
     __except (EXCEPTION_EXECUTE_HANDLER)
     {
         m_testOutputMessage += L"Structured Exception Handling (SEH) can also catch C++ exceptions, but exception data is lost\n";

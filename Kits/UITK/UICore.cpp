@@ -59,7 +59,10 @@ std::string NewUUID()
     GUID id = {};
     char buf[64] = {};
 
-    CoCreateGuid(&id);
+    if (FAILED(CoCreateGuid(&id)))
+    {
+        return std::string();
+    }
 
     sprintf_s(buf, "%08lX-%04hX-%04hX-%02hhX%02hhX-%02hhX%02hhX%02hhX%02hhX%02hhX%02hhX",
         id.Data1, id.Data2, id.Data3,

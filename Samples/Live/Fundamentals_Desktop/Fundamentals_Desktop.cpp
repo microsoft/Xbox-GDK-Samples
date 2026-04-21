@@ -163,7 +163,7 @@ void Sample::AddUserWithUI()
 
             if (FAILED(hr))
             {
-                // If XUserAddResult fails, then call XUserResolveIssueWithUiAsync
+                // If XUserGetId fails, then call XUserResolveIssueWithUiAsync
                 auto resolveAsyncBlock = new XAsyncBlock{};
                 resolveAsyncBlock->queue = pThis->m_asyncQueue;
                 resolveAsyncBlock->context = pThis;
@@ -172,31 +172,23 @@ void Sample::AddUserWithUI()
                     auto pThis = reinterpret_cast<Sample*>(asyncBlockInner->context);
                     HRESULT hr = XAsyncGetStatus(asyncBlockInner, false);
 
-                    XUserHandle user = nullptr;
                     if (FAILED(hr))
                     {
-                        XUserCloseHandle(user);
-                        user = nullptr;
                         pThis->DisplayHResult(hr, "XUserResolveIssueWithUiAsync");
-                    }
-                    else
-                    {
-                        pThis->HandleAddUserSuccess(user);
                     }
 
                     delete asyncBlockInner;
                 };
 
-                hr = XUserResolveIssueWithUiAsync(user, "https://www.xboxlive.com", asyncBlockInner);
+                hr = XUserResolveIssueWithUiAsync(user, "https://www.xboxlive.com", resolveAsyncBlock);
 
                 if (FAILED(hr))
                 {
-                    delete asyncBlockInner;
+                    delete resolveAsyncBlock;
                 }
             }
             else
             {
-                delete asyncBlockInner;
                 pThis->HandleAddUserSuccess(user);
             }
         }
@@ -382,7 +374,7 @@ void Sample::DownloadUpdates()
 {
     std::vector<const char*> packageIds;
 
-    for (XStorePackageUpdate package : m_updates)
+    for (const XStorePackageUpdate& package : m_updates)
     {
         packageIds.push_back(package.packageIdentifier);
     }

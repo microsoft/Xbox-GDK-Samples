@@ -61,9 +61,15 @@ extern "C" {
 HRESULT STDMETHODCALLTYPE DirectStorageFactory::QueryInterface(/* [in] */ REFIID riid,/* [iid_is][out] */ _COM_Outptr_ void __RPC_FAR* __RPC_FAR* ppvObject)
 {
     if (riid != __uuidof(IDStorageFactoryWin32))
+    {
+        *ppvObject = nullptr;
         return E_NOINTERFACE;
+    }
     if (g_masterFactory == nullptr)
+    {
+        *ppvObject = nullptr;
         return E_POINTER;
+    }
     *ppvObject = g_masterFactory;
     return S_OK;
 }
@@ -103,10 +109,11 @@ HRESULT DirectStorageFactory::SetStagingBufferSize(UINT32 size)
 {
     if ((size == 0) && (m_stagingBuffer != nullptr))
     {
-        m_stagingBuffer = HeapCreate(0, c_initialStagingBufferSize, 0);
-        if (!HeapDestroy(m_stagingBuffer))
-            return GetLastError();
+        HANDLE heap = m_stagingBuffer;
         m_stagingBuffer = nullptr;
+#pragma warning(suppress: 6387) // heap is guaranteed non-null by the enclosing if condition
+        if (!HeapDestroy(heap))
+            return GetLastError();
     }
     else if ((size != 0) && (m_stagingBuffer == nullptr))
     {
@@ -170,8 +177,8 @@ DirectStorageFactory::~DirectStorageFactory()
         ProcessDecompressionQueues();
         Sleep(c_managementThreadSleepTimeMS);
     }
-    CloseHandle(m_kickThreadEvent);
-    CloseHandle(m_kickDecompressionEvent);
+    std::ignore = CloseHandle(m_kickThreadEvent);
+    std::ignore = CloseHandle(m_kickDecompressionEvent);
     for (auto& iter : m_queues)
     {
         delete iter;
@@ -179,9 +186,9 @@ DirectStorageFactory::~DirectStorageFactory()
 
     for (auto& iter : m_openFiles)
     {
-        CloseHandle(iter.file);
+        std::ignore = CloseHandle(iter.file);
     }
-    HeapDestroy(m_stagingBuffer);
+    std::ignore = HeapDestroy(m_stagingBuffer);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -221,16 +228,19 @@ std::vector<DirectStorageFactory::OpenFileEntry>::const_iterator DirectStorageFa
 /// \details DirectStorageFactory::OpenFile
 /// \details Instantiation of IDStorageFactoryWin32::OpenFile function
 //////////////////////////////////////////////////////////////////////////
+#pragma warning(push)
+#pragma warning(disable: 6388 28196) // _COM_Outptr_ contract is satisfied: *ppv is set to nullptr then assigned on success
 HRESULT DirectStorageFactory::OpenFile(_In_z_ const WCHAR* fileName, REFIID riid, _COM_Outptr_ void** ppv)
 {
-    if (riid != __uuidof(IDStorageFileWin32))
-        return HRESULT_FROM_WIN32(ERROR_INVALID_PARAMETER);
     if (ppv == nullptr)
-        return HRESULT_FROM_WIN32(ERROR_INVALID_PARAMETER);
-    if (fileName == nullptr)
         return HRESULT_FROM_WIN32(ERROR_INVALID_PARAMETER);
 
     *ppv = nullptr;
+
+    if (riid != __uuidof(IDStorageFileWin32))
+        return HRESULT_FROM_WIN32(ERROR_INVALID_PARAMETER);
+    if (fileName == nullptr)
+        return HRESULT_FROM_WIN32(ERROR_INVALID_PARAMETER);
     if (m_openFiles.size() == c_maxOpenFiles)
         return E_DSTORAGE_TOO_MANY_FILES;
 
@@ -249,7 +259,7 @@ HRESULT DirectStorageFactory::OpenFile(_In_z_ const WCHAR* fileName, REFIID riid
     std::lock_guard<ATG::CriticalSectionLockable> lock(m_threadMutex);
     auto fileEntry = FindOpenFileByHash(uniqueFileID);
     HANDLE realFile = INVALID_HANDLE_VALUE;
-    HRESULT openError = S_OK;
+    HRESULT openError = E_FAIL;
 
     // A file by this name has not been opened yet so create a new entry
     if (fileEntry == m_openFiles.end())
@@ -283,8 +293,15 @@ HRESULT DirectStorageFactory::OpenFile(_In_z_ const WCHAR* fileName, REFIID riid
         newFile->AddRef();
         *ppv = newFile;
     }
+
+    if (*ppv == nullptr && SUCCEEDED(openError))
+    {
+        openError = E_FAIL;
+    }
+
     return openError;
 }
+#pragma warning(pop)
 
 //////////////////////////////////////////////////////////////////////////
 /// \brief CreateQueue
@@ -293,14 +310,15 @@ HRESULT DirectStorageFactory::OpenFile(_In_z_ const WCHAR* fileName, REFIID riid
 //////////////////////////////////////////////////////////////////////////
 HRESULT DirectStorageFactory::CreateQueue(const DSTORAGE_QUEUE_DESC* desc, REFIID riid, _COM_Outptr_ void** ppv)
 {
-    if (riid != __uuidof(IDStorageQueueWin32))
-        return HRESULT_FROM_WIN32(ERROR_INVALID_PARAMETER);
     if (ppv == nullptr)
-        return HRESULT_FROM_WIN32(ERROR_INVALID_PARAMETER);
-    if (desc == nullptr)
         return HRESULT_FROM_WIN32(ERROR_INVALID_PARAMETER);
 
     *ppv = nullptr;
+
+    if (riid != __uuidof(IDStorageQueueWin32))
+        return HRESULT_FROM_WIN32(ERROR_INVALID_PARAMETER);
+    if (desc == nullptr)
+        return HRESULT_FROM_WIN32(ERROR_INVALID_PARAMETER);
 
     if (desc->Capacity < DSTORAGE_MIN_QUEUE_CAPACITY)
         return E_DSTORAGE_INVALID_QUEUE_CAPACITY;
@@ -332,12 +350,13 @@ HRESULT DirectStorageFactory::CreateQueue(const DSTORAGE_QUEUE_DESC* desc, REFII
 //////////////////////////////////////////////////////////////////////////
 HRESULT DirectStorageFactory::CreateStatusArray(UINT32 capacity, PCSTR name, REFIID riid, _COM_Outptr_ void** ppv)
 {
-    if (riid != __uuidof(IDStorageStatusArrayWin32))
-        return HRESULT_FROM_WIN32(ERROR_INVALID_PARAMETER);
     if (ppv == nullptr)
         return HRESULT_FROM_WIN32(ERROR_INVALID_PARAMETER);
 
     *ppv = nullptr;
+
+    if (riid != __uuidof(IDStorageStatusArrayWin32))
+        return HRESULT_FROM_WIN32(ERROR_INVALID_PARAMETER);
     DirectStorageStatusArray* newArray = new DirectStorageStatusArray(capacity, name);
     if (!newArray)
         return E_OUTOFMEMORY;
@@ -385,7 +404,7 @@ void DirectStorageFactory::RemoveFile(HANDLE file)
             iter->refCount--;
             if (iter->refCount == 0)
             {
-                CloseHandle(iter->file);
+                std::ignore = CloseHandle(iter->file);
                 m_openFiles.erase(iter);
             }
             return;

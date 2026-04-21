@@ -53,6 +53,7 @@ namespace
 Sample::Sample() noexcept(false) :
     m_frame(0),
     m_storeContext(nullptr),
+    m_networkingConnectivityLevel{},
     m_asyncQueue(nullptr),
     m_packageInstallToken{},
     m_isStoreEnumerating{ false }
@@ -717,7 +718,7 @@ void Sample::EnumerateStoreProducts()
                 productInfo.images.push_back(image);
             }
 
-            if (product->productKind == XStoreProductKind::Game)
+            if ((product->productKind & XStoreProductKind::Game) == XStoreProductKind::Game)
             {
                 pThis->m_gameList.insert_or_assign(productInfo.storeId, productInfo);
             }
@@ -1815,7 +1816,7 @@ void Sample::WritePLS()
 
     char sharedData[100] = "This text is written by GameHub at ";
 
-    struct tm ct;
+    struct tm ct = {};
     time_t now = time(0);
     localtime_s(&ct, &now);
 
@@ -1830,7 +1831,7 @@ void Sample::WritePLS()
         debugPrint("Failed to write to PLS : 0x%08X\n", GetLastError());
     }
 
-    CloseHandle(hFile);
+    std::ignore = CloseHandle(hFile);
 
     delete[] path;
 

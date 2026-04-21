@@ -99,7 +99,12 @@ uint32_t GamePadUpdateLoop(int updateRate)
 {
     GAMEPAD_REPORT lastGpr;
     memset(&lastGpr, 0, sizeof(GAMEPAD_REPORT));
-    CoInitialize(0);
+    HRESULT hr = CoInitialize(0);
+    if (FAILED(hr))
+    {
+        OutputDebugString(L"CoInitialize failed\n");
+        return 1;
+    }
 
     OutputDebugString(L"GamePadUpdateThread created, wait before first poll...\n");
 

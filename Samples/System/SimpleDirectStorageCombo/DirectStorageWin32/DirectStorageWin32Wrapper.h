@@ -350,7 +350,7 @@ namespace DirectStorageWin32Wrapper
             //////////////////////////////////////////////////////////////////////////
             struct OpenFileEntry
             {
-                WIN32_FILE_ATTRIBUTE_DATA fileAttributes;
+                WIN32_FILE_ATTRIBUTE_DATA fileAttributes = {};
                 uint64_t nameHash;
                 HANDLE file;
                 mutable uint32_t refCount;
@@ -367,8 +367,8 @@ namespace DirectStorageWin32Wrapper
             std::atomic<ManagementThreadControlValues> m_threadMode;
             uint64_t							m_requestsSubmitted;	// total requests submitted
             size_t								m_lastQueueSubmitted;	// index of last queue submitted, rotate through queues at certain priority until next priority is needed
-            uint64_t							m_requestsDecompressed;	// total requests decompressed
-            size_t								m_lastQueueDecompressed;// index of last queue decompressed, rotate through queues at certain priority until next priority is needed
+            uint64_t							m_requestsDecompressed = 0;	// total requests decompressed
+            size_t								m_lastQueueDecompressed = 0;// index of last queue decompressed, rotate through queues at certain priority until next priority is needed
             std::vector<OpenFileEntry>			m_openFiles;			// hash of filename for quick lookup
                                                                         // TODO: Consider converting this to a map using the hash of the filename
             HANDLE								m_kickThreadEvent;		// Event the thread waits on so it can be kicked to wake up early

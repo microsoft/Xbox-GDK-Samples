@@ -1,0 +1,36 @@
+{
+  "$schema": "https://atgsamplessa.blob.core.windows.net/uitkschema/latest/layout.schema.json",
+  "definitions": {
+    "#console_window_width": 1200,
+    "#console_window_height": 650,
+    "#scroll_bar_width": 50,
+    "#console_minus_scrollbar_width": 1210
+  },
+  "prefab": {
+    "classId": "ConsoleWindow",
+    "maxConsoleLines": 100,
+    "viewportPanelSubElementId": "Console_Panel",
+    "verticalSliderSubElementId": "Console_Slider",
+    "size": [ "#console_window_width", "#console_window_height" ],
+    "styleId": "Basic_Console_Style",
+    "focusable": false,
+    "subElements": [
+      {
+        "classId": "Panel",
+        "id": "Console_Panel",
+        "size": [ "#console_minus_scrollbar_width", "#console_window_height" ],
+        "style": {
+          "classId": "SpriteStyle",
+          "color": [ 0, 0, 0, 0 ],
+          "colorUsage": "override"
+        }
+      },
+      {
+        "id": "Console_Slider",
+        "prefabRef": "#slider_prefab",
+        "position": [ 0, 0 ],
+        "size": [ "#scroll_bar_width", "#console_window_height" ]
+      }
+    ]
+  }
+}

@@ -178,6 +178,7 @@
     <OutDir>Bin\GDKX_2022\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>Bin\GDKX_2022\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>DirectXTK12</TargetName>
+    <EnableMicrosoftCodeAnalysis>true</EnableMicrosoftCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">
     <ReferencePath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</ReferencePath>
@@ -188,6 +189,7 @@
     <OutDir>Bin\GDKX_2022\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>Bin\GDKX_2022\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>DirectXTK12</TargetName>
+    <EnableMicrosoftCodeAnalysis>true</EnableMicrosoftCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">
     <ReferencePath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</ReferencePath>
@@ -198,6 +200,7 @@
     <OutDir>Bin\GDKX_2022\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>Bin\GDKX_2022\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>DirectXTK12</TargetName>
+    <EnableMicrosoftCodeAnalysis>true</EnableMicrosoftCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">
     <ReferencePath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</ReferencePath>
@@ -208,6 +211,7 @@
     <OutDir>Bin\GDKX_2022\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>Bin\GDKX_2022\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>DirectXTK12</TargetName>
+    <EnableMicrosoftCodeAnalysis>true</EnableMicrosoftCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">
     <ReferencePath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</ReferencePath>
@@ -218,6 +222,7 @@
     <OutDir>Bin\GDKX_2022\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>Bin\GDKX_2022\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>DirectXTK12</TargetName>
+    <EnableMicrosoftCodeAnalysis>true</EnableMicrosoftCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">
     <ReferencePath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</ReferencePath>
@@ -228,6 +233,7 @@
     <OutDir>Bin\GDKX_2022\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>Bin\GDKX_2022\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>DirectXTK12</TargetName>
+    <EnableMicrosoftCodeAnalysis>true</EnableMicrosoftCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ExecutablePath>$(GameDK)bin;$(ExecutablePath)</ExecutablePath>
@@ -237,6 +243,7 @@
     <OutDir>Bin\GDKX_2022\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>Bin\GDKX_2022\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>DirectXTK12</TargetName>
+    <EnableMicrosoftCodeAnalysis>true</EnableMicrosoftCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">
     <ExecutablePath>$(GameDK)bin;$(ExecutablePath)</ExecutablePath>
@@ -246,6 +253,7 @@
     <OutDir>Bin\GDKX_2022\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>Bin\GDKX_2022\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>DirectXTK12</TargetName>
+    <EnableMicrosoftCodeAnalysis>true</EnableMicrosoftCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ExecutablePath>$(GameDK)bin;$(ExecutablePath)</ExecutablePath>
@@ -255,6 +263,7 @@
     <OutDir>Bin\GDKX_2022\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>Bin\GDKX_2022\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>DirectXTK12</TargetName>
+    <EnableMicrosoftCodeAnalysis>true</EnableMicrosoftCodeAnalysis>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">
     <Link>

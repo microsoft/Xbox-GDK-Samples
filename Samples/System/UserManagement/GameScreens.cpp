@@ -715,7 +715,7 @@ void DevicesView::Render()
         UserData userData;
         gameScreenManager->GetUserData(user, &userData);
         auto userDevices = gameUserManager->GetUserDevices(user);
-        for (auto device : userDevices)
+        for (const auto& device : userDevices)
         {
             if (deviceIndex < deviceListSize)
             {
@@ -742,7 +742,7 @@ void DevicesView::Render()
     }
 
     auto unpairedDevices = gameScreenManager->GetUnpairedDevices();
-    for (auto unpairedDevice : unpairedDevices)
+    for (const auto& unpairedDevice : unpairedDevices)
     {
         if (deviceIndex < deviceListSize)
         {

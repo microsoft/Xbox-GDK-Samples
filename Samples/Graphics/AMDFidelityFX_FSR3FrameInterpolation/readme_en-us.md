@@ -1,12 +1,12 @@
 <img style="float: left" src="./media/image1.png" /><img style="float: right" src="./media/image3.png" />
 <br/><br/><br/><br/><br/>
-# FidelityFX Super Resolution 3.1.3
+# FidelityFX Super Resolution 3.1.4
 
 *This sample is compatible with the Microsoft Game Development Kit (March 2024 - Update 1).*
 
 # Description
 
-This sample demonstrates the use of AMD FidelityFX Super Resolution 3.1.3 for upscaling and frame generation.
+This sample demonstrates the use of AMD FidelityFX Super Resolution 3.1.4 for upscaling and frame generation.
 
 ![](./media/fsr31.bmp)
 
@@ -65,11 +65,11 @@ This sample is implemented in a dynamic-resolution style, whereby target resolut
 
 AMD recommends only using frame interpolation when the title can maintain a 60 fps average and is attached to a high refresh rate capable monitor (> 120Hz). While it can be used with lower frame rates and refresh rates, this may result in visual artifacting and fluidity issues.
 
-# Implementation notes -- FSR 3.1.3
+# Implementation notes -- FSR 3.1.4
 
 ## How it works
 
-AMD FidelityFX Super Resolution 3.1.3 (FSR3.1.3) combines resolution upscaling with frame generation.
+AMD FidelityFX Super Resolution 3.1.4 (FSR3.1.4) combines resolution upscaling with frame generation.
 
 It uses new and improved temporal upscaling, along with a new optical flow implementation to reproject samples from 2 rendered frames to generate an additional frame in between. FSR3.1.3 also implements a swapchain proxy, which is used to schedule interpolation workloads. On Desktop configurations, the swapchain proxy is also used to handle frame pacing for DirectX12 presentation.
 
@@ -119,7 +119,7 @@ found on GPUOpen at <https://gpuopen.com/fidelityfx-super-resolution-3/>.
 
 ### Walkthrough
 
-The following deals primarily with the Xbox version of FidelityFX FSR3.1.3. [For Desktop version walkthrough, please refer to the online documentation](https://github.com/GPUOpen-LibrariesAndSDKs/FidelityFX-SDK/blob/main/docs/techniques/super-resolution-interpolation.md).
+The following deals primarily with the Xbox version of FidelityFX FSR3.1.4. [For Desktop version walkthrough, please refer to the online documentation](https://github.com/GPUOpen-LibrariesAndSDKs/FidelityFX-SDK/blob/main/docs/techniques/super-resolution-interpolation.md).
 
 #### Add upscaling through FSR3 interface
 

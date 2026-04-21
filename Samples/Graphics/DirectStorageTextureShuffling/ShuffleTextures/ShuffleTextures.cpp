@@ -210,7 +210,7 @@ HRESULT CompressWithZlib(Xbox::XboxImage& srcImage, std::vector<Bytef>& compress
 HRESULT WriteTextureDataToDisk(std::wstring& outputPath, Xbox::XboxImage& image, const uint8_t* pCompressedData, UINT32 dstorageSwizzleMode,
                                const uint32_t shuffledCompressedSize, const uint32_t unshuffledCompressedSize)
 {
-    auto textureMetadata = image.GetMetadata();
+    const auto& textureMetadata = image.GetMetadata();
 
     ShuffledTextureMetadata shuffledTextureMetadata{};
 

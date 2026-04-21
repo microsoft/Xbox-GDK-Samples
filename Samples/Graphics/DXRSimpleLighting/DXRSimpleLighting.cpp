@@ -31,7 +31,8 @@ namespace
 } // Anonymous namespace
 
 Sample::Sample() noexcept(false)
-    : m_frame(0)
+    : m_outputSize{0, 0, 1920, 1080}
+    , m_frame(0)
     , m_gamePadButtons{}
     , m_sceneConstantData{}
     , m_cubeConstantData{}

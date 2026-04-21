@@ -266,7 +266,10 @@ void Sample::SendStats()
 #pragma region UI Related Methods
 void Sample::SetPage(SamplePage page)
 {
-    assert(page < SamplePage::PageCount);
+    if(page >= SamplePage::PageCount)
+    {
+        throw std::out_of_range("Invalid page index");
+    }
 
     for (uint32_t i = 0; i < (uint32_t)SamplePage::PageCount; i++)
     {

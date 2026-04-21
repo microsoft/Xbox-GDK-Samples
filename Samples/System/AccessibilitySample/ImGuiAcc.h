@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include "imgui.h"
+
 #include "Narrator.h"
 
 #include <GameInput.h>

@@ -92,7 +92,10 @@ namespace
 Sample::Sample() noexcept(false) :
     m_frame(0),
     m_asyncQueue(nullptr),
-    m_showConsole(false)
+    m_showConsole(false),
+    m_xStoreContext{},
+    m_pfCatalogInitialized{},
+    m_msProductsInitialized{}
 {
     DX::ThrowIfFailed(
         XTaskQueueCreate(XTaskQueueDispatchMode::ThreadPool, XTaskQueueDispatchMode::Manual, &m_asyncQueue)

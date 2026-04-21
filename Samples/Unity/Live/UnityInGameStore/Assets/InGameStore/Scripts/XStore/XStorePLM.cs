@@ -33,15 +33,28 @@ namespace GdkSample_InGameStore
         /// </summary>
         private void CheckEntitlements()
         {
-            if (XStoreManager.Instance.IsStoreReady)
+            if (XStoreManager.Instance.IsStoreReady && XNetworkManager.Instance.IsNetworkAvailable)
             {
                 // If the title has products available for purchase in the Microsoft Store, then whenever
                 // the game loses focus (PC) or is constrained (console), the user has the ability to
-                // purchase content from the Store, Xbox App or xbox.com.
+                // purchase content from the Microsoft Store, Xbox App or Xbox.com.
                 // To keep the game in-sync with external purchases, query entitlements after focus is restored.
                 // Note: If a title does not offer products for purchase outside of their game,
                 // then this entitlement check can be moved to XStoreShowPurchaseUIAsync's callback instead.
-                XStoreManager.Instance.QueryEntitledProducts();
+                if (!XStoreManager.Instance.IsCollectionsRefreshInProgress)
+                {
+                    XStoreManager.Instance.QueryEntitledProducts(false, (hr, products) =>
+                    {
+                        if (HR.SUCCEEDED(hr))
+                        {
+                            Debug.Log($"Successfully updated user entitlements.");
+                        }
+                        else
+                        {
+                            Debug.Log($"Failed to update user entitlements: HResult: 0x{hr:x} ({HR.NameOf(hr)})");
+                        }
+                    });
+                }
 
                 // (Optional) This sample will show the base game offer whenever the player does not have a full license to the game.
                 // If the base game offer is available to the current player, check if an update is needed.

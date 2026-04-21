@@ -152,13 +152,13 @@ private:
     // UI
     std::unique_ptr<ATG::UIManager>             m_ui;
     std::unique_ptr<DX::TextConsoleImage>       m_log;
-    ATG::TextLabel*                             m_valuesHeader;
-    ATG::TextLabel*                             m_valuesLabel;
-    ATG::TextLabel*                             m_speedLabel;
-    ATG::TextBox*                               m_descBox;
+    ATG::TextLabel*                             m_valuesHeader = nullptr;
+    ATG::TextLabel*                             m_valuesLabel = nullptr;
+    ATG::TextLabel*                             m_speedLabel = nullptr;
+    ATG::TextBox*                               m_descBox = nullptr;
     std::unique_ptr<DirectX::SpriteBatch>       m_spriteBatch;
     Microsoft::WRL::ComPtr<ID3D12Resource>      m_wheel;
-    DirectX::XMFLOAT2                           m_wheelOrigin;
+    DirectX::XMFLOAT2                           m_wheelOrigin = {};
 
     enum Descriptors
     {

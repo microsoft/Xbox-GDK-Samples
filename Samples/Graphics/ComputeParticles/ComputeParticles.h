@@ -57,8 +57,8 @@ private:
     {
         using EffectList = DirectX::Model::EffectCollection;
 
-        DirectX::XMFLOAT4X4 World;
-        DirectX::Model*     Model;
+        DirectX::XMFLOAT4X4 World{};
+        DirectX::Model*     Model = nullptr;
         EffectList          Effects;
     };
 

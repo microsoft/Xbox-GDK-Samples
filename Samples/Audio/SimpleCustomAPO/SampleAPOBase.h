@@ -220,24 +220,26 @@ void CSampleXAPOBase<APOClass, ParameterClass>::Process(
     UNREFERENCED_PARAMETER(IsEnabled);
 
     auto pParams = reinterpret_cast<ParameterClass*>(BeginProcess());
-    if (pInputProcessParameters[0].BufferFlags == XAPO_BUFFER_SILENT)
-    {
-        memset(pInputProcessParameters[0].pBuffer, 0,
-            pInputProcessParameters[0].ValidFrameCount * m_wfx.nChannels * sizeof(FLOAT32));
+    if (pInputProcessParameters != nullptr) {
+        if (pInputProcessParameters[0].BufferFlags == XAPO_BUFFER_SILENT)
+        {
+            memset(pInputProcessParameters[0].pBuffer, 0,
+                pInputProcessParameters[0].ValidFrameCount * m_wfx.nChannels * sizeof(FLOAT32));
 
-        DoProcess(
-            *pParams,
-            static_cast<FLOAT32 * __restrict>(pInputProcessParameters[0].pBuffer),
-            pInputProcessParameters[0].ValidFrameCount,
-            m_wfx.nChannels);
-    }
-    else if (pInputProcessParameters[0].BufferFlags == XAPO_BUFFER_VALID)
-    {
-        DoProcess(
-            *pParams,
-            static_cast<FLOAT32 * __restrict>(pInputProcessParameters[0].pBuffer),
-            pInputProcessParameters[0].ValidFrameCount,
-            m_wfx.nChannels);
+            DoProcess(
+                *pParams,
+                static_cast<FLOAT32 * __restrict>(pInputProcessParameters[0].pBuffer),
+                pInputProcessParameters[0].ValidFrameCount,
+                m_wfx.nChannels);
+        }
+        else if (pInputProcessParameters[0].BufferFlags == XAPO_BUFFER_VALID)
+        {
+            DoProcess(
+                *pParams,
+                static_cast<FLOAT32 * __restrict>(pInputProcessParameters[0].pBuffer),
+                pInputProcessParameters[0].ValidFrameCount,
+                m_wfx.nChannels);
+        }
     }
 
     EndProcess();

@@ -15,7 +15,7 @@
 # See the readme for more details.
 
 # Use the latest Windows Server Core image with .NET Framework 4.8.
-FROM mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2022
+FROM mcr.microsoft.com/dotnet/framework/sdk:4.8.1-windowsservercore-ltsc2022
 ARG ExtractedSDKDir=sdks
 # ScriptDir is the directory containing the setenv.cmd and vctargets.cmd scripts from the sample
 ARG ScriptDir=BWOIExample

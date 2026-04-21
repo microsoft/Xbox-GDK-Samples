@@ -12,9 +12,9 @@
 #include "SampleGUI.h"
 #include "LiveInfoHUD.h"
 #include "LiveResources.h"
-#include "SampleGUI.h"
 #include "StringUtil.h"
 #include "FileDownloader.h"
+#include "LicenseManager.h"
 
 
 #include "UIManager.h"
@@ -54,22 +54,22 @@ namespace
 
 struct UIProductPrice
 {
-    float basePrice;
-    float price;
-    float recurrencePrice;
+    float basePrice = 0;
+    float price = 0;
+    float recurrencePrice = 0;
     std::string currencyCode;
     std::string formattedBasePrice;
     std::string formattedPrice;
     std::string formattedRecurrencePrice;
-    bool isOnSale;
-    time_t saleEndDate;
+    bool isOnSale = false;
+    time_t saleEndDate = 0;
 };
 
 struct UIProductAvailability
 {
     std::string availabilityId;
     UIProductPrice price;
-    time_t endDate;
+    time_t endDate = 0;
 };
 
 struct UIProductSku
@@ -78,21 +78,21 @@ struct UIProductSku
     std::string title;
     std::string description;
     UIProductPrice price;
-    bool isTrial;
+    bool isTrial = false;
 
     std::vector<std::string> bundledSkus;
     std::vector<UIProductAvailability> availabilities;
 
-    bool isInUserCollection;
-    bool isSubscription;
+    bool isInUserCollection = false;
+    bool isSubscription = false;
 
-    uint32_t quantity;
+    uint32_t quantity = 0;
 };
 
 struct UIProductImage
 {
-    uint32_t width;
-    uint32_t height;
+    uint32_t width = 0;
+    uint32_t height = 0;
     std::string uri;
     std::string tag;
 };
@@ -103,14 +103,14 @@ struct UIProductDetails
     std::string title;
     std::string description;
     std::string language;
-    XStoreProductKind productKind;
+    XStoreProductKind productKind = {};
     UIProductPrice price;
-    bool hasDigitalDownload;
-    bool isInUserCollection;
-    uint32_t aggregateQuantity;
-    uint32_t skusCount;
+    bool hasDigitalDownload = false;
+    bool isInUserCollection = false;
+    uint32_t aggregateQuantity = 0;
+    uint32_t skusCount = 0;
     std::vector<UIProductSku> skus;
-    uint32_t imagesCount;
+    uint32_t imagesCount = 0;
     std::vector<UIProductImage> images;
 };
 
@@ -277,6 +277,10 @@ private:
     bool                                                            m_closeMenu;
     std::shared_ptr<ATG::UITK::UIPanel>                             m_console;
     bool                                                            m_showConsole;
+
+    // Durable license management
+    std::shared_ptr<ATG::LicenseManager>                            m_licenseManager;
+    std::vector<const char*>                                        m_durablesToLicense;
 
     // UI methods
     void SetupUI();

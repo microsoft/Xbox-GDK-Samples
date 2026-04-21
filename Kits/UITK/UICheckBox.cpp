@@ -32,7 +32,7 @@ void UICheckBox::Render()
     auto spriteStyle = styleManager.GetTypedById<UISpriteStyle>(m_elementDataProperties.styleId);
     spriteStyle->RenderSprite(screenRect);
 
-    if (m_checkboxState.Get() == State::Checked)
+    if (Checked())
     {
         spriteStyle = styleManager.GetTypedById<UISpriteStyle>(m_checkboxDataProperties.checkedStyleId);
         spriteStyle->RenderSprite(screenRect);

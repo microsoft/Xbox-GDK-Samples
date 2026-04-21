@@ -23,6 +23,7 @@ using Microsoft::WRL::ComPtr;
 
 Sample::Sample() noexcept(false) :
     m_frame(0),
+    deviceCallbackToken{},
     m_cursorState((maxX-minX)/2 + minX, (maxY - minY) / 2 + minY),
     m_cursorInput(),
     m_lastCursorInput(),

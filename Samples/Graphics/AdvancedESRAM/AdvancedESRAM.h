@@ -89,8 +89,8 @@ private:
     {
         using EffectList = DirectX::Model::EffectCollection;
 
-        DirectX::SimpleMath::Matrix world;
-        DirectX::Model*             model;
+        DirectX::SimpleMath::Matrix world{};
+        DirectX::Model*             model = nullptr;
         EffectList                  effects;
     };
 

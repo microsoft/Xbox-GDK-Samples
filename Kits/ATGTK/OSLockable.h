@@ -249,28 +249,36 @@ namespace ATG
         SRWSharedLockable() { InitializeSRWLock(&m_srw); }
         ~SRWSharedLockable() { }
 
+        _Acquires_exclusive_lock_(m_srw)
         void lock()
         {
             AcquireSRWLockExclusive(&m_srw);
         }
+        _Acquires_shared_lock_(m_srw)
         void lock_shared()
         {
             AcquireSRWLockShared(&m_srw);
         }
 
+        _When_(return == true, _Acquires_exclusive_lock_(m_srw))
         bool try_lock()
         {
             return TryAcquireSRWLockExclusive(&m_srw) == TRUE;
         }
+        _When_(return == true, _Acquires_shared_lock_(m_srw))
         bool try_lock_shared()
         {
             return TryAcquireSRWLockShared(&m_srw) == TRUE;
         }
 
+        _Releases_exclusive_lock_(m_srw)
+        _Requires_exclusive_lock_held_(m_srw)
         void unlock()
         {
             ReleaseSRWLockExclusive(&m_srw);
         }
+        _Releases_shared_lock_(m_srw)
+        _Requires_shared_lock_held_(m_srw)
         void unlock_shared()
         {
             ReleaseSRWLockShared(&m_srw);

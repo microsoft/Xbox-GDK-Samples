@@ -1,6 +1,6 @@
 # CMake GDK Example
 
-*This sample is compatible with the Microsoft Game Development Kit (March 2022)*
+*This sample is compatible with the Microsoft Game Development Kit (October 2025)*
 
 # Description
 
@@ -93,7 +93,7 @@ cmake --build out\build\x64-XboxOne
 
 *For VS 2022, change the generator to "Visual Studio 17 2022".*
 
-*Verify you are using CMake 3.20 or later with:*
+*Verify you are using CMake 3.21 or later with:*
 
 ```
 cmake --version
@@ -301,3 +301,5 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY VS_GLOBAL_VCToolsVersion "14.20.275
 |February 2025|Updated to use `XBOX_CONSOLE_TARGET` variable with 'xboxone' or 'scarlett' to match VCPKG.|
 |April 2025|Updated for CMake 3.31 add_custom_command warning.|
 |October 2025|Updated for 2510 GDK and new layout, replacing `Gaming.Desktop.x64` with `x64`|
+|February 2026|Updated to require CMake 3.21 or later|
+|April 2026|Updated to use Microsoft.Xbox.Services.143.C.lib in 2604|

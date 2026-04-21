@@ -22,10 +22,10 @@ enum DHEAP_DESCRIPTOR_INDICES
 
 struct PerParticleData
 {
-    DirectX::SimpleMath::Vector3    OrbitCenter;
-    DirectX::SimpleMath::Vector2    Radii;
-    float                           AngleSpeed;
-    float                           Range;
+    DirectX::SimpleMath::Vector3    OrbitCenter{};
+    DirectX::SimpleMath::Vector2    Radii{};
+    float                           AngleSpeed = 0.0f;
+    float                           Range = 0.0f;
 };
 
 struct LightParticlePosData

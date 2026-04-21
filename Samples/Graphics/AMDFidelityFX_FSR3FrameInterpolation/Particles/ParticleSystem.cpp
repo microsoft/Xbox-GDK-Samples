@@ -101,7 +101,8 @@ namespace
 namespace ATG
 {
 	ParticleSystem::ParticleSystem()
-		: m_resetStart(0)
+		: m_deviceResources(nullptr)
+		, m_resetStart(0)
 		, m_resetCount(0)
 		, m_particleBounciness(2.35f)
 		, m_particleUpdateSpeed(g_defaultParticleUpdateSpeed)

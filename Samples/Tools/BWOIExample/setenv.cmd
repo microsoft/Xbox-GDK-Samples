@@ -1,60 +1,54 @@
 @echo off
 
-REM Build W/O Installing (BWOI) Example for the Microsoft GDK 
+REM Build W/O Installing (BWOI) Example for the Microsoft GDK
 REM
 REM This command sets a few specific variables to drive the build
 
 if DEFINED VSInstallDir (goto :vs_install_dir_defined)
 
-if %1.==vspreview. goto :define_vs2022_preview
-if %1.==vs2019. goto :define_vs2019_install_dir
+if %1.==vspreview. goto :define_vs2026_insiders
+if %1.==vs2026. goto :define_vs2026_install_dir
 if %1.==vs2022. goto :define_vs2022_install_dir
 
-echo "Usage: setenv {vs2019 | vs2022 | vspreview} [GDK edition] [extracted GDK path]"
+echo "Usage: setenv {vs2022 | vs2026 | vspreview} [GDK edition] [extracted GDK path]"
 exit /b 0
 
 REM ****************************************************************************************************
-REM VSInstallDir for Visual Studio 2019 / VS 2022 Preview
+REM VSInstallDir for Visual Studio 2026 Insiders
 REM ****************************************************************************************************
-:define_vs2022_preview
-if NOT EXIST "%ProgramFiles%\Microsoft Visual Studio\2022\Preview\" goto :define_vs2019_preview
-ECHO *** Using VS 2022 Preview ***
-SET VSInstallDir=%ProgramFiles%\Microsoft Visual Studio\2022\Preview\
-goto :vs_install_dir_defined
-
-:define_vs2019_preview
-if NOT EXIST "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Preview\" goto :error_preview
-ECHO *** Using VS 2019 Preview ***
-SET VSInstallDir=%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Preview\
+:define_vs2026_insiders
+if NOT EXIST "%ProgramFiles%\Microsoft Visual Studio\18\Insiders\" goto :error_preview
+ECHO *** Using VS 2026 Insiders ***
+SET VSInstallDir=%ProgramFiles%\Microsoft Visual Studio\18\Insiders\
 goto :vs_install_dir_defined
 
 :error_preview
-echo *** ERROR: Can't find VS 2022 Preview or VS 2019 Preview installation!
+echo *** ERROR: Can't find VS 2026 Insiders installation!
 exit /b 1
 
 REM ****************************************************************************************************
-REM VSInstallDir for Visual Studio 2019
+REM VSInstallDir for Visual Studio 2026
 REM ****************************************************************************************************
-:define_vs2019_install_dir
-if NOT EXIST "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\" goto :vs2019_install_dir_professional
-ECHO *** Using VS 2019 Enterprise ***
-SET VSInstallDir=%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\
+:define_vs2026_install_dir
+if NOT EXIST "%ProgramFiles(x86)%\Microsoft Visual Studio\18\Enterprise\" goto :vs2026_install_dir_professional
+ECHO *** Using VS 2026 Enterprise ***
+SET VSInstallDir=%ProgramFiles(x86)%\Microsoft Visual Studio\18\Enterprise\
 goto :vs_install_dir_defined
 
-:vs2019_install_dir_professional
-if NOT EXIST "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Professional\" goto :vs2019_install_dir_buildtools
-ECHO *** Using VS 2019 Professional ***
-SET VSInstallDir=%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Professional\
+:vs2026_install_dir_professional
+if NOT EXIST "%ProgramFiles(x86)%\Microsoft Visual Studio\18\Professional\" goto :vs2026_install_dir_buildtools
+ECHO *** Using VS 2026 Professional ***
+SET VSInstallDir=%ProgramFiles(x86)%\Microsoft Visual Studio\18\Professional\
 goto :vs_install_dir_defined
 
-:vs2019_install_dir_buildtools
-if NOT EXIST "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\BuildTools\" goto :vs2019_install_dir_unknown
-ECHO *** Using VS 2019 Build Tools ***
-SET VSInstallDir=%ProgramFiles(x86)%\Microsoft Visual Studio\2019\BuildTools\
+:vs2026_install_dir_buildtools
+if NOT EXIST "%ProgramFiles(x86)%\Microsoft Visual Studio\18\BuildTools\" goto :vs2026_install_dir_unknown
+ECHO *** Using VS 2026 Build Tools ***
+SET VSInstallDir=%ProgramFiles(x86)%\Microsoft Visual Studio\18\BuildTools\
 goto :vs_install_dir_defined
 
-:vs2019_install_dir_unknown
-@echo Couldn't figure out your Visual 2019 installation directory (need to use Visual Studio 2019 Enterprise, Professional, or Build Tools)
+:vs2026_install_dir_unknown
+@echo Couldn't figure out your Visual 2026 installation directory (need to use Visual Studio 2026 Enterprise, Professional, or Build Tools)
 exit /b 1
 
 REM ****************************************************************************************************

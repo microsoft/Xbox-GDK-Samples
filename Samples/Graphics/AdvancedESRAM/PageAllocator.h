@@ -78,8 +78,8 @@ namespace ATG
         void Reset();
 
     public:
-        uint32_t            pagePoolCount;
-        HANDLE              pagePoolHandle;
+        uint32_t            pagePoolCount = 0;
+        HANDLE              pagePoolHandle = nullptr;
         std::vector<Range>  ranges;
     };
 

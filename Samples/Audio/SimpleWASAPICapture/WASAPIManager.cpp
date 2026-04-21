@@ -16,8 +16,21 @@ namespace
     //Thread to manage render sample requests
     VOID CALLBACK RenderWorkCallback(_Inout_ PTP_CALLBACK_INSTANCE, _Inout_opt_ PVOID Context, _Inout_ PTP_WORK)
     {
-        CoInitializeEx(nullptr, COINIT_MULTITHREADED);
         auto Manager = reinterpret_cast<WASAPIManager*>(Context);
+        
+        if (!Manager)
+        {
+            return;
+        }
+        
+        HRESULT hrCo = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
+        if (FAILED(hrCo))
+        {
+            Manager->m_renderThreadActive = false;
+            Manager->StopRenderDevice();
+            Manager->m_state = DeviceState::DeviceStateInError;
+            return;
+        }
 
         while (Manager->m_renderThreadActive)
         {
@@ -60,8 +73,20 @@ namespace
     //Thread to manage capture sample requests
     VOID CALLBACK CaptureWorkCallback(_Inout_ PTP_CALLBACK_INSTANCE, _Inout_opt_ PVOID Context, _Inout_ PTP_WORK)
     {
-        CoInitializeEx(nullptr, COINIT_MULTITHREADED);
         auto Manager = reinterpret_cast<WASAPIManager*>(Context);
+        
+        if (!Manager)
+        {
+            return;
+        }
+        
+        HRESULT hrCo = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
+        if (FAILED(hrCo))
+        {
+            Manager->m_captureThreadActive = false;
+            Manager->m_state = DeviceState::DeviceStateInError;
+            return;
+        }
 
         while (Manager->m_captureThreadActive)
         {
@@ -118,7 +143,7 @@ WASAPIManager::WASAPIManager() noexcept(false) :
 
     if (SUCCEEDED(InitializeRenderDevice()))
     {
-        InitializeCaptureDevice(0);
+        (void)InitializeCaptureDevice(0);
     }
 }
 
@@ -355,8 +380,11 @@ HRESULT WASAPIManager::InitializeCaptureDevice(UINT32 id)
         
     //Register the device manager
     Microsoft::WRL::ComPtr<IMMDeviceEnumerator> deviceEnum;
-    CoCreateInstance(__uuidof(MMDeviceEnumerator), nullptr, CLSCTX_ALL, __uuidof(IMMDeviceEnumerator), (void**)&deviceEnum);
-    deviceEnum->RegisterEndpointNotificationCallback(&m_deviceManager);
+    hr = CoCreateInstance(__uuidof(MMDeviceEnumerator), nullptr, CLSCTX_ALL, __uuidof(IMMDeviceEnumerator), (void**)&deviceEnum);
+    if (SUCCEEDED(hr) && deviceEnum)
+    {
+        (void)deviceEnum->RegisterEndpointNotificationCallback(&m_deviceManager);
+    }
 
     m_deviceManager.UpdateCaptureDeviceList();
 
@@ -462,11 +490,11 @@ HRESULT WASAPIManager::SetCaptureDevice(UINT32 index)
     {
         if (m_state == DeviceState::DeviceStatePlaying)
         {
-            StopPlayback();
+            (void)StopPlayback();
         }
         else if (m_state == DeviceState::DeviceStateCapturing)
         {
-            StopCapture();
+            (void)StopCapture();
         }
 
         m_deviceManager.SetCaptureId(static_cast<int>(index));
@@ -504,7 +532,11 @@ HRESULT WASAPIManager::PlayToggle()
         else
         {
             //Load recording
-            ConfigureSource(g_FileName);
+            hr = ConfigureSource(g_FileName);
+            if (FAILED(hr))
+            {
+                return hr;
+            }
 
             // Initialize the device and play
             hr = StartPlayback();
@@ -657,7 +689,7 @@ HRESULT WASAPIManager::StopPlayback()
 //--------------------------------------------------------------------------------------
 HRESULT WASAPIManager::RestartPlayback()
 {
-    StopRenderDevice();
+    (void)StopRenderDevice();
     m_state = DeviceState::DeviceStateUnInitialized;
     m_AudioClientForRender = nullptr;
     m_AudioRenderClient = nullptr;
@@ -685,7 +717,12 @@ HRESULT WASAPIManager::StartCapture()
 
     //Create the WAV file
     m_pWaveFile = new CWaveFileWriter();
-    m_pWaveFile->Open(g_FileName, m_CaptureWfx);
+    hr = m_pWaveFile->Open(g_FileName, m_CaptureWfx);
+    if (FAILED(hr))
+    {
+        m_state = DeviceState::DeviceStateInError;
+        return hr;
+    }
 
     // Actually start recording
     hr = m_AudioClientForCapture->Start();
@@ -718,7 +755,7 @@ HRESULT WASAPIManager::StopCapture()
         OnAudioCaptureSampleRequested();
     }
 
-    m_AudioClientForCapture->Stop();
+    (void)m_AudioClientForCapture->Stop();
     m_recordingSound = false;
 
     m_pWaveFile->Close();
@@ -827,7 +864,7 @@ HRESULT WASAPIManager::GetWaveSample(UINT32 FramesAvailable)
             hr = m_AudioRenderClient->ReleaseBuffer(FramesAvailable, AUDCLNT_BUFFERFLAGS_SILENT);
         }
 
-        StopPlayback();
+        (void)StopPlayback();
     }
     else if (bufferLength <= (FramesAvailable * m_RenderWfx->nBlockAlign))
     {

@@ -126,7 +126,7 @@ private:
     std::unique_ptr<XboxLiveManager>            m_liveManager;
     std::unique_ptr<GameChatManager>            m_chatManager;
 
-    XTaskQueueRegistrationToken                 m_inviteRegistration;
+    XTaskQueueRegistrationToken                 m_inviteRegistration{};
     std::vector<std::string>                    m_joinableSessions;
     std::string                                 m_joinHandle;
     static Sample*                              s_instance;

@@ -82,6 +82,10 @@ Sample::Sample() noexcept(false)
     : m_frame(0)
     , m_paused(false)
     , m_wireframe(false)
+    , m_mappedVSConstantData(nullptr)
+    , m_mappedPSConstantData(nullptr)
+    , m_VSConstantDataGpuAddr(0)
+    , m_PSConstantDataGpuAddr(0)
     , m_currentCausticTextureView(0)
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>();

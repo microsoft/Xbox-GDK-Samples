@@ -68,7 +68,7 @@ public:
         std::unique_ptr<DirectX::Model>    m_model;
         std::vector<ATG::MeshletSet>       m_meshlet;
         std::vector<std::vector<uint32_t>> m_texCoordOffsets;
-        uint32_t                           m_descriptorOffset;
+        uint32_t                           m_descriptorOffset = 0;
     };
 
 private:
@@ -76,8 +76,8 @@ private:
     struct ObjectInstance
     {
         DirectX::SimpleMath::Matrix m_world;
-        ModelInfo* m_modelInfo;
-        float m_scale;
+        ModelInfo* m_modelInfo=nullptr;
+        float m_scale=1.0f;
     };
 
     void Update(DX::StepTimer const& timer);

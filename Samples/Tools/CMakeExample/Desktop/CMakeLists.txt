@@ -1,7 +1,7 @@
 ﻿# Copyright (c) Microsoft Corporation.
 # Licensed under the MIT License.
 
-cmake_minimum_required (VERSION 3.20)
+cmake_minimum_required (VERSION 3.21)
 
 project(CMakeExampleDesktop
   DESCRIPTION "CMake example for a Microsoft GDK x64 project"
@@ -53,10 +53,9 @@ add_executable(${PROJECT_NAME} WIN32
 target_include_directories(${PROJECT_NAME} PUBLIC ./ ../)
 target_compile_definitions(${PROJECT_NAME} PRIVATE $<IF:$<CONFIG:DEBUG>,_DEBUG,NDEBUG> _GAMING_DESKTOP WINAPI_FAMILY=WINAPI_FAMILY_DESKTOP_APP _UNICODE UNICODE __WRL_NO_DEFAULT_LIB__)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE dxguid.lib d3d12.lib dxgi.lib Xbox::GameRuntime Xbox::XSAPI Xbox::XCurl)
-if (XdkEditionTarget GREATER_EQUAL 220600)
-    target_link_libraries(${PROJECT_NAME} PRIVATE Xbox::GameInput)
-endif()
+target_link_libraries(${PROJECT_NAME} PRIVATE dxguid.lib d3d12.lib dxgi.lib Xbox::GameRuntime Xbox::XSAPI Xbox::HTTPClient Xbox::XCurl)
+target_link_libraries(${PROJECT_NAME} PRIVATE Xbox::GameInput)
+
 # uuid.lib if using Windows Imaging Component (WIC) or other COM objects
 # delayimp.lib if using /DELAYLOAD (or use dloadhelper.lib if BUILD_USING_ONECORE is ON)
 # optional additional extension libraries: Xbox::GameChat2 Xbox::PlayFabMultiplayer Xbox::PlayFabParty Xbox::PlayFabPartyLIVE Xbox::PlayFabServices
@@ -231,13 +230,11 @@ add_custom_command(
     $<TARGET_FILE_DIR:${PROJECT_NAME}>
     )
 
-if (${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.21")
-   add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-      COMMAND ${CMAKE_COMMAND} -E copy
-      $<TARGET_RUNTIME_DLLS:${PROJECT_NAME}> $<TARGET_FILE_DIR:${PROJECT_NAME}>
-      COMMAND_EXPAND_LISTS
-      )
-endif()
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy
+  $<TARGET_RUNTIME_DLLS:${PROJECT_NAME}> $<TARGET_FILE_DIR:${PROJECT_NAME}>
+  COMMAND_EXPAND_LISTS
+  )
 
 # MSIXVC Packaging using the makepkg tool in the GDK:
 #    cd CMakeExample\Desktop\out\build\<config>\bin

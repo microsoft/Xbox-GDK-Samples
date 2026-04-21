@@ -279,7 +279,7 @@ int CompileDxc(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
 		if (FAILED(otherHr))
 			return otherHr;
 
-		PrintMessage("Compile returned error (0x%x), message = %s\n",
+		PrintMessage("Compile returned error (0x%x), message = %p\n",
 			hr,
 			errorMsgs->GetBufferPointer());
 		return hr;
@@ -335,7 +335,7 @@ int CompileDxc(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
 			return hr;
 		}
 
-		PrintMessage("PDB size %d is written here: %ls\n",
+		PrintMessage("PDB size %zu is written here: %ls\n",
 			pdbData->GetBufferSize(),
 			pdbPath);
 	}
@@ -347,7 +347,7 @@ int CompileDxc(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
 		return hr;
 	}
 
-	PrintMessage("Binary size %d is written here: %ls\n",
+	PrintMessage("Binary size %zu is written here: %ls\n",
 		code->GetBufferSize(),
 		argv[3]);
 
@@ -356,27 +356,45 @@ int CompileDxc(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
 
 int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
 {
-	if (argc < 2 || (0 != wcscmp(argv[1], L"fxc") && 0 != wcscmp(argv[1], L"dxc")))
+	if (argc < 2)
+	{
+		PrintMessage("First argument is missing, must be either fxc or dxc\n");
+		return -1;
+	}
+
+	if (0 != wcscmp(argv[1], L"fxc") && 0 != wcscmp(argv[1], L"dxc"))
 	{
 		PrintMessage("First argument was \"%ws\", must be either fxc or dxc\n", argv[1]);
 		return -1;
 	}
 
-	wchar_t** argvPassOn = (wchar_t**)alloca((argc - 1) * sizeof(wchar_t*));
-	argvPassOn[0] = argv[0];
-	for (auto i = 2; i < argc; ++i)
-	{
-		argvPassOn[i-1] = argv[i];
-	}
+    wchar_t** argvPassOn;
+    int errcode;
+    __try
+    {
+        argvPassOn = (wchar_t**)alloca((argc - 1) * sizeof(wchar_t*));
+        argvPassOn[0] = argv[0];
+        for (auto i = 2; i < argc; ++i)
+        {
+            argvPassOn[i - 1] = argv[i];
+        }
 
-	if (0 != wcscmp(argv[1], L"dxc"))
-	{
-        PrintMessage("The old shader compiler fxc is no longer supported\n", argv[1]);
+        if (0 != wcscmp(argv[1], L"dxc"))
+        {
+            PrintMessage("The old shader compiler fxc is no longer supported\n");
+            return -1;
+        }
+        else
+        {
+            return CompileDxc(argc - 1, argvPassOn);
+        }
+    }
+    __except ((GetExceptionCode() == STATUS_STACK_OVERFLOW) ?
+        EXCEPTION_EXECUTE_HANDLER : EXCEPTION_CONTINUE_SEARCH)
+    {
+        errcode = _resetstkoflw();
+        PrintMessage("_resetstkoflw failed with error code %d\n", errcode);
         return -1;
-	}
-	else
-	{
-		return CompileDxc(argc - 1, argvPassOn);
-	}
+    }
 }
 

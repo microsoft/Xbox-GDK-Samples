@@ -39,7 +39,10 @@ HRESULT CXboxNV12ToRGBConverter::CreateInstance(ID3D12Device* pDevice, IMFAttrib
 
     HRESULT hr = spVP->Initialize(pDevice, pAttribute);
     if (FAILED(hr))
+    {
+        delete spVP;
         return hr;
+    }
 
     *ppvObject = spVP;
 
@@ -146,7 +149,7 @@ HRESULT CXboxNV12ToRGBConverter::RenderDecodedSampleToResource(
     if (FAILED(hr))
         return hr;
 
-    const auto targetResourceDesc = pOutputResource->GetDesc();
+    const auto& targetResourceDesc = pOutputResource->GetDesc();
 
     // Create a temporary target for the video processor since DX12 does not allow writing directly to the swapchain
     // unless the command queue has ownership
@@ -211,6 +214,10 @@ HRESULT CXboxNV12ToRGBConverter::RenderDecodedSampleToResource(
     if (m_pVpFence->GetCompletedValue() < m_vpFenceValue)
     {
         HANDLE fenceEvent = CreateEvent(nullptr, false, false, nullptr);
+        if (!fenceEvent)
+        {
+            return HRESULT_FROM_WIN32(GetLastError());
+        }
         m_pVpFence->SetEventOnCompletion(m_vpFenceValue, fenceEvent);
         WaitForSingleObject(fenceEvent, INFINITE);
         CloseHandle(fenceEvent);

@@ -172,13 +172,13 @@ namespace
         CProcHandle(const CProcHandle &) = delete;
         CProcHandle &operator=(const CProcHandle &) = delete;
 
-        CProcHandle(CProcHandle &&other)
+        CProcHandle(CProcHandle &&other) noexcept(false)
             : m_handle(other.detach())
         {
         }
 
 
-        CProcHandle &operator=(CProcHandle &&other)
+        CProcHandle &operator=(CProcHandle &&other) noexcept(false)
         {
             close();
             m_handle = other.m_handle;
@@ -243,7 +243,7 @@ namespace
             int num = 1;
             wchar_t suffix[16] = L"";
 
-            wchar_t *underscore = dot;
+            wchar_t *underscore = wcsrchr(outFile, '.');
             while (FileExists(outFile))
             {
                 *underscore = L'\0';
@@ -259,7 +259,7 @@ namespace
     {
         if (!dumpFileName)
         {
-            DX::ThrowIfFailed(E_INVALIDARG);
+            throw DX::com_exception(E_INVALIDARG);
         }
 
         wprintf(L"Writing dump file: %s (type: 0x%08x)\n", dumpFileName, mdt);

@@ -79,9 +79,9 @@ private:
     //  problem.
     static uint32_t  g_Sequence;
 
-    uint32_t         m_cpuId;    // Processor event was created on
-    uint32_t         m_seq;      // Unique identifier
-    const wchar_t*   m_pTag;     // Label for event - must remain valid over lifetime of event object
+    uint32_t         m_cpuId = 0;    // Processor event was created on
+    uint32_t         m_seq   = 0;    // Unique identifier
+    const wchar_t*   m_pTag  = nullptr; // Label for event - must remain valid over lifetime of event object
 };
 
 //  Macro that creates uniquely named event objects for bracketing processing.

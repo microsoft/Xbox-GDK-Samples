@@ -134,6 +134,7 @@ Texture::Texture(_In_ ID3D12Device* device,
     CreateShaderResourceView(device, m_resource.Get(), srvDescriptor);
 }
 
+_Use_decl_annotations_
 Texture::Texture(ID3D12Device* device,
     DXGI_FORMAT format,
     int width,

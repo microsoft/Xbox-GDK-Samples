@@ -108,7 +108,8 @@ namespace
 namespace ATG
 {
 	ParticleSystem::ParticleSystem()
-		: m_resetStart(0)
+		: m_deviceResources(nullptr)
+		, m_resetStart(0)
 		, m_resetCount(0)
 		, m_emitterRadius(2.0f)
 		, m_emitterOrbitAngle(XM_PI)

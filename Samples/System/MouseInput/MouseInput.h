@@ -45,8 +45,8 @@ public:
     bool IsRunning4k() const noexcept { return m_deviceResources ? (m_deviceResources->GetDeviceOptions() & DX::DeviceResources::c_Enable4K_UHD) != 0 : false; }
     bool IsRunning1440p() const noexcept { return m_deviceResources ? (m_deviceResources->GetDeviceOptions() & DX::DeviceResources::c_EnableQHD) != 0 : false; }
 
-    int m_screenLocation_x;
-    int m_screenLocation_y;
+    int m_screenLocation_x = 0;
+    int m_screenLocation_y = 0;
     bool m_leftButton;
     bool m_rightButton;
 
@@ -96,7 +96,7 @@ private:
     // Input devices.
     Microsoft::WRL::ComPtr<IGameInput>			m_gameInput;
     Microsoft::WRL::ComPtr<IGameInputReading>   m_reading;
-    GameInputMouseState                         m_lastMouseState;
+    GameInputMouseState                         m_lastMouseState = {};
 
     // DirectXTK rendering
     std::unique_ptr<DirectX::SpriteFont> m_font;

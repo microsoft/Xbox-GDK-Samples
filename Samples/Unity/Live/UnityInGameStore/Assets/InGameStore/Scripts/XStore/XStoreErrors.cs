@@ -25,7 +25,13 @@ namespace GdkSample_InGameStore
         E_NOTSUPPORTED = -2147024846, //0x80070032
 
         // Process was canceled by user.
-        E_ABORT = -2147467260 //0x80004004
+        E_ABORT = -2147467260, //0x80004004
+
+        // Possible network connectivity issue, retry the operation when connectivity is restored.
+        HTTP_E_STATUS_NOT_FOUND = -2145844844, //0x80190194
+
+        // Possible network connectivity issue, retry the operation when connectivity is restored.
+        HTTP_E_STATUS_BAD_REQUEST = -2145844848, //0x80190190
     }
 
 }

@@ -387,7 +387,7 @@ void Sample::GetAchievements()
                 {
                     display->WriteLine(FormatAchievement(&achievement[i]).c_str());
                 }
-                log->Format(L"Page contained %u achievement(s). \n", count);
+                log->Format(L"Page contained %zu achievement(s). \n", count);
             }
 
             if (SUCCEEDED(XblAchievementsResultHasNext(result, &hasNext)))
