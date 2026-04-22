@@ -45,8 +45,8 @@ static_assert(sizeof(SceneConstants) % D3D12_CONSTANT_BUFFER_DATA_PLACEMENT_ALIG
 struct FXAAConstantBuffer
 {
     DirectX::SimpleMath::Vector2    fxaaPixelSize;
-    float                           width;
-    float                           height;
+    float                           width  = 0;
+    float                           height = 0;
 };
 static_assert(sizeof(FXAAConstantBuffer) % D3D12_CONSTANT_BUFFER_DATA_PLACEMENT_ALIGNMENT == 0 && L"Misaligned constant buffer!");
 

@@ -37,9 +37,12 @@ Sample::Sample() noexcept(false) :
     m_frame(0),
     m_userHandle(nullptr),
     m_providerHandle(nullptr),
+    m_taskQueue{},
     m_userAddInProgress(false),
+    m_currentWorldData{},
     m_containerHandle(nullptr),
-    m_isDataDisplayable(false)
+    m_isDataDisplayable(false),
+    m_userUIRequiresUpdate{}
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>();
     m_deviceResources->SetClearColor(ATG::Colors::Background);
@@ -711,6 +714,7 @@ HRESULT Sample::UpdateUserUIData()
         {
             sampleContext->LogFailedHR("XUserGetGamerPictureResultSize", hr);
             delete ctx;
+            ctx = nullptr;
             DX::ThrowIfFailed(hr);
         }
         if (hr == S_OK)

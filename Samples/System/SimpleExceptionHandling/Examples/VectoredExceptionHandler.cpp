@@ -56,18 +56,20 @@ void Sample::ExecuteVectoredException()
     g_calledVectoredExceptionHandler[1] = UINT32_MAX;
 
     // add the function VectoredExceptionHandlerFront to the front of the list of Vectored Exception filters
-    void *handler1 = AddVectoredExceptionHandler(1, VectoredExceptionHandlerFront);
+    void* handler1 = AddVectoredExceptionHandler(1, VectoredExceptionHandlerFront);
 
     // add the function VectoredExceptionHandlerBack to the end of the list of Vectored Exception filters
-    void *handler2 = AddVectoredExceptionHandler(0, VectoredExceptionHandlerBack);
+    void* handler2 = AddVectoredExceptionHandler(0, VectoredExceptionHandlerBack);
 
     // Raise an exception to be caught by the Vectored Exception system
     // Since the vectored exception handlers said used EXCEPTION_CONTINUE_EXECUTION at the end this exception does not become and unhandled exception
     // Since it's not an unhandled exception the debugger will not stop here
     RaiseException(ERROR_UNIDENTIFIED_ERROR, 0, 0, nullptr);
 
-    RemoveVectoredExceptionHandler(handler1);
-    RemoveVectoredExceptionHandler(handler2);
+    if (handler1)
+        RemoveVectoredExceptionHandler(handler1);
+    if (handler2)
+        RemoveVectoredExceptionHandler(handler2);
 
     m_testOutputMessage += L"Finished Vectored Exception Filter Sample\n";
 }

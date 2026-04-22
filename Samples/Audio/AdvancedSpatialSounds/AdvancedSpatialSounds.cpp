@@ -213,7 +213,7 @@ namespace
 							for (UINT32 i = 0; i < frameCount * 4; i++)
 							{
 								UINT32 fileLoc = it->curBufferLoc;
-								buffer[i] = it->wavBuffer[fileLoc];
+								buffer[i-1] = it->wavBuffer[fileLoc];
 								it->curBufferLoc++;
 								if (it->curBufferLoc == it->bufferSize)
 								{
@@ -359,7 +359,7 @@ void XM_CALLCONV Sample::DrawRoom(ID3D12GraphicsCommandList* commandList, FXMVEC
 	m_batch->DrawLine(v[2], v[3]);
 	m_batch->DrawLine(v[3], v[0]);
 
-    for (size_t i = 0; i <= 4; ++i)
+    for (size_t i = 0; i < 4; ++i)
     {
         m_batch->DrawLine(v[i], edge[i]);
     }

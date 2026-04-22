@@ -56,7 +56,46 @@ uint32_t Sample::m_indexBufferStart[ MESH_SHAPE_COUNT ];
 int32_t Sample::m_vertexBufferStart[ MESH_SHAPE_COUNT ];
 
 Sample::Sample() noexcept(false) :
-    m_frame(0)
+    m_frame(0),
+    m_drawMethod(0),
+    m_cull(true),
+    m_indexBuffer(nullptr),
+    m_indexBufferView{},
+    m_vertexBuffer(nullptr),
+    m_vertexBufferView{},
+    m_meshRadius(1.0f),
+    m_timeTotal(0.0f),
+    m_instances{},
+    m_instanceBuffer(nullptr),
+    m_viewProj{},
+    m_cameraPosition{},
+    m_cameraDirection{},
+    m_cameraRight{},
+    m_cameraUp{},
+    m_translationSpeed(5.0f),
+    m_rotationSpeed(1.0f),
+    m_rotationScale(0.5f),
+    m_nearPlane(0.1f),
+    m_farPlane(1000.0f),
+    m_viewportWidth(1920),
+    m_viewportHeight(1080),
+    m_cameraFrustum{},
+    m_constantBufferTransform{},
+    m_constantBufferTint{},
+    m_constantBufferFrustum{},
+    m_rootSignatureMesh{},
+    m_rootSignatureCull{},
+    m_commandSignature{},
+    m_argumentBuffer{},
+    m_countBuffer{},
+    m_countReadbackBuffer{},
+    m_indirectArgsCPUDescriptorHeap{},
+    m_indirectArgsGPUDescriptorHeap{},
+    m_argumentDescriptorCPU{},
+    m_argumentDescriptorGPU{},
+    m_countDescriptorCPU{},
+    m_countDescriptorGPU{},
+    m_executeCount(0UL)
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_D32_FLOAT,
         2,
@@ -218,7 +257,7 @@ void Sample::Render()
     m_constantBufferTransform->Unmap(0, &constantBufferTransformRange);
 
     // Set lighting parameters (these don't actually change, but we leave open that possibility)
-    const XMVECTOR vColor[m_maxInstances] =
+    const XMVECTOR vColor[MESH_SHAPE_COUNT] =
     {
         XMVectorSet(0.0f, 0.0f, 1.0f, 1.0f),
         XMVectorSet(0.0f, 1.0f, 0.0f, 1.0f),
@@ -1096,7 +1135,7 @@ void Sample::InitializeRootSignatures()
     {
         CD3DX12_ROOT_SIGNATURE_DESC descRootSignature;
 
-        CD3DX12_ROOT_PARAMETER rootSignatureElements[2];
+        CD3DX12_ROOT_PARAMETER rootSignatureElements[2] = {};
         rootSignatureElements[0].InitAsConstantBufferView(
             0,                                                      // UINT shaderRegister,
             0,                                                      // UINT registerSpace = 0,
@@ -1134,7 +1173,7 @@ void Sample::InitializeRootSignatures()
             0,                                                      // UINT OffsetInDescriptorsFromTableStart;
         };
 
-        CD3DX12_ROOT_PARAMETER rootSignatureElements[4];
+        CD3DX12_ROOT_PARAMETER rootSignatureElements[4] = {};
         rootSignatureElements[0].InitAsConstantBufferView(
             0                                                       // UINT shaderRegister,
                                                                     // UINT registerSpace = 0,

@@ -19,7 +19,7 @@
 			"Action": "Input",
 			"InputParams":
 			{
-				"Inputs": [ "Down" ],
+				"Inputs": [ "Right" ],
 				"State": "Press"
 			}
 		},
@@ -28,34 +28,16 @@
 			"Action": "Input",
 			"InputParams":
 			{
-				"Inputs": [ "Down" ],
+				"Inputs": [ "A" ],
 				"State": "Press"
 			}
 		},
 		{
 			"Frame": 800,
-			"Action": "Input",
-			"InputParams":
-			{
-				"Inputs": [ "A" ] ,
-				"State": "Press"
-			}
-		},
-		{
-			"Frame": 1000,
 			"Action": "Screenshot",
 			"ScreenshotParams":
 			{
 				"Filename": "screenshot2.png"
-			}
-		},
-		{
-			"Frame": 1220,
-			"Action": "Input",
-			"InputParams":
-			{
-				"Inputs": [ "View" ],
-				"State": "Press"
 			}
 		}
 	],
@@ -66,7 +48,7 @@
 			"StringMatchParams":
 			{
 				"Type": "Exact",
-				"MatchString": "Opening profile card for",
+				"MatchString": "Updating XboxSocialManager social group to 'AllFavorites'",
 				"Success": true
 			}
 		},
@@ -75,7 +57,7 @@
 			"StringMatchParams":
 			{
 				"Type": "RegEx",
-				"MatchString": "Opening profile card for",
+				"MatchString": "Creating SocialGroupType of '[a-zA-Z]+'.",
 				"Success": true
 			}
 		},

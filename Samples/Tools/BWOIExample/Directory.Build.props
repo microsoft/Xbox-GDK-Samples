@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <!-- TODO: Change this value to your target Microsoft GDK edition (currently the October 2025 GDK) -->
-    <GDKEditionNumber Condition="'$(GDKEditionNumber)'==''">251000</GDKEditionNumber>
+    <GDKEditionNumber Condition="'$(GDKEditionNumber)'==''">260400</GDKEditionNumber>
     <XDKEditionTarget Condition="'$(XDKEditionTarget)'==''">$(GDKEditionNumber)</XDKEditionTarget>
 
     <!-- TODO: Change this to the value for your extracted Microsoft GDK / Windows 10 SDK -->
@@ -13,8 +13,58 @@
     <_ExtractedMicrosoftGDK>$(ExtractedFolder)Microsoft GDK\</_ExtractedMicrosoftGDK>
     <_ExtractedWindowsSDKDir>$(ExtractedFolder)Windows Kits\10\</_ExtractedWindowsSDKDir>
 
+    <!-- TODO: Change these to the location for your temporary VCTargets folders for VS 2026 BWOI / v145 BWOI -->
+    <_AlternativeVCTargetsPath180>$(ExtractedFolder)VCTargets180\</_AlternativeVCTargetsPath180>
+
     <!-- TODO: Change these to the location for your temporary VCTargets folders for VS 2022 / v143 BWOI -->
     <_AlternativeVCTargetsPath170>$(ExtractedFolder)VCTargets170\</_AlternativeVCTargetsPath170>
+
+    <!-- TODO: Change these to the location for your temporary VCTargets folders for VS 2019 BWOI / v142 BWOI -->
+    <_AlternativeVCTargetsPath160>$(ExtractedFolder)VCTargets160\</_AlternativeVCTargetsPath160>
+  </PropertyGroup>
+
+  <!--
+  ****************************************************************************************************
+  VCTargetsPath redirection (VS 2026)
+  ****************************************************************************************************
+  -->
+  <PropertyGroup Condition="'$(Platform)' == 'Gaming.Xbox.XboxOne.x64' and '$(VisualStudioVersion)' == '18.0'">
+    <DisableInstalledVCTargetsUse>true</DisableInstalledVCTargetsUse>
+    <VCTargetsPath16 Condition="'$(_AlternativeVCTargetsPath160)'!=''">$(_AlternativeVCTargetsPath160)</VCTargetsPath16>
+    <VCTargetsPath17 Condition="'$(_AlternativeVCTargetsPath170)'!=''">$(_AlternativeVCTargetsPath170)</VCTargetsPath17>
+    <VCTargetsPath18>$(_AlternativeVCTargetsPath180)</VCTargetsPath18>
+    <VCTargetsPath>$(_AlternativeVCTargetsPath180)</VCTargetsPath>
+
+    <!-- workaround for VS 2026 MSBuild issue that require locking to 180 which supports v145 / ClangCL Toolset -->
+    <CurrentVCTargetsPath>$(_AlternativeVCTargetsPath180)</CurrentVCTargetsPath>
+    <VCTargetsPathActual>$(_AlternativeVCTargetsPath180)</VCTargetsPathActual>
+    <_VCTargetsPathForToolset>$(_AlternativeVCTargetsPath180)</_VCTargetsPathForToolset>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Platform)' == 'Gaming.Xbox.Scarlett.x64' and '$(VisualStudioVersion)' == '18.0'">
+    <DisableInstalledVCTargetsUse>true</DisableInstalledVCTargetsUse>
+    <VCTargetsPath16 Condition="'$(_AlternativeVCTargetsPath160)'!=''">$(_AlternativeVCTargetsPath160)</VCTargetsPath16>
+    <VCTargetsPath17 Condition="'$(_AlternativeVCTargetsPath170)'!=''">$(_AlternativeVCTargetsPath170)</VCTargetsPath17>
+    <VCTargetsPath18>$(_AlternativeVCTargetsPath180)</VCTargetsPath18>
+    <VCTargetsPath>$(_AlternativeVCTargetsPath180)</VCTargetsPath>
+
+    <!-- workaround for VS 2026 MSBuild issue that require locking to 180 which supports v145 / ClangCL Toolset -->
+    <CurrentVCTargetsPath>$(_AlternativeVCTargetsPath180)</CurrentVCTargetsPath>
+    <VCTargetsPathActual>$(_AlternativeVCTargetsPath180)</VCTargetsPathActual>
+    <_VCTargetsPathForToolset>$(_AlternativeVCTargetsPath180)</_VCTargetsPathForToolset>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Platform)' == 'Gaming.Desktop.x64' and '$(VisualStudioVersion)' == '18.0'">
+    <DisableInstalledVCTargetsUse>true</DisableInstalledVCTargetsUse>
+    <VCTargetsPath16 Condition="'$(_AlternativeVCTargetsPath160)'!=''">$(_AlternativeVCTargetsPath160)</VCTargetsPath16>
+    <VCTargetsPath17 Condition="'$(_AlternativeVCTargetsPath170)'!=''">$(_AlternativeVCTargetsPath170)</VCTargetsPath17>
+    <VCTargetsPath18>$(_AlternativeVCTargetsPath180)</VCTargetsPath18>
+    <VCTargetsPath>$(_AlternativeVCTargetsPath180)</VCTargetsPath>
+
+    <!-- workaround for VS 2026 MSBuild issue that require locking to 180 which supports v145 / ClangCL Toolset -->
+    <CurrentVCTargetsPath>$(_AlternativeVCTargetsPath180)</CurrentVCTargetsPath>
+    <VCTargetsPathActual>$(_AlternativeVCTargetsPath180)</VCTargetsPathActual>
+    <_VCTargetsPathForToolset>$(_AlternativeVCTargetsPath180)</_VCTargetsPathForToolset>
   </PropertyGroup>
 
   <!--
@@ -24,18 +74,21 @@
   -->
   <PropertyGroup Condition="'$(Platform)' == 'Gaming.Xbox.XboxOne.x64' and '$(VisualStudioVersion)' == '17.0'">
     <DisableInstalledVCTargetsUse>true</DisableInstalledVCTargetsUse>
+    <VCTargetsPath16 Condition="'$(_AlternativeVCTargetsPath160)'!=''">$(_AlternativeVCTargetsPath160)</VCTargetsPath16>
     <VCTargetsPath17>$(_AlternativeVCTargetsPath170)</VCTargetsPath17>
     <VCTargetsPath>$(_AlternativeVCTargetsPath170)</VCTargetsPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Platform)' == 'Gaming.Xbox.Scarlett.x64' and '$(VisualStudioVersion)' == '17.0'">
     <DisableInstalledVCTargetsUse>true</DisableInstalledVCTargetsUse>
+    <VCTargetsPath16 Condition="'$(_AlternativeVCTargetsPath160)'!=''">$(_AlternativeVCTargetsPath160)</VCTargetsPath16>
     <VCTargetsPath17>$(_AlternativeVCTargetsPath170)</VCTargetsPath17>
     <VCTargetsPath>$(_AlternativeVCTargetsPath170)</VCTargetsPath>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Platform)' == 'x64' and '$(VisualStudioVersion)' == '17.0'">
+  <PropertyGroup Condition="'$(Platform)' == 'Gaming.Desktop.x64' and '$(VisualStudioVersion)' == '17.0'">
     <DisableInstalledVCTargetsUse>true</DisableInstalledVCTargetsUse>
+    <VCTargetsPath16 Condition="'$(_AlternativeVCTargetsPath160)'!=''">$(_AlternativeVCTargetsPath160)</VCTargetsPath16>
     <VCTargetsPath17>$(_AlternativeVCTargetsPath170)</VCTargetsPath17>
     <VCTargetsPath>$(_AlternativeVCTargetsPath170)</VCTargetsPath>
   </PropertyGroup>
@@ -45,7 +98,7 @@
   Using extracted Windows 10 SDK (optional)
   ****************************************************************************************************
   -->
-  <PropertyGroup Condition="Exists('$(_ExtractedWindowsSDKDir)') AND ('$(Platform)' == 'Gaming.Xbox.XboxOne.x64' OR '$(Platform)' == 'Gaming.Xbox.Scarlett.x64' OR '$(Platform)' == 'x64')">
+  <PropertyGroup Condition="Exists('$(_ExtractedWindowsSDKDir)') AND ('$(Platform)' == 'Gaming.Xbox.XboxOne.x64' OR '$(Platform)' == 'Gaming.Xbox.Scarlett.x64' OR '$(Platform)' == 'Gaming.Desktop.x64')">
     <WindowsSDKDir Condition="'$(WindowsSDKDir)' == ''">$(_ExtractedWindowsSDKDir)</WindowsSDKDir>
     <WindowsSdkDir Condition="'$(WindowsSdkDir)' == ''">$(_ExtractedWindowsSDKDir)</WindowsSdkDir>
     <WindowsSdkDir_10 Condition="'$(WindowsSdkDir_10)' == ''">$(_ExtractedWindowsSDKDir)</WindowsSdkDir_10>
@@ -62,7 +115,7 @@
   Properties for Gaming.*.x64
   ****************************************************************************************************
   -->
-  <PropertyGroup Condition="'$(Platform)' == 'Gaming.Xbox.XboxOne.x64' OR '$(Platform)' == 'Gaming.Xbox.Scarlett.x64' OR '$(Platform)' == 'x64'">
+  <PropertyGroup Condition="'$(Platform)' == 'Gaming.Xbox.XboxOne.x64' OR '$(Platform)' == 'Gaming.Xbox.Scarlett.x64' OR '$(Platform)' == 'Gaming.Desktop.x64'">
     <ClearDevCommandPromptEnvVars>false</ClearDevCommandPromptEnvVars>
     <VCToolsVersion />
     <DurangoXdkInstallPath>$(_ExtractedMicrosoftGDK)</DurangoXdkInstallPath>

@@ -228,6 +228,8 @@ HRESULT CompressorGPU::Prepare(
 
     *bcTextureMem = nullptr;
     *bcTexture = nullptr;
+    *p2x2intermediateUAV = nullptr;
+    *p1x1intermediateUAV = nullptr;
 
     DXGI_FORMAT intermediateFormat = DXGI_FORMAT_UNKNOWN;
     switch (bcFormat)

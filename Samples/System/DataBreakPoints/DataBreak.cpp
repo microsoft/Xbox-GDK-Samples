@@ -116,33 +116,33 @@ namespace
                 break;
             }
 
-            threadContext.Dr7 &= ~((3 << 18) << (registerIndex * 4));       // Bits 18-19, 22-23, 26-27, 30-31 represent the address length for slot 1,2,3,4
+            threadContext.Dr7 &= ~((3ULL << 18) << (registerIndex * 4));       // Bits 18-19, 22-23, 26-27, 30-31 represent the address length for slot 1,2,3,4
             switch (params.addressSize)
             {
             case ADDRESS_SIZE::SIZE_1:
-                threadContext.Dr7 |= ((0 << 18) << (registerIndex * 4));
+                threadContext.Dr7 |= ((0ULL << 18) << (registerIndex * 4));
                 break;
             case ADDRESS_SIZE::SIZE_2:
-                threadContext.Dr7 |= ((1 << 18) << (registerIndex * 4));
+                threadContext.Dr7 |= ((1ULL << 18) << (registerIndex * 4));
                 break;
             case ADDRESS_SIZE::SIZE_4:
-                threadContext.Dr7 |= ((3 << 18) << (registerIndex * 4));
+                threadContext.Dr7 |= ((3ULL << 18) << (registerIndex * 4));
                 break;
             case ADDRESS_SIZE::SIZE_8:
-                threadContext.Dr7 |= ((2 << 18) << (registerIndex * 4));
+                threadContext.Dr7 |= ((2ULL << 18) << (registerIndex * 4));
                 break;
             }
-            threadContext.Dr7 &= ~((3 << 16) << (registerIndex * 4));       // Bits 16-17, 20-21, 24-25, 28-29 represent the type of breakpoint for slot 1,2,3,4
+            threadContext.Dr7 &= ~((3ULL << 16) << (registerIndex * 4));       // Bits 16-17, 20-21, 24-25, 28-29 represent the type of breakpoint for slot 1,2,3,4
             switch (params.addressOperation)
             {
             case ADDRESS_OPERATION::EXECUTION:
-                threadContext.Dr7 |= ((0 << 16) << (registerIndex * 4));
+                threadContext.Dr7 |= ((0ULL << 16) << (registerIndex * 4));
                 break;
             case ADDRESS_OPERATION::WRITE:
-                threadContext.Dr7 |= ((1 << 16) << (registerIndex * 4));
+                threadContext.Dr7 |= ((1ULL << 16) << (registerIndex * 4));
                 break;
             case ADDRESS_OPERATION::READ_WRITE:
-                threadContext.Dr7 |= ((3 << 16) << (registerIndex * 4));
+                threadContext.Dr7 |= ((3ULL << 16) << (registerIndex * 4));
                 break;
             }
         }

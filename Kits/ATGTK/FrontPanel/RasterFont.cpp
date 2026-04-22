@@ -210,12 +210,12 @@ RasterFont::RasterFont(std::unique_ptr<RasterGlyphSheet>&& glyphs)
 {
 }
 
-RasterFont::RasterFont(RasterFont && other)
+RasterFont::RasterFont(RasterFont && other) noexcept
+    : m_glyphs(std::move(other.m_glyphs))
 {
-    m_glyphs = std::move(other.m_glyphs);
 }
 
-RasterFont & RasterFont::operator=(RasterFont && other)
+RasterFont & RasterFont::operator=(RasterFont && other) noexcept
 {
     RasterFont temp(std::move(other));
     m_glyphs = std::move(temp.m_glyphs);

@@ -224,6 +224,7 @@ namespace ATG
         device->UnregisterPagePoolX(block.pagePoolHandle);
 
         // Decommit the memory.
+#pragma warning(suppress: 6250) // Pointer arithmetic into m_pageCache is intentional - freeing specific physical pages
         VirtualFree(address, s_blockSizeBytes, MEM_DECOMMIT);
 
         // Free the physical pages back to the OS.

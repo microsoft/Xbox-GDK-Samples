@@ -2,7 +2,7 @@
 
 #   Downloadable Content (DLC) Sample
 
-This sample is compatible with the Microsoft GDK (June 2023)
+This sample is compatible with the Microsoft GDK (June 2024)
 
 # Description
 
@@ -147,6 +147,10 @@ combinations.
 # Known issues
 
 # Update history
+
+**Update:** April 2026
+
+Organized the folder layout. Refactored the code.
 
 **Update:** June 2024
 

@@ -111,7 +111,7 @@
 #include <XUser.h>
 #include <XTaskQueue.h>
 #include <XGame.h>
-#include <XGameInvite.h>
+#include <XGameActivation.h>
 #include <XSystem.h>
 
 #ifdef _GAMING_XBOX
@@ -119,7 +119,13 @@
 #endif
 
 #include "Party.h"
+
+// Suppress warnings from PlayFab Party Xbox Live header
+#pragma warning(push)
+#pragma warning(disable : 28285) // SAL syntax error in partyxboxlive.h
 #include "PartyXboxLive.h"
+#pragma warning(pop)
+
 #include "GameChat2.h"
 
 #include "StringUtil.h"

@@ -84,8 +84,8 @@ bool ImGuiAcc::Begin(const char* name, bool* open, ImGuiWindowFlags flags, ImVec
         float deadzone = 0.1f;
 
         // Read the right thumbstick analog value directly
-        float rx = ImGui::GetIO().KeysData[ImGuiKey_GamepadRStickRight].AnalogValue -
-            ImGui::GetIO().KeysData[ImGuiKey_GamepadRStickLeft].AnalogValue;
+        float rx = ImGui::GetIO().KeysData[ImGuiKey_GamepadRStickRight - ImGuiKey_NamedKey_BEGIN].AnalogValue -
+            ImGui::GetIO().KeysData[ImGuiKey_GamepadRStickLeft - ImGuiKey_NamedKey_BEGIN].AnalogValue;
 
         if (fabsf(rx) > deadzone)
         {

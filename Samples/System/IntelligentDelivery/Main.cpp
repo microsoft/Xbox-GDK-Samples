@@ -180,8 +180,8 @@ int SampleMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR lpCmdLi
 #ifdef _GAMING_XBOX
     UnregisterAppStateChangeNotification(hPLM);
 
-    CloseHandle(g_plmSuspendComplete);
-    CloseHandle(g_plmSignalResume);
+    std::ignore = CloseHandle(g_plmSuspendComplete);
+    std::ignore = CloseHandle(g_plmSignalResume);
 #endif
 
     XGameRuntimeUninitialize();

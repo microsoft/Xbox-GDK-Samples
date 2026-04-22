@@ -68,6 +68,7 @@ const std::wstring Sample::c_zipDataFileName(L"DSTORAGEZipDataFile.zip");
 #endif
 
 // All the actual Sample code runs in this function which is on it's own thread to avoid interference with rendering
+#pragma warning(suppress: 6262) // Stack usage is spread across independent try/catch scopes
 void Sample::DSTORAGESampleFunc()
 {
     m_creatingDataFile = e_pending;
@@ -215,6 +216,8 @@ void Sample::DSTORAGESampleFunc()
 void Sample::CreateGDeflateDataFile()
 {
     uint32_t* rootBuffer = static_cast<uint32_t*> (VirtualAlloc(nullptr, c_gDeflateFileSize, MEM_COMMIT, PAGE_READWRITE));
+    if (!rootBuffer)
+        return;
     for (uint32_t j = 0; j < c_gDeflateFileSize / sizeof(uint32_t); j++)
     {
         rootBuffer[j] = j;
@@ -277,6 +280,8 @@ void Sample::CreateGDeflateDataFile()
     if (dataFile == INVALID_HANDLE_VALUE)
         DX::ThrowIfFailed(static_cast<HRESULT> (GetLastError()));
 
+#pragma warning(push)
+#pragma warning(disable: 6387) // CreateFile2 returns INVALID_HANDLE_VALUE on error, not nullptr
     DWORD actualWrite;
     uint64_t toWrite(c_gDeflateNumChunks);
     WriteFile(dataFile, &toWrite, 8, &actualWrite, nullptr);
@@ -300,7 +305,8 @@ void Sample::CreateGDeflateDataFile()
     }
 
     VirtualFree(srcData, 0, MEM_RELEASE);
-    CloseHandle(dataFile);
+    std::ignore = CloseHandle(dataFile);
+#pragma warning(pop)
 }
 #endif
 
@@ -333,6 +339,7 @@ void Sample::CreateDataFiles()
         uint64_t numberDataBlocks = c_realDataFileSize / c_dataBlockSize;									// only write 1gig at a time
 
         uint32_t* buffer = static_cast<uint32_t*> (VirtualAlloc(nullptr, c_dataBlockSize, MEM_COMMIT, PAGE_READWRITE));
+        if (buffer)
         {
             CREATEFILE2_EXTENDED_PARAMETERS params = {};
 
@@ -343,6 +350,8 @@ void Sample::CreateDataFiles()
             if (dataFile == INVALID_HANDLE_VALUE)
                 DX::ThrowIfFailed(static_cast<HRESULT> (GetLastError()));
 
+#pragma warning(push)
+#pragma warning(disable: 6387) // CreateFile2 returns INVALID_HANDLE_VALUE on error, not nullptr
             uint32_t currentSeedValue = 0;
 
             for (uint64_t blockIndex = 0; blockIndex < numberDataBlocks; blockIndex++)
@@ -355,14 +364,18 @@ void Sample::CreateDataFiles()
                 WriteFile(dataFile, buffer, static_cast<DWORD>(c_dataBlockSize), &actualWrite, nullptr);
             }
 
-            CloseHandle(dataFile);
+            std::ignore = CloseHandle(dataFile);
+#pragma warning(pop)
+            VirtualFree(buffer, 0, MEM_RELEASE);
         }
-        VirtualFree(buffer, 0, MEM_RELEASE);
     }
 
     // Create zipped data file for testing
     {
         uint32_t* buffer = static_cast<uint32_t*> (VirtualAlloc(nullptr, c_zipFileSize, MEM_COMMIT, PAGE_READWRITE));
+        if(!buffer)
+            return;
+
         for (uint32_t j = 0; j < c_zipFileSize / sizeof(uint32_t); j++)
         {
             buffer[j] = j;
@@ -411,7 +424,7 @@ void Sample::CreateDataFiles()
         WriteFile(dataFile, destBuffer, static_cast<DWORD>(compressedSize), &actualWrite, nullptr);
         VirtualFree(buffer, 0, MEM_RELEASE);
         VirtualFree(destBuffer, 0, MEM_RELEASE);
-        CloseHandle(dataFile);
+        std::ignore = CloseHandle(dataFile);
     }
 }
 

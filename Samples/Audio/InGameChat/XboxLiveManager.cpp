@@ -79,7 +79,7 @@ HRESULT XboxLiveManager::Initialize()
                 }
             }
 
-            DebugTrace("No chat id found for endpoint %lu", endpointId);
+            DebugTrace("No chat id found for endpoint %llu", endpointId);
         });
 
     // Initialize the mulitplayer manager
@@ -102,7 +102,15 @@ HRESULT XboxLiveManager::Initialize()
 
         if (FAILED(hr))
         {
-            DebugTrace("Unable to add local user %lu", user->UserHandle);
+            uint64_t xuid = 0;
+            if (SUCCEEDED(XUserGetId(user->UserHandle, &xuid)))
+            {
+                DebugTrace("Unable to add local user %llu", xuid);
+            }
+            else
+            {
+                DebugTrace("Unable to add local user (failed to get XUID)");
+            }
         }
     }
 
@@ -245,7 +253,7 @@ void XboxLiveManager::SendNetworkMessage(uint64_t chatId, std::vector<uint8_t>& 
         }
         else
         {
-            DebugTrace("No endpoint found for chat id %lu", chatId);
+            DebugTrace("No endpoint found for chat id %llu", chatId);
         }
     }
 }
@@ -273,7 +281,7 @@ HRESULT XboxLiveManager::AddUserToSession(XUserHandle user)
 
         if (SUCCEEDED(hr))
         {
-            DebugTrace("Added local user %lu to lobby", xuid);
+            DebugTrace("Added local user %llu to lobby", xuid);
         }
         else
         {
@@ -282,7 +290,7 @@ HRESULT XboxLiveManager::AddUserToSession(XUserHandle user)
     }
     else
     {
-        DebugTrace("Unable to add local user %lu to lobby!", xuid);
+        DebugTrace("Unable to add local user %llu to lobby!", xuid);
     }
 
     return hr;
@@ -449,11 +457,11 @@ HRESULT XboxLiveManager::JoinSession(const char* sessionHandle)
 
                 if (SUCCEEDED(hr))
                 {
-                    DebugTrace("Added user %lu to lobby", xuid);
+                    DebugTrace("Added user %llu to lobby", xuid);
                 }
                 else
                 {
-                    DebugTrace("Unable to add user hane %lu to lobby!", xuid);
+                    DebugTrace("Unable to add user hane %llu to lobby!", xuid);
                 }
             }
 
@@ -574,6 +582,11 @@ HRESULT XboxLiveManager::DoWork(float)
     if (FAILED(hr))
     {
         return hr;
+    }
+
+    if (events == nullptr || eventCount == 0)
+    {
+        return S_OK;
     }
 
     for (size_t x = 0; x < eventCount; x++)
@@ -824,7 +837,7 @@ void XboxLiveManager::OnMemberJoined(const XblMultiplayerEvent& event)
                             uint64_t chatId = 0;
 
                             // Now see if one is the endpoint user
-                            for (auto user : users)
+                            for (const auto& user : users)
                             {
                                 if (m_networkManager->IsEndpointXuid(user.Xuid))
                                 {
@@ -880,7 +893,7 @@ void XboxLiveManager::OnMemberLeft(const XblMultiplayerEvent& event)
         // Remove users from chat
         for (const auto& member : members)
         {
-            DebugTrace("Removing user %lu", member.Xuid);
+            DebugTrace("Removing user %llu", member.Xuid);
 
             Sample::Instance()->GetChatManager()->RemoveRemoteUser(
                 member.Xuid
@@ -891,7 +904,7 @@ void XboxLiveManager::OnMemberLeft(const XblMultiplayerEvent& event)
 
 void XboxLiveManager::OnEndpointChanged(uint64_t xuid, bool connected)
 {
-    DebugTrace("Endpoint change for user %lu %sconnected", xuid, connected ? "" : "dis");
+    DebugTrace("Endpoint change for user %llu %sconnected", xuid, connected ? "" : "dis");
 
     if (connected)
     {
@@ -901,7 +914,7 @@ void XboxLiveManager::OnEndpointChanged(uint64_t xuid, bool connected)
     }
     else
     {
-        DebugTrace("User %lu disconnected", xuid);
+        DebugTrace("User %llu disconnected", xuid);
     }
 }
 
@@ -953,7 +966,7 @@ void XboxLiveManager::ProcessPendingConnections()
                 // Add all users on the same device to chat
                 auto userList = GetMembersOnSameDevice(xuid);
 
-                for (auto user : userList)
+                for (const auto& user : userList)
                 {
                     // Add them to chat
                     Sample::Instance()->GetChatManager()->AddRemoteUser(
@@ -998,7 +1011,7 @@ std::vector<XblMultiplayerManagerMember> XboxLiveManager::GetMembersOnSameDevice
 
         if (SUCCEEDED(hr))
         {
-            for (auto member : members)
+            for (const auto& member : members)
             {
                 if (XblMultiplayerManagerMemberAreMembersOnSameDevice(&primary, &member))
                 {
@@ -1030,7 +1043,7 @@ HRESULT XboxLiveManager::GetMemberByXuid(uint64_t xuid, XblMultiplayerManagerMem
 
     if (SUCCEEDED(hr))
     {
-        for (auto member : members)
+        for (const auto& member : members)
         {
             if (member.Xuid == xuid)
             {

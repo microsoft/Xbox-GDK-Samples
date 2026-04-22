@@ -306,7 +306,7 @@ void UIStaticText::WireUpElements()
 
 /*static*/ void UIStaticTextFactory::DeserializeDataProperties(
     _In_ UIDataPtr data,
-    _Out_ StaticTextDataProperties& staticTextDataProperties)
+    _Inout_ StaticTextDataProperties& staticTextDataProperties)
 {
     ID tempID;
 

@@ -30,7 +30,12 @@ Sample::Sample() noexcept(false)
     : m_frame(0)
     , m_mappedConstantData(nullptr)
     , m_constantDataGpuAddr(0)
+    , m_vertexBufferView{}
+    , m_indexBufferView{}
     , m_curRotationAngleRad(0.0f)
+    , m_lightDirs{}
+    , m_lightColors{}
+    , m_outputColor{}
 {
     // Use gamma-correct rendering.
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM_SRGB, DXGI_FORMAT_D32_FLOAT, 2,

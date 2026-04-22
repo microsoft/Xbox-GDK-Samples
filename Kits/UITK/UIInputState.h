@@ -77,27 +77,27 @@ namespace ATG
 
             struct GamePadState
             {
-                GamePad::State m_prevState;
-                GamePad::State m_state;
-                GamePadButtonStates m_buttons;
+                GamePad::State m_prevState{};
+                GamePad::State m_state{};
+                GamePadButtonStates m_buttons{};
             };
 
             std::array<GamePadState, c_maxGamePads> m_gamePadStates;
 
             struct KeyboardState
             {
-                Keyboard::State m_prevState;
-                Keyboard::State m_state;
-                KeyboardKeyStates m_keys;
+                Keyboard::State m_prevState{};
+                Keyboard::State m_state{};
+                KeyboardKeyStates m_keys{};
             };
 
             KeyboardState               m_keyboardState;
 
             struct MouseState
             {
-                Mouse::State m_prevState;
-                Mouse::State m_state;
-                MouseButtonStates m_buttons;
+                Mouse::State m_prevState{};
+                Mouse::State m_state{};
+                MouseButtonStates m_buttons{};
             };
 
             MouseState                  m_mouseState;

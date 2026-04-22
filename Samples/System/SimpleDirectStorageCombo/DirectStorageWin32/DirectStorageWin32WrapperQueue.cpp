@@ -22,7 +22,10 @@ using namespace DirectStorageWin32Wrapper::Internal;
 HRESULT STDMETHODCALLTYPE DirectStorageQueue::QueryInterface(/* [in] */ REFIID riid,/* [iid_is][out] */ _COM_Outptr_ void __RPC_FAR* __RPC_FAR* ppvObject)
 {
 	if (riid != __uuidof(IDStorageQueueWin32))
+	{
+		*ppvObject = nullptr;
 		return E_NOINTERFACE;
+	}
 	*ppvObject = this;
 	return S_OK;
 }
@@ -145,7 +148,7 @@ DirectStorageQueue::~DirectStorageQueue()
 
 	// Notify factory this queue instance has been destroyed
 	DirectStorageFactory::GetInstance()->RemoveQueue(this);
-	CloseHandle(m_errorEvent);
+	std::ignore = CloseHandle(m_errorEvent);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -359,10 +362,12 @@ void DirectStorageQueue::Close()
 //////////////////////////////////////////////////////////////////////////
 void DirectStorageQueue::RetrieveErrorRecord(_Out_ DSTORAGE_ERROR_RECORD* record)
 {
-	if (!m_entries)					// Queue has been closed
+	if (!record)
 		return;
 
-	if (!record)
+	memset(record, 0, sizeof(*record));
+
+	if (!m_entries)					// Queue has been closed
 		return;
 
 	std::lock_guard<ATG::CriticalSectionLockable> queueLock(m_criticalSection);

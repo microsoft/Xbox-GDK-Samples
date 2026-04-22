@@ -75,10 +75,10 @@ private:
     // Game state                                    
     Microsoft::WRL::ComPtr<ID3D12Resource>           m_VSConstants;
     Microsoft::WRL::ComPtr<ID3D12Resource>           m_PSConstants;
-    ATG::VS_CONSTANT_BUFFER*                         m_mappedVSConstantData;
-    ATG::PS_CONSTANT_BUFFER*                         m_mappedPSConstantData;
-    D3D12_GPU_VIRTUAL_ADDRESS                        m_VSConstantDataGpuAddr;
-    D3D12_GPU_VIRTUAL_ADDRESS                        m_PSConstantDataGpuAddr;
+    ATG::VS_CONSTANT_BUFFER*                         m_mappedVSConstantData = nullptr;
+    ATG::PS_CONSTANT_BUFFER*                         m_mappedPSConstantData = nullptr;
+    D3D12_GPU_VIRTUAL_ADDRESS                        m_VSConstantDataGpuAddr = 0;
+    D3D12_GPU_VIRTUAL_ADDRESS                        m_PSConstantDataGpuAddr = 0;
 
     // Transform matrices                            
     DirectX::SimpleMath::Matrix                      m_matView;

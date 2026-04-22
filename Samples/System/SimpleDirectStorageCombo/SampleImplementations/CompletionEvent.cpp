@@ -28,6 +28,8 @@ bool CompletionEvent::RunSample(const std::wstring& fileName, uint64_t dataFileS
     {
         // Create an Event for each batch that is being enqueued, Events should be reused when they are no longer waiting on a batch to complete
         m_completionEvent[curBatch] = CreateEvent(nullptr, FALSE, FALSE, nullptr);
+        if (!m_completionEvent[curBatch])
+            return false;
         for (uint32_t curRead = 0; curRead < c_readsPerBatch; curRead++, ++curBuffer)
         {
             DStorageRequestCrossPlatform request = {};
@@ -75,7 +77,7 @@ bool CompletionEvent::RunSample(const std::wstring& fileName, uint64_t dataFileS
 
     for (auto& iter : m_completionEvent)
     {
-        CloseHandle(iter);
+        std::ignore = CloseHandle(iter);
     }
     return true;
 }

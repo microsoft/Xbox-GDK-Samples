@@ -58,7 +58,7 @@ private:
         uint64_t m_data;
     };
 
-    WorkerData* m_workerData;
+    WorkerData* m_workerData = nullptr;
 
     std::map<std::wstring, ATG::FileLogger*> m_openLogs;
     std::vector<std::wstring> m_coreTestNames;

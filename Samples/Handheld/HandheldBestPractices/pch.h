@@ -50,9 +50,9 @@
 #include "imgui.h"
 #include "backends/imgui_impl_win32.h"
 #include "backends/imgui_impl_dx12.h"
-#include "atg/imgui_sample.h"
-#include "atg/imgui_applog.h"
-#include "atg/imgui_deviceresources.h"
+#include "ATG/imgui_sample.h"
+#include "ATG/imgui_applog.h"
+#include "ATG/imgui_deviceresources.h"
 
 // To use graphics and CPU markup events with the latest version of PIX, change this to include <pix3.h>
 // then add the NuGet package WinPixEventRuntime to the project.

@@ -59,7 +59,7 @@ private:
     std::atomic<uint32_t> m_runWorking;
     std::atomic<uint32_t> m_firstProcessorCore;
     std::atomic<uint32_t> m_secondProcessorCore;
-    std::thread *m_workerThread;
+    std::thread *m_workerThread = nullptr;
     std::wstring m_testRunningOutputText;
 
     // Device resources.

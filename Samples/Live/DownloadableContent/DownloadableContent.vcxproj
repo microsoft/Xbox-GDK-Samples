@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Gaming.Xbox.Scarlett.x64">
@@ -48,6 +48,7 @@
     <TargetRuntime>Native</TargetRuntime>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
     <GDKCrossPlatform>true</GDKCrossPlatform>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Condition="Exists($(ATGBuildProps))" Project="$(ATGBuildProps)" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -214,22 +215,28 @@
     <IncludePath>$(GDKCrossPlatformPath)windows\include;$(IncludePath);</IncludePath>
     <LibraryPath>$(GDKCrossPlatformPath)windows\lib\x64;$(LibraryPath)</LibraryPath>
     <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ExecutablePath>$(GameDK)bin;$(ExecutablePath)</ExecutablePath>
     <IncludePath>$(GDKCrossPlatformPath)windows\include;$(IncludePath);</IncludePath>
     <LibraryPath>$(GDKCrossPlatformPath)windows\lib\x64;$(LibraryPath)</LibraryPath>
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">
     <ExecutablePath>$(GameDK)bin;$(ExecutablePath)</ExecutablePath>
     <IncludePath>$(GDKCrossPlatformPath)windows\include;$(IncludePath);</IncludePath>
     <LibraryPath>$(GDKCrossPlatformPath)windows\lib\x64;$(LibraryPath)</LibraryPath>
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">
     <Link>
-      <AdditionalDependencies>Microsoft.Xbox.Services.142.C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Microsoft.Xbox.Services.143.C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -249,12 +256,12 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <DisableSpecificWarnings>5204;5204</DisableSpecificWarnings>
+      <DisableSpecificWarnings>5204</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">
     <Link>
-      <AdditionalDependencies>Microsoft.Xbox.Services.142.C.lib;libHttpClient.lib;uuid.lib;dstorage_xs.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Microsoft.Xbox.Services.143.C.lib;libHttpClient.lib;uuid.lib;dstorage_xs.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -265,10 +272,6 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTelemetry\GDK;..\..\..\Kits\LiveTK;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalUsingDirectories>
-      </AdditionalUsingDirectories>
-      <ForcedUsingFiles>
-      </ForcedUsingFiles>
       <Optimization>MaxSpeed</Optimization>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level4</WarningLevel>
@@ -276,12 +279,12 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <DisableSpecificWarnings>5204;5204</DisableSpecificWarnings>
+      <DisableSpecificWarnings>5204</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">
     <Link>
-      <AdditionalDependencies>Microsoft.Xbox.Services.142.C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Microsoft.Xbox.Services.143.C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -301,12 +304,12 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <DisableSpecificWarnings>5204;5204</DisableSpecificWarnings>
+      <DisableSpecificWarnings>5204</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">
     <Link>
-      <AdditionalDependencies>Microsoft.Xbox.Services.142.C.lib;libHttpClient.lib;uuid.lib;dstorage_xs.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Microsoft.Xbox.Services.143.C.lib;libHttpClient.lib;uuid.lib;dstorage_xs.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -317,10 +320,6 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTelemetry\GDK;..\..\..\Kits\LiveTK;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalUsingDirectories>
-      </AdditionalUsingDirectories>
-      <ForcedUsingFiles>
-      </ForcedUsingFiles>
       <Optimization>MaxSpeed</Optimization>
       <PreprocessorDefinitions>PROFILE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level4</WarningLevel>
@@ -328,12 +327,12 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <DisableSpecificWarnings>5204;5204</DisableSpecificWarnings>
+      <DisableSpecificWarnings>5204</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">
     <Link>
-      <AdditionalDependencies>Microsoft.Xbox.Services.142.C.Debug.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Microsoft.Xbox.Services.143.C.Debug.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
@@ -350,12 +349,12 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <DisableSpecificWarnings>5204;5204</DisableSpecificWarnings>
+      <DisableSpecificWarnings>5204</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">
     <Link>
-      <AdditionalDependencies>Microsoft.Xbox.Services.142.C.Debug.lib;libHttpClient.lib;uuid.lib;dstorage_xs.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Microsoft.Xbox.Services.143.C.Debug.lib;libHttpClient.lib;uuid.lib;dstorage_xs.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
@@ -365,16 +364,12 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MinimalRebuild>false</MinimalRebuild>
       <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTelemetry\GDK;..\..\..\Kits\LiveTK;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalUsingDirectories>
-      </AdditionalUsingDirectories>
-      <ForcedUsingFiles>
-      </ForcedUsingFiles>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <DisableSpecificWarnings>5204;5204</DisableSpecificWarnings>
+      <DisableSpecificWarnings>5204</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -392,6 +387,7 @@
     <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h" />
     <ClInclude Include="..\..\..\Kits\ATGTK\Json.h" />
     <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h" />
+    <ClInclude Include="TrackedPackage.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Kits\ATGTK\Texture.cpp" />
@@ -406,6 +402,7 @@
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TrackedPackage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Assets\Layouts\consolewindow.json">
@@ -420,22 +417,26 @@
     </CopyFileToFolders>
     <None Include="..\..\NuGet.config" />
     <None Include="BuildAllDlc.cmd" />
-    <None Include="DLCDllPackagePC\makedlcpkg.cmd" />
-    <None Include="DLCDllPackagePC\Package\MicrosoftGame.Config" />
     <None Include="DLCDllPackage\makedlcpkg.cmd" />
     <None Include="DLCDllPackage\Package_Scarlett\MicrosoftGame.Config" />
     <None Include="DLCDllPackage\Package_XboxOne\MicrosoftGame.Config" />
-    <None Include="DLCExePackagePC\makedlcpkg.cmd" />
-    <None Include="DLCExePackagePC\Package\MicrosoftGame.Config" />
+    <None Include="DLCDllPackage\Package_PC\MicrosoftGame.Config" />
     <None Include="DLCExePackage\makedlcpkg.cmd" />
+    <None Include="DLCExePackage\Package_PC\Assets\AlternateUILayout.json" />
+    <None Include="DLCExePackage\Package_PC\Assets\Fonts\SegoeUI_18.spritefont" />
+    <None Include="DLCExePackage\Package_PC\Assets\Fonts\SegoeUI_36.spritefont" />
+    <None Include="DLCExePackage\Package_PC\Assets\Fonts\XboxOneControllerLegendSmall.spritefont" />
+    <None Include="DLCExePackage\Package_Scarlett\Assets\AlternateUILayout.json" />
+    <None Include="DLCExePackage\Package_Scarlett\Assets\Fonts\SegoeUI_18.spritefont" />
+    <None Include="DLCExePackage\Package_Scarlett\Assets\Fonts\SegoeUI_36.spritefont" />
+    <None Include="DLCExePackage\Package_Scarlett\Assets\Fonts\XboxOneControllerLegendSmall.spritefont" />
     <None Include="DLCExePackage\Package_Scarlett\MicrosoftGame.Config" />
+    <None Include="DLCExePackage\Package_XboxOne\Assets\AlternateUILayout.json" />
     <None Include="DLCExePackage\Package_XboxOne\MicrosoftGame.Config" />
-    <None Include="DLCPackagePC\makedlcpkg.cmd" />
+    <None Include="DLCExePackage\Package_PC\MicrosoftGame.Config" />
     <None Include="DLCPackage\Package_Scarlett\MicrosoftGame.Config" />
     <None Include="DLCPackage\Package_XboxOne\MicrosoftGame.Config" />
-    <None Include="DLCPackagePC\Package\MicrosoftGame.Config">
-      <FileType>Document</FileType>
-    </None>
+    <None Include="DLCPackage\Package_PC\MicrosoftGame.Config" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
@@ -503,7 +504,6 @@
       <FileType>Document</FileType>
       <DestinationFileName>Layouts/%(Filename)%(Extension)</DestinationFileName>
     </CopyFileToFolders>
-	
     <None Include="DLCPackage\makedlcpkg.cmd" />
     <None Include="DLCPackage\makedlcpkg_XDK.cmd" />
     <None Include="makepcpkg.cmd" />
@@ -534,7 +534,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Link>
-      <AdditionalDependencies>Microsoft.Xbox.Services.142.C.Debug.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;uuid.lib;xgameruntime.lib;gameinput.lib;d3d12.lib;dxgi.lib;dxguid.lib;kernel32.lib;user32.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Microsoft.Xbox.Services.143.C.Debug.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;uuid.lib;xgameruntime.lib;gameinput.lib;d3d12.lib;dxgi.lib;dxguid.lib;kernel32.lib;user32.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
@@ -553,7 +553,7 @@
       <WarningLevel>Level4</WarningLevel>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ConformanceMode>true</ConformanceMode>
-      <DisableSpecificWarnings>5204;5204</DisableSpecificWarnings>
+      <DisableSpecificWarnings>5204</DisableSpecificWarnings>
     </ClCompile>
     <FXCompile>
       <ShaderModel>6.0</ShaderModel>
@@ -563,7 +563,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Link>
-      <AdditionalDependencies>Microsoft.Xbox.Services.142.C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;uuid.lib;xgameruntime.lib;gameinput.lib;d3d12.lib;dxgi.lib;dxguid.lib;kernel32.lib;user32.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Microsoft.Xbox.Services.143.C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;uuid.lib;xgameruntime.lib;gameinput.lib;d3d12.lib;dxgi.lib;dxguid.lib;kernel32.lib;user32.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -586,7 +586,7 @@
       <WarningLevel>Level4</WarningLevel>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ConformanceMode>true</ConformanceMode>
-      <DisableSpecificWarnings>5204;5204</DisableSpecificWarnings>
+      <DisableSpecificWarnings>5204</DisableSpecificWarnings>
     </ClCompile>
     <FXCompile>
       <ShaderModel>6.0</ShaderModel>
@@ -596,7 +596,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">
     <Link>
-      <AdditionalDependencies>Microsoft.Xbox.Services.142.C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;uuid.lib;xgameruntime.lib;gameinput.lib;d3d12.lib;dxgi.lib;dxguid.lib;kernel32.lib;user32.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Microsoft.Xbox.Services.143.C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;uuid.lib;xgameruntime.lib;gameinput.lib;d3d12.lib;dxgi.lib;dxguid.lib;kernel32.lib;user32.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -619,7 +619,7 @@
       <WarningLevel>Level4</WarningLevel>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ConformanceMode>true</ConformanceMode>
-      <DisableSpecificWarnings>5204;5204</DisableSpecificWarnings>
+      <DisableSpecificWarnings>5204</DisableSpecificWarnings>
     </ClCompile>
     <FXCompile>
       <ShaderModel>6.0</ShaderModel>
@@ -642,32 +642,13 @@
       <DeploymentContent>true</DeploymentContent>
       <DestinationFileName>%(Filename)%(Extension)</DestinationFileName>
     </CopyFileToFolders>
-  </ItemGroup>
-  <ItemGroup>
-    <CopyFileToFolders Include="Assets\roundy-border.png">
-    </CopyFileToFolders>
-  </ItemGroup>
-  <ItemGroup>
-    <CopyFileToFolders Include="Assets\Selected.DDS">
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="Assets\Unselected.DDS">
-    </CopyFileToFolders>
-  </ItemGroup>
-  <ItemGroup>
-    <CopyFileToFolders Include="Assets\black-square.png">
-    </CopyFileToFolders>
-  </ItemGroup>
-  <ItemGroup>
-    <CopyFileToFolders Include="Assets\progressbar.png">
-    </CopyFileToFolders>
-  </ItemGroup>
-  <ItemGroup>
-    <CopyFileToFolders Include="Assets\blank.png">
-    </CopyFileToFolders>
-  </ItemGroup>
-  <ItemGroup>
-    <CopyFileToFolders Include="Assets\Unmounted.png">
-    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\roundy-border.png" />
+    <CopyFileToFolders Include="Assets\Selected.DDS" />
+    <CopyFileToFolders Include="Assets\Unselected.DDS" />
+    <CopyFileToFolders Include="Assets\black-square.png" />
+    <CopyFileToFolders Include="Assets\progressbar.png" />
+    <CopyFileToFolders Include="Assets\blank.png" />
+    <CopyFileToFolders Include="Assets\Unmounted.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="chunks.xml" />
@@ -691,13 +672,44 @@
     <None Include="DLCPackage\Package_XDK\Assets\SplashScreen.png" />
     <None Include="DLCPackage\Package_XDK\Assets\StoreLogo.png" />
     <None Include="DLCPackage\Package_XDK\Image.JPG" />
-    <None Include="DLCPackagePC\chunks.xml" />
-    <None Include="DLCPackagePC\Package\Assets\LargeLogo.png" />
-    <None Include="DLCPackagePC\Package\Assets\Logo.png" />
-    <None Include="DLCPackagePC\Package\Assets\SmallLogo.png" />
-    <None Include="DLCPackagePC\Package\Assets\SplashScreen.png" />
-    <None Include="DLCPackagePC\Package\Assets\StoreLogo.png" />
-    <None Include="DLCPackagePC\Package\Image.jpg" />
+    <None Include="DLCDllPackage\chunks.xml" />
+    <None Include="DLCDllPackage\Package_Scarlett\Assets\LargeLogo.png" />
+    <None Include="DLCDllPackage\Package_Scarlett\Assets\Logo.png" />
+    <None Include="DLCDllPackage\Package_Scarlett\Assets\SmallLogo.png" />
+    <None Include="DLCDllPackage\Package_Scarlett\Assets\SplashScreen.png" />
+    <None Include="DLCDllPackage\Package_Scarlett\Assets\StoreLogo.png" />
+    <None Include="DLCDllPackage\Package_XboxOne\Assets\LargeLogo.png" />
+    <None Include="DLCDllPackage\Package_XboxOne\Assets\Logo.png" />
+    <None Include="DLCDllPackage\Package_XboxOne\Assets\SmallLogo.png" />
+    <None Include="DLCDllPackage\Package_XboxOne\Assets\SplashScreen.png" />
+    <None Include="DLCDllPackage\Package_XboxOne\Assets\StoreLogo.png" />
+    <None Include="DLCDllPackage\Package_PC\Assets\LargeLogo.png" />
+    <None Include="DLCDllPackage\Package_PC\Assets\Logo.png" />
+    <None Include="DLCDllPackage\Package_PC\Assets\SmallLogo.png" />
+    <None Include="DLCDllPackage\Package_PC\Assets\SplashScreen.png" />
+    <None Include="DLCDllPackage\Package_PC\Assets\StoreLogo.png" />
+    <None Include="DLCDllPackage\Package_Scarlett\Image.jpg" />
+    <None Include="DLCDllPackage\Package_XboxOne\Image.jpg" />
+    <None Include="DLCDllPackage\Package_PC\Image.jpg" />
+    <None Include="DLCExePackage\chunks.xml" />
+    <None Include="DLCExePackage\Package_Scarlett\Image.jpg" />
+    <None Include="DLCExePackage\Package_XboxOne\Image.jpg" />
+    <None Include="DLCExePackage\Package_PC\Image.jpg" />
+    <None Include="DLCExePackage\Package_Scarlett\Assets\LargeLogo.png" />
+    <None Include="DLCExePackage\Package_Scarlett\Assets\Logo.png" />
+    <None Include="DLCExePackage\Package_Scarlett\Assets\SmallLogo.png" />
+    <None Include="DLCExePackage\Package_Scarlett\Assets\SplashScreen.png" />
+    <None Include="DLCExePackage\Package_Scarlett\Assets\StoreLogo.png" />
+    <None Include="DLCExePackage\Package_XboxOne\Assets\LargeLogo.png" />
+    <None Include="DLCExePackage\Package_XboxOne\Assets\Logo.png" />
+    <None Include="DLCExePackage\Package_XboxOne\Assets\SmallLogo.png" />
+    <None Include="DLCExePackage\Package_XboxOne\Assets\SplashScreen.png" />
+    <None Include="DLCExePackage\Package_XboxOne\Assets\StoreLogo.png" />
+    <None Include="DLCExePackage\Package_PC\Assets\LargeLogo.png" />
+    <None Include="DLCExePackage\Package_PC\Assets\Logo.png" />
+    <None Include="DLCExePackage\Package_PC\Assets\SmallLogo.png" />
+    <None Include="DLCExePackage\Package_PC\Assets\SplashScreen.png" />
+    <None Include="DLCExePackage\Package_PC\Assets\StoreLogo.png" />
   </ItemGroup>
   <ItemGroup>
     <MGCCompile Include="MicrosoftGameConfig_PC.mgc">
@@ -733,56 +745,11 @@
     <None Include="media\image1.png" />
     <None Include="media\image3.png" />
     <None Include="media\image4.jpeg" />
-    <None Include="DLCExePackage\chunks.xml" />
-    <None Include="DLCExePackagePC\chunks.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Kits\DirectXTK12\DirectXTK12_GDKX_2022.vcxproj">
       <Project>{052c4858-c76f-4cea-8a1a-e8e5559e67c2}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="DLCDllPackage\chunks.xml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="DLCDllPackage\Package_Scarlett\Assets\LargeLogo.png" />
-    <None Include="DLCDllPackage\Package_Scarlett\Assets\Logo.png" />
-    <None Include="DLCDllPackage\Package_Scarlett\Assets\SmallLogo.png" />
-    <None Include="DLCDllPackage\Package_Scarlett\Assets\SplashScreen.png" />
-    <None Include="DLCDllPackage\Package_Scarlett\Assets\StoreLogo.png" />
-    <None Include="DLCDllPackage\Package_XboxOne\Assets\LargeLogo.png" />
-    <None Include="DLCDllPackage\Package_XboxOne\Assets\Logo.png" />
-    <None Include="DLCDllPackage\Package_XboxOne\Assets\SmallLogo.png" />
-    <None Include="DLCDllPackage\Package_XboxOne\Assets\SplashScreen.png" />
-    <None Include="DLCDllPackage\Package_XboxOne\Assets\StoreLogo.png" />
-    <None Include="DLCDllPackagePC\Package\Assets\LargeLogo.png" />
-    <None Include="DLCDllPackagePC\Package\Assets\Logo.png" />
-    <None Include="DLCDllPackagePC\Package\Assets\SmallLogo.png" />
-    <None Include="DLCDllPackagePC\Package\Assets\SplashScreen.png" />
-    <None Include="DLCDllPackagePC\Package\Assets\StoreLogo.png" />
-    <None Include="DLCDllPackagePC\chunks.xml" />
-    <None Include="DLCExePackagePC\Package\Image.jpg" />
-    <None Include="DLCExePackage\Package_Scarlett\Image.jpg" />
-    <None Include="DLCExePackage\Package_XboxOne\Image.jpg" />
-    <None Include="DLCDllPackagePC\Package\Image.jpg" />
-    <None Include="DLCDllPackage\Package_Scarlett\Image.jpg" />
-    <None Include="DLCDllPackage\Package_XboxOne\Image.jpg" />
-    <None Include="DLCExePackage\Package_Scarlett\Assets\LargeLogo.png" />
-    <None Include="DLCExePackage\Package_Scarlett\Assets\Logo.png" />
-    <None Include="DLCExePackage\Package_Scarlett\Assets\SmallLogo.png" />
-    <None Include="DLCExePackage\Package_Scarlett\Assets\SplashScreen.png" />
-    <None Include="DLCExePackage\Package_Scarlett\Assets\StoreLogo.png" />
-    <None Include="DLCExePackage\Package_XboxOne\Assets\LargeLogo.png" />
-    <None Include="DLCExePackage\Package_XboxOne\Assets\Logo.png" />
-    <None Include="DLCExePackage\Package_XboxOne\Assets\SmallLogo.png" />
-    <None Include="DLCExePackage\Package_XboxOne\Assets\SplashScreen.png" />
-    <None Include="DLCExePackage\Package_XboxOne\Assets\StoreLogo.png" />
-    <None Include="DLCExePackagePC\Package\Assets\LargeLogo.png" />
-    <None Include="DLCExePackagePC\Package\Assets\Logo.png" />
-    <None Include="DLCExePackagePC\Package\Assets\SmallLogo.png" />
-    <None Include="DLCExePackagePC\Package\Assets\SplashScreen.png" />
-    <None Include="DLCExePackagePC\Package\Assets\StoreLogo.png" />
   </ItemGroup>
   <ItemGroup Condition="'$(Platform)'=='x64'">
     <ReferenceCopyLocalPaths Include="$(GDKCrossPlatformPath)windows\bin\x64\libHttpClient.dll" />
@@ -791,6 +758,17 @@
   <ItemGroup Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(Platform)', 'Gaming\.Xbox\..+\.x64'))">
     <ReferenceCopyLocalPaths Include="$(GDKCrossPlatformPath)xbox\bin\x64\libHttpClient.dll" />
     <ReferenceCopyLocalPaths Include="$(GDKCrossPlatformPath)xbox\bin\x64\XCurl.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="DLCExePackage\Package_PC\Assets\LOGO_ATG_SMALL.png" />
+    <Image Include="DLCExePackage\Package_Scarlett\Assets\LOGO_ATG_SMALL.png" />
+    <Image Include="DLCExePackage\Package_XboxOne\Assets\LOGO_ATG_SMALL.png" />
+    <Image Include="DLCPackage\Package_PC\Assets\LargeLogo.png" />
+    <Image Include="DLCPackage\Package_PC\Assets\Logo.png" />
+    <Image Include="DLCPackage\Package_PC\Assets\SmallLogo.png" />
+    <Image Include="DLCPackage\Package_PC\Assets\SplashScreen.png" />
+    <Image Include="DLCPackage\Package_PC\Assets\StoreLogo.png" />
+    <Image Include="DLCPackage\Package_PC\Image.jpg" />
   </ItemGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -812,8 +790,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(VCTargetsPath)\Platforms\$(Platform)\Platform.props')" Text="$([System.String]::Format('$(ErrorText)', '$(Platform)'))" />
   </Target>
-  <Target Name="BuildMGC" AfterTargets="Build" Condition="!$([System.Text.RegularExpressions.Regex]::IsMatch('$(Platform)', 'Gaming\..+\.x64'))"
-          Inputs="@(MGCCompile)" Outputs="$(OutDir)MicrosoftGame.config">
+  <Target Name="BuildMGC" AfterTargets="Build" Condition="!$([System.Text.RegularExpressions.Regex]::IsMatch('$(Platform)', 'Gaming\..+\.x64'))" Inputs="@(MGCCompile)" Outputs="$(OutDir)MicrosoftGame.config">
     <Exec ConsoleToMsBuild="true" Command="copy &quot;%(MGCCompile.Identity)&quot; &quot;$(OutDir)MicrosoftGame.config&quot;" />
     <Exec ConsoleToMsBuild="true" Command="makepkg.exe localize /d &quot;$(OutDir).&quot; /pd &quot;$(OutDir).&quot; /gc &quot;%(MGCCompile.Identity)&quot;" />
   </Target>

@@ -38,6 +38,11 @@ The store cannot function without a user signed into Xbox.
 
 - *XStoreManager.cs* - creates the store context, initializes the store, provides access to global variables and state, and monitors for 'license lost' events.
 
+- *XStoreLicenseManager.cs* - supports Durable license acquisition, including cached licenses when no network connection is available.
+When configuring the sample to run as your own title, update the 'DurablesToLicense' list with storeIds for your add-ons.
+
+- *XNetworkManager.cs* - monitors network changes so appropriate XStore options are available when running online or offline.
+
 ### Assets\InGameStore\Scripts\XStore
 
 - *XStoreDownload.cs* - provides support for downloading/installing a durable with a package.
@@ -50,10 +55,6 @@ This contains the only code that differs between PC and Xbox.
 - *XStoreQueries.cs* - calls XStoreQuery* APIs to retrieve product information from the store catalog and user entitlements (collections).
 
 - *XStoreShowUI.cs* - calls XStoreShow* APIs to open the Microsoft Store app.
-
-### Assets\InGameStore\Scripts\XStoreUI\Menus
-
-- *ItemMenu.cs* - registers acquired durable licenses for 'license lost' events and provides consume functionality to test consumable products.
 
 # Building the Sample
 
@@ -149,13 +150,18 @@ Results of each call are displayed in the console window.
 
 - *Query Game License* -- calls [XStoreQueryGameLicenseAsync](https://learn.microsoft.com/en-us/gaming/gdk/_content/gc/reference/system/xstore/functions/xstorequerygamelicenseasync) to retrieve a license for the game.
 If the license is valid, it will call [XStoreQueryLicenseTokenAsync](https://learn.microsoft.com/en-us/gaming/gdk/_content/gc/reference/system/xstore/functions/xstorequerylicensetokenasync) to get the license token.
+Available offline.
 
 - *Query Add-on Licenses* -- calls [XStoreQueryAddOnLicensesAsync](https://learn.microsoft.com/en-us/gaming/gdk/_content/gc/reference/system/xstore/functions/xstorequeryaddonlicensesasync) to get a list of durable add-ons that the user *might* be able to license.
+Available offline.
 
 *Additional Controls:*
 
 - *In-Game Store* -- launches the '*Product List Menu*', which provides a visual display of all add-on products available to the user.
 If the user does not currently have a full license to the game (owned or shared), then the base game offer will be included in the product list.
+
+- *Acquire Durable Licenses* -- attempts to acquire licenses for all Durable storeIds included in the 'DurablesToLicense' list (edit this list in *XStoreLicenseManager.cs* when running as your own title).
+Available offline.
 
 - *Sign In* -- opens the Xbox account picker.
 A user is required for all store operations.
@@ -326,9 +332,10 @@ For more information about Microsoft's privacy policies in general, see the [Mic
 
 # Update History
 
-| Description                 |  Release Date       |  Version          |
-|-----------------------------|--------------------|------------------|
-| Initial draft of sample and README. Includes build requirements, usage details, notes and issues. |  October 2023  |  1.0 |
-| Updated the sample to detect trial->full license upgrades and provide basic store-related PLM event handling. |  March 2024  |  1.0 |
-| Updated the sample to run on Unity 2022.3.28f1 and to use the latest (legacy) GameCore packages supported by Unity. Future versions of this sample will use the new Microsoft GDK Packages (com.unity.microsoft.gdk, com.unity.microsoft.gdk.tools, com.unity.microsoft.gdk.tools.xbox) available in Package Manager. |  June 2024 |  1.1 |
+| Description | Release Date | Version |
+| ----------------------------- | -------------------- | ------------------ |
+| Initial draft of sample and README. Includes build requirements, usage details, notes and issues. | October 2023 | 1.0 |
+| Updated the sample to detect trial->full license upgrades and provide basic store-related PLM event handling. | March 2024 | 1.0 |
+| Updated the sample to run on Unity 2022.3.28f1 and to use the latest (legacy) GameCore packages supported by Unity. Future versions of this sample will use the new Microsoft GDK Packages (com.unity.microsoft.gdk, com.unity.microsoft.gdk.tools, com.unity.microsoft.gdk.tools.xbox) available in Package Manager. | June 2024 | 1.1 |
 | Sample now targets both PC and Xbox using the new Microsoft GDK API and tools packages (com.unity.microsoft.gdk, com.microsoft.gdk.tools, com.unity.microsoft.gdk.tools.xbox) available via Unity's Package Manager. | January 2025 | 1.2 |
+| Sample now supports offline licensing, with addition of XNetworkManager.cs and XStoreLicenseManager.cs. | March 2026 | 1.2.1 |

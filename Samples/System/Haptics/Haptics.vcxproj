@@ -56,7 +56,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
-    <Import Project="..\..\packages\Microsoft.GameInput.3.1.26100.6879\build\native\targets\Microsoft.GameInput.targets" Condition="Exists('..\..\packages\Microsoft.GameInput.3.1.26100.6879\build\native\targets\Microsoft.GameInput.targets')" />
+    <Import Project="..\..\packages\Microsoft.GameInput.3.3.182\build\native\targets\Microsoft.GameInput.targets" Condition="Exists('..\..\packages\Microsoft.GameInput.3.3.182\build\native\targets\Microsoft.GameInput.targets')" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
@@ -182,32 +182,66 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">
       </ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_dx12.cpp" />
-    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_win32.cpp" />
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_dx12.cpp">
+      <DisableSpecificWarnings>6011;6387;26819;28182;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_win32.cpp">
+      <DisableSpecificWarnings>6011;6387;26819;28182;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">NotUsing</PrecompiledHeader>
+      <DisableSpecificWarnings>6011;6387;26819;28182;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_draw.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">NotUsing</PrecompiledHeader>
+      <DisableSpecificWarnings>6011;6387;26819;28182;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_tables.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">NotUsing</PrecompiledHeader>
+      <DisableSpecificWarnings>6011;6387;26819;28182;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_widgets.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">NotUsing</PrecompiledHeader>
+      <DisableSpecificWarnings>6011;6387;26819;28182;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
-    <ClCompile Include="Audio\WASAPIManager.cpp" />
-    <ClCompile Include="Audio\WaveSampleGenerator.cpp" />
-    <ClCompile Include="Audio\WAVFileReader.cpp" />
-    <ClCompile Include="Audio\XAudio2Manager.cpp" />
+    <ClCompile Include="HapticsManager\Audio\WASAPIManager.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="HapticsManager\Audio\WaveSampleGenerator.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="HapticsManager\Audio\WAVFileReader.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="HapticsManager\Audio\XAudio2Manager.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="HapticsManager\HapticsDevice.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="HapticsManager\HapticsManager.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -249,12 +283,14 @@
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imstb_rectpack.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imstb_textedit.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imstb_truetype.h" />
-    <ClInclude Include="Audio\RenderBuffer.h" />
-    <ClInclude Include="Audio\IGenerator.h" />
-    <ClInclude Include="Audio\WASAPIManager.h" />
-    <ClInclude Include="Audio\WaveSampleGenerator.h" />
-    <ClInclude Include="Audio\WAVFileReader.h" />
-    <ClInclude Include="Audio\XAudio2Manager.h" />
+    <ClInclude Include="HapticsManager\Audio\IGenerator.h" />
+    <ClInclude Include="HapticsManager\Audio\RenderBuffer.h" />
+    <ClInclude Include="HapticsManager\Audio\WASAPIManager.h" />
+    <ClInclude Include="HapticsManager\Audio\WaveSampleGenerator.h" />
+    <ClInclude Include="HapticsManager\Audio\WAVFileReader.h" />
+    <ClInclude Include="HapticsManager\Audio\XAudio2Manager.h" />
+    <ClInclude Include="HapticsManager\HapticsDevice.h" />
+    <ClInclude Include="HapticsManager\HapticsManager.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="haptics.h" />
   </ItemGroup>
@@ -329,6 +365,6 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Microsoft.GameInput.3.1.26100.6879\build\native\targets\Microsoft.GameInput.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.GameInput.3.1.26100.6879\build\native\targets\Microsoft.GameInput.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.GameInput.3.3.182\build\native\targets\Microsoft.GameInput.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.GameInput.3.3.182\build\native\targets\Microsoft.GameInput.targets'))" />
   </Target>
 </Project>

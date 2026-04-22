@@ -20,7 +20,9 @@ namespace
 }
 
 Sample::Sample() noexcept(false)
-    : m_frame(0)
+    : m_displayWidth(0)
+    , m_displayHeight(0)
+    , m_frame(0)
     , m_theta(0)
     , m_phi(XM_PIDIV4)
     , m_radius(4)

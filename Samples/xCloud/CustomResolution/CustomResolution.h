@@ -111,13 +111,13 @@ private:
         using EffectList = DirectX::Model::EffectCollection;
 
         DirectX::SimpleMath::Matrix world;
-        DirectX::Model*             model;
+        DirectX::Model*             model   = nullptr;
         EffectList                  effects;
     };
 
     static constexpr uint32_t                       c_numBackBuffers = 3;
 
-    XSystemDeviceType                               m_deviceType;
+    XSystemDeviceType                               m_deviceType = {};
 
     // Device resources.
     std::unique_ptr<DX::DeviceResources>            m_deviceResources;
@@ -164,10 +164,10 @@ private:
     // Sample settings
 
     // The adjustable dimensions
-    uint32_t                                        m_frameWidth;
-    uint32_t                                        m_frameHeight;
-    D3D12_VIEWPORT                                  m_frameViewportDynamic;
-    D3D12_VIEWPORT                                  m_frameViewportIdeal;
+    uint32_t                                        m_frameWidth = 0;
+    uint32_t                                        m_frameHeight = 0;
+    D3D12_VIEWPORT                                  m_frameViewportDynamic = {};
+    D3D12_VIEWPORT                                  m_frameViewportIdeal = {};
 
     static constexpr uint32_t                       c_frameWidthIncrement = 1920 / 10;
     static constexpr uint32_t                       c_frameHeightIncrement = 0;
@@ -191,6 +191,6 @@ private:
     // Flag to ensure thread finishes cleanly at sample exit
     std::atomic<bool>                               m_isExiting;
 
-    XTaskQueueRegistrationToken                     m_token;
-    XTaskQueueHandle                                m_queue;
+    XTaskQueueRegistrationToken                     m_token = {};
+    XTaskQueueHandle                                m_queue = nullptr;
 };

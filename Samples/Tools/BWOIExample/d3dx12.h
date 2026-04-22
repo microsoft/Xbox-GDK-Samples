@@ -6806,7 +6806,7 @@ public:
     template<typename T>
     T* CreateNode()
     {
-        m_NodeDescs.push_back({});
+        m_NodeDescs.push_back{};
         m_NumNodes++;
         T* pNodeHelper = new T(&m_NodeDescs.back());
         m_OwnedNodeHelpers.emplace_back(pNodeHelper);

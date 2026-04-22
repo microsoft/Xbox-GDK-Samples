@@ -63,6 +63,7 @@ ParticleSystem::ParticleSystem(
     , m_angle(XM_2PI)
     , m_lifetime(lifetime)
     , m_size(size)
+    , m_constants{}
     , m_particles{}
 {
     assert(spawnRate > 0.0f);

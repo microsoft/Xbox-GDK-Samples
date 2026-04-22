@@ -71,6 +71,8 @@ Sample::Sample() noexcept(false) :
     m_zoomViewportCas{},
     m_zoomRect{},
     m_zoomRectCas{},
+    m_CasContext{},
+    m_casOutputState(D3D12_RESOURCE_STATE_COMMON),
     m_casMode(CASMode::Sharpen),
     m_sharpness(0.5f),
     m_renderScaleChanged(false),

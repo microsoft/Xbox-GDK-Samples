@@ -89,7 +89,7 @@ private:
 
     // User sign in.
     XUserHandle                                 m_userHandle;
-    XTaskQueueHandle                            m_taskQueue;
+    XTaskQueueHandle                            m_taskQueue = nullptr;
     bool                                        m_userAddInProgress;
 
     // User GamerTag properties

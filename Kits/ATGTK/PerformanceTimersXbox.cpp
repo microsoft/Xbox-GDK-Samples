@@ -162,7 +162,7 @@ public:
     {
         if (m_memory)
         {
-            std::ignore = VirtualFree(m_memory, m_size, MEM_RELEASE);
+            std::ignore = VirtualFree(m_memory, 0, MEM_RELEASE);
             m_memory = nullptr;
         }
     }
@@ -341,6 +341,7 @@ void GPUCommandListTimer<t_CommandList>::Frame::ComputeFrame(_In_ t_CommandList*
         if (!m_used[j])
         {
             m_timing[j] = 0.f;
+            lastUpdatedValues[j] = 0.f;
             continue;
         }
 

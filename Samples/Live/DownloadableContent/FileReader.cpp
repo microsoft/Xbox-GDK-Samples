@@ -60,12 +60,12 @@ HRESULT FileReader::Open(const char* filename)
 
                 if (FAILED(hr))
                 {
-                    g_sample->ErrorMessage("CreateStatusArray failed : 0x%08X\n", hr);
+                    ErrorMessage("CreateStatusArray failed : 0x%08X\n", hr);
                 }
             }
             else
             {
-                g_sample->ErrorMessage("CreateQueue failed : 0x%08X\n", hr);
+                ErrorMessage("CreateQueue failed : 0x%08X\n", hr);
             }
 
             return hr;
@@ -74,19 +74,19 @@ HRESULT FileReader::Open(const char* filename)
         {
             // DirectStorage doesn't support to read from HDD on Scarlett
 
-            g_sample->ErrorMessage("OpenFile failed : 0x%08X. Fall back to Win32 File I/O\n", hr);
+            ErrorMessage("OpenFile failed : 0x%08X. Fall back to Win32 File I/O\n", hr);
             m_bUseWin32 = true;
             hr = S_OK;
         }
         else
         {
-            g_sample->ErrorMessage("OpenFile failed : 0x%08X\n", hr);
+            ErrorMessage("OpenFile failed : 0x%08X\n", hr);
             return hr;
         }
     }
     else
     {
-        g_sample->ErrorMessage("DStorageGetFactory failed : 0x%08X\n", hr);
+        ErrorMessage("DStorageGetFactory failed : 0x%08X\n", hr);
         return hr;
     }
 #endif
@@ -95,7 +95,7 @@ HRESULT FileReader::Open(const char* filename)
 
     if (m_hFile == INVALID_HANDLE_VALUE)
     {
-        g_sample->ErrorMessage("Failed to open %s\n", filename);
+        ErrorMessage("Failed to open %s\n", filename);
         hr = E_HANDLE;
     }
 
@@ -150,7 +150,7 @@ HRESULT FileReader::GetSize(UINT* size) const
 
     if (*size == 0)
     {
-        g_sample->ErrorMessage("Failed to get the file size : 0x%08X\n", hr);
+        ErrorMessage("Failed to get the file size : 0x%08X\n", hr);
     }
 
     return hr;
@@ -182,7 +182,7 @@ HRESULT FileReader::Read(void* buffer, UINT32 size)
         if (ReadFile(m_hFile, buffer, size, &bytesRead, nullptr) == FALSE)
         {
             hr = HRESULT_FROM_WIN32(GetLastError());
-            g_sample->ErrorMessage("ReadFile Failed : 0x%08X\n", hr);
+            ErrorMessage("ReadFile Failed : 0x%08X\n", hr);
         }
     }
     else
@@ -222,7 +222,7 @@ HRESULT FileReader::Read(void* buffer, UINT32 size)
     if (ReadFile(m_hFile, buffer, size, &bytesRead, nullptr) == FALSE)
     {
         hr = HRESULT_FROM_WIN32(GetLastError());
-        g_sample->ErrorMessage("ReadFile Failed : 0x%08X\n", hr);
+        ErrorMessage("ReadFile Failed : 0x%08X\n", hr);
     }
 #endif
 

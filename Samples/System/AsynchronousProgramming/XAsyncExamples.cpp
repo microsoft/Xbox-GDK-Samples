@@ -774,19 +774,19 @@ void XAsyncExamples::StartTest_AdvancedUsage()
     // Test data
     struct TestData
     {
-        XTaskQueueHandle                baseQueue;
-        XTaskQueueHandle                compositeQueue;
-        XTaskQueuePortHandle            baseQueueWorkPort;
+        XTaskQueueHandle                baseQueue = {};
+        XTaskQueueHandle                compositeQueue = {};
+        XTaskQueuePortHandle            baseQueueWorkPort = {};
 
         std::thread                     baseQueueDispatcherThread;
 
-        XTaskQueueHandle                duplicateBaseQueueHandle;
+        XTaskQueueHandle                duplicateBaseQueueHandle = {};
 
-        HANDLE                          waiterEvent;
-        XTaskQueueRegistrationToken     waiterToken;
+        HANDLE                          waiterEvent = {};
+        XTaskQueueRegistrationToken     waiterToken = {};
 
         std::function<void(TestData*)>  autoCleanupFn;
-        volatile LONG*                  testCounter;
+        volatile LONG*                  testCounter = nullptr;
     };
     TestData* testData = new TestData();
     testData->testCounter = new volatile LONG(0);
@@ -905,6 +905,7 @@ void XAsyncExamples::StartTest_AdvancedUsage()
     // to cause the callback to not be submitted until an event is signaled.
     {
         testData->waiterEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+        _Analysis_assume_(testData->waiterEvent != NULL);
         DX::ThrowIfFailed(XTaskQueueRegisterWaiter(testData->baseQueue, XTaskQueuePort::Work, testData->waiterEvent, testData,
             [](void* context, bool /*cancel*/)
             {
@@ -1154,6 +1155,7 @@ void XAsyncExamples::CalculateOverhead_XAsyncRun(XTaskQueueHandle taskQueue, Sto
     CallContext* callContext = new CallContext();
     callContext->profiler = &overheadProfiler;
     callContext->waitEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+    _Analysis_assume_(callContext->waitEvent != NULL);
 
     XAsyncBlock* async = new XAsyncBlock{};
     ZeroMemory(async, sizeof(XAsyncBlock));
@@ -1221,6 +1223,7 @@ void XAsyncExamples::CalculateOverhead_ParallelFor(StopwatchProfiler<Overhead_To
         context->timeInvokeToBody = 0.0;
         context->profiler = &overheadProfiler;
         context->completionEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+        _Analysis_assume_(context->completionEvent != NULL);
 
         XAsyncBlock* async = asyncBlocks + (i - startIndex);
         async->queue = s_singleton->m_taskQueue_ParallelFor;
@@ -1544,8 +1547,8 @@ void XAsyncExamples::ParallelFor(unsigned int startIndex, unsigned int endIndex,
     struct CallContext
     {
         std::function<void(unsigned int)> bodyFunction;
-        unsigned int index;
-        HANDLE completionEvent;
+        unsigned int index = 0;
+        HANDLE completionEvent = {};
     };
     CallContext* callContexts = new CallContext[numInvocations];
 
@@ -1556,6 +1559,7 @@ void XAsyncExamples::ParallelFor(unsigned int startIndex, unsigned int endIndex,
         context->bodyFunction = bodyFunction;
         context->index = i;
         context->completionEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+        _Analysis_assume_(context->completionEvent != NULL);
 
         XAsyncBlock* async = asyncBlocks + (i - startIndex);
         async->queue = s_singleton->m_taskQueue_ParallelFor;
@@ -1597,8 +1601,8 @@ void XAsyncExamples::ParallelExecute(unsigned int numTasks, XTaskQueueHandle tas
     struct CallContext
     {
         std::function<void(unsigned int)> bodyFunction;
-        unsigned int index;
-        HANDLE completionEvent;
+        unsigned int index = 0;
+        HANDLE completionEvent = {};
     };
     CallContext* callContexts = new CallContext[numTasks];
 
@@ -1609,6 +1613,7 @@ void XAsyncExamples::ParallelExecute(unsigned int numTasks, XTaskQueueHandle tas
         context->bodyFunction = bodyFunction;
         context->index = i;
         context->completionEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+        _Analysis_assume_(context->completionEvent != NULL);
 
         XAsyncBlock* async = asyncBlocks + i;
         async->queue = taskQueue;

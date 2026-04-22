@@ -81,7 +81,10 @@ void DirectStorageStatusArray::MarkState(uint32_t index, bool complete, HRESULT 
 HRESULT STDMETHODCALLTYPE DirectStorageStatusArray::QueryInterface(/* [in] */ REFIID riid,/* [iid_is][out] */ _COM_Outptr_ void __RPC_FAR* __RPC_FAR* ppvObject)
 {
 	if (riid != __uuidof(IDStorageStatusArrayWin32))
+	{
+		*ppvObject = nullptr;
 		return E_NOINTERFACE;
+	}
 	*ppvObject = this;
 	return S_OK;
 }

@@ -12,8 +12,8 @@
 // Contains the resources necessary to render to the aliased buffers for a particular resolution.
 struct ResolutionData
 {
-    D3D12_CPU_DESCRIPTOR_HANDLE             rtvDescriptor;
-    D3D12_CPU_DESCRIPTOR_HANDLE             dsvDescriptor;
+    D3D12_CPU_DESCRIPTOR_HANDLE             rtvDescriptor   = {};
+    D3D12_CPU_DESCRIPTOR_HANDLE             dsvDescriptor   = {};
     Microsoft::WRL::ComPtr<ID3D12Resource>  renderTarget;
     Microsoft::WRL::ComPtr<ID3D12Resource>  depthStencil;
 };
@@ -59,8 +59,8 @@ private:
     std::unordered_map<Resolution, ResolutionData, ResolutionHash> m_rezMap;
 
     ID3D12Device*                                       m_device;
-    DXGI_FORMAT                                         m_colorFormat;
-    DXGI_FORMAT                                         m_depthFormat;
+    DXGI_FORMAT                                         m_colorFormat   = {};
+    DXGI_FORMAT                                         m_depthFormat   = {};
     D3D12_GPU_VIRTUAL_ADDRESS                           m_rtAddress = 0;
     D3D12_GPU_VIRTUAL_ADDRESS                           m_dsAddress = 0;
     Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>        m_rtvDescriptorHeap;

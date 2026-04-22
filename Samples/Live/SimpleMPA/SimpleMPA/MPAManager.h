@@ -9,10 +9,10 @@
 
 struct UserActivity
 {
-    uint64_t xuid;
+    uint64_t xuid = 0;
     std::string connectionString;
-    size_t maxPlayers;
-    size_t currentPlayers;
+    size_t maxPlayers = 0;
+    size_t currentPlayers = 0;
 };
 
 class MPAManager

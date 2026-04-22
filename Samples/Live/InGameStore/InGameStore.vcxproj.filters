@@ -72,6 +72,8 @@
     <ClInclude Include="..\..\..\Kits\ATGTK\FileDownloader.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
+    <ClInclude Include="LicenseManager.h" />
+    <ClInclude Include="DebugLog.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -101,6 +103,7 @@
     <ClCompile Include="..\..\..\Kits\ATGTK\FileDownloader.cpp">
       <Filter>ATG Tool Kit</Filter>
     </ClCompile>
+    <ClCompile Include="LicenseManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MGCCompile Include="MicrosoftGameConfig.mgc" />
@@ -228,9 +231,9 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ReadMe.docx" />
-    <None Include="InGameStore_Readme_ja-JP.docx" />
-    <None Include="InGameStore_Readme_ko-KR.docx" />
-    <None Include="InGameStore_Readme_zh-CN.docx" />
+    <None Include="readme.md" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
   </ItemGroup>
 </Project>

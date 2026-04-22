@@ -23,6 +23,17 @@ namespace
 }
 
 ParticleSystem::ParticleSystem()
+    : m_particleCount(0)
+    , m_firstFrame(true)
+    , m_particleMeshData()
+    , m_updateConstantsAddress(0)
+    , m_updateConstantsMappedMem(nullptr)
+    , m_PerObjectCBAddress(0)
+    , m_PerObjectCBMappedMem(nullptr)
+    , m_PerParticleDataMappedMem(nullptr)
+    , m_ParticleAnglesMappedMem(nullptr)
+    , m_particleVBV()
+    , m_particleIBV()
 {
 }
 

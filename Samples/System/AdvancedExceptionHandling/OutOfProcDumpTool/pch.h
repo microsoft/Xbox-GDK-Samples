@@ -39,6 +39,7 @@
 #include <cstdio>
 #include <iterator>
 #include <memory>
+#include <stdexcept>
 #include <string>
 
 // To opt-out of telemetry uncomment the following line

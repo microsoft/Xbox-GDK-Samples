@@ -21,7 +21,7 @@ private:
     static const uint32_t c_dataBatches = 10;
     static const uint32_t c_readsPerBatch = 7;
 
-    HANDLE m_completionEvent[c_dataBatches];
+    HANDLE m_completionEvent[c_dataBatches] = {};
 
 public:
     CompletionEvent() = default;

@@ -24,7 +24,7 @@ Command Prompt*:
 cl /EHsc /D_WIN32_WINNT=0x0A00 /Ox /MT xbdepends.cpp onecore.lib
 ```
 
-You can use CMake 3.20 or later:
+You can use CMake 3.21 or later:
 
 ```
 cmake -B out .
@@ -163,3 +163,4 @@ File Format, Part 2*". MSDN Magazine (March 2002)
 |June 2024|Update for recent DLL additions|
 |January 2025|Update for recent additions for ASAN support|
 |April 2025|Fixed build warning using std::transform|
+|February 2026|Updated to require CMake 3.21 or later|

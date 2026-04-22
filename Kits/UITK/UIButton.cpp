@@ -121,7 +121,7 @@ std::shared_ptr<UISpriteStyle> UIButton::GetCurrentStyle()
 
 /*static*/ void UIButtonFactory::DeserializeDataProperties(
     _In_ UIDataPtr data,
-    _Out_ ButtonDataProperties& buttonDataProperties)
+    _Inout_ ButtonDataProperties& buttonDataProperties)
 {
     buttonDataProperties.m_disableStyleId = ID(data->GetIfExists<std::string>(UITK_FIELD(disabledStyleId), ""));
     buttonDataProperties.m_pressedStyleId = ID(data->GetIfExists<std::string>(UITK_FIELD(pressedStyleId), ""));

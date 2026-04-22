@@ -13,7 +13,7 @@
 #include <ShellScalingApi.h>
 #pragma comment(lib, "shcore.lib")
 
-#include "atg/imgui_allocator.h"
+#include "ATG/imgui_allocator.h"
 #include "haptics.h"
 
 static ImGuiStyle g_imGuiStyle{};
@@ -33,7 +33,7 @@ int WINAPI wWinMain(_In_ HINSTANCE /*hInstance*/, _In_opt_ HINSTANCE, _In_ LPWST
     ImGui_ImplWin32_EnableDpiAwareness();
     WNDCLASSEXW wc = { sizeof(wc), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, L"Advanced Haptics", NULL };
     RegisterClassExW(&wc);
-    g_hWnd = CreateWindowExW(0, wc.lpszClassName, L"Advanced Haptics", WS_OVERLAPPEDWINDOW, 100, 100, 1920, 1080, NULL, NULL, wc.hInstance, NULL);
+    g_hWnd = CreateWindowExW(0, wc.lpszClassName, L"Advanced Haptics", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 1920, 1080, NULL, NULL, wc.hInstance, NULL);
 
     // Initialize Direct3D
     if (!CreateDeviceD3D(g_hWnd, 1920, 1080))

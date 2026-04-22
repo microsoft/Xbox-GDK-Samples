@@ -14,11 +14,13 @@ This sample demonstrates how to use the LampArray API to operate lights in RGB d
 
 # Building the sample
 
-If using an Xbox One devkit, set the active solution platform to Gaming.Xbox.XboxOne.x64.
+If using an Xbox One devkit, set the active solution platform to `Gaming.Xbox.XboxOne.x64`.
 
-If using an Xbox Series X|S devkit, set the active solution platform to Gaming.Xbox.Scarlett.x64.
+If using an Xbox Series X|S devkit, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
 
-*For more information, see* __Running samples__*, in the GDK documentation.*
+If using a PC, set the active solution platform to x64.
+
+*For more information, see* __Running samples__, *in the GDK documentation.*
 
 # Using the sample
 

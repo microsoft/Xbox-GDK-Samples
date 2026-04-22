@@ -60,6 +60,7 @@ FileLogger::FileLogger() noexcept(false)
     m_directoryOverride = L"";
     m_includeCompilerVersion = false;
     m_includeTimeStamp = false;
+    m_includeGaming = true;
 }
 
 FileLogger::FileLogger(const std::wstring& location, bool append, bool includeTimeStamp, bool includeCompilerVersion, bool appendTxt, bool delayFlush, const std::wstring& directoryOverride, bool includeGaming) noexcept : FileLogger()

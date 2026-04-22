@@ -3,7 +3,7 @@
 #
 # This is a development only tool. It is not supported for use on retail kits.
 
-cmake_minimum_required (VERSION 3.20)
+cmake_minimum_required (VERSION 3.21)
 
 project(xbcompress
   DESCRIPTION "Microsoft SZDD/KWAJ-style compression tool for Windows & Xbox"

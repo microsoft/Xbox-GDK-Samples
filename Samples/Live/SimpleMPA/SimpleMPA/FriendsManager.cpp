@@ -112,25 +112,28 @@ void FriendsManager::DoWork()
     size_t count = 0;
     XblSocialManagerDoWork(&events, &count);
 
-    for (size_t i = 0; i < count; ++i)
+    if (events)
     {
-        const XblSocialManagerEvent& socialEvent = events[i];
-
-        DEBUGLOG("Social Manager Event: %s", GetXblSocialManagerEventTypeString(socialEvent.eventType).c_str());
-
-        switch (socialEvent.eventType)
+        for (size_t i = 0; i < count; ++i)
         {
-        case XblSocialManagerEventType::UsersAddedToSocialGraph: UpdateFriendDisplayNames(socialEvent); break;
-        case XblSocialManagerEventType::SocialUserGroupLoaded:   UpdateFriendDisplayNames(socialEvent); break;
-        case XblSocialManagerEventType::SocialUserGroupUpdated:  UpdateFriendDisplayNames(socialEvent); break;
+            const XblSocialManagerEvent& socialEvent = events[i];
 
-            //The sample does not currently react to these events
-        case XblSocialManagerEventType::LocalUserAdded:              break;
-        case XblSocialManagerEventType::UsersRemovedFromSocialGraph: break;
-        case XblSocialManagerEventType::SocialRelationshipsChanged:  break;
-        case XblSocialManagerEventType::PresenceChanged:             break;
-        case XblSocialManagerEventType::ProfilesChanged:             break;
-        case XblSocialManagerEventType::UnknownEvent:                break;
+            DEBUGLOG("Social Manager Event: %s", GetXblSocialManagerEventTypeString(socialEvent.eventType).c_str());
+
+            switch (socialEvent.eventType)
+            {
+            case XblSocialManagerEventType::UsersAddedToSocialGraph: UpdateFriendDisplayNames(socialEvent); break;
+            case XblSocialManagerEventType::SocialUserGroupLoaded:   UpdateFriendDisplayNames(socialEvent); break;
+            case XblSocialManagerEventType::SocialUserGroupUpdated:  UpdateFriendDisplayNames(socialEvent); break;
+
+                //The sample does not currently react to these events
+            case XblSocialManagerEventType::LocalUserAdded:              break;
+            case XblSocialManagerEventType::UsersRemovedFromSocialGraph: break;
+            case XblSocialManagerEventType::SocialRelationshipsChanged:  break;
+            case XblSocialManagerEventType::PresenceChanged:             break;
+            case XblSocialManagerEventType::ProfilesChanged:             break;
+            case XblSocialManagerEventType::UnknownEvent:                break;
+            }
         }
     }
 }
@@ -332,9 +335,16 @@ void FriendsManager::GetUsers(XblSocialManagerUserGroupHandle group, std::vector
     {
         outFriends.reserve(userCount);
 
-        for (size_t i = 0; i < userCount; ++i)
+        if (rawUsers)
         {
-            outFriends.push_back(rawUsers[i]->xboxUserId);
+            for (size_t i = 0; i < userCount; ++i)
+            {
+                outFriends.push_back(rawUsers[i]->xboxUserId);
+            }
+        }
+        else
+        {
+            DEBUGLOG("FriendsManager::GetUsers: No users found in group");
         }
     }
     else

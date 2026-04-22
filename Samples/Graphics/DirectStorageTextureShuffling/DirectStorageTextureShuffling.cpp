@@ -54,7 +54,8 @@ Sample::Sample() noexcept(false) :
     m_frame(0),
     m_unshuffleTextureFence(0),
     m_unshuffleTextureFenceEvent(nullptr),
-    m_unshuffleTextureFenceValue(0)
+    m_unshuffleTextureFenceValue(0),
+    m_quadVertexBufferView{}
 {
     // Renders only 2D, so no need for a depth buffer.
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_UNKNOWN, 2, DX::DeviceResources::c_Enable4K_UHD | DX::DeviceResources::c_EnableQHD);
@@ -112,6 +113,10 @@ void Sample::LoadTextureMetadata()
 
     // Submit the DS requests
     auto textureMetadataLoadedEvent = CreateEvent(nullptr, FALSE, FALSE, nullptr);
+    if (!textureMetadataLoadedEvent)
+    {
+        throw DX::com_exception(HRESULT_FROM_WIN32(GetLastError()));
+    }
     m_dsQueue->EnqueueSetEvent(textureMetadataLoadedEvent);
     m_dsQueue->Submit();
 
@@ -632,9 +637,9 @@ void Sample::CreateDeviceDependentResources()
     // Create synchronization objects to handle communication between DirectStorage and Graphics workloads
     {       
         m_unshuffleTextureFenceEvent = CreateEvent(nullptr, FALSE, FALSE, nullptr);
-        if (m_unshuffleTextureFenceEvent == nullptr)
+        if (!m_unshuffleTextureFenceEvent)
         {
-            DX::ThrowIfFailed(HRESULT_FROM_WIN32(GetLastError()));
+            throw DX::com_exception(HRESULT_FROM_WIN32(GetLastError()));
         }
 
         DX::ThrowIfFailed(device->CreateFence(0, D3D12_FENCE_FLAG_NONE, IID_GRAPHICS_PPV_ARGS(m_unshuffleTextureFence.ReleaseAndGetAddressOf())));

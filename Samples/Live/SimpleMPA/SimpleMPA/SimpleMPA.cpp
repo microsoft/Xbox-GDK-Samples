@@ -20,6 +20,9 @@ using namespace ATG;
 using namespace ATG::UITK;
 
 Sample::Sample() noexcept(false) :
+    m_connectivityHint{},
+    m_taskQueueRegToken{},
+    m_gameInviteEventToken{},
     m_frame(0)
 {
     // Renders only 2D, so no need for a depth buffer.
@@ -250,24 +253,24 @@ void Sample::RegisterForInvites()
 {
     DEBUGLOG("SessionManager::RegisterForInvites:");
 
-    auto InviteHandlerLambda = [](void* context, const char* inviteUri)
+    auto InviteHandlerLambda = [](void* context, const XGameActivationInfo* activationInfo)
     {
-        if (inviteUri != nullptr)
+        if (activationInfo->type == XGameActivationType::AcceptedGameInvite && activationInfo->inviteUri != nullptr)
         {
             if (auto pThis = reinterpret_cast<Sample*>(context))
             {
-                std::string uri = inviteUri;
+                std::string uri = activationInfo->inviteUri;
                 pThis->HandleInvite(uri);
             }
         }
     };
 
-    XGameInviteRegisterForEvent(nullptr, this, InviteHandlerLambda, &m_gameInviteEventToken);
+    XGameActivationRegisterForEvent(nullptr, this, InviteHandlerLambda, &m_gameInviteEventToken);
 }
 
 void Sample::UnregisterForInvites()
 {
-    XGameInviteUnregisterForEvent(m_gameInviteEventToken, false);
+    XGameActivationUnregisterForEvent(m_gameInviteEventToken, false);
 }
 
 void Sample::InitializeUIEventHandlers()

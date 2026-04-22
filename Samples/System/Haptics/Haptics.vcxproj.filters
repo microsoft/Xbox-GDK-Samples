@@ -4,9 +4,6 @@
     <Filter Include="ImGui">
       <UniqueIdentifier>{3d34b4bd-ea46-406c-9824-0dda6444b99f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Audio">
-      <UniqueIdentifier>{d5a2c484-cdc8-4e8d-ac54-8dee8d52bd08}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Media">
       <UniqueIdentifier>{474d2779-f286-4074-841b-641a4e0942d0}</UniqueIdentifier>
     </Filter>
@@ -22,22 +19,16 @@
     <Filter Include="ATG Tool Kit">
       <UniqueIdentifier>{bc7472e0-fe60-4401-bc5d-a20209e93581}</UniqueIdentifier>
     </Filter>
+    <Filter Include="HapticsManager">
+      <UniqueIdentifier>{3a8c1b54-9311-4dd5-837d-82642273abc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HapticsManager\Audio">
+      <UniqueIdentifier>{d5a2c484-cdc8-4e8d-ac54-8dee8d52bd08}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Audio\WASAPIManager.cpp">
-      <Filter>Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="Audio\WAVFileReader.cpp">
-      <Filter>Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="Audio\WaveSampleGenerator.cpp">
-      <Filter>Audio</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Audio\XAudio2Manager.cpp">
-      <Filter>Audio</Filter>
-    </ClCompile>
     <ClCompile Include="haptics.cpp" />
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui.cpp">
       <Filter>ImGui</Filter>
@@ -69,27 +60,27 @@
     <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
       <Filter>ATG Tool Kit</Filter>
     </ClCompile>
+    <ClCompile Include="HapticsManager\HapticsDevice.cpp">
+      <Filter>HapticsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="HapticsManager\HapticsManager.cpp">
+      <Filter>HapticsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="HapticsManager\Audio\WASAPIManager.cpp">
+      <Filter>HapticsManager\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="HapticsManager\Audio\WaveSampleGenerator.cpp">
+      <Filter>HapticsManager\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="HapticsManager\Audio\WAVFileReader.cpp">
+      <Filter>HapticsManager\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="HapticsManager\Audio\XAudio2Manager.cpp">
+      <Filter>HapticsManager\Audio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Audio\WASAPIManager.h">
-      <Filter>Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="Audio\WAVFileReader.h">
-      <Filter>Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="Audio\WaveSampleGenerator.h">
-      <Filter>Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="Audio\RenderBuffer.h">
-      <Filter>Audio</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Audio\IGenerator.h">
-      <Filter>Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="Audio\XAudio2Manager.h">
-      <Filter>Audio</Filter>
-    </ClInclude>
     <ClInclude Include="haptics.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imconfig.h">
       <Filter>ImGui</Filter>
@@ -165,6 +156,30 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\atg\d3dx12.h">
       <Filter>ImGui\ATG</Filter>
+    </ClInclude>
+    <ClInclude Include="HapticsManager\HapticsDevice.h">
+      <Filter>HapticsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="HapticsManager\HapticsManager.h">
+      <Filter>HapticsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="HapticsManager\Audio\IGenerator.h">
+      <Filter>HapticsManager\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="HapticsManager\Audio\WASAPIManager.h">
+      <Filter>HapticsManager\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="HapticsManager\Audio\WaveSampleGenerator.h">
+      <Filter>HapticsManager\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="HapticsManager\Audio\WAVFileReader.h">
+      <Filter>HapticsManager\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="HapticsManager\Audio\XAudio2Manager.h">
+      <Filter>HapticsManager\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="HapticsManager\Audio\RenderBuffer.h">
+      <Filter>HapticsManager\Audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

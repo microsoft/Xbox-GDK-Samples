@@ -19,7 +19,10 @@ using namespace DirectX;
 using Microsoft::WRL::ComPtr;
 
 Sample::Sample() noexcept(false) :
-    m_frame(0)
+    m_frame(0),
+    m_executionTestResult{},
+    m_readTestResult{},
+    m_readWriteTestResult{}
 {
     // Renders only 2D, so no need for a depth buffer.
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_UNKNOWN);

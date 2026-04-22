@@ -49,10 +49,14 @@ DeviceResources::DeviceResources(
     UINT backBufferCount,
     unsigned int flags) noexcept(false) :
         m_backBufferIndex(0),
+#ifdef _GAMING_XBOX
+        m_ffxSwapChain{},
+#endif
         m_fenceValue(0),
 #ifdef _GAMING_XBOX
         m_framePipelineToken{},
 #endif
+        m_hasHighRefreshRate(false),
         m_rtvDescriptorSize(0),
         m_screenViewport{},
         m_scissorRect{},

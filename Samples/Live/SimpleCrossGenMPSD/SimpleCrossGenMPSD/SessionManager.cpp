@@ -10,7 +10,7 @@
 #include "Debug.h"
 #include "GuidUtil.h"
 
-#include <XGameInvite.h>
+#include <XGameActivation.h>
 #include <XGameRuntimeFeature.h>
 #include <XGameUI.h>
 
@@ -69,7 +69,7 @@ void SessionManager::UnregisterForEvents()
 
         XblMultiplayerRemoveSubscriptionLostHandler(m_liveContext, m_subscriptionLostHandlerContext);
         XblMultiplayerRemoveConnectionIdChangedHandler(m_liveContext, m_connectionIdChangedHandlerContext);
-        XGameInviteUnregisterForEvent(m_gameInviteEventToken, false);
+        XGameActivationUnregisterForEvent(m_gameInviteEventToken, false);
 
         m_eventsRegistered = false;
     }
@@ -140,13 +140,13 @@ void SessionManager::RegisterForInvites()
 {
     DEBUGLOG("SessionManager::RegisterForInvites:");
 
-    auto InviteHandlerLambda = [](void* context, const char* inviteUri)
+    auto InviteHandlerLambda = [](void* context, const XGameActivationInfo* activationInfo)
     {
-        if (inviteUri != nullptr)
+        if (activationInfo->type == XGameActivationType::AcceptedGameInvite && activationInfo->inviteUri != nullptr)
         {
             if (auto pThis = reinterpret_cast<SessionManager*>(context))
             {
-                std::string uri = inviteUri;
+                std::string uri = activationInfo->inviteUri;
 
                 auto pos = uri.find("handle=") + 7;
                 auto end = uri.find('&', pos);
@@ -164,7 +164,7 @@ void SessionManager::RegisterForInvites()
         }
     };
 
-    XGameInviteRegisterForEvent(nullptr, this, InviteHandlerLambda, &m_gameInviteEventToken);
+    XGameActivationRegisterForEvent(nullptr, this, InviteHandlerLambda, &m_gameInviteEventToken);
 }
 
 void SessionManager::OnConnectionIdChanged()

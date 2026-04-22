@@ -149,18 +149,18 @@ namespace
 
 struct ATG::Help::CalloutBox
 {
-    ATG::HelpID helpID;         // The HelpID for the callout
-    CalloutType type;			// The type of callout to render.
-    uint16_t align;				// Alignment relative to anchor point.
-    HelpFonts font;				// font to render text in.
-    const wchar_t * labelPre;	// Label pre-text
-    const wchar_t * label;		// Label text
-    Vector4 labelForeground;	// Label Foreground
-    Vector4 foreground;			// Foreground color
-    Vector2 anchor;				// the anchor point for this callout.
-    const wchar_t * text;		// text for the callout.
-    Vector2 calloutLine;		// position to draw the line to on the callout from the anchor (if shown).
-    Vector2 midpointLine;       // the midpoint of the callout and anchor lines
+    ATG::HelpID helpID = {};                        // The HelpID for the callout
+    CalloutType type = CalloutType::NO_CONTAINER;	// The type of callout to render.
+    uint16_t align = 0;				                // Alignment relative to anchor point.
+    HelpFonts font = SEGOE_UI_18PT;				    // font to render text in.
+    const wchar_t * labelPre = nullptr;	            // Label pre-text
+    const wchar_t * label = nullptr;		        // Label text
+    Vector4 labelForeground = {};	                // Label Foreground
+    Vector4 foreground = {};			            // Foreground color
+    Vector2 anchor = {};				            // the anchor point for this callout.
+    const wchar_t * text = nullptr;		            // text for the callout.
+    Vector2 calloutLine = {};		                // position to draw the line to on the callout from the anchor (if shown).
+    Vector2 midpointLine = {};                      // the midpoint of the callout and anchor lines
 
     static void Create(_Out_ CalloutBox& dest, _In_opt_z_ const wchar_t* text, ATG::HelpID helpID, bool linearColors)
     {

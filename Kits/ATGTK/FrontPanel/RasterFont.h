@@ -218,9 +218,9 @@ namespace ATG
         RasterFont(const wchar_t *filename);
         RasterFont(std::unique_ptr<RasterGlyphSheet> &&glyphs);
 
-        RasterFont(RasterFont &&other);
+        RasterFont(RasterFont &&other) noexcept;
         RasterFont(const RasterFont &) = delete;
-        RasterFont &operator=(RasterFont &&other);
+        RasterFont &operator=(RasterFont &&other) noexcept;
         RasterFont &operator=(RasterFont&) = delete;
 
         ~RasterFont();

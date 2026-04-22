@@ -322,7 +322,7 @@ ENUM_LOOKUP_TABLE(SliderType,
 
 /*static*/ void UISliderFactory::DeserializeDataProperties(
     _In_ UIDataPtr data,
-    _Out_ SliderDataProperties& sliderDataProperties)
+    _Inout_ SliderDataProperties& sliderDataProperties)
 {
     ID sliderOrientationID;
     if (data->GetTo(UITK_FIELD(sliderOrientation), sliderOrientationID))

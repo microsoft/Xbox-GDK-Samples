@@ -11,7 +11,7 @@ namespace
 {
     // Helpers for creating/parsing Block ID bits.
     constexpr uint32_t c_blockIdBits = 31u;
-    constexpr uint32_t c_allocatorIdMask = (~0u) << c_blockIdBits;
+    constexpr uint64_t c_allocatorIdMask = (~0ull) << c_blockIdBits;
     constexpr uint32_t c_blockIndexMask = ~c_allocatorIdMask;
 
     // Returns the policy identifier used to allocate the block (ESRAM or DRAM.)

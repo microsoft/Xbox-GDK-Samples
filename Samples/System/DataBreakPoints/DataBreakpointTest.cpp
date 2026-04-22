@@ -13,7 +13,10 @@
 DataBreakpointTest::DataBreakpointTest() :
     m_testSuccessful(false)
     , m_shutdownThread(false)
-    , m_testThread(nullptr)
+    , m_testThread(nullptr),
+    m_currentTest{},
+    m_readWriteFailVariable{},
+    m_writeFailVariable{}
 {
 }
 

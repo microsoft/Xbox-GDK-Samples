@@ -72,9 +72,9 @@ public:
     void SetUserRequiresUpdate() { m_userUIRequiresUpdate = true; }
 
     struct CharacterStatData {
-        std::string name;
-        uint8_t level;
-        std::string combatClass;
+        std::string name{};
+        uint8_t level = 0;
+        std::string combatClass{};
     };
 
     struct WorldData {
@@ -85,7 +85,7 @@ public:
 
     struct GamerPicBytes
     {
-        size_t size;
+        size_t size = 0;
         std::unique_ptr<uint8_t> data;
     };
 

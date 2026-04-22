@@ -79,7 +79,9 @@ namespace
 }
 
 Sample::Sample() noexcept(false) :
-    m_frame(0)
+    m_frame(0),
+    m_vertexBufferView{},
+    m_indexBufferView{}
 {
     // Use gamma-correct rendering.
     m_deviceResources = std::make_unique<DX::DeviceResources>();

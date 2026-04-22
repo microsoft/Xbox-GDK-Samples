@@ -195,6 +195,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="..\Snippets\TextEntry.h" />
     <ClInclude Include="HandheldBestPractices.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
@@ -202,27 +203,35 @@
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_applog.cpp" />
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_deviceresources.cpp" />
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_sample.cpp" />
-    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_dx12.cpp" />
-    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_win32.cpp" />
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_dx12.cpp">
+      <DisableSpecificWarnings>6011;6387;26819;28182;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_win32.cpp">
+      <DisableSpecificWarnings>6011;6387;26819;28182;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">NotUsing</PrecompiledHeader>
+      <DisableSpecificWarnings>6011;6387;26819;28182;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_draw.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">NotUsing</PrecompiledHeader>
+      <DisableSpecificWarnings>6011;6387;26819;28182;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_tables.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">NotUsing</PrecompiledHeader>
+      <DisableSpecificWarnings>6011;6387;26819;28182;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_widgets.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">NotUsing</PrecompiledHeader>
+      <DisableSpecificWarnings>6011;6387;26819;28182;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="..\Snippets\AudioDeviceManager.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -309,6 +318,11 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\Snippets\TextEntry.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Snippets\VirtualKeyboard.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -342,14 +356,8 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\..\packages\Microsoft.GameInput.3.1.26100.6879\build\native\targets\Microsoft.GameInput.targets" Condition="Exists('..\..\packages\Microsoft.GameInput.3.1.26100.6879\build\native\targets\Microsoft.GameInput.targets')" />
+    <Import Project="..\..\packages\Microsoft.GameInput.3.3.182\build\native\targets\Microsoft.GameInput.targets" Condition="Exists('..\..\packages\Microsoft.GameInput.3.3.182\build\native\targets\Microsoft.GameInput.targets')" />
   </ImportGroup>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Microsoft.GameInput.3.1.26100.6879\build\native\targets\Microsoft.GameInput.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.GameInput.3.1.26100.6879\build\native\targets\Microsoft.GameInput.targets'))" />
-  </Target>
   <Target Name="GDKEditionCheck" BeforeTargets="PrepareForBuild">
     <Error Condition="'$(GameDK)'==''" Text="GameDK property is required" />
     <Error Condition="!HasTrailingSlash('$(GameDK)')" Text="GameDK property must have trailing slash" />
@@ -363,5 +371,11 @@
       <ErrorText>This project requires the Microsoft GDK with Xbox Extensions to be installed. If you have already installed the GDK, then run Repair to ensure proper integration with Visual Studio. The missing platform is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(VCTargetsPath)\Platforms\$(Platform)\Platform.props')" Text="$([System.String]::Format('$(ErrorText)', '$(Platform)'))" />
+  </Target>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Microsoft.GameInput.3.3.182\build\native\targets\Microsoft.GameInput.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.GameInput.3.3.182\build\native\targets\Microsoft.GameInput.targets'))" />
   </Target>
 </Project>

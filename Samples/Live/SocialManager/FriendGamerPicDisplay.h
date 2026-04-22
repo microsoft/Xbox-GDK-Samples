@@ -14,6 +14,7 @@ class FriendGamerPicDisplay
 {
 public:
     explicit FriendGamerPicDisplay() noexcept(false) :
+        m_gamerPicData(nullptr),
         m_gamerPicDataSize(0),
         m_gamerPicReady(false),
         m_gamerPicCPU{},

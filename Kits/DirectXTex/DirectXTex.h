@@ -47,7 +47,7 @@ struct IWICImagingFactory;
 struct IWICMetadataQueryReader;
 #endif
 
-#define DIRECTX_TEX_VERSION 209
+#define DIRECTX_TEX_VERSION 210
 
 #if defined(_WIN32) && defined(DIRECTX_TEX_EXPORT)
 #ifdef __GNUC__
@@ -142,6 +142,10 @@ namespace DirectX
         _Out_ size_t& rowPitch, _Out_ size_t& slicePitch, _In_ CP_FLAGS flags = CP_FLAGS_NONE) noexcept;
 
     DIRECTX_TEX_API size_t __cdecl ComputeScanlines(_In_ DXGI_FORMAT fmt, _In_ size_t height) noexcept;
+
+    DIRECTX_TEX_API bool __cdecl CalculateMipLevels(_In_ size_t width, _In_ size_t height, _Inout_ size_t& mipLevels) noexcept;
+    DIRECTX_TEX_API bool __cdecl CalculateMipLevels3D(_In_ size_t width, _In_ size_t height, _In_ size_t depth,
+        _Inout_ size_t& mipLevels) noexcept;
 
     DIRECTX_TEX_API DXGI_FORMAT __cdecl MakeSRGB(_In_ DXGI_FORMAT fmt) noexcept;
     DIRECTX_TEX_API DXGI_FORMAT __cdecl MakeLinear(_In_ DXGI_FORMAT fmt) noexcept;

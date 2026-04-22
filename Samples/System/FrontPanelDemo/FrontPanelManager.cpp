@@ -20,6 +20,7 @@ using ButtonState = FrontPanelInput::ButtonStateTracker::ButtonState;
 
 FrontPanelManager::FrontPanelManager()
     : m_currentPanelScreen(nullptr)
+    , m_buttonActionAssignments{}
 {
     m_available = XFrontPanelIsSupported();
     if (m_available)

@@ -25,7 +25,46 @@ with individual playback occuring on each.
 # Implementation notes
 
 This sample demonstrates how to be notified when a controller is plugged in, when haptics are ready, if
-available, and how to write audio data to the haptic endpoints using WASAPI and XAudio2.
+available, and how to write audio data to the haptic endpoints using WASAPI and XAudio2.  Haptics-related code
+is located in the reusable library located in the `HapticsManager` directory.
+
+# Haptics Manager
+
+This sample has separated out much of the haptics code into a reusable class that can be integrated into other 
+projects. To use, copy the HapticsManager.h and HapticsManager.cpp files into your project along with the Audio 
+subdirectory.  Then...
+
+- After the call to `GameInputCreate`, create an instance of `HapticsManager` and call `Initialize`, passing the
+created `IGameInput` instance:
+```c++
+ComPtr<IGameInput> g_gameInput {};
+std::unique_ptr<HapticsManager> g_hapticsManager;
+...
+g_hapticsManager = std::make_unique<HapticsManager>();
+if (FAILED(g_hapticsManager->Initialize(g_gameInput.Get())))
+{
+    // handle error
+}
+```
+- To write audio data to a haptic-enabled controller, call `GetHapticsDevice` with the `GameInputDevice` to retrieve
+the `HapticsDevice` wrapper, then call one of the `Play` methods:
+```c++
+const HapticsDevice* hapticsDevice = g_hapticsManager->GetHapticsDevice(giDevice);
+
+// if the device doesn't have haptic capabilities, hapticsDevice will be nullptr
+if (hapticsDevice)
+{
+    // load and play a WAV file
+    hapticsDevice->PlayWAVFile("filename.wav", HapticPlaybackEngine::XAudio2);
+
+    // OR play a pre-loaded WAV file
+    hapticsDevice->PlayWAVData(&wavData, wavDataSize, HapticPlaybackEngine::XAudio2);
+}
+```
+- To stop playing audio data, call the `Stop` method:
+```c++
+    hapticsDevice->Stop();
+```
 
 # Known Issues/Expectations
 
@@ -33,4 +72,5 @@ At present, the only haptics-enabled controller supported by GameInput is the Pl
 
 # Update history
 
+- 01/2026 -- Updated with HapticsManager
 - 10/2025 -- Initial release

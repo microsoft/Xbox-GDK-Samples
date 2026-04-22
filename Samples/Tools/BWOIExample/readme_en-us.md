@@ -1,6 +1,6 @@
 # Build W/O Installing (BWOI) Example
 
-*This sample is compatible with the Microsoft Game Development Kit (March 2022)*
+*This sample is compatible with the Microsoft Game Development Kit (October 2024)*
 
 # Description
 
@@ -28,12 +28,15 @@ agent](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/v2-windows
 or other custom build machine.
 
 For building Microsoft GDK projects, you can set up [Visual Studio
-2019](https://walbourn.github.io/visual-studio-2019/) (which can build
-v141 and v142 platform toolset VC++ projects) or [Visual Studio
 2022](https://walbourn.github.io/visual-studio-2022/) (which can build
-v141, v142, and v143 platform toolset VC++ projects). You can also use
+v142, v143, and clangcl platform toolset VC++ projects) or [Visual Studio
+2026](https://walbourn.github.io/visual-studio-2026/) (which can build
+v145 and clangcl platform toolset VC++ projects). You can also use
 either a full Visual Studio install or the [Visual Studio Build
 Tools](https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2022).
+
+> Visual Studio 2026 requires Microsoft GDKX April 2026 or later
+
 Be sure to install the following components:
 
 **Option 1: Full Visual Studio Install**
@@ -41,16 +44,15 @@ Be sure to install the following components:
 | Workload  |  Component ID (for [command line install](https://docs.microsoft.com/en-us/visualstudio/install/use-command-line-parameters-to-install-visual-studio)) |
 |-----------------------------------------|----------------------------|
 | Game Development with C++ | Microsoft.VisualStudio.Workload.NativeGame |
-| Desktop development with C++<br /> *Required component:* Windows 10 SDK (10.0.19041.0) -or- Windows 11 SDK (10.0.22000.0)<br /><br /> *Optional component:* MSVC v141 - VS 2017 C++ x64/x86 build tools (v14.16)<br /> *Only required if building v141 platform toolset projects using VS 2019/MSBuild 16.0 or VS 2022/MSBuild 17.0*<br /><br />  *Optional component, VS 2022 only:* MSVC v142 - VS 2019 C++ x64/x86 build tools (v14.29)<br /><br /> *Only required if building v142 platform toolset projects using VS 2022/MSBuild 17.0* <br /><br /> *Optional component:* C++ Clang tools for Windows (12.0.0 - x64/x86) <br /> *Only required if building using the Clang toolset* | Microsoft.VisualStudio.Workload.NativeDesktop<br /> Microsoft.VisualStudio.Component.Windows10SDK.19041<br />Microsoft.VisualStudio.Component.Windows11SDK.22000<br /><br /> *Optional:* Microsoft.VisualStudio.Component.VC.v141.x86.x64<br /><br /> *Optional, VS 2022 only:* Microsoft.VisualStudio.ComponentGroup.VC.Tools.142.x86.x64<br /><br /> *Optional:* Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Llvm.Clang|
+| Desktop development with C++<br /> *Required component:* Windows 11 SDK (10.0.22000.0)<br /><br /> *Optional component, VS 2022 only:* MSVC v142 - VS 2019 C++ x64/x86 build tools (v14.29)<br /><br /> *Only required if building v142 platform toolset projects using VS 2022/MSBuild 17.0* <br /><br /> *Optional component:* C++ Clang tools for Windows (xx.0.0 - x64/x86) <br /> *Only required if building using the Clang toolset* | Microsoft.VisualStudio.Workload.NativeDesktop<br /> Microsoft.VisualStudio.Component.Windows11SDK.22000<br /> *Optional, VS 2022 only:* Microsoft.VisualStudio.ComponentGroup.VC.Tools.142.x86.x64<br /><br /> *Optional:* Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Llvm.Clang|
 
 **Option 2: Visual Studio Build Tools**
 
 | Workload  |  Component ID (for [command line install](https://docs.microsoft.com/en-us/visualstudio/install/use-command-line-parameters-to-install-visual-studio)) |
 |-----------------------------------------|----------------------------|
-| C++ Build Tools<br /> *Required component:* Windows 10 SDK (10.0.19041.0) -or- Windows 11 SDK (10.0.22000.0)<br /><br /> *Required component:* MSVC v142 - VS 2019 C++ x64/x86 build tools (Latest)<br /> -or- MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)<br /><br /> *Optional component:* MSVC v141 - VS 2017 C++ x64/x86 build tools (v14.16)<br /> *Only required if building v141 platform toolset projects using VS 2019/MSBuild 16.0 or VS 2022/MSBuild 17.0*<br /><br /> *Optional component, VS 2022 only:* MSVC v142 - VS 2019 C++ x64/x86 build tools (v14.29)<br /> *Only required if building v142 platform toolset projects using VS 2022/MSBuild 17.0*<br /><br /> *Optional component:* C++ Clang tools for Windows (12.0.0 - x64/x86)<br /> *Only required if building using the Clang toolset* | Microsoft.VisualStudio.Workload.VCTools<br /> Microsoft.VisualStudio.Component.Windows10SDK.19041<br />Microsoft.VisualStudio.Component.Windows11SDK.22000<br /><br /> Microsoft.VisualStudio.Component.VC.Tools.x86.x64<br /><br /> *Optional:* Microsoft.VisualStudio.Component.VC.v141.x86.x64<br /><br /> *Optional, VS 2022 only:* Microsoft.VisualStudio.ComponentGroup.VC.Tools.142.x86.x64<br /><br /> *Optional:* Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Llvm.Clang|
+| C++ Build Tools<br /> *Required component:* Windows 11 SDK (10.0.22000.0)<br /><br /> *Required component:* MSVC v142 - VS 2019 C++ x64/x86 build tools (Latest)<br /> -or- MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)<br /><br /> *Optional component, VS 2022 only:* MSVC v142 - VS 2019 C++ x64/x86 build tools (v14.29)<br /> *Only required if building v142 platform toolset projects using VS 2022/MSBuild 17.0*<br /><br /> *Optional component:* C++ Clang tools for Windows (12.0.0 - x64/x86)<br /> *Only required if building using the Clang toolset* | Microsoft.VisualStudio.Workload.VCTools<br /> Microsoft.VisualStudio.Component.Windows11SDK.22000<br /><br /> Microsoft.VisualStudio.Component.VC.Tools.x86.x64<br /><br /> *Optional, VS 2022 only:* Microsoft.VisualStudio.ComponentGroup.VC.Tools.142.x86.x64<br /><br /> *Optional:* Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Llvm.Clang|
 
-> The BWOIExample project uses the v142 toolset by default, which means it requires VS 2019 or VS 2022. Building with VS 2019 requires the MSVC v142 - VS 2019 C++ x64/x86 build tools (Latest) component, and  VS 2022 requires the MSVC v142 - VS 2019 C++ x64/x86 build tools (v14.29) component.                                                   |
-
+> The BWOIExample project uses the v143 toolset by default, which means it requires VS 2022. Building with VS 2022 using v142 requires the MSVC v142 - VS 2019 C++ x64/x86 build tools (Latest) component, and  VS 2022 requires the MSVC v142 - VS 2019 C++ x64/x86 build tools (v14.29) component.                                                   |
 
 # Setting up the build environment
 
@@ -58,16 +60,13 @@ Once the software requirements have been installed, you can set up an
 extracted GDK that does not require installation. There are two ways to
 do this. It's also possible to extract the Windows 10 SDK if desired.
 
-***Note that the March 2022 GDK or later is required for VS 2022
-support.***
-
 ## Method 1: Download the extracted GDK
 
 This is recommended as the simplest option.
 
 1.  Go to [Xbox Developer Downloads](https://aka.ms/gdkdl).
 
-2.  Select "Game Core" as the file type.
+2.  Select "GDK" as the file type.
 
 3.  In the build/version menu, select "Microsoft GDK Extracted for Build
     Systems" for the GDK build you wish to use.
@@ -87,14 +86,16 @@ This method makes use of the `Microsoft.GDK.PC` package on [nuget.org](https://w
 3.  Extract the GDK content using:
 
 ```
+nuget install -ExcludeVersion -Source <name-of-source> Microsoft.GDK.Windows -OutputDirectory [path-for-extracted-sdks]
+```
+
+-or-
+
+```
 nuget install -ExcludeVersion -Source <name-of-source> Microsoft.GDK.PC -OutputDirectory [path-for-extracted-sdks]
 ```
 
-or with June 2024 or earlier:
-
-```
-nuget install -ExcludeVersion -Source <name-of-source> Microsoft.GDK.PC.<edition> -OutputDirectory [path-for-extracted-sdks]
-```
+> Using 'stock' x64 is recommended for PC development over the `Gaming.Desktop.x64` custom tool set. Most of this sample does not apply to 'stock' x64 build as they don't require custom MSBuild rules.
 
 ## Method 3: Extract the GDK manually
 
@@ -106,13 +107,13 @@ You will need a copy of the standard GDK installer.
 
 2.  **cd** to the BWOIExample sample folder.
 
-3.  Set up environment variables for VS 2022 or 2019 and provide your
+3.  Set up environment variables for VS 2022 or 2026 and provide your
     target edition number. If you specify a custom path for the
     extracted GDK, use a short, absolute, unquoted path to avoid issues
     such as exceeding MAX_PATH.
 
 ```
-setenv vs2022 251000 [path-for-extracted-sdks]
+setenv vs2022 260400 [path-for-extracted-sdks]
 ```
 
 4.  Extract the GDK from the installer image:
@@ -142,7 +143,7 @@ Center](https://developer.microsoft.com/windows/downloads/windows-sdk/).
     extracted GDK.
 
 ```
-setenv vs2022 251000 [path-for-extracted-sdks]
+setenv vs2022 260400 [path-for-extracted-sdks]
 ```
 
 3.  Extract the Windows 10 SDK from the installer image:
@@ -151,12 +152,14 @@ setenv vs2022 251000 [path-for-extracted-sdks]
 extractsdk <path-to-sdk-installer>\Installers
 ```
 
-## VS 2019/2022 only: Merge VCTargets
+## Merge VCTargets
 
-In addition to setting up the flat file directory of the GDK, VS 2019
-and 2022 BWOI rely on having a combined VCTargets folder that merges the
+> Note that this only applies when using the custom *Gaming.\*.x64* MSBuild platforms. If you are only building for *x64* you do not need to run this step.
+
+In addition to setting up the flat file directory of the GDK, VS 2022
+and 2026 BWOI rely on having a combined VCTargets folder that merges the
 standard Microsoft.Cpp MSBuild rules with the GDK's MSBuild rules. For
-VS 2019 and 2022 the robust solution is to create a merged folder
+VS 2022 and 2026 the robust solution is to create a merged folder
 alongside the extracted GDK.
 
 1.  **Open a Command Prompt** and **cd** to the BWOIExample folder.
@@ -165,7 +168,7 @@ alongside the extracted GDK.
     downloaded or manually extracted GDK.
 
 ```
-setenv vs2022 251000 [path-for-extracted-sdks]
+setenv vs2022 260400 [path-for-extracted-sdks]
 ```
 
 3.  Build the merged VC++ MSBuild targets directories and place them
@@ -180,6 +183,13 @@ points to the extracted, portable GDK (and optional Windows SDK and
 VCTargets directories) that the sample will build against. This folder
 can be copied to any other build machine as well.
 
+Alternatively you can use MSBuild `vctargets.targets` to do the same merge
+without the need to use setenv first to locate Visual Studio.
+
+```
+msbuild vctargets.targets /p:GDKEditionNumber=260400 /p:ExtractedFolder=[path-for-extracted-sdks]
+```
+
 # Building the sample
 
 The rest of the building is done as normal. This BWOI example is driven
@@ -193,10 +203,10 @@ installed.
 
 2.  **cd** to the BWOIExample sample folder.
 
-3.  Run **setenv** for VS 2022 or 2019 and your GDK edition target:
+3.  Run **setenv** for VS 2022 or 2026 and your GDK edition target:
 
 ```
-setenv vs2022 251000 [path-for-extracted-sdks]
+setenv vs2022 260400 [path-for-extracted-sdks]
 ```
 
 > If you don't run setenv, the build will fall back to default values specified in Directory.Build.props. You can modify these directly in the file if you prefer. You will also need to make sure MSBuild is on the path if not using setenv.
@@ -204,14 +214,12 @@ setenv vs2022 251000 [path-for-extracted-sdks]
 4.  Build the project on the command-line:
 
 ```
-msbuild BWOIExample.vcxproj /p:Configuration=Debug /p:Platform=x64
-
 msbuild BWOIExample.vcxproj /p:Configuration=Debug /p:Platform=Gaming.Xbox.XboxOne.x64
 
 msbuild BWOIExample.vcxproj /p:Configuration=Debug /p:Platform=Gaming.Xbox.Scarlett.x64
 ```
 
-> For VS 2019, if you only wish to support v142 platform toolset projects and did *not* install ``Microsoft.VisualStudio.Component.VC.v141.x86.x64``, then you should edit the Directory.Build.Props to remove the setting of ``VCTargetsPath15``. Similarly, for VS 2022, remove both ``VCTargetsPath15` and ``VCTargetsPath16`` if you only installed support for the v143 platform toolset.
+> For VS 2022, remove ``VCTargetsPath16`` if you only installed support for the v143 platform toolset. *Gaming.Desktop.x64* is deprecated.
 
 # Building in a Windows container
 
@@ -253,7 +261,7 @@ Visual Studio on the host machine.
 ```
 docker build -t gdkbwoi:latest -m 2GB --build-arg
 ExtractedSDKDir="sdks" --build-arg ScriptDir="BWOIExample"
---build-arg GDKVer="251000" .
+--build-arg GDKVer="260400" .
 ```
 
 > To allow your container to use additional CPU cores, use the ``--cpus=N`` flag. To use additional memory, change the value in the ``-m 2GB`` flag.
@@ -309,37 +317,10 @@ See the **CMakeExample** for more details.
 
 # Known Issues
 
-With some versions of VS 2019, if using
-DisableInstalledVCTargetsUse=true and the project contains
-\<MinimumVisualStudioVersion\>16.0\</MinimumVisualStudioVersion\>, then
-it can fail to build with:
-
-> C:\\Program Files (x86)\\Microsoft Visual
-> Studio\\2019\\Enterprise\\MSBuild\\Current\\Bin\\Microsoft.Common.CurrentVersion.targets(816,5):
-> error : The BaseOutputPath/OutputPath property is not set for project
-> \'X.vcxproj\'. Please check to make sure that you have specified a
-> valid combination of Configuration and Platform for this project.
-> Configuration=\'Debug\' Platform=\'Gaming.XBox.Scarlett.x64\'. You may
-> be seeing this message because you are trying to build a project
-> without a solution file, and have specified a non-default
-> Configuration or Platform that doesn\'t exist for this project.
-
-The workaround is to add an override to **Directory.Build.props**
-
-```
-<PropertyGroup>
-<ExtractedFolder Condition="'$(ExtractedFolder)'==''">C:\xtracted\</ExtractedFolder>
-<ExtractedFolder Condition="!HasTrailingSlash('$(ExtractedFolder)')">$(ExtractedFolder)\</ExtractedFolder>
-<_AlternativeVCTargetsPath160>$(ExtractedFolder)VCTargets160\</_AlternativeVCTargetsPath160>
-<_AlternativeVCTargetsPath150>$(ExtractedFolder)VCTargets150\</_AlternativeVCTargetsPath150>
-<!-- Workaround for VS bug -->
-<MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
-</PropertyGroup>
-```
-
-This issue [was
-fixed](https://developercommunity.visualstudio.com/t/1695-or-later-fails-when-using-disableinstalledvct/1435971)
-in Visual Studio 2019 version 16.11.
+The Visual Studio 2026 BWOI implementation for MSBuild doesn't support mixing v142,
+v143, and v145 platform toolsets in the same build. It has to lock to one version,
+and by default it is set to always use v145 / clangcl. We are working with the VS team
+to improve this support.
 
 # Version History
 
@@ -355,4 +336,5 @@ in Visual Studio 2019 version 16.11.
 |October 2022|Removed VS 2017 / MSBuild 15.0 support.|
 |March 2023|Added NuGet instructions.|
 |October 2023|GDK now requires Windows SDK (20000)|
-|October 2025|Updated for 2510 GDK and new layout, replacing `Gaming.Desktop.x64` with `x64`|
+|October 2025|Updated for 2510 GDK and new layout.<br /> Removed support for VS 2019 / MSBuild 16.0, but kept VS 2022+v142 platform toolset support.<br />Note that Gaming.Desktop.x64 is deprecated.|
+|April 2026|Updated for VS 2026.|

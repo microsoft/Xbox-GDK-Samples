@@ -35,7 +35,7 @@ public:
 
     struct ActionRecord
     {
-        unsigned id;
+        unsigned id = 0;
         bool operator==(const ActionRecord &other) const
         {
             return id == other.id;

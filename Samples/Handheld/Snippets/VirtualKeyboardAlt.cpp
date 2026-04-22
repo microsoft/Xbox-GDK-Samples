@@ -1,7 +1,7 @@
 // Using the CppWinRT wrappers for the virtual keyboard APIs requires Windows 8 or higher and compiling with exceptions enabled (/EHsc).
 // While the entire project does not need to be compiled this way, or one can #pragma disable the warnings that occur when exceptions
-// are disabled, neither solution is idea.  Additionally, some titles require compatibility with down-leven versions of Windows where
-// WinRT and this API may not be avaialable.
+// are disabled, neither solution is ideal.  Additionally, some titles require compatibility with downlevel versions of Windows where
+// WinRT and this API may not be available.
 
 // The following alternative snippet will compile all the way down to Windows 7 and dynamically load/create what is needed
 // on current versions of Windows.  Where WinRT and the Gamepad keyboard are not available, this code will silently fail

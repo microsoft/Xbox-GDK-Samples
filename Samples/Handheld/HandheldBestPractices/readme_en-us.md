@@ -88,5 +88,6 @@ for your title's needs with regard to compiling with exceptions and down-level W
 
 # Update history
 
+- 02/2025 -- Added reusable TextEntry example for string-based text entry, similar to GDK's `XGameUiShowTextEntryAsync`
 - 09/2025 -- Updated Virtual Keyboard snippets for downlevel/non-CppWinRT compilation
 - 07/2025 -- Initial release

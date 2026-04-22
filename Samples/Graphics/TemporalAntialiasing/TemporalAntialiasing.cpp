@@ -72,6 +72,9 @@ namespace
 
 Sample::Sample() noexcept(false) :
     m_frame(0),
+    m_displayWidth(0),
+    m_displayHeight(0),
+    m_gpuTimerMeasuresMS{},
     m_useTAA(false),
     m_performSharpenPass(false),
     m_hideZoomRegion(false),
@@ -86,7 +89,10 @@ Sample::Sample() noexcept(false) :
     m_previousJitter(0.5f),
     m_JitterDeltaX(0.0f),
     m_JitterDeltaY(0.0f),
-    m_sceneWorldMatrix()
+    m_sceneWorldMatrix(),
+    m_rtvHandleAlbedo{},
+    m_rtvHandleNormals{},
+    m_rtvHandleMotion{}
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_D32_FLOAT, 3u,
         DX::DeviceResources::c_Enable4K_UHD | DX::DeviceResources::c_EnableQHD );

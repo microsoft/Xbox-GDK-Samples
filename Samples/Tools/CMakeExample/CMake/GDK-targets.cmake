@@ -30,11 +30,22 @@ if(BUILD_USING_BWOI)
 
     set(Console_SdkRoot "${ExtractedFolder}/Microsoft GDK")
 else()
-    GET_FILENAME_COMPONENT(Console_SdkRoot "[HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432Node\\Microsoft\\GDK;GRDKInstallPath]" ABSOLUTE CACHE)
+    GET_FILENAME_COMPONENT(Console_SdkRoot "[HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432Node\\Microsoft\\GDK;InstallPath]" ABSOLUTE CACHE)
 endif()
 
 if(NOT EXISTS "${Console_SdkRoot}/${XdkEditionTarget}")
     message(FATAL_ERROR "ERROR: Cannot locate Microsoft Game Development Kit (GDK) - ${XdkEditionTarget}")
+endif()
+
+if(XdkEditionTarget GREATER_EQUAL 251000)
+   # New layout available starting with October 2025 release
+   if(_GDK_XBOX_)
+      set(PlatformRoot "${Console_SdkRoot}/${XdkEditionTarget}/xbox")
+   else()
+      set(PlatformRoot "${Console_SdkRoot}/${XdkEditionTarget}/windows")
+   endif()
+else(XdkEditionTarget LESS 241000)
+   message(FATAL_ERROR "ERROR: This file supports October 2024 GDK or later.")
 endif()
 
 #--- GameRuntime Library (for Xbox these are included in the Console_Libs variable)
@@ -42,10 +53,10 @@ if(NOT _GDK_XBOX_)
     add_library(Xbox::GameRuntime STATIC IMPORTED)
     if(XdkEditionTarget GREATER_EQUAL 251000)
         set_target_properties(Xbox::GameRuntime PROPERTIES
-            IMPORTED_LOCATION "${Console_SdkRoot}/${XdkEditionTarget}/windows/lib/x64/xgameruntime.lib"
+            IMPORTED_LOCATION "${PlatformRoot}/lib/x64/xgameruntime.lib"
             MAP_IMPORTED_CONFIG_MINSIZEREL ""
             MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
-            INTERFACE_INCLUDE_DIRECTORIES "${Console_SdkRoot}/${XdkEditionTarget}/windows/include"
+            INTERFACE_INCLUDE_DIRECTORIES "${PlatformRoot}/include"
             INTERFACE_COMPILE_FEATURES "cxx_std_11"
             IMPORTED_LINK_INTERFACE_LANGUAGES "CXX")
     else()
@@ -58,83 +69,76 @@ if(NOT _GDK_XBOX_)
             IMPORTED_LINK_INTERFACE_LANGUAGES "CXX")
     endif()
 
-    if(XdkEditionTarget GREATER_EQUAL 220600)
-        add_library(Xbox::GameInput STATIC IMPORTED)
-        if(XdkEditionTarget GREATER_EQUAL 251000)
-            set_target_properties(Xbox::GameInput PROPERTIES
-            IMPORTED_LOCATION "${Console_SdkRoot}/${XdkEditionTarget}/windows/lib/x64/GameInput.lib"
-            MAP_IMPORTED_CONFIG_MINSIZEREL ""
-            MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
-            INTERFACE_INCLUDE_DIRECTORIES "${Console_SdkRoot}/${XdkEditionTarget}/windows/include"
-            IMPORTED_LINK_INTERFACE_LANGUAGES "CXX")
-        else()
-            set_target_properties(Xbox::GameInput PROPERTIES
-            IMPORTED_LOCATION "${Console_SdkRoot}/${XdkEditionTarget}/GRDK/gameKit/Lib/amd64/gameinput.lib"
-            MAP_IMPORTED_CONFIG_MINSIZEREL ""
-            MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
-            INTERFACE_INCLUDE_DIRECTORIES "${Console_SdkRoot}/${XdkEditionTarget}/GRDK/gameKit/Include"
-            IMPORTED_LINK_INTERFACE_LANGUAGES "CXX")
-        endif()
+    add_library(Xbox::GameInput STATIC IMPORTED)
+    if(XdkEditionTarget GREATER_EQUAL 251000)
+        set_target_properties(Xbox::GameInput PROPERTIES
+        IMPORTED_LOCATION "${PlatformRoot}/lib/x64/GameInput.lib"
+        MAP_IMPORTED_CONFIG_MINSIZEREL ""
+        MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
+        INTERFACE_INCLUDE_DIRECTORIES "${PlatformRoot}/include"
+        IMPORTED_LINK_INTERFACE_LANGUAGES "CXX")
+    else()
+        set_target_properties(Xbox::GameInput PROPERTIES
+        IMPORTED_LOCATION "${Console_SdkRoot}/${XdkEditionTarget}/GRDK/gameKit/Lib/amd64/gameinput.lib"
+        MAP_IMPORTED_CONFIG_MINSIZEREL ""
+        MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
+        INTERFACE_INCLUDE_DIRECTORIES "${Console_SdkRoot}/${XdkEditionTarget}/GRDK/gameKit/Include"
+        IMPORTED_LINK_INTERFACE_LANGUAGES "CXX")
     endif()
 endif()
 
 #--- Extension Libraries
-set(ExtensionPlatformToolset 142)
+if(XdkEditionTarget GREATER_EQUAL 260400)
+    # VC++ binary compatibility means we can use the VS 2022 version with VS 2026
+    set(ExtensionPlatformToolset 143)
+else()
+    # VC++ binary compatibility means we can use the VS 2019 version with VS 2022
+    set(ExtensionPlatformToolset 142)
+endif()
 
 if(XdkEditionTarget GREATER_EQUAL 251000)
-   set(Console_GRDKExtLibRoot "${Console_SdkRoot}/${XdkEditionTarget}/windows")
-   set(Console_GRDKExtIncludePath "include")
-   set(Console_GRDKExtLibPath "lib/x64")
-   set(Console_GRDKExtDLLPath "bin/x64")
-elseif(XdkEditionTarget GREATER_EQUAL 241000)
-   set(Console_GRDKExtLibRoot "${Console_SdkRoot}/${XdkEditionTarget}/GRDK/ExtensionLibraries")
-   set(Console_GRDKExtIncludePath "Include")
-   set(Console_GRDKExtLibPath "Lib/x64")
-   set(Console_GRDKExtDLLPath "Redist/x64")
+   # These are now integrated into the platform folders.
 else()
    set(Console_GRDKExtLibRoot "${Console_SdkRoot}/${XdkEditionTarget}/GRDK/ExtensionLibraries")
-   set(Console_GRDKExtIncludePath "DesignTime/CommonConfiguration/neutral/Include")
-   set(Console_GRDKExtLibPath "DesignTime/CommonConfiguration/neutral/Lib")
-   set(Console_GRDKExtDLLPath "Redist/CommonConfiguration/neutral")
 endif()
 
 # XCurl
 add_library(Xbox::XCurl SHARED IMPORTED)
 if(XdkEditionTarget GREATER_EQUAL 251000)
     set_target_properties(Xbox::XCurl PROPERTIES
-        IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/${Console_GRDKExtDLLPath}/XCurl.dll"
-        IMPORTED_IMPLIB "${Console_GRDKExtLibRoot}/${Console_GRDKExtLibPath}/XCurl.lib"
+        IMPORTED_LOCATION "${PlatformRoot}/bin/x64/XCurl.dll"
+        IMPORTED_IMPLIB "${PlatformRoot}/lib/x64/XCurl.lib"
         MAP_IMPORTED_CONFIG_MINSIZEREL ""
         MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
-        INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/${Console_GRDKExtIncludePath}")
+        INTERFACE_INCLUDE_DIRECTORIES "${PlatformRoot}/include")
 else()
     set_target_properties(Xbox::XCurl PROPERTIES
-        IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/Xbox.XCurl.API/${Console_GRDKExtDLLPath}/XCurl.dll"
-        IMPORTED_IMPLIB "${Console_GRDKExtLibRoot}/Xbox.XCurl.API/${Console_GRDKExtLibPath}/XCurl.lib"
+        IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/Xbox.XCurl.API/Redist/x64/XCurl.dll"
+        IMPORTED_IMPLIB "${Console_GRDKExtLibRoot}/Xbox.XCurl.API/Lib/x64/XCurl.lib"
         MAP_IMPORTED_CONFIG_MINSIZEREL ""
         MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
-        INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/Xbox.XCurl.API/${Console_GRDKExtIncludePath}")
+        INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/Xbox.XCurl.API/Include")
 endif()
 
 # Xbox.Services.API.C (requires XCurl)
 add_library(Xbox::XSAPI STATIC IMPORTED)
 if(XdkEditionTarget GREATER_EQUAL 251000)
     set_target_properties(Xbox::XSAPI PROPERTIES
-        IMPORTED_LOCATION_RELEASE "${Console_GRDKExtLibRoot}/${Console_GRDKExtLibPath}/Microsoft.Xbox.Services.${ExtensionPlatformToolset}.C.lib"
-        IMPORTED_LOCATION_DEBUG "${Console_GRDKExtLibRoot}/${Console_GRDKExtLibPath}/Microsoft.Xbox.Services.${ExtensionPlatformToolset}.C.Debug.lib"
+        IMPORTED_LOCATION_RELEASE "${PlatformRoot}/lib/x64/Microsoft.Xbox.Services.${ExtensionPlatformToolset}.C.lib"
+        IMPORTED_LOCATION_DEBUG "${PlatformRoot}/lib/x64/Microsoft.Xbox.Services.${ExtensionPlatformToolset}.C.Debug.lib"
         IMPORTED_CONFIGURATIONS "RELEASE;DEBUG"
         MAP_IMPORTED_CONFIG_MINSIZEREL Release
         MAP_IMPORTED_CONFIG_RELWITHDEBINFO Release
-        INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/${Console_GRDKExtIncludePath}"
+        INTERFACE_INCLUDE_DIRECTORIES "${PlatformRoot}/include"
         IMPORTED_LINK_INTERFACE_LANGUAGES "CXX")
 else()
     set_target_properties(Xbox::XSAPI PROPERTIES
-        IMPORTED_LOCATION_RELEASE "${Console_GRDKExtLibRoot}/Xbox.Services.API.C/${Console_GRDKExtLibPath}/Release/v${ExtensionPlatformToolset}/Microsoft.Xbox.Services.${ExtensionPlatformToolset}.GDK.C.lib"
-        IMPORTED_LOCATION_DEBUG "${Console_GRDKExtLibRoot}/Xbox.Services.API.C/${Console_GRDKExtLibPath}/Debug/v${ExtensionPlatformToolset}/Microsoft.Xbox.Services.${ExtensionPlatformToolset}.GDK.C.lib"
+        IMPORTED_LOCATION_RELEASE "${Console_GRDKExtLibRoot}/Xbox.Services.API.C/Lib/x64/Release/v${ExtensionPlatformToolset}/Microsoft.Xbox.Services.${ExtensionPlatformToolset}.GDK.C.lib"
+        IMPORTED_LOCATION_DEBUG "${Console_GRDKExtLibRoot}/Xbox.Services.API.C/Lib/x64/Debug/v${ExtensionPlatformToolset}/Microsoft.Xbox.Services.${ExtensionPlatformToolset}.GDK.C.lib"
         IMPORTED_CONFIGURATIONS "RELEASE;DEBUG"
         MAP_IMPORTED_CONFIG_MINSIZEREL Release
         MAP_IMPORTED_CONFIG_RELWITHDEBINFO Release
-        INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/Xbox.Services.API.C/${Console_GRDKExtIncludePath}"
+        INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/Xbox.Services.API.C/Include"
         IMPORTED_LINK_INTERFACE_LANGUAGES "CXX")
 endif()
 
@@ -142,28 +146,19 @@ endif()
 if(XdkEditionTarget GREATER_EQUAL 251000)
     add_library(Xbox::HTTPClient SHARED IMPORTED)
     set_target_properties(Xbox::HTTPClient PROPERTIES
-        IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/${Console_GRDKExtDLLPath}/libHttpClient.GDK.dll"
-        IMPORTED_IMPLIB "${Console_GRDKExtLibRoot}/${Console_GRDKExtLibPath}/libHttpClient.GDK.lib"
+        IMPORTED_LOCATION "${PlatformRoot}/bin/x64/libHttpClient.dll"
+        IMPORTED_IMPLIB "${PlatformRoot}/lib/x64/libHttpClient.lib"
         MAP_IMPORTED_CONFIG_MINSIZEREL ""
         MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
-        INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/${Console_GRDKExtIncludePath}")
-elseif(XdkEditionTarget GREATER_EQUAL 240600)
+        INTERFACE_INCLUDE_DIRECTORIES "${PlatformRoot}/include")
+else()
     add_library(Xbox::HTTPClient SHARED IMPORTED)
     set_target_properties(Xbox::HTTPClient PROPERTIES
-        IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/Xbox.LibHttpClient/${Console_GRDKExtDLLPath}/libHttpClient.GDK.dll"
-        IMPORTED_IMPLIB "${Console_GRDKExtLibRoot}/Xbox.LibHttpClient/${Console_GRDKExtLibPath}/libHttpClient.GDK.lib"
+        IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/Xbox.LibHttpClient/Redist/x64/libHttpClient.GDK.dll"
+        IMPORTED_IMPLIB "${Console_GRDKExtLibRoot}/Xbox.LibHttpClient/Lib/x64/libHttpClient.GDK.lib"
         MAP_IMPORTED_CONFIG_MINSIZEREL ""
         MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
-        INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/Xbox.LibHttpClient/${Console_GRDKExtIncludePath}")
-else()
-    add_library(Xbox::HTTPClient STATIC IMPORTED)
-    set_target_properties(Xbox::HTTPClient PROPERTIES
-        IMPORTED_LOCATION_RELEASE "${Console_GRDKExtLibRoot}/Xbox.Services.API.C/${Console_GRDKExtLibPath}/Release/v${ExtensionPlatformToolset}/libHttpClient.${ExtensionPlatformToolset}.GDK.C.lib"
-        IMPORTED_LOCATION_DEBUG "${Console_GRDKExtLibRoot}/Xbox.Services.API.C/${Console_GRDKExtLibPath}/Debug/v${ExtensionPlatformToolset}/libHttpClient.${ExtensionPlatformToolset}.GDK.C.lib"
-        IMPORTED_CONFIGURATIONS "RELEASE;DEBUG"
-        MAP_IMPORTED_CONFIG_MINSIZEREL Release
-        MAP_IMPORTED_CONFIG_RELWITHDEBINFO Release
-        IMPORTED_LINK_INTERFACE_LANGUAGES "CXX")
+        INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/Xbox.LibHttpClient/Include")
 endif()
 
 target_link_libraries(Xbox::XSAPI INTERFACE Xbox::HTTPClient Xbox::XCurl appnotify.lib winhttp.lib crypt32.lib)
@@ -172,38 +167,38 @@ target_link_libraries(Xbox::XSAPI INTERFACE Xbox::HTTPClient Xbox::XCurl appnoti
 add_library(Xbox::GameChat2 SHARED IMPORTED)
 if(XdkEditionTarget GREATER_EQUAL 251000)
     set_target_properties(Xbox::GameChat2 PROPERTIES
-        IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/${Console_GRDKExtDLLPath}/GameChat2.dll"
-        IMPORTED_IMPLIB "${Console_GRDKExtLibRoot}/${Console_GRDKExtLibPath}/GameChat2.lib"
+        IMPORTED_LOCATION "${PlatformRoot}/bin/x64/GameChat2.dll"
+        IMPORTED_IMPLIB "${PlatformRoot}/lib/x64/GameChat2.lib"
         MAP_IMPORTED_CONFIG_MINSIZEREL ""
         MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
-        INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/${Console_GRDKExtIncludePath}")
+        INTERFACE_INCLUDE_DIRECTORIES "${PlatformRoot}/include")
 else()
     set_target_properties(Xbox::GameChat2 PROPERTIES
-        IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/Xbox.Game.Chat.2.Cpp.API/${Console_GRDKExtDLLPath}/GameChat2.dll"
-        IMPORTED_IMPLIB "${Console_GRDKExtLibRoot}/Xbox.Game.Chat.2.Cpp.API/${Console_GRDKExtLibPath}/GameChat2.lib"
+        IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/Xbox.Game.Chat.2.Cpp.API/Redist/x64/GameChat2.dll"
+        IMPORTED_IMPLIB "${Console_GRDKExtLibRoot}/Xbox.Game.Chat.2.Cpp.API/Lib/x64/GameChat2.lib"
         MAP_IMPORTED_CONFIG_MINSIZEREL ""
         MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
-        INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/Xbox.Game.Chat.2.Cpp.API/${Console_GRDKExtIncludePath}")
+        INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/Xbox.Game.Chat.2.Cpp.API/Include")
 endif()
 
 # PlayFab Multiplayer (requires XCurl)
 add_library(Xbox::PlayFabMultiplayer SHARED IMPORTED)
 if(XdkEditionTarget GREATER_EQUAL 251000)
     set_target_properties(Xbox::PlayFabMultiplayer PROPERTIES
-        IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/${Console_GRDKExtDLLPath}/PlayFabMultiplayerGDK.dll"
-        IMPORTED_IMPLIB "${Console_GRDKExtLibRoot}/${Console_GRDKExtLibPath}/PlayFabMultiplayerGDK.lib"
+        IMPORTED_LOCATION "${PlatformRoot}/bin/x64/PlayFabMultiplayer.dll"
+        IMPORTED_IMPLIB "${PlatformRoot}/lib/x64/PlayFabMultiplayer.lib"
         IMPORTED_LINK_DEPENDENT_LIBRARIES Xbox::XCurl
         MAP_IMPORTED_CONFIG_MINSIZEREL ""
         MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
-        INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/${Console_GRDKExtIncludePath}")
+        INTERFACE_INCLUDE_DIRECTORIES "${PlatformRoot}/include")
 else()
     set_target_properties(Xbox::PlayFabMultiplayer PROPERTIES
-        IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/PlayFab.Multiplayer.Cpp/${Console_GRDKExtDLLPath}/PlayFabMultiplayerGDK.dll"
-        IMPORTED_IMPLIB "${Console_GRDKExtLibRoot}/PlayFab.Multiplayer.Cpp/${Console_GRDKExtLibPath}/PlayFabMultiplayerGDK.lib"
+        IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/PlayFab.Multiplayer.Cpp/Redist/x64/PlayFabMultiplayerGDK.dll"
+        IMPORTED_IMPLIB "${Console_GRDKExtLibRoot}/PlayFab.Multiplayer.Cpp/Lib/x64/PlayFabMultiplayerGDK.lib"
         IMPORTED_LINK_DEPENDENT_LIBRARIES Xbox::XCurl
         MAP_IMPORTED_CONFIG_MINSIZEREL ""
         MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
-        INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/PlayFab.Multiplayer.Cpp/${Console_GRDKExtIncludePath}")
+        INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/PlayFab.Multiplayer.Cpp/Include")
 endif()
 
 target_link_libraries(Xbox::PlayFabMultiplayer INTERFACE Xbox::XCurl)
@@ -212,38 +207,38 @@ target_link_libraries(Xbox::PlayFabMultiplayer INTERFACE Xbox::XCurl)
 if(XdkEditionTarget GREATER_EQUAL 251000)
     add_library(Xbox::PlayFabServices SHARED IMPORTED)
     set_target_properties(Xbox::PlayFabServices PROPERTIES
-        IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/${Console_GRDKExtDLLPath}/PlayFabServices.GDK.dll"
-        IMPORTED_IMPLIB "${Console_GRDKExtLibRoot}/${Console_GRDKExtLibPath}/PlayFabServices.GDK.lib"
+        IMPORTED_LOCATION "${PlatformRoot}/bin/x64/PlayFabServices.dll"
+        IMPORTED_IMPLIB "${PlatformRoot}/lib/x64/PlayFabServices.lib"
         IMPORTED_LINK_DEPENDENT_LIBRARIES Xbox::XCurl
         MAP_IMPORTED_CONFIG_MINSIZEREL ""
         MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
-        INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/${Console_GRDKExtIncludePath}"
+        INTERFACE_INCLUDE_DIRECTORIES "${PlatformRoot}/include"
         IMPORTED_LINK_INTERFACE_LANGUAGES "CXX")
 
     add_library(Xbox::PlayFabCore SHARED IMPORTED)
     set_target_properties(Xbox::PlayFabCore PROPERTIES
-        IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/${Console_GRDKExtDLLPath}/PlayFabCore.GDK.dll"
-        IMPORTED_IMPLIB "${Console_GRDKExtLibRoot}/${Console_GRDKExtLibPath}/PlayFabCore.GDK.lib"
+        IMPORTED_LOCATION "${PlatformRoot}/bin/x64/PlayFabCore.dll"
+        IMPORTED_IMPLIB "${PlatformRoot}/lib/x64/PlayFabCore.lib"
         MAP_IMPORTED_CONFIG_MINSIZEREL ""
         MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
         IMPORTED_LINK_INTERFACE_LANGUAGES "CXX")
 
     target_link_libraries(Xbox::PlayFabServices INTERFACE Xbox::PlayFabCore Xbox::XCurl)
-elseif(XdkEditionTarget GREATER_EQUAL 230300)
+else()
     add_library(Xbox::PlayFabServices SHARED IMPORTED)
     set_target_properties(Xbox::PlayFabServices PROPERTIES
-        IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/PlayFab.Services.C/${Console_GRDKExtDLLPath}/PlayFabServices.GDK.dll"
-        IMPORTED_IMPLIB "${Console_GRDKExtLibRoot}/PlayFab.Services.C/${Console_GRDKExtLibPath}/PlayFabServices.GDK.lib"
+        IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/PlayFab.Services.C/Redist/x64/PlayFabServices.dll"
+        IMPORTED_IMPLIB "${Console_GRDKExtLibRoot}/PlayFab.Services.C/Lib/x64/PlayFabServices.lib"
         IMPORTED_LINK_DEPENDENT_LIBRARIES Xbox::XCurl
         MAP_IMPORTED_CONFIG_MINSIZEREL ""
         MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
-        INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/PlayFab.Services.C/${Console_GRDKExtIncludePath}"
+        INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/PlayFab.Services.C/Include"
         IMPORTED_LINK_INTERFACE_LANGUAGES "CXX")
 
     add_library(Xbox::PlayFabCore SHARED IMPORTED)
     set_target_properties(Xbox::PlayFabCore PROPERTIES
-        IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/PlayFab.Services.C/${Console_GRDKExtDLLPath}/PlayFabCore.GDK.dll"
-        IMPORTED_IMPLIB "${Console_GRDKExtLibRoot}/PlayFab.Services.C/${Console_GRDKExtLibPath}/PlayFabCore.GDK.lib"
+        IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/PlayFab.Services.C/Redist/x64/PlayFabCore.GDK.dll"
+        IMPORTED_IMPLIB "${Console_GRDKExtLibRoot}/PlayFab.Services.C/Lib/x64/PlayFabCore.GDK.lib"
         MAP_IMPORTED_CONFIG_MINSIZEREL ""
         MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
         IMPORTED_LINK_INTERFACE_LANGUAGES "CXX")
@@ -255,38 +250,38 @@ endif()
 add_library(Xbox::PlayFabParty SHARED IMPORTED)
 if(XdkEditionTarget GREATER_EQUAL 251000)
     set_target_properties(Xbox::PlayFabParty PROPERTIES
-        IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/${Console_GRDKExtDLLPath}/Party.dll"
-        IMPORTED_IMPLIB "${Console_GRDKExtLibRoot}/${Console_GRDKExtLibPath}/Party.lib"
+        IMPORTED_LOCATION "${PlatformRoot}/bin/x64/Party.dll"
+        IMPORTED_IMPLIB "${PlatformRoot}/lib/x64/Party.lib"
         MAP_IMPORTED_CONFIG_MINSIZEREL ""
         MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
-        INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/${Console_GRDKExtIncludePath}")
+        INTERFACE_INCLUDE_DIRECTORIES "${PlatformRoot}/include")
 else()
     set_target_properties(Xbox::PlayFabParty PROPERTIES
-        IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/PlayFab.Party.Cpp/${Console_GRDKExtDLLPath}/Party.dll"
-        IMPORTED_IMPLIB "${Console_GRDKExtLibRoot}/PlayFab.Party.Cpp/${Console_GRDKExtLibPath}/Party.lib"
+        IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/PlayFab.Party.Cpp/Redist/x64/Party.dll"
+        IMPORTED_IMPLIB "${Console_GRDKExtLibRoot}/PlayFab.Party.Cpp/Lib/x64/Party.lib"
         MAP_IMPORTED_CONFIG_MINSIZEREL ""
         MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
-        INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/PlayFab.Party.Cpp/${Console_GRDKExtIncludePath}")
+        INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/PlayFab.Party.Cpp/Include")
 endif()
 
 # PlayFab Party Xbox LIVE (requires PlayFab Party)
 add_library(Xbox::PlayFabPartyLIVE SHARED IMPORTED)
 if(XdkEditionTarget GREATER_EQUAL 251000)
     set_target_properties(Xbox::PlayFabPartyLIVE PROPERTIES
-        IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/${Console_GRDKExtDLLPath}/PartyXboxLive.dll"
-        IMPORTED_IMPLIB "${Console_GRDKExtLibRoot}/${Console_GRDKExtLibPath}/PartyXboxLive.lib"
+        IMPORTED_LOCATION "${PlatformRoot}/bin/x64/PartyXboxLive.dll"
+        IMPORTED_IMPLIB "${PlatformRoot}/lib/x64/PartyXboxLive.lib"
         IMPORTED_LINK_DEPENDENT_LIBRARIES Xbox::PlayFabParty
         MAP_IMPORTED_CONFIG_MINSIZEREL ""
         MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
-        INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/${Console_GRDKExtIncludePath}")
+        INTERFACE_INCLUDE_DIRECTORIES "${PlatformRoot}/include")
 else()
     set_target_properties(Xbox::PlayFabPartyLIVE PROPERTIES
-        IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/PlayFab.PartyXboxLive.Cpp/${Console_GRDKExtDLLPath}/PartyXboxLive.dll"
-        IMPORTED_IMPLIB "${Console_GRDKExtLibRoot}/PlayFab.PartyXboxLive.Cpp/${Console_GRDKExtLibPath}/PartyXboxLive.lib"
+        IMPORTED_LOCATION "${Console_GRDKExtLibRoot}/PlayFab.PartyXboxLive.Cpp/Redist/x64/PartyXboxLive.dll"
+        IMPORTED_IMPLIB "${Console_GRDKExtLibRoot}/PlayFab.PartyXboxLive.Cpp/Lib/x64/PartyXboxLive.lib"
         IMPORTED_LINK_DEPENDENT_LIBRARIES Xbox::PlayFabParty
         MAP_IMPORTED_CONFIG_MINSIZEREL ""
         MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
-        INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/PlayFab.PartyXboxLive.Cpp/${Console_GRDKExtIncludePath}")
+        INTERFACE_INCLUDE_DIRECTORIES "${Console_GRDKExtLibRoot}/PlayFab.PartyXboxLive.Cpp/Include")
 endif()
 
 target_link_libraries(Xbox::PlayFabPartyLIVE INTERFACE Xbox::PlayFabParty)

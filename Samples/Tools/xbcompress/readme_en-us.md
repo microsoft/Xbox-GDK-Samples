@@ -23,7 +23,7 @@ Command Prompt*:
 cl /EHsc /D_WIN32_WINNT=0x0A00 /Ox /MT compresstool.cpp /Fexbcompress.exe xgameplatform.lib
 ```
 
-You can use CMake 3.20 or later:
+You can use CMake 3.21 or later:
 
 ```
 cmake -B out .
@@ -138,3 +138,4 @@ XBCOMPRESS.EXE can be found in ATGTK\\ReadCompressedData.h / .cpp.
 |April 2021|Initial release|
 |January 2022|Make cleanup and added presets file|
 |November 2022|Updated to CMake 3.20|
+|February 2026|Updated to require CMake 3.21 or later|

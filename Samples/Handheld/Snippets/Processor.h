@@ -48,7 +48,7 @@ namespace ATG
         uint32_t level;
         uint32_t lineSize;
         uint32_t cacheSize;
-        UniqueProcessorMask coreMask;
+        UniqueProcessorMask coreMask = 0;
 
         CacheInformation() : cacheType(CacheType::CacheUnified), level(0), lineSize(0), cacheSize(0) {}
         CacheInformation(CacheType p1, uint32_t p2, uint32_t p3, uint32_t p4, const UniqueProcessorMask& p5)

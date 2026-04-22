@@ -19,6 +19,7 @@ using namespace DirectX::SimpleMath;
 using Microsoft::WRL::ComPtr;
 
 Sample::Sample() noexcept(false) :
+    m_wm(nullptr),
 	m_playPressed(false),
     m_playingWhenSuspended(false)
 {

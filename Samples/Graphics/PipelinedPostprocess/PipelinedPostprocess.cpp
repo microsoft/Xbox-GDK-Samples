@@ -54,7 +54,13 @@ Sample::Sample() noexcept(false) :
     m_frameDeltaTime(),
     m_GPUGeometryFrameTime(),
     m_GPUPostprocessFrameTime(),
+    m_postprocessRTVCpuHandle{},
+    m_postprocessDSVCpuHandle{},
+    m_displayWidth{},
+    m_displayHeight{},
     m_fenceCmpToGfx(D3D12_GPU_VIRTUAL_ADDRESS_NULL),
+    m_fenceAddress{},
+    m_fenceCmpToGfxValue{},
     m_prepassCBVA(D3D12_GPU_VIRTUAL_ADDRESS_NULL),
     m_prepassCBMappedMemory(nullptr),
     m_fxaaCBVA(D3D12_GPU_VIRTUAL_ADDRESS_NULL),
@@ -832,6 +838,7 @@ void Sample::CreateDeviceDependentResources()
         if (nullptr == m_fenceAddress)
         {
             DX::ThrowIfFailed(HRESULT_FROM_WIN32(GetLastError()));
+            return; // unreachable, but satisfies static analysis
         }
 
         ZeroMemory(m_fenceAddress, sizeof(uint64_t));

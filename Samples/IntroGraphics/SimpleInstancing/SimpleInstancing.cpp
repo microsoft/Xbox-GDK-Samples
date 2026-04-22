@@ -42,6 +42,8 @@ namespace
 
 Sample::Sample() noexcept(false) :
     m_frame(0),
+    m_vertexBufferView{},
+    m_indexBufferView{},
     m_mappedInstanceData(nullptr),
     m_instanceDataGpuAddr(0),
     m_usedInstanceCount(c_startInstanceCount),
@@ -514,7 +516,7 @@ void Sample::CreateDeviceDependentResources()
     // Create a static vertex buffer with color data.
     {
         static const XMVECTORF32 s_bigCubeColor = { 1.f, 1.f, 1.f, 0.f };
-        uint32_t colors[c_maxInstances];
+        auto colors = std::make_unique<uint32_t[]>(c_maxInstances);
         colors[0] = PackedVector::XMCOLOR(s_bigCubeColor);
         for (uint32_t i = 1; i < c_maxInstances; ++i)
         {
@@ -544,7 +546,7 @@ void Sample::CreateDeviceDependentResources()
         CD3DX12_RANGE readRange(0, 0);		// We do not intend to read from this resource on the CPU.
         DX::ThrowIfFailed(
             m_boxColors->Map(0, &readRange, reinterpret_cast<void**>(&pVertexDataBegin)));
-        memcpy(pVertexDataBegin, colors, sizeof(uint32_t) * c_maxInstances);
+        memcpy(pVertexDataBegin, colors.get(), sizeof(uint32_t) * c_maxInstances);
         m_boxColors->Unmap(0, nullptr);
 
         // Initialize the vertex buffer view.

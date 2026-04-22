@@ -18,7 +18,7 @@ Microsoft GDK applications, see **CMakeExample** and
 
 # Building the sample (Visual Studio)
 
-Using Visual Studio 2019 or 2022 select "Open a local folder..." from
+Using Visual Studio 2022 or 2026 select "Open a local folder..." from
 the New Project Dialog or the "File -\> Open -\> Folder..." menu command
 and open the sample folder:
 
@@ -51,8 +51,8 @@ program per the instructions below to run successfully.*
 
 # Building the sample (command-line)
 
-You can also generate and build from the command line using a *VS 2019
-or 2022 Developer Command Prompt*:
+You can also generate and build from the command line using a *VS 2022
+or 2026 Developer Command Prompt*:
 
 ```
 cd CMakeXboxConsoleApp
@@ -118,7 +118,7 @@ For PC Desktop, the **CMakeLists.txt** for a Win32 console exe (i.e.
 /SUBSYSTEM:CONSOLE) would be something like the following:
 
 ```
-cmake_minimum_required (VERSION 3.20)
+cmake_minimum_required (VERSION 3.21)
 
 project(CMakeExampleWindowsConsole LANGUAGES CXX)
 
@@ -207,3 +207,5 @@ details.
 |June 2023|Xbox One titles need to use `/d2vzeroupper-` with VS 2022 or later as the default behavior has flipped from VS 2019|
 |October 2023|The Microsoft GDK now requires Windows 11 SDK (22000) or later.|
 |April 2025|Made SDKVersion a cache variable|
+|February 2026|Updated to require CMake 3.21 or later|
+|April 2026|Updated for 2510 GDK and new layout.<br />Drop VS 2019, add VS 2026|

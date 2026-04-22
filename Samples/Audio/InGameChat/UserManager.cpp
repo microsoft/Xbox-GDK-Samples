@@ -304,7 +304,7 @@ void UserManager::OnDeviceAssocationChangeEvent(const XUserDeviceAssociationChan
 
         uint64_t xuid = 0;
         XUserGetId(user->UserHandle, &xuid);
-        DebugTrace("Assigned device to user %lu", xuid);
+        DebugTrace("Assigned device to user %llu", xuid);
 
         auto xblm = Sample::Instance()->GetLiveManager();
         if (xblm->IsInitialized())

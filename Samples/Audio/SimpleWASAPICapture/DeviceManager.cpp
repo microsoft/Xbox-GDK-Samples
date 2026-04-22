@@ -15,11 +15,16 @@ using namespace Microsoft::WRL;
 DeviceManager::DeviceManager() :
         _cRef(1),
         m_CaptureIndex( 0 ),
-		m_deviceChangeFunc( nullptr )
+	    m_deviceChangeFunc( nullptr ),
+	    m_CritSec{}
 {
     ComPtr<IMMDeviceCollection>   deviceCollectionInterface;
 
-    CoCreateInstance(__uuidof(MMDeviceEnumerator), nullptr, CLSCTX_ALL, __uuidof(IMMDeviceEnumerator), (void**)&m_deviceEnum);
+    HRESULT hr = CoCreateInstance(__uuidof(MMDeviceEnumerator), nullptr, CLSCTX_ALL, __uuidof(IMMDeviceEnumerator), (void**)&m_deviceEnum);
+    if (FAILED(hr))
+    {
+        return;
+    }
 
     if (!InitializeCriticalSectionEx( &m_CritSec, 0, 0 ))
     {
@@ -110,21 +115,30 @@ void DeviceManager::UpdateCaptureDeviceList()
 
             hr = deviceCollectionInterface->GetCount(&iDeviceCount);
                 
-            for(UINT i=0; SUCCEEDED( hr ) && i<iDeviceCount; i++)
+            if (SUCCEEDED(hr))
             {
-                //Go through each device and save the ID
-                hr = deviceCollectionInterface->Item(i, &deviceInterface);
-                    
-                if (SUCCEEDED( hr ))
+                for(UINT i=0; i<iDeviceCount; i++)
                 {
-                    LPWSTR deviceId;
-                    deviceInterface->GetId(&deviceId);
-                    m_CaptureDevices.push_back(deviceId);
-
-                    if(currentID.compare(deviceId) == 0)
+                    //Go through each device and save the ID
+                    hr = deviceCollectionInterface->Item(i, &deviceInterface);
+                        
+                    if (SUCCEEDED( hr ))
                     {
-                        //Make sure index is correct based on the ID string
-                        m_CaptureIndex = static_cast<int>(i);
+                        LPWSTR deviceId = nullptr;
+                        hr = deviceInterface->GetId(&deviceId);
+                        
+                        if (SUCCEEDED(hr) && deviceId != nullptr)
+                        {
+                            m_CaptureDevices.push_back(deviceId);
+
+                            if(currentID.compare(deviceId) == 0)
+                            {
+                                //Make sure index is correct based on the ID string
+                                m_CaptureIndex = static_cast<int>(i);
+                            }
+                            
+                            CoTaskMemFree(deviceId);
+                        }
                     }
                 }
             }

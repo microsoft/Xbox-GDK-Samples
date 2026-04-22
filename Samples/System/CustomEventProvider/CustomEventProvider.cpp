@@ -65,7 +65,10 @@ void Sample::Initialize(HWND window)
     //  Create a work thread and lock to Core 1
     m_stressThread = CreateThread(nullptr, 0, Sample::StressThreadEntry, this, 0, nullptr);
     DX::ThrowIfFailed((m_stressThread == nullptr) ? HRESULT_FROM_WIN32(GetLastError()) : S_OK);
-    SetThreadAffinityMask(m_stressThread, DWORD_PTR(1 << 1));
+    if (m_stressThread)
+    {
+        SetThreadAffinityMask(m_stressThread, DWORD_PTR(1 << 1));
+    }
     
     //  Spin until stress thread activates
     while (m_threadCount < 1)

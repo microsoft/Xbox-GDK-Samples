@@ -64,9 +64,9 @@ struct PackageInfo
     std::string displayName;
     std::string storeId;
     std::string titleId;
-    bool licensable; // from XStoreCanAcquireLicenseResult
-    bool hasUpdate; // from XStorePackageUpdate
-    bool isGame;
+    bool licensable = false; // from XStoreCanAcquireLicenseResult
+    bool hasUpdate = false; // from XStorePackageUpdate
+    bool isGame = false;
 
     std::shared_ptr<UIButton> button;
 };
@@ -89,14 +89,14 @@ struct ProductInfo
     {
     };
 
-    XStoreProductKind kind;
+    XStoreProductKind kind = {};
     std::string storeId;
     std::string parentStoreId;
     std::string title;
-    bool hasDigitalDownload;
-    bool isInUserCollection;
-    bool licensable; // from XStoreCanAcquireLicenseResult 
-    bool isBusy;
+    bool hasDigitalDownload = false;
+    bool isInUserCollection = false;
+    bool licensable = false; // from XStoreCanAcquireLicenseResult 
+    bool isBusy = false;
 
     std::shared_ptr<UIButton> button;
     std::vector<UIProductImage> images;

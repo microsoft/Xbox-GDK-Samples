@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>5493e4f9-6677-41ac-b8c2-c1ddcd301add</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>6533a267-c77a-41d9-8672-54a872a5d11c</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>ca4974b9-2df5-4bc6-86e0-2e5d46acfebc</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Xbox Live Tool Kit">
+      <UniqueIdentifier>912a5dc5-a701-4d0d-8ea0-cbd3cbde411f</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>b97f45e0-dcbf-49a6-abe9-0829884b06c6</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Layouts">
+      <UniqueIdentifier>{a66c9f29-5fe5-4316-b3f8-53bc2ffbd693}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Fonts">
+      <UniqueIdentifier>{50aeb3a4-64a0-4874-9a67-ebbdc3b7f580}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Textures">
+      <UniqueIdentifier>{bd41b43d-9de0-402d-83aa-4e64d2a2fd86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayFab">
+      <UniqueIdentifier>{bdf7f695-9eb5-46ba-a3ca-76d125ed14ce}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="PlayFabGameSave.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\LiveTK\LiveResources.h">
+      <Filter>Xbox Live Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\LiveTK\LiveInfoHUD.h">
+      <Filter>Xbox Live Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\PlayFabGDK\PlayFabResources.h">
+      <Filter>PlayFab</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="PlayFabGameSave.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\LiveTK\LiveResources.cpp">
+      <Filter>Xbox Live Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\LiveTK\LiveInfoHUD.cpp">
+      <Filter>Xbox Live Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\Texture.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\PlayFabGDK\PlayFabResources.cpp">
+      <Filter>PlayFab</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="..\..\..\Media\Textures\GamerPic.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Textures\black-square.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Textures\debug-rect.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Textures\focused_button.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Textures\roundy-border.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Textures\Selected.DDS">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Textures\Unselected.DDS">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Layouts\defs.json">
+      <Filter>Assets\Layouts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Layouts\styles.json">
+      <Filter>Assets\Layouts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Layouts\sample_layout.json">
+      <Filter>Assets\Layouts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\segoeui_18pt_sharp_24_Bold.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\segoeui_24pt_sharp_32.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\segoeui_24pt_sharp_32_Bold.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\segoeui_27pt_sharp_36.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\segoeui_27pt_sharp_36_Bold.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\segoeui_36pt_sharp_48.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\segoeui_36pt_sharp_48_Bold.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\segoeui_72pt_sharp_96.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\segoeuisb_27pt_sharp_36.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\segoeuisb_27pt_sharp_36_Bold.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\XboxOneControllerLegendSmall.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Layouts\console-window.json">
+      <Filter>Assets\Layouts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Layouts\menu-button.json" />
+    <CopyFileToFolders Include="Assets\Fonts\SegoeUI_18_Bold.spritefont" />
+    <CopyFileToFolders Include="Assets\Fonts\SegoeUI_36.spritefont" />
+    <CopyFileToFolders Include="Assets\Layouts\slider.json">
+      <Filter>Assets\Layouts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\LOGO_ATG.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Readme.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\screenshot.png">
+      <Filter>Assets</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

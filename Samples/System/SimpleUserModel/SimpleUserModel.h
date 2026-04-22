@@ -105,8 +105,8 @@ private:
     std::unique_ptr<DirectX::GraphicsMemory>    m_graphicsMemory;
 
     // User
-    XUserHandle                                 m_user;
-    XUserLocalId                                m_userLocalId;
+    XUserHandle                                 m_user = nullptr;
+    XUserLocalId                                m_userLocalId = {};
     XTaskQueueRegistrationToken                 m_userChangeEventCallbackToken;
     XTaskQueueRegistrationToken                 m_userDeviceAssociationChangedCallbackToken;
     XTaskQueueHandle                            m_taskQueue;

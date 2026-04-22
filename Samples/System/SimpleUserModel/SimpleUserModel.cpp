@@ -368,7 +368,7 @@ void CALLBACK Sample::UserChangeEventCallback(
 
     // Only handle events for the default user
     auto pThis = static_cast<Sample*>(context);
-    if (userLocalId.value != pThis->m_userLocalId.value)
+    if (!pThis || userLocalId.value != pThis->m_userLocalId.value)
     {
         return;
     }
@@ -425,8 +425,9 @@ void CALLBACK Sample::UserDeviceAssociationChangedCallback(
     }
 
     auto pThis = static_cast<Sample*>(context);
+
     // If default user doesn't have a controller attached, display the UI to assign a controller
-    if (change->oldUser.value == pThis->m_userLocalId.value){
+    if (pThis && change->oldUser.value == pThis->m_userLocalId.value){
         LoopFindControllerForUserWithUiAsync(pThis);
     }
 }

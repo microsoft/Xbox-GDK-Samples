@@ -17,33 +17,6 @@ namespace GdkSample_InGameStore
         public string BaseGame { get; private set; }
 
         /// <summary>
-        /// True, if the store is fully initialized and ready for
-        /// user interaction.
-        /// </summary>
-        public bool IsStoreReady { get; private set; }
-
-        /// <summary>
-        /// Signals when a durable license has been lost.
-        /// </summary>
-        public event Action DurableLicenseLost;
-
-        /// <summary>
-        /// Signals when changes are made to the 'AllProducts' list.
-        /// </summary>
-        public event Action ProductsUpdated;
-
-        /// <summary>
-        /// Signals when store intialization fails.
-        /// </summary>
-        public event Action StoreInitializationFailed;
-
-        /// <summary>
-        /// Signals when store initialization is complete and the
-        /// store is ready for user interaction.
-        /// </summary>
-        public event Action StoreInitializationSucceeded;
-  
-        /// <summary>
         /// Game License retrieved for the current user.
         /// Set during initialization.
         /// </summary>
@@ -57,6 +30,43 @@ namespace GdkSample_InGameStore
         public XStoreContext StoreContext { get; private set; }
 
         /// <summary>
+        /// True, if the store is fully initialized and ready for
+        /// user interaction.
+        /// </summary>
+        public bool IsStoreReady { get; private set; } = false;
+
+        /// <summary>
+        /// True, if the store initialization process is currently running.
+        /// </summary>
+        public bool IsStoreInitializationInProgress { get; private set; } = false;
+
+        /// <summary>
+        /// True, if a catalog refresh is currently in progress.
+        /// </summary>
+        public bool IsCatalogRefreshInProgress { get; private set; } = false;
+
+        /// <summary>
+        /// True, if a collections refresh is currently in progress.
+        /// </summary>
+        public bool IsCollectionsRefreshInProgress { get; private set; } = false;
+
+        /// <summary>
+        /// Signals when changes are made to the 'AllProducts' list.
+        /// </summary>
+        public event Action ProductsUpdated;
+
+        /// <summary>
+        /// Signals when store initialization fails.
+        /// </summary>
+        public event Action StoreInitializationFailed;
+
+        /// <summary>
+        /// Signals when store initialization is complete and the
+        /// store is ready for user interaction.
+        /// </summary>
+        public event Action StoreInitializationSucceeded;  
+
+        /// <summary>
         /// Contains all products available to the current user (catalog + collections).
         /// Recreated whenever a new account is signed into the game.
         /// </summary>
@@ -67,23 +77,17 @@ namespace GdkSample_InGameStore
         /// Recreated whenever a new account is signed into the game.
         /// </summary>
         public Dictionary<string, XStoreProduct> CatalogProducts;
-    
-        /// <summary>
-        /// Contains all durables with an active license.
-        /// Persists between user sign-in/sign-out events.
-        /// </summary>
-        public Dictionary<string, Tuple<XStoreLicense, PackageLicenseLostCallbackToken>> LicensedDurables;
-    
-        /// <summary>
-        /// Tracks license lost events for durables that have acquired a license.
-        /// Persists between user sign-in/sign-out events.
-        /// </summary>
-        public Queue<string> LostLicensesQueue;
 
         /// <summary>
         /// Registration token for game license change events.
         /// </summary>
         private GameLicenseChangedCallbackToken _gameLicenseChangedToken;
+
+        /// <summary>
+        /// Time since last catalog/collections refresh.
+        /// Used to determine whether a refresh is necessary after a network reconnect.
+        /// </summary>
+        private DateTime _lastRefreshTime;
 
         private void Awake()
         {
@@ -97,10 +101,10 @@ namespace GdkSample_InGameStore
 
             AllProducts = new();
             CatalogProducts = new();
-            LicensedDurables = new();
-            LostLicensesQueue = new();
 
             IsStoreReady = false;
+            IsStoreInitializationInProgress = false;
+
         }
 
         // Start is called before the first frame update.
@@ -116,36 +120,20 @@ namespace GdkSample_InGameStore
             {
                 XboxManager.Instance.InitializeAndAddUser();
             }
-        }
 
-        private void Update()
-        {
-            // It's up to the game to decide how to respond to license lost events.
-            // Typically, a game will allow the player to finish their current session and/or save
-            // before losing access to durable content. For this sample, we'll close the lost license handle
-            // and remove it from the 'LicensedDurables' list.
-
-            // Check if any durables have lost their license.
-            LostLicensesQueue.TryPeek(out string storeId);
-
-            if (!string.IsNullOrEmpty(storeId) && IsStoreReady)
+            XNetworkManager.Instance.NetworkConnectionEstablished += () =>
             {
-                if (LicensedDurables.ContainsKey(storeId))
+                if (!IsStoreReady && !IsStoreInitializationInProgress && XboxManager.Instance.UserHandle != null)
                 {
-                    Debug.Log($"Removing license for durable {storeId}.");
-                    var durable = LicensedDurables[storeId];
-                
-                    // Unregister license for LicenseLost events and close the handle
-                    SDK.XStoreUnregisterPackageLicenseLost(durable.Item1, durable.Item2);
-                    SDK.XStoreCloseLicenseHandle(durable.Item1);
-                
-                    // Remove the license and send an event for the UI to respond to
-                    LicensedDurables.Remove(storeId);
-                    DurableLicenseLost?.Invoke();
+                    InitializeStore();
                 }
-
-                LostLicensesQueue.Dequeue();
-            }
+                else if (IsStoreReady && (DateTime.Now - _lastRefreshTime).TotalSeconds > 300f)
+                {
+                    // Network loss might be brief, so we'll only refresh catalog/collection data
+                    // if more than 5 minutes have passed since the last refresh.
+                    RefreshStoreProducts();
+                }
+            };
         }
 
         #region Event Handlers
@@ -177,19 +165,21 @@ namespace GdkSample_InGameStore
         /// </summary>
         public void InitializeStore()
         {
-            Logger.Instance.Log($"{nameof(XStoreManager)} {nameof(InitializeStore)} started...", LogColor.System);
+            Logger.Instance.Log($"{nameof(XStoreManager)}.{nameof(InitializeStore)} started...", LogColor.System);
 
+            IsStoreInitializationInProgress = true;
             IsStoreReady = false;
             ClearStore();
 
-            // Check if the current user is signed into the Micrsoft Store.
+            // Check if the current user is signed into the Microsoft Store.
             // On console, this is always true. On PC, the user must be signed into the Microsoft Store for XStore APIs to work.
             // It is possible to have a different user signed into the Microsoft Store than the Xbox Live user, but all purchases
             // will be associated with the Microsoft Store account.
             // See 'Handling mismatched store account scenarios on PC' in the GDK documentation.
             if (!SDK.XUserIsStoreUser(XboxManager.Instance.UserHandle))
             {
-                Debug.LogError($"{nameof(XStoreManager)} {nameof(InitializeStore)} failed. Current user does not match Microsoft Store user.");
+                Debug.LogError($"{nameof(XStoreManager)}.{nameof(InitializeStore)} failed. Current user does not match Microsoft Store user.");
+                IsStoreInitializationInProgress = false;
                 StoreInitializationFailed?.Invoke();
                 return;
             }
@@ -198,6 +188,15 @@ namespace GdkSample_InGameStore
             int hr = CreateStoreContext();
             if (HR.FAILED(hr))
             {
+                IsStoreInitializationInProgress = false;
+                StoreInitializationFailed?.Invoke();
+                return;
+            }
+
+            if (!XNetworkManager.Instance.IsNetworkInitialized || !XNetworkManager.Instance.IsNetworkAvailable)
+            {
+                Debug.LogWarning($"{nameof(XStoreManager)}.{nameof(InitializeStore)} failed. Network is not available. Only cached licensing checks supported.");
+                IsStoreInitializationInProgress = false;
                 StoreInitializationFailed?.Invoke();
                 return;
             }
@@ -205,54 +204,31 @@ namespace GdkSample_InGameStore
             // Get base game information to add as an offer in the store.
             // (Optional) This sample will show the base game offer
             // to players that do not have a full license to the game.
-            QueryCurrentGame();
-
-            // Check if the player has a license to the game.
-            QueryGameLicense(false, (hr, gameLicense) =>
+            QueryCurrentGame( (hr, game) =>
             {
-                // Note: you can prevent users from playing the game or accessing
-                // the store when they don't have a game license (restrictive licensing).
-                // For this sample, we won't require a game license, but we will
-                // show the base game offer in the catalog when the user doesn't have
-                // a full game license.
-
-                // Check for catalog items available for purchase within the game.
-                QueryAssociatedProducts(false, (hr, products) =>
+                if (HR.FAILED(hr))
                 {
-                    if (HR.SUCCEEDED(hr))
+                    Debug.LogWarning($"{nameof(XStoreManager)}.{nameof(QueryCurrentGame)} failed with error code 0x{hr:X8}.");
+                    if (hr == (int)E_XBOX_ERROR_CODES.HTTP_E_STATUS_NOT_FOUND || hr == (int)E_XBOX_ERROR_CODES.HTTP_E_STATUS_BAD_REQUEST)
                     {
-                        foreach (XStoreProduct product in products)
-                        {
-                            if (!CatalogProducts.ContainsKey(product.StoreId))
-                            {
-                                CatalogProducts.Add(product.StoreId, product);
-                            }
-                        }
-
-                        // Check collections for any additional products that
-                        // the player might own but are not available in the catalog.
-                        // (Optional) This sample will show a combination of catalog and collection
-                        // results in the UI product list. If a title only shows purchasable items,
-                        // then this call is not required during initialization.
-                        QueryEntitledProducts(false, (hr, products) =>
-                        {
-                            if (HR.FAILED(hr))
-                            {
-                                // Sandbox or account configuration is wrong. Can't recover from this without user intervention.
-                                Debug.LogError($"{nameof(XStoreManager)} {nameof(InitializeStore)} failed. Check sandbox and user configuration.");
-                                StoreInitializationFailed?.Invoke();
-                                return;
-                            }
-
-                            if (HR.SUCCEEDED(hr))
-                            {
-                                Logger.Instance.Log($"{nameof(XStoreManager)} {nameof(InitializeStore)} succeeded.", LogColor.System);
-                            }
-
-                            IsStoreReady = true;
-                            StoreInitializationSucceeded?.Invoke();
-                        });
+                        Debug.Log($"Restarting initialization due to network error...");
+                        InitializeStore();
                     }
+
+                    return;
+                }
+
+                // Check if the player has a license to the game.
+                QueryGameLicense(false, (hr, gameLicense) =>
+                {
+                    // Note: you can prevent users from playing the game or accessing
+                    // the store when they don't have a game license (restrictive licensing).
+                    // For this sample, we won't require a game license, but we will
+                    // show the base game offer in the catalog when the user doesn't have
+                    // a full game license.
+
+                    // Check for catalog items available for purchase within the game.
+                    RefreshStoreProducts();
                 });
             });
         }
@@ -338,11 +314,18 @@ namespace GdkSample_InGameStore
                         List<XStoreProduct> baseGameList = new();
                         baseGameList.Add(game);
                         UpdateProducts(baseGameList);
-                    }
 
-                    if(completedCallback != null)
+                        if (completedCallback != null)
+                        {
+                            completedCallback?.Invoke(hr, game);
+                        }
+                    }
+                    else
                     {
-                        completedCallback?.Invoke(hr, game);
+                        if (completedCallback != null)
+                        {
+                            completedCallback?.Invoke(hr, null);
+                        }
                     }
                 });
         }
@@ -408,18 +391,26 @@ namespace GdkSample_InGameStore
                             Debug.Log(licenseInfo.ToString());
                         }
 
-                        if (getToken)
+                        if (getToken && XNetworkManager.Instance.IsNetworkAvailable)
                         {
                             // Retrieve the license token for the game.
                             XStoreLicensing.QueryLicenseToken(StoreContext, BaseGame);
                         }
                     }
+
+                    if (completedCallback != null)
+                    {
+                        completedCallback?.Invoke(hr, license);
+                    }
+                }
+                else
+                {
+                    if (completedCallback != null)
+                    {
+                        completedCallback?.Invoke(hr, null);
+                    }
                 }
 
-                if (completedCallback != null)
-                {
-                    completedCallback?.Invoke(hr, license);
-                }
             });
         }
         #endregion QueryGameLicense
@@ -437,6 +428,7 @@ namespace GdkSample_InGameStore
             { return; }
 
             Debug.Log($"{nameof(XStoreManager)}.{nameof(QueryAssociatedProducts)}()");
+            IsCatalogRefreshInProgress = true;
 
             XStoreQueries.QueryAssociatedProducts(
                 StoreContext, 
@@ -453,12 +445,21 @@ namespace GdkSample_InGameStore
                         }
 
                         UpdateProducts(products);
-                    }
 
-                    if (completedCallback != null)
-                    {
-                        completedCallback?.Invoke(hr, products);
+                        if (completedCallback != null)
+                        {
+                            completedCallback?.Invoke(hr, products);
+                        }
                     }
+                    else
+                    {
+                        if (completedCallback != null)
+                        {
+                            completedCallback?.Invoke(hr, null);
+                        }
+                    }
+                    
+                    IsCatalogRefreshInProgress = false;
                 });
         }
         #endregion QueryAssociatedProducts
@@ -466,7 +467,7 @@ namespace GdkSample_InGameStore
         #region QueryEntitledProducts
         /// <summary>
         /// Retrieves all add-on products that the user has an active entitlement to.
-        /// Results may include previously purchased products that are no longer availabe for purchase within the store,
+        /// Results may include previously purchased products that are no longer available for purchase within the store,
         /// or products that cannot be purchased outside of a bundle/pass.
         /// Called as the final step of store initialization or whenever the title is unconstrained after purchase/visiting the store
         /// to update ownership details in the UI.
@@ -478,6 +479,7 @@ namespace GdkSample_InGameStore
             { return; }
 
             Debug.Log($"{nameof(XStoreManager)}.{nameof(QueryEntitledProducts)}()");
+            IsCollectionsRefreshInProgress = true;
 
             XStoreQueries.QueryEntitledProducts(
                 StoreContext, 
@@ -494,12 +496,22 @@ namespace GdkSample_InGameStore
                         }
                 
                         UpdateProducts(products);
+
+                        if (completedCallback != null)
+                        {
+                            completedCallback?.Invoke(hr, products);
+                        }
+                    }
+                    else
+                    {
+                        Logger.Instance.Log($"{nameof(XStoreManager)}.{nameof(QueryEntitledProducts)} failed with error code 0x{hr:X8}. Entitlements may not be up to date.", LogColor.Warning);
+                        if (completedCallback != null)
+                        {
+                            completedCallback?.Invoke(hr, null);
+                        }
                     }
 
-                    if (completedCallback != null)
-                    {
-                        completedCallback?.Invoke(hr, products);
-                    }
+                    IsCollectionsRefreshInProgress = false;
                 });
         }
         #endregion QueryEntitledProducts
@@ -515,17 +527,14 @@ namespace GdkSample_InGameStore
         {
             Debug.Log($"{nameof(XStoreManager)}.{nameof(CloseAllStoreHandles)}()");
 
-            // Close the StoreContext and unregister for game license changes
-            ClearStoreContext();
-
-            // Close any durable license handles still open and unregister for license lost events
-            foreach (KeyValuePair<string, Tuple<XStoreLicense, PackageLicenseLostCallbackToken>> durable in LicensedDurables)
-            {
-                SDK.XStoreUnregisterPackageLicenseLost(durable.Value.Item1, durable.Value.Item2);
-                SDK.XStoreCloseLicenseHandle(durable.Value.Item1);
+            // Close any Durable license handles still open and unregister for license lost events
+            if (XStoreLicenseManager.Instance != null)
+            { 
+                XStoreLicenseManager.Instance.CleanupLicenses(); 
             }
 
-            LicensedDurables.Clear();
+            // Close the StoreContext and unregister for game license changes
+            ClearStoreContext();
         }
 
         /// <summary>
@@ -624,22 +633,15 @@ namespace GdkSample_InGameStore
         }
 
         /// <summary>
-        /// Resets most store globals/variables for a clean start.
+        /// Resets most store variables for a clean start.
         /// Does not clear durable license data, as that should persist across users.
         /// </summary>
         private void ClearStore()
         {
             ClearStoreContext();
 
-            if (AllProducts != null)
-            {
-                AllProducts.Clear();
-            }
-
-            if (CatalogProducts != null)
-            {
-                CatalogProducts.Clear();
-            }
+            AllProducts?.Clear();
+            CatalogProducts?.Clear();
 
             GameLicense = null;
         }
@@ -704,6 +706,71 @@ namespace GdkSample_InGameStore
             }
 
             return productsInfo;
+        }
+
+        private void RefreshStoreProducts()
+        {
+            if (IsCatalogRefreshInProgress ){ return; }
+
+            _lastRefreshTime = DateTime.Now;
+
+            // Check for catalog items available for purchase within the game.
+            QueryAssociatedProducts(false, (hr, products) =>
+            {
+                if (HR.SUCCEEDED(hr) && products != null)
+                {
+                    foreach (XStoreProduct product in products)
+                    {
+                        if (!CatalogProducts.ContainsKey(product.StoreId))
+                        {
+                            CatalogProducts.Add(product.StoreId, product);
+                        }
+                    }
+
+                    if (IsCollectionsRefreshInProgress) { return; }
+
+                    // Check collections for any additional products that
+                    // the player might own but are not available in the catalog.
+                    // (Optional) This sample will show a combination of catalog and collection
+                    // results in the UI product list. If a title only shows purchasable items,
+                    // then this call is not required.
+                    QueryEntitledProducts(false, (hr, products) =>
+                    {
+                        if (HR.FAILED(hr))
+                        {
+                            // Sandbox or account configuration is wrong. Can't recover from this without user intervention                           
+                            if (IsStoreInitializationInProgress)
+                            {
+                                Debug.LogError($"{nameof(XStoreManager)}.{nameof(InitializeStore)} failed. Check sandbox and user configuration.");
+                                IsStoreInitializationInProgress = false;
+                                IsStoreReady = false;
+                                StoreInitializationFailed?.Invoke();
+                            }
+                            else if (IsStoreReady && (hr == (int)E_XBOX_ERROR_CODES.HTTP_E_STATUS_NOT_FOUND || hr == (int)E_XBOX_ERROR_CODES.HTTP_E_STATUS_BAD_REQUEST))
+                            {
+                                Debug.LogError($"{nameof(XStoreManager)}.{nameof(RefreshStoreProducts)} failed due to a network error. Check network connection.");
+                            }
+
+                            return;
+                        }
+
+                        if (HR.SUCCEEDED(hr))
+                        {                          
+                            if (IsStoreInitializationInProgress)
+                            {
+                                Logger.Instance.Log($"{nameof(XStoreManager)}.{nameof(InitializeStore)} succeeded.", LogColor.System);
+                                IsStoreInitializationInProgress = false;
+                                IsStoreReady = true;
+                                StoreInitializationSucceeded?.Invoke();
+                            }
+                            else if (IsStoreReady)
+                            {
+                                Logger.Instance.Log($"{nameof(XStoreManager)}.{nameof(RefreshStoreProducts)} succeeded.", LogColor.System);
+                            }
+                        }
+                    });
+                }
+            });
         }
 
         #endregion Helper Methods

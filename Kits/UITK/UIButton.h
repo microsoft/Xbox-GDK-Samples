@@ -105,7 +105,7 @@ class UIButtonFactory : public UIElementFactory<UIButton>
 protected:
     static void DeserializeDataProperties(
         _In_ UIDataPtr data,
-        _Out_ ButtonDataProperties&);
+        _Inout_ ButtonDataProperties&);
 
 protected:
     /*virtual*/ UIButton* Create(UIManager& manager, ID id, UIDataPtr data)

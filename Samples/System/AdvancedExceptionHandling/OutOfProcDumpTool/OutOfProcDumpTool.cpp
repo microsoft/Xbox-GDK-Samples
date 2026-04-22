@@ -70,7 +70,7 @@ namespace
     {
         if (!dumpFileName)
         {
-            DX::ThrowIfFailed(E_INVALIDARG);
+            throw std::invalid_argument("dumpFileName");
         }
 
         // Create the dump file

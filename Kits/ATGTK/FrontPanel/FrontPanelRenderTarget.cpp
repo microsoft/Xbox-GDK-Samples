@@ -22,6 +22,9 @@ using namespace DirectX;
 FrontPanelRenderTarget::FrontPanelRenderTarget()
     : m_displayWidth(0),
     m_displayHeight(0),
+    m_rtvDescriptorSize(0),
+    m_srvDescriptorSize(0),
+    m_numBlitRenderTargets(0),
     m_blitRenderTargetFormat(DXGI_FORMAT_UNKNOWN)
 {
 }

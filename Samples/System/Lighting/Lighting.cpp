@@ -13,6 +13,10 @@
 #include "FindMedia.h"
 #include "ControllerFont.h"
 
+#ifndef _GAMING_XBOX
+#pragma comment(lib, "lamparray.lib")
+#endif
+
 extern void ExitSample() noexcept;
 
 using Microsoft::WRL::ComPtr;

@@ -81,13 +81,13 @@ private:
     Microsoft::WRL::ComPtr<ID3D12PipelineState> m_pipelineStateDxCompilerAutoPdb;
 
     // Binary sizes
-    size_t										m_sizeDxcEmbeddedPdb;
-    size_t										m_sizeDxcManualPdb;
-    size_t										m_sizeDxcAutoPdb;
+    size_t										m_sizeDxcEmbeddedPdb =  0;
+    size_t										m_sizeDxcManualPdb = 0;
+    size_t										m_sizeDxcAutoPdb = 0;
 
-    size_t										m_sizeDxCompilerEmbeddedPdb;
-    size_t										m_sizeDxCompilerManualPdb;
-    size_t										m_sizeDxCompilerAutoPdb;
+    size_t										m_sizeDxCompilerEmbeddedPdb = 0;
+    size_t										m_sizeDxCompilerManualPdb = 0;
+    size_t										m_sizeDxCompilerAutoPdb= 0;
 
     // Draw helper
     std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionColor>>  

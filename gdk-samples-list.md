@@ -121,6 +121,7 @@ Following is a list of categories for the samples.
 | __mDNS__ | This sample demonstrates using mDNS to register a game service and broadcasting it across your local network, as well as demonstrating network discovery and resolving on Xbox. | ✓ | ✓ | 
 | __MicrosoftStoreServicesClient__ | This sample works with the Microsoft.StoreServices Sample and demonstrates the client side call pattern to do service-to-service auth with the Store Services | ✓ | ✓ | 
 | __MsQuicEcho__ | This sample is to demonstrate how to implement MsQuic using a simple Echo Server as an example. |  | ✓ | 
+| __PlayFabGameSave__ | This sample demonstrates how to use PlayFab Game Saves with the Microsoft Game Development Kit (GDK). | ✓ | ✓ | 
 | __PlayFabLeaderboards__ | This sample displays the data of the leaderboard registered in PlayFab Leaderboards (v2). As an option, a tool is provided to create PlayFab Leaderboards and write any number of player entities and scores to them. | ✓ | ✓ | 
 | __PlayFabStore__ | This sample demonstrates the client-based operations used in presenting and operating an in-game economy with PlayFab Economy v2. | ✓ | ✓ | 
 | __SimpleCrossGenMPSD__ | This sample demonstrates how to use MPSD to implement sessions and matchmaking for both cross generation and single generation games. | ✓ | ✓ | 
@@ -188,6 +189,7 @@ Following is a list of categories for the samples.
 | __DumpTool__ | DumpTool runs in the Xbox Game OS and generates a crash dump for another process that you specify by name as an argument to the tool. | ✓ |  | 
 | __MeshletConverter__ | The meshlet converter is a command line tool for use on PC. |  | ✓ | 
 | __PlayInputMacro__ | This tool allows play back of recorded XBOM macros to a console from the command line. |  | ✓ | 
+| __RemoteIterationToolsSample__ | A WPF sample application demonstrating how to use the Remote Iteration Client API |  | ✓ | 
 | __WPAProfiles__ | These are WPA profiles for the Windows Performance Analyzer tool. | ✓ | ✓ | 
 | __xbcompress__ | This samples demonstrates the Compression API introduced with Windows 8 which is supported for all Gaming.*.x64 platforms. | ✓ | ✓ | 
 | __xbdepends__ | This is a command-line for Windows 10 machines intended to help diagnose build and launch issues for GDKX titles. | ✓ | ✓ | 

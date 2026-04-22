@@ -1,0 +1,226 @@
+{
+  "includes": [
+    "Assets/Layouts/defs.json",
+    "Assets/Layouts/styles.json"
+  ],
+  "layout": {
+    "classId": "Panel",
+    "id": "menu-screen",
+    "size": [ 1920, 1080 ],
+    "style": {
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#background_color"
+    },
+    "childElements": [
+      {
+        "id": "AddUserButton",
+        "prefabRef": "Assets/Layouts/menu-button.json",
+        "position": [ 120, 230 ],
+        "subElements": [
+          {
+            "classId": "staticText",
+            "id": "Label",
+            "styleId": "button_label_style",
+            "staticText": {
+              "text": "Add User to Game Saves"
+            }
+          }
+        ]
+      },
+      {
+        "id": "DataSaveButton",
+        "prefabRef": "Assets/Layouts/menu-button.json",
+        "position": [ 120, 295 ],
+        "subElements": [
+          {
+            "classId": "staticText",
+            "id": "Label",
+            "styleId": "button_label_style",
+            "staticText": {
+              "text": "Save 10MB file"
+            }
+          }
+        ]
+      },
+      {
+        "id": "DataLoadButton",
+        "prefabRef": "Assets/Layouts/menu-button.json",
+        "position": [ 120, 360 ],
+        "subElements": [
+          {
+            "classId": "staticText",
+            "id": "Label",
+            "styleId": "button_label_style",
+            "staticText": {
+              "text": "Load/Verify save"
+            }
+          }
+        ]
+      },
+      {
+        "id": "DataDeleteButton",
+        "prefabRef": "Assets/Layouts/menu-button.json",
+        "position": [ 120, 425 ],
+        "subElements": [
+          {
+            "classId": "staticText",
+            "id": "Label",
+            "styleId": "button_label_style",
+            "staticText": {
+              "text": "Delete save"
+            }
+          }
+        ]
+      },
+      {
+        "id": "SetDescriptionButton",
+        "prefabRef": "Assets/Layouts/menu-button.json",
+        "position": [ 120, 490 ],
+        "subElements": [
+          {
+            "classId": "staticText",
+            "id": "Label",
+            "styleId": "button_label_style",
+            "staticText": {
+              "text": "Set short save description"
+            }
+          }
+        ]
+      },
+      {
+        "id": "UploadReleaseDeviceButton",
+        "prefabRef": "Assets/Layouts/menu-button.json",
+        "position": [ 120, 555 ],
+        "subElements": [
+          {
+            "classId": "staticText",
+            "id": "Label",
+            "styleId": "button_label_style",
+            "staticText": {
+              "text": "Upload (release device)"
+            }
+          }
+        ]
+      },
+      {
+        "id": "UploadKeepActiveButton",
+        "prefabRef": "Assets/Layouts/menu-button.json",
+        "position": [ 120, 620 ],
+        "subElements": [
+          {
+            "classId": "staticText",
+            "id": "Label",
+            "styleId": "button_label_style",
+            "staticText": {
+              "text": "Upload (keep active)"
+            }
+          }
+        ]
+      },
+      {
+        "classId": "HorizontalStackPanel",
+        "id": "Sample_Title_Panel",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "position": [ 50, 25 ],
+        "size": [ 1920, 120 ],
+        "styleId": "Invisible_Panel_Style",
+        "stackingOrientation": "right",
+        "focusable": false,
+        "childElements": [
+          {
+            "classId": "Image",
+            "id": "ATG_Logo_Image",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 90, 40 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 100, 110 ],
+            "focusable": false,
+            "styleId": "ATG_Logo_Style"
+          },
+          {
+            "classId": "StaticText",
+            "id": "Panel_Title_Label",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "text": "PlayFab Game Save Sample",
+            "size": [ 1550, 120 ],
+            "focusable": false,
+            "styleId": "menu_title_text_style"
+          }
+        ]
+      },
+      {
+        "id": "OrangePanel",
+        "classId": "Panel",
+        "position": [ 0, 0 ],
+        "size": [ 40, 1280 ],
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "styleId": "PlayfabPanel"
+      },
+      {
+        "classId": "staticText",
+        "id": "Log_Label",
+        "size": [ 100, 100 ],
+        "position": [ 570, 195 ],
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "styleId": "log_label_style",
+        "isLegend": true,
+        "staticText": {
+          "text": "Log"
+        }
+      },
+      {
+        "classId": "Panel",
+        "id": "Input_Panel",
+        "size": [ 200, 110 ],
+        "position": [ 340, 710 ],
+        "style": {
+          "classId": "SpriteStyle",
+          "colorUsage": "override",
+          "color": [ 90, 80, 80, 1.0 ]
+        },
+        "childElements": [
+          {
+            "classId": "staticText",
+            "id": "GuideLabel",
+            "position": [ 10, 10 ],
+            "size": [ 500, 500 ],
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "styleId": "guide_label_style",
+            "isLegend": true,
+            "staticText": {
+
+              "text": "[DPad] : Navigate\n[A] : Select\n[View] : Exit\n"
+            }
+          }
+        ]
+      },
+      {
+        "classId": "Image",
+        "id": "Console_Background",
+        "position": [ 570, 250 ],
+        "size": [ 1200, 650 ],
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "style": {
+          "classId": "SpriteStyle",
+          "colorUsage": "override",
+          "color": [ 32, 32, 32, 1 ]
+        },
+        "childElements": [
+          {
+            "id": "ConsoleWindow",
+            "prefabRef": "Assets/Layouts/console-window.json"
+          }
+        ]
+      }
+
+
+    ]
+  }
+}

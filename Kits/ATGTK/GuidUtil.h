@@ -7,6 +7,9 @@
 
 #pragma once
 
+#include <string>
+#include <combaseapi.h>
+
 namespace DX
 {
     class GuidUtil
@@ -17,7 +20,12 @@ namespace DX
             GUID id = {};
             char buf[64] = {};
 
-            CoCreateGuid(&id);
+            HRESULT hr = CoCreateGuid(&id);
+            if (FAILED(hr))
+            {
+                // If CoCreateGuid fails, return an empty string or throw an exception
+                return std::string();
+            }
 
             sprintf_s(buf, "%08lX-%04hX-%04hX-%02hhX%02hhX-%02hhX%02hhX%02hhX%02hhX%02hhX%02hhX",
                 id.Data1, id.Data2, id.Data3,

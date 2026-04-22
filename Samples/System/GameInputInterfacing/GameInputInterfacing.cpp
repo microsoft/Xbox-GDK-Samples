@@ -67,7 +67,8 @@ namespace
 }
 
 Sample::Sample() noexcept(false) :
-    m_frame(0)
+    m_frame(0),
+    m_deviceToken{}
 {
     // Renders only 2D, so no need for a depth buffer.
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_UNKNOWN, 2);
@@ -321,7 +322,7 @@ void Sample::Update(DX::StepTimer const& timer)
 
                 //Touch states
                 //CONSOLE-BASED XCLOUD ONLY
-#ifdef _GAMING_XBOX
+#if defined(_GAMING_XBOX) && GAMEINPUT_API_VERSION < 3
                 inputCount = m_reading->GetTouchCount();
                 if (inputCount > 0)
                 {

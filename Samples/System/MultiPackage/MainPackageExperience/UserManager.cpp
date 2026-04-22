@@ -15,7 +15,7 @@ UserManager::UserManager(SimpleLogManager* logger):
     m_taskQueue(nullptr),
     m_userAddInProgress(false),
     m_userHandleIsAvailable(false),
-    m_gamerPic({}),
+    m_gamerPic{},
     m_gamerPicGamertag(""),
     m_logger(logger)
 {
@@ -105,9 +105,9 @@ HRESULT UserManager::LoadGamerPic()
 
     struct AsyncBlockContext
     {
-        GamerPicBytes* gamerPicBytes;
+        GamerPicBytes* gamerPicBytes = nullptr;
         std::string potentialGamertag;
-        UserManager* pThis;
+        UserManager* pThis = nullptr;
     };
 
     AsyncBlockContext* ctx = new AsyncBlockContext();

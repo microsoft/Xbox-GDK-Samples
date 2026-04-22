@@ -108,14 +108,14 @@ void Sample::Update(DX::StepTimer const& timer)
     m_examples->Update(elapsedTime);
 
     // Check if the "view" button was pressed and exit the sample if so
-    auto buttons = m_uiInputState.GetGamePadButtons(0);
+    const auto& buttons = m_uiInputState.GetGamePadButtons(0);
     if (buttons.view == GamePad::ButtonStateTracker::PRESSED)
     {
         ExitSample();
     }
 
     // Also exit if the Sample user presses the [ESC] key
-    auto keys = m_uiInputState.GetKeyboardKeys();
+    const auto& keys = m_uiInputState.GetKeyboardKeys();
     if (keys.IsKeyPressed(DirectX::Keyboard::Keys::Escape))
     {
         ExitSample();

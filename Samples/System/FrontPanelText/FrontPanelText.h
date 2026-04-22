@@ -69,8 +69,8 @@ private:
     // RasterFonts
     struct FontEntry
     {
-        unsigned size;
-        const wchar_t *name;
+        unsigned size       = 0;
+        const wchar_t *name = nullptr;
         ATG::RasterFont font;
     };
     unsigned FindFontEntry(const wchar_t *name, unsigned size, bool larger = true) const;

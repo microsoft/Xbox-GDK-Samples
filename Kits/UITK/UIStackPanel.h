@@ -133,6 +133,7 @@ public:
 protected:
     UIStackPanel(UIManager& uiManager, ID id) : UIElement(uiManager, id)
     {
+        m_orientation = StackingOrientation::Down;
         m_startIndex = 0;
         m_numChildren = 0;
         m_updateFocus = c_noUpdate;

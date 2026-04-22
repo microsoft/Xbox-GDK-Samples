@@ -125,6 +125,8 @@ Sample::Sample() noexcept(false)
     : m_displayWidth(0)
     , m_displayHeight(0)
     , m_frame(0)
+    , m_lodCounts(nullptr)
+    , m_primCounts{0}
     , m_uploadInstances(false)
     , m_instMode(InstanceMode::IM_Line)
     , m_renderMode(RenderMode::RM_Meshlets)

@@ -32,12 +32,12 @@ void ViewDevicePowerStatus()
 
 		std::cout << "SystemStatusFlag: Battery saver is " << (g_sysPowerStatus.SystemStatusFlag == 1?"On":"Off") << std::endl;
 
-		if (g_sysPowerStatus.BatteryLifeTime == -1)
+		if (g_sysPowerStatus.BatteryLifeTime == static_cast<DWORD>(-1))
 			std::cout << "BatteryLifeTime: Unknown - Device is either plugged in or this data is not available" << std::endl;
 		else
 			std::cout << "BatteryLifeTime: " << g_sysPowerStatus.BatteryLifeTime << " Seconds remaining" << std::endl;
 
-		if (g_sysPowerStatus.BatteryFullLifeTime == -1)
+		if (g_sysPowerStatus.BatteryFullLifeTime == static_cast<DWORD>(-1))
 			std::cout << "BatteryFullLifeTime: Unknown - Device is either plugged in or this data is not available" << std::endl;
 		else
 			std::cout << "BatteryFullLifeTime: " << g_sysPowerStatus.BatteryFullLifeTime << " Seconds in total" << std::endl;

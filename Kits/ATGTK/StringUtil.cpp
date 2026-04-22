@@ -44,19 +44,19 @@ namespace
         if ((secondByte & MUL_BYTE_MASK) != MUL_BYTE_VAL)
         {
             char buf[128] = { 0 };
-            sprintf_s(buf, "ConvertUTF8ToUTF32_FourBytes: Second byte does not start with proper 2 bits: %d", static_cast<uint32_t>(secondByte));
+            sprintf_s(buf, "ConvertUTF8ToUTF32_FourBytes: Second byte does not start with proper 2 bits: %u", static_cast<uint32_t>(secondByte));
             throw std::exception(buf);
         }
         if ((thirdByte & MUL_BYTE_MASK) != MUL_BYTE_VAL)
         {
             char buf[128] = { 0 };
-            sprintf_s(buf, "ConvertUTF8ToUTF32_FourBytes: Third byte does not start with proper 2 bits: %d", static_cast<uint32_t>(thirdByte));
+            sprintf_s(buf, "ConvertUTF8ToUTF32_FourBytes: Third byte does not start with proper 2 bits: %u", static_cast<uint32_t>(thirdByte));
             throw std::exception(buf);
         }
         if ((fourthByte & MUL_BYTE_MASK) != MUL_BYTE_VAL)
         {
             char buf[128] = { 0 };
-            sprintf_s(buf, "ConvertUTF8ToUTF32_FourBytes: Fourth byte does not start with proper 2 bits: %d", static_cast<uint32_t>(fourthByte));
+            sprintf_s(buf, "ConvertUTF8ToUTF32_FourBytes: Fourth byte does not start with proper 2 bits: %u", static_cast<uint32_t>(fourthByte));
             throw std::exception(buf);
         }
 
@@ -77,13 +77,13 @@ namespace
         if ((secondByte & MUL_BYTE_MASK) != MUL_BYTE_VAL)
         {
             char buf[128] = { 0 };
-            sprintf_s(buf, "ConvertUTF8ToUTF32_ThreeBytes: Second byte does not start with proper 2 bits: %d", static_cast<uint32_t>(secondByte));
+            sprintf_s(buf, "ConvertUTF8ToUTF32_ThreeBytes: Second byte does not start with proper 2 bits: %u", static_cast<uint32_t>(secondByte));
             throw std::exception(buf);
         }
         if ((thirdByte & MUL_BYTE_MASK) != MUL_BYTE_VAL)
         {
             char buf[128] = { 0 };
-            sprintf_s(buf, "ConvertUTF8ToUTF32_ThreeBytes: Third byte does not start with proper 2 bits: %d", static_cast<uint32_t>(thirdByte));
+            sprintf_s(buf, "ConvertUTF8ToUTF32_ThreeBytes: Third byte does not start with proper 2 bits: %u", static_cast<uint32_t>(thirdByte));
             throw std::exception(buf);
         }
 
@@ -103,7 +103,7 @@ namespace
         if ((secondByte & MUL_BYTE_MASK) != MUL_BYTE_VAL)
         {
             char buf[128] = { 0 };
-            sprintf_s(buf, "ConvertUTF8ToUTF32_TwoBytes: Second byte does not start with proper 2 bits: %d", static_cast<uint32_t>(secondByte));
+            sprintf_s(buf, "ConvertUTF8ToUTF32_TwoBytes: Second byte does not start with proper 2 bits: %u", static_cast<uint32_t>(secondByte));
             throw std::exception(buf);
         }
 
@@ -248,7 +248,7 @@ std::u32string DX::Utf8ToUtf32(const std::string& utf8String)
         else
         {
             char buf[128] = { 0 };
-            sprintf_s(buf, "ConvertUTF8ToUTF32: Invalid UTF-8 starting byte encountered: %d", static_cast<uint32_t>(firstByte));
+            sprintf_s(buf, "ConvertUTF8ToUTF32: Invalid UTF-8 starting byte encountered: %u", static_cast<uint32_t>(firstByte));
             throw std::exception(buf);
         }
     }

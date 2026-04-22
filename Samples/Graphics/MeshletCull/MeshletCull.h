@@ -74,8 +74,8 @@ private:
     {
         using EffectList = DirectX::Model::EffectCollection;
 
-        VQS                                     World;
-        uint32_t                                ModelIndex;
+        VQS                                     World       = {};
+        uint32_t                                ModelIndex  = 0;
         Microsoft::WRL::ComPtr<ID3D12Resource>  ConstantBuffer;
         EffectList                              Effects;
     };

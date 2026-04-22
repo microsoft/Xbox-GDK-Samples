@@ -91,7 +91,11 @@ namespace
 Sample::Sample() noexcept(false) :
     m_frame(0),
     m_asyncQueue(nullptr),
-    m_xStoreContext(nullptr)
+    m_xStoreContext(nullptr),
+    m_CollectionsUIStart{},
+    m_CollectionsUIEnd{},
+    m_subscriptionUIStart{},
+    m_subscriptionUIEnd{}
 {
     DX::ThrowIfFailed(
         XTaskQueueCreate(XTaskQueueDispatchMode::ThreadPool, XTaskQueueDispatchMode::Manual, &m_asyncQueue)
@@ -1520,6 +1524,13 @@ void Sample::CacheAccessTokensFromService(std::string ServerAccessTokenURL)
             {
                 HttpManagerLog("Response status code: " + std::to_string(context->responseStatusCode) + "\n");
                 HttpManagerLog("Response body size: " + std::to_string(context->responseBody.size()) + "\n");
+
+                if (context->responseStatusCode < 200 || context->responseStatusCode >= 300)
+                {
+                    HttpManagerLog("CacheAccessTokensFromService failed with HTTP " + std::to_string(context->responseStatusCode) + "\n");
+                    this->m_cachingTokens = false;
+                    return;
+                }
 
                 auto rawBody = context->responseBody.data();
                 auto bodyLen = context->responseBody.size();

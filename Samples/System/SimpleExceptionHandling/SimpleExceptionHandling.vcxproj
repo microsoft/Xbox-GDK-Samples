@@ -131,6 +131,7 @@
     <IncludePath>$(Console_SdkIncludeRoot)</IncludePath>
     <ExecutablePath>$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
     <LinkIncremental>false</LinkIncremental>
+    <EnableMicrosoftCodeAnalysis>true</EnableMicrosoftCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">
     <ReferencePath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</ReferencePath>
@@ -139,6 +140,7 @@
     <IncludePath>$(Console_SdkIncludeRoot)</IncludePath>
     <ExecutablePath>$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
     <LinkIncremental>false</LinkIncremental>
+    <EnableMicrosoftCodeAnalysis>true</EnableMicrosoftCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">
     <ReferencePath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</ReferencePath>
@@ -147,6 +149,7 @@
     <IncludePath>$(Console_SdkIncludeRoot)</IncludePath>
     <ExecutablePath>$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
     <LinkIncremental>true</LinkIncremental>
+    <EnableMicrosoftCodeAnalysis>true</EnableMicrosoftCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">
     <ReferencePath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</ReferencePath>
@@ -155,24 +158,28 @@
     <IncludePath>$(Console_SdkIncludeRoot)</IncludePath>
     <ExecutablePath>$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
     <LinkIncremental>true</LinkIncremental>
+    <EnableMicrosoftCodeAnalysis>true</EnableMicrosoftCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ExecutablePath>$(GameDK)bin;$(ExecutablePath)</ExecutablePath>
     <IncludePath>$(GDKCrossPlatformPath)windows\include;$(IncludePath);</IncludePath>
     <LibraryPath>$(GDKCrossPlatformPath)windows\lib\x64;$(LibraryPath)</LibraryPath>
     <LinkIncremental>true</LinkIncremental>
+    <EnableMicrosoftCodeAnalysis>true</EnableMicrosoftCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ExecutablePath>$(GameDK)bin;$(ExecutablePath)</ExecutablePath>
     <IncludePath>$(GDKCrossPlatformPath)windows\include;$(IncludePath);</IncludePath>
     <LibraryPath>$(GDKCrossPlatformPath)windows\lib\x64;$(LibraryPath)</LibraryPath>
     <LinkIncremental>false</LinkIncremental>
+    <EnableMicrosoftCodeAnalysis>true</EnableMicrosoftCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">
     <ExecutablePath>$(GameDK)bin;$(ExecutablePath)</ExecutablePath>
     <IncludePath>$(GDKCrossPlatformPath)windows\include;$(IncludePath);</IncludePath>
     <LibraryPath>$(GDKCrossPlatformPath)windows\lib\x64;$(LibraryPath)</LibraryPath>
     <LinkIncremental>false</LinkIncremental>
+    <EnableMicrosoftCodeAnalysis>true</EnableMicrosoftCodeAnalysis>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">
     <Link>
@@ -512,8 +519,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(VCTargetsPath)\Platforms\$(Platform)\Platform.props')" Text="$([System.String]::Format('$(ErrorText)', '$(Platform)'))" />
   </Target>
-  <Target Name="BuildMGC" AfterTargets="Build" Condition="!$([System.Text.RegularExpressions.Regex]::IsMatch('$(Platform)', 'Gaming\..+\.x64'))"
-          Inputs="@(MGCCompile)" Outputs="$(OutDir)MicrosoftGame.config">
+  <Target Name="BuildMGC" AfterTargets="Build" Condition="!$([System.Text.RegularExpressions.Regex]::IsMatch('$(Platform)', 'Gaming\..+\.x64'))" Inputs="@(MGCCompile)" Outputs="$(OutDir)MicrosoftGame.config">
     <Exec ConsoleToMsBuild="true" Command="copy &quot;%(MGCCompile.Identity)&quot; &quot;$(OutDir)MicrosoftGame.config&quot;" />
     <Exec ConsoleToMsBuild="true" Command="makepkg.exe localize /d &quot;$(OutDir).&quot; /pd &quot;$(OutDir).&quot; /gc &quot;%(MGCCompile.Identity)&quot;" />
   </Target>

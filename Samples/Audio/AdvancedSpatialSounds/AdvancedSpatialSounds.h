@@ -26,11 +26,11 @@ enum TravelType {
 
 struct TravelData
 {
-	TravelType travelType;
-	float radius;
-	float vel;
-	DirectX::XMFLOAT3 direction;
-	DirectX::BoundingBox boundingBox;
+	TravelType travelType = Linear;
+	float radius = 0.0f;
+	float vel = 0.0f;
+	DirectX::XMFLOAT3 direction = { 0.0f, 0.0f, 0.0f };
+	DirectX::BoundingBox boundingBox = {};
 };
 
 struct BedChannel
@@ -45,17 +45,17 @@ struct BedChannel
 
 struct PointSound
 {
-	BYTE *  wavBuffer;
-	UINT32  bufferSize;
-	float   volume;
-	UINT32  curBufferLoc;
-	float   posX;
-	float   posY;
-	float   posZ;
-	int soundIndex;
+	BYTE *  wavBuffer = nullptr;
+	UINT32  bufferSize = 0;
+	float   volume = 0.0f;
+	UINT32  curBufferLoc = 0;
+	float   posX = 0.0f;
+	float   posY = 0.0f;
+	float   posZ = 0.0f;
+	int soundIndex = 0;
 	Microsoft::WRL::ComPtr<ISpatialAudioObject> object;
-	TravelData travelData;
-	bool    isPlaying;
+	TravelData travelData = {};
+	bool    isPlaying = false;
 };
 
 class Sample

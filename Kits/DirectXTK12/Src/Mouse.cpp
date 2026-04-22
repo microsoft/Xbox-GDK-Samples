@@ -4,8 +4,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 //
-// http://go.microsoft.com/fwlink/?LinkId=248929
-// http://go.microsoft.com/fwlink/?LinkID=615561
+// https://go.microsoft.com/fwlink/?LinkId=248929
+// https://go.microsoft.com/fwlink/?LinkID=615561
 //--------------------------------------------------------------------------------------
 
 #include "pch.h"
@@ -32,6 +32,10 @@ using namespace GameInput::v3;
 #endif
 
 using GameInputCreateFn = HRESULT(*)(IGameInput**);
+
+#ifdef __clang__
+#pragma clang diagnostic ignored "-Wmicrosoft-cast"
+#endif
 
 //
 // Call this static function from your Window Message Procedure
@@ -93,7 +97,7 @@ public:
             s_gameInputModule = LoadLibraryExW(L"GameInput.dll", nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32);
             if (s_gameInputModule)
             {
-                s_gameInputCreate = reinterpret_cast<GameInputCreateFn>(static_cast<void*>(GetProcAddress(s_gameInputModule, "GameInputCreate")));
+                s_gameInputCreate = reinterpret_cast<GameInputCreateFn>(reinterpret_cast<void*>(GetProcAddress(s_gameInputModule, "GameInputCreate")));
             }
 
             if (!s_gameInputCreate)

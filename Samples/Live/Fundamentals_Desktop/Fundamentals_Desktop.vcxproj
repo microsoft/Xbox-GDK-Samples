@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -19,10 +19,6 @@
     <ProjectGuid>{154bd22d-765e-46c4-b056-5723c3b4ae4a}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <GDKPCEditionPath Condition="'$(GDKPCEditionPath)'==''">$(GRDKLatest)</GDKPCEditionPath>
-    <ExtensionPlatformToolset>142</ExtensionPlatformToolset>
-    <GDKCrossPlatform>true</GDKCrossPlatform>
-    <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
   </PropertyGroup>
   <Import Condition="Exists($(ATGBuildProps))" Project="$(ATGBuildProps)" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -54,10 +50,6 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <PropertyGroup>
-    <GDKCrossPlatformPath Condition="'$(GDKCrossPlatformPath)'==''">$(GameDKCoreLatest)</GDKCrossPlatformPath>
-    <GDKCrossPlatformPath Condition="'$(GDKCrossPlatformPath)'==''">$(GameDKXboxLatest)</GDKCrossPlatformPath>
-  </PropertyGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -93,7 +85,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_WINDOWS;_GAMING_DESKTOP;WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_GAMING_DESKTOP;WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FloatingPointModel>Fast</FloatingPointModel>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
@@ -122,7 +114,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>_WINDOWS;_GAMING_DESKTOP;WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_GAMING_DESKTOP;WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FloatingPointModel>Fast</FloatingPointModel>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
@@ -255,6 +247,10 @@ makepkg.exe localize /d "$(OutDir)." /pd "$(OutDir)." /gc "%(Identity)"</Command
       <Outputs>$(OutDir)MicrosoftGame.config</Outputs>
     </CustomBuild>
   </ItemGroup>
+  <ItemGroup Condition="'$(Platform)'=='x64'">
+    <ReferenceCopyLocalPaths Include="$(GDKCrossPlatformPath)windows\bin\x64\libHttpClient.dll" />
+    <ReferenceCopyLocalPaths Include="$(GDKCrossPlatformPath)windows\bin\x64\XCurl.dll" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="readme_ja-jp.md" />
     <None Include="readme_ko-kr.md" />
@@ -270,10 +266,6 @@ makepkg.exe localize /d "$(OutDir)." /pd "$(OutDir)." /gc "%(Identity)"</Command
     <ReferenceCopyLocalPaths Include="$(GDKCrossPlatformPath)windows\bin\x64\libHttpClient.dll" />
     <ReferenceCopyLocalPaths Include="$(GDKCrossPlatformPath)windows\bin\x64\XCurl.dll" />
   </ItemGroup>
-  <ItemGroup Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(Platform)', 'Gaming\.Xbox\..+\.x64'))">
-    <ReferenceCopyLocalPaths Include="$(GDKCrossPlatformPath)xbox\bin\x64\libHttpClient.dll" />
-    <ReferenceCopyLocalPaths Include="$(GDKCrossPlatformPath)xbox\bin\x64\XCurl.dll" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
@@ -284,16 +276,5 @@ makepkg.exe localize /d "$(OutDir)." /pd "$(OutDir)." /gc "%(Identity)"</Command
     <Error Condition="!HasTrailingSlash('$(GDKCrossPlatformPath)')" Text="GDKCrossPlatformPath property must have trailing slash" />
     <Error Condition="!Exists('$(GDKCrossPlatformPath)windows')" Text="GDKCrossPlatformPath needs to point to the October 2025 GDK or later" />
     <Message Importance="high" Text="Using $(GDKCrossPlatformPath)" />
-  </Target>
-  <Target Name="EnsureGDK" BeforeTargets="_CheckForInvalidConfigurationAndPlatform" Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(Platform)', 'Gaming\.Xbox\..+\.x64'))">
-    <PropertyGroup>
-      <ErrorText>This project requires the Microsoft GDK with Xbox Extensions to be installed. If you have already installed the GDK, then run Repair to ensure proper integration with Visual Studio. The missing platform is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('$(VCTargetsPath)\Platforms\$(Platform)\Platform.props')" Text="$([System.String]::Format('$(ErrorText)', '$(Platform)'))" />
-  </Target>
-  <Target Name="BuildMGC" AfterTargets="Build" Condition="!$([System.Text.RegularExpressions.Regex]::IsMatch('$(Platform)', 'Gaming\..+\.x64'))"
-          Inputs="@(MGCCompile)" Outputs="$(OutDir)MicrosoftGame.config">
-    <Exec ConsoleToMsBuild="true" Command="copy &quot;%(MGCCompile.Identity)&quot; &quot;$(OutDir)MicrosoftGame.config&quot;" />
-    <Exec ConsoleToMsBuild="true" Command="makepkg.exe localize /d &quot;$(OutDir).&quot; /pd &quot;$(OutDir).&quot; /gc &quot;%(MGCCompile.Identity)&quot;" />
   </Target>
 </Project>

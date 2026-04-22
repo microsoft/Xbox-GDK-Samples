@@ -1,0 +1,125 @@
+﻿{
+  "$schema": "https://atgsamplessa.blob.core.windows.net/uitkschema/latest/layout.schema.json",
+  "definitions": {
+    "#fullscreen": [ 1920, 1080 ]
+  },
+  "styles": [
+    {
+      "id": "basic_panel_style",
+      "classId": "SpriteStyle",
+      "spriteStyle": {
+        "colorUsage": "override",
+        "color": [ 47, 47, 47, 1.0 ]
+      }
+    },
+    {
+      "id": "base_text_style",
+      "classId": "TextStyle",
+      "font": "Assets/Fonts/SegoeUI",
+      "legendFont": "Assets/Fonts/XboxOneControllerLegendSmall",
+      "color": [ 140, 198, 199, 1.0 ],
+      "size": 18,
+      "colorUsage": "override",
+      "horizontalAlign": "left",
+      "verticalAlign": "top"
+    },
+    {
+      "id": "header_text_style",
+      "classId": "TextStyle",
+      "font": "Assets/Fonts/SegoeUI",
+      "color": [ 225, 225, 225, 0.8 ],
+      "size": 36,
+      "colorUsage": "override",
+      "horizontalAlign": "left",
+      "verticalAlign": "top"
+    },
+    {
+      "id": "menu_title_text_style",
+      "classId": "TextStyle",
+      "colorUsage": "override",
+      "color": [ 227, 211, 177, 0.8 ],
+      "font": "Assets/Fonts/SegoeUI",
+      "size": 36,
+      "horizontalAlign": "left",
+      "verticalAlign": "middle"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "ATG_Logo_Style",
+      "spriteStyle": {
+        "colorUsage": "override",
+        "color": [ 195, 181, 152, 1.0 ],
+        "texture": "Assets/LOGO_ATG_SMALL.png"
+      }
+    }
+  ],
+  "layout": {
+    "id": "SamplePanel",
+    "classId": "panel",
+    "styleId": "basic_panel_style",
+    "panel": {
+      "positioningAnchor": [ "left", "top" ],
+      "position": [ 0, 0 ],
+      "sizingAnchor": [ "left", "top" ],
+      "size": "#fullscreen"
+    },
+    "childElements": [
+      {
+        "classId": "Image",
+        "id": "ATG_Logo_Image",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 90, 40 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 100, 110 ],
+        "focusable": false,
+        "styleId": "ATG_Logo_Style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "Panel_Title_Label",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "text": "SimpleMultiExecutablePackage Sample",
+        "position": [ 200, 40 ],
+        "size": [ 1550, 120 ],
+        "focusable": false,
+        "styleId": "menu_title_text_style"
+      },
+      {
+        "classId": "StaticText",
+        "id": "header_text",
+        "styleId": "header_text_style",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 150, 400 ],
+        "sizingAnchor": [ "left", "top" ],
+        "text": "This executable is AlternateExperience.exe",
+        "size": [ 800, 200 ],
+        "focusable": false
+      },
+      {
+        "classId": "StaticText",
+        "id": "base_text",
+        "styleId": "base_text_style",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 150, 600 ],
+        "sizingAnchor": [ "left", "top" ],
+        "isLegend": true,
+        "text": "Press [A] to switch executables.",
+        "size": [ 800, 200 ],
+        "focusable": false
+      },
+      {
+        "classId": "StaticText",
+        "id": "base_text_2",
+        "styleId": "base_text_style",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 150, 675 ],
+        "sizingAnchor": [ "left", "top" ],
+        "isLegend": true,
+        "text": "Press [B] to switch/sign in a user.",
+        "size": [ 800, 200 ],
+        "focusable": false
+      }
+    ]
+  }
+}

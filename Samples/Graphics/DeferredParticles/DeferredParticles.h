@@ -51,8 +51,8 @@ private:
     {
         using DrawCallback = DirectX::ModelMeshPart::DrawCallback;
 
-        DirectX::XMFLOAT4X4 World;
-        DirectX::Model*     Model;
+        DirectX::XMFLOAT4X4 World{};
+        DirectX::Model*     Model = nullptr;
         DrawCallback        SetupFunc;
     };
 

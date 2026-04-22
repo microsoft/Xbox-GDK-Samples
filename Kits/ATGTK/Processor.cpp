@@ -338,6 +338,8 @@ bool ATG::SetupProcessorData()
         wchar_t processorName[256];
         DWORD dataSize = sizeof(wchar_t) * 256;
         RegGetValueW(HKEY_LOCAL_MACHINE, L"HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0", L"ProcessorNameString", RRF_RT_REG_SZ, nullptr, processorName, &dataSize);
+        // Ensure string is null-terminated to satisfy static analysis
+        processorName[255] = L'\0';
         g_trueProcessorName = processorName;
     }
 #elif defined(_GAMING_XBOX)
@@ -353,6 +355,7 @@ bool ATG::SetupProcessorData()
     case XSystemDeviceType::XboxScarlettAnaconda:   g_trueProcessorName = L"Microsoft Xbox Series X CPU"; break;
     case XSystemDeviceType::XboxScarlettDevkit:     g_trueProcessorName = L"Microsoft Xbox Series X DevKit CPU"; break;
     case XSystemDeviceType::Pc: assert(false);      // fallthrough, this case should never happen because this block of code is only on console
+        [[fallthrough]];
     case XSystemDeviceType::Unknown:                g_trueProcessorName = L"Microsoft Undefined Xbox CPU"; break;
     }
 #else       // Xbox XDK path

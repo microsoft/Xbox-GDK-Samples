@@ -7,6 +7,16 @@
 
 #pragma once
 
+
+#include <GameInput.h>
+#if GAMEINPUT_API_VERSION == 1
+using namespace GameInput::v1;
+#elif GAMEINPUT_API_VERSION == 2
+using namespace GameInput::v2;
+#elif GAMEINPUT_API_VERSION == 3
+using namespace GameInput::v3;
+#endif
+
 extern std::unique_ptr<AppLog> g_appLog;
 extern std::unique_ptr<DX::DeviceResources> g_deviceResources;
 
@@ -50,18 +60,3 @@ std::wstring OpenWavFileDialog(HWND owner);
 bool IsButtonPressed(GameInputGamepadButtons buttons, GameInputGamepadButtons lastButtons, GameInputGamepadButtons button);
 
 const char* StringifyDeviceId(_In_ const APP_LOCAL_DEVICE_ID& deviceId) noexcept;
-
-typedef struct StreamingFeedbackProvider
-{
-    IMMDevice* endpoint = nullptr;
-    uint32_t locationCount = 0;
-    GUID locations[GAMEINPUT_HAPTIC_MAX_LOCATIONS] = {};
-
-    ~StreamingFeedbackProvider()
-    {
-        if (endpoint != nullptr)
-        {
-            endpoint->Release();
-        }
-    }
-} StreamingFeedbackProvider;

@@ -135,7 +135,7 @@ void GameChatManager::Initialize()
         }
         else
         {
-            DebugTrace("Failed to get XUID for user %lu", user->UserHandle);
+            DebugTrace("Failed to get XUID for user %p", user->UserHandle);
         }
     }
 }
@@ -163,7 +163,7 @@ void GameChatManager::AddRemoteUser(
     {
         std::lock_guard<std::mutex> lock(m_lock);
 
-        DebugTrace("Adding remote chat user: %lu, %lu", chatUserXuid, deviceId);
+        DebugTrace("Adding remote chat user: %llu, %llu", chatUserXuid, deviceId);
 
         chat_manager::singleton_instance().add_remote_user(
             std::to_wstring(chatUserXuid).c_str(),
@@ -331,7 +331,7 @@ void GameChatManager::AddLocalUser(
     {
         std::lock_guard<std::mutex> lock(m_lock);
 
-        DebugTrace("Adding local chat user: %lu", chatUserXuid);
+        DebugTrace("Adding local chat user: %llu", chatUserXuid);
 
         chat_manager::singleton_instance().add_local_user(std::to_wstring(chatUserXuid).c_str());
 
@@ -409,7 +409,7 @@ void GameChatManager::RemoveLocalUser(
     uint64_t chatUserXuid
     )
 {
-    DebugTrace("RemoveLocalUser: %lu", chatUserXuid);
+    DebugTrace("RemoveLocalUser: %llu", chatUserXuid);
 
     if (m_initialized)
     {
@@ -427,7 +427,7 @@ void GameChatManager::RemoveRemoteUser(
     {
         std::lock_guard<std::mutex> lock(m_lock);
 
-        DebugTrace("GameChatManager::RemoveRemoteUser(%lu)", chatUserXuid);
+        DebugTrace("GameChatManager::RemoveRemoteUser(%llu)", chatUserXuid);
 
         uint32_t chatUserCount;
         chat_user_array chatUsers;
@@ -447,7 +447,7 @@ void GameChatManager::RemoveRemoteUser(
                     chatUser
                     );
 
-                DebugTrace("Removing remote user: %lu", chatUserXuid);
+                DebugTrace("Removing remote user: %llu", chatUserXuid);
                 break;
             }
         }
@@ -528,32 +528,43 @@ GameChatManager::ToggleChatUserMuteState(
     // Helper function to swap the mute state of a specific chat user
     auto chatUser = GetChatUserByXboxUserId(chatUserXuid);
 
-    if (chatUser->local() != nullptr)
+    if (chatUser != nullptr)
     {
-        chatUser->local()->set_microphone_muted(
-            !chatUser->local()->microphone_muted()
-            );
-    }
-    else
-    {
-        auto users = Sample::Instance()->GetUserManager()->GetUsers();
-
-        for (auto xboxUser : users)
+        auto chatUserLocal = chatUser->local();
+        if (chatUserLocal != nullptr)
         {
-            uint64_t xuid = 0;
-            auto hr = XUserGetId(
-                xboxUser->UserHandle,
-                &xuid
+            chatUserLocal->set_microphone_muted(
+                !chatUserLocal->microphone_muted()
                 );
+        }
+        else
+        {
+            auto users = Sample::Instance()->GetUserManager()->GetUsers();
 
-            if (SUCCEEDED(hr))
+            for (auto xboxUser : users)
             {
-                auto localUser = GetChatUserByXboxUserId(xuid);
-
-                localUser->local()->set_remote_user_muted(
-                    chatUser,
-                    !localUser->local()->remote_user_muted(chatUser)
+                uint64_t xuid = 0;
+                auto hr = XUserGetId(
+                    xboxUser->UserHandle,
+                    &xuid
                     );
+
+                if (SUCCEEDED(hr))
+                {
+                    auto localUser = GetChatUserByXboxUserId(xuid);
+
+                    if (localUser != nullptr)
+                    {
+                        auto localUserLocal = localUser->local();
+                        if (localUserLocal != nullptr)
+                        {
+                            localUserLocal->set_remote_user_muted(
+                                chatUser,
+                                !localUserLocal->remote_user_muted(chatUser)
+                                );
+                        }
+                    }
+                }
             }
         }
     }

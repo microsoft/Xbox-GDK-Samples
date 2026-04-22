@@ -10,7 +10,7 @@
 #include "imgui.h"
 #include "backends/imgui_impl_dx12.h"
 #include "backends/imgui_impl_win32.h"
-#include "atg/imgui_allocator.h"
+#include "ATG/imgui_allocator.h"
 #include "ImGuiAcc.h"
 
 // A basic sample implementation that creates a D3D12 device and
@@ -67,5 +67,5 @@ private:
     // Descriptor heap for ImGui
     DescriptorHeapAllocator                     m_pd3dSrvDescHeapAlloc;
 
-    ImGuiAcc* imguiAcc;
+    ImGuiAcc* imguiAcc = nullptr;
 };

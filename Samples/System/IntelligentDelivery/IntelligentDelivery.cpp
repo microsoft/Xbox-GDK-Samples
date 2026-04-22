@@ -454,7 +454,7 @@ void Sample::Update(DX::StepTimer const& timer)
     m_uiInputState.Update(elapsedTime, *m_gamePad, *m_keyboard, *m_mouse);
     m_uiManager.Update(elapsedTime, m_uiInputState);
 
-    auto keys = m_uiInputState.GetKeyboardKeys();
+    const auto& keys = m_uiInputState.GetKeyboardKeys();
 
     if (m_uiInputState.GetGamePadButtons(0).view == GamePad::ButtonStateTracker::RELEASED ||
         keys.IsKeyPressed(DirectX::Keyboard::OemTilde))

@@ -55,13 +55,13 @@ namespace GdkSample_InGameStore
                 }
                 else
                 {
-                    // Intialize the ProductList with products available to current user.
+                    // Initialize the ProductList with products available to current user.
                     OnProductsUpdated();
                 }
             }
             else
             {
-                // Returning to the menu after previous intialization.
+                // Returning to the menu after previous initialization.
                 // Set focus to the previously selected item.
                 EventSystem.current.SetSelectedGameObject(ProductUIManager.Instance.UIProducts[SelectedProduct]);
                 ProductSelectionChanged?.Invoke();
@@ -77,6 +77,7 @@ namespace GdkSample_InGameStore
             XboxManager.Instance.UserSignedOut += Close;
             XStoreManager.Instance.StoreInitializationSucceeded += OnProductsUpdated;
             ProductUIManager.Instance.UIProductsUpdated += OnProductsUpdated;
+            XNetworkManager.Instance.NetworkConnectionLost += OnNetworkChangeDetected;
 
             CloseButton.onClick.AddListener(() => Close());
         }
@@ -107,7 +108,7 @@ namespace GdkSample_InGameStore
         }
 
         /// <summary>
-        /// Changes visiblity of UI products to only show items available to the current user.
+        /// Changes visibility of UI products to only show items available to the current user.
         /// The 'UIProducts' list maintained by ProductUIManager persists between user changes to avoid
         /// re-creating product buttons and re-downloading product images. We use the 'AllProducts' list,
         /// created by XStoreManager in context of the current user, to determine which items should be visible.
@@ -191,6 +192,17 @@ namespace GdkSample_InGameStore
         private void Close()
         {
             if (gameObject.activeInHierarchy)
+            {
+                MenuManager.Instance.ShowMainMenu();
+            }
+        }
+
+        /// <summary>
+        /// Returns to Main Menu when no network connection is available.
+        /// </summary>
+        private void OnNetworkChangeDetected()
+        {
+            if (gameObject.activeInHierarchy && !XNetworkManager.Instance.IsNetworkAvailable)
             {
                 MenuManager.Instance.ShowMainMenu();
             }

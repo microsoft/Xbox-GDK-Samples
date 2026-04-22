@@ -33,6 +33,7 @@ namespace
         __try
         {
             char *fred = nullptr;
+#pragma warning(suppress: 6011) // Ignore in static scanning, this is intentional
             *fred = 5;
         }
         __except (OutofProcExceptionFilter(GetExceptionInformation()), EXCEPTION_EXECUTE_HANDLER)

@@ -348,7 +348,7 @@ public:
 protected:
     static void DeserializeDataProperties(
         _In_ UIDataPtr data,
-        _Out_ StyleProperties&);
+        _Inout_ StyleProperties&);
 
 protected:
     virtual UIStyle* Create(UIStyleManager&, const ID&, const ID&, UIDataPtr) = 0;

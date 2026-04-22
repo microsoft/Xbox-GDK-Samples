@@ -27,6 +27,8 @@ namespace
 }
 
 Sample::Sample() noexcept(false) :
+    m_connectivityHint{},
+    m_taskQueueRegToken{},
     m_frame(0)
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>();

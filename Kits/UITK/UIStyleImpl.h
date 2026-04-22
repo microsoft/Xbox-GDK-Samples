@@ -214,7 +214,7 @@ class UITextStyleFactory : public UIStyleFactory<UITextStyle>
 protected:
     static void DeserializeDataProperties(
         _In_ UIDataPtr data,
-        _Out_ StyleTextProperties&);
+        _Inout_ StyleTextProperties&);
 
 protected:
     UITextStyle* Create(UIStyleManager& styleManager, const ID& id, const ID& inheritsFromId, UIDataPtr data) override
@@ -239,7 +239,7 @@ class UISpriteStyleFactory : public UIStyleFactory<UISpriteStyle>
 protected:
     static void DeserializeDataProperties(
         _In_ UIDataPtr data,
-        _Out_ StyleSpriteProperties&);
+        _Inout_ StyleSpriteProperties&);
 
 protected:
     UISpriteStyle* Create(UIStyleManager& styleManager, const ID& id, const ID& inheritsFromId, UIDataPtr data) override

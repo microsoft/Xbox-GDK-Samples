@@ -37,3 +37,4 @@ packages
 .vscode
 .editorconfig
 Directory.Build.props
+Directory.Build.targets

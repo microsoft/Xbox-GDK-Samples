@@ -17,6 +17,7 @@ namespace ATG
     const XMINT2 EsramVisualizeEffect::s_groupSize = XMINT2(8, 8);
 
     EsramVisualizeEffect::EsramVisualizeEffect(ID3D12Device* device)
+        : m_constants{}
     {
         assert(device != nullptr);
 
