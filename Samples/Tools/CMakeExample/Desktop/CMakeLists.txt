@@ -4,7 +4,7 @@
 cmake_minimum_required (VERSION 3.21)
 
 project(CMakeExampleDesktop
-  DESCRIPTION "CMake example for a Microsoft GDK x64 project"
+  DESCRIPTION "CMake example for a Microsoft GDK PC project"
   HOMEPAGE_URL "https://github.com/microsoft/Xbox-GDK-Samples"
   LANGUAGES CXX)
 
@@ -24,9 +24,9 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib/x64")
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib/x64")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/x64")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib/${GDK_ARCH}")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib/${GDK_ARCH}")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/${GDK_ARCH}")
 
 # Libraries
 # kernel32.lib user32.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib are the libs for Win32 desktop DirectX apps
@@ -58,7 +58,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE Xbox::GameInput)
 
 # uuid.lib if using Windows Imaging Component (WIC) or other COM objects
 # delayimp.lib if using /DELAYLOAD (or use dloadhelper.lib if BUILD_USING_ONECORE is ON)
-# optional additional extension libraries: Xbox::GameChat2 Xbox::PlayFabMultiplayer Xbox::PlayFabParty Xbox::PlayFabPartyLIVE Xbox::PlayFabServices
+# optional additional extension libraries: Xbox::GameChat2 Xbox::PlayFabMultiplayer Xbox::PlayFabParty Xbox::PlayFabPartyLIVE Xbox::PlayFabServices Xbox::PlayFabGameSave
 
 # Build HLSL shaders
 add_custom_target(shaders)
@@ -83,7 +83,7 @@ configure_file(../MicrosoftGameConfig.mgc MicrosoftGame.config @ONLY)
 add_custom_target(mgccompile)
 
 add_custom_command(TARGET mgccompile POST_BUILD
-                   COMMAND ${MAKEPKG_TOOL} localize /d "${CMAKE_BINARY_DIR}" /pd "${CMAKE_BINARY_DIR}/bin/x64"
+                   COMMAND ${MAKEPKG_TOOL} localize /d "${CMAKE_BINARY_DIR}" /pd "${CMAKE_BINARY_DIR}/bin/${GDK_ARCH}"
                    COMMENT "makepkg localize MicrosoftGame.config"
                    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
                    VERBATIM)
@@ -136,8 +136,10 @@ endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
    # /sdl (Enable Additional Security Checks)
+   # /Zc:forScope (Force Conformance in for Loop Scope)
    # /Zc:inline (Remove unreferenced COMDAT)
-   target_compile_options(${PROJECT_NAME} PRIVATE /sdl /Zc:inline)
+   # /Zc:wchar_t (wchar_t Is Native Type)
+   target_compile_options(${PROJECT_NAME} PRIVATE /sdl /Zc:forScope /Zc:inline /Zc:wchar_t)
 
    # /analyze (Code analysis)
    if(ENABLE_CODE_ANALYSIS)
@@ -166,7 +168,7 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 
    # /CETCOMPAT (CET Shadow Stack compatible)
    # Note: Make sure any middleware libraries you use support CET
-   if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.27)
+   if((CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.27) AND (NOT (${GDK_ARCH} MATCHES "^arm")))
       target_link_options(${PROJECT_NAME} PRIVATE /CETCOMPAT)
    endif()
 
@@ -240,3 +242,5 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
 #    cd CMakeExample\Desktop\out\build\<config>\bin
 #    makepkg genmap /f chunks.xml /d x64
 #    makepkg pack /f chunks.xml /d x64 /pd . /pc
+#
+#  Change x64 to arm64 if needed

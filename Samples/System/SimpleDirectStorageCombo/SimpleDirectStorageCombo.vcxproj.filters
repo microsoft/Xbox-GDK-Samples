@@ -14,21 +14,6 @@
     <Filter Include="SampleImplementations">
       <UniqueIdentifier>{57d0a32b-2dbd-455e-988e-e1c790908f5e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="zlib">
-      <UniqueIdentifier>{de2109b4-a073-430d-8241-c1a602858903}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="zlib\include">
-      <UniqueIdentifier>{325880ea-8420-435e-a15a-f41b28898d12}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="zlib\lib">
-      <UniqueIdentifier>{43740583-fdcc-4606-a5d5-fa7b1428d463}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="zlib\lib\Debug">
-      <UniqueIdentifier>{6cebfef7-3510-4c54-82a8-7ab722c94840}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="zlib\lib\Release">
-      <UniqueIdentifier>{fed4af16-75e0-49c5-b7f8-5fb4b1bbd9b0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="DirectStorageWin32">
       <UniqueIdentifier>{2be32ed6-9e5b-4813-bdd7-8c27b2a52fc6}</UniqueIdentifier>
     </Filter>
@@ -64,39 +49,6 @@
     <ClInclude Include="DirectStorageWin32\DirectStorageWin32Wrapper.h">
       <Filter>DirectStorageWin32</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\inflate.h">
-      <Filter>zlib\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\inftrees.h">
-      <Filter>zlib\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\trees.h">
-      <Filter>zlib\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\zconf.h">
-      <Filter>zlib\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\zlib.h">
-      <Filter>zlib\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\zutil.h">
-      <Filter>zlib\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\crc32.h">
-      <Filter>zlib\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\deflate.h">
-      <Filter>zlib\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\gzguts.h">
-      <Filter>zlib\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\inffast.h">
-      <Filter>zlib\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\inffixed.h">
-      <Filter>zlib\include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Kits\ATGTK\RDTSCPStopWatch.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
@@ -110,9 +62,6 @@
       <Filter>SampleImplementations\Headers</Filter>
     </ClInclude>
     <ClInclude Include="SampleImplementations\CompletionEvent.h">
-      <Filter>SampleImplementations\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="SampleImplementations\DesktopCPUDecompression.h">
       <Filter>SampleImplementations\Headers</Filter>
     </ClInclude>
     <ClInclude Include="SampleImplementations\DesktopGPUDecompression.h">
@@ -179,9 +128,6 @@
       <Filter>SampleImplementations\Source</Filter>
     </ClCompile>
     <ClCompile Include="SampleImplementations\CompletionEvent.cpp">
-      <Filter>SampleImplementations\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="SampleImplementations\DesktopCPUDecompression.cpp">
       <Filter>SampleImplementations\Source</Filter>
     </ClCompile>
     <ClCompile Include="SampleImplementations\DesktopGPUDecompression.cpp">
@@ -254,14 +200,7 @@
     <None Include="readme_ko-kr.md" />
     <None Include="readme_zh-cn.md" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="..\..\..\Kits\OpenSource\zlib\lib\Debug\zlibstatic.lib">
-      <Filter>zlib\lib\Debug</Filter>
-    </Library>
-    <Library Include="..\..\..\Kits\OpenSource\zlib\lib\Release\zlibstatic.lib">
-      <Filter>zlib\lib\Release</Filter>
-    </Library>
+    <None Include="vcpkg.json" />
   </ItemGroup>
   <ItemGroup>
     <MGCCompile Include="MicrosoftGameConfig.mgc" />

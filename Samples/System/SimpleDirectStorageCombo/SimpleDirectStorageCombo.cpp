@@ -6,7 +6,9 @@
 //--------------------------------------------------------------------------------------
 
 #include "pch.h"
-#include "zlib/include/zlib.h"
+#if defined (_GAMING_XBOX_SCARLETT)
+#include <zlib.h>
+#endif
 #include "SimpleDirectStorageCombo.h"
 #include "SampleImplementations/SimpleLoad.h"
 #include "SampleImplementations/StatusBatch.h"
@@ -16,7 +18,6 @@
 #include "SampleImplementations/RecommendedPattern.h"
 #include "SampleImplementations/XBoxZLibDecompression.h"
 #include "SampleImplementations/XBoxInMemoryZLibDecompression.h"
-#include "SampleImplementations/DesktopCPUDecompression.h"
 #include "SampleImplementations/DesktopGPUDecompression.h"
 #if (_GRDK_VER >= 0x585D073C) || defined(_GAMING_DESKTOP) /* GDK Edition 221000 */
 #include "SampleImplementations/CompletionEvent.h"
@@ -73,6 +74,9 @@ void Sample::DSTORAGESampleFunc()
 {
     m_creatingDataFile = e_pending;
     CreateDataFiles();
+#ifndef _GAMING_XBOX
+    CreateGDeflateDataFile();
+#endif
     m_creatingDataFile = e_success;
 
     SetThreadAffinityMask(GetCurrentThread(), 0x04);
@@ -154,20 +158,6 @@ void Sample::DSTORAGESampleFunc()
     try
     {
 #ifndef _GAMING_XBOX
-        DesktopCPUDecompression decompressionSample;
-        m_desktopCPUDecompressionStatus = decompressionSample.RunSample(c_zipDataFileName, c_zipFileSize) ? e_success : e_failed;
-#else
-        m_desktopCPUDecompressionStatus = e_notImplemented;
-#endif
-    }
-    catch (...)
-    {
-        m_desktopCPUDecompressionStatus = e_exception;
-    }
-
-    try
-    {
-#ifndef _GAMING_XBOX
         DesktopGPUDecompression decompressionSample;
         m_desktopGPUDecompressionStatus = decompressionSample.RunSample(c_gDeflateDataFileName, m_deviceResources->GetD3DDevice()) ? e_success : e_failed;
 #else
@@ -239,31 +229,31 @@ void Sample::CreateGDeflateDataFile()
     {
         threads.emplace_back(
             [&]()
+        {
+            // Each thread needs its own instance of the codec
+            Microsoft::WRL::ComPtr <IDStorageCompressionCodec> codec;
+            DX::ThrowIfFailed(DStorageCreateCompressionCodec(DSTORAGE_COMPRESSION_FORMAT_GDEFLATE, 1, __uuidof(IDStorageCompressionCodec), (void**)(codec.ReleaseAndGetAddressOf())));
+
+            while (true)
             {
-                // Each thread needs its own instance of the codec
-                Microsoft::WRL::ComPtr <IDStorageCompressionCodec> codec;
-                DX::ThrowIfFailed(DStorageCreateCompressionCodec(DSTORAGE_COMPRESSION_FORMAT_GDEFLATE, 1, __uuidof(IDStorageCompressionCodec), (void**)(codec.ReleaseAndGetAddressOf())));
+                size_t chunkIndex = nextChunk.fetch_add(1);
+                if (chunkIndex >= c_gDeflateNumChunks)
+                    return;
 
-                while (true)
-                {
-                    size_t chunkIndex = nextChunk.fetch_add(1);
-                    if (chunkIndex >= c_gDeflateNumChunks)
-                        return;
+                size_t thisChunkOffset = chunkIndex * c_gDeflateChunkSize;
+                size_t thisChunkSize = std::min<size_t>(c_gDeflateFileSize - thisChunkOffset, c_gDeflateChunkSize);
 
-                    size_t thisChunkOffset = chunkIndex * c_gDeflateChunkSize;
-                    size_t thisChunkSize = std::min<size_t>(c_gDeflateFileSize - thisChunkOffset, c_gDeflateChunkSize);
+                Chunk chunk(codec->CompressBufferBound(thisChunkSize));
 
-                    Chunk chunk(codec->CompressBufferBound(thisChunkSize));
+                uint8_t* uncompressedStart = srcData + thisChunkOffset;
 
-                    uint8_t* uncompressedStart = srcData + thisChunkOffset;
+                size_t compressedSize = 0;
+                DX::ThrowIfFailed(codec->CompressBuffer(uncompressedStart, thisChunkSize, DSTORAGE_COMPRESSION_BEST_RATIO, chunk.data(), chunk.size(), &compressedSize));
+                chunk.resize(compressedSize);
 
-                    size_t compressedSize = 0;
-                    DX::ThrowIfFailed(codec->CompressBuffer(uncompressedStart, thisChunkSize, DSTORAGE_COMPRESSION_BEST_RATIO, chunk.data(), chunk.size(), &compressedSize));
-                    chunk.resize(compressedSize);
-
-                    chunks[chunkIndex] = std::move(chunk);
-                }
-            });
+                chunks[chunkIndex] = std::move(chunk);
+            }
+        });
     }
 
     for (auto& thread : threads)
@@ -300,7 +290,7 @@ void Sample::CreateGDeflateDataFile()
 
     for (uint32_t i = 0; i < c_gDeflateNumChunks; ++i)
     {
-        uint32_t chunkSize = static_cast<uint32_t> (chunks[i].size());
+        uint32_t chunkSize = static_cast<uint32_t>(chunks[i].size());
         WriteFile(dataFile, chunks[i].data(), chunkSize, &actualWrite, nullptr);
     }
 
@@ -370,10 +360,12 @@ void Sample::CreateDataFiles()
         }
     }
 
+    // zlib Decompression testing is only supported on Xbox, so only create the zipped file for that platform
+#ifdef _GAMING_XBOX_SCARLETT
     // Create zipped data file for testing
     {
         uint32_t* buffer = static_cast<uint32_t*> (VirtualAlloc(nullptr, c_zipFileSize, MEM_COMMIT, PAGE_READWRITE));
-        if(!buffer)
+        if (!buffer)
             return;
 
         for (uint32_t j = 0; j < c_zipFileSize / sizeof(uint32_t); j++)
@@ -426,6 +418,7 @@ void Sample::CreateDataFiles()
         VirtualFree(destBuffer, 0, MEM_RELEASE);
         std::ignore = CloseHandle(dataFile);
     }
+#endif
 }
 
 Sample::Sample() noexcept(false) :
@@ -434,7 +427,6 @@ Sample::Sample() noexcept(false) :
     , m_cancellationStatus(e_pending)
     , m_xBoxDecompressionStatus(e_pending)
     , m_xBoxInMemoryDecompressionStatus(e_pending)
-    , m_desktopCPUDecompressionStatus(e_pending)
     , m_desktopGPUDecompressionStatus(e_pending)
     , m_multipleQueuesStatus(e_pending)
     , m_statusBatchStatus(e_pending)
@@ -448,17 +440,14 @@ Sample::Sample() noexcept(false) :
     m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_UNKNOWN);
     m_deviceResources->SetClearColor(ATG::Colors::Background);
     m_deviceResources->RegisterDeviceNotify(this);
-#if defined(_GAMING_XBOX_XBOXONE)
     m_xBoxInMemoryDecompressionStatus = e_notImplemented;
-    m_desktopCPUDecompressionStatus = e_notImplemented;
-    m_desktopGPUDecompressionStatus = e_notImplemented;
-#elif defined (_GAMING_XBOX_SCARLETT)
-    m_desktopCPUDecompressionStatus = e_notImplemented;
-    m_desktopGPUDecompressionStatus = e_notImplemented;
-#else
     m_xBoxDecompressionStatus = e_notImplemented;
-    m_xBoxInMemoryDecompressionStatus = e_notImplemented;
+#if defined (_GAMING_XBOX_SCARLETT)
+    m_xBoxInMemoryDecompressionStatus = e_pending;
+    m_xBoxDecompressionStatus = e_pending;
+    m_desktopGPUDecompressionStatus = e_notImplemented;
 #endif
+
 #if (_GRDK_VER < 0x585D073C) && !defined(_GAMING_DESKTOP) /* GDK Edition 221000 */
     m_completionEventStatus = e_notImplemented;
 #endif
@@ -499,9 +488,9 @@ void Sample::Tick()
 #endif
 
     m_timer.Tick([&]()
-        {
-            Update(m_timer);
-        });
+    {
+        Update(m_timer);
+    });
 
     Render();
 
@@ -583,7 +572,6 @@ void Sample::Render()
         DisplayStatusLine(m_xBoxDecompressionStatus, L"Xbox Hardware Decompression", pos);
 #endif
         DisplayStatusLine(m_xBoxInMemoryDecompressionStatus, L"Xbox In Memory Hardware Decompression", pos);
-        DisplayStatusLine(m_desktopCPUDecompressionStatus, L"Desktop CPU Decompression", pos);
         DisplayStatusLine(m_desktopGPUDecompressionStatus, L"Desktop GPU Decompression", pos);
         DisplayStatusLine(m_multipleQueuesStatus, L"Multiple Queues", pos);
         DisplayStatusLine(m_statusBatchStatus, L"Status Batch", pos);

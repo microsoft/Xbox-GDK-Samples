@@ -207,7 +207,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="readme.md" />
-    <None Include="packages.config" />
     <None Include="..\..\NuGet.config" />
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

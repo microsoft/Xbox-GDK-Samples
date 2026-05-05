@@ -93,7 +93,6 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Readme.docx" />
     <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
       <Filter>Assets</Filter>
     </None>
@@ -106,9 +105,10 @@
     <None Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
       <Filter>Assets</Filter>
     </None>
-    <None Include="Collision_ko-kr.docx" />
-    <None Include="Collision_zh-cn.docx" />
-    <None Include="Collision_ja-jp.docx" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
+    <None Include="readme.md" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Assets\Logo.png">

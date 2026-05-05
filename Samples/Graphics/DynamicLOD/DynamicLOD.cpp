@@ -624,6 +624,9 @@ void Sample::CreateDeviceDependentResources()
     if (FAILED(device->CheckFeatureSupport(D3D12_FEATURE_D3D12_OPTIONS7, &features, sizeof(features)))
         || (features.MeshShaderTier == D3D12_MESH_SHADER_TIER_NOT_SUPPORTED))
     {
+#ifndef _GAMING_XBOX
+        MessageBox(nullptr, L"Mesh Shaders aren't supported on this system. The sample will now exit.", L"Unsupported Feature", MB_OK | MB_ICONERROR);
+#endif
         OutputDebugStringA("ERROR: Mesh Shaders aren't supported!\n");
         throw std::exception("Mesh Shaders aren't supported!");
     }

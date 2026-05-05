@@ -73,7 +73,7 @@ namespace DX
             m_avg{},
             m_used{},
             m_timing{}
-        {
+        {                                                               
             RestoreDevice(device, commandQueue);
         }
 

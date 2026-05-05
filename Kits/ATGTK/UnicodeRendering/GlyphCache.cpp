@@ -16,7 +16,7 @@
 #include FT_BITMAP_H
 
 // HarfBuzz is required for text shaping
-#include <hb.h>
+#include <harfbuzz/hb.h>
 
 #include <assert.h>
 

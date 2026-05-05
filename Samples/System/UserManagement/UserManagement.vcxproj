@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Gaming.Xbox.Scarlett.x64">
@@ -36,12 +36,17 @@
     <TargetRuntime>Native</TargetRuntime>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
     <GDKCrossPlatform>true</GDKCrossPlatform>
+    <VcpkgEnableManifest>true</VcpkgEnableManifest>
   </PropertyGroup>
   <Import Condition="Exists($(ATGBuildProps))" Project="$(ATGBuildProps)" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup>
     <GDKCrossPlatformPath Condition="'$(GDKCrossPlatformPath)'==''">$(GameDKCoreLatest)</GDKCrossPlatformPath>
     <GDKCrossPlatformPath Condition="'$(GDKCrossPlatformPath)'==''">$(GameDKXboxLatest)</GDKCrossPlatformPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <XSAPIVersion>142</XSAPIVersion>
+    <XSAPIVersion Condition="'$(XSAPIVersion)'=='142' AND Exists('$(GDKCrossPlatformPath)windows\lib\x64\Microsoft.Xbox.Services.143.C.lib')">143</XSAPIVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -170,7 +175,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">
     <Link>
-      <AdditionalDependencies>Microsoft.Xbox.Services.142.C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freetype.lib;harfbuzz.lib;Microsoft.Xbox.Services.$(XSAPIVersion).C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -180,7 +185,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\ATGTelemetry\GDK;..\..\..\Kits\OpenSource\HarfBuzz\include;..\..\..\Kits\OpenSource\FreeType2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\ATGTelemetry\GDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories />
       <ForcedUsingFiles />
       <Optimization>MaxSpeed</Optimization>
@@ -198,7 +203,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">
     <Link>
-      <AdditionalDependencies>Microsoft.Xbox.Services.142.C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freetype.lib;harfbuzz.lib;Microsoft.Xbox.Services.$(XSAPIVersion).C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -208,7 +213,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\ATGTelemetry\GDK;..\..\..\Kits\OpenSource\HarfBuzz\include;..\..\..\Kits\OpenSource\FreeType2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\ATGTelemetry\GDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>
       </AdditionalUsingDirectories>
       <ForcedUsingFiles>
@@ -228,7 +233,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">
     <Link>
-      <AdditionalDependencies>Microsoft.Xbox.Services.142.C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freetype.lib;harfbuzz.lib;Microsoft.Xbox.Services.$(XSAPIVersion).C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -238,7 +243,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\ATGTelemetry\GDK;..\..\..\Kits\OpenSource\HarfBuzz\include;..\..\..\Kits\OpenSource\FreeType2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\ATGTelemetry\GDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories />
       <ForcedUsingFiles />
       <Optimization>MaxSpeed</Optimization>
@@ -256,7 +261,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">
     <Link>
-      <AdditionalDependencies>Microsoft.Xbox.Services.142.C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freetype.lib;harfbuzz.lib;Microsoft.Xbox.Services.$(XSAPIVersion).C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -266,7 +271,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\ATGTelemetry\GDK;..\..\..\Kits\OpenSource\HarfBuzz\include;..\..\..\Kits\OpenSource\FreeType2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\ATGTelemetry\GDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>
       </AdditionalUsingDirectories>
       <ForcedUsingFiles>
@@ -286,7 +291,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">
     <Link>
-      <AdditionalDependencies>Microsoft.Xbox.Services.142.C.Debug.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freetyped.lib;harfbuzz.lib;Microsoft.Xbox.Services.$(XSAPIVersion).C.Debug.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalOptions>/ignore:4099 /NODEFAULTLIB:MSVCRT %(AdditionalOptions)</AdditionalOptions>
@@ -295,7 +300,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MinimalRebuild>false</MinimalRebuild>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\ATGTelemetry\GDK;..\..\..\Kits\OpenSource\HarfBuzz\include;..\..\..\Kits\OpenSource\FreeType2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\ATGTelemetry\GDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories />
       <ForcedUsingFiles />
       <WarningLevel>Level4</WarningLevel>
@@ -311,7 +316,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">
     <Link>
-      <AdditionalDependencies>Microsoft.Xbox.Services.142.C.Debug.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freetyped.lib;harfbuzz.lib;Microsoft.Xbox.Services.$(XSAPIVersion).C.Debug.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalOptions>/ignore:4099 /NODEFAULTLIB:MSVCRT %(AdditionalOptions)</AdditionalOptions>
@@ -320,7 +325,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MinimalRebuild>false</MinimalRebuild>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\ATGTelemetry\GDK;..\..\..\Kits\OpenSource\HarfBuzz\include;..\..\..\Kits\OpenSource\FreeType2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\ATGTelemetry\GDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>
       </AdditionalUsingDirectories>
       <ForcedUsingFiles>
@@ -340,98 +345,6 @@
     <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h" />
     <ClInclude Include="..\..\..\Kits\ATGTK\Texture.h" />
     <ClInclude Include="..\..\..\Kits\ATGTK\UnicodeRendering\GlyphCache.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\config\ftconfig.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\config\ftheader.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\config\ftmodule.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\config\ftoption.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\config\ftstdlib.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\config\integer-types.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\config\mac-support.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\config\public-macros.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\freetype.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftadvanc.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftbbox.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftbdf.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftbitmap.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftbzip2.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftcache.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftchapters.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftcid.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftcolor.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftdriver.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\fterrdef.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\fterrors.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftfntfmt.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftgasp.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftglyph.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftgxval.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftgzip.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftimage.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftincrem.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftlcdfil.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftlist.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftlzw.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftmac.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftmm.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftmodapi.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftmoderr.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftotval.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftoutln.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftparams.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftpfr.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftrender.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftsizes.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftsnames.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftstroke.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftsynth.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftsystem.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\fttrigon.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\fttypes.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftwinfnt.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\t1tables.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ttnameid.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\tttables.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\tttags.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\ft2build.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-aat-layout.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-aat.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-blob.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-buffer.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-common.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-coretext.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-deprecated.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-directwrite.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-draw.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-face.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-font.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ft.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-gdi.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-glib.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-gobject-structs.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-gobject.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-graphite2.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-icu.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-map.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-color.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-deprecated.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-font.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-layout.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-math.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-meta.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-metrics.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-name.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-shape.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-var.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-set.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-shape-plan.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-shape.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-style.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-subset.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-unicode.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-uniscribe.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-version.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb.h" />
     <ClInclude Include="GameInputDevice.h" />
     <ClInclude Include="GameScreens.h" />
     <ClInclude Include="GameUser.h" />
@@ -593,8 +506,11 @@
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
     </CopyFileToFolders>
     <None Include="Assets\Fonts\segoeuisb_27pt_sharp_36.spritefont">
       <DeploymentContent>true</DeploymentContent>
@@ -635,24 +551,6 @@
     <None Include="readme_zh-cn.md" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\..\..\Kits\OpenSource\FreeType2\lib\x64\ReleaseStatic\freetype.lib">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">false</ExcludedFromBuild>
-    </Library>
-    <Library Include="..\..\..\Kits\OpenSource\HarfBuzz\lib\release\harfbuzz.lib">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">false</ExcludedFromBuild>
-    </Library>
-  </ItemGroup>
-  <ItemGroup>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\OFL\NotoNaskhArabic-Regular.ttf">
       <FileType>Document</FileType>
       <DeploymentContent>true</DeploymentContent>
@@ -663,8 +561,11 @@
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\OFL\NotoSans-Regular.ttf">
       <DeploymentContent>true</DeploymentContent>
@@ -676,8 +577,11 @@
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\OFL\NotoSansCJKjp-Regular.otf">
       <FileType>Document</FileType>
@@ -689,8 +593,11 @@
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\OFL\NotoSansCJKkr-Regular.otf">
       <FileType>Document</FileType>
@@ -702,8 +609,11 @@
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\OFL\NotoSansCJKsc-Regular.otf">
       <DeploymentContent>true</DeploymentContent>
@@ -715,8 +625,11 @@
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\OFL\NotoSerifBengali-Regular.ttf">
       <DeploymentContent>true</DeploymentContent>
@@ -728,8 +641,11 @@
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\OFL\NotoSerifDevanagari-Regular.ttf">
       <DeploymentContent>true</DeploymentContent>
@@ -741,8 +657,11 @@
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\OFL\NotoSerifHebrew-Regular.ttf">
       <DeploymentContent>true</DeploymentContent>
@@ -754,8 +673,11 @@
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\OFL\NotoSerifThai-Regular.ttf">
       <FileType>Document</FileType>
@@ -767,8 +689,11 @@
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">$(OutDir)Assets\Fonts</DestinationFolders>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Profile|ARM64'">$(OutDir)Assets\Fonts</DestinationFolders>
     </CopyFileToFolders>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
@@ -796,6 +721,10 @@
   <ItemGroup Condition="'$(Platform)'=='x64'">
     <ReferenceCopyLocalPaths Include="$(GDKCrossPlatformPath)windows\bin\x64\libHttpClient.dll" />
     <ReferenceCopyLocalPaths Include="$(GDKCrossPlatformPath)windows\bin\x64\XCurl.dll" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(Platform)'=='ARM64'">
+    <ReferenceCopyLocalPaths Include="$(GDKCrossPlatformPath)windows\bin\ARM64\libHttpClient.dll" />
+    <ReferenceCopyLocalPaths Include="$(GDKCrossPlatformPath)windows\bin\ARM64\XCurl.dll" />
   </ItemGroup>
   <ItemGroup Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(Platform)', 'Gaming\.Xbox\..+\.x64'))">
     <ReferenceCopyLocalPaths Include="$(GDKCrossPlatformPath)xbox\bin\x64\libHttpClient.dll" />

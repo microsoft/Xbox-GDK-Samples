@@ -83,7 +83,7 @@ public:
     void SetupXboxHardwareZLibRead(DStorageFileCrossPlatform* file, void* destBuffer, UINT64 fileOffset, UINT32 compressedSize, UINT32 uncompressedSize, UINT64 cancellationTag = 0)
     {
         SetupUncompressedRead(file, destBuffer, fileOffset, compressedSize, cancellationTag);
-#if defined (_GAMING_XBOX) || defined (FORCE_DS_WIN32)
+#if defined (_GAMING_XBOX_SCARLETT)
         DestinationSize = uncompressedSize;
         Options.ZlibDecompress = true;
 #else
@@ -100,7 +100,7 @@ public:
     void SetupXboxHardwareInMemoryZLib(void* srcBuffer, void* destBuffer, UINT32 compressedSize, UINT32 uncompressedSize, UINT64 cancellationTag = 0)
     {
         SetupXboxHardwareZLibRead(nullptr, destBuffer, 0, compressedSize, uncompressedSize, cancellationTag);
-#if defined (_GAMING_XBOX) || defined (FORCE_DS_WIN32)
+#if defined (_GAMING_XBOX_SCARLETT)
         Options.SourceType = DSTORAGE_REQUEST_SOURCE_MEMORY;
         Source = srcBuffer;
 #else
@@ -133,7 +133,7 @@ public:
 
     void SetupXboxHardwareInMemoryZLib(void* srcBuffer, PULONG_PTR physicalPageArray, UINT32 compressedSize, UINT32 uncompressedSize, UINT16 physicalOffset, UINT64 cancellationTag = 0)
     {
-#if defined (_GAMING_XBOX) || defined (FORCE_DS_WIN32)
+#if defined (_GAMING_XBOX_SCARLETT)
         SetupXboxHardwareInMemoryZLib(srcBuffer, nullptr, compressedSize, uncompressedSize, cancellationTag);
         Options.DestinationIsPhysicalPages = 1;
         DestinationPageArray = physicalPageArray;

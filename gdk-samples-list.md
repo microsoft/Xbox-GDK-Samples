@@ -182,7 +182,6 @@ Following is a list of categories for the samples.
 | Sample | Description | Console | PC | 
 | ------ | ----------- | ------- | -- | 
 | __BWOIExample__ | This example demonstrates a method for building MSBuild-based projects using the Gaming.*.x64 platforms without having the Microsoft GDK installed. | ✓ | ✓ | 
-| __CacheTestCombo__ | This sample works with the Cross-Core Memory Cost entry in the Microsoft GDK documentation. | ✓ | ✓ | 
 | __CMakeExample__ | This is an example of using the CMake cross-platform build system to build an executable with the Microsoft Game Development Kit via the Ninja generator. | ✓ | ✓ | 
 | __CMakeGDKExample__ | This is an example of using the CMake cross-platform build system to build an executable with the Microsoft Game Development Kit via the Visual Studio generator. | ✓ | ✓ | 
 | __CMakeXboxConsoleApp__ | This is an example of using the CMake cross-platform build system to produce a 'Win32 console' application that can be executed on the Xbox hardware using the Microsoft GDK. | ✓ |  | 

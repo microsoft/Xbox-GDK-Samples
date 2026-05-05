@@ -1,44 +1,53 @@
 # Simple MultiExecutable Package Sample
+
 _This sample is compatible with the Microsoft Game Development Kit (March 2022)_
+
 ![image](SampleImage.png)
 
+# Description
 
-### Description
-A sample that demonstrates how to set up a solution with multiple executables. This implementation is done by creating multiple projects, and setting them up in a way that allows them to be packaged and run together. 
+A sample that demonstrates how to set up a solution with multiple executables. This implementation is done by creating multiple projects, and setting them up in a way that allows them to be packaged and run together.
 
-# Building the sample
+# Running the sample
 
-If using an Xbox One devkit, set the active solution platform to `Gaming.Xbox.XboxOne.x64`.
+## Method 1: Run from Visual Studio
 
-If using Xbox Series X|S, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
+Build the solution and press F5. The default experience will be the first to load.
 
-If running on PC, set the active solution platform to `x64`.
+## Method 2: Run from package creation
 
-### Running the sample.
+1. Build the project.
 
-#### Method 1, Run from Visual Studio
-- You can run the sample building the solution and then clicking F5. The default experience will be the first to load.
+2. **Create the package** by running the corresponding script from an
+   **Xbox Gaming Command Prompt**:
 
-#### Method 2, Run from Package creation
-- You can also generate a package for this sample, and run it from there.
-- To generate the package.
-	1. Build the project.
-	2. Run GenConsoleXVCPackage.bat or GenDesktopMSIXVCPackage.bat within a terminal that supports Makepkg.
-		1. The console package files can be found in the .\\DefaultExperience\\$Target\\Layout\\Image\\.
-		2. The desktop package files can be found in .\\x64\\Layout\\Image
-- Installing and running the package.
-	1. If running on Xbox, copy the .xvc file into your devkit through Xbox Manager. You can also install the package with xbapp install.
-	2. If running on desktop, install the .MSIXVC file through WDAPP install.
+   | Platform | Script |
+   |---|---|
+   | Xbox One | `GenXboxOneXVCPackage.bat` |
+   | Xbox Series X\|S | `GenScarlettXVCPackage.bat` |
+   | PC (x64) | `GenDesktopMSIXVCPackage_x64.bat` |
+   | PC (ARM64) | `GenDesktopMSIXVCPackage_ARM64.bat` |
 
+   Console packages produce **.xvc** files in .\\DefaultExperience\\$Target\\Layout\\Image
 
-## Update history
+   Desktop packages produce **.msixvc** files in .\\x64\\Layout\\Image (x64) or .\\ARM64\\Layout\\Image (ARM64)
+
+3. **Install and run** the package:
+   - **Xbox**: Copy the .xvc file into your devkit through Xbox Manager, or install with xbapp install.
+   - **PC**: Install the .msixvc file with wdapp install.
+
+# Update history
 
 **Initial Release:** Microsoft Game Development Kit (June 2023)
 
 June 2023: Initial release
-October 2025: Fixed a bug that broke the XLaunchNewGame when running with f5.
 
-## Privacy Statement
+October 2025: Fixed a bug that broke the XLaunchNewGame when running with F5.
+
+April 2026: Add ARM64 support for PC packaging scripts; rename Desktop
+bat files to distinguish x64 and ARM64 architectures
+
+# Privacy Statement
 
 When compiling and running a sample, the file name of the sample
 executable will be sent to Microsoft to help track sample usage. To

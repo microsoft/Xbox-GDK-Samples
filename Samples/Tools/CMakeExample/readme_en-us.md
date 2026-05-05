@@ -253,4 +253,4 @@ See the **BWOIExample** for more details.
 |April 2025|Updated for CMake 3.31 add_custom_command warning.<br />Made SDKVersion a cache variable.|
 |October 2025|Updated for 2510 GDK and new layout. Trimmed support older than October 2024 GDK which are now out of service.|
 |February 2026|Updated to require CMake 3.21 or later.|
-|April 2026|Drop VS 2019, add VS 2026.<br />Updated to use Microsoft.Xbox.Services.143.C.lib in 2604.|
+|April 2026|Drop VS 2019, add VS 2026.<br />Updated to use Microsoft.Xbox.Services.143.C.lib in 2604.<br />ARM64 support for PC build<br />Updates to improve CMake 4.1 support|

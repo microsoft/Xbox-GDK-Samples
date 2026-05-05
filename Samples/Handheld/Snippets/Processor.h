@@ -28,7 +28,7 @@ namespace ATG
         return value;
 #else
         __isb(_ARM64_BARRIER_SY);
-        return _ReadStatusReg(ARM64_SYSREG(3, 3, 14, 0, 2));    //ARM64_CNTVCT_EL0
+        return static_cast<uint64_t>(_ReadStatusReg(ARM64_SYSREG(3, 3, 14, 0, 2)));    //ARM64_CNTVCT_EL0
 #endif
 #endif
     }

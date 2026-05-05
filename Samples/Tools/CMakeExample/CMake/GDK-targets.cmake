@@ -16,6 +16,15 @@ if(NOT XdkEditionTarget)
     message(FATAL_ERROR "ERROR: XdkEditionTarget must be set")
 endif()
 
+#--- Determines target architecture
+if(NOT (DEFINED GDK_ARCH))
+    if((CMAKE_GENERATOR_PLATFORM MATCHES "^[Aa][Rr][Mm]64$") OR (CMAKE_VS_PLATFORM_NAME_DEFAULT MATCHES "^[Aa][Rr][Mm]64$"))
+      set(GDK_ARCH arm64)
+    else()
+      set(GDK_ARCH x64)
+    endif()
+endif()
+
 #--- Locate Microsoft GDK
 if(BUILD_USING_BWOI)
     if(DEFINED ENV{ExtractedFolder})
@@ -53,7 +62,7 @@ if(NOT _GDK_XBOX_)
     add_library(Xbox::GameRuntime STATIC IMPORTED)
     if(XdkEditionTarget GREATER_EQUAL 251000)
         set_target_properties(Xbox::GameRuntime PROPERTIES
-            IMPORTED_LOCATION "${PlatformRoot}/lib/x64/xgameruntime.lib"
+            IMPORTED_LOCATION "${PlatformRoot}/lib/${GDK_ARCH}/xgameruntime.lib"
             MAP_IMPORTED_CONFIG_MINSIZEREL ""
             MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
             INTERFACE_INCLUDE_DIRECTORIES "${PlatformRoot}/include"
@@ -72,7 +81,7 @@ if(NOT _GDK_XBOX_)
     add_library(Xbox::GameInput STATIC IMPORTED)
     if(XdkEditionTarget GREATER_EQUAL 251000)
         set_target_properties(Xbox::GameInput PROPERTIES
-        IMPORTED_LOCATION "${PlatformRoot}/lib/x64/GameInput.lib"
+        IMPORTED_LOCATION "${PlatformRoot}/lib/${GDK_ARCH}/GameInput.lib"
         MAP_IMPORTED_CONFIG_MINSIZEREL ""
         MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
         INTERFACE_INCLUDE_DIRECTORIES "${PlatformRoot}/include"
@@ -106,8 +115,8 @@ endif()
 add_library(Xbox::XCurl SHARED IMPORTED)
 if(XdkEditionTarget GREATER_EQUAL 251000)
     set_target_properties(Xbox::XCurl PROPERTIES
-        IMPORTED_LOCATION "${PlatformRoot}/bin/x64/XCurl.dll"
-        IMPORTED_IMPLIB "${PlatformRoot}/lib/x64/XCurl.lib"
+        IMPORTED_LOCATION "${PlatformRoot}/bin/${GDK_ARCH}/XCurl.dll"
+        IMPORTED_IMPLIB "${PlatformRoot}/lib/${GDK_ARCH}/XCurl.lib"
         MAP_IMPORTED_CONFIG_MINSIZEREL ""
         MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
         INTERFACE_INCLUDE_DIRECTORIES "${PlatformRoot}/include")
@@ -124,8 +133,8 @@ endif()
 add_library(Xbox::XSAPI STATIC IMPORTED)
 if(XdkEditionTarget GREATER_EQUAL 251000)
     set_target_properties(Xbox::XSAPI PROPERTIES
-        IMPORTED_LOCATION_RELEASE "${PlatformRoot}/lib/x64/Microsoft.Xbox.Services.${ExtensionPlatformToolset}.C.lib"
-        IMPORTED_LOCATION_DEBUG "${PlatformRoot}/lib/x64/Microsoft.Xbox.Services.${ExtensionPlatformToolset}.C.Debug.lib"
+        IMPORTED_LOCATION_RELEASE "${PlatformRoot}/lib/${GDK_ARCH}/Microsoft.Xbox.Services.${ExtensionPlatformToolset}.C.lib"
+        IMPORTED_LOCATION_DEBUG "${PlatformRoot}/lib/${GDK_ARCH}/Microsoft.Xbox.Services.${ExtensionPlatformToolset}.C.Debug.lib"
         IMPORTED_CONFIGURATIONS "RELEASE;DEBUG"
         MAP_IMPORTED_CONFIG_MINSIZEREL Release
         MAP_IMPORTED_CONFIG_RELWITHDEBINFO Release
@@ -146,8 +155,8 @@ endif()
 if(XdkEditionTarget GREATER_EQUAL 251000)
     add_library(Xbox::HTTPClient SHARED IMPORTED)
     set_target_properties(Xbox::HTTPClient PROPERTIES
-        IMPORTED_LOCATION "${PlatformRoot}/bin/x64/libHttpClient.dll"
-        IMPORTED_IMPLIB "${PlatformRoot}/lib/x64/libHttpClient.lib"
+        IMPORTED_LOCATION "${PlatformRoot}/bin/${GDK_ARCH}/libHttpClient.dll"
+        IMPORTED_IMPLIB "${PlatformRoot}/lib/${GDK_ARCH}/libHttpClient.lib"
         MAP_IMPORTED_CONFIG_MINSIZEREL ""
         MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
         INTERFACE_INCLUDE_DIRECTORIES "${PlatformRoot}/include")
@@ -167,8 +176,8 @@ target_link_libraries(Xbox::XSAPI INTERFACE Xbox::HTTPClient Xbox::XCurl appnoti
 add_library(Xbox::GameChat2 SHARED IMPORTED)
 if(XdkEditionTarget GREATER_EQUAL 251000)
     set_target_properties(Xbox::GameChat2 PROPERTIES
-        IMPORTED_LOCATION "${PlatformRoot}/bin/x64/GameChat2.dll"
-        IMPORTED_IMPLIB "${PlatformRoot}/lib/x64/GameChat2.lib"
+        IMPORTED_LOCATION "${PlatformRoot}/bin/${GDK_ARCH}/GameChat2.dll"
+        IMPORTED_IMPLIB "${PlatformRoot}/lib/${GDK_ARCH}/GameChat2.lib"
         MAP_IMPORTED_CONFIG_MINSIZEREL ""
         MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
         INTERFACE_INCLUDE_DIRECTORIES "${PlatformRoot}/include")
@@ -185,8 +194,8 @@ endif()
 add_library(Xbox::PlayFabMultiplayer SHARED IMPORTED)
 if(XdkEditionTarget GREATER_EQUAL 251000)
     set_target_properties(Xbox::PlayFabMultiplayer PROPERTIES
-        IMPORTED_LOCATION "${PlatformRoot}/bin/x64/PlayFabMultiplayer.dll"
-        IMPORTED_IMPLIB "${PlatformRoot}/lib/x64/PlayFabMultiplayer.lib"
+        IMPORTED_LOCATION "${PlatformRoot}/bin/${GDK_ARCH}/PlayFabMultiplayer.dll"
+        IMPORTED_IMPLIB "${PlatformRoot}/lib/${GDK_ARCH}/PlayFabMultiplayer.lib"
         IMPORTED_LINK_DEPENDENT_LIBRARIES Xbox::XCurl
         MAP_IMPORTED_CONFIG_MINSIZEREL ""
         MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
@@ -207,8 +216,8 @@ target_link_libraries(Xbox::PlayFabMultiplayer INTERFACE Xbox::XCurl)
 if(XdkEditionTarget GREATER_EQUAL 251000)
     add_library(Xbox::PlayFabServices SHARED IMPORTED)
     set_target_properties(Xbox::PlayFabServices PROPERTIES
-        IMPORTED_LOCATION "${PlatformRoot}/bin/x64/PlayFabServices.dll"
-        IMPORTED_IMPLIB "${PlatformRoot}/lib/x64/PlayFabServices.lib"
+        IMPORTED_LOCATION "${PlatformRoot}/bin/${GDK_ARCH}/PlayFabServices.dll"
+        IMPORTED_IMPLIB "${PlatformRoot}/lib/${GDK_ARCH}/PlayFabServices.lib"
         IMPORTED_LINK_DEPENDENT_LIBRARIES Xbox::XCurl
         MAP_IMPORTED_CONFIG_MINSIZEREL ""
         MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
@@ -217,8 +226,8 @@ if(XdkEditionTarget GREATER_EQUAL 251000)
 
     add_library(Xbox::PlayFabCore SHARED IMPORTED)
     set_target_properties(Xbox::PlayFabCore PROPERTIES
-        IMPORTED_LOCATION "${PlatformRoot}/bin/x64/PlayFabCore.dll"
-        IMPORTED_IMPLIB "${PlatformRoot}/lib/x64/PlayFabCore.lib"
+        IMPORTED_LOCATION "${PlatformRoot}/bin/${GDK_ARCH}/PlayFabCore.dll"
+        IMPORTED_IMPLIB "${PlatformRoot}/lib/${GDK_ARCH}/PlayFabCore.lib"
         MAP_IMPORTED_CONFIG_MINSIZEREL ""
         MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
         IMPORTED_LINK_INTERFACE_LANGUAGES "CXX")
@@ -246,12 +255,23 @@ else()
     target_link_libraries(Xbox::PlayFabServices INTERFACE Xbox::PlayFabCore Xbox::XCurl)
 endif()
 
+# PlayFab Game Save
+if(XdkEditionTarget GREATER_EQUAL 251000)
+    add_library(Xbox::PlayFabGameSave SHARED IMPORTED)
+    set_target_properties(Xbox::PlayFabGameSave PROPERTIES
+        IMPORTED_LOCATION "${PlatformRoot}/bin/${GDK_ARCH}/PlayFabGameSave.lib"
+        IMPORTED_IMPLIB "${PlatformRoot}/lib/${GDK_ARCH}/PlayFabGameSave.lib"
+        MAP_IMPORTED_CONFIG_MINSIZEREL ""
+        MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
+        INTERFACE_INCLUDE_DIRECTORIES "${PlatformRoot}/include")
+endif()
+
 # PlayFab Party
 add_library(Xbox::PlayFabParty SHARED IMPORTED)
 if(XdkEditionTarget GREATER_EQUAL 251000)
     set_target_properties(Xbox::PlayFabParty PROPERTIES
-        IMPORTED_LOCATION "${PlatformRoot}/bin/x64/Party.dll"
-        IMPORTED_IMPLIB "${PlatformRoot}/lib/x64/Party.lib"
+        IMPORTED_LOCATION "${PlatformRoot}/bin/${GDK_ARCH}/Party.dll"
+        IMPORTED_IMPLIB "${PlatformRoot}/lib/${GDK_ARCH}/Party.lib"
         MAP_IMPORTED_CONFIG_MINSIZEREL ""
         MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""
         INTERFACE_INCLUDE_DIRECTORIES "${PlatformRoot}/include")
@@ -268,8 +288,8 @@ endif()
 add_library(Xbox::PlayFabPartyLIVE SHARED IMPORTED)
 if(XdkEditionTarget GREATER_EQUAL 251000)
     set_target_properties(Xbox::PlayFabPartyLIVE PROPERTIES
-        IMPORTED_LOCATION "${PlatformRoot}/bin/x64/PartyXboxLive.dll"
-        IMPORTED_IMPLIB "${PlatformRoot}/lib/x64/PartyXboxLive.lib"
+        IMPORTED_LOCATION "${PlatformRoot}/bin/${GDK_ARCH}/PartyXboxLive.dll"
+        IMPORTED_IMPLIB "${PlatformRoot}/lib/${GDK_ARCH}/PartyXboxLive.lib"
         IMPORTED_LINK_DEPENDENT_LIBRARIES Xbox::PlayFabParty
         MAP_IMPORTED_CONFIG_MINSIZEREL ""
         MAP_IMPORTED_CONFIG_RELWITHDEBINFO ""

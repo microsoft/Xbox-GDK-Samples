@@ -81,7 +81,6 @@
     <ClCompile Include="IntelligentDelivery.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="readme.docx" />
     <None Include="CreateInstallPackage_XboxOne.bat">
       <Filter>Misc</Filter>
     </None>
@@ -100,9 +99,10 @@
     <None Include="CreateMSIXVC_PC.bat">
       <Filter>Misc</Filter>
     </None>
-    <None Include="readme_ja-JP.docx" />
-    <None Include="readme_ko-KR.docx" />
-    <None Include="readme_zh-CN.docx" />
+    <None Include="readme.md" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Chunks_Scarlett.xml">

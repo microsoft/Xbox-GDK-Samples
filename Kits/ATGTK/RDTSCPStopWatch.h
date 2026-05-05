@@ -28,6 +28,16 @@ namespace ATG
         bool m_running;
 
     public:
+        __forceinline static uint64_t GetCPUTimeStamp()
+        {
+#ifndef _M_ARM64
+            uint32_t tempAux;
+            return __rdtscp(&tempAux);
+#else
+            __isb(_ARM64_BARRIER_SY);
+            return static_cast<uint64_t> (_ReadStatusReg(ARM64_SYSREG(3, 3, 14, 0, 2)));    //ARM64_CNTVCT_EL0
+#endif
+        }
 
         RDTSCPStopWatch() :m_startTimeRaw(0), m_stopTimeRaw(0), m_running(false) {}
 
@@ -37,22 +47,19 @@ namespace ATG
             assert(!m_running);
             m_running = true;
             m_stopTimeRaw = 0;
-            uint32_t tempAux;
-            m_startTimeRaw = __rdtscp(&tempAux);
+            m_startTimeRaw = GetCPUTimeStamp();
         }
         double Stop()
         {
             assert(m_running);
-            uint32_t tempAux;
-            m_stopTimeRaw = __rdtscp(&tempAux);
+            m_stopTimeRaw = GetCPUTimeStamp();
             m_running = false;
             return GetTotalSeconds();
         }
 
         void Reset()
         {
-            uint32_t tempAux;
-            m_startTimeRaw = __rdtscp(&tempAux);
+            m_startTimeRaw = GetCPUTimeStamp();
             m_stopTimeRaw = 0;
         }
 
@@ -63,33 +70,29 @@ namespace ATG
         double GetCurrentSeconds() const
         {
             assert(m_running);
-            uint32_t tempAux;
             uint64_t temp;
-            temp = __rdtscp(&tempAux);
+            temp = GetCPUTimeStamp();
             return static_cast<double>(temp - m_startTimeRaw) / s_rdtscpFrequencySecs;
         }
         double GetCurrentMilliseconds() const
         {
             assert(m_running);
-            uint32_t tempAux;
             uint64_t temp;
-            temp = __rdtscp(&tempAux);
+            temp = GetCPUTimeStamp();
             return static_cast<double>(temp - m_startTimeRaw) / s_rdtscpFrequencyMS;
         }
         double GetCurrentMicroseconds() const
         {
             assert(m_running);
-            uint32_t tempAux;
             uint64_t temp;
-            temp = __rdtscp(&tempAux);
+            temp = GetCPUTimeStamp();
             return static_cast<double>(temp - m_startTimeRaw) / s_rdtscpFrequencyUS;
         }
         uint64_t GetCurrentRaw() const
         {
             assert(m_running);
-            uint32_t tempAux;
             uint64_t temp;
-            temp = __rdtscp(&tempAux);
+            temp = GetCPUTimeStamp();
             return temp - m_startTimeRaw;
         }
 

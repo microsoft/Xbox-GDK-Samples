@@ -9,7 +9,7 @@
 #include <cstdint>
 #include <memory>
 #include <vector>
-#include "zlib/include/zlib.h"
+#include "zlib.h"
 #include "ImplementationBase.h"
 
 #ifdef _GAMING_XBOX_SCARLETT

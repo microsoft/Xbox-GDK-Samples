@@ -1,0 +1,9 @@
+{
+  "name": "user-management",
+  "version-string": "1.0.0",
+  "builtin-baseline": "f77737496dabd44c63ecc599dc0f4d6cff30d0d5",
+  "dependencies": [
+    "freetype",
+    "harfbuzz"
+  ]
+}

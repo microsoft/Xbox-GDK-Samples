@@ -16,7 +16,7 @@ namespace
     LPTOP_LEVEL_EXCEPTION_FILTER g_previousExceptionFilter = nullptr;
 
     // Pointer used to create an access violation
-    uint32_t *g_nullPointer = nullptr;
+    uint32_t* g_nullPointer = nullptr;
 
     // used to avoid an infinite loop in this sample where it's continously trying to write a null pointer
     uint32_t g_numTimesFired = 0;
@@ -33,7 +33,11 @@ extern "C" LONG WINAPI HandledExceptionFilter(LPEXCEPTION_POINTERS const excepti
     if (g_numTimesFired > 2)
     {
         Sample::m_testOutputMessage += L"Fixup instruction pointer to bypass null pointer dereference\n";
+#ifndef _M_ARM64
         exceptionPointers->ContextRecord->Rip++;
+#else
+        exceptionPointers->ContextRecord->Pc++;
+#endif
     }
 
     // Possible return values from the unhandled exception filter
