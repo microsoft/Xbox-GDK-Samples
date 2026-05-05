@@ -184,7 +184,8 @@ namespace DirectStorageWin32Wrapper
                     stagingBufferSize(0),
                     stagingBuffer(nullptr),
                     stagingBuffer2(nullptr),
-                    stagingBufferUsed(false) {}
+                    stagingBufferUsed(false) {
+                }
                 void SwitchState(const State newState);
 
                 // Helper Functions for conditional checks around aggregated states
@@ -258,17 +259,15 @@ namespace DirectStorageWin32Wrapper
 
             void MarkRequestCompleted(size_t index);					// after a request is marked as completed checks are made against the next status/fence for marking completed as well
             void MarkRequestError(size_t index, HRESULT errorResult, bool signalStatusOrFence);		// It's possible for an enqueued request to immediately fail, in this case don't check for a following status/fence
-                                                                                                    // Technically the requests have not been submitted yet and there is no following status/fence yet
+            // Technically the requests have not been submitted yet and there is no following status/fence yet
 
-            // Helper functions to update internal index variables to handle circular queue
-            // The numbers increase to UINT64_MAX
-            // Worse case: assuming 2GB/s using 1 byte reads the number won't wrap for ~272 years
+// Helper functions to update internal index variables to handle circular queue
+// The numbers increase to UINT64_MAX
+// Worse case: assuming 2GB/s using 1 byte reads the number won't wrap for ~272 years
             void IncrementNextRequestSubmitted() { m_nextRequestSubmitted++; }
             void IncrementNextRequestEnqueued() { m_nextRequestEnqueued++; }
             void IncrementNextRequestNotComplete() { m_nextRequestNotComplete++; }
             void IncrementNextRequestRead() { m_nextRequestRead++; }
-
-            size_t LZInflate(void* output, size_t outputSize, const void* input, size_t length);
 
             DSTORAGE_PRIORITY Priority() const { return m_description.Priority; }
             const char* Name() const { return m_description.Name; }
@@ -323,7 +322,7 @@ namespace DirectStorageWin32Wrapper
             static constexpr uint32_t c_maxOpenFiles = 5000;					// Used to preallocate the array of open files, TODO: Check if this number is reasonable, could be larger
             static constexpr uint32_t c_maxQueues = 100;						// Used to preallocate the array of queue object, TODO: Check if this number is reasonable, could be larger
             static constexpr uint64_t c_initialStagingBufferSize = 32ULL * 1024 * 1024;	// Staging buffer heap is created initially at this size.
-                                                                                    // However the heap can grow beyond this size due to limitiations in Win32 Heap objects
+            // However the heap can grow beyond this size due to limitiations in Win32 Heap objects
             static constexpr uint32_t c_numDecompressionThreads = 1;
 
         private:
@@ -370,7 +369,7 @@ namespace DirectStorageWin32Wrapper
             uint64_t							m_requestsDecompressed = 0;	// total requests decompressed
             size_t								m_lastQueueDecompressed = 0;// index of last queue decompressed, rotate through queues at certain priority until next priority is needed
             std::vector<OpenFileEntry>			m_openFiles;			// hash of filename for quick lookup
-                                                                        // TODO: Consider converting this to a map using the hash of the filename
+            // TODO: Consider converting this to a map using the hash of the filename
             HANDLE								m_kickThreadEvent;		// Event the thread waits on so it can be kicked to wake up early
             HANDLE								m_kickDecompressionEvent;
 

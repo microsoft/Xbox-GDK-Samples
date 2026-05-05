@@ -468,9 +468,9 @@
     <None Include="..\..\..\Kits\OpenSource\FreeType2\lib\x64\ReleaseStatic\freetype.pdb">
       <Filter>OpenSource\FreeType2\lib</Filter>
     </None>
-    <None Include="readme.docx" />
-    <None Include="readme_ja-JP.docx" />
-    <None Include="readme_ko-KR.docx" />
-    <None Include="readme_zh-CN.docx" />
+    <None Include="readme.md" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
   </ItemGroup>
 </Project>

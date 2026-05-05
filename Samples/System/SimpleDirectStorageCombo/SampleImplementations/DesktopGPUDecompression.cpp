@@ -7,7 +7,7 @@
 
 #include "pch.h"
 #include "DesktopGPUDecompression.h"
-#include "zlib/include/zlib.h"
+#include "zlib.h"
 
 #ifndef _GAMING_XBOX
 bool DesktopGPUDecompression::RunSample(const std::wstring& fileName, ID3D12Device* device)

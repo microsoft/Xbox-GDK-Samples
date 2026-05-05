@@ -92,8 +92,10 @@ endif()
 target_compile_options(${PROJECT_NAME} PRIVATE /W4 /EHsc /GR- /fp:fast /GS /Gy)
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+    # /Zc:forScope (Force Conformance in for Loop Scope)
     # /Zc:inline (Remove unreferenced COMDAT)
-    target_compile_options(${PROJECT_NAME} PRIVATE /Zc:inline)
+    # /Zc:wchar_t (Force Conformance in for Loop Scope)
+    target_compile_options(${PROJECT_NAME} PRIVATE /Zc:forScope /Zc:inline /Zc:wchar_t)
 
     # /permissive- (C++ conformance mode enabled)
     if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.10)
@@ -187,7 +189,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE "Microsoft.Xbox.Services.${Extensi
 
 target_link_libraries(${PROJECT_NAME} PRIVATE "libHttpClient.lib")
 
-# target_link_libraries(${PROJECT_NAME} PRIVATE XCurl.lib GameChat2.lib PlayFabMultiplayer.lib Party.lib PartyXboxLive.lib PlayFabCore.lib PlayFabServices.lib)
+# target_link_libraries(${PROJECT_NAME} PRIVATE XCurl.lib GameChat2.lib PlayFabMultiplayer.lib Party.lib PartyXboxLive.lib PlayFabCore.lib PlayFabServices.lib PlayFabGameSave.lib)
 
 if(NOT (DEFINED XBOX_CONSOLE_TARGET))
     target_link_libraries(${PROJECT_NAME} PRIVATE appnotify.lib)

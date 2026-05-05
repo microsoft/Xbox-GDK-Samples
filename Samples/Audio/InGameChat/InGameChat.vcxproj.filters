@@ -291,12 +291,12 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="InGameChat_ReadMe_ja-jp.docx" />
-    <None Include="InGameChat_ReadMe_ko-kr.docx" />
-    <None Include="InGameChat_ReadMe_zh-cn.docx" />
-    <None Include="ReadMe.docx" />
     <None Include="Scripts\Desktop.PostBuild.bat">
       <Filter>Scripts</Filter>
     </None>
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
+    <None Include="readme.md" />
   </ItemGroup>
 </Project>

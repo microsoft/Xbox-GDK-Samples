@@ -37,6 +37,7 @@ namespace
     constexpr size_t DVD_BLOCK_SIZE = DVD_SECTOR_SIZE * 16;
 
     constexpr size_t ALIGNMENT_MIN = 4;
+    constexpr size_t ALIGNMENT_MAX = 0xFFFF;
     constexpr size_t ALIGNMENT_DVD = DVD_SECTOR_SIZE;
 
     constexpr size_t MAX_DATA_SEGMENT_SIZE = 0xFFFFFFFF;
@@ -603,12 +604,12 @@ HRESULT WaveBankReader::Impl::Open(const wchar_t* szFileName) noexcept(false)
 
     if (m_data.dwFlags & BANKDATA::TYPE_STREAMING)
     {
-        if (m_data.dwAlignment < ALIGNMENT_DVD)
+        if ((m_data.dwAlignment < ALIGNMENT_DVD) || (m_data.dwAlignment > ALIGNMENT_MAX))
             return E_FAIL;
         if (m_data.dwAlignment % DVD_SECTOR_SIZE)
             return E_FAIL;
     }
-    else if (m_data.dwAlignment < ALIGNMENT_MIN)
+    else if ((m_data.dwAlignment < ALIGNMENT_MIN) || (m_data.dwAlignment > ALIGNMENT_MAX))
     {
         return E_FAIL;
     }
@@ -635,7 +636,14 @@ HRESULT WaveBankReader::Impl::Open(const wchar_t* szFileName) noexcept(false)
     }
 
     const DWORD metadataBytes = m_header.Segments[HEADER::SEGIDX_ENTRYMETADATA].dwLength;
-    if (metadataBytes != (m_data.dwEntryCount * m_data.dwEntryMetaDataElementSize))
+
+    uint64_t expectedSize = uint64_t(m_data.dwEntryCount) * m_data.dwEntryMetaDataElementSize;
+    if (expectedSize > MAX_DATA_SEGMENT_SIZE)
+    {
+        return HRESULT_FROM_WIN32(ERROR_ARITHMETIC_OVERFLOW);
+    }
+
+    if (metadataBytes != static_cast<DWORD>(expectedSize))
     {
         return E_FAIL;
     }
@@ -644,7 +652,13 @@ HRESULT WaveBankReader::Impl::Open(const wchar_t* szFileName) noexcept(false)
     const DWORD namesBytes = m_header.Segments[HEADER::SEGIDX_ENTRYNAMES].dwLength;
     if (namesBytes > 0)
     {
-        if (namesBytes >= (m_data.dwEntryNameElementSize * m_data.dwEntryCount))
+        expectedSize = uint64_t(m_data.dwEntryCount) * m_data.dwEntryNameElementSize;
+        if (expectedSize > UINT32_MAX)
+        {
+            return HRESULT_FROM_WIN32(ERROR_ARITHMETIC_OVERFLOW);
+        }
+
+        if (namesBytes >= static_cast<DWORD>(expectedSize))
         {
             std::unique_ptr<char[]> temp(new (std::nothrow) char[namesBytes]);
             if (!temp)
@@ -1171,7 +1185,9 @@ HRESULT WaveBankReader::Impl::GetMetadata(uint32_t index, Metadata& metadata) co
     {
         const uint64_t offset = uint64_t(metadata.offsetBytes) + uint64_t(m_header.Segments[HEADER::SEGIDX_ENTRYWAVEDATA].dwOffset);
         if (offset > UINT32_MAX)
+        {
             return HRESULT_FROM_WIN32(ERROR_ARITHMETIC_OVERFLOW);
+        }
 
         metadata.offsetBytes = static_cast<uint32_t>(offset);
     }

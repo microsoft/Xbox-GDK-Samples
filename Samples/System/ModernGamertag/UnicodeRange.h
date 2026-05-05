@@ -8,7 +8,7 @@
 #include <functional>
 
 // HarfBuzz is required for text shaping
-#include <hb.h>
+#include <harfbuzz/hb.h>
 
 #pragma once
 namespace TextRenderer

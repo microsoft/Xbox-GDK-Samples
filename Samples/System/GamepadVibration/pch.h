@@ -49,6 +49,12 @@
 #if _GRDK_VER < 0x65F41800 /* GDK Edition 251000 */
 #error This sample requires the October 2025 GDK or later
 #endif
+
+#if defined(_M_ARM64)
+#if _GRDK_EDITION < 260400
+#error ARM64 support requires April 2026 GDK or later
+#endif
+#endif
 #endif
 
 #ifdef _GAMING_XBOX_SCARLETT

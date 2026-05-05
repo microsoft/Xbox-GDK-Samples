@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Gaming.Xbox.Scarlett.x64">
@@ -49,12 +49,17 @@
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
     <ProjectName>NLSAndLocalization</ProjectName>
     <GDKCrossPlatform>true</GDKCrossPlatform>
+    <VcpkgEnableManifest>true</VcpkgEnableManifest>
   </PropertyGroup>
   <Import Condition="Exists($(ATGBuildProps))" Project="$(ATGBuildProps)" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup>
     <GDKCrossPlatformPath Condition="'$(GDKCrossPlatformPath)'==''">$(GameDKCoreLatest)</GDKCrossPlatformPath>
     <GDKCrossPlatformPath Condition="'$(GDKCrossPlatformPath)'==''">$(GameDKXboxLatest)</GDKCrossPlatformPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <XSAPIVersion>142</XSAPIVersion>
+    <XSAPIVersion Condition="'$(XSAPIVersion)'=='142' AND Exists('$(GDKCrossPlatformPath)windows\lib\x64\Microsoft.Xbox.Services.143.C.lib')">143</XSAPIVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -236,7 +241,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">
     <Link>
-      <AdditionalDependencies>Microsoft.Xbox.Services.142.C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freetype.lib;harfbuzz.lib;Microsoft.Xbox.Services.$(XSAPIVersion).C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -246,7 +251,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTelemetry\GDK;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\OpenSource\FreeType2\include;..\..\..\Kits\OpenSource\HarfBuzz\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTelemetry\GDK;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories />
       <ForcedUsingFiles />
       <Optimization>MaxSpeed</Optimization>
@@ -264,7 +269,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">
     <Link>
-      <AdditionalDependencies>Microsoft.Xbox.Services.142.C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freetype.lib;harfbuzz.lib;Microsoft.Xbox.Services.$(XSAPIVersion).C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -274,7 +279,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTelemetry\GDK;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\OpenSource\FreeType2\include;..\..\..\Kits\OpenSource\HarfBuzz\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTelemetry\GDK;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>
       </AdditionalUsingDirectories>
       <ForcedUsingFiles>
@@ -294,7 +299,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">
     <Link>
-      <AdditionalDependencies>Microsoft.Xbox.Services.142.C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freetype.lib;harfbuzz.lib;Microsoft.Xbox.Services.$(XSAPIVersion).C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -304,7 +309,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTelemetry\GDK;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\OpenSource\FreeType2\include;..\..\..\Kits\OpenSource\HarfBuzz\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTelemetry\GDK;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories />
       <ForcedUsingFiles />
       <Optimization>MaxSpeed</Optimization>
@@ -322,7 +327,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">
     <Link>
-      <AdditionalDependencies>Microsoft.Xbox.Services.142.C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freetype.lib;harfbuzz.lib;Microsoft.Xbox.Services.$(XSAPIVersion).C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -332,7 +337,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTelemetry\GDK;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\OpenSource\FreeType2\include;..\..\..\Kits\OpenSource\HarfBuzz\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTelemetry\GDK;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>
       </AdditionalUsingDirectories>
       <ForcedUsingFiles>
@@ -352,7 +357,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">
     <Link>
-      <AdditionalDependencies>Microsoft.Xbox.Services.142.C.Debug.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freetyped.lib;harfbuzz.lib;Microsoft.Xbox.Services.$(XSAPIVersion).C.Debug.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalOptions>/ignore:4099 /NODEFAULTLIB:MSVCRT %(AdditionalOptions)</AdditionalOptions>
@@ -361,7 +366,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MinimalRebuild>false</MinimalRebuild>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTelemetry\GDK;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\OpenSource\FreeType2\include;..\..\..\Kits\OpenSource\HarfBuzz\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTelemetry\GDK;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories />
       <ForcedUsingFiles />
       <WarningLevel>Level4</WarningLevel>
@@ -377,7 +382,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">
     <Link>
-      <AdditionalDependencies>Microsoft.Xbox.Services.142.C.Debug.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freetyped.lib;harfbuzz.lib;Microsoft.Xbox.Services.$(XSAPIVersion).C.Debug.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalOptions>/ignore:4099 /NODEFAULTLIB:MSVCRT %(AdditionalOptions)</AdditionalOptions>
@@ -386,7 +391,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <MinimalRebuild>false</MinimalRebuild>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTelemetry\GDK;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\OpenSource\FreeType2\include;..\..\..\Kits\OpenSource\HarfBuzz\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTelemetry\GDK;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>
       </AdditionalUsingDirectories>
       <ForcedUsingFiles>
@@ -404,7 +409,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Link>
-      <AdditionalDependencies>Microsoft.Xbox.Services.142.C.Debug.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;uuid.lib;xgameruntime.lib;gameinput.lib;d3d12.lib;dxgi.lib;dxguid.lib;kernel32.lib;user32.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freetyped.lib;harfbuzz.lib;Microsoft.Xbox.Services.$(XSAPIVersion).C.Debug.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;uuid.lib;xgameruntime.lib;gameinput.lib;d3d12.lib;dxgi.lib;dxguid.lib;kernel32.lib;user32.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
@@ -415,7 +420,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTelemetry\GDK;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\OpenSource\FreeType2\include;..\..\..\Kits\OpenSource\HarfBuzz\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTelemetry\GDK;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_GAMING_DESKTOP;_WINDOWS;WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FloatingPointModel>Fast</FloatingPointModel>
       <AdditionalOptions>/Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
@@ -433,7 +438,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Link>
-      <AdditionalDependencies>Microsoft.Xbox.Services.142.C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;uuid.lib;xgameruntime.lib;gameinput.lib;d3d12.lib;dxgi.lib;dxguid.lib;kernel32.lib;user32.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freetype.lib;harfbuzz.lib;Microsoft.Xbox.Services.$(XSAPIVersion).C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;uuid.lib;xgameruntime.lib;gameinput.lib;d3d12.lib;dxgi.lib;dxguid.lib;kernel32.lib;user32.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -446,7 +451,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTelemetry\GDK;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\OpenSource\FreeType2\include;..\..\..\Kits\OpenSource\HarfBuzz\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTelemetry\GDK;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_GAMING_DESKTOP;_WINDOWS;WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FloatingPointModel>Fast</FloatingPointModel>
       <AdditionalOptions>/Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
@@ -466,7 +471,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">
     <Link>
-      <AdditionalDependencies>Microsoft.Xbox.Services.142.C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;uuid.lib;xgameruntime.lib;gameinput.lib;d3d12.lib;dxgi.lib;dxguid.lib;kernel32.lib;user32.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freetype.lib;harfbuzz.lib;Microsoft.Xbox.Services.$(XSAPIVersion).C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;uuid.lib;xgameruntime.lib;gameinput.lib;d3d12.lib;dxgi.lib;dxguid.lib;kernel32.lib;user32.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -479,7 +484,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTelemetry\GDK;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;..\..\..\Kits\OpenSource\FreeType2\include;..\..\..\Kits\OpenSource\HarfBuzz\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\ATGTelemetry\GDK;..\..\..\Kits\DirectXTK12\Inc;..\..\..\Kits\ATGTK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>PROFILE;_GAMING_DESKTOP;_WINDOWS;WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FloatingPointModel>Fast</FloatingPointModel>
       <AdditionalOptions>/Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
@@ -501,98 +506,6 @@
     <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h" />
     <ClInclude Include="..\..\..\Kits\ATGTK\Texture.h" />
     <ClInclude Include="..\..\..\Kits\ATGTK\UnicodeRendering\GlyphCache.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\config\ftconfig.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\config\ftheader.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\config\ftmodule.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\config\ftoption.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\config\ftstdlib.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\config\integer-types.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\config\mac-support.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\config\public-macros.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\freetype.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftadvanc.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftbbox.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftbdf.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftbitmap.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftbzip2.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftcache.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftchapters.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftcid.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftcolor.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftdriver.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\fterrdef.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\fterrors.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftfntfmt.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftgasp.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftglyph.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftgxval.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftgzip.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftimage.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftincrem.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftlcdfil.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftlist.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftlzw.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftmac.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftmm.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftmodapi.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftmoderr.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftotval.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftoutln.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftparams.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftpfr.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftrender.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftsizes.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftsnames.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftstroke.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftsynth.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftsystem.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\fttrigon.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\fttypes.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ftwinfnt.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\t1tables.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\ttnameid.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\tttables.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\freetype\tttags.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\FreeType2\include\ft2build.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-aat-layout.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-aat.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-blob.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-buffer.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-common.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-coretext.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-deprecated.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-directwrite.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-draw.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-face.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-font.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ft.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-gdi.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-glib.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-gobject-structs.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-gobject.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-graphite2.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-icu.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-map.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-color.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-deprecated.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-font.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-layout.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-math.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-meta.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-metrics.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-name.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-shape.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot-var.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-ot.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-set.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-shape-plan.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-shape.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-style.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-subset.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-unicode.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-uniscribe.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb-version.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\HarfBuzz\include\hb.h" />
     <ClInclude Include="NLSAndLocalization.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="StepTimer.h" />
@@ -911,10 +824,6 @@
     <None Include="readme_ja-jp.md" />
     <None Include="readme_ko-kr.md" />
     <None Include="readme_zh-cn.md" />
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="..\..\..\Kits\OpenSource\FreeType2\lib\x64\ReleaseStatic\freetype.lib" />
-    <Library Include="..\..\..\Kits\OpenSource\HarfBuzz\lib\release\harfbuzz.lib" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\OFL\NotoNaskhArabic-Regular.ttf">
@@ -2297,8 +2206,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(VCTargetsPath)\Platforms\$(Platform)\Platform.props')" Text="$([System.String]::Format('$(ErrorText)', '$(Platform)'))" />
   </Target>
-  <Target Name="BuildMGC" AfterTargets="Build" Condition="!$([System.Text.RegularExpressions.Regex]::IsMatch('$(Platform)', 'Gaming\..+\.x64'))"
-          Inputs="@(MGCCompile)" Outputs="$(OutDir)MicrosoftGame.config">
+  <Target Name="BuildMGC" AfterTargets="Build" Condition="!$([System.Text.RegularExpressions.Regex]::IsMatch('$(Platform)', 'Gaming\..+\.x64'))" Inputs="@(MGCCompile)" Outputs="$(OutDir)MicrosoftGame.config">
     <Exec ConsoleToMsBuild="true" Command="copy &quot;%(MGCCompile.Identity)&quot; &quot;$(OutDir)MicrosoftGame.config&quot;" />
     <Exec ConsoleToMsBuild="true" Command="makepkg.exe localize /d &quot;$(OutDir).&quot; /pd &quot;$(OutDir).&quot; /gc &quot;%(MGCCompile.Identity)&quot;" />
   </Target>

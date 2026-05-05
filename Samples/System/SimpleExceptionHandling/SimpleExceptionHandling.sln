@@ -10,16 +10,21 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
+		Debug|ARM64 = Debug|ARM64
 		Debug|Gaming.Xbox.Scarlett.x64 = Debug|Gaming.Xbox.Scarlett.x64
 		Debug|Gaming.Xbox.XboxOne.x64 = Debug|Gaming.Xbox.XboxOne.x64
 		Release|x64 = Release|x64
+		Release|ARM64 = Release|ARM64
 		Release|Gaming.Xbox.Scarlett.x64 = Release|Gaming.Xbox.Scarlett.x64
 		Release|Gaming.Xbox.XboxOne.x64 = Release|Gaming.Xbox.XboxOne.x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{6E7AF02B-59BD-4982-B170-473CD470D62D}.Debug|x64.ActiveCfg = Debug|x64
+		{6E7AF02B-59BD-4982-B170-473CD470D62D}.Debug|ARM64.ActiveCfg = Debug|ARM64
 		{6E7AF02B-59BD-4982-B170-473CD470D62D}.Debug|x64.Build.0 = Debug|x64
+		{6E7AF02B-59BD-4982-B170-473CD470D62D}.Debug|ARM64.Build.0 = Debug|ARM64
 		{6E7AF02B-59BD-4982-B170-473CD470D62D}.Debug|x64.Deploy.0 = Debug|x64
+		{6E7AF02B-59BD-4982-B170-473CD470D62D}.Debug|ARM64.Deploy.0 = Debug|ARM64
 		{6E7AF02B-59BD-4982-B170-473CD470D62D}.Debug|Gaming.Xbox.Scarlett.x64.ActiveCfg = Debug|Gaming.Xbox.Scarlett.x64
 		{6E7AF02B-59BD-4982-B170-473CD470D62D}.Debug|Gaming.Xbox.Scarlett.x64.Build.0 = Debug|Gaming.Xbox.Scarlett.x64
 		{6E7AF02B-59BD-4982-B170-473CD470D62D}.Debug|Gaming.Xbox.Scarlett.x64.Deploy.0 = Debug|Gaming.Xbox.Scarlett.x64
@@ -27,8 +32,11 @@ Global
 		{6E7AF02B-59BD-4982-B170-473CD470D62D}.Debug|Gaming.Xbox.XboxOne.x64.Build.0 = Debug|Gaming.Xbox.XboxOne.x64
 		{6E7AF02B-59BD-4982-B170-473CD470D62D}.Debug|Gaming.Xbox.XboxOne.x64.Deploy.0 = Debug|Gaming.Xbox.XboxOne.x64
 		{6E7AF02B-59BD-4982-B170-473CD470D62D}.Release|x64.ActiveCfg = Release|x64
+		{6E7AF02B-59BD-4982-B170-473CD470D62D}.Release|ARM64.ActiveCfg = Release|ARM64
 		{6E7AF02B-59BD-4982-B170-473CD470D62D}.Release|x64.Build.0 = Release|x64
+		{6E7AF02B-59BD-4982-B170-473CD470D62D}.Release|ARM64.Build.0 = Release|ARM64
 		{6E7AF02B-59BD-4982-B170-473CD470D62D}.Release|x64.Deploy.0 = Release|x64
+		{6E7AF02B-59BD-4982-B170-473CD470D62D}.Release|ARM64.Deploy.0 = Release|ARM64
 		{6E7AF02B-59BD-4982-B170-473CD470D62D}.Release|Gaming.Xbox.Scarlett.x64.ActiveCfg = Release|Gaming.Xbox.Scarlett.x64
 		{6E7AF02B-59BD-4982-B170-473CD470D62D}.Release|Gaming.Xbox.Scarlett.x64.Build.0 = Release|Gaming.Xbox.Scarlett.x64
 		{6E7AF02B-59BD-4982-B170-473CD470D62D}.Release|Gaming.Xbox.Scarlett.x64.Deploy.0 = Release|Gaming.Xbox.Scarlett.x64
@@ -36,13 +44,17 @@ Global
 		{6E7AF02B-59BD-4982-B170-473CD470D62D}.Release|Gaming.Xbox.XboxOne.x64.Build.0 = Release|Gaming.Xbox.XboxOne.x64
 		{6E7AF02B-59BD-4982-B170-473CD470D62D}.Release|Gaming.Xbox.XboxOne.x64.Deploy.0 = Release|Gaming.Xbox.XboxOne.x64
 		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Debug|x64.ActiveCfg = Debug|x64
+		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Debug|ARM64.ActiveCfg = Debug|ARM64
 		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Debug|x64.Build.0 = Debug|x64
+		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Debug|ARM64.Build.0 = Debug|ARM64
 		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Debug|Gaming.Xbox.Scarlett.x64.ActiveCfg = Debug|Gaming.Xbox.Scarlett.x64
 		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Debug|Gaming.Xbox.Scarlett.x64.Build.0 = Debug|Gaming.Xbox.Scarlett.x64
 		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Debug|Gaming.Xbox.XboxOne.x64.ActiveCfg = Debug|Gaming.Xbox.XboxOne.x64
 		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Debug|Gaming.Xbox.XboxOne.x64.Build.0 = Debug|Gaming.Xbox.XboxOne.x64
 		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Release|x64.ActiveCfg = Release|x64
+		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Release|ARM64.ActiveCfg = Release|ARM64
 		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Release|x64.Build.0 = Release|x64
+		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Release|ARM64.Build.0 = Release|ARM64
 		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Release|Gaming.Xbox.Scarlett.x64.ActiveCfg = Release|Gaming.Xbox.Scarlett.x64
 		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Release|Gaming.Xbox.Scarlett.x64.Build.0 = Release|Gaming.Xbox.Scarlett.x64
 		{052C4858-C76F-4CEA-8A1A-E8E5559E67C2}.Release|Gaming.Xbox.XboxOne.x64.ActiveCfg = Release|Gaming.Xbox.XboxOne.x64

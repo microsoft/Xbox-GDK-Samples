@@ -11,6 +11,7 @@
 
 #include "pch.h"
 #include "PerformanceTimers.h"
+#include "DeveloperMode.h"
 
 #include "DirectXHelpers.h"
 
@@ -257,6 +258,13 @@ void GPUTimer::RestoreDevice(_In_ ID3D12Device* device, _In_ ID3D12CommandQueue*
 {
     assert(device != 0 && commandQueue != 0);
 
+    if (!IsDeveloperModeEnabled())
+    {
+#ifndef _GAMING_XBOX
+        MessageBox(nullptr, L"ERROR: Developer Mode is required for this sample. \n\nPlease enable Developer Mode in Windows Settings.", L"Developer Mode Disabled", MB_OK | MB_ICONERROR);
+#endif
+        ThrowIfFailed(E_NOTIMPL);
+    }
 #if defined(_DEBUG) || defined(PROFILE)
     if (FAILED(device->SetStablePowerState(TRUE)))
     {

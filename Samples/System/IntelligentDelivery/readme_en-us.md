@@ -95,48 +95,57 @@ If using an Xbox Series X|S devkit, set the active solution platform to `Gaming.
 
 If using an Xbox One devkit, set the active solution platform to `Gaming.Xbox.XboxOne.x64`.
 
-If using PC, set the active solution platform to x64.
+If using PC with x64, set the active solution platform to `x64`.
+
+If using PC with ARM64, set the active solution platform to `ARM64`.
 
 *For more information, see* __Running samples__, *in the GDK documentation.*
 
 # Using the sample
 
-Unlike most GDK samples, the *IntelligentDelivery* sample is not meant
-to be built and deployed from Visual Studio. Although you can deploy and
-run directly from Visual Studio this circumvents the installation tools
-and process this sample is meant to demonstrate. The steps to use this
-sample are as follows:
+Unlike most GDK samples, this sample is not meant to be deployed directly
+from Visual Studio. Follow these steps from an **Xbox Gaming Command Prompt**
+in the directory containing *IntelligentDelivery.vcxproj*:
 
-1.  Build the sample from Visual Studio **without** deploying and
-    executing it
+1. **Build** the sample in Visual Studio (do not deploy/run)
 
-2.  Generate content for the installation package
+2. **Generate test content**. These scripts create large placeholder files
+   that act as chunk content, making the installation progress observable
+   in real time. They also stage the appropriate MicrosoftGameConfig for
+   the target platform.
 
-3.  Create the installation package
+   | Platform | Script |
+   |---|---|
+   | Xbox One | `GenerateContent_XboxOne.bat` |
+   | Xbox Series X\|S | `GenerateContent_Scarlett.bat` |
+   | PC (x64) | `GenerateContent_PC_x64.bat` |
+   | PC (ARM64) | `GenerateContent_PC_ARM64.bat` |
 
-4.  Install the package and run the sample
+3. **Create the package** by running the corresponding makepkg script:
 
-This sample requires separate packages for each console device family.
-Different .bat and .config files are provided to be used to build the
-appropriate package for each device. Regardless of the platform, the
-XPackage code remains unchanged with GDK. In the *MicrosoftGame.config*
-file, the only differentiating attribute is TargetDeviceFamily which is
-either XboxOne, Scarlett, or PC.
+   | Platform | Script |
+   |---|---|
+   | Xbox One | `CreateXVC_XboxOne.bat` |
+   | Xbox Series X\|S | `CreateXVC_Scarlett.bat` |
+   | PC (x64) | `CreateMSIXVC_PC_x64.bat` |
+   | PC (ARM64) | `CreateMSIXVC_PC_ARM64.bat` |
 
-The first step is simply to build the sample from Visual Studio. This
-will create the binaries and directory layout that will eventually be
-used in creating the package. Once the sample has been built, run
-**CreateInstallPackage\_\[XboxOne/Scarlett/PC\].bat** from the command
-line. The batch file will create several large files to act as content
-files to monitor installation progress in real time and stage the
-appropriate MicrosoftGame.config with the TargetDeviceFamily set.
+4. **Install** the package:
+   - **Xbox**: `xbapp install <package name>`
+   - **PC**: `wdapp install <package name>`
 
-The next step is to create the installation package using the
-**makepkg** tool installed with the GDK. Open an **Xbox Gaming Command
-Prompt** and navigate to the directory that contains
-*IntelligentDelivery.vcxproj*. You can run
-**CreateXVC\_\[XboxOne/Scarlett\].bat** or **CreateMSIXVC_PC.bat** from
-the command prompt you opened or run the command directly:
+Package creation may take several minutes due to the large filler content
+files. Console packages produce **.xvc** files, PC packages produce
+**.msixvc** files.
+
+# Advanced usage
+
+The package creation scripts wrap the **makepkg** tool installed with the
+GDK. If you need to run makepkg directly, refer to the commands below.
+Be sure all files are staged to the right location first by running the
+appropriate generate content script. For full details on makepkg options
+and usage, see the [MakePkg documentation](https://learn.microsoft.com/gaming/gdk/docs/features/common/packaging/deployment/makepkg)
+in the GDK documentation.
 
 Xbox One Device Family:
 
@@ -150,15 +159,17 @@ Xbox Series X|S Device Family:
 > \".\\Gaming.Scarlett.x64\\Layout\\Image\\Loose\" /pd
 > \".\\Gaming.Scarlett.x64\\Layout\\Image\" \[/lk \<filename\>.lekb\]
 
-PC:
+PC (x64):
 
 > makepkg.exe pack /pc /v /f Chunks_PC.xml /d
 > .\\x64\\Layout\\Image\\Loose /pd
 > .\\x64\\Layout\\Image \[/lk \<filename\>.lekb\]
 
-Be aware that if running the command directly, refer to the .bat to
-ensure all the files are staged to the right location, especially if
-some have been updated.
+PC (ARM64):
+
+> makepkg.exe pack /pc /v /f Chunks_PC.xml /d
+> .\\ARM64\\Layout\\Image\\Loose /pd
+> .\\ARM64\\Layout\\Image \[/lk \<filename\>.lekb\]
 
 It's recommended to use /lk signing for packages. /lk signed packages
 can be securely transferred as well as locally installed and tested.
@@ -173,22 +184,7 @@ the .xvc as well as the **.cekb** file that is also found in the output
 location. The .cekb file can be manually installed by using **xbapp
 installkey**.
 
-Since the package has been filled with several gigabytes of filler
-content it can take up to several minutes to execute. Once it has
-finished executing, several files will be created in the location
-specified after the **/pd** option,
-**".\\Gaming.\[Xbox/Scarlett/PC\].x64\\Layout\\Image"** directory in
-this case. The actual installation package file will be given a name
-that contains the **Package Family Name** of the package, derived from
-the *MicrosoftGame.config.* For console, an **.xvc** file will be
-created with a suffix depending on the TargetDeviceFamily: **\_x** for
-Xbox One, **\_xs** for Scarlett. For PC, an **.msixvc** file is created.
-
-The final step is to install the package onto your device. For **Xbox**,
-there are several options to determine what content you want to install
-depending on what scenarios you would like to test. If you want to test
-your streaming installation implementation, then the following command
-can be used:
+## Xbox install options
 
 > xbapp install \[/l\] \[/w\] \[/i\] \<package name\>
 
@@ -234,6 +230,8 @@ of the optional arguments that can be passed to the command.
 This is not an exhaustive list of the options that can be used with the
 **xbapp install** command. Refer to the GDK documentation for a
 comprehensive list of options.
+
+## PC install options
 
 For **PC**, the wdapp command will be used instead. Only the /l flag is
 available to install the launch chunks. Since the sample is running on
@@ -301,6 +299,9 @@ March 2021 Add PC as supported platform
 
 March 2022 Update to use /lk; added example PackageUploader
 configuration scripts
+
+April 2026 Add ARM64 support for PC packaging scripts; rename Desktop
+bat files to distinguish x64 and ARM64 architectures
 
 # Privacy Statement
 

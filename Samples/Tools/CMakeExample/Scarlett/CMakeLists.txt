@@ -86,7 +86,7 @@ target_compile_options(${PROJECT_NAME} PRIVATE /W4 /EHsc /GR- /fp:fast /GS /Gy)
 target_link_libraries(${PROJECT_NAME} PRIVATE ${Console_Libs} Xbox::XSAPI Xbox::HTTPClient Xbox::XCurl)
 # uuid.lib if using Windows Imaging Component (WIC)
 # dloadhelper.lib if using /DELAYLOAD
-# optional additional extension libraries: Xbox::GameChat2 Xbox::PlayFabMultiplayer Xbox::PlayFabParty Xbox::PlayFabPartyLIVE Xbox::PlayFabServices
+# optional additional extension libraries: Xbox::GameChat2 Xbox::PlayFabMultiplayer Xbox::PlayFabParty Xbox::PlayFabPartyLIVE Xbox::PlayFabServices Xbox::PlayFabGameSave
 
 # Optional precompiled header switches:
 # /Ycpch.h (Create Precompiled Header File)
@@ -106,8 +106,10 @@ if((MSVC_VERSION GREATER_EQUAL 1924)
 endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+   # /Zc:forScope (Force Conformance in for Loop Scope)
    # /Zc:inline (Remove unreferenced COMDAT)
-   target_compile_options(${PROJECT_NAME} PRIVATE /Zc:inline)
+   # /Zc:wchar_t (wchar_t Is Native Type)
+   target_compile_options(${PROJECT_NAME} PRIVATE /Zc:forScope /Zc:inline /Zc:wchar_t)
 
    # /analyze (Code analysis)
    if(ENABLE_CODE_ANALYSIS)

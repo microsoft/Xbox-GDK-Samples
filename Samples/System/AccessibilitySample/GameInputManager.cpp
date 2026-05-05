@@ -29,7 +29,11 @@ void GameInputManager::Shutdown()
     // Unregister GameInput device callback
     if (m_gameInput && m_deviceToken)
     {
-        m_gameInput->UnregisterCallback(m_deviceToken, 100000);
+        #if defined(GAMEINPUT_API_VERSION) && (GAMEINPUT_API_VERSION >= 1)
+            if (!m_gameInput->UnregisterCallback(m_deviceToken))
+        #else
+            if (!m_gameInput->UnregisterCallback(m_deviceToken, UINT64_MAX))
+        #endif
         m_deviceToken = 0;
     }
 
@@ -67,7 +71,14 @@ void CALLBACK GameInputManager::DeviceCallback(
     {
         // Device connected
         m_devices.emplace_back(device);
-        m_activeKind |= device->GetDeviceInfo()->supportedInput;
+        #if defined(GAMEINPUT_API_VERSION) && (GAMEINPUT_API_VERSION >= 1)
+            const GameInputDeviceInfo* deviceInfo = nullptr;
+            device->GetDeviceInfo(&deviceInfo);
+        #else
+            auto deviceInfo = device->GetDeviceInfo();
+        #endif
+
+        m_activeKind |= deviceInfo->supportedInput;
     }
     else if (wasConnected && !isConnected)
     {
@@ -84,7 +95,14 @@ void CALLBACK GameInputManager::DeviceCallback(
         m_activeKind = static_cast<GameInputKind>(0);
         for (auto& d : m_devices)
         {
-            m_activeKind |= d->GetDeviceInfo()->supportedInput;
+            #if defined(GAMEINPUT_API_VERSION) && (GAMEINPUT_API_VERSION >= 1)
+                const GameInputDeviceInfo* deviceInfo = nullptr;
+                d->GetDeviceInfo(&deviceInfo);
+            #else
+                auto deviceInfo = d->GetDeviceInfo();
+            #endif
+
+            m_activeKind |= deviceInfo->supportedInput;
         }
     }
 }

@@ -8,17 +8,23 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
+		Debug|ARM64 = Debug|ARM64
 		Debug|x86 = Debug|x86
 		Release|x64 = Release|x64
+		Release|ARM64 = Release|ARM64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{DB83417E-FCEB-4ABE-A54E-D16E52A569AC}.Debug|x64.ActiveCfg = Debug|x64
+		{DB83417E-FCEB-4ABE-A54E-D16E52A569AC}.Debug|ARM64.ActiveCfg = Debug|ARM64
 		{DB83417E-FCEB-4ABE-A54E-D16E52A569AC}.Debug|x64.Build.0 = Debug|x64
+		{DB83417E-FCEB-4ABE-A54E-D16E52A569AC}.Debug|ARM64.Build.0 = Debug|ARM64
 		{DB83417E-FCEB-4ABE-A54E-D16E52A569AC}.Debug|x86.ActiveCfg = Debug|Win32
 		{DB83417E-FCEB-4ABE-A54E-D16E52A569AC}.Debug|x86.Build.0 = Debug|Win32
 		{DB83417E-FCEB-4ABE-A54E-D16E52A569AC}.Release|x64.ActiveCfg = Release|x64
+		{DB83417E-FCEB-4ABE-A54E-D16E52A569AC}.Release|ARM64.ActiveCfg = Release|ARM64
 		{DB83417E-FCEB-4ABE-A54E-D16E52A569AC}.Release|x64.Build.0 = Release|x64
+		{DB83417E-FCEB-4ABE-A54E-D16E52A569AC}.Release|ARM64.Build.0 = Release|ARM64
 		{DB83417E-FCEB-4ABE-A54E-D16E52A569AC}.Release|x86.ActiveCfg = Release|Win32
 		{DB83417E-FCEB-4ABE-A54E-D16E52A569AC}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection

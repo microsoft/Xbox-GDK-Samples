@@ -8,7 +8,7 @@
 #include "pch.h"
 #include "XBoxInMemoryZLibDecompression.h"
 #include "RDTSCPStopWatch.h"
-#include "zlib/include/zlib.h"
+#include "zlib.h"
 
 #define VALIDATE_READS
 

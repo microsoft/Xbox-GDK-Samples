@@ -302,4 +302,4 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY VS_GLOBAL_VCToolsVersion "14.20.275
 |April 2025|Updated for CMake 3.31 add_custom_command warning.|
 |October 2025|Updated for 2510 GDK and new layout, replacing `Gaming.Desktop.x64` with `x64`|
 |February 2026|Updated to require CMake 3.21 or later|
-|April 2026|Updated to use Microsoft.Xbox.Services.143.C.lib in 2604|
+|April 2026|Updated to use Microsoft.Xbox.Services.143.C.lib in 2604<br />Updates to improve CMake 4.1 support|

@@ -13,7 +13,7 @@
 #include <freetype/ftbitmap.h>
 
 // HarfBuzz is required for text shaping
-#include <hb.h>
+#include <harfbuzz/hb.h>
 #include <set>
 #include <map>
 

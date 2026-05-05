@@ -593,6 +593,9 @@ void Sample::CreateDeviceDependentResources()
     if (FAILED(device->CheckFeatureSupport(D3D12_FEATURE_D3D12_OPTIONS5, &features, sizeof(features)))
         || (features.RaytracingTier == D3D12_RAYTRACING_TIER_NOT_SUPPORTED))
     {
+#ifndef _GAMING_XBOX
+        MessageBox(nullptr, L"DirectX Raytracing (DXR) is not supported on this system. The sample will now exit.", L"Unsupported Feature", MB_OK | MB_ICONERROR);
+#endif
         OutputDebugStringA("ERROR: DirectX Raytracing (DXR) is not supported!\n");
         throw std::exception("DirectX Raytracing (DXR) is not supported!");
     }

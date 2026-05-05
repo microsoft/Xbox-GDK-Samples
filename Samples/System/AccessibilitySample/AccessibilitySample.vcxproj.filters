@@ -120,6 +120,7 @@
       <Filter>ImGui\Backends\Shaders</Filter>
     </ClInclude>
     <ClInclude Include="GameInputManager.h" />
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\d3dx12.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -178,5 +179,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="readme.md" />
+    <None Include="..\..\NuGet.config" />
   </ItemGroup>
 </Project>

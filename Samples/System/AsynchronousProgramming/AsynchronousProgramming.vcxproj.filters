@@ -140,30 +140,30 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Layouts\Layout.json">
+    <CopyFileToFolders Include="Assets\Layouts\Layout.json">
       <Filter>Assets\Layouts</Filter>
-    </None>
-    <None Include="Assets\Fonts\SegoeUI_18.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\SegoeUI_18.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="Assets\Fonts\SegoeUI_24.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\SegoeUI_24.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="Assets\Fonts\SegoeUI_24_Bold.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\SegoeUI_24_Bold.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="Assets\Fonts\SegoeUI_24_Italic.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\SegoeUI_24_Italic.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="Assets\Fonts\SegoeUI_18_Bold.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\SegoeUI_18_Bold.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="Assets\Fonts\SegoeUI_18_Italic.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\SegoeUI_18_Italic.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="Assets\Layouts\TestButtonPrefab.json">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Layouts\TestButtonPrefab.json">
       <Filter>Assets\Layouts</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="Readme_ja-JP.docx" />
     <None Include="Readme_ko-KR.docx" />
     <None Include="Readme_zh-CN.docx" />
@@ -171,8 +171,8 @@
     <None Include="Scripts\Desktop.PostBuild.bat">
       <Filter>Scripts</Filter>
     </None>
-    <None Include="Assets\Fonts\XboxOneControllerLegendSmall.spritefont">
+    <CopyFileToFolders Include="Assets\Fonts\XboxOneControllerLegendSmall.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

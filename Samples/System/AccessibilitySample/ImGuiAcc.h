@@ -6,7 +6,13 @@
 #include "Narrator.h"
 
 #include <GameInput.h>
-#include <sapi.h>
+#if GAMEINPUT_API_VERSION == 1
+using namespace GameInput::v1;
+#elif GAMEINPUT_API_VERSION == 2
+using namespace GameInput::v2;
+#elif GAMEINPUT_API_VERSION == 3
+using namespace GameInput::v3;
+#endif#include <sapi.h>
 #include "XAccessibility.h"
 #include "XSpeechSynthesizer.h"
 #include <xaudio2.h>
