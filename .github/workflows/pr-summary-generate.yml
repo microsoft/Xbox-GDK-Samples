@@ -11,8 +11,8 @@ permissions:
 
 jobs:
   generate-summary:
-    # Only run for bot-created PRs
-    if: endsWith(github.event.pull_request.user.login, '[bot]')
+    # Run when a PR is opened without a description
+    if: github.event.pull_request.body == '' || github.event.pull_request.body == null
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
