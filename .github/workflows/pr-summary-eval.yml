@@ -1,0 +1,15 @@
+name: PR Summary Eval
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  evaluate-summary:
+    # Skip the initial 'opened' event for bot PRs — the generate workflow will
+    # handle eval after updating the body.
+    if: >-
+      !(github.event.action == 'opened' && endsWith(github.event.pull_request.user.login, '[bot]'))
+    uses: ./.github/workflows/pr-summary-eval-reusable.yml
+    with:
+      pr-number: ${{ github.event.pull_request.number }}

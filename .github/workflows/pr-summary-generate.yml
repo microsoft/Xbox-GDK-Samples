@@ -1,0 +1,151 @@
+name: Generate PR Summary
+
+on:
+  pull_request:
+    types: [opened]
+
+permissions:
+  contents: read
+  pull-requests: write
+  models: read
+
+jobs:
+  generate-summary:
+    # Only run for bot-created PRs
+    if: endsWith(github.event.pull_request.user.login, '[bot]')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get PR diff summary
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr diff ${{ github.event.pull_request.number }} --stat > /tmp/diff-stat.txt 2>/dev/null || echo "Unable to retrieve diff" > /tmp/diff-stat.txt
+          gh pr diff ${{ github.event.pull_request.number }} --name-only > /tmp/changed-files.txt 2>/dev/null || echo "" > /tmp/changed-files.txt
+
+      - name: Read format instructions
+        run: |
+          if [ -f .github/copilot-instructions.md ]; then
+            cat .github/copilot-instructions.md > /tmp/format-instructions.txt
+          else
+            echo "No format instructions found" > /tmp/format-instructions.txt
+          fi
+
+      - name: Generate summary with GitHub Models
+        id: generate
+        uses: actions/github-script@v7
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          script: |
+            const fs = require('fs');
+
+            const diffStat = fs.readFileSync('/tmp/diff-stat.txt', 'utf8');
+            const changedFiles = fs.readFileSync('/tmp/changed-files.txt', 'utf8');
+            const formatInstructions = fs.readFileSync('/tmp/format-instructions.txt', 'utf8');
+
+            const prompt = `You are generating a pull request description for an automated sync from an internal development repository to the public GitHub repository.
+
+            Here are the format instructions to follow:
+            ---
+            ${formatInstructions}
+            ---
+
+            Here are the changed files in this PR:
+            ---
+            ${changedFiles}
+            ---
+
+            Here is the diff stat:
+            ---
+            ${diffStat}
+            ---
+
+            Generate a PR description that follows the format instructions exactly. Categorize files correctly:
+            - Files under Samples/ that appear new → New samples
+            - Files under Samples/ that are modified → Updated samples (use the sample directory name)
+            - Files under Kits/ → Updated kits
+            - Everything else (Media/, configs, docs) → General
+
+            Also generate a concise PR title (not the H2 heading) that summarizes the changes in
+            a few words (e.g., "Add TriangleWave sample, update ATGTK helpers").
+
+            Output a JSON object with two fields:
+            - "title": the PR title string
+            - "body": the formatted PR description following the instructions
+
+            Output ONLY valid JSON, nothing else.`;
+
+            const response = await fetch('https://models.github.ai/inference/chat/completions', {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                model: 'openai/gpt-4o-mini',
+                messages: [
+                  { role: 'user', content: prompt }
+                ],
+                temperature: 0.3,
+                response_format: { type: 'json_object' },
+              }),
+            });
+
+            if (!response.ok) {
+              const error = await response.text();
+              core.setFailed(`GitHub Models API error: ${response.status} - ${error}`);
+              return;
+            }
+
+            const result = await response.json();
+            let content = result.choices[0].message.content.trim();
+
+            // Strip markdown code fences if present
+            content = content.replace(/^```(?:json)?\s*\n?/i, '').replace(/\n?```\s*$/i, '');
+
+            let parsed;
+            try {
+              parsed = JSON.parse(content);
+            } catch (e) {
+              // Fallback: treat entire response as body if JSON parsing fails
+              parsed = { title: '', body: content };
+            }
+
+            fs.writeFileSync('/tmp/pr-summary.md', parsed.body);
+            core.setOutput('summary', parsed.body);
+            core.setOutput('title', parsed.title);
+
+      - name: Update PR title and description
+        if: steps.generate.outputs.summary != ''
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const summary = fs.readFileSync('/tmp/pr-summary.md', 'utf8');
+            const title = '${{ steps.generate.outputs.title }}';
+
+            const update = {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              body: summary,
+            };
+
+            if (title) {
+              update.title = title;
+            }
+
+            await github.rest.pulls.update(update);
+
+            console.log('PR title and description updated successfully');
+
+  evaluate-summary:
+    needs: generate-summary
+    uses: ./.github/workflows/pr-summary-eval-reusable.yml
+    with:
+      pr-number: ${{ github.event.pull_request.number }}
