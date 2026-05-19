@@ -3,6 +3,8 @@ name: Generate PR Summary
 on:
   pull_request:
     types: [opened]
+  issue_comment:
+    types: [created]
 
 permissions:
   contents: read
@@ -11,21 +13,48 @@ permissions:
 
 jobs:
   generate-summary:
-    # Run when a PR is opened without a description
-    if: github.event.pull_request.body == '' || github.event.pull_request.body == null
+    # Run when:
+    # 1. A PR is opened without a description, OR
+    # 2. Someone comments "/generate-summary" on a PR
+    if: |
+      (github.event_name == 'pull_request' && (github.event.pull_request.body == '' || github.event.pull_request.body == null)) ||
+      (github.event_name == 'issue_comment' && github.event.issue.pull_request && contains(github.event.comment.body, '/generate-summary'))
     runs-on: ubuntu-latest
+    outputs:
+      pr-number: ${{ steps.pr-number.outputs.number }}
     steps:
+      - name: Determine PR number
+        id: pr-number
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "number=${{ github.event.pull_request.number }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "number=${{ github.event.issue.number }}" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      - name: React to comment
+        if: github.event_name == 'issue_comment'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: context.payload.comment.id,
+              content: 'rocket',
+            });
+
       - name: Get PR diff summary
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh pr diff ${{ github.event.pull_request.number }} --stat > /tmp/diff-stat.txt 2>/dev/null || echo "Unable to retrieve diff" > /tmp/diff-stat.txt
-          gh pr diff ${{ github.event.pull_request.number }} --name-only > /tmp/changed-files.txt 2>/dev/null || echo "" > /tmp/changed-files.txt
+          gh pr diff ${{ steps.pr-number.outputs.number }} --stat > /tmp/diff-stat.txt 2>/dev/null || echo "Unable to retrieve diff" > /tmp/diff-stat.txt
+          gh pr diff ${{ steps.pr-number.outputs.number }} --name-only > /tmp/changed-files.txt 2>/dev/null || echo "" > /tmp/changed-files.txt
 
       - name: Read format instructions
         run: |
@@ -132,7 +161,7 @@ jobs:
             const update = {
               owner: context.repo.owner,
               repo: context.repo.repo,
-              pull_number: context.payload.pull_request.number,
+              pull_number: ${{ steps.pr-number.outputs.number }},
               body: summary,
             };
 
@@ -148,4 +177,4 @@ jobs:
     needs: generate-summary
     uses: ./.github/workflows/pr-summary-eval-reusable.yml
     with:
-      pr-number: ${{ github.event.pull_request.number }}
+      pr-number: ${{ needs.generate-summary.outputs.pr-number }}
