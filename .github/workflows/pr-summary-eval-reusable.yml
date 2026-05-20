@@ -1,0 +1,101 @@
+name: Evaluate PR Summary
+
+on:
+  workflow_call:
+    inputs:
+      pr-number:
+        required: true
+        type: number
+
+permissions:
+  pull-requests: write
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch current PR body
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: ${{ inputs.pr-number }},
+            });
+            const fs = require('fs');
+            fs.writeFileSync('/tmp/pr-body.txt', pr.body || '');
+
+      - name: Evaluate PR summary format
+        run: |
+          set +e
+          export PR_BODY="$(cat /tmp/pr-body.txt)"
+          node .github/scripts/eval-pr-summary.js > eval-result.json 2>&1
+          echo "Eval exit code: $?"
+
+      - name: Post evaluation comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let result;
+            try {
+              result = JSON.parse(fs.readFileSync('eval-result.json', 'utf8'));
+            } catch (e) {
+              result = { score: 0, maxScore: 100, pass: false, feedback: 'Could not parse eval results.', results: [] };
+            }
+
+            const icon = result.pass ? '✅' : '⚠️';
+            const status = result.pass ? 'PASS' : 'NEEDS IMPROVEMENT';
+
+            let body = `## ${icon} PR Summary Format Eval: ${status}\n\n`;
+            body += `**Score:** ${result.score}/${result.maxScore}\n\n`;
+            body += `${result.feedback}\n\n`;
+
+            if (result.results && result.results.length > 0) {
+              body += `### Criteria Breakdown\n\n`;
+              body += `| Criterion | Status | Points |\n`;
+              body += `|-----------|--------|--------|\n`;
+              for (const r of result.results) {
+                const checkmark = r.passed ? '✅' : '❌';
+                body += `| ${r.name} | ${checkmark} | ${r.earned}/${r.weight} |\n`;
+              }
+            }
+
+            body += `\n---\n*Format reference: [.github/copilot-instructions.md](.github/copilot-instructions.md)*`;
+
+            const comments = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ inputs.pr-number }},
+            });
+
+            const marker = '## ✅ PR Summary Format Eval';
+            const markerAlt = '## ⚠️ PR Summary Format Eval';
+            const existing = comments.data.find(c =>
+              c.body.startsWith(marker) || c.body.startsWith(markerAlt)
+            );
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: ${{ inputs.pr-number }},
+                body,
+              });
+            }
