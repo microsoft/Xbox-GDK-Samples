@@ -91,6 +91,23 @@ namespace ATG
 
     WASAPIManager::~WASAPIManager()
     {
+        // Tear down the persistent render stream and worker thread.
+        m_playingSound = false;
+        if (m_sampleReadyEvent && m_sampleReadyEvent != INVALID_HANDLE_VALUE)
+        {
+            SetEvent(m_sampleReadyEvent);   // wake the worker so it can exit promptly
+        }
+        if (m_renderWorkThread)
+        {
+            WaitForSingleObject(m_renderWorkThread, 2000);
+            CloseHandle(m_renderWorkThread);
+            m_renderWorkThread = nullptr;
+        }
+        if (m_AudioClient)
+        {
+            m_AudioClient->Stop();
+        }
+
         if (INVALID_HANDLE_VALUE != m_sampleReadyEvent)
         {
             CloseHandle(m_sampleReadyEvent);
@@ -250,6 +267,20 @@ namespace ATG
 
         m_state = DeviceState::DeviceStateInitialized;
 
+        // Start the render stream immediately and keep it running for the lifetime of the
+        // device. Idle time renders silence and playback simply installs a sample generator.
+        // Keeping the WASAPI stream continuously running (like the XAudio2 path's mastering
+        // voice) avoids the actuator "click" that occurs every time the stream is started or
+        // stopped.
+        m_playingSound = true;
+        hr = StartDevice();
+        if (FAILED(hr))
+        {
+            m_state = DeviceState::DeviceStateInError;
+            return hr;
+        }
+        m_renderWorkThread = CreateThread(nullptr, 0, RenderWorkCallback, this, 0, nullptr);
+
         return hr;
     }
 
@@ -299,52 +330,47 @@ namespace ATG
 
     //--------------------------------------------------------------------------------------
     //  Name: Play
-    //  Desc: Initialize and start playback
+    //  Desc: Begin playback of the currently configured sample generator. The render stream
+    //        itself runs continuously (started in InitializeDevice); this only marks a clip
+    //        as active so the worker renders its data instead of silence.
     //--------------------------------------------------------------------------------------
     HRESULT WASAPIManager::Play()
     {
-        // we are already playing or we don't have a sample generator, bail out
-        if (m_state == DeviceState::DeviceStatePlaying)
-        {
-            return S_OK;
-        }
-
         if (m_currentGenerator == nullptr)
         {
             return E_FAIL;
         }
 
-        HRESULT hr = AUDCLNT_E_DEVICE_INVALIDATED;
+        HRESULT hr = S_OK;
 
-        while (AUDCLNT_E_UNSUPPORTED_FORMAT == hr ||
-            AUDCLNT_E_RESOURCES_INVALIDATED == hr ||
-            AUDCLNT_E_DEVICE_INVALIDATED == hr ||
-            AUDCLNT_E_ENDPOINT_CREATE_FAILED == hr)
+        // Recover the persistent stream/worker if a previous error tore them down.
+        if (!m_playingSound || m_renderWorkThread == nullptr)
         {
-            // Any of these errors can occur when a title becomes unconstrained and the renderer is not ready
-            // Once the IMMDevice is obtained, it could possibly be invalidated at any time
-            // Retry initialization until it is successful or hits a different error
-
-            hr = StartDevice();
-
-            // Give the device time to finish processing an invalidation
-            if (FAILED(hr))
+            hr = AUDCLNT_E_DEVICE_INVALIDATED;
+            while (AUDCLNT_E_UNSUPPORTED_FORMAT == hr ||
+                AUDCLNT_E_RESOURCES_INVALIDATED == hr ||
+                AUDCLNT_E_DEVICE_INVALIDATED == hr ||
+                AUDCLNT_E_ENDPOINT_CREATE_FAILED == hr)
             {
-                Sleep(50);
-            }
+                hr = StartDevice();
 
-            // Create a new render thread if the previous one went away due to an error
-            // or this is the first time calling play
-            if (SUCCEEDED(hr) && !m_playingSound)
-            {
-                if (m_renderWorkThread)
+                if (FAILED(hr))
                 {
-                    m_renderWorkThread = nullptr;
+                    Sleep(50);
                 }
 
-                m_playingSound = true;
-                m_renderWorkThread = CreateThread(nullptr, 0, RenderWorkCallback, this, 0, nullptr);
+                if (SUCCEEDED(hr) && !m_playingSound)
+                {
+                    m_playingSound = true;
+                    m_renderWorkThread = CreateThread(nullptr, 0, RenderWorkCallback, this, 0, nullptr);
+                }
             }
+        }
+
+        if (SUCCEEDED(hr))
+        {
+            m_state = DeviceState::DeviceStatePlaying;
+            m_clipActive = true;
         }
 
         return hr;
@@ -394,10 +420,35 @@ namespace ATG
                 }
                 else
                 {
-                    if (m_state == DeviceState::DeviceStatePlaying)
+                    if (m_clipActive.load() && m_currentGenerator && !m_currentGenerator->IsEOF())
                     {
                         // Fill the buffer with a playback sample
                         hr = GetSample(framesAvailable);
+                    }
+                    else
+                    {
+                        // If a clip was active but its generator is now exhausted, the clip has
+                        // finished: clear the active flag and release the generator so IsPlaying()
+                        // reports false (re-enabling the Play buttons).
+                        if (m_clipActive.load())
+                        {
+                            m_clipActive = false;
+                            if (m_waveGenerator)
+                            {
+                                m_waveGenerator->Flush();
+                            }
+                            m_currentGenerator = nullptr;
+                            m_waveGenerator = nullptr;
+                        }
+
+                        // Idle (no active clip): render silence so the stream keeps running
+                        // without stopping the device, avoiding start/stop actuator clicks.
+                        BYTE* pData;
+                        hr = m_audioRenderClient->GetBuffer(framesAvailable, &pData);
+                        if (SUCCEEDED(hr))
+                        {
+                            hr = m_audioRenderClient->ReleaseBuffer(framesAvailable, AUDCLNT_BUFFERFLAGS_SILENT);
+                        }
                     }
                 }
             }
@@ -429,7 +480,11 @@ namespace ATG
                 hr = m_audioRenderClient->ReleaseBuffer(FramesAvailable, AUDCLNT_BUFFERFLAGS_SILENT);
             }
 
-            Stop();
+            // Clip finished: mark inactive and release the generator, but keep the stream
+            // running (rendering silence) so the device is not stopped/started.
+            m_clipActive = false;
+            m_currentGenerator = nullptr;
+            m_waveGenerator = nullptr;
         }
         else if (bufferLength <= (FramesAvailable * m_MixFormat->nBlockAlign))
         {
@@ -452,31 +507,23 @@ namespace ATG
 
     //--------------------------------------------------------------------------------------
     //  Name:   Stop
-    //  Desc:   Stop playback, if WASAPI renderer exists
+    //  Desc:   Stop feeding clip data. The render stream keeps running (rendering silence)
+    //          so the device is never stopped, which prevents the actuator from clicking on
+    //          the next play.
     //--------------------------------------------------------------------------------------
     HRESULT WASAPIManager::Stop()
     {
-        if (m_state != DeviceState::DeviceStateUnInitialized &&
-            m_state != DeviceState::DeviceStateInError)
+        EnterCriticalSection(&m_CritSec);
+
+        m_clipActive = false;
+        if (m_waveGenerator)
         {
-            if (m_playingSound)
-            {
-                m_playingSound = false;
-            }
-
-            // Flush anything left in buffer with silence
-            OnAudioSampleRequested(true);
-
-            m_state = DeviceState::DeviceStateStopped;
-
-            // Flush remaining buffers
-            if (m_currentGenerator)
-            {
-                m_currentGenerator->Flush();
-            }
-
-            return m_AudioClient->Stop();
+            m_waveGenerator->Flush();
         }
+        m_currentGenerator = nullptr;
+        m_waveGenerator = nullptr;
+
+        LeaveCriticalSection(&m_CritSec);
 
         return S_OK;
     }
@@ -570,7 +617,11 @@ namespace ATG
             return hr;
         }
 
+        // Swap in the new generator under the lock so the render thread never observes a
+        // half-updated generator.
+        EnterCriticalSection(&m_CritSec);
         m_currentGenerator = m_waveGenerator;
+        LeaveCriticalSection(&m_CritSec);
         return hr;
     }
 }
