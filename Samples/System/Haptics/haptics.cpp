@@ -202,16 +202,31 @@ void Sample_Draw(float uiScale)
 
                 ImGui::Dummy(ImVec2(0, 20));
 
-                ImGui::BeginDisabled(hapticsDevice->IsPlaying());
-                    if(ImGui::Button("Play WASAPI (L1)", ImVec2(160*uiScale, 50*uiScale)) || IsButtonPressed(state.buttons, context.lastGamepadState.buttons, GameInputGamepadButtons::GameInputGamepadLeftShoulder))
+                const bool isPlaying = hapticsDevice->IsPlaying();
+
+                ImGui::BeginDisabled(isPlaying);
+                    // Always draw the buttons (ImGui requires the call every frame), but gate the
+                    // resulting action on !isPlaying. ImGui::BeginDisabled only blocks new mouse/Tab
+                    // focus; it does NOT block keyboard Space/Enter on an item that already had focus,
+                    // and it does not affect the "|| IsButtonPressed(...)" gamepad shortcut at all.
+                    // Gating the action closes both gaps so a clip cannot be restarted (or the other
+                    // engine started) mid-play, and SetWindowFocus(nullptr) drops focus so the
+                    // disabled button does not keep showing a pressed animation when Space is held.
+                    const bool wasapiPressed = ImGui::Button("Play WASAPI (L1)", ImVec2(160*uiScale, 50*uiScale))
+                        || IsButtonPressed(state.buttons, context.lastGamepadState.buttons, GameInputGamepadButtons::GameInputGamepadLeftShoulder);
+                    if(!isPlaying && wasapiPressed)
                     {
                         hapticsDevice->PlayWAVFile(context.mediaItem.filename.c_str(), HapticPlaybackEngine::WASAPI);
+                        ImGui::SetWindowFocus(nullptr);
                     }
                     ImGui::SameLine();
 
-                    if(ImGui::Button("Play XAudio2 (R1)", ImVec2(160*uiScale, 50*uiScale)) || IsButtonPressed(state.buttons, context.lastGamepadState.buttons, GameInputGamepadButtons::GameInputGamepadRightShoulder))
+                    const bool xaudioPressed = ImGui::Button("Play XAudio2 (R1)", ImVec2(160*uiScale, 50*uiScale))
+                        || IsButtonPressed(state.buttons, context.lastGamepadState.buttons, GameInputGamepadButtons::GameInputGamepadRightShoulder);
+                    if(!isPlaying && xaudioPressed)
                     {
                         hapticsDevice->PlayWAVFile(context.mediaItem.filename.c_str(), HapticPlaybackEngine::XAudio2);
+                        ImGui::SetWindowFocus(nullptr);
                     }
                 ImGui::EndDisabled();
 
