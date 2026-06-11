@@ -25,11 +25,15 @@ jobs:
     steps:
       - name: Determine PR number
         id: pr-number
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
         run: |
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            echo "number=${{ github.event.pull_request.number }}" >> "$GITHUB_OUTPUT"
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            echo "number=$PR_NUMBER" >> "$GITHUB_OUTPUT"
           else
-            echo "number=${{ github.event.issue.number }}" >> "$GITHUB_OUTPUT"
+            echo "number=$ISSUE_NUMBER" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Checkout
@@ -52,9 +56,10 @@ jobs:
       - name: Get PR diff summary
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ steps.pr-number.outputs.number }}
         run: |
-          gh pr diff ${{ steps.pr-number.outputs.number }} --stat > /tmp/diff-stat.txt 2>/dev/null || echo "Unable to retrieve diff" > /tmp/diff-stat.txt
-          gh pr diff ${{ steps.pr-number.outputs.number }} --name-only > /tmp/changed-files.txt 2>/dev/null || echo "" > /tmp/changed-files.txt
+          gh pr diff "$PR_NUMBER" --stat > /tmp/diff-stat.txt 2>/dev/null || echo "Unable to retrieve diff" > /tmp/diff-stat.txt
+          gh pr diff "$PR_NUMBER" --name-only > /tmp/changed-files.txt 2>/dev/null || echo "" > /tmp/changed-files.txt
 
       - name: Read format instructions
         run: |
@@ -152,16 +157,19 @@ jobs:
       - name: Update PR title and description
         if: steps.generate.outputs.summary != ''
         uses: actions/github-script@v7
+        env:
+          PR_TITLE: ${{ steps.generate.outputs.title }}
+          PR_NUMBER: ${{ steps.pr-number.outputs.number }}
         with:
           script: |
             const fs = require('fs');
             const summary = fs.readFileSync('/tmp/pr-summary.md', 'utf8');
-            const title = '${{ steps.generate.outputs.title }}';
+            const title = process.env.PR_TITLE || '';
 
             const update = {
               owner: context.repo.owner,
               repo: context.repo.repo,
-              pull_number: ${{ steps.pr-number.outputs.number }},
+              pull_number: parseInt(process.env.PR_NUMBER, 10),
               body: summary,
             };
 

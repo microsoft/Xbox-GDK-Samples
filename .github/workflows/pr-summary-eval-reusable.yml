@@ -24,12 +24,14 @@ jobs:
 
       - name: Fetch current PR body
         uses: actions/github-script@v7
+        env:
+          PR_NUMBER: ${{ inputs.pr-number }}
         with:
           script: |
             const { data: pr } = await github.rest.pulls.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              pull_number: ${{ inputs.pr-number }},
+              pull_number: parseInt(process.env.PR_NUMBER, 10),
             });
             const fs = require('fs');
             fs.writeFileSync('/tmp/pr-body.txt', pr.body || '');
@@ -43,9 +45,12 @@ jobs:
 
       - name: Post evaluation comment
         uses: actions/github-script@v7
+        env:
+          PR_NUMBER: ${{ inputs.pr-number }}
         with:
           script: |
             const fs = require('fs');
+            const prNumber = parseInt(process.env.PR_NUMBER, 10);
             let result;
             try {
               result = JSON.parse(fs.readFileSync('eval-result.json', 'utf8'));
@@ -75,7 +80,7 @@ jobs:
             const comments = await github.rest.issues.listComments({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: ${{ inputs.pr-number }},
+              issue_number: prNumber,
             });
 
             const marker = '## ✅ PR Summary Format Eval';
@@ -95,7 +100,7 @@ jobs:
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                issue_number: ${{ inputs.pr-number }},
+                issue_number: prNumber,
                 body,
               });
             }
