@@ -1,0 +1,79 @@
+{
+  "includes":
+  [
+    "Assets/Layouts/Definitions.json",
+    "Assets/Layouts/Styles.json"
+  ],
+  "layout":
+  {
+    "id": "RuntimeBackgroundPanel",
+    "classId": "Panel",
+    "styleId": "background_panel_style",
+    "panel":
+    {
+      "positioningAnchor": [ "left", "top" ],
+      "position": [ 0, 0 ],
+      "sizingAnchor": [ "left", "top" ],
+      "size": "#fullscreen"
+    },
+    "childElements":
+    [
+      {
+        "classId": "StaticText",
+        "id": "RuntimeExeText",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "text": "Exe.exe Commandline Commandline Commandline",
+        "styleId": "label_text_style",
+        "size": [1880, 48],
+        "position": [28, 10]
+      },
+      {
+        "classId": "StaticText",
+        "id": "RuntimeWorkingDirectoryText",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "text": "Working Directory: d:\\path\\path\\path",
+        "styleId": "label_text_style",
+        "size": [1880, 48],
+        "position": [28, 46]
+      },
+      {
+        "classId": "StaticText",
+        "id": "RuntimeButtonPromptText",
+        "positioningAnchor": [ "center", "top" ],
+        "sizingAnchor": [ "center", "top" ],
+        "text": "[DPad]Up/[DPad]Down: Scroll Log   [LB]/[RB]: Page Scroll Log   [Y]: Toggle Auto-Scroll (Currently Enabled)   Hold [B]: Terminate Process",
+        "isLegend": true,
+        "styleId": "label_text_style_centered",
+        "size": [1880, 48],
+        "position": [20, 1018]
+      },
+      {
+        "id": "RuntimeLogColorBackgroundPanel",
+        "classId": "Panel",
+        "styleId": "border_panel_style",
+        "panel":
+        {
+          "positioningAnchor": [ "left", "top" ],
+          "size": [ 1880, 936 ],
+          "position": [20, 82],
+          "sizingAnchor": [ "left", "top" ]
+        },
+        "childElements":
+        [
+          {
+            "classId": "VerticalStackPanel",
+            "id": "RuntimeLogVerticalStack",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 1880, 936 ],
+            "position": [0, 0],
+            "styleId": "invisible_panel_style",
+            "stackingOrientation": "down"
+          }
+        ]
+      }
+    ]
+  }
+}

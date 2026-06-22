@@ -1,0 +1,1431 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>fe58a5d7-33fb-4f84-9027-c10bdbb34301</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>cb5339c9-e9d2-4c3a-b0c8-39fe0c7069e1</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>2490b548-445b-4bdd-92c5-690c04c67036</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{51f7d6a4-7ddd-4a6a-ac79-aab18a865ee8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Benchmarks">
+      <UniqueIdentifier>{9aba547f-305c-4d8c-8541-b1abc15eec43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{70f12d7c-6836-4bbe-82ca-351e70706a99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Aniso">
+      <UniqueIdentifier>{7642de3a-28d6-4593-bb1d-e6ec50c81179}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Buffer">
+      <UniqueIdentifier>{20d37299-e475-47c5-96c4-4873d536d600}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Compute">
+      <UniqueIdentifier>{0e6e6ce4-f8cb-47cf-b901-e812f3e76f98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Cubemap">
+      <UniqueIdentifier>{8a1eca1c-9988-445e-afba-fe2d191b44fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Dcc">
+      <UniqueIdentifier>{ad786a08-368e-41fa-8a36-9e4fc5dfff28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Depth">
+      <UniqueIdentifier>{be4e4546-6a2a-49f3-9f2b-de0099da7d3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\DepthTile">
+      <UniqueIdentifier>{b21ced1c-afc0-4b2e-bd15-daa26f5ab550}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\General">
+      <UniqueIdentifier>{7ca1729c-e8be-4d00-88f0-e015638d2257}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Memory">
+      <UniqueIdentifier>{372de8da-e391-4184-a941-609d0fbfd355}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Pixel">
+      <UniqueIdentifier>{8b5e6799-a9c4-4eef-88ca-4cffa4128e85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Primitive">
+      <UniqueIdentifier>{53bec814-8eb2-4abc-8697-f0de1fbe120e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Sample">
+      <UniqueIdentifier>{1aae33c7-7fef-4cfd-99c1-d0f71bc4f897}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\TcCompat">
+      <UniqueIdentifier>{4311b855-700a-4ce0-bc8c-59f72dd7e7ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Texture">
+      <UniqueIdentifier>{7d0afe55-aec7-4a11-8cd0-f36633afe168}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Trijuicing">
+      <UniqueIdentifier>{60317062-cf2f-4169-803b-fc71cde3677c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Vertex">
+      <UniqueIdentifier>{cb3d3aaa-09ce-4ccc-9e7f-e6ba705033f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Vrs">
+      <UniqueIdentifier>{c685aacc-73e0-4d35-bc7c-b7e5c1848f85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\LaunchRateCs">
+      <UniqueIdentifier>{1bd0999b-de78-4a4c-b3d7-75e7dd502bd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\LaunchRateMs">
+      <UniqueIdentifier>{6273beef-de1b-493b-b25c-997205c13a17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\LaunchRatePs">
+      <UniqueIdentifier>{5dcf06af-47dd-4464-afb0-72f520a6bbc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\SwizzleMode">
+      <UniqueIdentifier>{613a268f-b14e-4d02-a973-e570aa46aeef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Parameter">
+      <UniqueIdentifier>{4011a4bb-e3e2-45d0-973c-93bd1d4d2eab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Decompress">
+      <UniqueIdentifier>{46cc556b-b2dc-4e71-b624-b9a5a6ff3c4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>{b4e07646-9856-4a53-8b08-ca555602acf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\NvPerf-2025.1.1">
+      <UniqueIdentifier>{c824b095-682e-49ce-9706-3d2aaee012c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\NvPerf-2025.1.1\bin">
+      <UniqueIdentifier>{dffb0ad6-3c4b-4bcc-9c7e-638df36f29e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\NvPerf-2025.1.1\include">
+      <UniqueIdentifier>{ffcb1fec-bb0b-4b2e-b670-ab5d6b432f5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\NvPerf-2025.1.1\bin\x64">
+      <UniqueIdentifier>{58bed020-bb13-40fb-99e8-423b5097db59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\GPUPerfAPI-4.0.0.39">
+      <UniqueIdentifier>{025ab478-2ccb-4270-aa05-b98b69998be0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\GPUPerfAPI-4.0.0.39\4_0">
+      <UniqueIdentifier>{01c07c6e-6b2c-4f79-90ae-d5db17b7a99c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\GPUPerfAPI-4.0.0.39\4_0\bin">
+      <UniqueIdentifier>{7ffa4387-4e67-4e2c-9882-ebfcc743e7e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\GPUPerfAPI-4.0.0.39\4_0\include">
+      <UniqueIdentifier>{86498ebc-7bb0-4368-aaf2-038bece11def}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\GPUPerfAPI-4.0.0.39\4_0\include\gpu_performance_api">
+      <UniqueIdentifier>{bb8ae667-73f6-4e4a-bb1d-9a576be2f0a7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="GpuBench.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\Json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="Benchmark.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GpuCounter.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GpuCounterSet.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GpuCounterSetDurango.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GpuCounterType.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GpuMemory.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GpuProperties.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Report.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Test.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Util.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\PerformanceTimersXbox.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ReadData.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="ID3D12XboxCounterSet.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Capture.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\PerformanceTimers.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="External\NvPerf-2025.1.1\include\nvperf_common.h">
+      <Filter>External\NvPerf-2025.1.1\include</Filter>
+    </ClInclude>
+    <ClInclude Include="External\NvPerf-2025.1.1\include\nvperf_d3d12_host.h">
+      <Filter>External\NvPerf-2025.1.1\include</Filter>
+    </ClInclude>
+    <ClInclude Include="External\NvPerf-2025.1.1\include\nvperf_d3d12_target.h">
+      <Filter>External\NvPerf-2025.1.1\include</Filter>
+    </ClInclude>
+    <ClInclude Include="External\NvPerf-2025.1.1\include\nvperf_host.h">
+      <Filter>External\NvPerf-2025.1.1\include</Filter>
+    </ClInclude>
+    <ClInclude Include="External\NvPerf-2025.1.1\include\nvperf_target.h">
+      <Filter>External\NvPerf-2025.1.1\include</Filter>
+    </ClInclude>
+    <ClInclude Include="External\NvPerf-2025.1.1\include\nvperf_versions_target.h">
+      <Filter>External\NvPerf-2025.1.1\include</Filter>
+    </ClInclude>
+    <ClInclude Include="External\GPUPerfAPI-4.0.0.39\4_0\include\gpu_performance_api\gpu_perf_api.h">
+      <Filter>External\GPUPerfAPI-4.0.0.39\4_0\include\gpu_performance_api</Filter>
+    </ClInclude>
+    <ClInclude Include="External\GPUPerfAPI-4.0.0.39\4_0\include\gpu_performance_api\gpu_perf_api_counters.h">
+      <Filter>External\GPUPerfAPI-4.0.0.39\4_0\include\gpu_performance_api</Filter>
+    </ClInclude>
+    <ClInclude Include="External\GPUPerfAPI-4.0.0.39\4_0\include\gpu_performance_api\gpu_perf_api_function_types.h">
+      <Filter>External\GPUPerfAPI-4.0.0.39\4_0\include\gpu_performance_api</Filter>
+    </ClInclude>
+    <ClInclude Include="External\GPUPerfAPI-4.0.0.39\4_0\include\gpu_performance_api\gpu_perf_api_functions.h">
+      <Filter>External\GPUPerfAPI-4.0.0.39\4_0\include\gpu_performance_api</Filter>
+    </ClInclude>
+    <ClInclude Include="External\GPUPerfAPI-4.0.0.39\4_0\include\gpu_performance_api\gpu_perf_api_interface_loader.h">
+      <Filter>External\GPUPerfAPI-4.0.0.39\4_0\include\gpu_performance_api</Filter>
+    </ClInclude>
+    <ClInclude Include="External\GPUPerfAPI-4.0.0.39\4_0\include\gpu_performance_api\gpu_perf_api_stub.h">
+      <Filter>External\GPUPerfAPI-4.0.0.39\4_0\include\gpu_performance_api</Filter>
+    </ClInclude>
+    <ClInclude Include="External\GPUPerfAPI-4.0.0.39\4_0\include\gpu_performance_api\gpu_perf_api_types.h">
+      <Filter>External\GPUPerfAPI-4.0.0.39\4_0\include\gpu_performance_api</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="GpuBench.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmarks\AnisoBenchmark.cpp">
+      <Filter>Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmarks\BufferBenchmark.cpp">
+      <Filter>Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmarks\ComputeBenchmark.cpp">
+      <Filter>Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmarks\CubemapBenchmark.cpp">
+      <Filter>Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmarks\DccBenchmark.cpp">
+      <Filter>Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmarks\DepthBenchmark.cpp">
+      <Filter>Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmarks\DepthTileBenchmark.cpp">
+      <Filter>Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmarks\DmaBenchmark.cpp">
+      <Filter>Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmarks\MemoryBenchmark.cpp">
+      <Filter>Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmarks\PixelBenchmark.cpp">
+      <Filter>Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmarks\PrimitiveBenchmark.cpp">
+      <Filter>Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmarks\SampleBenchmark.cpp">
+      <Filter>Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmarks\TcCompatBenchmark.cpp">
+      <Filter>Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmarks\TextureBenchmark.cpp">
+      <Filter>Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmarks\TrijuicingBenchmark.cpp">
+      <Filter>Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmarks\VertexBenchmark.cpp">
+      <Filter>Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\PerformanceTimersXbox.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmarks\ContentionBenchmark.cpp">
+      <Filter>Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmarks\DrawBenchmark.cpp">
+      <Filter>Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmarks\VrsBenchmark.cpp">
+      <Filter>Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmarks\BarrierBenchmark.cpp">
+      <Filter>Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmarks\LaunchRateCsBenchmark.cpp">
+      <Filter>Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmarks\LaunchRateMsBenchmark.cpp">
+      <Filter>Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmarks\LaunchRatePsBenchmark.cpp">
+      <Filter>Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmarks\LaunchRateAsyncCsBenchmark.cpp">
+      <Filter>Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmarks\SwizzleModeBenchmark.cpp">
+      <Filter>Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmarks\ParameterBenchmark.cpp">
+      <Filter>Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmarks\DecompressBenchmark.cpp">
+      <Filter>Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\PerformanceTimers.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\Aniso10Gs.hlsl">
+      <Filter>Shaders\Aniso</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Aniso15Gs.hlsl">
+      <Filter>Shaders\Aniso</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Aniso20Gs.hlsl">
+      <Filter>Shaders\Aniso</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Aniso25Gs.hlsl">
+      <Filter>Shaders\Aniso</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Aniso30Gs.hlsl">
+      <Filter>Shaders\Aniso</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Aniso35Gs.hlsl">
+      <Filter>Shaders\Aniso</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Aniso40Gs.hlsl">
+      <Filter>Shaders\Aniso</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Aniso45Gs.hlsl">
+      <Filter>Shaders\Aniso</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Aniso50Gs.hlsl">
+      <Filter>Shaders\Aniso</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Aniso55Gs.hlsl">
+      <Filter>Shaders\Aniso</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Aniso60Gs.hlsl">
+      <Filter>Shaders\Aniso</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Aniso65Gs.hlsl">
+      <Filter>Shaders\Aniso</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Aniso70Gs.hlsl">
+      <Filter>Shaders\Aniso</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Aniso75Gs.hlsl">
+      <Filter>Shaders\Aniso</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Aniso80Gs.hlsl">
+      <Filter>Shaders\Aniso</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Aniso90Gs.hlsl">
+      <Filter>Shaders\Aniso</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Aniso100Gs.hlsl">
+      <Filter>Shaders\Aniso</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Aniso110Gs.hlsl">
+      <Filter>Shaders\Aniso</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Aniso120Gs.hlsl">
+      <Filter>Shaders\Aniso</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Aniso130Gs.hlsl">
+      <Filter>Shaders\Aniso</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Aniso140Gs.hlsl">
+      <Filter>Shaders\Aniso</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Aniso150Gs.hlsl">
+      <Filter>Shaders\Aniso</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Aniso160Gs.hlsl">
+      <Filter>Shaders\Aniso</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\AnisoPs.hlsl">
+      <Filter>Shaders\Aniso</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\BufferSmemReadCs.hlsl">
+      <Filter>Shaders\Buffer</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\BufferVmemAtomicCs.hlsl">
+      <Filter>Shaders\Buffer</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\BufferVmemAtomicReturnCs.hlsl">
+      <Filter>Shaders\Buffer</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\BufferVmemRead1xuintCs.hlsl">
+      <Filter>Shaders\Buffer</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\BufferVmemRead2xuintCs.hlsl">
+      <Filter>Shaders\Buffer</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\BufferVmemRead4xuintCs.hlsl">
+      <Filter>Shaders\Buffer</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\BufferVmemWrite1xuint8Cs.hlsl">
+      <Filter>Shaders\Buffer</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\BufferVmemWrite1xuint16Cs.hlsl">
+      <Filter>Shaders\Buffer</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\BufferVmemWrite1xuint32Cs.hlsl">
+      <Filter>Shaders\Buffer</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\BufferVmemWrite2xuint8Cs.hlsl">
+      <Filter>Shaders\Buffer</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\BufferVmemWrite2xuint16Cs.hlsl">
+      <Filter>Shaders\Buffer</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\BufferVmemWrite2xuint32Cs.hlsl">
+      <Filter>Shaders\Buffer</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\BufferVmemWrite4xuint8Cs.hlsl">
+      <Filter>Shaders\Buffer</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\BufferVmemWrite4xuint16Cs.hlsl">
+      <Filter>Shaders\Buffer</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\BufferVmemWrite4xuint32Cs.hlsl">
+      <Filter>Shaders\Buffer</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\ComputeDoubleAddCs.hlsl">
+      <Filter>Shaders\Compute</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\ComputeDoubleArithmeticCs.hlsl">
+      <Filter>Shaders\Compute</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\ComputeFloatArithmeticCs.hlsl">
+      <Filter>Shaders\Compute</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\ComputeFloatSinCs.hlsl">
+      <Filter>Shaders\Compute</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\ComputeFloatTranscendentalCs.hlsl">
+      <Filter>Shaders\Compute</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\ComputeIntArithmeticCs.hlsl">
+      <Filter>Shaders\Compute</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\ComputeIntDivCs.hlsl">
+      <Filter>Shaders\Compute</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\ComputeIntMulCs.hlsl">
+      <Filter>Shaders\Compute</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\ComputeScalarCs.hlsl">
+      <Filter>Shaders\Compute</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\CubemapCornerGs.hlsl">
+      <Filter>Shaders\Cubemap</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\CubemapEdgeGs.hlsl">
+      <Filter>Shaders\Cubemap</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\CubemapFaceGs.hlsl">
+      <Filter>Shaders\Cubemap</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\CubemapPs.hlsl">
+      <Filter>Shaders\Cubemap</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\DccWriteRtPs.hlsl">
+      <Filter>Shaders\Dcc</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\DepthGs.hlsl">
+      <Filter>Shaders\Depth</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\DepthLateZPs.hlsl">
+      <Filter>Shaders\Depth</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\DepthPs.hlsl">
+      <Filter>Shaders\Depth</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\DepthTileReadSrCs.hlsl">
+      <Filter>Shaders\DepthTile</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\FullScreenGs.hlsl">
+      <Filter>Shaders\General</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\NullVs.hlsl">
+      <Filter>Shaders\General</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\MemoryCs.hlsl">
+      <Filter>Shaders\Memory</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\MemoryWriteRtPs.hlsl">
+      <Filter>Shaders\Memory</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Pixel1xfloat4Ps.hlsl">
+      <Filter>Shaders\Pixel</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Pixel1xuint4Ps.hlsl">
+      <Filter>Shaders\Pixel</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Pixel2xfloat4Ps.hlsl">
+      <Filter>Shaders\Pixel</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Pixel2xuint4Ps.hlsl">
+      <Filter>Shaders\Pixel</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Pixel3xfloat4Ps.hlsl">
+      <Filter>Shaders\Pixel</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Pixel3xuint4Ps.hlsl">
+      <Filter>Shaders\Pixel</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Pixel4xfloat4Ps.hlsl">
+      <Filter>Shaders\Pixel</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Pixel4xuint4Ps.hlsl">
+      <Filter>Shaders\Pixel</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Pixel5xfloat4Ps.hlsl">
+      <Filter>Shaders\Pixel</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Pixel5xuint4Ps.hlsl">
+      <Filter>Shaders\Pixel</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Pixel6xfloat4Ps.hlsl">
+      <Filter>Shaders\Pixel</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Pixel6xuint4Ps.hlsl">
+      <Filter>Shaders\Pixel</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Pixel7xfloat4Ps.hlsl">
+      <Filter>Shaders\Pixel</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Pixel7xuint4Ps.hlsl">
+      <Filter>Shaders\Pixel</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Pixel8xfloat4Ps.hlsl">
+      <Filter>Shaders\Pixel</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Pixel8xuint4Ps.hlsl">
+      <Filter>Shaders\Pixel</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PixelDiscardPs.hlsl">
+      <Filter>Shaders\Pixel</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PrimitiveVs.hlsl">
+      <Filter>Shaders\Primitive</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Sample_Texture1DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Sample_Texture2DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Sample_Texture3DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Sample_TextureCubePs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleBias_Texture1DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleBias_Texture2DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleBias_Texture3DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleBias_TextureCubePs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleBiasOffset_Texture1DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleBiasOffset_Texture2DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleBiasOffset_Texture3DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleClamp_Texture1DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleClamp_Texture2DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleClamp_Texture3DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleCmp_Texture1DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleCmp_Texture2DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleCmp_TextureCubePs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleCmpLevelZero_Texture1DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleCmpLevelZero_Texture2DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleCmpLevelZero_TextureCubePs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleGrad_Texture1DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleGrad_Texture2DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleGrad_Texture3DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleGrad_TextureCubePs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleGradClamp_Texture1DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleGradClamp_Texture2DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleGradClamp_Texture3DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleGradClamp_TextureCubePs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleGs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleLevel_Texture1DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleLevel_Texture2DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleLevel_Texture3DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleLevel_TextureCubePs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleOffset_Texture1DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleOffset_Texture2DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleOffset_Texture3DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleStatus_Texture1DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleStatus_Texture2DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleStatus_Texture3DPs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleStatus_TextureCubePs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Texture1LoadPs.hlsl">
+      <Filter>Shaders\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Texture1SamplePs.hlsl">
+      <Filter>Shaders\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Texture2LoadPs.hlsl">
+      <Filter>Shaders\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Texture2SamplePs.hlsl">
+      <Filter>Shaders\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Texture4LoadPs.hlsl">
+      <Filter>Shaders\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Texture4SamplePs.hlsl">
+      <Filter>Shaders\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TextureAniso2Gs.hlsl">
+      <Filter>Shaders\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TextureAniso4Gs.hlsl">
+      <Filter>Shaders\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TextureAniso6Gs.hlsl">
+      <Filter>Shaders\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TextureAniso8Gs.hlsl">
+      <Filter>Shaders\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TextureAniso10Gs.hlsl">
+      <Filter>Shaders\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TextureAniso12Gs.hlsl">
+      <Filter>Shaders\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TextureAniso14Gs.hlsl">
+      <Filter>Shaders\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TextureAniso16Gs.hlsl">
+      <Filter>Shaders\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TextureTrilinearGs.hlsl">
+      <Filter>Shaders\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Trijuicing000Gs.hlsl">
+      <Filter>Shaders\Trijuicing</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Trijuicing010Gs.hlsl">
+      <Filter>Shaders\Trijuicing</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Trijuicing020Gs.hlsl">
+      <Filter>Shaders\Trijuicing</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Trijuicing025Gs.hlsl">
+      <Filter>Shaders\Trijuicing</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Trijuicing030Gs.hlsl">
+      <Filter>Shaders\Trijuicing</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Trijuicing040Gs.hlsl">
+      <Filter>Shaders\Trijuicing</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Trijuicing050Gs.hlsl">
+      <Filter>Shaders\Trijuicing</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Trijuicing060Gs.hlsl">
+      <Filter>Shaders\Trijuicing</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Trijuicing070Gs.hlsl">
+      <Filter>Shaders\Trijuicing</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Trijuicing075Gs.hlsl">
+      <Filter>Shaders\Trijuicing</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Trijuicing080Gs.hlsl">
+      <Filter>Shaders\Trijuicing</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Trijuicing090Gs.hlsl">
+      <Filter>Shaders\Trijuicing</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Trijuicing100Gs.hlsl">
+      <Filter>Shaders\Trijuicing</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TrijuicingPs.hlsl">
+      <Filter>Shaders\Trijuicing</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\VertexVs.hlsl">
+      <Filter>Shaders\Vertex</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\ComputeFloatArithTransCs.hlsl">
+      <Filter>Shaders\Compute</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\VrsPs.hlsl">
+      <Filter>Shaders\Vrs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Vrs1x1Gs.hlsl">
+      <Filter>Shaders\Vrs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Vrs1x2Gs.hlsl">
+      <Filter>Shaders\Vrs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Vrs2x1Gs.hlsl">
+      <Filter>Shaders\Vrs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Vrs2x2Gs.hlsl">
+      <Filter>Shaders\Vrs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TcCompatSrvCoherentPs.hlsl">
+      <Filter>Shaders\TcCompat</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TcCompatSrvScatteredPs.hlsl">
+      <Filter>Shaders\TcCompat</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TcCompatUavScatteredCs.hlsl">
+      <Filter>Shaders\TcCompat</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TcCompatUavCoherentCs.hlsl">
+      <Filter>Shaders\TcCompat</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SampleClamp_TextureCubePs.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Texture1LoadD16Ps.hlsl">
+      <Filter>Shaders\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Texture1SampleD16Ps.hlsl">
+      <Filter>Shaders\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Texture2LoadD16Ps.hlsl">
+      <Filter>Shaders\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Texture2SampleD16Ps.hlsl">
+      <Filter>Shaders\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Texture4LoadD16Ps.hlsl">
+      <Filter>Shaders\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Texture4SampleD16Ps.hlsl">
+      <Filter>Shaders\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Texture1GatherPs.hlsl">
+      <Filter>Shaders\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Texture2GatherPs.hlsl">
+      <Filter>Shaders\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Texture4GatherPs.hlsl">
+      <Filter>Shaders\Texture</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\ComputeHalfArithmeticCs.hlsl">
+      <Filter>Shaders\Compute</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\ComputeShortMulCs.hlsl">
+      <Filter>Shaders\Compute</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRateCsWave32Tg1Vgpr1Cs.hlsl">
+      <Filter>Shaders\LaunchRateCs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRateCsWave32Tg1Vgpr2Cs.hlsl">
+      <Filter>Shaders\LaunchRateCs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRateCsWave32Tg1Vgpr3Cs.hlsl">
+      <Filter>Shaders\LaunchRateCs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRateCsWave32Tg2Vgpr1Cs.hlsl">
+      <Filter>Shaders\LaunchRateCs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRateCsWave32Tg2Vgpr2Cs.hlsl">
+      <Filter>Shaders\LaunchRateCs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRateCsWave32Tg2Vgpr3Cs.hlsl">
+      <Filter>Shaders\LaunchRateCs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRateCsWave32Tg4Vgpr1Cs.hlsl">
+      <Filter>Shaders\LaunchRateCs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRateCsWave32Tg4Vgpr2Cs.hlsl">
+      <Filter>Shaders\LaunchRateCs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRateCsWave32Tg4Vgpr3Cs.hlsl">
+      <Filter>Shaders\LaunchRateCs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRateCsWave64Tg1Vgpr1Cs.hlsl">
+      <Filter>Shaders\LaunchRateCs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRateCsWave64Tg1Vgpr2Cs.hlsl">
+      <Filter>Shaders\LaunchRateCs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRateCsWave64Tg1Vgpr3Cs.hlsl">
+      <Filter>Shaders\LaunchRateCs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRateCsWave64Tg2Vgpr1Cs.hlsl">
+      <Filter>Shaders\LaunchRateCs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRateCsWave64Tg2Vgpr2Cs.hlsl">
+      <Filter>Shaders\LaunchRateCs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRateCsWave64Tg2Vgpr3Cs.hlsl">
+      <Filter>Shaders\LaunchRateCs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRatePsWave32Vgpr2Ps.hlsl">
+      <Filter>Shaders\LaunchRatePs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRatePsWave32Vgpr3Ps.hlsl">
+      <Filter>Shaders\LaunchRatePs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRatePsWave32Vgpr4Ps.hlsl">
+      <Filter>Shaders\LaunchRatePs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRatePsWave32Vgpr5Ps.hlsl">
+      <Filter>Shaders\LaunchRatePs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRatePsWave32Vgpr6Ps.hlsl">
+      <Filter>Shaders\LaunchRatePs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRatePsWave32Vgpr7Ps.hlsl">
+      <Filter>Shaders\LaunchRatePs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRatePsWave64Vgpr2Ps.hlsl">
+      <Filter>Shaders\LaunchRatePs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRatePsWave64Vgpr3Ps.hlsl">
+      <Filter>Shaders\LaunchRatePs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRatePsWave64Vgpr4Ps.hlsl">
+      <Filter>Shaders\LaunchRatePs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRatePsWave64Vgpr5Ps.hlsl">
+      <Filter>Shaders\LaunchRatePs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRatePsWave64Vgpr6Ps.hlsl">
+      <Filter>Shaders\LaunchRatePs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRatePsWave64Vgpr7Ps.hlsl">
+      <Filter>Shaders\LaunchRatePs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRateMsWave32WavePerSG1Ms.hlsl">
+      <Filter>Shaders\LaunchRateMs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRateMsWave32WavePerSG2Ms.hlsl">
+      <Filter>Shaders\LaunchRateMs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRateMsWave32WavePerSG4Ms.hlsl">
+      <Filter>Shaders\LaunchRateMs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRateMsWave32WavePerSG8Ms.hlsl">
+      <Filter>Shaders\LaunchRateMs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRateMsWave64WavePerSG1Ms.hlsl">
+      <Filter>Shaders\LaunchRateMs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRateMsWave64WavePerSG2Ms.hlsl">
+      <Filter>Shaders\LaunchRateMs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRateMsWave64WavePerSG4Ms.hlsl">
+      <Filter>Shaders\LaunchRateMs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRatePsWave64Vgpr8Ps.hlsl">
+      <Filter>Shaders\LaunchRatePs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRatePsWave64Vgpr9Ps.hlsl">
+      <Filter>Shaders\LaunchRatePs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRatePsWave32Vgpr8Ps.hlsl">
+      <Filter>Shaders\LaunchRatePs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\LaunchRatePsWave32Vgpr9Ps.hlsl">
+      <Filter>Shaders\LaunchRatePs</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SwizzleModeTex3dStoreCs.hlsl">
+      <Filter>Shaders\SwizzleMode</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SwizzleModeTex3dSampleCs.hlsl">
+      <Filter>Shaders\SwizzleMode</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SwizzleModeTex3dLoadCs.hlsl">
+      <Filter>Shaders\SwizzleMode</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SwizzleModeTex3dAtomicCs.hlsl">
+      <Filter>Shaders\SwizzleMode</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SwizzleModeTex2dStoreCs.hlsl">
+      <Filter>Shaders\SwizzleMode</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SwizzleModeTex2dSampleCs.hlsl">
+      <Filter>Shaders\SwizzleMode</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SwizzleModeTex2dMsaaStoreCs.hlsl">
+      <Filter>Shaders\SwizzleMode</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SwizzleModeTex1dAtomicCs.hlsl">
+      <Filter>Shaders\SwizzleMode</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SwizzleModeTex1dLoadCs.hlsl">
+      <Filter>Shaders\SwizzleMode</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SwizzleModeTex1dSampleCs.hlsl">
+      <Filter>Shaders\SwizzleMode</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SwizzleModeTex1dStoreCs.hlsl">
+      <Filter>Shaders\SwizzleMode</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SwizzleModeTex2dAtomicCs.hlsl">
+      <Filter>Shaders\SwizzleMode</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SwizzleModeTex2dMsaaLoadCs.hlsl">
+      <Filter>Shaders\SwizzleMode</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SwizzleModeTex2dLoadCs.hlsl">
+      <Filter>Shaders\SwizzleMode</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter31Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter00Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter01Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter02Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter03Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter04Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter05Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter06Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter07Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter08Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter09Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter10Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter11Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter12Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter13Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter14Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter15Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter16Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter17Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter18Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter19Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter20Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter21Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter22Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter23Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter24Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter25Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter26Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter27Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter28Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter29Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter30Vs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter00Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter01Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter02Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter03Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter04Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter05Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter06Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter07Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter08Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter09Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter10Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter11Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter12Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter13Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter14Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter15Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter16Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter17Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter18Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter19Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter20Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter21Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter22Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter23Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter24Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter25Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter26Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter27Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter28Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter29Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter30Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter31Ps.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\DecompressWriteDepthUncompressedPs.hlsl">
+      <Filter>Shaders\Decompress</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\DecompressWriteStencilUncompressedPs.hlsl">
+      <Filter>Shaders\Decompress</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\DecompressWriteColorUncompressed1BpcPs.hlsl">
+      <Filter>Shaders\Decompress</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\DecompressWriteColorSingleValuePs.hlsl">
+      <Filter>Shaders\Decompress</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\DecompressWriteColorUncompressed2BpcPs.hlsl">
+      <Filter>Shaders\Decompress</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\DecompressWriteColorUncompressed4BpcPs.hlsl">
+      <Filter>Shaders\Decompress</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter00StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter01StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter02StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter03StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter04StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter05StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter06StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter07StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter08StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter09StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter10StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter11StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter12StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter13StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter14StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter15StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter16StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter17StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter18StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter19StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter20StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter21StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter22StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter23StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter24StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter25StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter26StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter27StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter28StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter29StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter30StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Parameter31StripVs.hlsl">
+      <Filter>Shaders\Parameter</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\AnisoGs.hlsli">
+      <Filter>Shaders\Aniso</Filter>
+    </None>
+    <None Include="Shaders\BufferFormat.hlsli">
+      <Filter>Shaders\Buffer</Filter>
+    </None>
+    <None Include="Shaders\BufferVmemReadCs.hlsli">
+      <Filter>Shaders\Buffer</Filter>
+    </None>
+    <None Include="Shaders\BufferVmemWriteCs.hlsli">
+      <Filter>Shaders\Buffer</Filter>
+    </None>
+    <None Include="Shaders\CubemapGs.hlsli">
+      <Filter>Shaders\Cubemap</Filter>
+    </None>
+    <None Include="Shaders\DepthPs.hlsli">
+      <Filter>Shaders\Depth</Filter>
+    </None>
+    <None Include="Shaders\PixelPs.hlsli">
+      <Filter>Shaders\Pixel</Filter>
+    </None>
+    <None Include="Shaders\RootSignature.hlsli">
+      <Filter>Shaders\General</Filter>
+    </None>
+    <None Include="Shaders\SamplePs.hlsli">
+      <Filter>Shaders\Sample</Filter>
+    </None>
+    <None Include="Shaders\TextureGs.hlsli">
+      <Filter>Shaders\Texture</Filter>
+    </None>
+    <None Include="Shaders\TexturePs.hlsli">
+      <Filter>Shaders\Texture</Filter>
+    </None>
+    <None Include="Shaders\TrijuicingGs.hlsli">
+      <Filter>Shaders\Trijuicing</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\Courier_16.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Shaders\VrsGs.hlsli">
+      <Filter>Shaders\Vrs</Filter>
+    </None>
+    <None Include="Shaders\Vrs.hlsli">
+      <Filter>Shaders\Vrs</Filter>
+    </None>
+    <None Include="Shaders\TcCompatSrvPs.hlsli">
+      <Filter>Shaders\TcCompat</Filter>
+    </None>
+    <None Include="Shaders\TcCompatUavCs.hlsli">
+      <Filter>Shaders\TcCompat</Filter>
+    </None>
+    <None Include="Shaders\LaunchRateCsCs.hlsli">
+      <Filter>Shaders\LaunchRateCs</Filter>
+    </None>
+    <None Include="Shaders\LaunchRatePsPs.hlsli">
+      <Filter>Shaders\LaunchRatePs</Filter>
+    </None>
+    <None Include="Shaders\LaunchRateMsMs.hlsli">
+      <Filter>Shaders\LaunchRateMs</Filter>
+    </None>
+    <None Include="Shaders\SwizzleModeCs.hlsli">
+      <Filter>Shaders\SwizzleMode</Filter>
+    </None>
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
+    <None Include="readme.md" />
+    <None Include="Shaders\ParameterVs.hlsli">
+      <Filter>Shaders\Parameter</Filter>
+    </None>
+    <None Include="Shaders\ParameterPs.hlsli">
+      <Filter>Shaders\Parameter</Filter>
+    </None>
+    <None Include="Shaders\ParameterVsPs.hlsli">
+      <Filter>Shaders\Parameter</Filter>
+    </None>
+    <None Include="Shaders\DecompressWriteColorUncompressedPs.hlsli">
+      <Filter>Shaders\Decompress</Filter>
+    </None>
+    <None Include="packages.config" />
+    <CopyFileToFolders Include="External\GPUPerfAPI-4.0.0.39\4_0\bin\GPUPerfAPIDX12-x64.dll">
+      <Filter>External\GPUPerfAPI-4.0.0.39\4_0\bin</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="External\NvPerf-2025.1.1\bin\x64\nvperf_grfx_host.dll">
+      <Filter>External\NvPerf-2025.1.1\bin\x64</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="External\NvPerf-2025.1.1\bin\x64\nvperf_grfx_host.lib">
+      <Filter>External\NvPerf-2025.1.1\bin\x64</Filter>
+    </CopyFileToFolders>
+    <None Include="..\..\NuGet.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+</Project>

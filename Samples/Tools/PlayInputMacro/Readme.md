@@ -1,29 +1,48 @@
----
-page_type: sample
-languages:
-- csharp
-products:
-- gdk
-urlFragment: "playinputmacro"
-extendedZipContent:
-- path: LICENSE
-  target: LICENSE
-- path: Kits
-  target: Kits
-- path: Media
-  target: Media
-description: "This tool allows play back of recorded XBOM macros to a console from the command line."
----
+  ![](./media/image1.png)
 
-# PlayInputMacro
+# PlayInputMacro Sample
 
-For more information see: 
-- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Tools/PlayInputMacro/readme_en-us.md)
+## Description
 
-## Privacy statement
+This sample demonstrates how to play back recorded input recorded in the Xbox One Macro recorder to any console, primarily for automated testing.
 
-For more information about Microsoft's privacy policies in general, see the [Microsoft Privacy Statement](https://privacy.microsoft.com/privacystatement/).
+## Building the sample
 
-## Trademarks
+To build the sample, ensure the .NET 8 SDK (or greater) is installed, load the solution in VS2022 (or greater), and build.
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
+## Using the sample
+
+Ensure the .NET 8 runtime is installed on the machine from which this tool will be used.  Alternatively, you can build this
+tool as a standalone release and publish as a single executable.
+
+This tool has a dependency on `XtfInput.dll` and `xbtp.dll` included with the GDK, so ensure the GDK is installed on the target machine and the bin directory is included
+in the environment path.
+
+Alternatively, copy `XtfInput.dll` and `xbtp.dll` from the GDK's bin directory to the directory containing the PlayInputMacro executable.
+
+### Recording a macro
+
+Use Xbox One Manager's "macro recording" feature to record input using your PC.  For more information, please see the 
+[Xbox One Manager documentation](https://learn.microsoft.com/en-us/gaming/gdk/_content/gc/tools-console/xbox-tools-and-apis/xbom/manager-tool-gamepad-input#ID4EXE)
+to learn how to record and save the macro file.
+
+### Playing back the input
+
+Once the macro file is saved, you can then run this tool from the command line as follows:
+
+`PlayInputMacro <Console IP> <XML Macro File>`
+
+This will play back the input recorded in the XML macro file against the console specified.
+
+## Implementation notes
+
+This sample uses .NET 8, and the .NET 8 SDK (or newer) must be installed via Visual Studio or separately.  Ensure a matching
+.NET Runtime is installed to run the application.  Please see the [.NET 8](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) page for more info.
+
+## Update history
+
+- April 2025: Initial Release
+
+## Privacy Statement
+
+For more information about Microsoft's privacy policies in general, see the [Microsoft Privacy Statement](https://privacy.microsoft.com/en-us/privacystatement/).

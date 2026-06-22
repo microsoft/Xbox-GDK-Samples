@@ -1,32 +1,40 @@
----
-page_type: sample
-languages:
-- cpp
-products:
-- gdk
-urlFragment: "simplewasapiplaysound"
-extendedZipContent:
-- path: LICENSE
-  target: LICENSE
-- path: Kits
-  target: Kits
-- path: Media
-  target: Media
-description: "This sample demonstrates how to play setup and play a simple sound (sine tone) to a WASAPI render endpoint on Xbox."
----
+# Simple WASAPI Play Sound Sample
 
-# SimpleWASAPIPlaySound
+*This sample is compatible with the Microsoft Game Development Kit (June
+2020)*
 
-For more information see: 
-- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Audio/SimpleWASAPIPlaySound/readme_en-us.md)
-- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Audio/SimpleWASAPIPlaySound/readme_ja-jp.md)
-- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Audio/SimpleWASAPIPlaySound/readme_ko-kr.md)
-- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Audio/SimpleWASAPIPlaySound/readme_zh-cn.md)
+# Description
 
-## Privacy statement
+This sample demonstrates how to play setup and play a simple sound (sine
+tone) to a WASAPI render endpoint on Xbox One.
 
-For more information about Microsoft's privacy policies in general, see the [Microsoft Privacy Statement](https://privacy.microsoft.com/privacystatement/).
+![](./media/image1.png)
 
-## Trademarks
+# Building the sample
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
+If using an Xbox One devkit, set the active solution platform to `Gaming.Xbox.XboxOne.x64`.
+
+If using Project Scarlett, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
+
+*For more information, see* __Running samples__, *in the GDK documentation.*
+
+# Using the sample
+
+Use Spacebar on keyboard or Button A on gamepad to start and stop the
+playback. Use Escape on keyboard or View Button to exit the app.
+
+# Implementation notes
+
+For more information on WASAPI see
+[MSDN](https://msdn.microsoft.com/en-us/library/windows/desktop/dd371455.aspx).
+
+# Privacy statement
+
+When compiling and running a sample, the file name of the sample
+executable will be sent to Microsoft to help track sample usage. To
+opt-out of this data collection, you can remove the block of code in
+Main.cpp labeled "Sample Usage Telemetry".
+
+For more information about Microsoft's privacy policies in general, see
+the [Microsoft Privacy
+Statement](https://privacy.microsoft.com/en-us/privacystatement/).

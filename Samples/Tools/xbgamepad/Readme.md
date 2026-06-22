@@ -1,32 +1,41 @@
----
-page_type: sample
-languages:
-- cpp
-products:
-- gdk
-urlFragment: "xbgamepad"
-extendedZipContent:
-- path: LICENSE
-  target: LICENSE
-- path: Kits
-  target: Kits
-- path: Media
-  target: Media
-description: "This testing tool forwards XINPUT gamepad input on PC to a Xbox console."
----
-
 # xbgamepad
 
-For more information see: 
-- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Tools/xbgamepad/readme_en-us.md)
-- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Tools/xbgamepad/readme_ja-jp.md)
-- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Tools/xbgamepad/readme_ko-kr.md)
-- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Tools/xbgamepad/readme_zh-cn.md)
+*This sample is compatible with the Microsoft Game Development Kit (March 2022)*
 
-## Privacy statement
+# Description
 
-For more information about Microsoft's privacy policies in general, see the [Microsoft Privacy Statement](https://privacy.microsoft.com/privacystatement/).
+This is a minimal win32 console app that takes input from the locally
+connected XINPUT device (e.g. Xbox gamepad) and send those inputs to an
+Xbox One or Xbox Series X|S devkit using the XTF (Xbox Tools Framework)
+libraries that ship with the XDK and GDK.
 
-## Trademarks
+# Running
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
+It can be run on a machine without a GDK installed as it will use the
+dlls in the xtfdlls folder if they are present. The tool requires
+Windows 8 or higher.
+
+# Usage
+
+```
+xbgamepad /x:<devkit ipv4 address> [/r:<update rate in hz - default is 30>]
+```
+
+Access to the devkit via TCP ports 4211 and 4212 is required.
+
+# Build Pre-requisites
+
+-   Visual Studio 2019 (16.11) or Visual Studio 2022
+
+-   Windows 10 SDK
+
+-   Recent GDK install for XTF headers and libraries (project can be
+    modified to use XDK by changing the environment variable GameDK to
+    the XDK version in the includes and linker inputs)
+
+# Distributing
+
+To run on a machine with no GDK installed you need to copy the xbtp.dll
+and xtfinput.dll files from an existing GDK installation. They are in
+`%GameDK%\bin`. You can place them side-by-side with xbgamepad.exe on the
+machine without an installed GDK.

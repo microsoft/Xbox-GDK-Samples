@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Game configVersion="0">
+  <!-- Version "1" is supported by March 2022 GDK or later -->
+
+  <Identity Name="8C937903-FA28-4D46-8DDB-C9F99184B200"
+            Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+            Version="1.0.0.0" />
+
+  <ExecutableList>
+    <Executable Name="EnumerateThreads_xs.exe"
+                TargetDeviceFamily="Scarlett"
+                Id="Game" />
+    <Executable Name="EnumerateThreads_x.exe"
+                TargetDeviceFamily="XboxOne"
+                Id="Game" />
+    <Executable Name="EnumerateThreads_desktop.exe"
+                TargetDeviceFamily="PC"
+                Id="Game" />
+  </ExecutableList>
+
+  <ShellVisuals DefaultDisplayName="EnumerateThreads"
+                PublisherDisplayName="Xbox Advanced Technology Group"
+                StoreLogo="Assets\StoreLogo.png"
+                Square150x150Logo="Assets\Logo.png"
+                Square44x44Logo="Assets\SmallLogo.png"
+                Square480x480Logo="Assets\LargeLogo.png"
+                Description="EnumerateThreads"
+                ForegroundText="dark"
+                BackgroundColor="#000000"
+                SplashScreenImage="Assets\SplashScreen.png" />
+
+  <VirtualMachine>
+    <XboxAnacondaTitleMemory>Standard</XboxAnacondaTitleMemory>
+    <SMTEnabled>true</SMTEnabled>
+  </VirtualMachine>
+</Game>

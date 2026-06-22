@@ -1,32 +1,97 @@
----
-page_type: sample
-languages:
-- cpp
-products:
-- gdk
-urlFragment: "collision"
-extendedZipContent:
-- path: LICENSE
-  target: LICENSE
-- path: Kits
-  target: Kits
-- path: Media
-  target: Media
-description: "This sample demonstrates DirectXMath's collision types for simple bounding volume tests."
----
+  ![](./media/image1.png)
 
-# Collision
+#   Collision Sample
 
-For more information see: 
-- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/Collision/readme_en-us.md)
-- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/Collision/readme_ja-jp.md)
-- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/Collision/readme_ko-kr.md)
-- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/Collision/readme_zh-cn.md)
+*This sample is compatible with the Microsoft Game Development Kit (June
+2020)*
 
-## Privacy statement
+# 
 
-For more information about Microsoft's privacy policies in general, see the [Microsoft Privacy Statement](https://privacy.microsoft.com/privacystatement/).
+# Description
 
-## Trademarks
+This sample demonstrates DirectXMath's collision types for simple
+bounding volume tests in an Xbox One app.
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
+![C:\\temp\\xbox_screenshot.png](./media/image3.png)
+
+# Building the sample
+
+If using an Xbox One devkit, set the active solution platform to `Gaming.Xbox.XboxOne.x64`.
+
+If using an Xbox Series X|S devkit, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
+
+If using Windows 10, set the active solution platform to `x64`.
+
+*For more information, see* __Running samples__, *in the GDK documentation.*
+
+# Using the sample
+
+The sample shows four different 'collision' groups:
+
+1.  A static bounding **frustum** colliding with an animated sphere,
+    axis-aligned box, oriented box, and a triangle.
+
+2.  A static **axis-aligned box** colliding with an animated sphere,
+    axis-aligned box, oriented box, and a triangle.
+
+3.  A static **oriented box** colliding with an animated sphere,
+    axis-aligned box, oriented box, and a triangle.
+
+4.  An animated **ray** colliding with a static sphere, axis-aligned
+    box, oriented box, and a triangle. If there is a ray hit, a marker
+    box is placed at the intersection point on the target object.
+
+| Action                       |  Gamepad                               |
+|------------------------------|---------------------------------------|
+| Orbit camera X/Y around group |  Right Thumbstick |
+| Reset view                   |  Right Thumstick Button                |
+| Focus on Frustum group       |  DPad Up                               |
+| Focus on Axis-aligned box group |  DPad Right |
+| Focus on Oriented box group  |  DPad Down                             |
+| Focus on Ray test group      |  DPad Left                             |
+| Toggle help                  |  Menu Button                           |
+| Exit                         |  View Button                           |
+
+# Implementation notes
+
+For more on DirectXMath's bounding volume types, see [Microsoft
+Docs](https://docs.microsoft.com/windows/desktop/dxmath/directxmath-portal)
+for:
+
+-   **BoundingBox** class
+
+-   **BoundingFrustum** class
+
+-   **BoundingOrientedBox** class
+
+-   **BoundingSphere** class
+
+-   **TriangleTests** namespace
+
+The latest version of DirectXMath is available on
+[GitHub](https://github.com/Microsoft/DirectXMath).
+
+# Known issues
+
+DirectXMath's **BoundingFrustum** class only works with left-handed
+viewing systems.
+
+# Update history
+
+Initial release of the Xbox One XDK version of this sample made in May
+2016. The most recent legacy DirectX SDK version of this sample can be
+found on
+[GitHub](https://github.com/walbourn/directx-sdk-samples/tree/master/Collision).
+
+June 2020 -- Updated with Gaming.Desktop.x64
+
+# Privacy statement
+
+When compiling and running a sample, the file name of the sample
+executable will be sent to Microsoft to help track sample usage. To
+opt-out of this data collection, you can remove the block of code in
+Main.cpp labeled "Sample Usage Telemetry".
+
+For more information about Microsoft's privacy policies in general, see
+the [Microsoft Privacy
+Statement](https://privacy.microsoft.com/en-us/privacystatement/).

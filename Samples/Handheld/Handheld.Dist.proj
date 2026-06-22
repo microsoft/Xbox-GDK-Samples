@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Distribute" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+
+
+  <!--
+       ================================================================================
+       X64 Samples
+       ================================================================================
+  -->
+  <ItemGroup Label="PC">
+    <SlnDist Include="Handheld\HandheldBestPractices\HandheldBestPractices.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates the best practices for running a title on handheld devices.</Description>
+      <Owner>Brian Peek (brpeek@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+  </ItemGroup>
+
+</Project>

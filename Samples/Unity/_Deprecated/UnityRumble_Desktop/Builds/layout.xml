@@ -1,0 +1,18 @@
+<Package>
+  <Chunk Id="1000" Marker="Launch">
+    <FileGroup DestinationPath="." SourcePath="." Include="*.*" />
+    <FileGroup DestinationPath=".\MonoBleedingEdge\EmbedRuntime" SourcePath=".\MonoBleedingEdge\EmbedRuntime" Include="*.*" />
+    <FileGroup DestinationPath=".\MonoBleedingEdge\etc\mono" SourcePath=".\MonoBleedingEdge\etc\mono" Include="*.*" />
+    <FileGroup DestinationPath=".\MonoBleedingEdge\etc\mono\2.0" SourcePath=".\MonoBleedingEdge\etc\mono\2.0" Include="*.*" />
+    <FileGroup DestinationPath=".\MonoBleedingEdge\etc\mono\2.0\Browsers" SourcePath=".\MonoBleedingEdge\etc\mono\2.0\Browsers" Include="*.*" />
+    <FileGroup DestinationPath=".\MonoBleedingEdge\etc\mono\4.0" SourcePath=".\MonoBleedingEdge\etc\mono\4.0" Include="*.*" />
+    <FileGroup DestinationPath=".\MonoBleedingEdge\etc\mono\4.0\Browsers" SourcePath=".\MonoBleedingEdge\etc\mono\4.0\Browsers" Include="*.*" />
+    <FileGroup DestinationPath=".\MonoBleedingEdge\etc\mono\4.5" SourcePath=".\MonoBleedingEdge\etc\mono\4.5" Include="*.*" />
+    <FileGroup DestinationPath=".\MonoBleedingEdge\etc\mono\4.5\Browsers" SourcePath=".\MonoBleedingEdge\etc\mono\4.5\Browsers" Include="*.*" />
+    <FileGroup DestinationPath=".\MonoBleedingEdge\etc\mono\mconfig" SourcePath=".\MonoBleedingEdge\etc\mono\mconfig" Include="*.*" />
+    <FileGroup DestinationPath=".\UnityRumbleGDK_Data" SourcePath=".\UnityRumbleGDK_Data" Include="*.*" />
+    <FileGroup DestinationPath=".\UnityRumbleGDK_Data\Managed" SourcePath=".\UnityRumbleGDK_Data\Managed" Include="*.*" />
+    <FileGroup DestinationPath=".\UnityRumbleGDK_Data\Plugins\x86_64" SourcePath=".\UnityRumbleGDK_Data\Plugins\x86_64" Include="*.*" />
+    <FileGroup DestinationPath=".\UnityRumbleGDK_Data\Resources" SourcePath=".\UnityRumbleGDK_Data\Resources" Include="*.*" />
+  </Chunk>
+</Package>

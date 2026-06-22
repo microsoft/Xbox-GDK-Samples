@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Game configVersion="1">
+
+  <Identity Name="4c7ee604-9132-4167-969b-485e632ebecb"
+            Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+            Version="1.0.0.0"/>
+
+  <ExecutableList>
+    <Executable Name="DXRProceduralGeo.exe"
+                Id="Game"/>
+  </ExecutableList>
+
+  <!--DebugNetworkPort specifies an additional port to open for development on a Development Kit.-->
+  <DevelopmentOnly>
+    <DebugNetworkPortList>
+      <DebugNetworkPort>4711</DebugNetworkPort>
+    </DebugNetworkPortList>
+  </DevelopmentOnly>
+
+  <MSAAppId>PleaseChangeMe</MSAAppId>
+  <TitleId>FFFFFFFF</TitleId>
+
+  <ShellVisuals DefaultDisplayName="DXRProceduralGeo"
+                PublisherDisplayName="Xbox Advanced Technology Group"
+                StoreLogo="Assets\StoreLogo.png"
+                Square480x480Logo="Assets\LargeLogo.png"
+                Square150x150Logo="Assets\Logo.png"
+                Square44x44Logo="Assets\SmallLogo.png"
+                Description="DXRProceduralGeo"
+                ForegroundText="dark"
+                BackgroundColor="#000000"
+                SplashScreenImage="Assets\SplashScreen.png"/>
+</Game>

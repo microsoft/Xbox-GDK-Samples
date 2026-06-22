@@ -85,6 +85,7 @@
 #include <cstring>
 #include <cwchar>
 #include <exception>
+#include <filesystem>
 #include <functional>
 #include <future>
 #include <iterator>

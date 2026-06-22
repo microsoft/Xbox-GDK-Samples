@@ -1,0 +1,42 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36109.1 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ProcessorInfo", "ProcessorInfo.vcxproj", "{73EEC3DD-CF38-465C-B24C-2B96D4802D30}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTK12", "..\..\..\Kits\DirectXTK12\DirectXTK_Desktop_2022_Win10.vcxproj", "{3E0E8608-CD9B-4C76-AF33-29CA38F2C9F0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|ARM64 = Debug|ARM64
+		Release|x64 = Release|x64
+		Release|ARM64 = Release|ARM64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{73EEC3DD-CF38-465C-B24C-2B96D4802D30}.Debug|x64.ActiveCfg = Debug|x64
+		{73EEC3DD-CF38-465C-B24C-2B96D4802D30}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{73EEC3DD-CF38-465C-B24C-2B96D4802D30}.Debug|x64.Build.0 = Debug|x64
+		{73EEC3DD-CF38-465C-B24C-2B96D4802D30}.Debug|ARM64.Build.0 = Debug|ARM64
+		{73EEC3DD-CF38-465C-B24C-2B96D4802D30}.Debug|x64.Deploy.0 = Debug|x64
+		{73EEC3DD-CF38-465C-B24C-2B96D4802D30}.Debug|ARM64.Deploy.0 = Debug|ARM64
+		{73EEC3DD-CF38-465C-B24C-2B96D4802D30}.Release|x64.ActiveCfg = Release|x64
+		{73EEC3DD-CF38-465C-B24C-2B96D4802D30}.Release|ARM64.ActiveCfg = Release|ARM64
+		{73EEC3DD-CF38-465C-B24C-2B96D4802D30}.Release|x64.Build.0 = Release|x64
+		{73EEC3DD-CF38-465C-B24C-2B96D4802D30}.Release|ARM64.Build.0 = Release|ARM64
+		{3E0E8608-CD9B-4C76-AF33-29CA38F2C9F0}.Debug|x64.ActiveCfg = Debug|x64
+		{3E0E8608-CD9B-4C76-AF33-29CA38F2C9F0}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{3E0E8608-CD9B-4C76-AF33-29CA38F2C9F0}.Debug|x64.Build.0 = Debug|x64
+		{3E0E8608-CD9B-4C76-AF33-29CA38F2C9F0}.Debug|ARM64.Build.0 = Debug|ARM64
+		{3E0E8608-CD9B-4C76-AF33-29CA38F2C9F0}.Release|x64.ActiveCfg = Release|x64
+		{3E0E8608-CD9B-4C76-AF33-29CA38F2C9F0}.Release|ARM64.ActiveCfg = Release|ARM64
+		{3E0E8608-CD9B-4C76-AF33-29CA38F2C9F0}.Release|x64.Build.0 = Release|x64
+		{3E0E8608-CD9B-4C76-AF33-29CA38F2C9F0}.Release|ARM64.Build.0 = Release|ARM64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {50290358-391c-4fbf-92f6-9a3612b0ce76}
+	EndGlobalSection
+EndGlobal

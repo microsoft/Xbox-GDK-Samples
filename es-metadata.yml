@@ -1,0 +1,12 @@
+schemaVersion: 1.0.0
+providers:
+- provider: InventoryAsCode
+  version: 1.0.0
+  metadata:
+    isProduction: false
+    accountableOwners:
+      service: b0d4c73a-0be1-47a8-960a-2e76dbd80b71
+    routing:
+      defaultAreaPath:
+        org: ggpub
+        path: ATG

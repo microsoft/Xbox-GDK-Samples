@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Distribute" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--
+       ================================================================================
+       Gaming.Xbox.*.x64 Samples
+       ================================================================================
+  -->
+  <ItemGroup Label="Combo">
+    <!-- C -->
+    <SlnDist Include="xCloud\CloudReactiveUI\CloudReactiveUI.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates how to detect game streaming clients and change onscreen control layouts to handle differing input and orientation setups.</Description>
+      <Owner>Tim Chen (timch@microsoft.com)</Owner>
+      <Author>Jeff Ballard</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="xCloud\CloudVariableReplacement\CloudVariableReplacement.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to alter the state of the touch adaptation kit from within a game.</Description>
+      <Owner>Tim Chen (timch@microsoft.com)</Owner>
+      <Author>Jeff Ballard</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="xCloud\CustomResolution\CustomResolution.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to change rendering resolution and set streaming resolution to match streaming client characteristics.</Description>
+      <Owner>Tim Chen (timch@microsoft.com)</Owner>
+      <Author>Tim Chen</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- S -->
+    <SlnDist Include="xCloud\SimpleCloudAwareSample\SimpleCloudAwareSample.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to detect game streaming clients, change onscreen control layouts, and read touch points.</Description>
+      <Owner>Tim Chen (timch@microsoft.com)</Owner>
+      <Author>Jeff Ballard</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+  </ItemGroup>
+
+</Project>

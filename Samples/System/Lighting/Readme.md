@@ -1,32 +1,43 @@
----
-page_type: sample
-languages:
-- cpp
-products:
-- gdk
-urlFragment: "lighting"
-extendedZipContent:
-- path: LICENSE
-  target: LICENSE
-- path: Kits
-  target: Kits
-- path: Media
-  target: Media
-description: "This sample shows how to use the LampArray API."
----
+![](./media/image1.png)
 
-# Lighting
+# LampArray Sample
 
-For more information see: 
-- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/Lighting/readme_en-us.md)
-- [Readme æ—¥æœ¬èªž](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/Lighting/readme_ja-jp.md)
-- [Readme í•œêµ­ì–´](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/Lighting/readme_ko-kr.md)
-- [Readme ä¸­æ–‡ (ç®€ä½“)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/Lighting/readme_zh-cn.md)
+*This sample is compatible with the Microsoft Game Development Kit (March 2023 QFE1)*
 
-## Privacy statement
+# Description
 
-For more information about Microsoft's privacy policies in general, see the [Microsoft Privacy Statement](https://privacy.microsoft.com/privacystatement/).
+This sample demonstrates how to use the LampArray API to operate lights in RGB devices, such as keyboards and mice.
 
-## Trademarks
+> **Please note:** As of the March 2023 QFE1 release, the GDK LampArray API only supports the following devices on console. Support for additional devices will be added in future recovery releases.
+> - Razer Turret for Xbox One (keyboard and mouse)
+> - Razer BlackWidow Tournament Edition Chroma V2
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
+# Building the sample
+
+If using an Xbox One devkit, set the active solution platform to `Gaming.Xbox.XboxOne.x64`.
+
+If using an Xbox Series X|S devkit, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
+
+If using a PC, set the active solution platform to x64.
+
+*For more information, see* __Running samples__, *in the GDK documentation.*
+
+# Using the sample
+
+Ensure you have a compatible device connected.  Use the keyboard arrow keys or a Gamepad's DPad to move between the sample effects.
+
+Press the Esc key or View button to exit.
+
+# Implementation notes
+
+The effect implementations are found in the `LightingEffects.cpp` file.  The callback and other functionality is located in the `Lighting.cpp` file.
+
+# Privacy statement
+
+When compiling and running a sample, the file name of the sample
+executable will be sent to Microsoft to help track sample usage. To
+opt-out of this data collection, you can remove the block of code in
+Main.cpp labeled "Sample Usage Telemetry".
+
+For more information about Microsoft's privacy policies in general, see
+the [Microsoft Privacy Statement](https://privacy.microsoft.com/en-us/privacystatement/).

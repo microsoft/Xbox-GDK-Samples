@@ -1,0 +1,33 @@
+//--------------------------------------------------------------------------------------
+// VSDefault.pfx
+//
+// HLSL vertex shader for scene rendering.  Transforms vertex tangents and binormals for
+// normal mapping in the pixel shader.
+//
+// Copyright (C) Microsoft Corporation. All rights reserved.
+//--------------------------------------------------------------------------------------
+
+#include "ShaderCommon.hlsli"
+#include "RootSignature.hlsli"
+
+[RootSignature(RS_Streaming12)]
+VS_OUT main(VS_IN In)
+{
+    float4 WorldPos = mul( float4(In.Pos, 1), g_WorldTransform );
+    float3 WorldViewDirection = WorldPos.xyz - g_CameraPosWorld.xyz;
+    float4 TransformedPos = mul( WorldPos, g_VPTransform );
+    float3 TransformedNormal = mul( float4( In.Normal, 0 ), g_WorldTransform ).xyz;
+    float3 TransformedTangent = mul( float4( In.Tangent, 0 ), g_WorldTransform ).xyz;
+    float3 TransformedBinormal = mul( float4( In.Binormal, 0 ), g_WorldTransform ).xyz;
+
+    VS_OUT Out;
+    Out.Pos = TransformedPos;
+    Out.Normal = TransformedNormal;
+    Out.TexCoord0 = In.TexCoord0;
+    Out.Tangent = TransformedTangent;
+    Out.Binormal = TransformedBinormal;
+    Out.Color = float4(1, 0, 1, 1);
+    Out.ViewDirection = WorldViewDirection;
+
+    return Out;
+}

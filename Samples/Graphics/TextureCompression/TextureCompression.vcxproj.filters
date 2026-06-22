@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>adf92a4d-39e9-4fbe-899c-43e627b4610a</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>0f9936dc-61dc-4c12-b232-4420b945d555</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>9be87add-3af4-4c82-88c5-6d81d5f229c8</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DirectXTex">
+      <UniqueIdentifier>0a4a1acf-dca9-4040-9057-8d569453eabc</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\TestData">
+      <UniqueIdentifier>{e7cc43fa-b8e2-4297-8e5c-4080af629ee5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{ad4e9fd6-70d3-4e3a-888d-27a1ddef07e8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="TextureCompression.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ReadData.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\DirectXTex\DDS.h">
+      <Filter>DirectXTex</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureInfo.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="TextureCompression.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureInfo.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Shared.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Assets\TestData\Columns_Normal.xbtc">
+      <Filter>Assets\TestData</Filter>
+    </None>
+    <None Include="Assets\TestData\Columns_RMA.xbtc">
+      <Filter>Assets\TestData</Filter>
+    </None>
+    <None Include="Assets\TestData\Columns_BaseColor.xbtc">
+      <Filter>Assets\TestData</Filter>
+    </None>
+    <None Include="Assets\TestData\Cowboy_Body_BaseColor.xbtc">
+      <Filter>Assets\TestData</Filter>
+    </None>
+    <None Include="Assets\TestData\Cowboy_Gun_BaseColor.xbtc">
+      <Filter>Assets\TestData</Filter>
+    </None>
+    <None Include="Assets\TestData\FireFly_BaseColor.xbtc">
+      <Filter>Assets\TestData</Filter>
+    </None>
+    <None Include="Assets\TestData\LargeRocks_BaseColor.xbtc">
+      <Filter>Assets\TestData</Filter>
+    </None>
+    <None Include="Assets\TestData\Firefly_Normal.xbtc">
+      <Filter>Assets\TestData</Filter>
+    </None>
+    <None Include="Assets\TestData\Firefly_RMA.xbtc">
+      <Filter>Assets\TestData</Filter>
+    </None>
+    <None Include="Assets\TestData\LargeRocks_Normal.xbtc">
+      <Filter>Assets\TestData</Filter>
+    </None>
+    <None Include="Assets\TestData\LargeRocks_RMA.xbtc">
+      <Filter>Assets\TestData</Filter>
+    </None>
+    <None Include="Assets\TestData\Grass.xbtc">
+      <Filter>Assets\TestData</Filter>
+    </None>
+    <None Include="Assets\TestData\Leaf.xbtc">
+      <Filter>Assets\TestData</Filter>
+    </None>
+    <None Include="ReadMe.docx" />
+    <None Include="TextureCompression_ReadMe_ja-jp.docx" />
+    <None Include="TextureCompression_ReadMe_ko-kr.docx" />
+    <None Include="TextureCompression_ReadMe_zh-cn.docx" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="SimplePS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="SimpleVS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+</Project>

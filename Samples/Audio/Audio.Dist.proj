@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Distribute" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--
+       ================================================================================
+       Gaming.*.x64 (combo) Samples
+       ================================================================================
+  -->
+  <ItemGroup Label="Combo">
+    <!-- I -->
+    <SlnDist Include="Audio\InGameChat\InGameChat.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>The InGameChat sample provides a working example of integrating the GameChat2 library into an Xbox title. It brings together the pieces needed to demonstrate in-title VOIP communications: GameChat, Multiplayer Sessions, and Peer Networking.</Description>
+      <Owner>Steve Spiller (sspiller@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+  </ItemGroup>
+
+  <!--
+       ================================================================================
+       Gaming.Xbox.*.x64 Samples
+       ================================================================================
+  -->
+  <ItemGroup Label="Console">
+    <!-- A -->
+    <SlnDist Include="Audio\AdvancedSpatialSounds\AdvancedSpatialSounds.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how use ISpatialAudioClient to playback both static and dynamic positional audio using Windows Sonic technologies in an Xbox title.</Description>
+      <Owner>Robert Ridihalgh (robertr@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- S -->
+    <SlnDist Include="Audio\SimpleCustomAPO\SimpleCustomAPO.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to play a wav file using XAudio2 on the Xbox using a custom xAPO effect.</Description>
+      <Owner>Robert Ridihalgh (robertr@microsoft.com)</Owner>
+      <Author>Chuck Walbourn</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <SlnDist Include="Audio\SimplePlay3DSound\SimplePlay3DSound.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how use XAudio2 and X3DAudio to playback positional audio on Xbox.</Description>
+      <Owner>Robert Ridihalgh (robertr@microsoft.com)</Owner>
+      <Author>Jeff Ballard</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Audio\SimplePlaySound\SimplePlaySound.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to play a wav file using XAudio2 on the Xbox.</Description>
+      <Owner>Robert Ridihalgh (robertr@microsoft.com)</Owner>
+      <Author>Chuck Walbourn (chuckw@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Audio\SimplePlaySoundStream\SimplePlaySoundStream.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to stream a wav file using XAudio2 on the Xbox.</Description>
+      <Owner>Robert Ridihalgh (robertr@microsoft.com)</Owner>
+      <Author>Jeff Ballard</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <SlnDist Include="Audio\SimpleSpatialPlaySound\SimpleSpatialPlaySound.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how use ISpatialAudioClient to playback static audio with height channels using Windows Sonic technologies in an Xbox title.</Description>
+      <Owner>Robert Ridihalgh (robertr@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <SlnDist Include="Audio\SimpleWASAPICapture\SimpleWASAPICapture.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to capture audio using WASAPI on Xbox.</Description>
+      <Owner>Robert Ridihalgh (robertr@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Audio\SimpleWASAPIPlaySound\SimpleWASAPIPlaySound.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to play setup and play a simple sound (sine tone) to a WASAPI render endpoint on Xbox.</Description>
+      <Owner>Robert Ridihalgh (robertr@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <SlnDist Include="Audio\SimpleXDSPConv\SimpleXDSPConv.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates how to perform hardware offloaded convolution reverb using the XDsp API on the Xbox Series X|S.</Description>
+      <Owner>Robert Ridihalgh (robertr@microsoft.com)</Owner>
+      <Author>Jeff Ballard</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Audio\SimpleXDSPFFT\SimpleXDSPFFT.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates how to perform hardware offloaded fast Fourier transforms (FFTs) using the XDsp API on the Xbox Series X|S.</Description>
+      <Owner>Robert Ridihalgh (robertr@microsoft.com)</Owner>
+      <Author>Jeff Ballard</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+  </ItemGroup>
+</Project>

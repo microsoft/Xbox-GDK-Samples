@@ -1,32 +1,81 @@
----
-page_type: sample
-languages:
-- cpp
-products:
-- gdk
-urlFragment: "geometricexpansion"
-extendedZipContent:
-- path: LICENSE
-  target: LICENSE
-- path: Kits
-  target: Kits
-- path: Media
-  target: Media
-description: "This sample demonstrates the geometric expansion capabilities of mesh shaders for Xbox Series X|S and PC."
----
+  ![](./media/image1.png)
 
-# GeometricExpansion
+#   Geometric Expansion Sample
 
-For more information see: 
-- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Graphics/GeometricExpansion/readme_en-us.md)
-- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Graphics/GeometricExpansion/readme_ja-jp.md)
-- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Graphics/GeometricExpansion/readme_ko-kr.md)
-- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Graphics/GeometricExpansion/readme_zh-cn.md)
+*This sample is compatible with the Microsoft Game Development Kit
+(March 2022) and Windows 10 (Version 2004) May 2020 Update*
 
-## Privacy statement
+# Description
 
-For more information about Microsoft's privacy policies in general, see the [Microsoft Privacy Statement](https://privacy.microsoft.com/privacystatement/).
+This sample demonstrates the geometric expansion capabilities of mesh
+shaders. This is the process whereby sample points are loaded and
+procedurally expanded into representative geometry by shader code.
+Common cases are full-screen quads, billboarded sprites, particle
+trails, decals, etc.
 
-## Trademarks
+Mesh shaders provide the ability to determine how workloads map to
+threadgroups as well as the data-sharing facilities previously unique to
+compute shaders. This allows more intuitive implementations and access
+to local geometry data.
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
+![](./media/image3.png)
+
+# Building the sample
+
+If using a Xbox Series X|S devkit, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
+
+If using a PC with the appropriate hardware and Windows 10 release, set
+the active solution platform to `x64`.
+
+This sample does not support Xbox One.
+
+*For more information, see* __Running samples__, *in the GDK documentation.*
+
+# Using the sample
+
+Beyond moving the camera there are options to manipulate the dynamics
+properties of the particle simulation.
+
+# Controls
+
+| Action                       |  Gamepad          |  Keyboard          |
+|------------------------------|------------------|-------------------|
+| Rotate/translate camera along view vector |  Left Thumbstick  |  Mouse wheel |
+| Orbit camera                 |  Right Thumbstick |  Hold LMB + Mouse  |
+| Pan Camera  |  Directional Pad  |  WASD or Arrow Keys              |
+| Reset camera  |  Right Thumbstick (Push) |  \- |
+| Increase/Decrease Spawn Rate  |  Left Shoulder/Trigger |  +/- |
+| Increase/Decrease Initial Speed |  Right Shoulder/Trigger |  O/P |
+| Increase/Decrease Spring Coefficient |  X/Y  |  K/L |
+| Increase/Decrease Drag Factor |  A/B  |  N/M |
+| Exit                         |  View Button      |  Escape            |
+
+# Implementation notes
+
+Each frame the particle data is simulated on the CPU and copied to a GPU
+resource. A mesh shader then loads the particle data (individual sample
+points) and expands them to billboarded quads. Since each quad requires
+four vertices & two primitives each thread is responsible for
+determining which, if any, vertex & primitive for which it's
+responsible.
+
+# Update history
+
+10/31/2019 -- Sample creation.
+
+4/28/2020 - Updated to use the D3DX12 helpers for mesh shader pipeline
+creation
+
+10/29/2021 -- Shader bug fix, improved physical dynamics, slight shader
+optimizations
+
+# Privacy Statement
+
+When compiling and running a sample, the file name of the sample
+executable will be sent to Microsoft to help track sample usage. To
+opt-out of this data collection, you can remove the block of code in
+Main.cpp labeled "Sample Usage Telemetry".
+
+For more information about Microsoft's privacy policies in general, see
+the [Microsoft Privacy
+Statement](https://privacy.microsoft.com/en-us/privacystatement/).

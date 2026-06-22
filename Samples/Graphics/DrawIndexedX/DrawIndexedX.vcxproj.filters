@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>af512e6b-63ea-47eb-988a-18f3b55a0ee9</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>6cdd1390-362d-4122-95c2-9c9c33af5cd1</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>319c472d-fcf5-42db-8aab-4b125ac5a43d</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Text">
+      <UniqueIdentifier>{86221b94-22ea-483b-aa74-5504ad0eacc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{1dae306c-fb6a-4494-808f-0baea2fa0c08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mesh">
+      <UniqueIdentifier>{c178dd0f-6d50-416c-99c2-93cc60a2d54e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mesh\BuildingAtlas">
+      <UniqueIdentifier>{9cc52fae-1b93-4ef8-8353-b0889e583e11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mesh\BuildingIndividual">
+      <UniqueIdentifier>{b085623d-1277-4052-b791-f3784baace11}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="DrawIndexedX.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\Json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="Common.h" />
+    <ClInclude Include="SampleEffect.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerHelp.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\PerformanceTimersXbox.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ReadData.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="DrawIndexedX.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleEffect.cpp" />
+    <ClCompile Include="..\..\..\Kits\ATGTK\ControllerHelp.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\PerformanceTimersXbox.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
+      <Filter>Assets\Text</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\callout_circle.dds">
+      <Filter>Assets\Text</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\gamepad.dds">
+      <Filter>Assets\Text</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Building\Building_AtlasWithEnv\Atlas.dds">
+      <Filter>Mesh\BuildingAtlas</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Building\Building_AtlasWithEnv\Environment.dds">
+      <Filter>Mesh\BuildingAtlas</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Building\Building_IndividualWithEnv\Environment.dds">
+      <Filter>Mesh\BuildingIndividual</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Building\Building_IndividualWithEnv\matDECO_Crown_A.dds">
+      <Filter>Mesh\BuildingIndividual</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Building\Building_IndividualWithEnv\matDECO_Crown_A_Corner.dds">
+      <Filter>Mesh\BuildingIndividual</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Building\Building_IndividualWithEnv\matDECO_Crown_B_Corner.dds">
+      <Filter>Mesh\BuildingIndividual</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Building\Building_IndividualWithEnv\matDECO_Ground_Entrance_A.dds">
+      <Filter>Mesh\BuildingIndividual</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Building\Building_IndividualWithEnv\matDECO_Ground_Wall_A.dds">
+      <Filter>Mesh\BuildingIndividual</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Building\Building_IndividualWithEnv\matDECO_Mezz_A_Corner.dds">
+      <Filter>Mesh\BuildingIndividual</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Building\Building_IndividualWithEnv\matDECO_Mezz_A_Half.dds">
+      <Filter>Mesh\BuildingIndividual</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Building\Building_IndividualWithEnv\matDECO_Roof_Accessory_Flagpole_A.dds">
+      <Filter>Mesh\BuildingIndividual</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Building\Building_IndividualWithEnv\matDECO_Wall_Balcony_A.dds">
+      <Filter>Mesh\BuildingIndividual</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Building\Building_IndividualWithEnv\matDECO_Wall_Corner_C.dds">
+      <Filter>Mesh\BuildingIndividual</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Building\Building_IndividualWithEnv\matDECO_Wall_Spacer_A.dds">
+      <Filter>Mesh\BuildingIndividual</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Building\Building_IndividualWithEnv\matDECO_Wall_Spacer_Blank.dds">
+      <Filter>Mesh\BuildingIndividual</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Building\Building_IndividualWithEnv\matDECO_Wall_Spacer_C.dds">
+      <Filter>Mesh\BuildingIndividual</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Building\Building_IndividualWithEnv\matDECO_Wall_Spacer_C_Top.dds">
+      <Filter>Mesh\BuildingIndividual</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Building\Building_IndividualWithEnv\matDECO_Wall_Spacer_D.dds">
+      <Filter>Mesh\BuildingIndividual</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Building\Building_IndividualWithEnv\matDECO_Wall_Win_Bay_B.dds">
+      <Filter>Mesh\BuildingIndividual</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Building\Building_IndividualWithEnv\matDECO_Wall_Win_Half_B.dds">
+      <Filter>Mesh\BuildingIndividual</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Building\Building_IndividualWithEnv\matDECO_Wall_Win_Half_B_AC.dds">
+      <Filter>Mesh\BuildingIndividual</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Building\Building_IndividualWithEnv\matDECO_Wall_Win_Half_D.dds">
+      <Filter>Mesh\BuildingIndividual</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Building\Building_IndividualWithEnv\matDECO_Wall_Win_Strd_A.dds">
+      <Filter>Mesh\BuildingIndividual</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Building\Building_IndividualWithEnv\matDECO_Wall_Win_Strd_Bay_A.dds">
+      <Filter>Mesh\BuildingIndividual</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets\Text</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_22.spritefont">
+      <Filter>Assets\Text</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+      <Filter>Assets\Text</Filter>
+    </None>
+    <None Include="Common.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Helper.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Building\Building_AtlasWithEnv\Building_Atlas.sdkmesh">
+      <Filter>Mesh\BuildingAtlas</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Building\Building_IndividualWithEnv\Building_Individual.sdkmesh">
+      <Filter>Mesh\BuildingIndividual</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneController.spritefont">
+      <Filter>Assets\Text</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
+      <Filter>Assets\Text</Filter>
+    </None>
+    <None Include="Readme.docx" />
+    <None Include="DrawIndexedX_ReadMe_ja-jp.docx" />
+    <None Include="DrawIndexedX_ReadMe_ko-kr.docx" />
+    <None Include="DrawIndexedX_ReadMe_zh-cn.docx" />
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="FullScreenPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="FullScreenVS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="MeshDebugWavesDrawIndexedXPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="MeshDebugWavesDrawIndexedXVS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="MeshDebugWavesPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="MeshDebugWavesVS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="MeshDrawIndexedXPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="MeshDrawIndexedXVS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="MeshPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="MeshVS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+</Project>

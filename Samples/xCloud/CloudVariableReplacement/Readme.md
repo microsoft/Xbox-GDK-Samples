@@ -1,32 +1,56 @@
----
-page_type: sample
-languages:
-- cpp
-products:
-- gdk
-urlFragment: "cloudvariablereplacement"
-extendedZipContent:
-- path: LICENSE
-  target: LICENSE
-- path: Kits
-  target: Kits
-- path: Media
-  target: Media
-description: "This sample demonstrates how to alter the state of the touch adaptation kit from within a game."
----
+# Cloud Variable Replacement Sample
 
-# CloudVariableReplacement
+*This sample is compatible with the Microsoft Game Development Kit
+(October 2022)*
 
-For more information see: 
-- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/xCloud/CloudVariableReplacement/readme_en-us.md)
-- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/xCloud/CloudVariableReplacement/readme_ja-jp.md)
-- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/xCloud/CloudVariableReplacement/readme_ko-kr.md)
-- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/xCloud/CloudVariableReplacement/readme_zh-cn.md)
+# Description
 
-## Privacy statement
+This sample demonstrates how to alter the state of the touch adaptation
+kit from within a game.
 
-For more information about Microsoft's privacy policies in general, see the [Microsoft Privacy Statement](https://privacy.microsoft.com/privacystatement/).
+![Text Description automatically generated](./media/image1.jpeg)
 
-## Trademarks
+# Using the sample
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
+Ensure that Game Streaming is enabled before launching the sample.
+Also ensure that on the streaming client (such as the Xbox Game 
+Streaming Test App) that Settings > Developer > Touch adaptation > 
+Enable sideload is enabled. Connect to the console running the sample 
+using the streaming client app. Once you are connected, the sample 
+should change to reflect presence of a streaming client.
+Ensure the "sample-layouts" bundle is loaded by running the following
+command in a Gaming command prompt:
+
+```
+tak serve --takxconfig sample-layouts\takxconfig.json
+```
+
+Press dpad left and right to change the opacity of the B button on the
+TAK. Press dpad up to toggle the visibility of the Y button and dpad
+down to toggle the enabled state of the A button.
+
+# Implementation notes
+
+This sample demonstrates how to use the cloud aware API for xCloud.
+
+For more information, please see the following documentation:
+https://learn.microsoft.com/gaming/gdk/_content/gc/system/overviews/game-streaming/building-touch-layouts/game-streaming-touch-changing-layouts-game-state
+
+# Version History
+
+April 2024:
+- Updated sample to use the `OnClient` APIs to allow for per-client control of the on screen touch layout.
+- Added a `takxconfig.json` to `sample-layouts`.
+
+July 2021: Initial sample
+
+# Privacy statement
+
+When compiling and running a sample, the file name of the sample
+executable will be sent to Microsoft to help track sample usage. To
+opt-out of this data collection, you can remove the block of code in
+Main.cpp labeled "Sample Usage Telemetry".
+
+For more information about Microsoft's privacy policies in general, see
+the [Microsoft Privacy
+Statement](https://privacy.microsoft.com/en-us/privacystatement/).

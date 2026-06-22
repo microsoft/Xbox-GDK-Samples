@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Distribute" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--
+       ================================================================================
+       Gaming.*.x64 (combo) Samples
+       ================================================================================
+  -->
+  <ItemGroup Label="Combo">
+    <!-- SimpleD -->
+    <SlnDist Include="IntroGraphics\SimpleDynamicResources\SimpleDynamicResources.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>Demonstrates how to use HLSL Dynamic Resources in HLSL Shader Model 6.6. This sample is functionally identical to SimpleTexture, except resources are accessed directly through the heap using ResourceDescriptorHeap[] and SamplerDescriptorHeap[] in HLSL.</Description>
+      <AreaPath>Graphics\</AreaPath>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Nico May (nicomay@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- SimpleM -->
+    <SlnDist Include="IntroGraphics\SimpleMeshShader\SimpleMeshShader.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample is a companion to the SimpleTriangle sample with the exception being that it uses Directx 12 Mesh Shaders.</Description>
+      <Platform>$(Platform_Scarlett_from_Outlet)</Platform>
+      <AreaPath>Graphics\</AreaPath>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Matt Hurliman</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+  </ItemGroup>
+
+  <!--
+       ================================================================================
+       Gaming.Xbox.*.x64 Samples
+       ================================================================================
+  -->
+  <ItemGroup Label="Console">
+    <!-- SimpleB -->
+    <SlnDist Include="IntroGraphics\SimpleBezier\SimpleBezier.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to create hull and domain shaders to draw a tessellated Bezier surface representing a Mobius strip for DirectX 12 on Xbox.</Description>
+      <AreaPath>Graphics\</AreaPath>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Kevin Cogger (kevincog@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- SimpleC -->
+    <SlnDist Include="IntroGraphics\SimpleCompute\SimpleCompute.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>SimpleCompute shows how to use DirectCompute (i.e. Direct3D Compute Shader) for DirectX 12 on Xbox.</Description>
+      <AreaPath>Graphics\</AreaPath>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Andrew Farrier (Andrew.Farrier@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- SimpleD -->
+    <SlnDist Include="IntroGraphics\SimpleDeviceAndSwapChain\SimpleDeviceAndSwapChain.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to create a Direct3D 12 device and swap chain for an GameCore on Xbox title.</Description>
+      <AreaPath>Graphics\</AreaPath>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Chuck Walbourn (chuckw@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- SimpleI -->
+    <SlnDist Include="IntroGraphics\SimpleInstancing\SimpleInstancing.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to use instancing with the Direct3D 12 API on Xbox.</Description>
+      <AreaPath>Graphics\</AreaPath>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Chuck Walbourn (chuckw@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- SimpleL -->
+    <SlnDist Include="IntroGraphics\SimpleLighting\SimpleLighting.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to create a static Direct3D 12 vertex, index, and constant buffer to draw indexed geometry lit by using static and dynamic Lambertian lighting on Xbox.</Description>
+      <AreaPath>Graphics\</AreaPath>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Greg Pettyjon</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <SlnDist Include="IntroGraphics\SimpleMSAA\SimpleMSAA.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample implements an MSAA render target and depth/stencil buffer for a 3D scene using DirectX 12 on Xbox.</Description>
+      <AreaPath>Graphics\</AreaPath>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Chuck Walbourn (chuckw@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- SimpleS -->
+    <SlnDist Include="IntroGraphics\SimpleSamplerFeedback\SimpleSamplerFeedback.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>Simple example of using DirectX 12 Sampler Feedback.</Description>
+      <AreaPath>Graphics\</AreaPath>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- SimpleT -->
+    <SlnDist Include="IntroGraphics\SimpleTexture\SimpleTexture.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample implements an MSAA render target and depth/stencil buffer for a 3D scene using DirectX 12 on Xbox.</Description>
+      <AreaPath>Graphics\</AreaPath>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Chuck Walbourn (chuckw@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="IntroGraphics\SimpleTriangle\SimpleTriangle.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to create a static Direct3D 12 vertex buffer to render a triangle on screen on Xbox.</Description>
+      <AreaPath>Graphics\</AreaPath>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Chuck Walbourn (chuckw@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+  </ItemGroup>
+
+  <!--
+       ================================================================================
+       Gaming.Desktop.X64 Samples
+       ================================================================================
+  -->
+  <ItemGroup Label="PC">
+    <SlnDist Include="IntroGraphics\SimpleTriangleDesktop\SimpleTriangleDesktop.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to create a static Direct3D 12 vertex buffer to render a triangle on screen.</Description>
+      <AreaPath>Graphics\</AreaPath>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Chuck Walbourn (chuckw@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+  </ItemGroup>
+</Project>

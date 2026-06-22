@@ -1,29 +1,33 @@
----
-page_type: sample
-languages:
-- csharp
-products:
-- gdk
-urlFragment: "remoteiterationtoolssample"
-extendedZipContent:
-- path: LICENSE
-  target: LICENSE
-- path: Kits
-  target: Kits
-- path: Media
-  target: Media
-description: "A WPF sample application demonstrating how to use the Remote Iteration Client API"
----
+# Remote Iteration Tools Sample
 
-# RemoteIterationToolsSample
+A WPF sample application demonstrating how to use the **Remote Iteration Client API**
+(`Microsoft.GDK.RemoteIterationClientApi`) to deploy, launch, and manage game builds on
+remote Xbox devices.
 
-For more information see: 
-- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Tools/RemoteIterationToolsSample/readme_en-us.md)
+## What This Sample Demonstrates
 
-## Privacy statement
+- **Deploy** — Copy a local game build to a remote device using delta file transfer
+- **Register** — Register a deployed game on the remote device
+- **Launch** — Start an executable on the remote device (normal or suspended)
+- **Resume** — Resume a suspended game process
+- **Terminate** — Stop a running game on the remote device
+- **Cancel** — Cancel an in-progress deployment
 
-For more information about Microsoft's privacy policies in general, see the [Microsoft Privacy Statement](https://privacy.microsoft.com/privacystatement/).
+## Prerequisites
 
-## Trademarks
+- Visual Studio with support for WPF applications
+- .NET SDK installed
+- Pair remote device using [Xbox PC Remote Tools overview](https://learn.microsoft.com/en-us/gaming/gdk/docs/gdk-dev/pc-dev/overviews/remote-win-gamedev)
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
+## Build
+
+Open `RemoteIterationToolsSample.sln` in Visual Studio and build the **x64** or **ARM64** configuration,
+or from the command line:
+
+```shell
+dotnet build RemoteIterationToolsSample/RemoteIterationToolsSample.csproj -p:Platform=x64
+dotnet build RemoteIterationToolsSample/RemoteIterationToolsSample.csproj -p:Platform=ARM64
+```
+
+> **Note:** The project references the `Microsoft.GDK.RemoteIterationClientApi` NuGet
+> package.

@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:mx="http://schemas.microsoft.com/appx/2013/xbox/manifest" IgnorableNamespaces="mx">
+  <Identity Name="WordGame" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Version="1.0.0.0" ProcessorArchitecture="x64" />
+  <Properties>
+    <DisplayName>GameSave</DisplayName>
+    <PublisherDisplayName>Xbox Advanced Technology Group</PublisherDisplayName>
+    <Logo>Assets\Store\StoreLogo.png</Logo>
+    <Description>Game Save Sample</Description>
+  </Properties>
+  <Prerequisites>
+    <OSMinVersion>6.2</OSMinVersion>
+    <OSMaxVersionTested>6.2</OSMaxVersionTested>
+    <mx:ApplicationEnvironment>title</mx:ApplicationEnvironment>
+    <mx:OSName>era</mx:OSName>
+  </Prerequisites>
+  <Resources>
+    <Resource Language="en-us" />
+  </Resources>
+  <Applications>
+    <Application Id="Debug" Executable="GameSaveXDKDebug.exe" EntryPoint="GameSave.App">
+      <VisualElements DisplayName="Game Save (XDK-Debug)" Logo="Assets\Store\LogoX.png" SmallLogo="Assets\Store\SmallLogoX.png" Description="WordGame Game Save Sample" ForegroundText="light" BackgroundColor="#461803">
+        <DefaultTile ShortName="Game Save Sample (XDK)" WideLogo="Assets\Store\WideLogoX.png" />
+        <SplashScreen Image="Assets\Store\SplashScreenX.png" />
+      </VisualElements>
+      <Extensions>
+        <mx:Extension Category="xbox.live">
+          <mx:XboxLive TitleId="2FC77605" PrimaryServiceConfigId="66cd0100-f948-49b1-814d-c1132fc77605" />
+        </mx:Extension>
+        <mx:Extension Category="xbox.system.resources">
+          <mx:XboxSystemResources />
+        </mx:Extension>
+      </Extensions>
+    </Application>
+    <Application Id="Release" Executable="GameSaveXDKRelease.exe" EntryPoint="GameSave.App">
+      <VisualElements DisplayName="Game Save (XDK-Release)" Logo="Assets\Store\LogoX.png" SmallLogo="Assets\Store\SmallLogoX.png" Description="WordGame Game Save Sample" ForegroundText="light" BackgroundColor="#461803">
+        <DefaultTile ShortName="Game Save Sample (XDK)" WideLogo="Assets\Store\WideLogoX.png" />
+        <SplashScreen Image="Assets\Store\SplashScreenX.png" />
+      </VisualElements>
+      <Extensions>
+        <mx:Extension Category="xbox.live">
+          <mx:XboxLive TitleId="2FC77605" PrimaryServiceConfigId="66cd0100-f948-49b1-814d-c1132fc77605" />
+        </mx:Extension>
+        <mx:Extension Category="xbox.system.resources">
+          <mx:XboxSystemResources />
+        </mx:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClientServer" />
+  </Capabilities>
+  <Extensions>
+    <mx:PackageExtension Category="windows.kinect">
+      <mx:Kinect IsVersionLocked="false">
+        <mx:AudioPipeline Version="1.14.8" />
+        <mx:SpeechPipeline Version="1.14.8" />
+        <mx:VisionPipeline Version="1.14.8" />
+      </mx:Kinect>
+    </mx:PackageExtension>
+  </Extensions>
+</Package>

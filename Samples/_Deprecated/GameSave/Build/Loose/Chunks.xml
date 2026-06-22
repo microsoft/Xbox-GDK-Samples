@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package>
+  <Chunk Id="1000" Marker="Launch">
+    <FileGroup DestinationPath="\" SourcePath=".\" Include="*.exe"/>
+    <FileGroup DestinationPath="\" SourcePath=".\" Include="*.xml"/>
+    <FileGroup DestinationPath="\" SourcePath=".\" Include="*.bin"/>
+    <FileGroup DestinationPath="\" SourcePath=".\" Include="*.pri"/>
+
+    <FileGroup DestinationPath="\Assets"             SourcePath="Assets"              Include="*.*"/>
+    <FileGroup DestinationPath="\Assets\Board"       SourcePath="Assets\Board"        Include="*.*"/>
+    <FileGroup DestinationPath="\Assets\Buttons"     SourcePath="Assets\Buttons"      Include="*.*"/>
+    <FileGroup DestinationPath="\Assets\Controller"  SourcePath="Assets\Controller"   Include="*.*"/>
+    <FileGroup DestinationPath="\Assets\Fonts"       SourcePath="Assets\Fonts"        Include="*.*"/>
+    <FileGroup DestinationPath="\Assets\Store"       SourcePath="Assets\Store"        Include="*.*"/>
+  </Chunk>
+  <Chunk Id="1073741823">
+    <FileGroup DestinationPath="\" SourcePath=".\" Include="Update.AlignmentChunk"/>
+  </Chunk> 
+</Package>
+

@@ -1,32 +1,87 @@
----
-page_type: sample
-languages:
-- cpp
-products:
-- gdk
-urlFragment: "antialiasing"
-extendedZipContent:
-- path: LICENSE
-  target: LICENSE
-- path: Kits
-  target: Kits
-- path: Media
-  target: Media
-description: "This sample shows different antialiasing methods (SMAA, SMAA2x, and FXAA) on Xbox."
----
+  ![](./media/image1.png)
 
-# Antialiasing
+# Antialiasing Sample
 
-For more information see: 
-- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Graphics/Antialiasing/readme_en-us.md)
-- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Graphics/Antialiasing/readme_ja-jp.md)
-- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Graphics/Antialiasing/readme_ko-kr.md)
-- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Graphics/Antialiasing/readme_zh-cn.md)
+*This sample is compatible with the Microsoft Game Development Kit
+(March 2022)*
 
-## Privacy statement
+# Description
 
-For more information about Microsoft's privacy policies in general, see the [Microsoft Privacy Statement](https://privacy.microsoft.com/privacystatement/).
+This sample shows different antialiasing methods (SMAA, SMAA2x, and FXAA).
 
-## Trademarks
+![](./media/image2.jpeg)
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
+# Building the sample
+
+If using an Xbox One devkit, set the active solution platform to `Gaming.Xbox.XboxOne.x64`.
+
+If using the Xbox Series X|S devkit, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
+
+*For more information, see* __Running samples__, *in the GDK documentation.*
+
+# Using the sample
+
+| Action                                |  Gamepad                      |
+|---------------------------------------|------------------------------|
+| Cycle AA techniques                   |  A button / X button          |
+| Toggle hardware AA                    |  B button                     |
+| Cycle MSAA count                      |  Y button                     |
+| Select SMAA edge detection technique  |  DPad Left, Down, Right       |
+| Rotate view                           |  Left thumbstick              |
+| Reset view                            |  Left thumbstick (click)      |
+| Exit                                  |  View Button                  |
+
+# Implementation notes
+
+This sample implements post-processing shader techniques for
+anti-aliasing.
+
+## SMAA
+
+The SMAA algorithm is explained in detail at
+<http://www.iryoku.com/smaa/>. The scene is rendered and passed to the
+algorithm which is executed in 3 passes:
+
+-   Edge Detection Pass: This can be done using depth, luma or color
+    values. Depth runs the fastest and gives better results.
+
+-   Blending Weight Pass
+
+-   Neighborhood Blending Pass
+
+For SMAA 2x the scene is first rendered using MSAA 2x and then the above
+passes are run separately for each of the mesh renders generated from
+the multi-sample.
+
+## FXAA
+
+Just render the scene and pass it off to the shader. The FXAA algorithm
+is explained in detail at
+<http://developer.download.nvidia.com/assets/gamedev/files/sdk/11/FXAA_WhitePaper.pdf>.
+
+*See the MiniEngine demo for an implementation of FXAA using
+DirectCompute*.
+
+***Be sure to read ThirdPartyNotices.txt if you wish to implement these
+techniques in your title.***
+
+See the **SimpleMSAA** sample for a demonstration of the basics of using
+the built-it multi-sampling hardware, and **Multisampling** for more
+detailed exploration of MSAA.
+
+# Update history
+
+The original version of the sample was written using the XSF-based
+framework. It was rewritten to use the ATG sample templates in June
+2020.
+
+# Privacy Statement
+
+When compiling and running a sample, the file name of the sample
+executable will be sent to Microsoft to help track sample usage. To
+opt-out of this data collection, you can remove the block of code in
+Main.cpp labeled "Sample Usage Telemetry".
+
+For more information about Microsoft's privacy policies in general, see
+the [Microsoft Privacy
+Statement](https://privacy.microsoft.com/en-us/privacystatement/).

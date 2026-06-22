@@ -1,0 +1,37 @@
+{
+  "prefab": 
+  {
+    "classId": "Panel",
+    "id": "LaunchTextEntryLayoutPanel",
+    "positioningAnchor": [ "center", "middle" ],
+    "sizingAnchor": [ "center", "middle" ],
+    "size": [1920, 64],
+    "styleId": "invisible_panel_style",
+    "subElements":
+    [
+      {
+        "classId": "Panel",
+        "id": "LaunchTextEntryBorderPanel",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [1800, 56],
+        "position": [60, 4],
+        "styleId": "basic_button_style",
+        "focusable": true,
+        "subElements":
+        [
+          {
+            "classId": "StaticText",
+            "id": "LaunchTextEntryStaticText",
+            "positioningAnchor": [ "center", "middle" ],
+            "sizingAnchor": [ "center", "middle" ],
+            "text": "Launch Text Entry Default Text Value",
+            "styleId": "entry_text_style",
+            "size": [1790, 28],
+            "position": [10, 2]
+          }
+        ]
+      }
+    ]
+  }
+}

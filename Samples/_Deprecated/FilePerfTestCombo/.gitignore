@@ -1,0 +1,6 @@
+#special section for FilePerfTestCombo
+FileData/*
+ZipData_*/*
+ReadSets/*
+LayoutSets/*
+*.packed

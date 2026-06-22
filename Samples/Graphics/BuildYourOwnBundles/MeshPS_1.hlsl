@@ -1,0 +1,8 @@
+#include "MeshPS.hlsli"
+
+[ROOT_SIGNATURE_MESH]
+float4 main(PSInput psIn) : SV_TARGET0
+{
+	float4 color = MainMeshPS(psIn);
+	return color * float4(70.f/256.f, 150.0f/256.f, 156.f/256.f, 1.0f);
+}

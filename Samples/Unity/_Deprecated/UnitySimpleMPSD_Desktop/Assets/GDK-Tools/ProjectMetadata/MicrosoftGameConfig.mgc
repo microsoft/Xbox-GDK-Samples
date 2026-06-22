@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Game configVersion="1">
+  <!-- For more information on MicrosoftGame.config elements,
+       please refer to online GDK documentation found at https://aka.ms/GDK_MSGC
+       or the MicrosoftGame.config topic in the System section of the offline GDK documentation. -->
+  <Identity 
+    Name="41336MicrosoftATG.SimpleCrossGenMPSD" 
+    Publisher="CN=A4954634-DF4B-47C7-AB70-D3215D246AF1" 
+    Version="1.1.0.0" />
+  <ShellVisuals 
+    DefaultDisplayName="UnitySimpleMPSD_Desktop" 
+    PublisherDisplayName="Xbox Advanced Technology Group" 
+    StoreLogo="StoreLogo.png" 
+    Square150x150Logo="Logo.png" 
+    Square44x44Logo="SmallLogo.png" 
+    Square480x480Logo="LargeLogo.png" 
+    Description="Unity Simple MPSD for Desktop" 
+    ForegroundText="light" BackgroundColor="#000040" 
+    SplashScreenImage="SplashScreen.png" />
+  <ExecutableList>
+    <Executable 
+      Name="UnitySimpleMPSD_Desktop.exe" 
+      Id="Game" 
+      TargetDeviceFamily="PC" />
+    <!--    TargetDeviceFamily="PC"
+            IsDevOnly="false" | IsDevOnly specifies if is a Development only executable.
+            OverrideDisplayName="Xbox Game Override"
+            OverrideLogo="GraphicsLogoOverride.png"
+            OverrideSquare44x44Logo="SmallLogoOverride.png"
+            OverrideSplashScreenImage="SplashScreenOverride.png" -->
+  </ExecutableList>
+  <!-- <StoreId>000000000000</StoreId> | StoreID specifies the store identity of this title. -->
+  <StoreId>9N659P9449HR</StoreId>
+  <MSAAppId>000000004C5CA94C</MSAAppId>
+  <TitleId>799A2E03</TitleId>
+  <!-- <Resources> | Resources is a list of Language Locale pairs used to localize Shell Visuals.
+        <Resource Language="en-us"/>
+        <Resource Language="de-de"/>
+        <Resource Language="es-mx"/>
+  </Resources> -->
+  <!-- <DesktopRegistration>
+      <CustomInstallActions> | CustomInstallActions specifies a custom installer action with Administrator privileges the first time your game runs.
+        <Folder>Installers</Folder>
+        <InstallActionList>
+          <InstallAction File="CustomInstaller.exe" Name="UniqueInstallTaskName" Arguments="/silent /example" />
+        </InstallActionList>
+      </CustomInstallActions>
+      <DependencyList> | DependencyList determines which framework packages need to be installed before installing the title package.
+        <Dependency Name="Microsoft.DirectXRuntime" MinVersion="9.29.952.0"/>
+      </DependencyList>
+      <ProcessorArchitecture>x64</ProcessorArchitecture> | ProcessorArchitecture specifies the processor architecture that matches your game executables.
+      <ModFolder Name="Xbox Game"/> | ModFolder defines the location of end-user mods for your game files.
+  </DesktopRegistration> -->
+  <ExtendedAttributeList>
+    <ExtendedAttribute Name="SandboxIds" Value="XDKS.1" />
+    <ExtendedAttribute Name="Scid" Value="00000000-0000-0000-0000-0000790907e2" />
+  </ExtendedAttributeList>
+  <DesktopRegistration>
+    <ProcessorArchitecture>x64</ProcessorArchitecture>
+    <DependencyList>
+      <KnownDependency Name="VC14" />
+    </DependencyList>
+    <MultiplayerProtocol Executable="UnitySimpleMPSD_Desktop.exe">true</MultiplayerProtocol>
+  </DesktopRegistration>
+  <AdvancedUserModel>true</AdvancedUserModel>
+  <DevelopmentOnly>
+    <ContentIdOverride>00000000-0000-0000-0000-000000000000</ContentIdOverride>
+  </DevelopmentOnly>
+</Game>

@@ -1,0 +1,472 @@
+﻿@page
+@model DevkitStateModel
+@{
+    ViewData["Title"] = "Xbox DevKit Agent Server Sample";
+}
+
+<style>
+    .col {
+        border: 2px outset black;
+        text-align: left;
+    }
+</style>
+
+<style>
+    .subrow {
+        border: 2px outset black;
+        text-align: left;
+    }
+</style>
+
+<style>
+    .selectedDevkitCellColor {
+        background-color: aqua;
+    }
+</style>
+
+<p>
+    <button onClick="window.location.reload();">Refresh Page</button>
+</p>
+
+<div class="DevkitStatePage">
+    <div class="row">
+        <div class="col">
+            <h4><u>Xbox Development Kits</u></h4>
+            <div class="LinkedDevkits">
+                @if(Model.XboxAgentDevkits.Count > 0)
+                {
+                    <table>
+                        <tr>
+                            <th scope="col">Host Name</th>
+                            <th scope="col">IP Address</th>
+                        </tr>
+                        @foreach (var item in Model.XboxAgentDevkits)
+                        {
+                            if (Model.SelectedDevkit != null &&
+                               item.DeveloperDeviceId == Model.SelectedDevkit.DeveloperDeviceId)
+                            {
+                                <tr class="selectedDevkitCellColor">
+                                    <td><a asp-page="./DevkitState" asp-route-id="@item.DeveloperDeviceId">@Html.DisplayFor(modelItem => item.HostName)</a></td>
+                                    <td>@Html.DisplayFor(modelItem => item.IpAddress)</td>
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td><a asp-page="./DevkitState" asp-route-id="@item.DeveloperDeviceId">@Html.DisplayFor(modelItem => item.HostName)</a></td>
+                                    <td>@Html.DisplayFor(modelItem => item.IpAddress)</td>
+                                </tr>
+                            }
+                        }
+                    </table>
+                }
+                else
+                {
+                    <p>Waiting for Xbox Agents to connect.</p>
+                }
+            </div>
+            
+            <br />
+
+            <h4><u>HeartbeatRequest</u></h4>
+            <div class="HeartbeatRequest">
+                @if (Model.SelectedDevkit == null)
+                {
+                    <p> Please select a devkit agent to view the last heartbeat request </p>
+                }
+                else
+                {
+                    <table>
+                        <tr>
+                            <th scope="row">Host Name</th>
+                            <td>@Html.DisplayFor(modelItem => Model.SelectedDevkit.DevkitInfo.HostName)</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">IP Address</th>
+                            <td>@Html.DisplayFor(modelItem => Model.SelectedDevkit.DevkitInfo.IpAddress)</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Developer Device ID</th>
+                            <td>@Html.DisplayFor(modelItem => Model.SelectedDevkit.DevkitInfo.DeveloperDeviceId)</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Console Type</th>
+                            <td>@Html.DisplayFor(modelItem => Model.SelectedDevkit.DevkitInfo.ConsoleType)</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">OS Version</th>
+                            <td>@Html.DisplayFor(modelItem => Model.SelectedDevkit.DevkitInfo.OsVersion)</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Uptime</th>
+                            <td>@Html.DisplayFor(modelItem => Model.SelectedDevkit.DevkitInfo.Uptime)</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Running Application ID</th>
+                            <td>@Html.DisplayFor(modelItem => Model.SelectedDevkit.DevkitInfo.RunningApplicationId)</td>
+                        </tr>
+                        @if (Model.SelectedDevkit.LatestAgentState != null)
+                        {
+                            <tr>
+                                <th scope="row">Active Job ID</th>
+                                <td>@Html.DisplayFor(modelItem => Model.SelectedDevkit.LatestAgentState.ActiveJobId)</td>
+                            </tr>
+                        }
+                    </table>
+                }               
+            </div>
+            <p></p>
+        </div>
+
+        <div class="col">
+            @if (Model.SelectedDevkit != null)
+            {              
+                <h3>
+                    @Html.DisplayFor(modelItem => Model.SelectedDevkit.DevkitInfo.HostName)     
+                    (@Html.DisplayFor(modelItem => Model.SelectedDevkit.DevkitInfo.IpAddress))
+                </h3>
+
+                <div class="SelectJob" style='width:400px'>
+
+                    <!-- Trigger the modal with a button -->
+                    <button type="button" class="ExecuteCommandModal" data-toggle="modal" data-target="#ExecuteCommandModal">Execute Command</button>
+
+                    <!-- Modal -->
+                    <div id="ExecuteCommandModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <form method="post">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title"> Execute Command</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="text" asp-for="CommandString"/>
+                                        <br>
+                                            <input type="checkbox" 
+                                            asp-for="CommandWaitForExit"
+                                            name="CommandWaitForExit"
+                                            checked />
+                                            <label for="WaitForExitCheckBox">Wait for command exit</label>
+                                        <br/>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <input type="submit" value="Execute" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <br>
+                    <br>
+                    @* Download a file to the kit's d:/temp/ drive *@
+                    <button type="button" class="DownloadFileModal" data-toggle="modal" data-target="#DownloadFileModal">Download File to Devkit</button>
+
+                    <!-- Modal -->
+                    <div id="DownloadFileModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <form method="post">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Download file to devkit</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        File URL to download:
+                                        <input type="text" asp-for="FileDownloadURI" value="https://" />
+                                        <br>
+                                        Destination directory on devkit:
+                                        <br>
+                                        D:\
+                                        <input type="text" asp-for="FileDestination" value="temp" />
+                                        <br>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <input type="submit" value="Download to Devkit" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <br>
+                    <br>
+                    
+                    <form method="post">
+                        <button type="submit" 
+                            asp-page="./DevkitState" 
+                            asp-route-id="@Model.SelectedDevkit.DeveloperDeviceId"
+                            asp-route-cancelJob="true">Cancel Current Job</button>
+                    </form>
+                </div>
+                <br />
+            }
+            else
+            {
+                <p> Awaiting connected devkit agents </p>
+            }
+
+            <p></p>
+
+            <h4><u>Next Job Queued</u></h4>
+            <div class="NextJob">
+                    @if (Model.SelectedDevkit != null &&
+                   Model.SelectedDevkit.NextJob != null)
+                    {
+                        <table>
+                            <tr>
+                                <th scope="row">Job ID</th>
+                                <td>@Html.DisplayFor(modelItem => Model.SelectedDevkit.NextJob.Id)</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Job Type</th>
+                                <td>@Html.DisplayFor(modelItem => Model.SelectedDevkit.NextJob.JobType)</td>
+                            </tr>
+
+                            @if (Model.SelectedDevkit.NextJob.JobType == Xbox.AgentProtocol.JobType.ExecuteCommandJob &&
+                           Model.SelectedDevkit.NextJob.ExecuteCommandJob != null)
+                            {
+                                <tr>
+                                    <th scope="row">Command</th>
+                                    <td>@Html.DisplayFor(modelItem => Model.SelectedDevkit.NextJob.ExecuteCommandJob.CommandLine)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Working directory</th>
+                                    <td>@Html.DisplayFor(modelItem => Model.SelectedDevkit.NextJob.ExecuteCommandJob.WorkingDirectory)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Will reboot devkit</th>
+                                    <td>@Html.DisplayFor(modelItem => Model.SelectedDevkit.NextJob.ExecuteCommandJob.WillReboot)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Wait for exit</th>
+                                    <td>@Html.DisplayFor(modelItem => Model.SelectedDevkit.NextJob.ExecuteCommandJob.WaitForExit)</td>
+                                </tr>
+                            }
+                            else if (Model.SelectedDevkit.NextJob.JobType == Xbox.AgentProtocol.JobType.UploadFilesJob &&
+                            Model.SelectedDevkit.NextJob.UploadFilesJob != null)
+                            {
+                                <tr>
+                                    <th scope="row">Files</th>
+                                    <td>
+                                        @foreach (var item in Model.SelectedDevkit.NextJob.UploadFilesJob.Files)
+                                        {
+                                            @Html.DisplayFor(modelItem => item.Source)
+                                            <br />
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                            else if (Model.SelectedDevkit.NextJob.JobType == Xbox.AgentProtocol.JobType.DownloadFilesJob &&
+                            Model.SelectedDevkit.NextJob.DownloadFilesJob != null)
+                            {
+                                <tr>
+                                    <th scope="row">Files</th>
+                                    <td>
+                                        @foreach (var item in Model.SelectedDevkit.NextJob.DownloadFilesJob.Files)
+                                        {
+                                            @Html.DisplayFor(modelItem => item.Source)
+                                            <br />
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    }
+                    else
+                    {
+                        <p>No jobs queued for current devkit</p>
+                    }
+                </div>
+            
+
+            <p></p>
+
+
+                <h4><u>Current Job</u></h4>
+                <div class="PendingJob">
+                    @if (Model.SelectedDevkit != null &&
+                  Model.SelectedDevkit.PendingJob != null)
+                    {
+                        <table>
+                            <tr>
+                                <th scope="row">Job ID</th>
+                                <td>@Html.DisplayFor(modelItem => Model.SelectedDevkit.PendingJob.Id)</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Job Type</th>
+                                <td>@Html.DisplayFor(modelItem => Model.SelectedDevkit.PendingJob.JobType)</td>
+                            </tr>
+
+                            @if (Model.SelectedDevkit.PendingJob.JobType == Xbox.AgentProtocol.JobType.ExecuteCommandJob &&
+                           Model.SelectedDevkit.PendingJob.ExecuteCommandJob != null)
+                            {
+                                <tr>
+                                    <th scope="row">Command</th>
+                                    <td>@Html.DisplayFor(modelItem => Model.SelectedDevkit.PendingJob.ExecuteCommandJob.CommandLine)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Working directory</th>
+                                    <td>@Html.DisplayFor(modelItem => Model.SelectedDevkit.PendingJob.ExecuteCommandJob.WorkingDirectory)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Will reboot devkit</th>
+                                    <td>@Html.DisplayFor(modelItem => Model.SelectedDevkit.PendingJob.ExecuteCommandJob.WillReboot)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Wait for exit</th>
+                                    <td>@Html.DisplayFor(modelItem => Model.SelectedDevkit.PendingJob.ExecuteCommandJob.WaitForExit)</td>
+                                </tr>
+                            }
+                            else if (Model.SelectedDevkit.PendingJob.JobType == Xbox.AgentProtocol.JobType.UploadFilesJob &&
+                                     Model.SelectedDevkit.PendingJob.UploadFilesJob != null)
+                            {
+                                <tr>
+                                    <th scope="row">Files</th>
+                                    <td>
+                                        @foreach (var item in Model.SelectedDevkit.PendingJob.UploadFilesJob.Files)
+                                        {
+                                            @Html.DisplayFor(modelItem => item.Source)
+                                            <br />
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                            else if (Model.SelectedDevkit.PendingJob.JobType == Xbox.AgentProtocol.JobType.DownloadFilesJob &&
+                                     Model.SelectedDevkit.PendingJob.DownloadFilesJob != null)
+                            {
+                                <tr>
+                                    <th scope="row">Files</th>
+                                    <td>
+                                        @foreach (var item in Model.SelectedDevkit.PendingJob.DownloadFilesJob.Files)
+                                        {
+                                            @Html.DisplayFor(modelItem => item.Source)
+                                            <br />
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    }
+                    else
+                    {
+                        <p>No current jobs running</p>
+                    }
+                </div>
+            
+
+            <p></p>
+
+
+                <h4><u>Last Processed Job Result</u></h4>
+                <div class="LastJobResults">
+                    @if (Model.SelectedDevkit != null &&
+                       Model.SelectedDevkit.LastJobResult != null)
+                    {
+                        <table>
+                            <tr>
+                                <th scope="row">Job ID</th>
+                                <td>@Html.DisplayFor(modelItem => Model.SelectedDevkit.LastJobResult.Id)</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Job Type</th>
+                                <td>@Html.DisplayFor(modelItem => Model.SelectedDevkit.LastJobResult.JobType)</td>
+                            </tr>
+
+                            @if (Model.SelectedDevkit.LastJobResult.JobType == Xbox.AgentProtocol.JobType.ExecuteCommandJob &&
+                          Model.SelectedDevkit.LastJobResult.ExecuteCommandJobResult != null)
+                            {
+                                <tr>
+                                    <th scope="row">Command</th>
+                                    <td>@Html.DisplayFor(modelItem => Model.SelectedDevkit.LastJobResult.ExecuteCommandJobResult.Job.CommandLine)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Working Directory</th>
+                                    <td>@Html.DisplayFor(modelItem => Model.SelectedDevkit.LastJobResult.ExecuteCommandJobResult.Job.WorkingDirectory)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Exit Code</th>
+                                    <td>@Html.DisplayFor(modelItem => Model.SelectedDevkit.LastJobResult.ExecuteCommandJobResult.ExitCode)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" valign="top">Command Output</th>
+                                    <td>@Html.DisplayFor(modelItem => Model.SelectedDevkit.LastJobResult.ExecuteCommandJobResult.CommandOutput)</td>
+                                </tr>
+                            }
+                            else if (Model.SelectedDevkit.LastJobResult.JobType == Xbox.AgentProtocol.JobType.UploadFilesJob &&
+                                     Model.SelectedDevkit.LastJobResult.UploadFilesJobResult != null)
+                            {
+                                if (Model.SelectedDevkit.LastJobResult.UploadFilesJobResult.FailedFileUploadResults != null)
+                                {
+                                    <tr>
+                                        <th>File Upload Errors</th>
+                                        <td>Source</td>
+                                    </tr>
+                                    @foreach (var item in Model.SelectedDevkit.LastJobResult.UploadFilesJobResult.FailedFileUploadResults)
+                                    {
+                                        <tr>
+                                            <th>@Html.DisplayFor(modelItem => item.ErrorMessage)</th>
+                                            <td>@Html.DisplayFor(modelItem => item.Source)</td>
+                                        </tr>
+                                    }
+                                }
+                                <tr>
+                                    <th scope="row">Files</th>
+                                    <td>
+                                        @foreach (var item in Model.SelectedDevkit.LastJobResult.UploadFilesJobResult.Job.Files)
+                                        {
+                                            @Html.DisplayFor(modelItem => item.Source)
+                                            <br />
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                            else if (Model.SelectedDevkit.LastJobResult.JobType == Xbox.AgentProtocol.JobType.DownloadFilesJob &&
+                                     Model.SelectedDevkit.LastJobResult.DownloadFilesJobResult != null)
+                            {
+                                 <tr>
+                                    <th scope="row">Files downloaded</th>
+                                    <td>
+                                        @foreach (var item in Model.SelectedDevkit.LastJobResult.DownloadFilesJobResult.Job.Files)
+                                        {
+                                            @Html.DisplayFor(modelItem => item.Source)
+                                            <br />
+                                        }
+                                    </td>
+                                </tr>
+
+                                if (Model.SelectedDevkit.LastJobResult.DownloadFilesJobResult.FailedFileDownloadResults.Count > 0)
+                                {
+                                    <tr>
+                                        <th>Errors</th>
+                                        <td></td>
+                                    </tr>
+                                    @foreach (var item in Model.SelectedDevkit.LastJobResult.DownloadFilesJobResult.FailedFileDownloadResults)
+                                    {
+                                        <tr>
+                                            <th></th>
+                                            <td>@Html.DisplayFor(modelItem => item.ErrorMessage)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Source)</td>
+                                        </tr>
+                                    }
+                                }
+
+                               
+                            }
+                        </table>
+                    }
+                    else
+                    {
+                        <p>No results yet</p>
+                    }
+
+                </div>
+            <p></p>
+        </div>
+    </div>
+</div>

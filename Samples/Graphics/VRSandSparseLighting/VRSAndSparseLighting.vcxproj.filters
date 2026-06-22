@@ -1,0 +1,301 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>b7988040-18ec-4a5b-936f-908e3ea72b31</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>5051341a-4b90-4fbf-a955-853826cf1a2e</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>f381de04-feda-422d-93ad-e34b519d581c</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>549d4c30-f958-4fb5-a2c6-7cd15603c046</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{948f0637-cb03-41d7-9a53-b5051a102554}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Terrain">
+      <UniqueIdentifier>{8d875cb4-1c02-4fea-a7ca-7b552dbee9d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Terrain">
+      <UniqueIdentifier>{f103aad6-d4cb-4b1e-af33-817b0642ab5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\VRS">
+      <UniqueIdentifier>{c0a9475e-3df4-4f2e-bbf5-b74b76453c2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\VRS\Debug">
+      <UniqueIdentifier>{2092523a-1c47-45c7-bfed-67982cb7fabf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Terrain\Common">
+      <UniqueIdentifier>{548a2e4e-9c54-4490-9745-81c94e2e4fd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Terrain\Generate">
+      <UniqueIdentifier>{7011c781-cf77-4a09-a3bb-3cb4e0b812fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Terrain\Render">
+      <UniqueIdentifier>{9c1fb1ef-1731-4c8a-a2dd-f1da31d462e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Terrain\Visibility">
+      <UniqueIdentifier>{c164d778-b7f2-4763-a3e7-0fb6ce5319c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Sky">
+      <UniqueIdentifier>{354c7328-8b20-4522-a8b2-1dcf09ce87e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Post Processing">
+      <UniqueIdentifier>{dc367133-2043-4b2c-8d5b-55a5efa311b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Deferred/Sparse Lighting">
+      <UniqueIdentifier>{f7da0556-e518-4908-abe3-185a15ea8f3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Deferred/Sparse Lighting\Debug">
+      <UniqueIdentifier>{62101cfd-f687-419f-9336-ccbf4ffc6051}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Deferred/Sparse Lighting\Common">
+      <UniqueIdentifier>{f4f256d9-f8ff-46f6-8a3a-3460e22fd62b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Deferred/Sparse Lighting\CompileHelpers">
+      <UniqueIdentifier>{286d8195-c947-48a7-8c3a-2d81dc1c4859}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Post Processing\Deblocker">
+      <UniqueIdentifier>{da7ca6e1-3c70-4429-ac0f-5c01d6b3aede}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Utility">
+      <UniqueIdentifier>{329bc179-ea2c-4bba-a257-070d3d548d4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Post Processing\Debug">
+      <UniqueIdentifier>{f23b01fd-a680-4a12-bb44-f442b28dc394}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Depth Decode And Build Sparse Buffers">
+      <UniqueIdentifier>{4edc17cc-ad43-4b09-a202-9bc602df5264}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Depth Decode And Build Sparse Buffers\Common">
+      <UniqueIdentifier>{80734e5b-fe81-490b-8828-00576e8577e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\VRS\CompileHelpers">
+      <UniqueIdentifier>{a96f0dd5-5d65-4c9a-a280-9ae57ca0e8cd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="VRSAndSparseLighting.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\Json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h">
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ReadData.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\PerformanceTimersXbox.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="DPadUI.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="VRSAndSparseLighting.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="TerrainCreateResources.cpp">
+      <Filter>Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="TerrainGenerate.cpp">
+      <Filter>Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="TerrainIndexBuffer.cpp">
+      <Filter>Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="TerrainRender.cpp">
+      <Filter>Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\PerformanceTimersXbox.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="DPadUI.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\VisualizeShadingRatePS.hlsl">
+      <Filter>Shaders\VRS\Debug</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TerrainCompute8x8maxY.hlsl">
+      <Filter>Shaders\Terrain\Generate</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TerrainCompute16x16maxY.hlsl">
+      <Filter>Shaders\Terrain\Generate</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TerrainComputeAABBandNormalsCS.hlsl">
+      <Filter>Shaders\Terrain\Generate</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TerrainGenerateCS.hlsl">
+      <Filter>Shaders\Terrain\Generate</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TerrainInitAABBCS.hlsl">
+      <Filter>Shaders\Terrain\Generate</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TerrainSmoothCS.hlsl">
+      <Filter>Shaders\Terrain\Generate</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TerrainRenderPS.hlsl">
+      <Filter>Shaders\Terrain\Render</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TerrainRenderVS.hlsl">
+      <Filter>Shaders\Terrain\Render</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TerrainVisibilityCS.hlsl">
+      <Filter>Shaders\Terrain\Visibility</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\GenerateShadingRateCS.hlsl">
+      <Filter>Shaders\VRS</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\DepthDecompress.hlsl">
+      <Filter>Shaders\Depth Decode And Build Sparse Buffers</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SparseLightingShowPixelCopiesCS.hlsl">
+      <Filter>Shaders\Deferred/Sparse Lighting\Debug</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\DepthDecompressAndBuildSparseBuffersCS.hlsl">
+      <Filter>Shaders\Depth Decode And Build Sparse Buffers</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SparseLightingShowCountMapPS.hlsl">
+      <Filter>Shaders\Deferred/Sparse Lighting\Debug</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\DeferredLightingCS.hlsl">
+      <Filter>Shaders\Deferred/Sparse Lighting\CompileHelpers</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SparseLightingCS.hlsl">
+      <Filter>Shaders\Deferred/Sparse Lighting\CompileHelpers</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SkyRenderPS.hlsl">
+      <Filter>Shaders\Sky</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\DeblockAndTonemapCS.hlsl">
+      <Filter>Shaders\Post Processing</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\ToneMapCS.hlsl">
+      <Filter>Shaders\Post Processing</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\DeblockCS.hlsl">
+      <Filter>Shaders\Post Processing</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\FullScreenTriangleVS.hlsl">
+      <Filter>Shaders\Utility</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\BuildSparseBuffersCS.hlsl">
+      <Filter>Shaders\Depth Decode And Build Sparse Buffers</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\VisualizeCoveragePS.hlsl">
+      <Filter>Shaders\VRS\Debug</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\ZoomCopy0CS.hlsl">
+      <Filter>Shaders\Post Processing\Debug</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\ZoomCopy1CS.hlsl">
+      <Filter>Shaders\Post Processing\Debug</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\GenerateShadingRateDepthDiscontinuityCheckCS.hlsl">
+      <Filter>Shaders\VRS\CompileHelpers</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Media\Fonts\Courier_36.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Shaders\TerrainGlobal.hlsli">
+      <Filter>Shaders\Terrain\Common</Filter>
+    </None>
+    <None Include="Shaders\TerrainRaycast.hlsli">
+      <Filter>Shaders\Terrain\Render</Filter>
+    </None>
+    <None Include="Readme_ja-JP.docx" />
+    <None Include="Readme_ko-KR.docx" />
+    <None Include="Readme_zh-CN.docx" />
+    <None Include="Readme.docx" />
+    <None Include="Shaders\DepthDecompressUtility.hlsli">
+      <Filter>Shaders\Depth Decode And Build Sparse Buffers\Common</Filter>
+    </None>
+    <None Include="Shaders\DeferredCommon.hlsli">
+      <Filter>Shaders\Deferred/Sparse Lighting\Common</Filter>
+    </None>
+    <None Include="Shaders\SparseLightingCommon.hlsli">
+      <Filter>Shaders\Deferred/Sparse Lighting\Common</Filter>
+    </None>
+    <None Include="Shaders\LightingShader.hlsli">
+      <Filter>Shaders\Deferred/Sparse Lighting</Filter>
+    </None>
+    <None Include="Shaders\AtmosphericScattering.hlsli">
+      <Filter>Shaders\Sky</Filter>
+    </None>
+    <None Include="Shaders\Deblock.hlsli">
+      <Filter>Shaders\Post Processing\Deblocker</Filter>
+    </None>
+    <None Include="Shaders\Global.hlsli">
+      <Filter>Shaders\Utility</Filter>
+    </None>
+    <None Include="Shaders\ComputeShaderQuads.hlsli">
+      <Filter>Shaders\Utility</Filter>
+    </None>
+    <None Include="Shaders\BuildSparseBuffersCommon.hlsli">
+      <Filter>Shaders\Depth Decode And Build Sparse Buffers\Common</Filter>
+    </None>
+    <None Include="Shaders\ZoomCopy.hlsli">
+      <Filter>Shaders\Post Processing\Debug</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Distribute" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <!-- Set up the BranchRoot property for use in directory path computations -->
+    <BranchRoot>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), Branch.props))\</BranchRoot>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Specifies the root directory for the branch distribution -->
+    <DistRoot>$(BranchRoot)LocalDist\</DistRoot>
+
+    <!-- Specifies how a file will be placed in the GitHub distribution outlet -->
+    <GitHubPathTemplate Condition="'$(TestDistribution)'=='true'">$(DistRoot)Preview\%(Platform)\%(AreaPath)%(DistributionName)\%(RelativePath)</GitHubPathTemplate>
+    <GitHubPathTemplate Condition="'$(TestDistribution)'!='true' AND '$(SelfContainedSamples)' == 'true'">$(DistRoot)%(Outlet)\%(Platform)\%(AreaPath)%(DistributionName)\%(RelativePath)</GitHubPathTemplate>
+    <GitHubPathTemplate Condition="'$(GitHubPathTemplate)' == ''">$(DistRoot)%(Outlet)\Samples\%(DefaultAreaPath)%(DistributionName)\%(DistributionFilePath)</GitHubPathTemplate>
+
+    <!-- Specifies how a file will be placed in the GitPrivate distribution outlet -->
+    <GitPrivatePathTemplate Condition="'$(TestDistribution)'=='true'">$(DistRoot)Preview\%(Platform)\%(AreaPath)%(DistributionName)\%(RelativePath)</GitPrivatePathTemplate>
+    <GitPrivatePathTemplate Condition="'$(TestDistribution)'!='true' AND '$(SelfContainedSamples)' == 'true'">$(DistRoot)%(Outlet)\%(Platform)\%(AreaPath)%(DistributionName)\%(RelativePath)</GitPrivatePathTemplate>
+    <GitPrivatePathTemplate Condition="'$(GitPrivatePathTemplate)' == ''">$(DistRoot)%(Outlet)\Samples\%(DefaultAreaPath)%(DistributionName)\%(DistributionFilePath)</GitPrivatePathTemplate>
+
+    <!-- Specifies how a file will be placed in the XGD distribution outlet -->
+    <XGDPathTemplate Condition="'$(TestDistribution)'=='true'">$(DistRoot)Preview\%(Platform)\%(AreaPath)%(DistributionName)\%(RelativePath)</XGDPathTemplate>
+    <XGDPathTemplate Condition="'$(TestDistribution)'!='true' AND '$(SelfContainedSamples)' == 'true'">$(DistRoot)%(Outlet)\%(Platform)\%(AreaPath)%(DistributionName)\%(RelativePath)</XGDPathTemplate>
+    <XGDPathTemplate Condition="'$(XGDPathTemplate)' == ''">$(DistRoot)%(Outlet)\%(FriendlyPlatform)Samples\%(DefaultAreaPath)%(DistributionName)\%(DistributionFilePath)</XGDPathTemplate>
+
+    <!-- Specifies how a file will be placed in the Unity distribution outlet -->
+    <UnityPathTemplate Condition="'$(TestDistribution)'=='true'">$(DistRoot)Preview\%(Platform)\%(AreaPath)%(DistributionName)\%(RelativePath)</UnityPathTemplate>
+    <UnityPathTemplate Condition="'$(TestDistribution)'!='true' AND '$(SelfContainedSamples)' == 'true'">$(DistRoot)%(Outlet)\%(Platform)\%(AreaPath)%(DistributionName)\%(RelativePath)</UnityPathTemplate>
+    <UnityPathTemplate Condition="'$(UnityPathTemplate)' == ''">$(DistRoot)%(Outlet)\%(FriendlyPlatform)Samples\%(DefaultAreaPath)%(DistributionName)\%(DistributionFilePath)</UnityPathTemplate>
+
+    <!-- Specifies how a file will be placed in the TestOnly distribution outlet -->
+    <TestOnlyPathTemplate Condition="'$(TestDistribution)'=='true'">$(DistRoot)TestOnly\%(Platform)\%(AreaPath)%(DistributionName)\%(RelativePath)</TestOnlyPathTemplate>
+    <TestOnlyPathTemplate Condition="'$(TestDistribution)'!='true' AND '$(SelfContainedSamples)' == 'true'">$(DistRoot)%(Outlet)\%(Platform)\%(AreaPath)%(DistributionName)\%(RelativePath)</TestOnlyPathTemplate>
+    <TestOnlyPathTemplate Condition="'$(TestOnlyPathTemplate)' == ''">$(DistRoot)%(Outlet)\%(FriendlyPlatform)Samples\%(DefaultAreaPath)%(DistributionName)\%(DistributionFilePath)</TestOnlyPathTemplate>
+  </PropertyGroup>
+
+  <!--
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      Samples are now organized by area path:
+      To add your sample to the distribution, close this file and then add your sample to the appropriate
+      *.Dist.proj
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  -->
+  <ImportGroup>
+    <Import Condition="Exists('Audio\Audio.Dist.proj')" Project="Audio\Audio.Dist.proj" />
+    <Import Condition="Exists('CodeBlocks\CodeBlocks.Dist.proj')" Project="CodeBlocks\CodeBlocks.Dist.proj"/>
+    <Import Condition="Exists('Graphics\Graphics.Dist.proj')" Project="Graphics\Graphics.Dist.proj"/>
+    <Import Condition="Exists('Handheld\Handheld.Dist.proj')" Project="Handheld\Handheld.Dist.proj"/>
+    <Import Condition="Exists('IntroGraphics\IntroGraphics.Dist.proj')" Project="IntroGraphics\IntroGraphics.Dist.proj"/>
+    <Import Condition="Exists('Live\Live.Dist.proj')" Project="Live\Live.Dist.proj"/>
+    <Import Condition="Exists('System\System.Dist.proj')" Project="System\System.Dist.proj"/>
+    <Import Condition="Exists('Tools\Tools.Dist.proj')" Project="Tools\Tools.Dist.proj"/>
+    <Import Condition="Exists('Unity\Unity.Dist.proj')" Project="Unity\Unity.Dist.proj"/>
+    <Import Condition="Exists('xCloud\xCloud.Dist.proj')" Project="xCloud\xCloud.Dist.proj"/>
+    <Import Condition="Exists('TestOnly\TestOnly.Dist.proj')" Project="TestOnly\TestOnly.Dist.proj"/>
+  </ImportGroup>
+
+  <Import Project="$(BranchRoot)Infrastructure\build\ATGDist_gxdk.targets" />
+
+  <Target Name="Clean">
+    <RemoveDir Directories="$(DistRoot)" />
+  </Target>
+</Project>

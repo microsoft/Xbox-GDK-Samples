@@ -1,32 +1,78 @@
----
-page_type: sample
-languages:
-- cpp
-products:
-- gdk
-urlFragment: "socialmanager"
-extendedZipContent:
-- path: LICENSE
-  target: LICENSE
-- path: Kits
-  target: Kits
-- path: Media
-  target: Media
-description: "This sample demonstrates the Social Manager C-API provided by the Microsoft Gaming SDK (GDK)."
----
+  ![](./media/image1.png)
 
-# SocialManager
+#   SocialManager Sample
 
-For more information see: 
-- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Live/SocialManager/readme_en-us.md)
-- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Live/SocialManager/readme_ja-jp.md)
-- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Live/SocialManager/readme_ko-kr.md)
-- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Live/SocialManager/readme_zh-cn.md)
+*This sample is compatible with the Microsoft GDKX (March 2022)*
 
-## Privacy statement
+# 
 
-For more information about Microsoft's privacy policies in general, see the [Microsoft Privacy Statement](https://privacy.microsoft.com/privacystatement/).
+# Description
 
-## Trademarks
+This sample demonstrates the Social Manager C-API provided by the
+Microsoft Gaming SDK (GDK).
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
+This sample includes scenarios for:
+
+-   Adding users and creating groups
+
+-   Retrieving social groups based on filters
+
+-   Responding to Social Manager events
+
+# Building the sample
+
+-   If using an Xbox One devkit, set the active solution platform to
+    **Gaming.Xbox.XboxOne.x64**.
+
+-   If using an Xbox Series X|S devkit, set the active solution platform
+    to **Gaming.Xbox.Scarlett.x64**.
+
+-   If using a PC, set the active solution platform to
+    **x64**.
+
+*For more information, see* __Running samples__, *in the GDK documentation.*
+
+# Using the sample
+
+The sample is controlled using a standard gamepad or keyboard. The
+bottom of the screen displays the input legend with all available
+actions.
+
+## Sample Screen
+
+![Text Description automatically generated](./media/image3.png)
+
+| Action                      |  Gamepad                                |
+|-----------------------------|----------------------------------------|
+| Change Social Group  |  LB and RB shoulder buttons / Left or Right arrow keys                       |
+| Select User                 |  DPad up/down or Up/Down arrow keys     |
+| View Profile                |  A button or Enter key                  |
+| Refresh UI for current filter |  X Button or F5 key |
+| Sign in user                |  Menu button or Tab key                 |
+| Exit                        |  View Button / ESC key                  |
+
+# Implementation notes
+
+The code that directly interfaces with Social Manager API is
+encapsulated into the SocialManagerIntegration.cpp file.
+
+# Privacy Statement
+
+When compiling and running a sample, the file name of the sample
+executable will be sent to Microsoft to help track sample usage. To
+opt-out of this data collection, you can remove the block of code in
+Main.cpp labeled "Sample Usage Telemetry".
+
+For more information about Microsoft's privacy policies in general, see
+the [Microsoft Privacy
+Statement](https://privacy.microsoft.com/en-us/privacystatement/).
+
+# Update history
+
+September 2019 -- Initial release
+
+February 2022
+
+June 2022 -- March 2022 (and newer) GDK compatibility
+
+August 2024 -- Adding `XblSocialManagerSetRichPresencePollingStatus` in code

@@ -1,0 +1,93 @@
+
+Table SourceLine {
+  Id INTEGER [pk]
+  ModuleId INTEGER
+  SourceFileId INTEGER
+  Offset INTEGER
+  Length INTEGER
+  LineStart INTEGER
+  LineEnd INTEGER
+  ColumnStart INTEGER
+  ColumnEnd INTEGER
+}
+
+Table Modules {
+    Id INTEGER [pk]
+    PEPathId INTEGER
+    PETimestamp INTEGER
+    PESize INTEGER
+    PDBPathId INTEGER
+    PDBGuid INTEGER
+    PDBAge INTEGER
+}
+
+Table FunctionInformation {
+    Id INTEGER [pk]
+    ModuleId INTEGER
+    Offset INTEGER
+    Size INTEGER
+    DecoratedNameId INTEGER
+    MethodToken INTEGER
+}
+
+Table SourceFile {
+    Id INTEGER [pk]
+    SourceFileNameId INTEGER
+    ChecksumType INTEGER
+    Checksum BLOB
+}
+
+Table SymbolStrings {
+    Id INTEGER [pk]
+    Value TEXT
+}
+
+Table Images
+{
+    Id INTEGER [pk]
+    OSProcessId INTEGER
+    PELoadAddress INTEGER [note: 'callstack address is PELoadAddress + offset']
+    LoadSize INTEGER
+    LoadTimestamp INTEGER
+    UnloadTimestamp INTEGER
+    FilePathId INTEGER
+    ModuleId INTEGER
+    XMemFlags INTEGER
+}
+
+Table StackEvents
+{
+    Id INTEGER [pk]
+    OSThreadId INTEGER
+    StartTimestamp INTEGER
+    EndTimestamp INTEGER
+    StackEventData BLOB
+    EventCount INTEGER
+}
+
+Table Stacks
+{
+    Id INTEGER [pk]
+    NumFrames INTEGER
+    Addresses BLOB
+}
+
+Ref: SourceLine.ModuleId - Modules.Id
+Ref: FunctionInformation.ModuleId - Modules.Id
+Ref: SourceLine.SourceFileId - SourceFile.Id
+Ref: FunctionInformation.DecoratedNameId - SymbolStrings.Id
+Ref: SourceFile.SourceFileNameId - SymbolStrings.Id
+Ref: Images.FilePathId - SymbolStrings.Id
+Ref: Images.ModuleId - Modules.Id
+
+TableGroup StackGroup
+{
+    StackEvents
+    Stacks
+}
+
+TableGroup SourceGroup
+{
+    SourceLine
+    SourceFile
+}

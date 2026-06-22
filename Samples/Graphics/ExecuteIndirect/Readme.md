@@ -1,32 +1,62 @@
----
-page_type: sample
-languages:
-- cpp
-products:
-- gdk
-urlFragment: "executeindirect"
-extendedZipContent:
-- path: LICENSE
-  target: LICENSE
-- path: Kits
-  target: Kits
-- path: Media
-  target: Media
-description: "This sample demonstrates usage of DirectX 12's ExecuteIndirect API for asynchronously building rendering commands."
----
+  ![](./media/image1.png)
 
-# ExecuteIndirect
+# ExecuteIndirect Sample
 
-For more information see: 
-- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Graphics/ExecuteIndirect/readme_en-us.md)
-- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Graphics/ExecuteIndirect/readme_ja-jp.md)
-- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Graphics/ExecuteIndirect/readme_ko-kr.md)
-- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Graphics/ExecuteIndirect/readme_zh-cn.md)
+*This sample is compatible with the Microsoft Game Development Kit (March 2022)*
 
-## Privacy statement
+# Description
 
-For more information about Microsoft's privacy policies in general, see the [Microsoft Privacy Statement](https://privacy.microsoft.com/privacystatement/).
+*This sample demonstrates usage of DirectX 12's ExecuteIndirect API for
+asynchronously building rendering commands.*
 
-## Trademarks
+The sample creates a large number of mesh instances, distributed
+randomly in front of the camera. In Direct mode, each mesh instance is
+drawn using a separate draw call. In Indirect mode, the entire "scene"
+is drawn using a single ExecuteIndirect call.
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
+The sample optionally performs frustum culling in either mode. In Direct
+mode, instances are culled one at a time on the CPU. In Indirect mode,
+instances are culled in parallel using GPU compute. The ExecuteIndirect
+call only ever sees those instances which pass culling. The other
+instances do not exist in the indirect command buffer.
+
+# Building the sample
+
+If using an Xbox One devkit, set the active solution platform to `Gaming.Xbox.XboxOne.x64`.
+
+If using an Xbox Series X|S devkit, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
+
+*For more information, see* __Running samples__, *in the GDK documentation.*
+
+# Using the sample
+
+This sample uses the following controls.
+
+| Action                                 |  Gamepad                     |
+|----------------------------------------|-----------------------------|
+| Toggle Direct/Indirect draws           |  A Button                    |
+| Toggle culling on/off                  |  B Button                    |
+| Exit                                   |  View Button                 |
+
+![](./media/image3.png)
+
+# Known issues
+
+None.
+
+# Update history
+
+Initial release for XDK August 2015
+
+Updated for Microsoft GDK April 2020
+
+# Privacy Statement
+
+When compiling and running a sample, the file name of the sample
+executable will be sent to Microsoft to help track sample usage. To
+opt-out of this data collection, you can remove the block of code in
+Main.cpp labeled "Sample Usage Telemetry".
+
+For more information about Microsoft's privacy policies in general, see
+the [Microsoft Privacy
+Statement](https://privacy.microsoft.com/en-us/privacystatement/).

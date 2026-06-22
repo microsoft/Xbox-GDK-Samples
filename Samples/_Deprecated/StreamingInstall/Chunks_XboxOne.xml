@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package>
+  <Chunk Id="1000" Marker="Launch">
+    <FileGroup DestinationPath="\" SourcePath="." Include="StreamingInstall.exe"/>
+    <FileGroup DestinationPath="\" SourcePath="." Include="*.dll"/>
+    <FileGroup DestinationPath="\" SourcePath="." Include="*.xml"/>
+    <FileGroup DestinationPath="\" SourcePath="." Include="*.spritefont"/>
+    <FileGroup DestinationPath="\" SourcePath="." Include="MicrosoftGame.config"/>
+    <FileGroup DestinationPath="\Assets"    SourcePath=".\Assets"    Include="*.*"/>
+  </Chunk>
+  <Chunk Id="1001">
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb1.txt"/>
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb2.txt"/>
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb3.txt"/>
+  </Chunk>
+  <Chunk Id="1002" Tags="Custom">
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb4.txt"/>
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb5.txt"/>
+  </Chunk>
+  <Chunk Id="1003" Devices="Xbox-Durango">
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb6.txt"/>
+  </Chunk>
+  <Chunk Id="1004" Devices="Xbox-Scorpio">
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb7.txt"/>
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb8.txt"/>
+  </Chunk>
+  <Chunk Id="1005" Languages="en">
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb9.txt"/>
+  </Chunk>
+  <Chunk Id="1006" Languages="fr">
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb10.txt"/>
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb11.txt"/>
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb12.txt"/>
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb13.txt"/>
+  </Chunk>
+  <Chunk Id="1007" Languages="es">
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb14.txt"/>
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb15.txt"/>
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb16.txt"/>
+  </Chunk>
+  <Chunk Id="1008" OnDemand="true" Tags="MapEditor">
+    <FileGroup DestinationPath="\" SourcePath="." Include="filler256mb17.txt"/>
+  </Chunk>
+</Package>
+

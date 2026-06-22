@@ -1,29 +1,47 @@
----
-page_type: sample
-languages:
-- cpp
-products:
-- gdk
-urlFragment: "accessibilitysample"
-extendedZipContent:
-- path: LICENSE
-  target: LICENSE
-- path: Kits
-  target: Kits
-- path: Media
-  target: Media
-description: "This sample demonstrates how to implement cross-platform accessibility features for a title."
----
+  ![](./media/image1.png)
 
-# AccessibilitySample
+#   Accessibility Sample (PC, XBOX)
 
-For more information see: 
-- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/AccessibilitySample/readme_en-us.md)
+*This sample is compatible with the Microsoft Game Development Kit
+(March 2022)*
 
-## Privacy statement
+![Accessibilty Sample with 2 windows](./AccessibilitySample.png)
 
-For more information about Microsoft's privacy policies in general, see the [Microsoft Privacy Statement](https://privacy.microsoft.com/privacystatement/).
+# Description
 
-## Trademarks
+This sample demonstrates the following accessibility features.
+-	Text/background luminosity ratios > 4.5:1
+-	All Non-Text Contrast (for icons, Focus) Luminosity ratio should be >=3:1
+-	Focused/selected UI element are visually differentiated
+-	Keyboard navigable UI Elements
+-	Reads OS settings (where available) for both high-contrast dark and high-contrast light themes
+-	Screen narration. 
+-	No text overlap on OS text resize or DPI change.
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
+These features are implemented through a wrapper for ImGUI.
+
+# Sample architecture
+
+![Accessibilty Sample with 2 windows](./AccessibilitySampleArchitecture.jpg)
+
+# Building the sample
+
+This sample supports both Xbox and Desktop.
+
+Privacy:
+
+When compiling and running a sample, the file name of the sample
+executable will be sent to Microsoft to help track sample usage. To
+opt-out of this data collection, remove ATG_ENABLE_TELEMETRY from the
+C/C++ / Preprocessor / Preprocessor Definitions list in the project's
+settings.
+
+For more information about Microsoft's privacy policies in general, see
+the [Microsoft Privacy
+Statement](https://privacy.microsoft.com/en-us/privacystatement/).
+
+# Third Party Notice
+
+This sample demonstrates using the ImGui library which is available under the MIT license.
+
+For more information, see https://github.com/ocornut/imgui

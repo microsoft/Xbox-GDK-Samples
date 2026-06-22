@@ -1,0 +1,306 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>abb8c110-1ffa-4326-bcdc-5cc343b4666c</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>ecfa1b73-3f68-4066-bb9b-1e1f1be704d9</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>0fd1360b-7263-42f8-b2c7-cfc4a624e7f9</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Xbox Live Tool Kit">
+      <UniqueIdentifier>ae484201-2fe2-4cc2-8d07-00b4ed033dcc</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>cdd6d0af-5ff7-4cc6-97a5-0284ae000e40</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts">
+      <UniqueIdentifier>{c9b63815-d751-4719-97d8-52fe35fa3dcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameChat">
+      <UniqueIdentifier>{230e40ac-ffc7-48af-8eec-7254f6c98261}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{cb3f35bc-6cd2-4b51-a449-1b6d9206e85c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="InGameChat_Desktop.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\LiveTK\LiveResources.h">
+      <Filter>Xbox Live Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="GameChatManager.h">
+      <Filter>GameChat</Filter>
+    </ClInclude>
+    <ClInclude Include="UserRepeater.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemRepeater.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="UnsecuredNetworkManager.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="UserManager.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="XboxLiveManager.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\CSVReader.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\SampleGUI.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\TextConsole.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="InGameChat_Desktop.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\LiveTK\LiveResources.cpp">
+      <Filter>Xbox Live Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="GameChatManager.cpp">
+      <Filter>GameChat</Filter>
+    </ClCompile>
+    <ClCompile Include="UserRepeater.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="UnsecuredNetworkManager.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="UserManager.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="XboxLiveManager.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\TextConsole.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\SampleGUI.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGame.Config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\controller4.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\controller5.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\controller6.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\controller7.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\controller8.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\DbugLbl_ON.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\DbugLog.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\debugDisabled.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Kinect.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\kinect_Mute.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Mic.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Mic_Mute.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\mic2.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\participantsLbl.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\particpantBG.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\ParticpantMutedBG.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\spacer.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\talking.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Asset2.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\controller1.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\controller2.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\controller3.png">
+      <Filter>Assets</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Layout.csv">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="ReadMe.docx" />
+    <None Include="Assets\Courier_16.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\ATGSampleBackground.dds">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Scripts\Desktop.PostBuild.bat">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_18_Bold.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_18_Italic.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_22.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_22_Bold.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_22_Italic.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_36_Bold.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_36_Italic.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneController.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_48.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_48_Bold.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_48_Italic.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_30.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_30_Bold.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_30_Italic.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_24.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_24_Bold.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_24_Italic.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\Courier_36.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Consolas_8.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\..\..\Redist\CommonConfiguration\neutral\GameChat2.dll" />
+    <None Include="InGameChat_Desktop_ReadMe_ja-jp.docx" />
+    <None Include="InGameChat_Desktop_ReadMe_ko-kr.docx" />
+    <None Include="InGameChat_Desktop_ReadMe_zh-cn.docx" />
+  </ItemGroup>
+</Project>

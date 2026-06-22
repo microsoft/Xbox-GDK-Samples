@@ -1,32 +1,100 @@
----
-page_type: sample
-languages:
-- cpp
-products:
-- gdk
-urlFragment: "simplecustomapo"
-extendedZipContent:
-- path: LICENSE
-  target: LICENSE
-- path: Kits
-  target: Kits
-- path: Media
-  target: Media
-description: "This sample demonstrates how to play a wav file using XAudio2 on the Xbox using a custom xAPO effect."
----
+# Simple Custom APO Sample
 
-# SimpleCustomAPO
+*This sample is compatible with the Microsoft Game Development Kit
+(March 2022)*
 
-For more information see: 
-- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Audio/SimpleCustomAPO/readme_en-us.md)
-- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Audio/SimpleCustomAPO/readme_ja-jp.md)
-- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Audio/SimpleCustomAPO/readme_ko-kr.md)
-- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Audio/SimpleCustomAPO/readme_zh-cn.md)
+# Description
 
-## Privacy statement
+This sample demonstrates how to play a wav file using XAudio2 on the
+Xbox using a custom APO effect.
 
-For more information about Microsoft's privacy policies in general, see the [Microsoft Privacy Statement](https://privacy.microsoft.com/privacystatement/).
+# Building the sample
 
-## Trademarks
+If using an Xbox One devkit, set the active solution platform to `Gaming.Xbox.XboxOne.x64`.
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
+If using Xbox Series X|S, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
+
+For an equivalent sample on PC, see **XAudio2CustomAPO** on
+[GitHub](https://aka.ms/xaudio2samples).
+
+*For more information, see* __Running samples__, *in the GDK documentation.*
+
+# Using the sample
+
+The sample allows you to manipulate a floating-point parameter between 0
+and 1 with the Dpad. The View button exits the sample.
+
+# Implementation notes
+
+This sample uses a similar set up to the **SimplePlaySound** sample with
+the addition of a xAPO effect to the source voice.
+
+**SimpleAPO** applies a simple gain factor by multiplying the sample
+values processed.
+
+The APOs are implemented by using a helper template class,
+SampleAPOBase, that handles shared registration, class factory, and
+parameter handling operations. Use of this template class is not
+required, but it is used to simplify the sample.
+
+# Known issues
+
+If using the Windows SDK (22000), you will get the following errors at
+link time when using that xapobase.lib:
+
+xapobase.lib(oapmatrixmix.obj) : error LNK2019: unresolved external
+symbol \_vsnwprintf referenced in function \"long \_\_cdecl
+StringCchPrintfW(unsigned short \*,unsigned \_\_int64,unsigned short
+const \*,\...)\" (?StringCchPrintfW@@YAJPEAG_KPEBGZZ)
+
+xapobase.lib(oapmatrixmix.obj) : error LNK2019: unresolved external
+symbol GetFeatureEnabledState referenced in function \"enum
+FEATURE_ENABLED_STATE \_\_cdecl
+wil::details::GetFeatureEnabledStateHelper(unsigned int,enum
+FEATURE_CHANGE_TIME,int \*)\"
+(?GetFeatureEnabledStateHelper@details@wil@@YA?AW4FEATURE_ENABLED_STATE@@IW4FEATURE_CHANGE_TIME@@PEAH@Z)
+
+xapobase.lib(oapmatrixmix.obj) : error LNK2019: unresolved external
+symbol GetFeatureVariant referenced in function \"unsigned int \_\_cdecl
+wil::details::GetFeatureVariantHelper(unsigned int,enum
+FEATURE_CHANGE_TIME,unsigned int \*,int \*,int \*)\"
+(?GetFeatureVariantHelper@details@wil@@YAIIW4FEATURE_CHANGE_TIME@@PEAIPEAH2@Z)
+
+xapobase.lib(oapmatrixmix.obj) : error LNK2019: unresolved external
+symbol RecordFeatureUsage referenced in function \"public: int \_\_cdecl
+\<lambda_778f06ff3b1f47a446cbe609236855d4\>::operator()(void)const \"
+(??R\<lambda_778f06ff3b1f47a446cbe609236855d4\>@@QEBAHXZ)
+
+xapobase.lib(oapmatrixmix.obj) : error LNK2019: unresolved external
+symbol RecordFeatureError referenced in function \"public: int \_\_cdecl
+\<lambda_778f06ff3b1f47a446cbe609236855d4\>::operator()(void)const \"
+(??R\<lambda_778f06ff3b1f47a446cbe609236855d4\>@@QEBAHXZ)
+
+xapobase.lib(oapmatrixmix.obj) : error LNK2019: unresolved external
+symbol SubscribeFeatureStateChangeNotification referenced in function
+\"public: int \_\_cdecl
+\<lambda_778f06ff3b1f47a446cbe609236855d4\>::operator()(void)const \"
+(??R\<lambda_778f06ff3b1f47a446cbe609236855d4\>@@QEBAHXZ)
+
+xapobase.lib(oapmatrixmix.obj) : error LNK2019: unresolved external
+symbol UnsubscribeFeatureStateChangeNotification referenced in function
+\"public: int \_\_cdecl
+\<lambda_778f06ff3b1f47a446cbe609236855d4\>::operator()(void)const \"
+(??R\<lambda_778f06ff3b1f47a446cbe609236855d4\>@@QEBAHXZ)
+
+The best solution is to use a newer version of the Windows SDK which
+does not have this issue. Older SDKs also did not have this bug.
+
+Alternatively, you can link with SHCORE.LIB but be aware this may allow
+unsupported APIs for Game OS to link.
+
+# Privacy statement
+
+When compiling and running a sample, the file name of the sample
+executable will be sent to Microsoft to help track sample usage. To
+opt-out of this data collection, you can remove the block of code in
+Main.cpp labeled "Sample Usage Telemetry".
+
+For more information about Microsoft's privacy policies in general, see
+the [Microsoft Privacy
+Statement](https://privacy.microsoft.com/en-us/privacystatement/).

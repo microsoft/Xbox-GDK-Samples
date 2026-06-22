@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>e8f8d95c-ce0c-417a-9185-33ec60c88143</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{777969eb-be50-400a-921c-0f4aa283d220}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ATGTK">
+      <UniqueIdentifier>{dec5511b-f420-462a-9f2c-7402c1c2a91d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared Header Files">
+      <UniqueIdentifier>{6d2c2297-30f0-4999-bc7a-3ea63876fbc4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="OfflineRT.h" />
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATGTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\ControllerFont.h">
+      <Filter>ATGTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\OrbitCamera.h">
+      <Filter>ATGTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\OfflineRT\FileFormat.h">
+      <Filter>Shared Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\OfflineRT\ShaderShared.h">
+      <Filter>Shared Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\PerformanceTimersXbox.h">
+      <Filter>ATGTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATGTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATGTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\Json.h">
+      <Filter>ATGTK</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="OfflineRT.cpp" />
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\ATGTK\OrbitCamera.cpp">
+      <Filter>ATGTK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\ATGTK\PerformanceTimersXbox.cpp">
+      <Filter>ATGTK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATGTK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATGTK</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\..\Media\Meshes\ATGDragon\dragon_LOD0.sdkmesh">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\Build\Dragon_LOD0.mdat">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\Include\OfflineRT\Common.hlsli">
+      <Filter>Shared Header Files</Filter>
+    </None>
+    <None Include="..\Build\OfflineRTPSO.sobj">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\Build\OfflineCollectionHitgroups.sobj">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\Build\OfflineCollectionRaygen.sobj">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\Build\Dragon_LOD0.compressed.mdat">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\Build\Dragon_LOD0.compressed.GPU.mdat">
+      <Filter>Assets</Filter>
+    </None>
+	<None Include="..\Build\Dragon_LOD0.compressed.Dehydrated.mdat">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\readme.md" />
+    <None Include="..\readme_ja-jp.md" />
+    <None Include="..\readme_ko-kr.md" />
+    <None Include="..\readme_zh-cn.md" />
+    <None Include="..\Build\Dragon_LOD0_bvhtoy_triangles.mdat">
+      <Filter>Assets</Filter>
+    </None>
+	<None Include="..\Build\Dragon_LOD0_bvhtoy_triangles.compressed.Dehydrated.mdat">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\Build\Dragon_LOD0_bvhtoy_triangles.compressed.GPU.mdat">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\Build\Dragon_LOD0_bvhtoy_triangles.compressed.mdat">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\Build\Dragon_LOD0_bvhtoy_quads.mdat">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\Build\Dragon_LOD0_bvhtoy_quads.compressed.mdat">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\Build\Dragon_LOD0_bvhtoy_quads.compressed.GPU.mdat">
+      <Filter>Assets</Filter>
+    </None>
+	<None Include="..\Build\Dragon_LOD0_bvhtoy_quads.compressed.Dehydrated.mdat">
+      <Filter>Assets</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="RuntimeRTPSO.hlsl" />
+  </ItemGroup>
+</Project>

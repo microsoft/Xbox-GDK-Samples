@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>3fd212a3-5b41-4422-9b31-91abb7e27204</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>5347b3d4-e5f3-408a-a703-a2cd7c1c3672</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>b7223409-30dc-4a73-be58-81ae87fac66a</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>9021e727-45f9-4a97-a70b-138c83ec99ab</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{4e27474d-cc34-4fad-be9b-040739626ad4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Ship">
+      <UniqueIdentifier>{293ba3df-0851-4f01-8c0e-45a3a36e0727}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\CoastRocks">
+      <UniqueIdentifier>{93cb6b3c-051e-4c95-9e4b-9a195980ed71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\IslandTree">
+      <UniqueIdentifier>{4496616d-8a60-4b8b-a31d-8938bfbab9c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Pier">
+      <UniqueIdentifier>{65c8d992-e0c4-418e-a0ab-c76b9f0abd75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Ocean">
+      <UniqueIdentifier>{f6c67151-c023-41ab-aed1-0e57d4a2498c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Fence">
+      <UniqueIdentifier>{c95ce0e7-0a7b-4595-9d34-5e0574d6950f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Shovel">
+      <UniqueIdentifier>{826ff481-7821-442b-8f8f-04ef9db8ca77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Skybox">
+      <UniqueIdentifier>{10fad263-7f8c-4710-b4ad-9280ad87c230}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="DXRContent.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h" />
+    <ClInclude Include="Constants.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FlyCamera.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\PerformanceTimersXbox.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ReadData.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\OptionSet.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\gltf\gltf.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\gltf\GltfProcessing.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="DXRContent.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\FlyCamera.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\PerformanceTimersXbox.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\gltf\gltf.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\gltf\GltfProcessing.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="InlineRTCS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="InlineRTDebugCS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="$(Console_SdkToolPath)xdxrofflinebvh.dll" />
+    <None Include="InlineRT.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_48_Bold.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Ship\ship_pinnace.bin">
+      <Filter>Assets\Ship</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Ship\ship_pinnace_4k.gltf">
+      <Filter>Assets\Ship</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Ship\ship_pinnace_4k_merged_meshes.gltf">
+      <Filter>Assets\Ship</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\CoastRocks\coast_rocks_03.bin">
+      <Filter>Assets\CoastRocks</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\CoastRocks\coast_rocks_03_4k.gltf">
+      <Filter>Assets\CoastRocks</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\IslandTree\island_tree_01.bin">
+      <Filter>Assets\IslandTree</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\IslandTree\island_tree_01_4k.gltf">
+      <Filter>Assets\IslandTree</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\IslandTree\island_tree_01_separate.gltf">
+      <Filter>Assets\IslandTree</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Pier\pier.bin">
+      <Filter>Assets\Pier</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Pier\pier.gltf">
+      <Filter>Assets\Pier</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Pier\pier_separated.gltf">
+      <Filter>Assets\Pier</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Ocean\ocean_merged.bin">
+      <Filter>Assets\Ocean</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Ocean\ocean_merged.gltf">
+      <Filter>Assets\Ocean</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Ocean\ocean_split.gltf">
+      <Filter>Assets\Ocean</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Fence\fence.bin">
+      <Filter>Assets\Fence</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Fence\fence.gltf">
+      <Filter>Assets\Fence</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Fence\fence_merged.bin">
+      <Filter>Assets\Fence</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Fence\fence_merged.gltf">
+      <Filter>Assets\Fence</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Shovel\shovel_rotated.bin">
+      <Filter>Assets\Shovel</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Shovel\shovel_rotated.gltf">
+      <Filter>Assets\Shovel</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Shovel\shovel_rotated_baked.bin">
+      <Filter>Assets\Shovel</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Shovel\shovel_rotated_baked.gltf">
+      <Filter>Assets\Shovel</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Skybox\skybox.bin">
+      <Filter>Assets\Skybox</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Skybox\skybox.gltf">
+      <Filter>Assets\Skybox</Filter>
+    </None>
+    <None Include="readme.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_aft_arm_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_aft_diff_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_aft_nor_gl_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_deck_arm_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_deck_diff_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_deck_nor_gl_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_details_arm_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_details_diff_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_details_nor_gl_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_hull_arm_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_hull_diff_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_hull_nor_gl_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_interior_arm_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_interior_diff_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_interior_nor_gl_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_rigging_arm_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_rigging_diff_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_rigging_nor_gl_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_sails_arm_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_sails_diff_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_sails_nor_gl_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\CoastRocks\textures\coast_rocks_03_arm_4k.jpg">
+      <Filter>Assets\CoastRocks</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\CoastRocks\textures\coast_rocks_03_diff_4k.jpg">
+      <Filter>Assets\CoastRocks</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\CoastRocks\textures\coast_rocks_03_nor_gl_4k.jpg">
+      <Filter>Assets\CoastRocks</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\IslandTree\textures\island_tree_01_arm_4k.jpg">
+      <Filter>Assets\IslandTree</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\IslandTree\textures\island_tree_01_branches_arm_4k.jpg">
+      <Filter>Assets\IslandTree</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\IslandTree\textures\island_tree_01_branches_diff_4k.jpg">
+      <Filter>Assets\IslandTree</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\IslandTree\textures\island_tree_01_branches_nor_gl_4k.jpg">
+      <Filter>Assets\IslandTree</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\IslandTree\textures\island_tree_01_diff_4k.jpg">
+      <Filter>Assets\IslandTree</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\IslandTree\textures\island_tree_01_leaves_arm_4k.jpg">
+      <Filter>Assets\IslandTree</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\IslandTree\textures\island_tree_01_leaves_diff_4k.jpg">
+      <Filter>Assets\IslandTree</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\IslandTree\textures\island_tree_01_leaves_nor_gl_4k.jpg">
+      <Filter>Assets\IslandTree</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\IslandTree\textures\island_tree_01_nor_gl_4k.jpg">
+      <Filter>Assets\IslandTree</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Pier\modular_wooden_pier_planks_arm_4k.jpg">
+      <Filter>Assets\Pier</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Pier\modular_wooden_pier_planks_diff_4k.jpg">
+      <Filter>Assets\Pier</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Pier\modular_wooden_pier_planks_nor_gl_4k.jpg">
+      <Filter>Assets\Pier</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Pier\modular_wooden_pier_poles_arm_4k.jpg">
+      <Filter>Assets\Pier</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Pier\modular_wooden_pier_poles_diff_4k.jpg">
+      <Filter>Assets\Pier</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Pier\modular_wooden_pier_poles_nor_gl_4k.jpg">
+      <Filter>Assets\Pier</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ocean\water_bottom_left.png">
+      <Filter>Assets\Ocean</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ocean\water_bottom_right.png">
+      <Filter>Assets\Ocean</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ocean\water_upper_left.png">
+      <Filter>Assets\Ocean</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ocean\water_upper_right.png">
+      <Filter>Assets\Ocean</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Fence\modular_wooden_pier_planks_arm_4k.jpg">
+      <Filter>Assets\Fence</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Fence\modular_wooden_pier_planks_diff_4k.jpg">
+      <Filter>Assets\Fence</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Fence\modular_wooden_pier_planks_nor_gl_4k.jpg">
+      <Filter>Assets\Fence</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Shovel\rusted_spade_01_arm_4k.jpg">
+      <Filter>Assets\Shovel</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Shovel\rusted_spade_01_diff_4k.jpg">
+      <Filter>Assets\Shovel</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Shovel\rusted_spade_01_nor_gl_4k.jpg">
+      <Filter>Assets\Shovel</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Skybox\kloofendal_48d_partly_cloudy_puresky_4k.png">
+      <Filter>Assets\Skybox</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

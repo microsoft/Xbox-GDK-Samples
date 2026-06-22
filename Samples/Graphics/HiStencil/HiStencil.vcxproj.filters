@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>e6849b91-295d-4191-8d0e-06a5a04315c1</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>5eddf323-5276-4b3f-9eed-d8d050cf7ab3</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>f8fbd197-86e7-4f07-a909-ffff1ec611ef</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{ccc06905-0031-4aa1-8152-4e7f9d12235b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Mesh">
+      <UniqueIdentifier>{7412b5e3-8d4d-4deb-a587-0229c8716314}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="HiStencil.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\Json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerHelp.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FlyCamera.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\PerformanceTimersXbox.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ReadData.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonHeader.h" />
+    <ClInclude Include="SampleEffect.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="HiStencil.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\ControllerHelp.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\FlyCamera.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\PerformanceTimersXbox.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleEffect.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\MechRobot\GearsMaterial_baseColor.DDS">
+      <Filter>Assets\Mesh</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\MechRobot\GearsMaterial_normal.DDS">
+      <Filter>Assets\Mesh</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\MechRobot\GearsMaterial_occlusionRoughnessMetallic.DDS">
+      <Filter>Assets\Mesh</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\MechRobot\InteriorMaterial_baseColor.DDS">
+      <Filter>Assets\Mesh</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\MechRobot\InteriorMaterial_normal.DDS">
+      <Filter>Assets\Mesh</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\MechRobot\InteriorMaterial_occlusionRoughnessMetallic.DDS">
+      <Filter>Assets\Mesh</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\MechRobot\MechMaterial_baseColor.DDS">
+      <Filter>Assets\Mesh</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\MechRobot\MechMaterial_normal.DDS">
+      <Filter>Assets\Mesh</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\MechRobot\MechMaterial_occlusionRoughnessMetallic.DDS">
+      <Filter>Assets\Mesh</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\MechRobot\RobotMaterial_baseColor.DDS">
+      <Filter>Assets\Mesh</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\MechRobot\RobotMaterial_normal.DDS">
+      <Filter>Assets\Mesh</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\MechRobot\RobotMaterial_occlusionRoughnessMetallic.DDS">
+      <Filter>Assets\Mesh</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\callout_circle.dds">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\gamepad.dds">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\HDR\Stonewall_Ref_irradiance.dds">
+      <Filter>Assets\Mesh</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\HDR\Stonewall_Ref_radiance.dds">
+      <Filter>Assets\Mesh</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="DiscVS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="QuadPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="QuadVS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ReadHTileCS_SR0_SR1_WithCounters_XboxOne.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ReadHTileCS_SR0_SR1_WithCounters_XboxOneX.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ReadHTileCS_SR0_SR1_XboxOne.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ReadHTileCS_SR0_SR1_XboxOneX.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ReadHTileCS_SR0_WithCounters_XboxOne.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ReadHTileCS_SR0_WithCounters_XboxOneX.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ReadHTileCS_SR0_XboxOne.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ReadHTileCS_SR0_XboxOneX.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="WriteStencilPixelsCS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="WriteStencilPixelsPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadHTileCS.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="RootSignature.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="SMemSRValues.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\MechRobot\disc.sdkmesh">
+      <Filter>Assets\Mesh</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\MechRobot\disc2.sdkmesh">
+      <Filter>Assets\Mesh</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\MechRobot\disc3.sdkmesh">
+      <Filter>Assets\Mesh</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\MechRobot\disc4.sdkmesh">
+      <Filter>Assets\Mesh</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\MechRobot\MechRobot-exterior.sdkmesh">
+      <Filter>Assets\Mesh</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\MechRobot\MechRobot-interior.sdkmesh">
+      <Filter>Assets\Mesh</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\MechRobot\MechRobot-interiorFurnishings.sdkmesh">
+      <Filter>Assets\Mesh</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\MechRobot\MechRobot-interiorGears.sdkmesh">
+      <Filter>Assets\Mesh</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\MechRobot\MechRobot-interiorRobot.sdkmesh">
+      <Filter>Assets\Mesh</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_22.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneController.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
+    <None Include="readme.md" />
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
+  </ItemGroup>
+</Project>

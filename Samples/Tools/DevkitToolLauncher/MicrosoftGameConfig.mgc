@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Game configVersion="0">
+  <!-- Version "1" is supported by March 2022 GDK or later -->
+
+  <Identity Name="b484cd03-523b-4450-bb87-b467f2a14fa6"
+            Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+            Version="1.0.0.0"/>
+  
+  <ExecutableList>
+    <Executable Name="DevkitToolLauncher.exe"
+                Id="Game"/>
+  </ExecutableList>
+
+  <!-- For a devkit, unsolicited inbound TCP/UDP packets can be received when the DebugNetworkPortList is specified. -->
+  <!--DevelopmentOnly>
+    <DebugNetworkPortList>
+      <DebugNetworkPort>4600</DebugNetworkPort>
+      <DebugNetworkPort>4601</DebugNetworkPort>
+    </DebugNetworkPortList>
+  </DevelopmentOnly-->
+
+  <ShellVisuals DefaultDisplayName="DevkitToolLauncher"
+                PublisherDisplayName="Xbox Advanced Technology Group"
+                StoreLogo="Assets\StoreLogo.png"
+                Square150x150Logo="Assets\Logo.png"
+                Square44x44Logo="Assets\SmallLogo.png"
+                Square480x480Logo="Assets\LargeLogo.png"
+                Description="DevkitToolLauncher"
+                ForegroundText="dark"
+                BackgroundColor="#000000"
+                SplashScreenImage="Assets\SplashScreen.png"/>
+</Game>

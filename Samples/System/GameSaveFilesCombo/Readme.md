@@ -1,29 +1,47 @@
----
-page_type: sample
-languages:
-- cpp
-products:
-- gdk
-urlFragment: "gamesavefilescombo"
-extendedZipContent:
-- path: LICENSE
-  target: LICENSE
-- path: Kits
-  target: Kits
-- path: Media
-  target: Media
-description: "This sample demonstrates the use of the XGameSaveFiles APIs to access folders on Xbox."
----
+  ![](./media/image1.png)
 
-# GameSaveFilesCombo
+#   GameSaveFilesCombo Sample (PC, XBOX)
 
-For more information see: 
-- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/GameSaveFilesCombo/readme_en-us.md)
+*This sample is compatible with the Microsoft Game Development Kit
+(March 2022)*
 
-## Privacy statement
+![Image of GameSaveFilesCombo sample](./media/GameSaveFilesComboImage.jpg)
 
-For more information about Microsoft's privacy policies in general, see the [Microsoft Privacy Statement](https://privacy.microsoft.com/privacystatement/).
+# 
 
-## Trademarks
+# Description
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
+A simple sample that implements the
+[XGameSaveFiles](https://learn.microsoft.com/en-us/gaming/gdk/_content/gc/reference/system/xgamesavefiles/xgamesavefiles_members)
+api functions. It also demonstrates how to use Win32 FileIO with XGameSaveFiles.
+
+# Important Methods
+
+## GetFolderWithUIAsync
+
+-   Calls the
+    [XGameSaveFilesGetFolderWithUiAsync](https://docs.microsoft.com/en-us/gaming/gdk/_content/gc/reference/system/xgamesavefiles/functions/xgamesavefilesgetfolderwithuiasync)
+     to get a folder path that can be used to read and write files. Data in the path will also be synced with the cloud.
+
+## GetRemainingQuoata
+
+-   Calls the
+    [XGameSaveFilesGetRemainingQuota](https://docs.microsoft.com/en-us/gaming/gdk/_content/gc/reference/system/xgamesavefiles/functions/xgamesavefilesgetremainingquota)
+    to get the remaining storage available to save with using the
+    XGameSaveFiles API.
+
+# Building the sample
+
+This sample supports both Xbox and Desktop.
+
+Privacy:
+
+When compiling and running a sample, the file name of the sample
+executable will be sent to Microsoft to help track sample usage. To
+opt-out of this data collection, remove ATG_ENABLE_TELEMETRY from the
+C/C++ / Preprocessor / Preprocessor Definitions list in the project's
+settings.
+
+For more information about Microsoft's privacy policies in general, see
+the [Microsoft Privacy
+Statement](https://privacy.microsoft.com/en-us/privacystatement/).

@@ -1,0 +1,589 @@
+openapi: 3.0.3
+info:
+  title: Inbox Agent
+  description: |-
+    This document specifies the contract between the Inbox Agent running on a
+    device and a server provided by the user to provision said device. It
+    formalizes all REST API calls and models. Since this document is written
+    using the OpenApi specification, it can be consumed by a code generator such
+    as the [OpenAPI Generator](https://openapi-generator.tech) to generate
+    server endpoint stubs or followed by a developer to manually code the
+    endpoints and models.
+
+    ## Glossary
+
+    * Agent - The process running on the device that runs as a client and sends 
+      out heartbeats to the server for jobs to process.
+    * Server - An HTTP server provided by the user that receives heartbeats from 
+      the agent and provides the next job for the agent to process.
+    * Job - A single operation for the agent to process. There are currently 
+      four types of jobs: [ExecuteCommand](#model-ExecuteCommandJob),
+      [DownloadFiles](#model-DownloadFilesJob), [UploadFiles](#model-UploadFilesJob)
+      and [CancelCurrent](#model-CancelCurrentJob).
+      Jobs are not necessarily idempotent so any job modifying the state of the
+      device should be preceded by a job that inspects the state of anything to
+      be modified by the job.
+
+    ## Operation and Expectations
+
+    ### Agent
+
+    The agent is simple in its operation. Every 10 seconds or immediately after
+    processing a job, the agent requests a single job from the server a.k.a.
+    "Heartbeat". The job is then immediately processed. As long as a job is
+    being processed by the agent, the activeJobId will be populated with the id
+    of the job currently being processed. Otherwise the property will be an all
+    zero GUID '00000000-0000-0000-0000-000000000000'. For [ExecuteCommand](#model-ExecuteCommandJob)
+    jobs when the field 'WaitForExit' is set to 'false' then the command runs in
+    a fire-and-forget manner. The LastProcessedJobResult property will not be
+    populated with any output or exit code and the agent will immediately
+    request the next job.
+
+    The agent's heartbeat interval can be adjusted on the fly by the server. If
+    the property 'heartbeatInterval' on [KitHeartbeatResponse](#model-KitHeartbeatResponse)
+    is in the valid range then all subsequent periodic heartbeats will be sent
+    on that interval until it's either changed again by the server or the agent
+    restarts (the interval will reset to 10 seconds).
+
+    The agent does not store its state for recovery. As such, if there is a
+    reboot of the agent (such as in the case of the device being rebooted) the
+    very first heartbeat message will indicate that the agent restarted (see
+    [KitHeartbeatRequest](#model-KitHeartbeatRequest)).
+
+    ### Server
+
+    The server will wait and listen for requests from the agent. When received,
+    the server will inspect the heartbeat message and determine the next job
+    that the agent should execute. All logic in deciding what job to execute
+    must be handled by the server. The agent has no capabilities to perform any
+    logic.
+
+    ### Authentication
+
+    The agent requires communication with the server over HTTPS. The agent
+    authenticates with the server using an XToken. The agent needs to be
+    configured with a Relying Party first. The agent will pass on a generated
+    XToken to the server via the 'XBOX-AGENT-XTOKEN' header. The server then
+    decrypts and validates the token's signature to authenticate the agent and
+    then reply with its response. Additional information at 
+    [Xbox Live security tokens](https://developer.microsoft.com/en-us/games/xbox/docs/gdk/live-security-token-nav).
+
+  version: 2024.02.0
+tags:
+  - name: agent
+paths:
+  /KitHeartbeat:
+    post:
+      tags:
+        - agent
+      summary: >-
+        Receives the Agent's current state and returns a job for the Agent to
+        process.
+      description: >-
+        This endpoint is called every 10 seconds by the agent or when a command
+        completes. If the server has a job for the device to process it will
+        respond with a [KitHeartbeatRequest](#model-KitHeartbeatRequest) with a
+        populated 'requestedJob' property.
+      operationId: sendHeartbeat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KitHeartbeatRequest'
+        required: true
+      responses:
+        200:
+          description: >-
+            Success. Returns a response with a job to the agent. If no job is
+            available, then the 'requestedJob' property will be null.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KitHeartbeatResponse'
+components:
+  schemas:
+    FileDownload:
+      type: object
+      description: Represents the source and destination of a file download.
+      properties:
+        source:
+          type: string
+          format: uri
+          description: >-
+            The source url of where to retrieve the file. This url can be
+            arbitrary and does provide the same configured authentication as the
+            heartbeat calls. Calls are done via GET.
+            This uri can also be a file uri which specifies a path for a direct
+            copy of the file, such as to an SMB network share. The console must
+            already have access to the source location.
+          example: https://storagesample.blob.core.windows.net/sample-container/sampleBlob.txt?sv=...
+        destination:
+          type: string
+          description: The path to save the file to. On Xbox consoles this can be a relative path to the D:\ drive.
+          example: ExampleDirectory/sampleblob.txt
+        httpHeaders:
+          type: object
+          additionalProperties:
+            type: string
+          description: The list of http headers to include with the request.
+      required:
+        - source
+        - destination
+      additionalProperties: false
+    FileUpload:
+      type: object
+      description: Represents the source and destination of a file upload.
+      properties:
+        source:
+          type: string
+          description: The path to the file to upload. On Xbox consoles this can be a relative path to the D:\ drive.
+          example: ExampleDirectory/sampleblob.txt
+        destination:
+          type: string
+          format: uri
+          description: >-
+            The destination url of where to upload the file. This url can be
+            arbitrary and provides the same configured authentication as the
+            heartbeat calls. Calls are done via the specified HTTP verb; PUT or
+            POST. The file upload is done either via an application/octet-stream
+            or using the multipart/form-data schema, so the receiving server
+            should parse the boundary string from the incoming request when
+            appropriate and parse out the file body accordingly.
+            This uri can also be a file uri which specifies a path for a direct
+            copy of the file, such as to an SMB network share. The console must
+            already have access to the destination location.
+          example: https://storagesample.blob.core.windows.net/sample-container/sampleBlob.txt?sv=...
+        httpUploadType:
+          $ref: '#/components/schemas/HttpUploadType'
+        httpVerb:
+          $ref: '#/components/schemas/HttpUploadVerb'
+        httpHeaders:
+          type: object
+          additionalProperties:
+            type: string
+          description: The list of http headers to include with the request.
+      required:
+        - source
+        - destination
+      additionalProperties: false
+    HttpUploadType:
+      type: string
+      enum:
+        - invalid
+        - octetStream
+        - multiPart
+        - azureBlob
+      description: >-
+        Chooses the type of upload to perform to the destination.
+        NOTE: If this field is not populated or unable to be parsed, the agent will interpret it as invalid.
+    HttpUploadVerb:
+      type: string
+      enum:
+        - invalid
+        - httpPost
+        - httpPut
+      description: >-
+        Specifies which HTTP verb to use for FileUpload.
+    FailedFileTransferResult:
+      type: object
+      properties:
+        source:
+          type: string
+          description: The source path or url of the file transfer that failed.
+          example: ExampleDirectory/sampleblob.txt OR https://storagesample.blob.core.windows.net/sample-container/sampleBlob.txt?sv=...
+        errorMessage:
+          type: string
+          description: >-
+            The error message describing why the file transfer failed.
+      additionalProperties: false
+    Package:
+      type: object
+      description: Represents a package or application on the device.
+      properties:
+        displayName:
+          type: string
+          description: The friendly name for the package.
+          example: Example Game
+        fullName:
+          type: string
+          description: The full name of the package.
+          example: 41336PublisherName.ExampleGame
+        aumids:
+          type: array
+          items:
+            type: string
+          description: List of Application User Model Ids for the package.
+          example: 41336PublisherName.ExampleGame_8wekyb3d8bbwe!App
+      required:
+        - displayName
+        - fullName
+        - aumids
+      nullable: true
+      additionalProperties: false
+    Executable:
+      type: object
+      description: Represents a running executable on the device.
+      properties:
+        fileName:
+          type: string
+          description: The filename of the executable.
+          example: MyGame.exe
+        packageName:
+          type: string
+          description: The full name of the package if this executable is tied to a package.
+          example: 41336PublisherName.ExampleGame
+        processId:
+          type: integer
+          format: int64
+          description: The process id of the executable.
+          example: 1337
+      required:
+        - fileName
+        - processId
+      additionalProperties: false
+    Kit:
+      type: object
+      description: Provides the identity and other metadata of the device.
+      properties:
+        hostname:
+          type: string
+          description: The hostname for the device.
+          example: DevKit01
+        ipAddress:
+          type: string
+          description: The ip address for the device.
+          example: 172.200.0.1
+        osVersion:
+          type: string
+          description: The version of the operating system.
+          example: 10.0.22000.4558 (xb_flt_2205co.220508-1030)
+        runningApplicationId:
+          type: string
+          description: The Application User Model Id for running application.
+          example: 41336PublisherName.ExampleGame_8wekyb3d8bbwe!App
+        runningApplication:
+          $ref: '#/components/schemas/Package'
+          description: The Package model for the currently running application (or the first running application if there are multiple running applications)
+        runningExecutableList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Executable'
+          description: A list of the currently running executables being tracked by the agent.
+        uptime:
+          type: integer
+          format: int64
+          description: >-
+            The number of milliseconds since the device last restarted.
+          example: 1234567890
+        deviceType:
+          type: string
+          description: The current hardware type. Expected values for officially supported devices are XboxOne, XboxOneS, XboxOneX, and XboxOneXDevkit for
+                       the Xbox One family of consoles, Lockhart, ScarlettOther, and ScarlettDevkit for the Xbox Series family of consoles, and Windows for
+                       the PC platform. Other devices, including officially supported future devices, will result in additional values being added to this list.
+          example: ScarlettDevkit
+        consoleType:
+          type: string
+          description: The current hardware type. This field is deprecated starting in the October 2023 recovery and superseded by deviceType. It will be removed in a future release.
+          example: ScarlettDevkit
+      required:
+        - hostname
+        - ipAddress
+        - osVersion
+        - runningApplicationId
+        - runningApplication
+        - uptime
+        - deviceType
+        - consoleType
+      additionalProperties: false
+    ExecuteCommandJob:
+      type: object
+      description: This job instructs the agent to run the specified command.
+      properties:
+        commandLine:
+          type: string
+          description: The command to execute on the device.
+          example: cmd.exe /C ECHO Here are some \"quotes.\"
+        workingDirectory:
+          type: string
+          description: The directory to run the command in.
+          example: 'd:\'
+        commandLineIsScript:
+          type: boolean
+          description: >-
+            Indicates that the contents of the commandLine string should be interpreted
+            as a batch script file.
+          default: false
+          example: true
+        waitForExit:
+          type: boolean
+          description: >-
+            Indicates whether to wait for the command to finish before 
+            processing the next job.
+          default: true
+          example: true
+        willReboot:
+          type: boolean
+          description: >-
+            Indicates that this command will invoke a reboot of the device. This
+            flag MUST be set 'true' in order to correctly identify the reboot is
+            complete. When set to 'true', the agent will remember the job's id
+            and after the agent starts up from a reboot, it return the job id as
+            the 'activeJobId'.
+          default: false
+          example: true
+        trackProcessId:
+          type: boolean
+          description: >-
+            Indicates whether to track the process id of the process created by the
+            command. If set to 'true', then the agent will remember the process id
+            and include it in the runningExecutableList until it terminates.
+          default: false
+          example: true
+      required:
+        - commandLine
+        - workingDirectory
+        - waitForExit
+        - willReboot
+      nullable: true
+      additionalProperties: false
+    DownloadFilesJob:
+      description: >-
+        This job instructs the agent to download a file and save it to the
+        device.
+      type: object
+      properties:
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileDownload'
+          minimum: 1
+          description: The list of files to download to the device.
+      required:
+        - files
+      nullable: true
+      additionalProperties: false
+    UploadFilesJob:
+      description: >-
+        This job instructs the agent to upload a file to a specified url.
+      type: object
+      properties:
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileUpload'
+          minimum: 1
+          description: The list of files to upload.
+      required:
+        - files
+      nullable: true
+      additionalProperties: false
+    CancelCurrentJob:
+      description: >-
+        This job instructs the agent to cancel the currently executing job.
+      nullable: true
+      additionalProperties: false
+    RequestedJob:
+      type: object
+      properties:
+        id:
+          type: string
+          description: >-
+            An unique id to identify the job to help the server keep track of
+            which jobs have been processed.
+          example: 85a5cb10-cee1-4eac-865d-978746090428
+        downloadFilesJob:
+          $ref: '#/components/schemas/DownloadFilesJob'
+        executeCommandJob:
+          $ref: '#/components/schemas/ExecuteCommandJob'
+        uploadFilesJob:
+          $ref: '#/components/schemas/UploadFilesJob'
+        cancelCurrentJob:
+          $ref: '#/components/schemas/CancelCurrentJob'
+        jobType:
+          $ref: '#/components/schemas/JobType'
+      required:
+        - id
+        - jobType
+      additionalProperties: false
+      nullable: true
+    KitHeartbeatResponse:
+      type: object
+      description: >-
+        The response sent by the server containing a job for the agent to
+        process. 'requestedJob' will be empty if no job is requested.
+      properties:
+        requestedJob:
+          $ref: '#/components/schemas/RequestedJob'
+        heartbeatInterval:
+          type: integer
+          format: int32
+          description: >-
+            Specify the number of seconds between heartbeat intervals. Whenever
+            the agent is started or restarted, it will default to 10 seconds. If
+            this property is defined and within the range of 1 - 600 seconds
+            (inclusive) then subsequent heartbeats will be sent after the
+            defined number of seconds.
+          minimum: 1
+          maximum: 600
+          nullable: true
+      required:
+        - requestedJob
+      additionalProperties: false
+    ExecuteCommandJobResult:
+      type: object
+      description: Represents the result of a [ExecuteCommandJob](#model-ExecuteCommandJob).
+      properties:
+        commandOutput:
+          type: string
+          description: >-
+            Contains all the output from standard out and standard error.
+          example: Here are some "quotes"
+        exitCode:
+          type: integer
+          format: int32
+          description: The exit code for the command.
+          example: 1
+        processId:
+          type: integer
+          format: int32
+          description: The processId of the executed command.
+          example: 1337
+        job:
+          $ref: '#/components/schemas/ExecuteCommandJob'
+      required:
+        - commandOutput
+        - exitCode
+        - job
+      nullable: true
+      additionalProperties: false
+    DownloadFilesJobResult:
+      type: object
+      description: Represents the result of a [DownloadFilesJob](#model-DownloadFilesJob).
+      properties:
+        job:
+          $ref: '#/components/schemas/DownloadFilesJob'
+        failedFileDownloadResults:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedFileTransferResult'
+          description: The list of files that failed to download.
+      required:
+        - job
+        - failedFileDownloadResults
+      nullable: true
+      additionalProperties: false
+    UploadFilesJobResult:
+      type: object
+      description: Represents the result of an [UploadFilesJob](#model-UploadFilesJob).
+      properties:
+        job:
+          $ref: '#/components/schemas/UploadFilesJob'
+        failedFileUploadResults:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedFileTransferResult'
+          description: The list of files that failed to upload.
+      required:
+        - job
+        - failedFileUploadResults
+      nullable: true
+      additionalProperties: false
+    LastProcessedJobResult:
+      type: object
+      description: >-
+        Represents the result of the last job that was processed. On the first
+        request to the server, this object will be null.
+      properties:
+        id:
+          type: string
+          description: >-
+            The id of the job this result represents.
+          example: 85a5cb10-cee1-4eac-865d-978746090428
+        downloadFilesJobResult:
+          $ref: '#/components/schemas/DownloadFilesJobResult'
+        executeCommandJobResult:
+          $ref: '#/components/schemas/ExecuteCommandJobResult'
+        uploadFilesJobResult:
+          $ref: '#/components/schemas/UploadFilesJobResult'
+        jobType:
+          $ref: '#/components/schemas/JobType'
+      required:
+        - id
+        - jobType
+      nullable: true
+      additionalProperties: false
+    KitHeartbeatRequest:
+      type: object
+      description: >-
+        Sent by the agent to provide the current state of the device, and
+        request a job to process.
+      properties:
+        agentSchemaVersion:
+          type: string
+          description: >-
+            The version of the schema that the agent supports.
+        kit:
+          $ref: '#/components/schemas/Kit'
+        activeJobId:
+          type: string
+          description: >-
+            The job id of the currently processing job. If there is no pending
+            job, then this property will be an all zero GUID
+            '00000000-0000-0000-0000-000000000000'.
+          example: 85a5cb10-cee1-4eac-865d-978746090428
+        lastProcessedJobResult:
+          $ref: '#/components/schemas/LastProcessedJobResult'
+        agentStartTime:
+          type: string
+          format: date-time
+          description: >-
+            Provide a UTC date-time object for when the agent first started.
+            This can assist in determining a reboot of the device.
+          example: 2023-05-10T20:26:59.8034206+00:00
+        currentDateTime:
+          type: string
+          format: date-time
+          description: >-
+            The UTC date/time for when this heartbeat request was generated.
+          example: 2023-05-10T20:46:54.5836905+00:00
+      required:
+        - kit
+        - activeJobId
+        - agentStartTime
+        - currentTime
+      additionalProperties: false
+    JobType:
+      type: string
+      description: Specifies which job property is populated.
+      enum:
+        - invalid
+        - executeCommandJob
+        - downloadFilesJob
+        - uploadFilesJob
+        - cancelCurrentJob
+  securitySchemes:
+    xtoken:
+      type: apiKey
+      description: >-
+        An XToken. See [Xbox Live service authentication](https://developer.microsoft.com/en-us/games/xbox/docs/gdk/live-service-authentication-nav)
+        for additional information on inspecting XTokens. See [Setting up web services at Partner Center](https://developer.microsoft.com/en-us/games/xbox/docs/gdk/live-web-services.html)
+        on how to setup a relying party in order to decrypt the XToken.
+      name: XBOX-AGENT-XTOKEN
+      in: header
+    deviceId:
+      type: apiKey
+      description: >-
+        If XToken is not available, then this field will be used and populated with the Xbox Live Device Id.
+      name: XBOX-AGENT-DEVICEID
+      in: header
+    af-key:
+      type: apiKey
+      description: >-
+        For azure function development, this will send the specified api key.
+        See [Azure Functions HTTP trigger - Function access keys](https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-http-webhook-trigger?tabs=in-process%2Cfunctionsv2&pivots=programming-language-csharp#authorization-keys)
+      name: x-functions-key
+      in: header
+security:
+  - xtoken: []
+  - deviceId: []
+  - af-key: []

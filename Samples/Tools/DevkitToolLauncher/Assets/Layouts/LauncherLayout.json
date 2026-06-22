@@ -1,0 +1,224 @@
+{
+  "includes":
+  [
+    "Assets/Layouts/Definitions.json",
+    "Assets/Layouts/Styles.json"
+  ],
+  "layout":
+  {
+    "id": "LauncherBackgroundPanel",
+    "classId": "Panel",
+    "styleId": "background_panel_style",
+    "panel":
+    {
+      "positioningAnchor": [ "left", "top" ],
+      "position": [ 0, 0 ],
+      "sizingAnchor": [ "left", "top" ],
+      "size": "#fullscreen"
+    },
+    "childElements":
+    [
+      {
+        "classId": "VerticalStackPanel",
+        "id": "LauncherVerticalStack",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "position": [ 0, 0 ],
+        "size": "#fullscreen",
+        "styleId": "invisible_panel_style",
+        "stackingOrientation": "down",
+        "childElements":
+        [
+          {
+            "classId": "StaticText",
+            "id": "LaunchSettingsTitleLabel",
+            "positioningAnchor": [ "center", "middle" ],
+            "sizingAnchor": [ "center", "middle" ],
+            "text": "Launch Settings",
+            "styleId": "title_text_style_centered",
+            "size": [1920, 100]
+          },
+          {
+            "classId": "Panel",
+            "id": "Spacer1",
+            "positioningAnchor": [ "center", "middle" ],
+            "sizingAnchor": [ "center", "middle" ],
+            "styleId": "invisible_panel_style",
+            "size": [1920, 100]
+          },
+          {
+            "classId": "StaticText",
+            "id": "LaunchSettingsExeLabel",
+            "positioningAnchor": [ "center", "middle" ],
+            "sizingAnchor": [ "center", "middle" ],
+            "text": "Exe",
+            "styleId": "label_text_style_centered",
+            "size": [1920, 32]
+          },
+          {
+            "id": "LaunchSettingsExeTextEntry",
+            "prefabRef": "Assets/Layouts/LauncherTextEntryPrefab.json"
+          },
+          {
+            "classId": "Panel",
+            "id": "Spacer2",
+            "positioningAnchor": [ "center", "middle" ],
+            "sizingAnchor": [ "center", "middle" ],
+            "styleId": "invisible_panel_style",
+            "size": [1920, 60]
+          },
+          {
+            "classId": "StaticText",
+            "id": "LaunchSettingsCommandlineParametersLabel",
+            "positioningAnchor": [ "center", "middle" ],
+            "sizingAnchor": [ "center", "middle" ],
+            "text": "Commandline Parameters",
+            "styleId": "label_text_style_centered",
+            "size": [1920, 32]
+          },
+          {
+            "id": "LaunchSettingsCommandLineTextEntry",
+            "prefabRef": "Assets/Layouts/LauncherTextEntryPrefab.json"
+          },
+          {
+            "classId": "Panel",
+            "id": "Spacer3",
+            "positioningAnchor": [ "center", "middle" ],
+            "sizingAnchor": [ "center", "middle" ],
+            "styleId": "invisible_panel_style",
+            "size": [1920, 60]
+          },
+          {
+            "classId": "StaticText",
+            "id": "LaunchSettingsWorkingDirectoryParametersLabel",
+            "positioningAnchor": [ "center", "middle" ],
+            "sizingAnchor": [ "center", "middle" ],
+            "text": "Working Directory",
+            "styleId": "label_text_style_centered",
+            "size": [1920, 32]
+          },
+          {
+            "id": "LaunchSettingsWorkingDirectoryTextEntry",
+            "prefabRef": "Assets/Layouts/LauncherTextEntryPrefab.json"
+          },
+          {
+            "classId": "Panel",
+            "id": "Spacer4",
+            "positioningAnchor": [ "center", "middle" ],
+            "sizingAnchor": [ "center", "middle" ],
+            "styleId": "invisible_panel_style",
+            "size": [1920, 60]
+          },
+          {
+            "classId": "Panel",
+            "id": "PortInformationLayoutPanel",
+            "positioningAnchor": [ "center", "middle" ],
+            "sizingAnchor": [ "center", "middle" ],
+            "size": [1920, 200],
+            "styleId": "invisible_panel_style",
+            "subElements":
+            [
+              {
+                "classId": "StaticText",
+                "id": "PortInformationText",
+                "positioningAnchor": [ "center", "middle" ],
+                "sizingAnchor": [ "center", "middle" ],
+                "text": "To change which ports can accept unsolicited inbound connections, you must edit the \"DebugNetworkPortList\" in MicrosoftGame.config and re-deploy. See readme.docx for more information.\n\nIf you launch with GPU, then the screen will go blank to give up the GPU until the process has ended. You can still terminate the process by holding [B] on a gamepad.",
+                "isLegend": true,
+                "styleId": "label_text_style_centered",
+                "size": [800, 200],
+                "horzWrap": "WrapAtSpace"
+              }
+            ]
+          },
+          {
+            "classId": "Panel",
+            "id": "LaunchButtonsLayoutPanel",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [1920, 200],
+            "styleId": "invisible_panel_style",
+            "subElements":
+            [
+              {
+                "classId": "Button",
+                "id": "LaunchButtonCPU",
+                "positioningAnchor": [ "left", "top" ],
+                "sizingAnchor": [ "left", "top" ],
+                "size": [ 300, 80 ],
+                "position": [ 450, 60 ],
+                "styleId": "basic_button_style",
+                "focusable": true,
+                "disabledStyleId": "disabled_button_style",
+                "focusedStyleId": "focused_button_style",
+                "hoveredStyleId": "hovered_button_style",
+                "pressedStyleId": "pressed_button_style",
+                "subElements": 
+                [
+                  {
+                    "classId": "StaticText",
+                    "id": "LaunchButtonCPULabel",
+                    "positioningAnchor": [ "center", "middle" ],
+                    "sizingAnchor": [ "center", "middle" ],
+                    "text": "Launch (CPU Only)",
+                    "styleId": "label_text_style_centered"
+                  }
+                ]
+              },
+              {
+                "classId": "Button",
+                "id": "LaunchButtonGPU",
+                "positioningAnchor": [ "left", "top" ],
+                "sizingAnchor": [ "left", "top" ],
+                "size": [ 300, 80 ],
+                "position": [ 810, 60 ],
+                "styleId": "basic_button_style",
+                "focusable": true,
+                "disabledStyleId": "disabled_button_style",
+                "focusedStyleId": "focused_button_style",
+                "hoveredStyleId": "hovered_button_style",
+                "pressedStyleId": "pressed_button_style",
+                "subElements": 
+                [
+                  {
+                    "classId": "StaticText",
+                    "id": "LaunchButtonGPULabel",
+                    "positioningAnchor": [ "center", "middle" ],
+                    "sizingAnchor": [ "center", "middle" ],
+                    "text": "Launch (CPU & GPU)",
+                    "styleId": "label_text_style_centered"
+                  }
+                ]
+              },
+              {
+                "classId": "Button",
+                "id": "CancelButton",
+                "positioningAnchor": [ "left", "top" ],
+                "sizingAnchor": [ "left", "top" ],
+                "size": [ 300, 80 ],
+                "position": [ 1170, 60 ],
+                "styleId": "basic_button_style",
+                "focusable": true,
+                "disabledStyleId": "disabled_button_style",
+                "focusedStyleId": "focused_button_style",
+                "hoveredStyleId": "hovered_button_style",
+                "pressedStyleId": "pressed_button_style",
+                "subElements": 
+                [
+                  {
+                    "classId": "StaticText",
+                    "id": "CancelButtonLabel",
+                    "positioningAnchor": [ "center", "middle" ],
+                    "sizingAnchor": [ "center", "middle" ],
+                    "text": "Cancel",
+                    "styleId": "label_text_style_centered"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

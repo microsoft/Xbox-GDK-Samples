@@ -1,32 +1,69 @@
----
-page_type: sample
-languages:
-- cpp
-products:
-- gdk
-urlFragment: "frontpanelgame"
-extendedZipContent:
-- path: LICENSE
-  target: LICENSE
-- path: Kits
-  target: Kits
-- path: Media
-  target: Media
-description: "FrontPanelGame is the classic 'snake game' implemented completely on the Xbox DevKit Front Panel."
----
+  ![](./media/image1.png)
 
-# FrontPanelGame
+#   FrontPanelGame Sample
 
-For more information see: 
-- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/FrontPanelGame/readme_en-us.md)
-- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/FrontPanelGame/readme_ja-jp.md)
-- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/FrontPanelGame/readme_ko-kr.md)
-- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/FrontPanelGame/readme_zh-cn.md)
+*This sample is compatible with the Microsoft Game Development Kit (June
+2020)*
 
-## Privacy statement
+# 
 
-For more information about Microsoft's privacy policies in general, see the [Microsoft Privacy Statement](https://privacy.microsoft.com/privacystatement/).
+# Description
 
-## Trademarks
+FrontPanelGame is the classic "snake game" implemented completely on the
+Xbox One X Devkit and Xbox Series X|S Devkit Front Panels. The sample is
+mainly provided for fun but nonetheless does demonstrate some important
+aspects of the front panel control:
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
+-   The front panel is completely programmable from title code
+
+-   The buttons and DPAD APIs are analogous to the familiar Gamepad APIs
+
+-   The sample showcases some utility code that you can use in your own
+    front panel project
+
+    -   Text rendering using RasterFont (see also: the FrontPanelText
+        sample)
+
+    -   FrontPanelInput provides a reusable input class much like
+        DirectXTK::GamePad
+
+    -   FrontPanelDisplay provides a simple class for managing the front
+        panel buffer
+
+    -   Code for drawing basic shapes such as lines and rectangles
+
+![](./media/image3.png)
+
+# Building the sample
+
+If using an Xbox One devkit, set the active solution platform to `Gaming.Xbox.XboxOne.x64`.
+
+If using an Xbox Series X|S devkit, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
+
+*For more information, see* __Running samples__, *in the GDK documentation.*
+
+# Using the sample
+
+| Action                                    |  Front Panel              |
+|-------------------------------------------|--------------------------|
+| Start a new game                          |  Button 1                 |
+| Move the snake  |  DPAD (Left, Right, Up, Down)                    |
+| Take a screenshot                         |  DPAD Select              |
+| Toggle between game mode and system mode  |  Press and hold DPAD Select                   |
+
+# Update history
+
+April 2019, first release of the sample.
+
+November 2019, support for the Xbox Series X|S Devkit.
+
+# Privacy Statement
+
+When compiling and running a sample, the file name of the sample
+executable will be sent to Microsoft to help track sample usage. To
+opt-out of this data collection, you can remove the block of code in
+Main.cpp labeled "Sample Usage Telemetry".
+
+For more information about Microsoft's privacy policies in general, see
+the [Microsoft Privacy
+Statement](https://privacy.microsoft.com/en-us/privacystatement/).

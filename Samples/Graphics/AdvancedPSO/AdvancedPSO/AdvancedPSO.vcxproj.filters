@@ -1,0 +1,559 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>cd3e918f-e8b3-417d-8600-166c604aa929</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>dbadd18c-fb78-4d7f-890e-56c088b87de0</UniqueIdentifier>
+      <Extensions>bmp;dds;fbx;gif;jpg;jpeg;tga;tiff;tif;png</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>{4ad4b8d9-6220-4727-ae43-3f1c05f7d48e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\psoset">
+      <UniqueIdentifier>{843cad70-9aac-4fe7-a236-01d400c18b78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared">
+      <UniqueIdentifier>{6ee42261-b248-4413-a367-f19c1f7136db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers">
+      <UniqueIdentifier>{2aa2fe71-b3a6-4cb4-9b9a-c7ad8067143a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\Shaders">
+      <UniqueIdentifier>{65bb0a87-1f30-44fa-8c3c-a7cad2f98350}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\psoset\XboxOne-Release">
+      <UniqueIdentifier>{fe121296-bd98-498b-9c5b-94909a82cf9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\psoset\XboxOne-Debug">
+      <UniqueIdentifier>{f19af80e-a2f3-430f-8578-ee9b427c51e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\psoset\Scarlett-Release">
+      <UniqueIdentifier>{a5fefd0b-e0eb-49ed-9fb3-73eade932ff6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\psoset\Scarlett-Debug">
+      <UniqueIdentifier>{6c9c702b-3764-4380-886f-8f9e98569aa7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="AdvancedPSO.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\PsoSet.h">
+      <Filter>Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\PsoDesc.h">
+      <Filter>Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="Minitracker.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomEffect.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\ReadData.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\Json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="AdvancedPSO.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Minitracker.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\WideLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="..\..\..\..\Media\Textures\default_white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="..\..\..\..\Media\Textures\MossRock.dds">
+      <Filter>Assets</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\PSOGen\Assets\common.hlsli">
+      <Filter>Shared\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\..\Media\Fonts\Courier_16.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\..\Media\Fonts\Courier_36.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\..\Media\Fonts\SegoeUI_22.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\..\Media\Fonts\SegoeUI_24.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\..\Media\Fonts\SegoeUI_34.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\..\Media\Fonts\SegoeUI_48.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\..\Media\Fonts\XboxOneController.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\readme.md" />
+    <None Include="..\readme_ja-jp.md" />
+    <None Include="..\readme_ko-kr.md" />
+    <None Include="..\readme_zh-cn.md" />
+    <None Include="Assets\psoset\XboxOne-Release\test_set.ps_light.shader.gpu.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.ps_light.shader.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.ps_light_texture.shader.gpu.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.ps_light_texture.shader.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.ps_texture.shader.gpu.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.ps_texture.shader.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.rootsig.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.vs_morph.ps_light.pso.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.vs_morph.ps_light.pso.packet.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.vs_morph.ps_light_texture.pso.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.vs_morph.ps_light_texture.pso.packet.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.vs_morph.ps_texture.pso.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.vs_morph.ps_texture.pso.packet.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.vs_morph.shader.gpu.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.vs_morph.shader.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.vs_static.ps_light.pso.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.vs_static.ps_light.pso.packet.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.vs_static.ps_light_texture.pso.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.vs_static.ps_light_texture.pso.packet.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.vs_static.ps_texture.pso.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.vs_static.ps_texture.pso.packet.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.vs_static.shader.gpu.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.vs_static.shader.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.vs_tint.ps_light.pso.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.vs_tint.ps_light.pso.packet.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.vs_tint.ps_light_texture.pso.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.vs_tint.ps_light_texture.pso.packet.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.vs_tint.ps_texture.pso.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.vs_tint.ps_texture.pso.packet.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.vs_tint.shader.gpu.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Release\test_set.vs_tint.shader.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.ps_light.shader.gpu.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.ps_light.shader.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.ps_light_texture.shader.gpu.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.ps_light_texture.shader.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.ps_texture.shader.gpu.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.ps_texture.shader.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.rootsig.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.vs_morph.ps_light.pso.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.vs_morph.ps_light.pso.packet.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.vs_morph.ps_light_texture.pso.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.vs_morph.ps_light_texture.pso.packet.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.vs_morph.ps_texture.pso.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.vs_morph.ps_texture.pso.packet.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.vs_morph.shader.gpu.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.vs_morph.shader.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.vs_static.ps_light.pso.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.vs_static.ps_light.pso.packet.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.vs_static.ps_light_texture.pso.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.vs_static.ps_light_texture.pso.packet.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.vs_static.ps_texture.pso.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.vs_static.ps_texture.pso.packet.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.vs_static.shader.gpu.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.vs_static.shader.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.vs_tint.ps_light.pso.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.vs_tint.ps_light.pso.packet.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.vs_tint.ps_light_texture.pso.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.vs_tint.ps_light_texture.pso.packet.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.vs_tint.ps_texture.pso.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.vs_tint.ps_texture.pso.packet.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.vs_tint.shader.gpu.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\XboxOne-Debug\test_set.vs_tint.shader.meta.bin">
+      <Filter>Assets\psoset\XboxOne-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.fs_nmtx.shader.gpu.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.ps_light.shader.gpu.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.ps_light.shader.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.ps_light_texture.shader.gpu.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.ps_light_texture.shader.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.ps_texture.shader.gpu.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.ps_texture.shader.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.rootsig.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.vs_morph.ps_light.pso.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.vs_morph.ps_light.pso.packet.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.vs_morph.ps_light_texture.pso.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.vs_morph.ps_light_texture.pso.packet.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.vs_morph.ps_texture.pso.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.vs_morph.ps_texture.pso.packet.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.vs_morph.shader.gpu.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.vs_morph.shader.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.vs_static.ps_light.pso.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.vs_static.ps_light.pso.packet.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.vs_static.ps_light_texture.pso.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.vs_static.ps_light_texture.pso.packet.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.vs_static.ps_texture.pso.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.vs_static.ps_texture.pso.packet.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.vs_static.shader.gpu.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.vs_static.shader.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.vs_tint.ps_light.pso.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.vs_tint.ps_light.pso.packet.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.vs_tint.ps_light_texture.pso.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.vs_tint.ps_light_texture.pso.packet.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.vs_tint.ps_texture.pso.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.vs_tint.ps_texture.pso.packet.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.vs_tint.shader.gpu.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Release\test_set.vs_tint.shader.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Release</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.fs_nmtx.shader.gpu.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.ps_light.shader.gpu.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.ps_light.shader.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.ps_light_texture.shader.gpu.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.ps_light_texture.shader.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.ps_texture.shader.gpu.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.ps_texture.shader.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.rootsig.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.vs_morph.ps_light.pso.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.vs_morph.ps_light.pso.packet.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.vs_morph.ps_light_texture.pso.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.vs_morph.ps_light_texture.pso.packet.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.vs_morph.ps_texture.pso.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.vs_morph.ps_texture.pso.packet.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.vs_morph.shader.gpu.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.vs_morph.shader.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.vs_static.ps_light.pso.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.vs_static.ps_light.pso.packet.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.vs_static.ps_light_texture.pso.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.vs_static.ps_light_texture.pso.packet.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.vs_static.ps_texture.pso.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.vs_static.ps_texture.pso.packet.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.vs_static.shader.gpu.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.vs_static.shader.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.vs_tint.ps_light.pso.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.vs_tint.ps_light.pso.packet.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.vs_tint.ps_light_texture.pso.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.vs_tint.ps_light_texture.pso.packet.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.vs_tint.ps_texture.pso.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.vs_tint.ps_texture.pso.packet.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.vs_tint.shader.gpu.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+    <None Include="Assets\psoset\Scarlett-Debug\test_set.vs_tint.shader.meta.bin">
+      <Filter>Assets\psoset\Scarlett-Debug</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\PSOGen\Assets\ps_light.hlsl">
+      <Filter>Shared\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\PSOGen\Assets\ps_light_texture.hlsl">
+      <Filter>Shared\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\PSOGen\Assets\ps_texture.hlsl">
+      <Filter>Shared\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\PSOGen\Assets\vs_morph.hlsl">
+      <Filter>Shared\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\PSOGen\Assets\vs_static.hlsl">
+      <Filter>Shared\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\PSOGen\Assets\vs_tint.hlsl">
+      <Filter>Shared\Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,62 @@
+﻿@page
+@model XboxAgentServerSample.Pages.DevkitsModel
+
+@{
+    ViewData["Title"] = "Devkits";
+}
+
+<p>
+    <button onClick="window.location.reload();">Refresh Page</button>
+</p>
+
+<h1>Devkits</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.LinkedDevkits[0].DevkitInfo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LinkedDevkits[0].PendingJob)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LinkedDevkits[0].NextJob)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LinkedDevkits[0].CancelCurrentJob)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LinkedDevkits[0].LatestAgentState)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.LinkedDevkits)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DevkitInfo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PendingJob)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NextJob)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CancelCurrentJob)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LatestAgentState)
+            </td>
+@*            <td>
+                <a asp-page="./Edit" asp-route-id="@item.DeveloperDeviceId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.DeveloperDeviceId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.DeveloperDeviceId">Delete</a>
+            </td>*@
+        </tr>
+}
+    </tbody>
+</table>

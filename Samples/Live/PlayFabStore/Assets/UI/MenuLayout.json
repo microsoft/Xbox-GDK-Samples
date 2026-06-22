@@ -1,0 +1,10 @@
+{
+  "$schema": "https://atgsamplessa.blob.core.windows.net/uitkschema/latest/layout.schema.json",
+  "definitions": {
+    "#fullscreen": [ 1920, 1080 ]
+  },
+  "includes": [
+    "Assets/defs.json",
+    "Assets/styles.json"
+  ]
+}

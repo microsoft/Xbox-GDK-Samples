@@ -61,6 +61,8 @@
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
     <GDKCrossPlatform>true</GDKCrossPlatform>
     <VcpkgEnableManifest>true</VcpkgEnableManifest>
+    <VcpkgTriplet Condition="'$(Platform)'=='ARM64'">arm64-windows</VcpkgTriplet>
+    <VcpkgTriplet Condition="'$(Platform)'!='ARM64'">x64-windows</VcpkgTriplet>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Condition="Exists($(ATGBuildProps))" Project="$(ATGBuildProps)" />

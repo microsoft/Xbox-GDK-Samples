@@ -1,32 +1,73 @@
----
-page_type: sample
-languages:
-- cpp
-products:
-- gdk
-urlFragment: "simpleexceptionhandling"
-extendedZipContent:
-- path: LICENSE
-  target: LICENSE
-- path: Kits
-  target: Kits
-- path: Media
-  target: Media
-description: "Demonstrates various ways that C++ and SEH exceptions can occur in Microsoft GDK titles."
----
+  ![](./media/image1.png)
 
-# SimpleExceptionHandling
+#   SimpleExceptionHandling Sample
 
-For more information see: 
-- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/SimpleExceptionHandling/readme_en-us.md)
-- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/SimpleExceptionHandling/readme_ja-jp.md)
-- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/SimpleExceptionHandling/readme_ko-kr.md)
-- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/SimpleExceptionHandling/readme_zh-cn.md)
+*This sample is compatible with the Microsoft Game Development Kit (June
+2020)*
 
-## Privacy statement
+# Description
 
-For more information about Microsoft's privacy policies in general, see the [Microsoft Privacy Statement](https://privacy.microsoft.com/privacystatement/).
+This sample shows several different ways handle exceptions that can
+occur in your title.
 
-## Trademarks
+-   Unhandled Exception Filter -- Demonstrates how to use an [Unhandled
+    Exception
+    Filter](https://docs.microsoft.com/windows/win32/api/errhandlingapi/nf-errhandlingapi-setunhandledexceptionfilter)
+    to catch and process general exceptions your title.
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
+-   Structured Exceptions -- Demonstrates how to use the [Structured
+    Exception
+    Handling](https://docs.microsoft.com/cpp/cpp/structured-exception-handling-c-cpp)
+    system.
+
+-   Vectored Exception Handler -- Demonstrates how to use the [Vectored
+    Exception
+    Handling](https://docs.microsoft.com/windows/win32/debug/vectored-exception-handling)
+    system.
+
+-   C++ Language Exceptions -- Demonstrates how to use the exception
+    system built into the [C++
+    Language](https://docs.microsoft.com/cpp/cpp/try-throw-and-catch-statements-cpp).
+
+-   Recommended pattern -- Demonstrates a recommended pattern that uses
+    a combination of the other systems.
+
+# Building the sample
+
+If using an Xbox One devkit, set the active solution platform to `Gaming.Xbox.XboxOne.x64`.
+
+If using Xbox Series X|S, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
+
+If using the Desktop, set the active solution platform to `x64`.
+
+*For more information, see* __Running samples__, *in the GDK documentation.*
+
+# Using the sample
+
+Press the corresponding button on the controller for each demonstration.
+The display will show the order of operations that happen in the code
+when an exception is raised.
+
+Note: The Unhandled Exception Filter example will behave differently if
+there is a debugger attached, there are additional details in the
+comments.
+
+# Implementation notes
+
+All the examples are contained in the Examples folder. They are heavily
+documented with details on each system and how they work.
+
+# Update history
+
+Initial release April 2021
+
+# Privacy statement
+
+When compiling and running a sample, the file name of the sample
+executable will be sent to Microsoft to help track sample usage. To
+opt-out of this data collection, you can remove the block of code in
+Main.cpp labeled "Sample Usage Telemetry".
+
+For more information about Microsoft's privacy policies in general, see
+the [Microsoft Privacy
+Statement](https://privacy.microsoft.com/en-us/privacystatement/).

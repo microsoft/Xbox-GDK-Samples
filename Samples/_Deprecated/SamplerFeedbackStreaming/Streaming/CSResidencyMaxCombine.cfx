@@ -1,0 +1,41 @@
+//--------------------------------------------------------------------------------------
+// File: CSResidencyMaxCombine.pfx
+//
+// This is a compute shader that combines multiple residency maps together into a single
+// destination residency map, using a "max" operation.
+//
+// Copyright (c) Microsoft Corporation. All rights reserved.
+//--------------------------------------------------------------------------------------
+
+#include "RootSignature.hlsli"
+
+RWTexture2DArray<float> DestTexture : register(u0, space2);
+Texture2DArray<float> SourceTextures[8] : register(t0);
+SamplerState pointSampler : register(s14);
+
+cbuffer cb0 : register(b0)                                                                   
+{                                                                              
+    uint4 DimensionsAndCount : packoffset(c0);                        
+};                                                                             
+
+[RootSignature(RS_Streaming12)]
+[numthreads(8,8,1)]
+void main(
+    uint3 DTid : SV_DispatchThreadID
+)
+{
+    float3 TexCoords;
+    TexCoords.x = (float)DTid.x / (float)DimensionsAndCount.x;
+    TexCoords.y = (float)DTid.y / (float)DimensionsAndCount.y;
+    TexCoords.z = (float)DTid.z;
+
+    uint TexCount = DimensionsAndCount.z;
+
+    float MaxValue = SourceTextures[0].SampleLevel(pointSampler, TexCoords, 0);
+    for (uint i = 1; i < TexCount; ++i)
+    {
+        MaxValue = max(MaxValue, SourceTextures[i].SampleLevel(pointSampler, TexCoords, 0));
+    }
+
+    DestTexture[DTid.xyz] = MaxValue;
+}

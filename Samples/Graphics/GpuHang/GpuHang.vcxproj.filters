@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>e353b00f-ba4e-4fe3-8539-b32491645676</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>ad203483-94c7-4573-8677-82fe03c98005</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>b8103adb-ed29-43ea-8cfe-1d6f0966f732</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hang">
+      <UniqueIdentifier>{6bbf796f-823f-4777-8425-094f8bbc9758}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{da5674a8-6123-402b-935c-86b51d5feb43}</UniqueIdentifier>
+      <Extensions>*.hlsl;*.hlsli</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="GpuHang.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\Json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="Hang.h" />
+    <ClInclude Include="Util.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ReadData.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="Telemetry.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="GpuHang.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Util.cpp" />
+    <ClCompile Include="HangCommandBufferContention.cpp">
+      <Filter>Hang</Filter>
+    </ClCompile>
+    <ClCompile Include="HangCommandBufferCorruption.cpp">
+      <Filter>Hang</Filter>
+    </ClCompile>
+    <ClCompile Include="HangDescriptorCorruption.cpp">
+      <Filter>Hang</Filter>
+    </ClCompile>
+    <ClCompile Include="HangFalsePositive.cpp">
+      <Filter>Hang</Filter>
+    </ClCompile>
+    <ClCompile Include="HangFenceDeadlock.cpp">
+      <Filter>Hang</Filter>
+    </ClCompile>
+    <ClCompile Include="HangFenceNonWritable.cpp">
+      <Filter>Hang</Filter>
+    </ClCompile>
+    <ClCompile Include="HangFenceUnsignaled.cpp">
+      <Filter>Hang</Filter>
+    </ClCompile>
+    <ClCompile Include="HangInfiniteLoop.cpp">
+      <Filter>Hang</Filter>
+    </ClCompile>
+    <ClCompile Include="HangLargeDirectWorkload.cpp">
+      <Filter>Hang</Filter>
+    </ClCompile>
+    <ClCompile Include="HangLargeIndirectWorkload.cpp">
+      <Filter>Hang</Filter>
+    </ClCompile>
+    <ClCompile Include="HangLateAlloc.cpp">
+      <Filter>Hang</Filter>
+    </ClCompile>
+    <ClCompile Include="HangMissingScratch.cpp">
+      <Filter>Hang</Filter>
+    </ClCompile>
+    <ClCompile Include="HangSamplerCorruption.cpp">
+      <Filter>Hang</Filter>
+    </ClCompile>
+    <ClCompile Include="HangUnpairedBarrier.cpp">
+      <Filter>Hang</Filter>
+    </ClCompile>
+    <ClCompile Include="HangPsoCorruption.cpp">
+      <Filter>Hang</Filter>
+    </ClCompile>
+    <ClCompile Include="HangShaderAssert.cpp">
+      <Filter>Hang</Filter>
+    </ClCompile>
+    <ClCompile Include="HangRootSignatureMismatch.cpp">
+      <Filter>Hang</Filter>
+    </ClCompile>
+    <ClCompile Include="HangAVWrite.cpp">
+      <Filter>Hang</Filter>
+    </ClCompile>
+    <ClCompile Include="HangFloatDivideByZero.cpp">
+      <Filter>Hang</Filter>
+    </ClCompile>
+    <ClCompile Include="HangDrawBalancing.cpp">
+      <Filter>Hang</Filter>
+    </ClCompile>
+    <ClCompile Include="Hang1DDepth.cpp">
+      <Filter>Hang</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\sunset.jpg">
+      <Filter>Assets</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Media\Fonts\Courier_16.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_18_Italic.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
+    <None Include="readme.md" />
+    <None Include="Cull.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="CullGraphicsCs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="InfiniteLoopCs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="LateAllocPs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="LateAllocVs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="PointSpriteGs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="PointSpritePs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="PointSpriteVs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="ScratchCs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="SimpleTexture12Ps.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="SimpleTexture12Vs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="SimpleTriangle12Ps.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="SimpleTriangle12Vs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="TransformCs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="SimpleSamplerVs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="SimpleSamplerPs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="CopyCs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="AssertCs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="SimpleRWTexturePs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="SimpleRWTextureVs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="DivideCs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="CullAsyncCs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Game configVersion="0">
+  <!-- Version "1" is supported by March 2022 GDK or later -->
+
+  <Identity Name="9f7d18be-b958-4d37-b9ca-ea07e4e9cffe"
+            Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+            Version="1.0.0.0"/>
+  
+  <ExecutableList>
+    <Executable Name="SimpleMDU.exe"
+                Id="Game"/>
+  </ExecutableList>
+
+  
+  <ShellVisuals DefaultDisplayName="SimpleMDU"
+                PublisherDisplayName="Xbox Advanced Technology Group"
+                StoreLogo="Assets\StoreLogo.png"
+                Square150x150Logo="Assets\Logo.png"
+                Square44x44Logo="Assets\SmallLogo.png"
+                Square480x480Logo="Assets\LargeLogo.png"
+                Description="SimpleMDU"
+                ForegroundText="dark"
+                BackgroundColor="#000000"
+                SplashScreenImage="Assets\SplashScreen.png"/>
+</Game>

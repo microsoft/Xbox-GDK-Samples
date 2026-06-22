@@ -1,32 +1,61 @@
----
-page_type: sample
-languages:
-- cpp
-products:
-- gdk
-urlFragment: "mdns"
-extendedZipContent:
-- path: LICENSE
-  target: LICENSE
-- path: Kits
-  target: Kits
-- path: Media
-  target: Media
-description: "This sample demonstrates using mDNS to register a game service and broadcasting it across your local network, as well as demonstrating network discovery and resolving on Xbox."
----
+  ![](./media/image1.png)
 
-# mDNS
+#   mDNS Sample
 
-For more information see: 
-- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Live/mDNS/readme_en-us.md)
-- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Live/mDNS/readme_ja-jp.md)
-- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Live/mDNS/readme_ko-kr.md)
-- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Live/mDNS/readme_zh-cn.md)
+*This sample is compatible with the Microsoft GDKX (March 2022)*
 
-## Privacy statement
+# Description
 
-For more information about Microsoft's privacy policies in general, see the [Microsoft Privacy Statement](https://privacy.microsoft.com/privacystatement/).
+This sample demonstrates using mDNS to register a game service and
+broadcasting it across your local network, as well as demonstrating
+network discovery & resolving.
 
-## Trademarks
+# Building the sample
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
+If using an Xbox One devkit, set the active solution platform to `Gaming.Xbox.XboxOne.x64`.
+
+If using an Xbox Series X|S devkit, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
+
+This sample does not utilize any Xbox Live functionality and should not
+require the configuration of anything related to sandboxes or titles.
+
+*For more information, see* __Running samples__, *in the GDK documentation.*
+
+# Using the sample
+
+When the sample is run, can perform the following actions:
+
+-   **Register DNS:** Register local device for network discovery
+
+-   **De-Register DNS:** De-register a previously created registration
+
+-   **Start Browse:** Begin continuous network discovery of registered
+    devices (including self)
+
+-   **Stop Browse:** Cancel a previously started DNS browse.
+
+Upon selecting an option, you will see output in the console showing the
+result of the action requested.
+
+When 'Start Browse' is selected, you will periodically see the endpoint
+of discovered services which were resolved successfully.
+
+This feature and sample function cross-device, for example, when running
+the desktop equivalent of this sample, an Xbox and PC will be able to
+discover each other.
+
+# Update history
+
+- March 2024 - Merged console and desktop samples into combo solution
+- February 2020 - Initial release February 2020
+
+# Privacy Statement
+
+When compiling and running a sample, the file name of the sample
+executable will be sent to Microsoft to help track sample usage. To
+opt-out of this data collection, you can remove the block of code in
+Main.cpp labeled "Sample Usage Telemetry".
+
+For more information about Microsoft's privacy policies in general, see
+the [Microsoft Privacy
+Statement](https://privacy.microsoft.com/en-us/privacystatement/).

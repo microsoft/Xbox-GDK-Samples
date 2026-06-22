@@ -1,4 +1,4 @@
-///--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
 // pch.h
 //
 // Advanced Technology Group (ATG)
@@ -29,6 +29,9 @@
 
 #include <Windows.h>
 
+#include <wrl/client.h>
+#include <wrl/event.h>
+
 #include <d3d12.h>
 #include <dxgi1_6.h>
 
@@ -51,6 +54,7 @@
 #include <cstring>
 #include <cwchar>
 #include <exception>
+#include <filesystem>
 #include <fstream>
 #include <iterator>
 #include <map>
@@ -66,9 +70,7 @@
 #include "imgui.h"
 #include "backends/imgui_impl_win32.h"
 #include "backends/imgui_impl_dx12.h"
-#include "ATG/imgui_sample.h"
-#include "ATG/imgui_applog.h"
-#include "ATG/imgui_deviceresources.h"
+#include "imgui/imgui_atg.h"
 
 // To use graphics markup events with the latest version of PIX, change this to include <pix3.h>
 // then add the NuGet package WinPixEventRuntime to the project.

@@ -1,0 +1,45 @@
+//--------------------------------------------------------------------------------------
+// File: uisprite11.vfx
+//
+// This is the vertex shader used for sprite rendering.
+//
+// Copyright (c) Microsoft Corporation. All rights reserved.
+//--------------------------------------------------------------------------------------
+
+#include "CommonRootSignature.hlsli"
+
+cbuffer cb0                                                                    
+{                                                                              
+    row_major float4x4 mWorldViewProj : packoffset(c0);                        
+    float4 UVector : packoffset(c4);                                           
+    float4 VVector : packoffset(c5);                                           
+    float4 WVector : packoffset(c6);                                           
+};                                                                             
+
+struct VS_INPUT                                                                
+{                                                                              
+    float2 Position   : POSITION;       // vertex position                     
+    float4 Diffuse    : COLOR0;         // vertex diffuse color                
+    float2 TexCoord   : TEXCOORD0;      // vertex position                     
+};                                                                             
+
+struct VS_OUTPUT                                                               
+{                                                                              
+    float4 Diffuse    : COLOR0;         // vertex diffuse color                
+    float2 TexCoord   : TEXCOORD0;      // vertex position                     
+    float4 Position   : SV_Position;    // vertex position                     
+};        
+                                                                     
+[RootSignature(RS_UISprite12)]                                                    
+VS_OUTPUT main( VS_INPUT In )                                                
+{                                                                              
+    VS_OUTPUT Out;                                                             
+                                                                               
+    float4 Position = mul( float4( In.Position.xy, 0, 1 ), mWorldViewProj );   
+    Out.Position = Position;                                                   
+    Out.Diffuse = In.Diffuse;                                                  
+    Out.TexCoord = In.TexCoord;                                                
+                                                                               
+    return Out;                                                                
+}                                                                              
+

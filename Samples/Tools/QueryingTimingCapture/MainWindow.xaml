@@ -1,0 +1,102 @@
+﻿<Window x:Class="QueryingTimingCapture.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QueryingTimingCapture"
+        mc:Ignorable="d"
+        Title="QueryingTimingCapture" Height="540" Width="660" MinHeight="540" MinWidth="660" ResizeMode="CanResize">
+    <Grid Margin="10,10,10,3">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="42"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Horizontal"  Margin="10,10,10,10">
+                <TextBox x:Name="textPixPath" Width="480" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Button x:Name="openPixFileButton" Content="Open" Margin="10,0,0,0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Click="openPixFileButton_Click"/>
+            </StackPanel>
+        </Grid>
+        <TabControl x:Name="tabControl" Grid.Row="1" IsEnabled="False" SelectionChanged="tabControl_SelectionChanged">
+            <TabItem Header="GetSampledFunction" Height="22" Margin="-2,0,-2,0" VerticalAlignment="Bottom">
+                <Grid Background="#FFE5E5E5" Height="50">
+                    <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
+                        <Label x:Name="getSampledFunctionTabTLabel" Content="Thread"/>
+                        <ComboBox x:Name="getSampledFunctionTabComboBox" Width="190" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Button x:Name="getSampledFunctionGetButton" Content="Get" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Click="getSampledFunctionGetButton_Click"/>
+                        <Button x:Name="getSampledFunctionCancelButton" Content="Cancel" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Click="getSampledFunctionCancelButton_Click"/>
+                        <CheckBox x:Name="getSampledFunctionCheckBoxCache" Content="Use symbol cache" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="False" />
+                        <CheckBox x:Name="getSampledFunctionCheckBoxSource" Content="Show source info" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="False" />
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="GetContextSwitch" Height="22" Margin="-2,0,-2,0" VerticalAlignment="Bottom">
+                <Grid Background="#FFE5E5E5" Height="50">
+                    <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
+                        <Label x:Name="getContextSwitchTLabel" Content="Thread"/>
+                        <ComboBox x:Name="getContextSwitchTabComboBox" Width="190" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Button x:Name="getContextSwitchGetButton" Content="Get" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Click="getContextSwitchGetButton_Click"/>
+                        <Button x:Name="getContextSwitchCancelButton" Content="Cancel" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Click="getContextSwitchCancelButton_Click"/>
+                        <CheckBox x:Name="getContextSwitchCheckBoxCache" Content="Use symbol cache" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="False" />
+                        <CheckBox x:Name="getContextSwitchCheckBoxSource" Content="Show source info" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="False" />
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="DelayedThread" Height="22" Margin="-2,0,-2,0" VerticalAlignment="Bottom">
+                <Grid Background="#FFE5E5E5" Height="50">
+                    <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
+                        <Button x:Name="delayedThreadGetButton" Content="Get" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Click="delayedThreadGetButton_Click"/>
+                        <Button x:Name="delayedThreadCancelButton" Content="Cancel" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Click="delayedThreadCancelButton_Click"/>
+                        <CheckBox x:Name="delayedThreadCheckBoxCache" Content="Use symbol cache" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="False" />
+                        <CheckBox x:Name="delayedThreadCheckBoxSource" Content="Show source info" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="False" />
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="LongestEvent" Height="22" Margin="-2,0,-2,0" VerticalAlignment="Bottom">
+                <Grid Background="#FFE5E5E5" Height="50">
+                    <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
+                        <Label x:Name="longestEventLabel" Content="Event Name"/>
+                        <ComboBox x:Name="longestEventComboBox" Width="190" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" IsEditable="True"/>
+                        <Button x:Name="longestEventGetButton" Content="Get" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Click="longestEventGetButton_Click"/>
+                        <Button x:Name="longestEventCancelButton" Content="Cancel" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Click="longestEventCancelButton_Click"/>
+                        <CheckBox x:Name="longestEventCheckBox" Content="Add bookmark" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="False" />
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="PerfReviewInfoSummary">
+                <Grid Background="#FFE5E5E5" Height="50">
+                    <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
+                        <Button x:Name="PerfReviewInfoSummaryButton" Content="Get summary of the capture for performance review" HorizontalAlignment="Left"  VerticalAlignment="Center" Click="PerfReviewInfoSummaryButton_Click"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Free Input SQL">
+                <Grid Background="#FFE5E5E5" MinHeight="50">
+                    <StackPanel Orientation="Vertical">
+                        <TextBox x:Name="freeInputTabTextBox" MinLines="3" MaxLines="18" Text="" TextWrapping="Wrap" AcceptsReturn="True" DockPanel.Dock="Left" Margin="5,5,5,5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"/>
+                        <DockPanel>
+                            <Label Content="Sample queries:" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <ComboBox x:Name="freeInputTabPutSampleComboBox" Margin="5,5,5,5" SelectedValuePath="Value" DisplayMemberPath="Key" SelectedIndex="0"/>
+                            <Button x:Name="freeInputTabPutSampleButton" Content="Input sample" Margin="5,5,5,5" HorizontalAlignment="Left" VerticalAlignment="Center" Click="freeInputTabPutSampleButton_Click"/>
+                            <Button x:Name="freeInputTabGetButton" Content="Run" DockPanel.Dock="Right" Margin="5,5,5,5" HorizontalAlignment="Right" VerticalAlignment="Center" Click="freeInputTabGetButton_Click"/>
+                            <CheckBox x:Name="freeInputTabClearCheckBox" Content="Clear output on Run" IsChecked="False" DockPanel.Dock="Right" Margin="5,5,5,5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        </DockPanel>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Grid Grid.Row="2">
+            <DockPanel LastChildFill="True">
+                <Button x:Name="clearOutputTextBoxButton" Content="Clear output" DockPanel.Dock="Bottom" Margin="0,3,0,3" HorizontalAlignment="Right" VerticalAlignment="Top" Click="clearOutputTextBoxButton_Click"/>
+                <!--<TextBox x:Name="outputTextBox" Text="output:&#xa;" TextWrapping="NoWrap" DockPanel.Dock="Top" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Auto" FontFamily="Consolas"/>-->
+                <Border Margin="0,10,0,0" BorderBrush="Gray" BorderThickness="1">
+                    <ScrollViewer x:Name="outputScrollViewer" HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Auto" DockPanel.Dock="Top">
+                        <StackPanel x:Name="outputStackPanel" Orientation="Vertical">
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+            </DockPanel>
+        </Grid>
+    </Grid>
+</Window>

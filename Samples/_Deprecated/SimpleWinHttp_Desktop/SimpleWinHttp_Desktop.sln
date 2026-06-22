@@ -1,0 +1,38 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34622.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleWinHttp_Desktop", "SimpleWinHttp_Desktop.vcxproj", "{A679B5F1-48EC-42CE-8584-D94D6D068CEB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTK12", "..\..\..\Kits\DirectXTK12\DirectXTK_Desktop_2019_Win10.vcxproj", "{3E0E8608-CD9B-4C76-AF33-29CA38F2C9F0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Gaming.Desktop.x64 = Debug|Gaming.Desktop.x64
+		Profile|Gaming.Desktop.x64 = Profile|Gaming.Desktop.x64
+		Release|Gaming.Desktop.x64 = Release|Gaming.Desktop.x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A679B5F1-48EC-42CE-8584-D94D6D068CEB}.Debug|Gaming.Desktop.x64.ActiveCfg = Debug|Gaming.Desktop.x64
+		{A679B5F1-48EC-42CE-8584-D94D6D068CEB}.Debug|Gaming.Desktop.x64.Build.0 = Debug|Gaming.Desktop.x64
+		{A679B5F1-48EC-42CE-8584-D94D6D068CEB}.Debug|Gaming.Desktop.x64.Deploy.0 = Debug|Gaming.Desktop.x64
+		{A679B5F1-48EC-42CE-8584-D94D6D068CEB}.Profile|Gaming.Desktop.x64.ActiveCfg = Debug|Gaming.Desktop.x64
+		{A679B5F1-48EC-42CE-8584-D94D6D068CEB}.Profile|Gaming.Desktop.x64.Build.0 = Debug|Gaming.Desktop.x64
+		{A679B5F1-48EC-42CE-8584-D94D6D068CEB}.Profile|Gaming.Desktop.x64.Deploy.0 = Debug|Gaming.Desktop.x64
+		{A679B5F1-48EC-42CE-8584-D94D6D068CEB}.Release|Gaming.Desktop.x64.ActiveCfg = Debug|Gaming.Desktop.x64
+		{A679B5F1-48EC-42CE-8584-D94D6D068CEB}.Release|Gaming.Desktop.x64.Build.0 = Debug|Gaming.Desktop.x64
+		{A679B5F1-48EC-42CE-8584-D94D6D068CEB}.Release|Gaming.Desktop.x64.Deploy.0 = Debug|Gaming.Desktop.x64
+		{3E0E8608-CD9B-4C76-AF33-29CA38F2C9F0}.Debug|Gaming.Desktop.x64.ActiveCfg = Debug|x64
+		{3E0E8608-CD9B-4C76-AF33-29CA38F2C9F0}.Debug|Gaming.Desktop.x64.Build.0 = Debug|x64
+		{3E0E8608-CD9B-4C76-AF33-29CA38F2C9F0}.Profile|Gaming.Desktop.x64.ActiveCfg = Debug|x64
+		{3E0E8608-CD9B-4C76-AF33-29CA38F2C9F0}.Profile|Gaming.Desktop.x64.Build.0 = Debug|x64
+		{3E0E8608-CD9B-4C76-AF33-29CA38F2C9F0}.Release|Gaming.Desktop.x64.ActiveCfg = Release|x64
+		{3E0E8608-CD9B-4C76-AF33-29CA38F2C9F0}.Release|Gaming.Desktop.x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9C8CF644-588A-43C6-828B-01593FEDBD49}
+	EndGlobalSection
+EndGlobal

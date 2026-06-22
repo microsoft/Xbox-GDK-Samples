@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>b7988040-18ec-4a5b-936f-908e3ea72b31</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>5051341a-4b90-4fbf-a955-853826cf1a2e</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>f381de04-feda-422d-93ad-e34b519d581c</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>549d4c30-f958-4fb5-a2c6-7cd15603c046</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{948f0637-cb03-41d7-9a53-b5051a102554}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Terrain">
+      <UniqueIdentifier>{8d875cb4-1c02-4fea-a7ca-7b552dbee9d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Terrain">
+      <UniqueIdentifier>{f103aad6-d4cb-4b1e-af33-817b0642ab5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\VRS">
+      <UniqueIdentifier>{c0a9475e-3df4-4f2e-bbf5-b74b76453c2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\VRS\Debug">
+      <UniqueIdentifier>{2092523a-1c47-45c7-bfed-67982cb7fabf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Terrain\Common">
+      <UniqueIdentifier>{548a2e4e-9c54-4490-9745-81c94e2e4fd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Terrain\Generate">
+      <UniqueIdentifier>{7011c781-cf77-4a09-a3bb-3cb4e0b812fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Terrain\Render">
+      <UniqueIdentifier>{9c1fb1ef-1731-4c8a-a2dd-f1da31d462e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Terrain\Visibility">
+      <UniqueIdentifier>{c164d778-b7f2-4763-a3e7-0fb6ce5319c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\VRS\CompileHelpers">
+      <UniqueIdentifier>{63f14d35-32c7-4ab2-8410-a634329c319c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="VRS.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="GpuProfiler.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\Json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h">
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ReadData.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="VRS.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="GpuProfiler.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="TerrainCreateResources.cpp">
+      <Filter>Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="TerrainGenerate.cpp">
+      <Filter>Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="TerrainIndexBuffer.cpp">
+      <Filter>Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="TerrainRender.cpp">
+      <Filter>Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\FullScreenTriangleVS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\ABSDifferencePS.hlsl">
+      <Filter>Shaders\VRS\Debug</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\VisualizeShadingRatePS.hlsl">
+      <Filter>Shaders\VRS\Debug</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SkyRenderPS.hlsl">
+      <Filter>Shaders\Terrain\Render</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TerrainCompute8x8maxY.hlsl">
+      <Filter>Shaders\Terrain\Generate</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TerrainCompute16x16maxY.hlsl">
+      <Filter>Shaders\Terrain\Generate</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TerrainComputeAABBandNormalsCS.hlsl">
+      <Filter>Shaders\Terrain\Generate</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TerrainGenerateCS.hlsl">
+      <Filter>Shaders\Terrain\Generate</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TerrainInitAABBCS.hlsl">
+      <Filter>Shaders\Terrain\Generate</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TerrainSmoothCS.hlsl">
+      <Filter>Shaders\Terrain\Generate</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TerrainRenderPS.hlsl">
+      <Filter>Shaders\Terrain\Render</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TerrainRenderVS.hlsl">
+      <Filter>Shaders\Terrain\Render</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TerrainVisibilityCS.hlsl">
+      <Filter>Shaders\Terrain\Visibility</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\GenerateShadingRateFullRes8x8.hlsl">
+      <Filter>Shaders\VRS\CompileHelpers</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\GenerateShadingRateHalfRes8x8.hlsl">
+      <Filter>Shaders\VRS\CompileHelpers</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TerrainRenderAOOnlyPS.hlsl">
+      <Filter>Shaders\Terrain\Render</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\GenerateShadingRateFullRes8x8Wave32.hlsl">
+      <Filter>Shaders\VRS\CompileHelpers</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\GenerateShadingRateHalfRes8x8Wave32.hlsl">
+      <Filter>Shaders\VRS\CompileHelpers</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Media\Fonts\Courier_36.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Shaders\Global.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\AtmosphericScattering.hlsli">
+      <Filter>Shaders\Terrain\Common</Filter>
+    </None>
+    <None Include="Shaders\GenerateShadingRate.hlsli">
+      <Filter>Shaders\VRS</Filter>
+    </None>
+    <None Include="Shaders\TerrainGlobal.hlsli">
+      <Filter>Shaders\Terrain\Common</Filter>
+    </None>
+    <None Include="Shaders\TerrainRaycast.hlsli">
+      <Filter>Shaders\Terrain\Render</Filter>
+    </None>
+    <None Include="Readme.docx" />
+    <None Include="VRS_ReadMe_ja-jp.docx" />
+    <None Include="VRS_ReadMe_ko-kr.docx" />
+    <None Include="VRS_ReadMe_zh-cn.docx" />
+  </ItemGroup>
+</Project>

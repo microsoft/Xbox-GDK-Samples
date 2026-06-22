@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+         xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+         xmlns:uap7="http://schemas.microsoft.com/appx/manifest/uap/windows10/7"
+         IgnorableNamespaces="uap">
+
+  <Identity Name="ae4d3703-8204-4fdf-99f1-efa55faebf5f"
+            Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+            Version="1.0.0.0" />
+
+  <Properties>
+    <DisplayName>BuildYourOwnBundles</DisplayName>
+    <PublisherDisplayName>Xbox Advanced Technology Group</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+    <Description>BuildYourOwnBundles</Description>
+    <uap:SupportedUsers>multiple</uap:SupportedUsers>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.10586.0" MaxVersionTested="10.0.10586.0" />
+    <uap7:OSPackageDependency Name="Microsoft.GameOS" Version="10.0.17670.0"/>
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="en-us"/>
+  </Resources>
+
+  <Applications>
+    <Application Id="App"
+        Executable="$targetnametoken$.exe"
+        EntryPoint="GamingProxyApp.Application.EntryPoint">
+      <uap:VisualElements
+          DisplayName="BuildYourOwnBundles"
+          Square150x150Logo="Assets\Logo.png"
+          Square44x44Logo="Assets\SmallLogo.png"
+          Description="BuildYourOwnBundles"
+          ForegroundText="dark"
+          BackgroundColor="#000000">
+        <uap:DefaultTile Wide310x150Logo="Assets\WideLogo.png"/>
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+      </uap:VisualElements>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <DeviceCapability Name="5012DC0D-21CC-4D8A-AE07-326E86FE5258" />
+  </Capabilities>
+</Package>
+  

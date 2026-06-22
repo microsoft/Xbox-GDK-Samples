@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Shared Header Files">
+      <UniqueIdentifier>{d9aea34e-8220-4220-9f9f-7ca6d6e8fd84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{659ee147-3aff-4f21-b7a9-ef4bf6f47bc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ATGTK">
+      <UniqueIdentifier>{9d5e202a-ee30-4913-9010-cb66226a8e26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Build">
+      <UniqueIdentifier>{bc0c9e18-4b1a-4a4f-aa86-d3b1ba2ed31c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>{992d4d10-4a3e-4a14-aa91-d775f91926dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\fast_obj">
+      <UniqueIdentifier>{8ba2a5ec-76a9-4aaa-9f14-4f0e186b2975}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\meshoptimizer">
+      <UniqueIdentifier>{597ea44c-6d97-49a0-93c0-c7663be4626c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\bvhtoy">
+      <UniqueIdentifier>{d4413068-f1e2-4219-a209-e2cbbec842ee}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="RTBuilder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\ATGTK\ReadCompressedData.cpp">
+      <Filter>ATGTK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\OpenSource\fast_obj\fast_obj.c">
+      <Filter>External\fast_obj</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\OpenSource\meshoptimizer\allocator.cpp">
+      <Filter>External\meshoptimizer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Kits\OpenSource\meshoptimizer\indexgenerator.cpp">
+      <Filter>External\meshoptimizer</Filter>
+    </ClCompile>
+    <ClCompile Include="External\bvhtoy\bvhtoy.c">
+      <Filter>External\bvhtoy</Filter>
+    </ClCompile>
+    <ClCompile Include="External\bvhtoy\bvhtoyxbox.cpp">
+      <Filter>External\bvhtoy</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Include\OfflineRT\FileFormat.h">
+      <Filter>Shared Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\ReadData.h">
+      <Filter>ATGTK</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\ReadCompressedData.h">
+      <Filter>ATGTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\ATGTK\WriteData.h">
+      <Filter>ATGTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\OpenSource\fast_obj\fast_obj.h">
+      <Filter>External\fast_obj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Kits\OpenSource\meshoptimizer\meshoptimizer.h">
+      <Filter>External\meshoptimizer</Filter>
+    </ClInclude>
+    <ClInclude Include="External\bvhtoy\bvhtoy.h">
+      <Filter>External\bvhtoy</Filter>
+    </ClInclude>
+    <ClInclude Include="External\bvhtoy\bvhtoyxbox.h">
+      <Filter>External\bvhtoy</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Assets\OfflineCollectionCommon.hlsli">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\Assets\Dragon_LOD0.ob_">
+      <Filter>Assets</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Assets\OfflineRTPSO.hlsl">
+      <Filter>Assets</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\OfflineCollectionHitgroups.hlsl">
+      <Filter>Assets</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Assets\OfflineCollectionRaygen.hlsl">
+      <Filter>Assets</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Build\ReadMe.txt">
+      <Filter>Build</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

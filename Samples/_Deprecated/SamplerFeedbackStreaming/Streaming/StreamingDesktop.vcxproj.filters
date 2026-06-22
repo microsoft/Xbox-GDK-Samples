@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>{b6d636d6-5e80-497b-b900-1a473bbdcaa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Shaders">
+      <UniqueIdentifier>{c2d07b2c-23a7-4d35-a152-749ab1953495}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{9f950caa-8ae8-4d13-a868-868398aef61f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Common\d3d12app.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\D3D12Util.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\JobQueue.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\menu.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\SDKmesh.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\texfill.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\UISprite12.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\util.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="precomp.cpp" />
+    <ClCompile Include="SceneGraph.cpp" />
+    <ClCompile Include="TextureFiles.cpp" />
+    <ClCompile Include="TextureStreaming.cpp" />
+    <ClCompile Include="TextureStreamingUtils.cpp" />
+    <ClCompile Include="..\Common\win32app.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Common\d3d12app.hpp">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\D3D12Util.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\JobQueue.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\menu.hpp">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\precomp.hpp">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\SDKmesh.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\targetver.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\texfill.hpp">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\UISprite12.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\util.hpp">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\uwp\d3dx12.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\DevtestPlatform.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Platform_GXDK.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Platform_UWP.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Platform_Win32.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Platform_Xbox.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h" />
+    <ClInclude Include="precomp.hpp" />
+    <ClInclude Include="SceneGraph.h" />
+    <ClInclude Include="TextureFiles.h" />
+    <ClInclude Include="TextureStreaming.h" />
+    <ClInclude Include="TextureStreamingUtils.h" />
+    <ClInclude Include="TiledResourceImage.h" />
+    <ClInclude Include="TiledResourcesTier.h" />
+    <ClInclude Include="..\Common\win32app.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Platform_GDK.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\console.hpp">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\ui2.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\ui2-r8.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\uwpapp.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Common\UISprite11.vfx">
+      <Filter>Common\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Common\UISprite11modulate.pfx">
+      <Filter>Common\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Common\UISprite11modulate1D.pfx">
+      <Filter>Common\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Common\UISprite11modulatearray.pfx">
+      <Filter>Common\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Common\UISprite11modulatecube.pfx">
+      <Filter>Common\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Common\UISprite11modulateint.pfx">
+      <Filter>Common\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Common\UISprite11modulatevolume.pfx">
+      <Filter>Common\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Common\UISprite11text.pfx">
+      <Filter>Common\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PSDefault1Layer.pfx">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PSDefault1LayerFilterEmu.pfx">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PSDefault2Layers.pfx">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PSDefault2LayersFilterEmu.pfx">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PSDefault3Layers.pfx">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PSDefault3LayersFilterEmu.pfx">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PSFeedbackBufferView.pfx">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PSFeedbackView.pfx">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PSMinLODView.pfx">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PSNoFeedback1Layer.pfx">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PSShowFeedback.pfx">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PSShowMinLOD.pfx">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PSShowMinLODWithFilter.pfx">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="VSDefault.vfx">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MinLODFilterEmulation.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="RootSignature.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="SamplerFeedbackEmulation.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="SamplerFeedbackEmulationBuffer.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="SceneLighting.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="ShaderCommon.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Common\CommonRootSignature.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+  </ItemGroup>
+</Project>

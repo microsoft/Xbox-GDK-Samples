@@ -1,0 +1,68 @@
+{
+  "layout": {
+    "classId": "Panel",
+    "id": "SampleContainer",
+    "positioningAnchor": [ "left", "top" ],
+    "position": [ 100, 100 ],
+    "sizingAnchor": [ "left", "top" ],
+    "size": [ 800, 500 ],
+    "visible": true,
+    "style": {
+      "spriteType": "nineSliced",
+      "classId": "SpriteStyle",
+      "texture": "Assets/Textures/panel-frame-02.png",
+      "color": [ 255, 255, 255, 1.0 ],
+      "colorUsage": "override",
+      "innerUVExtents": [ 0.1, 0.1, 0.9, 0.9 ]
+    },
+    "childElements": [
+      {
+        "classId": "CheckBox",
+        "id": "CheckBox",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 25, 25 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 200, 200 ],
+        "checkboxSubElementId": "CheckBoxChecked",
+        "style": {
+          "classId": "SpriteStyle",
+          "texture": "Assets/Textures/checkbox-back.png",
+          "color": [ 255, 255, 255, 1.0 ]
+        },
+        "childElements": [
+          {
+            "classId": "StaticText",
+            "id": "Label",
+            "positioningAnchor": [ "center", "bottom" ],
+            "position": [ 0, 0 ],
+            "sizingAnchor": [ "center", "top" ],
+            "size": [ 200, 100 ],
+            "style": {
+              "classId": "TextStyle",
+              "font": "Assets/Fonts/SegoeUI",
+              "size": 18,
+              "weight": "normal",
+              "color": [ 255, 255, 255, 1.0 ],
+              "horizontalAlign": "center",
+              "verticalAlign": "middle"
+            },
+            "text": "CAT"
+          },
+          {
+            "classId": "Image",
+            "id": "CheckBoxChecked",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 200, 200 ],
+            "style": {
+              "classId": "SpriteStyle",
+              "id": "cbCheckedStyle",
+              "texture": "Assets/Textures/checkbox-checkbox-x.png",
+              "color": [ 0, 255, 0, 1.0 ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

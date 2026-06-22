@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>b087acc2-e9c0-4ce8-ba60-14855f56ca0b</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>aa38f6f1-e757-4c4f-bb9b-45bb1dc3ac4e</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>356c2ecd-2658-4f6c-a37b-9dcf4e2abeb7</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>51ec040a-057c-454d-8b3d-9f31f89ed172</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{121999d1-f0ce-4375-99d5-990eeff4e428}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media">
+      <UniqueIdentifier>{14396f40-5c85-43ad-acc4-e6d0a4fa14ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media\Fonts">
+      <UniqueIdentifier>{22726aad-1b39-4a69-bc2e-de9aba9cd37e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media\Meshes">
+      <UniqueIdentifier>{d1f2ebf6-59d4-4a53-9d1a-00ee82d70f7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media\Meshes\AliasSampleCityBlock">
+      <UniqueIdentifier>{94b3f7a5-ef79-44db-a582-818188726b18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media\Meshes\ATGDragon">
+      <UniqueIdentifier>{35c35819-10ae-4fac-a8eb-a5b4fa178205}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media\Meshes\Floor">
+      <UniqueIdentifier>{0eb6e82b-a6c6-4f06-926a-8eedbf6d4a38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media\Meshes\Gargoyle">
+      <UniqueIdentifier>{64629d13-976f-4758-9118-bce97097ec7b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="SimpleROV.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\SharedDefinitions.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleObject.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\FlyCamera.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\PerformanceTimers.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\PerformanceTimersXbox.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ReadData.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\DeveloperMode.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="SimpleROV.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleObject.cpp" />
+    <ClCompile Include="..\..\..\Kits\ATGTK\FlyCamera.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\PerformanceTimers.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\PerformanceTimersXbox.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\CompositeTranslucentMLAB_CS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\CompositeTranslucentPPLL_CS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\OpaquePS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\OpaqueVS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TranslucentMLAB_ROV_PS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TranslucentPPLL_PS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\TranslucentStandardPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\HLSLCommon.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Media\Fonts</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_18_Bold.spritefont">
+      <Filter>Media\Fonts</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+      <Filter>Media\Fonts</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\TankScene\terrain.sdkmesh">
+      <Filter>Media\Meshes\Floor</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\AliasSampleCityBlock\CityBlockConcrete.sdkmesh">
+      <Filter>Media\Meshes\AliasSampleCityBlock</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Gargoyle\gargoyle.sdkmesh">
+      <Filter>Media\Meshes\Gargoyle</Filter>
+    </None>
+    <None Include="readme.md" />
+    <None Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD3.sdkmesh">
+      <Filter>Media\Meshes\ATGDragon</Filter>
+    </None>
+    <None Include="..\..\NuGet.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Media\Meshes\TankScene\ground_diff.dds">
+      <Filter>Media\Meshes\Floor</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\TankScene\ground_norm.dds">
+      <Filter>Media\Meshes\Floor</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AliasSampleCityBlock\Concrete.dds">
+      <Filter>Media\Meshes\AliasSampleCityBlock</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\AliasSampleCityBlock\Lightmap.dds">
+      <Filter>Media\Meshes\AliasSampleCityBlock</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Gargoyle\gargoyle_diffuse.dds">
+      <Filter>Media\Meshes\Gargoyle</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Gargoyle\gargoyle_normals.dds">
+      <Filter>Media\Meshes\Gargoyle</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

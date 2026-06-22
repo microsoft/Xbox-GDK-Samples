@@ -1,0 +1,153 @@
+{
+  "styles": 
+  [
+    {
+      "id": "background_panel_style",
+      "classId": "SpriteStyle",
+      "spriteStyle":
+      {
+        "colorUsage": "override",
+        "color": "#background_color"
+      }
+    },
+    {
+      "id": "invisible_panel_style",
+      "classId": "SpriteStyle",
+      "spriteStyle":
+      {
+        "colorUsage": "override",
+        "color": "#invisible_color"
+      }
+    },
+    {
+      "id": "border_panel_style",
+      "classId": "SpriteStyle",
+      "spriteStyle":
+      {
+        "colorUsage": "override",
+        "color": "#panel_background_color"
+      }
+    },
+    {
+      "id": "border_panel_style_focused",
+      "classId": "SpriteStyle",
+      "spriteStyle":
+      {
+        "colorUsage": "override",
+        "color": "#panel_background_color"
+      }
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "basic_button_style",
+      "colorUsage": "setExisting",
+      "color": [ 255, 255, 255, 1.0 ],
+      "texture": "Assets/Textures/Button_Unfocused.png",
+      "spriteType": "nineSliced",
+      "innerUVExtents": [ 0.1, 0.1, 0.9, 0.9 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "focused_button_style",
+      "inheritsFromId": "basic_button_style",
+      "texture": "Assets/Textures/Button_Focused_NoShade.png"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "disabled_button_style",
+      "inheritsFromId": "basic_button_style",
+      "texture": "Assets/Textures/Button_Disabled.png"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "pressed_button_style",
+      "inheritsFromId": "basic_button_style",
+      "texture": "Assets/Textures/Button_Pressed.png"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "hovered_button_style",
+      "inheritsFromId": "basic_button_style",
+      "texture": "Assets/Textures/Button_Hovered_NoShade.png"
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "focused_browser_item_style",
+      "inheritsFromId": "basic_button_style",
+      "texture": "Assets/Textures/FocusBorder.png"
+    },
+    {
+      "id": "unfocused_browser_item_style",
+      "classId": "SpriteStyle",
+      "spriteStyle":
+      {
+        "colorUsage": "override",
+        "color": "#invisible_color"
+      }
+    },
+
+    {
+      "classId": "TextStyle",
+      "id": "label_text_style_centered",
+      "colorUsage": "override",
+      "color": "#primary_color",
+      "verticalAlign": "middle",
+      "horizontalAlign": "center",
+      "fontSize": 18
+    },
+    {
+      "classId": "TextStyle",
+      "id": "label_text_style",
+      "colorUsage": "override",
+      "color": "#primary_color",
+      "verticalAlign": "top",
+      "horizontalAlign": "left",
+      "fontSize": 18
+    },
+    {
+      "classId": "TextStyle",
+      "id": "title_text_style_centered",
+      "colorUsage": "override",
+      "color": "#primary_color",
+      "verticalAlign": "middle",
+      "horizontalAlign": "center",
+      "fontSize": 24
+    },
+    {
+      "classId": "TextStyle",
+      "id": "entry_text_style",
+      "colorUsage": "override",
+      "color": "#offwhite",
+      "verticalAlign": "middle",
+      "horizontalAlign": "left",
+      "fontSize": 18
+    },
+    {
+      "classId": "TextStyle",
+      "id": "entry_text_style_success",
+      "inheritsFromId": "entry_text_style",
+      "color": "#green"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "entry_text_style_warning",
+      "inheritsFromId": "entry_text_style",
+      "color": "#yellow"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "entry_text_style_error",
+      "inheritsFromId": "entry_text_style",
+      "color": "#red"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "entry_text_style_centered",
+      "colorUsage": "override",
+      "color": "#offwhite",
+      "verticalAlign": "middle",
+      "horizontalAlign": "center",
+      "fontSize": 18
+    }
+  ]
+}

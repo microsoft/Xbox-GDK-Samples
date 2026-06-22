@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Distribute" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--
+       ================================================================================
+       Gaming.*.x64 (combo) Samples
+       ================================================================================
+  -->
+  <ItemGroup Label="Combo">
+    <!-- A -->
+    <SlnDist Include="Live\Achievements\Achievements.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates using the Title-Managed Achievements C-API provided by the Microsoft Game Development Kit.</Description>
+      <Owner>Brian Peek (brpeek@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- D -->
+    <SlnDist Include="Live\DownloadableContent\DownloadableContent.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to implement enumeration and loading of downloadable content for Xbox LIVE services.</Description>
+      <Owner>Kiyomasa Nakai (kiynak@microsoft.com)</Owner>
+      <Author>James Lenell (jameslen@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+      <AllowStoreId>9NQWJKKNHF1L;9P96RFVJQ562</AllowStoreId>
+    </SlnDist>
+    
+    <!-- G -->
+    <SlnDist Include="Live\GameHub\GameHub.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to implement Franchise Game Hub.</Description>
+      <Owner>Kiyomasa Nakai (kiynak@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+      <AllowStoreId>9P0ZBQ3PLQ6Q;9P0P0MRKG6DC</AllowStoreId>
+    </SlnDist>
+
+	  <!-- I -->
+    <SlnDist Include="Live\InGameStore\InGameStore.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates the client-based operations used in presenting and operating an in-game storefront.</Description>
+      <Owner>Tim Chen (timch@microsoft.com)</Owner>
+      <Author>James Lenell (jameslen@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+      <AllowStoreId>9NTL0QDWZ4FS</AllowStoreId>
+    </SlnDist>
+    
+    <!-- L -->
+    <SlnDist Include="Live\LeaderboardsEventBased\LeaderboardsEventBased.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates the usage of Xbox Live Leaderboards with Events-Based stats.</Description>
+      <Owner>Brian Peek (brpeek@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- L -->
+    <SlnDist Include="Live\LeaderboardsTitleManaged\LeaderboardsTitleManaged.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>The leaderboards sample demonstrates the usage of Xbox Live Leaderboards with Title-Managed stats.</Description>
+      <Owner>Jon Martin (jonmartin@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- M -->
+    <SlnDist Include="Live\mDNS\mDNS.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates using mDNS to register a game service and broadcasting it across your local network, as well as demonstrating network discovery and resolving on Xbox.</Description>
+      <Owner>Philip Niemeyer-Farquharson (Philip.Farquharson@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <SlnDist Include="Live\MicrosoftStoreServicesClient\MicrosoftStoreServicesClient.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample works with the Microsoft.StoreServices Sample and demonstrates the client side call pattern to do service-to-service auth with the Store Services</Description>
+      <Owner>Cameron Goodwin (Cameron.Goodwin@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+      <AllowStoreId>9MXL21XPWWWK</AllowStoreId>
+    </SlnDist>
+
+    <SlnDist Include="Live\MsQuicEcho\EchoServerSample.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample is to demonstrate how to implement MsQuic using a simple Echo Server as an example.</Description>
+      <Owner>Emily Mattlin (emilymattlin@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- N -->
+    <SlnDist Include="Live\NetRumble\NetRumble.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates multiplayer functionality using the 2015 Multiplayer APIs to build a complete end-to-end game experience.</Description>
+      <Owner>James Lenell (jameslen@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+	<!-- P -->
+    <SlnDist Include="Live\PlayFabMultiplayerRumble\PlayFabMultiplayerRumble.sln">
+      <Outlet>XGD</Outlet>
+      <AllowStoreId>9P9KXF2Q0KT8</AllowStoreId>
+      <Owner>Steve Spiller (sspiller@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <SlnDist Include="Live\PlayFabStore\PlayFabStore.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates the client-based operations used in presenting and operating an in-game economy with PlayFab Economy v2.</Description>
+      <AllowStoreId>9N4J3231RQJT</AllowStoreId>
+      <Owner>Angela Hillier (anhillier@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <SlnDist Include="Live\PlayFabLeaderboards\PlayFabLeaderboards.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample displays the data of the leaderboard registered in PlayFab Leaderboards (v2). As an option, a tool is provided to create PlayFab Leaderboards and write any number of player entities and scores to them.</Description>
+      <Owner>Emily Mattlin (emilymattlin@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <SlnDist Include="Live\PlayFabGameSave\PlayFabGameSave.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to use PlayFab Game Saves with the Microsoft Game Development Kit (GDK).</Description>
+      <Owner>Emily Mattlin (emilymattlin@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- S -->
+    <SlnDist Include="Live\SimpleCrossGenMPSD\SimpleCrossGenMPSD.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to use MPSD to implement sessions and matchmaking for both cross generation and single generation games.</Description>
+      <Owner>Gerardo Malpartida Vela (gerardomal@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <SlnDist Include="Live\SimpleHttp\SimpleHttp.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates using XCurl to make HTTP requests including adding the user token and signature to the headers for authenticated Xbox LIVE calls.</Description>
+      <Owner>James Lenell (jameslen@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <SlnDist Include="Live\SimpleMPA\SimpleMPA.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to use the Multiplayer Activity Service for activities and invites.</Description>
+      <Owner>Emily Mattlin (emilymattlin@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <SlnDist Include="Live\SimpleWebSockets\SimpleWebSockets.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates using LibHttpClient to connect, send, and receive messages to/from a host via Web Sockets.</Description>
+      <Owner>James Lenell (jameslen@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <SlnDist Include="Live\SimpleWinHttp\SimpleWinHttp.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates using WinHTTP to make HTTP requests including adding the user token and signature to the headers for authenticated Xbox Live calls, and connecting, sending and receiving messages to/from a host via Web Sockets.</Description>
+      <Owner>Steve Spiller (sspiller@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <SlnDist Include="Live\SocialManager\SocialManager.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates the Social Manager C-API provided by the Microsoft Gaming SDK (GDK).</Description>
+      <Owner>Brian Peek (Brian.Peek@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+  </ItemGroup>
+
+  <!--
+       ================================================================================
+       Gaming.Xbox.*.x64 Samples
+       ================================================================================
+  -->
+  <ItemGroup Label="Console">
+    <!-- C -->
+    <SlnDist Include="Live\CustomHttp\CustomHttp.sln">
+        <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+        <Description>This sample demonstrates how to integrate libcurl into an Xbox title following the GDK networking lifecycle, including waiting for network initialization, cleaning up on suspend, re-initializing on resume, resolving the Xbox debug proxy address, and detecting debug certificates.</Description>
+        <Owner>James Lenell (jameslen@microsoft.com)</Owner>
+        <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- G -->
+    <FolderDist Include="Live\GameService\">
+        <DistributionItemGroup>
+            <Files Include="**\*.*" />
+        </DistributionItemGroup>
+        <Platform>$(Platform_Default_from_Outlet)</Platform>
+        <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+        <Description>This sample is a functioning web service for an Xbox Live title that has example source code for decrypting and verifying X-tokens as well as communication with the required services to make authenticated calls on-behalf-of a user (backend to backend or b2b) to other Xbox Live services.</Description>
+        <Owner>Cameron Goodwin (Cameron.Goodwin@microsoft.com)</Owner>
+        <CodeLanguage>csharp</CodeLanguage>
+        <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </FolderDist> 
+
+    
+    <!-- N -->
+    <SlnDist Include="Live\NetworkSecurityBCrypt\NetworkSecurityBCrypt.sln">
+        <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+        <Description>This sample demonstrates the best practices for helping secure UDP traffic using a DTLS implementation using the CNG (Crypto: Next Generation) API.</Description>
+        <Owner>Steve Spiller (sspiller@microsoft.com)</Owner>
+        <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <FolderDist Include="Live\NetworkSecurityOpenSSL_Linux\">
+        <DistributionItemGroup>
+            <Files Include="**\*.*" />
+        </DistributionItemGroup>
+        <Platform>$(Platform_Default_from_Outlet)</Platform>
+        <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+        <Description>This sample demonstrates best practices for helping secure UDP traffic using OpenSSL's DTLS implementation and is designed to work in conjunction with the Networking Security OpenSSL sample.</Description>
+        <Owner>Steve Spiller (sspiller@microsoft.com)</Owner>
+        <CodeLanguage>C++</CodeLanguage>
+        <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </FolderDist> 
+
+    <SlnDist Include="Live\NetworkSecurityOpenSSL\NetworkSecurityOpenSSL.sln">
+        <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+        <Description>This sample demonstrates the best practices for helping secure UDP traffic using OpenSSL's DTLS implementation.</Description>
+        <Owner>James Lenell (jameslen@microsoft.com)</Owner>
+        <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- T -->
+    <SlnDist Include="Live\TitleStorage\TitleStorage.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates Title Storage API provided by the Microsoft Game Development Kit (GDK).</Description>
+      <Owner>Gerardo Malpartida Vela (gerardomal@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+      <AllowStoreId>9ND4RC3GGSSZ</AllowStoreId>
+    </SlnDist>
+  </ItemGroup>
+
+  <!--
+       ================================================================================
+       Gaming.Desktop.X64 Samples
+       ================================================================================
+  -->
+  <ItemGroup Label="PC">
+    <!-- F -->
+    <SlnDist Include="Live\Fundamentals_Desktop\Fundamentals_Desktop.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates signing into Xbox Live and making a license check to ensure that the game is owned by the currently signed in user on PC.</Description>
+      <Owner>Philip Niemeyer-Farquharson (Philip.Farquharson@microsoft.com)</Owner>
+      <Author>James Lenell (jameslen@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+  </ItemGroup>
+</Project>

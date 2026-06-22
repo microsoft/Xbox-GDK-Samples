@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>981df2fb-0c42-49dd-bf0f-92e476afeba9</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>b77c987c-e000-4f84-a512-eb1aba90dfc4</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>0d0c5f76-03ab-42d6-93f1-aab46811c1ff</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>a7256c84-c3d1-41ab-9526-1ccd93f5967d</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Ship">
+      <UniqueIdentifier>{9f08dbd5-4844-4fbf-8a7d-ca558a1ee341}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\CoastRocks">
+      <UniqueIdentifier>{ceb5cc4d-c2c0-4988-b6d8-9b951b660922}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{2e633dd3-94a8-4aea-a0ba-8bd27bd3b6e0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="GltfRender.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FlyCamera.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\gltf\gltf.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\gltf\GltfProcessing.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\ReadData.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="GltfRender.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\FlyCamera.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\gltf\gltf.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\gltf\GltfProcessing.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Media\Meshes\Ship\ship_pinnace.bin">
+      <Filter>Assets\Ship</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Ship\ship_pinnace_4k.gltf">
+      <Filter>Assets\Ship</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Ship\ship_pinnace_4k_merged_meshes.gltf">
+      <Filter>Assets\Ship</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\CoastRocks\coast_rocks_03.bin">
+      <Filter>Assets\CoastRocks</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\CoastRocks\coast_rocks_03_4k.gltf">
+      <Filter>Assets\CoastRocks</Filter>
+    </None>
+    <None Include="packages.config" />
+    <None Include="..\..\NuGet.config" />
+    <None Include="Common.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Media\Meshes\CoastRocks\textures\coast_rocks_03_arm_4k.jpg">
+      <Filter>Assets\CoastRocks</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\CoastRocks\textures\coast_rocks_03_diff_4k.jpg">
+      <Filter>Assets\CoastRocks</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\CoastRocks\textures\coast_rocks_03_nor_gl_4k.jpg">
+      <Filter>Assets\CoastRocks</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_aft_arm_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_aft_diff_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_aft_nor_gl_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_deck_arm_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_deck_diff_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_deck_nor_gl_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_details_arm_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_details_diff_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_details_nor_gl_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_hull_arm_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_hull_diff_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_hull_nor_gl_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_interior_arm_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_interior_diff_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_interior_nor_gl_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_rigging_arm_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_rigging_diff_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_rigging_nor_gl_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_sails_arm_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_sails_diff_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Ship\textures\ship_pinnace_sails_nor_gl_4k.jpg">
+      <Filter>Assets\Ship</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="VertexShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PixelShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="InlineRTCS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+</Project>

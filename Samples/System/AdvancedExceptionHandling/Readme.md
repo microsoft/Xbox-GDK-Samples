@@ -1,32 +1,65 @@
----
-page_type: sample
-languages:
-- cpp
-products:
-- gdk
-urlFragment: "advancedexceptionhandling"
-extendedZipContent:
-- path: LICENSE
-  target: LICENSE
-- path: Kits
-  target: Kits
-- path: Media
-  target: Media
-description: "Demonstrates various ways that C++ and SEH exceptions can occur in Microsoft GDK titles including advanced scenarios."
----
+  ![](./media/image1.png)
 
-# AdvancedExceptionHandling
+#   AdvancedExceptionHandling Sample
 
-For more information see: 
-- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/AdvancedExceptionHandling/readme_en-us.md)
-- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/AdvancedExceptionHandling/readme_ja-jp.md)
-- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/AdvancedExceptionHandling/readme_ko-kr.md)
-- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/AdvancedExceptionHandling/readme_zh-cn.md)
+*This sample is compatible with the Microsoft Game Development Kit (June
+2020)*
 
-## Privacy statement
+# Description
 
-For more information about Microsoft's privacy policies in general, see the [Microsoft Privacy Statement](https://privacy.microsoft.com/privacystatement/).
+This sample shows several advanced ways handle exceptions that can occur
+in your title.
 
-## Trademarks
+-   Using a separate process to save crash dumps -- Demonstrates how to
+    use a separate process to create crash dumps. This is the
+    recommended pattern for creating crash dumps.
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
+-   Adding custom data to Windows Error Reporting -- Demonstrates how to
+    add data to the Windows Error Reporting system that is uploaded
+    along with crash dumps to the Microsoft servers for later analysis.
+
+-   Uploading Crash Dumps -- Demonstrates how to upload crash dumps to
+    your own servers so they don\'t interfere with title execution and
+    possibly cause more exceptions.
+
+-   Handling Exceptions during Suspend/Resume (PLM) -- Demonstrates how
+    to handle exceptions that happen during the PLM Suspend/Resume path.
+
+-   Full Exception System -- Putting all the pieces together into a full
+    exception system.
+
+# Building the sample
+
+If using an Xbox One devkit, set the active solution platform to `Gaming.Xbox.XboxOne.x64`.
+
+If using Xbox Series X|S, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
+
+If using the Desktop, set the active solution platform to `x64`.
+
+*For more information, see* __Running samples__, *in the GDK documentation.*
+
+# Using the sample
+
+Press the corresponding button on the controller for each demonstration.
+The display will show the order of operations that happen in the code
+when an exception is raised.
+
+# Implementation notes
+
+All the examples are contained in the Examples folder. They are heavily
+documented with details on each system and how they work.
+
+# Update history
+
+Initial release June 2021
+
+# Privacy statement
+
+When compiling and running a sample, the file name of the sample
+executable will be sent to Microsoft to help track sample usage. To
+opt-out of this data collection, you can remove the block of code in
+Main.cpp labeled "Sample Usage Telemetry".
+
+For more information about Microsoft's privacy policies in general, see
+the [Microsoft Privacy
+Statement](https://privacy.microsoft.com/en-us/privacystatement/).

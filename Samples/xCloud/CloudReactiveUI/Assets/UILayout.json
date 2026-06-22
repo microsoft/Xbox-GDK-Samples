@@ -1,0 +1,313 @@
+﻿{
+  "$schema": "https://atgsamplessa.blob.core.windows.net/uitkschema/latest/layout.schema.json",
+  "includes": [
+    "Assets/sample-styles.json"
+  ],
+  "definitions": {
+    "#fullscreen": [ 1920, 1080 ],
+    "#menu_left_coordinate": 50
+  },
+  "layout": {
+    "id": "BGPanel",
+    "classId": "panel",
+    "styleId": "background_style",
+    "panel": {
+      "positioningAnchor": [ "left", "top" ],
+      "position": [ 0, 0 ],
+      "sizingAnchor": [ "left", "top" ],
+      "size": "#fullscreen"
+    },
+    "childElements": [
+      {
+
+        "id": "SamplePanel",
+        "classId": "panel",
+        "styleId": "Basic_Panel_Style",
+        "panel": {
+          "positioningAnchor": [ "left", "top" ],
+          "position": [ 1100, 100 ],
+          "sizingAnchor": [ "left", "top" ],
+          "size": [ 700, 900 ]
+        },
+        "childElements": [
+          {
+            "id": "Button0",
+            "prefabRef": "Assets/menu-button.json",
+            "position": [ "#menu_left_coordinate", 50 ],
+            "subElements": [
+              {
+                "classId": "staticText",
+                "id": "Label",
+                "styleId": "button_label_style",
+                "staticText": {
+                  "text": "New Game"
+                }
+              }
+            ]
+          },
+          {
+            "id": "Button1",
+            "prefabRef": "Assets/menu-button.json",
+            "position": [ "#menu_left_coordinate", 190 ],
+            "subElements": [
+              {
+                "classId": "staticText",
+                "id": "Label",
+                "styleId": "button_label_style",
+                "staticText": {
+                  "text": "Continue Game"
+                }
+              }
+            ]
+          },
+          {
+            "id": "Button2",
+            "prefabRef": "Assets/menu-button.json",
+            "position": [ "#menu_left_coordinate", 330 ],
+            "subElements": [
+              {
+                "classId": "staticText",
+                "id": "Label",
+                "styleId": "button_label_style",
+                "staticText": {
+                  "text": "Settings"
+                }
+              }
+            ]
+          },
+          {
+            "id": "Button3",
+            "prefabRef": "Assets/menu-button.json",
+            "position": [ "#menu_left_coordinate", 470 ],
+            "subElements": [
+              {
+                "classId": "staticText",
+                "id": "Label",
+                "styleId": "button_label_style",
+                "staticText": {
+                  "text": "Credits"
+                }
+              }
+            ]
+          },
+          {
+            "id": "Button4",
+            "prefabRef": "Assets/menu-button.json",
+            "position": [ "#menu_left_coordinate", 610 ],
+            "subElements": [
+              {
+                "classId": "staticText",
+                "id": "Label",
+                "styleId": "button_label_style",
+                "staticText": {
+                  "text": "Orientation Change"
+                }
+              }
+            ]
+          },
+          {
+            "id": "Button5",
+            "prefabRef": "Assets/menu-button.json",
+            "position": [ "#menu_left_coordinate", 750 ],
+            "subElements": [
+              {
+                "classId": "staticText",
+                "id": "Label",
+                "styleId": "button_label_style",
+                "staticText": {
+                  "text": "Exit"
+                }
+              }
+            ]
+          },
+          {
+            "id": "Button6",
+            "prefabRef": "Assets/menu-button-touch.json",
+            "position": [ "#menu_left_coordinate", 35 ],
+            "subElements": [
+              {
+                "classId": "staticText",
+                "id": "Label",
+                "styleId": "button_label_style",
+                "staticText": {
+                  "text": "New Game"
+                }
+              }
+            ]
+          },
+          {
+            "id": "Button7",
+            "prefabRef": "Assets/menu-button-touch.json",
+            "position": [ "#menu_left_coordinate", 195 ],
+            "subElements": [
+              {
+                "classId": "staticText",
+                "id": "Label",
+                "styleId": "button_label_style",
+                "staticText": {
+                  "text": "Continue Game"
+                }
+              }
+            ]
+          },
+          {
+            "id": "Button8",
+            "prefabRef": "Assets/menu-button-touch.json",
+            "position": [ "#menu_left_coordinate", 355 ],
+            "subElements": [
+              {
+                "classId": "staticText",
+                "id": "Label",
+                "styleId": "button_label_style",
+                "staticText": {
+                  "text": "Settings"
+                }
+              }
+            ]
+          },
+          {
+            "id": "Button9",
+            "prefabRef": "Assets/menu-button-touch.json",
+            "position": [ "#menu_left_coordinate", 515 ],
+            "subElements": [
+              {
+                "classId": "staticText",
+                "id": "Label",
+                "styleId": "button_label_style",
+                "staticText": {
+                  "text": "Credits"
+                }
+              }
+            ]
+          },
+          {
+            "id": "Button10",
+            "prefabRef": "Assets/menu-button-touch.json",
+            "position": [ "#menu_left_coordinate", 675 ],
+            "subElements": [
+              {
+                "classId": "staticText",
+                "id": "Label",
+                "styleId": "button_label_style",
+                "staticText": {
+                  "text": "Orientation Change"
+                }
+              }
+            ]
+          },
+          {
+            "id": "Button11",
+            "prefabRef": "Assets/menu-button-touch.json",
+            "position": [ "#menu_left_coordinate", 835 ],
+            "subElements": [
+              {
+                "classId": "staticText",
+                "id": "Label",
+                "styleId": "button_label_style",
+                "staticText": {
+                  "text": "Exit"
+                }
+              }
+            ]
+          },
+          {
+            "id": "Button12",
+            "visibe": false,
+            "prefabRef": "Assets/menu-button-rot.json",
+            "position": [ "#menu_left_coordinate", 50 ],
+            "subElements": [
+              {
+                "classId": "staticText",
+                "id": "Label",
+                "styleId": "button_label_style_rot",
+                "staticText": {
+                  "text": "New Game"
+                }
+              }
+            ]
+          },
+          {
+            "id": "Button13",
+            "visibe":  false,
+            "prefabRef": "Assets/menu-button-rot.json",
+            "position": [ "#menu_left_coordinate", 290 ],
+            "subElements": [
+              {
+                "classId": "staticText",
+                "id": "Label",
+                "styleId": "button_label_style_rot",
+                "staticText": {
+                  "text": "Continue Game"
+                }
+              }
+            ]
+          },
+          {
+            "id": "Button14",
+            "visibe": false,
+            "prefabRef": "Assets/menu-button-rot.json",
+            "position": [ "#menu_left_coordinate", 530 ],
+            "subElements": [
+              {
+                "classId": "staticText",
+                "id": "Label",
+                "styleId": "button_label_style_rot",
+                "staticText": {
+                  "text": "Settings"
+                }
+              }
+            ]
+          },
+          {
+            "id": "Button15",
+            "visibe": false,
+            "prefabRef": "Assets/menu-button-rot.json",
+            "position": [ "#menu_left_coordinate", 770 ],
+            "subElements": [
+              {
+                "classId": "staticText",
+                "id": "Label",
+                "styleId": "button_label_style_rot",
+                "staticText": {
+                  "text": "Credits"
+                }
+              }
+            ]
+          },
+          {
+            "id": "Button16",
+            "visibe": false,
+            "prefabRef": "Assets/menu-button-rot.json",
+            "position": [ "#menu_left_coordinate", 1010 ],
+            "subElements": [
+              {
+                "classId": "staticText",
+                "id": "Label",
+                "styleId": "button_label_style_rot",
+                "staticText": {
+                  "text": "Orientation Change"
+                }
+              }
+            ]
+          },
+          {
+            "id": "Button17",
+            "visibe": false,
+            "prefabRef": "Assets/menu-button-rot.json",
+            "position": [ "#menu_left_coordinate", 1250 ],
+            "subElements": [
+              {
+                "classId": "staticText",
+                "id": "Label",
+                "styleId": "button_label_style_rot",
+                "staticText": {
+                  "text": "Exit"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

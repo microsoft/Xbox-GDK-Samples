@@ -1,29 +1,57 @@
----
-page_type: sample
-languages:
-- cpp
-products:
-- gdk
-urlFragment: "moderngamertag"
-extendedZipContent:
-- path: LICENSE
-  target: LICENSE
-- path: Kits
-  target: Kits
-- path: Media
-  target: Media
-description: "This sample demonstrates the use of a Glyph cache that can be used to store and render strings to a screen on Xbox."
----
+  ![](./media/image1.png)
 
-# ModernGamertag
+#   Modern Gamertag
 
-For more information see: 
-- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/ModernGamertag/readme_en-us.md)
+*This sample is compatible with the Microsoft Game Development Kit
+(March 2022)*
 
-## Privacy statement
+![Text Description automatically generated](./media/image3.png)
 
-For more information about Microsoft's privacy policies in general, see the [Microsoft Privacy Statement](https://privacy.microsoft.com/privacystatement/).
+# Description
 
-## Trademarks
+This code sample illustrates the process of creating and utilizing a
+texture atlas to store Strings made up of 1 or more fonts, such as user
+gamertags, for rendering on the screen. The implementation relies on
+three primary classes to handle the bulk of the functionality.
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
+1.  StringRenderer: Responsible for drawing strings to the screen. This
+    class retrieves the strings from the texture atlas.
+
+2.  StringTextureAtlas: Manages and caches the strings to a texture
+    atlas.
+
+3.  StringShaper: Responsible for rasterizing a string. It converts the
+    string into a bitmap image so that it can be rendered and stored in
+    the texture atlas.
+
+This sample does NOT have an eviction policy; however it does support
+the removal of Strings from the texture atlas. Implementation of an
+eviction policy is left up to the reader.
+
+# Building the sample
+
+If using an Xbox Series X|S devkit, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
+
+If using an Xbox One devkit, set the active solution platform to `Gaming.Xbox.XboxOne.x64`.
+
+If using PC, set the active solution platform to `x64`.
+
+*For more information, see* __Running samples__, *in the GDK documentation.*
+
+# Using the sample
+
+Simply select the active solution platform to run it on. If no user is
+used, the default value is set to what a modern gamertag would look
+like.
+
+# Update history
+
+February 2023 Initial release
+
+# Privacy Statement
+
+For more information about Microsoft's privacy policies in general, see
+the [Microsoft Privacy
+Statement](https://privacy.microsoft.com/en-us/privacystatement/).
+
+# 

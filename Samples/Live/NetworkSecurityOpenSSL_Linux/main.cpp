@@ -1,0 +1,275 @@
+#include "pch.h"
+
+#include <signal.h>
+#include <netdb.h>
+
+#include "DTLSConnection.h"
+#include "DTLSSocket.h"
+#include "OpenSSLHelpers.h"
+
+using namespace ATG;
+
+// Global options
+uint16_t g_portNumber = 0;
+bool g_debugOutput = false;
+std::string g_certFile;
+std::string g_keyFile;
+std::string g_expectedIdentityString;
+
+// Global components
+XTaskQueueHandle g_taskQueue{};
+std::unique_ptr<DTLSSocket> g_serverSocket;
+DTLSConnectionHandle g_serverConnection{};
+
+namespace ATG
+{
+    bool GetBestLocalAddress(sockaddr_in& outAddr);
+}
+
+void Usage(void)
+{
+    std::cout << "Usage: NetworkSecurityOpenSSL_Linux [-p <port>] [-d] <certificate> <privatekey>" << std::endl;
+    std::cout << std::endl;
+    std::cout << "Options:" << std::endl;
+    std::cout << " -p = Port to bind to (default: 0)" << std::endl;
+    std::cout << " -d = Enable debug output" << std::endl;
+    std::cout << " -? = This help text" << std::endl;
+}
+
+void ProcessCommandLine(int argc, char **argv)
+{
+    int currentArg = 0;
+
+    try
+    {
+        // Loop over the arguments, skipping the first (the exe name)
+        while (++currentArg != argc)
+        {
+            std::string argValue(argv[currentArg]);
+
+            if (argValue == "-p")
+            {
+                if (++currentArg == argc)
+                {
+                    throw std::invalid_argument("p");
+                }
+
+                g_portNumber = static_cast<uint16_t>(std::atoi(argv[currentArg]));
+
+                std::cout << "Using port number: " << g_portNumber << std::endl;
+            }
+            else if (argValue == "-d")
+            {
+                g_debugOutput = true;
+
+                std::cout << "Debug logging enabled" << std::endl;
+            }
+            else
+            {
+                // If it's not an option assume it's the cert file name
+                g_certFile = argv[currentArg];
+
+                // The next argument needs to be the key file name
+                if (currentArg + 1 == argc)
+                {
+                    continue;
+                }
+
+                g_keyFile = argv[++currentArg];
+
+                std::cout << "Using cert file: " << g_certFile << std::endl;
+                std::cout << "Using key file: " << g_keyFile << std::endl;
+            }
+        }
+
+        if (g_certFile.empty())
+        {
+            std::cerr << "No certificate file specified." << std::endl;
+            throw std::invalid_argument("cert");
+        }
+        
+        if (g_keyFile.empty())
+        {
+            std::cerr << "No private key file specified." << std::endl;
+            throw std::invalid_argument("key");
+        }
+    }
+    catch (...)
+    {
+        // Any errors parsing the command line will just print usage and exit
+        Usage();
+        exit(1);
+    }
+}
+void PrintLocalAddress()
+{
+    sockaddr localAddress{};
+    sockaddr_in* addrIn = reinterpret_cast<sockaddr_in*>(&localAddress);
+
+    ATG::GetBestLocalAddress(*addrIn);
+    addrIn->sin_port = htons(g_portNumber);
+
+    std::cout << "\nLocal Address: " << AddressToString(localAddress) << "\n\n";
+}
+
+void PrintLocalIdentityString()
+{
+    uint32_t fingersize = g_serverSocket->GetFingerprintSize();
+    std::vector<uint8_t> fingerprint(fingersize);
+    g_serverSocket->GetFingerprint(fingerprint.data(), fingersize, &fingersize);
+    
+    uint32_t namesize = g_serverSocket->GetSubjectNameSize();
+    std::vector<uint8_t> subject(namesize);
+    g_serverSocket->GetSubjectName(subject.data(), namesize, &namesize);
+
+    std::cout << "Local Identity: " << ATG::BytesToHexString(fingerprint.data(), fingersize);
+    std::cout << ":" <<  ATG::BytesToHexString(subject.data(), namesize) << "\n\n";
+}
+
+void RequestExpectedIdentityString()
+{
+    
+    std::cout << "Enter the Identity string for the expected connection: ";
+    std::cin >> g_expectedIdentityString;
+
+    std::string expectedFingerprintString, subjectname;
+    ATG::SplitString(g_expectedIdentityString, ":", expectedFingerprintString, subjectname);
+
+    std::cout << "\nExpected Fingerprint: " << expectedFingerprintString << "\n\n";
+    std::cout << "Expected SubjectName: " << subjectname << "\n\n";
+}
+
+void SetupSIGINT()
+{
+    struct sigaction sigIntHandler{};
+
+    sigIntHandler.sa_handler = [](int s)
+        {
+            std::cout << std::endl << "Ctrl-C received, stopping server." << std::endl;
+
+            if (g_serverConnection != nullptr && g_serverConnection->IsConnected())
+            {
+                g_serverSocket->CloseConnection(g_serverConnection);
+            }
+
+            g_serverSocket.reset();
+
+            exit(0);
+        };
+
+    sigaction(SIGINT, &sigIntHandler, NULL);
+}
+
+int main(int argc, char **argv)
+{
+    // Get any command line settings
+    ProcessCommandLine(argc, argv);
+
+    // Establish a task queue
+    auto hr = XTaskQueueCreate(XTaskQueueDispatchMode::SerializedThreadPool, XTaskQueueDispatchMode::Manual, &g_taskQueue);
+
+    if (FAILED(hr))
+    {
+        std::cerr << "Unable to create task queue." << std::endl;
+        exit(1);
+    }
+
+    // Create a DTLS socket
+    DTLSSocket *socket{};
+
+    hr = DTLSSocket::Create(g_portNumber, g_taskQueue, g_certFile, g_keyFile, &socket);
+
+    if (FAILED(hr))
+    {
+        std::cerr << "Unable to create DTLS socket." << std::endl;
+        exit(1);
+    }
+
+    // Move the socket to our unique pointer
+    g_serverSocket.reset(socket);
+
+    // Print the local address for copy pasting
+    PrintLocalAddress();
+
+    // Print the local identity string for copy pasting
+    PrintLocalIdentityString();
+
+    // Allow the user to paste the expected identity string
+    RequestExpectedIdentityString();
+
+    // Establish handler for incoming connections
+    g_serverSocket->AcceptConnections([](DTLSSocket *socket, const sockaddr *source, const SocketPayload *data, void *context)
+    {
+        std::string addressString = AddressToString(*source);
+
+        if (g_serverConnection != nullptr)
+        {
+            return;
+        }
+
+        std::cout << "Incoming connections from " << AddressToString(*source) << ". Establishing..." << std::endl;
+
+        auto async = std::make_unique<XAsyncBlock>();
+        async->queue = g_taskQueue;
+        async->callback = [](XAsyncBlock *async)
+        {
+            std::unique_ptr<XAsyncBlock> asyncPtr{async};
+
+            auto hr = DTLSSocket::AcceptConnectionAsyncResult(async, &g_serverConnection);
+
+            // TODO: Logging, checking only one connection exists, etc
+            if (SUCCEEDED(hr))
+            {
+                std::cout << "Connection established." << std::endl;
+            }
+            else
+            {
+                std::cout << "Connection failed." << std::endl;
+            }
+        };
+
+        // Attempt to connect securely
+        auto hr = socket->AcceptConnectionAsync(source, g_expectedIdentityString, data, async.get());
+
+        if (SUCCEEDED(hr))
+        {
+            async.release();
+        }
+    }, nullptr);
+
+    // Setup a SIGINT (Ctrl-C) handler to quit the server
+    SetupSIGINT();
+
+    std::cout << "Server accepting connections.  Ctrl-C to exit." << std::endl;
+
+    // Main server loop
+    while (true)
+    {
+        DTLSConnectionHandle source{};
+        SocketPayload data{};
+
+        XTaskQueueDispatch(g_taskQueue, XTaskQueuePort::Completion, 0);
+
+        while (SUCCEEDED(g_serverSocket->RecvFrom(&source, &data)))
+        {
+            auto async = std::make_unique<XAsyncBlock>();
+            async->queue = g_taskQueue;
+            async->callback = [](XAsyncBlock *async)
+            {
+                std::unique_ptr<XAsyncBlock> asyncPtr{async};
+            };
+
+            std::cout << "Received: " << std::string_view(reinterpret_cast<const char *>(data.payload), data.size) << std::endl;
+
+            // Echo back the received data
+            auto hr = g_serverSocket->SendToAsync(source, &data, async.get());
+
+            if (SUCCEEDED(hr))
+            {
+                async.release();
+            }
+        }
+    }
+
+    return 0;
+}

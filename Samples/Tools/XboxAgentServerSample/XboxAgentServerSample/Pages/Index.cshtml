@@ -1,0 +1,69 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Xbox DevKit Agent Server Sample";
+}
+
+<style>
+    .col {
+        border: 2px outset black;
+        text-align: left;
+    }
+</style>
+
+<p>
+    <button onClick="window.location.reload();">Refresh Page</button>
+</p>
+
+<div class="IndexPage">
+    <div class="row">
+        <div class="col">
+            <h4><u>Xbox Development Kits</u></h4>
+            <p></p>
+            <div class="LinkedDevkits">
+                @if (Model.XboxAgentDevkitStates.Count > 0)
+                {
+                    <table>
+                        <tr>
+                            <th scope="col">Host Name</th>
+                            <th scope="col">IP Address</th>
+                        </tr>
+                        @foreach (var item in Model.XboxAgentDevkitStates)
+                        {
+                            <tr>
+                                <td><a asp-page="./DevkitState" asp-route-id="@item.DeveloperDeviceId">@Html.DisplayFor(modelItem => item.DevkitInfo.HostName)</a></td>
+                                <td>@Html.DisplayFor(modelItem => item.DevkitInfo.IpAddress)</td>
+                            </tr>
+                        }
+                    </table>
+                }
+                else
+                {
+                    <p>Waiting for Xbox Agents to connect.</p>
+                }
+            </div>
+            <br />
+            <h4><u>HeartbeatRequest</u></h4>
+            <div class="HeartbeatRequest">
+                <p> Please select a devkit agent to view the last heartbeat request </p>
+            </div>
+            <p></p>
+        </div>
+
+        <div class="col">
+            @if (Model.SelectedDevkit != null)
+            {
+                <p>
+                    @Html.DisplayFor(modelItem => Model.SelectedDevkit.DevkitInfo.HostName)
+                    (@Html.DisplayFor(modelItem => Model.SelectedDevkit.DevkitInfo.IpAddress))
+                </p>
+
+                <br />
+            }
+            else
+            {
+                <h4> Please select a Devkit agent </h4>
+            }
+        </div>
+    </div>
+</div>

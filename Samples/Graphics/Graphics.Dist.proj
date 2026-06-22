@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Distribute" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--
+       ================================================================================
+       Gaming.Xbox.*.x64 Samples
+       ================================================================================
+  -->
+  <ItemGroup Label="Console">
+    <!-- A -->
+    <SlnDist Include="Graphics\AdvancedESRAM\AdvancedESRAM.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates the use of advanced DirectX 12.x memory features on Xbox One to effectively alias memory for Direct3D resources.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Matt Hurliman</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\AdvancedLighting\AdvancedLighting.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates different techniques to improve performance of deferred rendering with many lights.</Description>
+      <Owner>Jose Rosenbluth (josrosen@microsoft.com)</Owner>
+      <Author>David Cook</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\AdvancedPSO\AdvancedPSO.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates Xbox specific Pipeline State Object (PSO) generation methods which improve the memory usage and runtime performance relative to the stock DirectX 12 method (CreateGraphicsPipelineState).</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Justin Saunders</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\AmbientOcclusion\AmbientOcclusion.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates two ambient occlusion techniques: MiniEngine's SSAO and Intel's GTAO.</Description>
+      <Owner>Jennifer Chandler (jennic@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- AMD -->
+    <SlnDist Include="Graphics\AMDFidelityFX_CACAO\AMDFidelityFX_CACAO.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates AMD's FidelityFX Combined Adaptive Compute Ambient Occlusion (CACAO) algorithm.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Colin Riley (Colin.Riley@amd.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\AMDFidelityFX_CAS\AMDFidelityFX_CAS.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates AMD's FidelityFX Contrast Adaptive Sharpening (CAS) algorithm.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Colin Riley (Colin.Riley@amd.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\AMDFidelityFX_FSR3FrameInterpolation\AMDFidelityFX_FSR3FrameInterpolation.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates AMD's FidelityFX FSR3 algorithm.</Description>
+      <Owner>Pavel Martishevsky (pamartis@microsoft.com)</Owner>
+      <Author>Jason Lacroix (Jason.Lacroix@amd.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\AMDFidelityFX_RTShadowDenoiser\AMDFidelityFX_RTShadowDenoiser.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample shows an implementation of the AMD's FidelityFX RT Shadow Denoiser applied against a basic implementation of DXR 1.0 Raytraced Shadows.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Colin Riley (Colin.Riley@amd.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\AMDFidelityFX_SuperResolution\AMDFidelityFX_SuperResolution.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates AMD's FidelityFX Super Resolution (FSR) algorithm.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Colin Riley (Colin.Riley@amd.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\AMDFidelityFX_VariableShading\AMDFidelityFX_VariableShading.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates AMD's FidelityFX Variable Shading algorithm.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Colin Riley (Colin.Riley@amd.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <SlnDist Include="Graphics\Antialiasing\Antialiasing.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample shows different antialiasing methods (SMAA, SMAA2x, and FXAA) on Xbox.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Chuck Walbourn (chuckw@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\AutoHDR\AutoHDR.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates the Auto HDR feature of the Xbox Series X|S console.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\AutoRGB\AutoRGB.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to extract a single, representative ambient color from a given scene and use it to light up lamps from connected devices (HID). Uses the LampArray api.</Description>
+      <Owner>Jose Rosenbluth (josrosen@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- B -->
+    <SlnDist Include="Graphics\BankRotation\BankRotation.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates a technique which helps in speeding up writes to multiple DRAM render targets in the same draw call.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Tiju Thomas</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\BuildYourOwnBundles\BuildYourOwnBundles.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates building draw bundles using the ExecuteIndirectBundleX API on Xbox.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Tiju Thomas</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\BVHIntrinsic\BVHIntrinsic.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates how to access and use the Xbox Series X|S 'image_bvh_intersect_ray' instruction in order to accelerate DirectX Raytracing.</Description>
+      <Platform>Gaming.Xbox.Scarlett.x64</Platform>
+      <Owner>Adam Miles (aj@xbox.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- C -->
+    <SlnDist Include="Graphics\CMaskDecode\CMaskDecode.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates how to extract fast clear values from the cmask surface on the Xbox.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Tiju Thomas</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\ComputeParticles\ComputeParticles.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to use compute shaders and append buffers to perform a basic particle simulation and performantly render a silly number of particles.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Matt Hurliman</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- D -->
+    <SlnDist Include="Graphics\DeferredParticles\DeferredParticles.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This DirectX 12 sample demonstrates a method for rendering lit smoke particles in either a forward or deferred fashion.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Matt Hurliman</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\DirectStorageTextureShuffling\DirectStorageTextureShuffling.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to use DirectStorage swizzle modes together with shuffling (deinterleaving) the data of BC1, BC3, BC4 and BC5 textures in specific ways to improve ZLib compression.The sample consists of an offline tool to prepare the texture data, and runtime code with compute shaders to unshuffle the texture data.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Claude Marais</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\DrawIndexedX\DrawIndexedX.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates using the DrawIndexedX API on Xbox.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Tiju Thomas</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\DXRContent\DXRContent.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates the various XDXR flags for BLAS and TLAS building and compares different methods of setting up content for raytracing performance.</Description>
+      <Owner>Jennifer Chandler (jennic@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\DXRProceduralGeo\DXRProceduralGeo.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates how to render different types of geometry using DirectX Raytracing API on Xbox Series X|S and PC.</Description>
+      <Owner>Jose Rosenbluth (josrosen@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\DXRSimpleLighting\DXRSimpleLighting.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how diffuse lighting and animated cubes can be rendered with the DirectX Raytracing API on a Xbox Series X|S device.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\DXRTriangle\DXRTriangle.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates the basic use of the DirectX Raytracing API on Xbox Series X|S and PC.</Description>
+      <Owner>Adam Miles (aj@xbox.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\DynamicCubeMap\DynamicCubeMap.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to render the scene to a cubemap at runtime and then sample from the cubemap.</Description>
+      <Owner>Jennifer Chandler (jennic@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\DynamicLOD\DynamicLOD.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to leverage amplification shaders to do per-instance frustum culling and mesh level-of-detail (LOD) selection entirely on the GPU for an arbitrary number of instances on Xbox Series X|S and PC.</Description>
+      <Platform>$(Platform_Scarlett_from_Outlet)</Platform>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Matt Hurliman</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\DynamicResolution\DynamicResolution.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates how to maintain frame rate by modulating resolution in response to changing performance conditions.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- E -->
+    <SlnDist Include="Graphics\ExecuteIndirect\ExecuteIndirect.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates usage of DirectX 12's ExecuteIndirect API for asynchronously building rendering commands.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- F -->
+    <SlnDist Include="Graphics\FastBlockCompress\FastBlockCompress.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how you can use DirectCompute to perform fast texture compression at run time to the BC1, BC3, and BC5 formats based on the classic Fast Block Compression algorithm on Xbox.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Chuck Walbourn (chuckw@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- G -->
+    <SlnDist Include="Graphics\GeometricExpansion\GeometricExpansion.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates the geometric expansion capabilities of mesh shaders for Xbox Series X|S and PC.</Description>
+      <Platform>$(Platform_Scarlett_from_Outlet)</Platform>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Matt Hurliman</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\GpuBench\GpuBench.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample is ATG's internally developed GPU benchmarking tool.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\GpuHang\GpuHang.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample is a testbed which reproduces a variety of commonly encountered GpuHangs, producing Hix file dumps for postmortem investigation.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- H -->
+
+    <!-- HDR -->
+    <SlnDist Include="Graphics\HDR10\HDR10.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>Switch a UHD TV into HDR mode and render a HDR10 scene with values higher than 1.0f, which will be displayed as brighter than white on a UHD TV using DirectX 12 on Xbox.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\HDRAutoToneMapping\HDRAutoToneMapping.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample shows how an HDR game can use auto tone mapping by the D3D driver to produce an SDR image for GameDVR, as opposed to the title rendering the SDR image itself.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\HDRDisplayMapping\HDRDisplayMapping.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample shows that even when rendering a HDR scene on a HDR capable TV, some tone mapping is still needed, referred to as 'HDR display mapping'.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\HDRCalibration\HDRCalibration.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample switches an HDR TV to HDR mode and then presents the user with several calibration options to adjust the visible detail in brights and darks, the overall brightness and color saturation of the image.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\HDRPrecision\HDRPrecision.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how precision and GPU performance are affected when using different formats and color spaces while rendering HDR on Xbox Series X|S.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\HDRReconstruction\HDRReconstruction.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample shows how HDR can be reconstructed from an already tonemapped SDR image as a simple postprocessing technique.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <SlnDist Include="Graphics\HlslCompile\HlslCompile.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>The sample compiles the same pixel shader in a number of different ways, to illustrate different options for PC-side asset build.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\HiStencil\HiStencil.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>The sample also shows how to use a compute shader to read hi-stencil results from the HTile buffer.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Tiju Thomas</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\HistogramCS\HistogramCS.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates some performance considerations for Compute Shaders on Xbox.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Chuck Walbourn (chuckw@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\HiZDecode\HiZDecode.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates how to extract hi z values from the htile surface.</Description>
+      <Owner>Pavel Martishevsky (pamartis@microsoft.com)</Owner>
+      <Author>Chuck Walbourn (chuckw@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\HWDisplayPlaneCompositing\HWDisplayPlaneCompositing.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates how to setup hardware display planes to composite UI onto a scene at no performance or latency costs.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Claude Marais (cmarais@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- M -->
+    <SlnDist Include="Graphics\MipMapCS\MipMapCS.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates how to create mips for a texture using a compute shader avoiding thread local storage on Xbox.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Chuck Walbourn (chuckw@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\MeshletCull\MeshletCull.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to leverage amplification shaders to cull meshlets against the camera using per-meshlet culling metadata on Xbox Series X|S and PC.</Description>
+      <Platform>$(Platform_Scarlett_from_Outlet)</Platform>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Matt Hurliman</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\MeshletInstancing\MeshletInstancing.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>Demonstrates GPU instancing for DirectX 12 Mesh Shaders.</Description>
+      <Platform>$(Platform_Scarlett_from_Outlet)</Platform>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Matt Hurliman</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\MP4Encoder\MP4Encoder.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample shows how the Media Foundation APIs can be used to encode the back buffer of a game into a MP4 video file using the H264 codec on Xbox.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Claude Marais (cmarais@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\MP4Reader\MP4Reader.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample shows how the Media Foundation Source Reader can be used to read a MP4 file which contains an H264 or HEVC video stream, and decode it using hardware acceleration on Xbox.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Richie Meyer (richiem@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\Multisampling\Multisampling.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>The sample renders geometry which is subject to aliasing, and it allows the user to observe the effect of all supported MSAA modes on that geometry on Xbox.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- O -->
+    <SlnDist Include="Graphics\OfflineRT\OfflineRT.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates how to use the offline acceleration-structure (BVH) builder and raytracing pipeline state object (RTPSO) serialization features available for the Xbox Series X|S.</Description>
+      <Platform>$(Platform_Scarlett_from_Outlet)</Platform>
+      <Owner>Tad Swift (tad@xbox.com)</Owner>
+      <Author>Troels Gram (trgram@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- P -->
+    <SlnDist Include="Graphics\PipelinedPostprocess\PipelinedPostprocess.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to overlap the postprocess phase of one frame with the beginning of the next frame, potentially achieving some performance benefit from parallelization.</Description>
+      <Owner>Jose Rosenbluth (josrosen@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\PixelBinning\PixelBinning.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates how to sort pixels by an id associated with each pixel to later dispatch compute workloads with waves processing pixels either with the same id or with a minimal set of non-identical ids on Xbox.</Description>
+      <Owner>Pavel Martishevsky (pamartis@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\PointSprites\PointSprites.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>Demonstrates ten methods of rendering point sprites in DirectX 12.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Matt Hurliman</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\PrimeHTile\PrimeHTile.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates priming the HiZ part of the HTile with depth values, enabling subsequent rendering to fail the depth test pre-pixel shading on Xbox One.</Description>
+      <Owner>Martin Fuller (martin@xbox.com)</Owner>
+      <Author>Chuck Walbourn (chuckw@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- R -->
+    <!-- NOT ENABLED until June release because there might be another (OneSweep) implementation which is even faster
+    <SlnDist Include="Graphics\RadixSort\RadixSort.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Owner>Pavel Martishevsky (pamartis@microsoft.com)</Owner>
+      <Author>Pavel Martishevsky (pamartis@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    -->
+    <SlnDist Include="Graphics\ResponsivenessSample\ResponsivenessSample.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>The sample provides a variety of examples to show how Dyanmic Latency Input (DLI) and display technologies can improve responsiveness on Xbox.</Description>
+      <Owner>Brian Peek (brpeek@microsoft.com)</Owner>
+      <Author>Jeff Ballard</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- S -->
+    <!-- NOT ENABLED for now due to shader compiler codegen issues
+    <SlnDist Include="Graphics\ScatteringFp16\ScatteringFp16.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Owner>Pavel Martishevsky (pamartis@microsoft.com)</Owner>
+      <Author>Pavel Martishevsky (pamartis@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    -->
+    <!-- Simple -->
+
+    <SlnDist Include="Graphics\SimpleROV\SimpleROV.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample shows usage of Raster Order Views on Scarlett, specifically showing how to use them to implement order independent transparency.</Description>
+      <Owner>Jose Rosenbluth (josrosen@microsoft.com)</Owner>
+      <Author></Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\ShadowMapSample\ShadowMapSample.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates different techniques to achieve soft shadows, both with PCF and filtering techniques.</Description>
+      <Owner>Jose Rosenbluth (josrosen@microsoft.com)</Owner>
+      <Author>David Cook</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\Simple120Hz\Simple120Hz.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates the basics of rendering at several refresh rates on Xbox: 30Hz, 40Hz, 60Hz, and 120Hz.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Matt Hurliman</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\SimpleESRAM\SimpleESRAM.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates the basics of utilizing ESRAM with DirectX 12 on Xbox One.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Matt Hurliman</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\SimpleHDR\SimpleHDR.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This is a simple sample showing how to implement HDR on Xbox.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Claude Marais</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\SimpleMeshlet\SimpleMeshlet.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample introduces the meshlet data structure and provides an example of rendering using meshlets on Xbox Series X|S and PC.</Description>
+      <Platform>$(Platform_Scarlett_from_Outlet)</Platform>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Matt Hurliman</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\SimplePBR\SimplePBR.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates physically based rendering (PBR) on Xbox using DirectX 12.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Justin Saunders</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\SimpleSFS\SimpleSFS.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample shows a simple implementation of Sampler Feedback for Streaming (SFS), showing how to use a SamplerFeedback map with a MinMip map on Xbox Series X|S.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\SimpleVRS\SimpleVRS.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates Tier 2 screen-space Variable Rate Shading (VRS) on Xbox Series X|S.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <SlnDist Include="Graphics\SmokeSimulation\SmokeSimulation.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to use Compute Shader 6.0 and 3D textures to implement basic 3D Navier-Stokes flow simulation.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Matt Hurliman</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\TemporalAntialiasing\TemporalAntialiasing.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to implement Temporal Antialiasing (TAA), plus a series of other techniques which help improve the algoritm stability and fix some of its inherent issues.</Description>
+      <Owner>Jose Rosenbluth (josrosen@microsoft.com)</Owner>
+      <Author></Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\ShaderReflect\ShaderReflect.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Platform>Gaming.Xbox.XboxOne.x64</Platform>
+      <Description>This sample demonstrates how you can access shader reflection information and how it relates to the root signature.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Troels Gram (trgram@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- T -->
+    <SlnDist Include="Graphics\TextureCompression\TextureCompression.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates how to use the new hardware decompression unit available on Xbox Series X|S for texture data.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Troels Gram (trgram@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- V -->
+    <SlnDist Include="Graphics\VisibilityBuffer\VisibilityBuffer\VisibilityBuffer.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>Demonstrates a visibility buffer (deferred) rendering technique, making use of Mesh Shaders and HLSL 6.6 Dynamic Resources.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Nico May (nicomay@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\VisibilityBuffer\VisibilityBufferIndexReorder\VisibilityBufferIndexReorder.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample augments the VisibilityBuffer sample with a simple index buffer reordering to improve vertex shader performance on Xbox.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Nico May (nicomay@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Graphics\VRSandSparseLighting\VRSandSparseLighting.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample implements sparse deferred lighting on Xbox Series X|S.</Description>
+      <Owner>Martin Fuller (martin@xbox.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+  </ItemGroup>
+</Project>

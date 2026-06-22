@@ -1,0 +1,156 @@
+//--------------------------------------------------------------------------------------
+// pch.h
+//
+// Header for standard system include files.
+//
+// Advanced Technology Group (ATG)
+// Copyright (C) Microsoft Corporation. All rights reserved.
+//--------------------------------------------------------------------------------------
+
+#pragma once
+
+#include <winsdkver.h>
+#define _WIN32_WINNT 0x0A00
+#include <sdkddkver.h>
+
+// Use the C++ standard templated min/max
+#define NOMINMAX
+
+// DirectX apps don't need GDI
+#define NODRAWTEXT
+#define NOGDI
+#define NOBITMAP
+
+// Include <mcx.h> if you need this
+#define NOMCX
+
+// Include <winsvc.h> if you need this
+#define NOSERVICE
+
+// WinHelp is deprecated
+#define NOHELP
+
+#include <Windows.h>
+
+#include <wrl/client.h>
+#include <wrl/event.h>
+
+#include <gxdk.h>
+
+#if _GXDK_VER < 0x55F00C58 /* GDK Edition 220301 */
+#error This sample requires the March 2022 Update 1 GDK or later
+#endif
+
+#ifndef _GAMING_XBOX_SCARLETT
+#error This sample only supports Xbox Series X|S
+#endif
+
+#include <d3d12_xs.h>
+#include <d3dx12_xs.h>
+
+#define _XM_NO_XMVECTOR_OVERLOADS_
+
+#include <DirectXMath.h>
+#include <DirectXColors.h>
+
+#include <algorithm>
+#include <atomic>
+#include <cassert>
+#include <cmath>
+#include <cstddef>
+#include <cstdint>
+#include <cstdio>
+#include <cstring>
+#include <cwchar>
+#include <exception>
+#include <fstream>
+#include <functional>
+#include <future>
+#include <iterator>
+#include <memory>
+#include <stdexcept>
+#include <string>
+#include <system_error>
+#include <tuple>
+
+#include <pix3.h>
+
+#include <XGame.h>
+#include <XSystem.h>
+
+// DirectXTK12 includes:
+#include <CommonStates.h>
+#include <DescriptorHeap.h>
+#include <DirectXHelpers.h>
+#include <GamePad.h>
+#include <GraphicsMemory.h>
+#include <Model.h>
+#include "RenderTargetState.h"
+#include <ResourceUploadBatch.h>
+#include <SimpleMath.h>
+#include <SpriteBatch.h>
+#include <SpriteFont.h>
+
+// ATGTK includes:
+#include <ATGColors.h>
+#include <ControllerFont.h>
+#include <OrbitCamera.h>
+#include <PerformanceTimersXbox.h>
+
+#ifndef MAKEFOURCC
+    #define MAKEFOURCC(ch0, ch1, ch2, ch3) \
+                (static_cast<uint32_t>(static_cast<uint8_t>(ch0)) \
+                | (static_cast<uint32_t>(static_cast<uint8_t>(ch1)) << 8) \
+                | (static_cast<uint32_t>(static_cast<uint8_t>(ch2)) << 16) \
+                | (static_cast<uint32_t>(static_cast<uint8_t>(ch3)) << 24))
+#endif /* MAKEFOURCC */
+
+// To opt-out of telemetry uncomment the following line
+//#define ATG_DISABLE_TELEMETRY
+
+namespace DX
+{
+    // Helper class for COM exceptions
+    class com_exception : public std::exception
+    {
+    public:
+        com_exception(HRESULT hr) noexcept : result(hr) {}
+
+        const char* what() const noexcept override
+        {
+            static char s_str[64] = {};
+            sprintf_s(s_str, "Failure with HRESULT of %08X", static_cast<unsigned int>(result));
+            return s_str;
+        }
+
+    private:
+        HRESULT result;
+    };
+
+    // Helper utility converts D3D API failures into exceptions.
+    inline void ThrowIfFailed(HRESULT hr)
+    {
+        if (FAILED(hr))
+        {
+#ifdef _DEBUG
+            char str[64] = {};
+            sprintf_s(str, "**ERROR** Fatal Error with HRESULT of %08X\n", static_cast<unsigned int>(hr));
+            OutputDebugStringA(str);
+            __debugbreak();
+#endif
+            throw com_exception(hr);
+        }
+    }
+
+    // Helper utility to throw on failed condition
+    inline void ThrowIfFalse(bool cond, const char* message)
+    {
+        if (!cond)
+        {
+            throw std::exception(message);
+        }
+    }
+}
+
+// Enable off by default warnings to improve code conformance
+#pragma warning(default : 4061 4062 4191 4263 4264 4265 4266 4289 4746 4826 4841 4986 4987 5029 5038 5042)

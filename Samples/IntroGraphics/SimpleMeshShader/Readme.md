@@ -1,32 +1,71 @@
----
-page_type: sample
-languages:
-- cpp
-products:
-- gdk
-urlFragment: "simplemeshshader"
-extendedZipContent:
-- path: LICENSE
-  target: LICENSE
-- path: Kits
-  target: Kits
-- path: Media
-  target: Media
-description: "This sample is a companion to the SimpleTriangle sample with the exception being that it uses Directx 12 Mesh Shaders."
----
+  ![](./media/image1.png)
 
-# SimpleMeshShader
+#   Simple Mesh Shader Sample
 
-For more information see: 
-- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/IntroGraphics/SimpleMeshShader/readme_en-us.md)
-- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/IntroGraphics/SimpleMeshShader/readme_ja-jp.md)
-- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/IntroGraphics/SimpleMeshShader/readme_ko-kr.md)
-- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/IntroGraphics/SimpleMeshShader/readme_zh-cn.md)
+*This sample is compatible with the Microsoft Game Development Kit
+(March 2022) and Windows 10 (Version 2004) May 2020 Update*
 
-## Privacy statement
+# Description
 
-For more information about Microsoft's privacy policies in general, see the [Microsoft Privacy Statement](https://privacy.microsoft.com/privacystatement/).
+This sample is a companion to the well-aged sample SimpleTriangle with
+the exception being that it uses mesh shaders. Its purpose is to simply
+demonstrate all the pieces necessary to get a mesh shader pipeline
+initialized and running on both PC & the Xbox Series X|S.
 
-## Trademarks
+Note: There is no mesh shader support on the Xbox One console family,
+and as such no build configuration is available for that platform.
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
+![](./media/image3.png)
+
+# Building the sample
+
+If using a Xbox Series X|S devkit, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
+
+If using PC with appropriate hardware and Windows 10 release, set the
+active solution platform to x64.
+
+This sample does not support Xbox One.
+
+*For more information, see* __Running samples__, *in the GDK documentation.*
+
+# Using the sample
+
+| Action                          |  Gamepad                            |
+|---------------------------------|------------------------------------|
+| Exit                            |  View Button                        |
+
+# Implementation notes
+
+The steps demonstrated by this sample are as follows:
+
+1.  Initialize the ID3D12Device & request API objects for rendering with
+    DirectX12.
+
+2.  Check for mesh shader feature support using the
+    ID3D12Device::CheckFeatureSupport() function.
+
+3.  Create a mesh shader pipeline using the
+    ID3D12Device2::CreatePipelineState() function.
+
+4.  Bind the root signature, pipeline state, and resources to a command
+    list. Dispatch the mesh bound pipeline using the
+    ID3D12GraphicsCommandList6::DispatchMesh() function with the
+    requisite parameters.
+
+# Update history
+
+10/31/2019 -- Sample creation.
+
+4/28/2020 - Updated to use the D3DX12 helpers for mesh shader pipeline
+creation
+
+# Privacy Statement
+
+When compiling and running a sample, the file name of the sample
+executable will be sent to Microsoft to help track sample usage. To
+opt-out of this data collection, you can remove the block of code in
+Main.cpp labeled "Sample Usage Telemetry".
+
+For more information about Microsoft's privacy policies in general, see
+the [Microsoft Privacy
+Statement](https://privacy.microsoft.com/en-us/privacystatement/).

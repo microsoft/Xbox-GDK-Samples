@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Distribute" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--
+       ================================================================================
+       Combo GXDK Tools/Samples
+       ================================================================================
+  -->
+  <ItemGroup Label="Combo">
+    <!-- C -->    <!-- D -->
+    <SlnDist Include="Tools\DiaStreamPdbParse\DiaStreamPdbParse.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample shows how to use the DIA (Debug Interface Access) SDK to resolve symbols within your title as well as how to override the file I/O used through the IOStream interface.</Description>
+      <Owner>Andrew Farrier (afarrier@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+  </ItemGroup>
+
+  <!--
+       ================================================================================
+       Gaming.Xbox.*.x64 Samples
+       ================================================================================
+  -->
+  <ItemGroup Label="Console">
+    <!-- B -->
+    <FolderDist Include="Tools\BWOIExample\">
+      <DistributionItemGroup>
+        <Files Include="*.cmd" />
+        <Files Include="*.proj" />
+        <Files Include="*.props" />
+        <Files Include="*.h" />
+        <Files Include="*.cpp" />
+        <Files Include="*.hlsl" />
+        <Files Include="*.md" />
+        <Files Include="*.mgc" />
+        <Files Include="*.sln" />
+        <Files Include="*.vcxproj" />
+        <Files Include="*.vcxproj.filters" />
+        <Files Include="*.config" />
+        <Files Include="Assets\*.png" />
+        <Files Include="media\*.png" />
+        <Files Include="Dockerfile" />
+      </DistributionItemGroup>
+      <Platform>Gaming.Xbox.XboxOne.x64</Platform>
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This example demonstrates a method for building MSBuild-based projects using the Gaming.*.x64 platforms without having the Microsoft GDK installed.</Description>
+      <IncludeKitsInZip>false</IncludeKitsInZip>
+      <IncludeMediaInZip>false</IncludeMediaInZip>
+      <Owner>Philip Niemeyer-Farquharson (Philip.Farquharson@microsoft.com)</Owner>
+      <Author>Chuck Walbourn (chuckw@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </FolderDist>
+
+    <!-- C -->
+    <FolderDist Include="Tools\CMakeExample\">
+      <DistributionItemGroup>
+        <Files Include="*.h" />
+        <Files Include="*.cpp" />
+        <Files Include="*.hlsl" />
+        <Files Include="*.mgc" />
+        <Files Include="*.md" />
+        <Files Include="Assets\*.png" />
+        <Files Include="CMake\*.*" />
+        <Files Include="Desktop\*.*" />
+        <Files Include="Scarlett\*.*" />
+        <Files Include="XboxOne\*.*" />
+        <Files Include="media\*.png" />
+      </DistributionItemGroup>
+      <Platform>Gaming.Xbox.XboxOne.x64</Platform>
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This is an example of using the CMake cross-platform build system to build an executable with the Microsoft Game Development Kit via the Ninja generator.</Description>
+      <IncludeKitsInZip>false</IncludeKitsInZip>
+      <IncludeMediaInZip>false</IncludeMediaInZip>
+      <Owner>Philip Niemeyer-Farquharson (Philip.Farquharson@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </FolderDist>
+    <FolderDist Include="Tools\CMakeGDKExample\">
+      <DistributionItemGroup>
+        <Files Include="*.h" />
+        <Files Include="*.cpp" />
+        <Files Include="*.hlsl" />
+        <Files Include="*.mgc" />
+        <Files Include="*.md" />
+        <Files Include="*.txt" />
+        <Files Include="*.json" />
+        <Files Include="*.cmake" />
+        <Files Include="*.props" />
+        <Files Include="Assets\*.png" />
+        <Files Include="media\*.png" />
+      </DistributionItemGroup>
+      <Platform>Gaming.Xbox.XboxOne.x64</Platform>
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This is an example of using the CMake cross-platform build system to build an executable with the Microsoft Game Development Kit via the Visual Studio generator.</Description>
+      <IncludeKitsInZip>false</IncludeKitsInZip>
+      <IncludeMediaInZip>false</IncludeMediaInZip>
+      <Owner>Philip Niemeyer-Farquharson (Philip.Farquharson@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </FolderDist>
+    <FolderDist Include="Tools\CMakeXboxConsoleApp\">
+      <DistributionItemGroup>
+        <Files Include="*.cmake" />
+        <Files Include="*.cpp" />
+        <Files Include="*.md" />
+        <Files Include="*.json" />
+        <Files Include="*.txt" />
+        <Files Include="media\*.png" />
+      </DistributionItemGroup>
+      <Platform>Gaming.Xbox.XboxOne.x64</Platform>
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This is an example of using the CMake cross-platform build system to produce a 'Win32 console' application that can be executed on the Xbox hardware using the Microsoft GDK.</Description>
+      <IncludeKitsInZip>false</IncludeKitsInZip>
+      <IncludeMediaInZip>false</IncludeMediaInZip>
+      <Owner>Philip Niemeyer-Farquharson (Philip.Farquharson@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </FolderDist>
+
+    <!-- D -->
+    <SlnDist Include="Tools\DevkitTooling\DevkitTooling.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample shows how to launch CPU and GPU subprocesses such that they can be run on Xbox Devkits as tools.</Description>
+      <Owner>Philip Niemeyer-Farquharson (Philip.Farquharson@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Tools\DevkitToolLauncher\DevkitToolLauncher.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample provides an Xbox application that facilitates running processes in the devkit’s title partition for tooling purposes.</Description>
+      <Owner>Philip Niemeyer-Farquharson (Philip.Farquharson@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="Tools\DumpTool\DumpTool.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>DumpTool runs in the Xbox Game OS and generates a crash dump for another process that you specify by name as an argument to the tool.</Description>
+      <IncludeMediaInZip>false</IncludeMediaInZip>
+      <Owner>Philip Niemeyer-Farquharson (Philip.Farquharson@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+  </ItemGroup>
+
+  <!--
+       ================================================================================
+       PC-side GXDK Tools
+       ================================================================================
+  -->
+  <ItemGroup Label="PC">
+    <!-- M -->
+    <SlnDist Include="Tools\MeshletConverter\MeshletConverter.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <IncludeMediaInZip>false</IncludeMediaInZip>
+      <Description>The meshlet converter is a command line tool for use on PC.</Description>
+      <Platform>Gaming.Xbox.XboxOne.x64</Platform>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <Author>Matt Hurliman</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- P -->
+    <SlnDist Include="Tools\PlayInputMacro\PlayInputMacro.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This tool allows play back of recorded XBOM macros to a console from the command line.</Description>
+      <Owner>Brian Peek (brpeek@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+      <CodeLanguage>csharp</CodeLanguage>
+      <ReadmeFileName>readme.md</ReadmeFileName>
+    </SlnDist>
+
+    <!-- Q -->
+    <SlnDist Include="Tools\QueryingTimingCapture\QueryingTimingCapture.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample shows how to query the PIX timing capture using SQL.</Description>
+      <Owner>Kiyomasa Nakai (kiynak@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+      <CodeLanguage>csharp</CodeLanguage>
+      <ReadmeFileName>readme.md</ReadmeFileName>
+    </SlnDist>
+
+    <!-- R -->
+    <SlnDist Include="Tools\RemoteConsoleView\RemoteConsoleView.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample shows how to consume the VideoStreamingControl from a WPF app, to show console content remotely on a PC, in a similar way to the Xbox One Manager.</Description>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+      <CodeLanguage>csharp</CodeLanguage>
+      <ReadmeFileName>RemoteConsoleView\readme.md</ReadmeFileName>
+    </SlnDist>
+
+    <!-- S -->
+    <SlnDist Include="Tools\SolutionUpdater\SolutionUpdater.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample tool is provided as means to move a large number of Visual Studio Projects to the new GDKX programming model.</Description>
+      <Owner>Tad Swift (tadswift@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+      <CodeLanguage>csharp</CodeLanguage>
+      <ReadmeFileName>readme.md</ReadmeFileName>
+    </SlnDist>
+
+    <!-- W -->
+    <FolderDist Include="Tools\WPAProfiles\">
+      <DistributionItemGroup>
+        <Files Include="*.wpaProfile" />
+        <Files Include="*.md" />
+        <Files Include="media\*.png" />
+      </DistributionItemGroup>
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>These are WPA profiles for the Windows Performance Analyzer tool.</Description>
+      <IncludeKitsInZip>false</IncludeKitsInZip>
+      <IncludeMediaInZip>false</IncludeMediaInZip>
+      <Platform>Gaming.Xbox.XboxOne.x64</Platform>
+      <Owner>Philip Niemeyer-Farquharson (Philip.Farquharson@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </FolderDist>
+
+    <!-- X -->
+    <FolderDist Include="Tools\xbdepends\">
+      <DistributionItemGroup>
+        <Files Include="*.cpp" />
+        <Files Include="*.h" />
+        <Files Include="*.md" />
+        <Files Include="*.txt" />
+        <Files Include="*.json" />
+        <Files Include="media\*.png" />
+      </DistributionItemGroup>
+      <Platform>Gaming.Xbox.XboxOne.x64</Platform>
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This is a command-line for Windows 10 machines intended to help diagnose build and launch issues for GDKX titles.</Description>
+      <Owner>Philip Niemeyer-Farquharson (Philip.Farquharson@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </FolderDist>
+
+    <FolderDist Include="Tools\xbcompress\">
+      <DistributionItemGroup>
+        <Files Include="*.cpp" />
+        <Files Include="*.md" />
+        <Files Include="*.txt" />
+        <Files Include="*.json" />
+        <Files Include="media\*.png" />
+        <Files Include="..\..\..\Kits\ATGTK\ReadCompressedData.*" />
+      </DistributionItemGroup>
+      <Platform>Gaming.Xbox.XboxOne.x64</Platform>
+      <Description>This samples demonstrates the Compression API introduced with Windows 8 which is supported for all Gaming.*.x64 platforms.</Description>
+      <IncludeKitsInZip>false</IncludeKitsInZip>
+      <IncludeMediaInZip>false</IncludeMediaInZip>
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Owner>Philip Niemeyer-Farquharson (Philip.Farquharson@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </FolderDist>
+
+    <SlnDist Include="Tools\xbgamepad\xbgamepad.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This testing tool forwards XINPUT gamepad input on PC to a Xbox console.</Description>
+      <IncludeKitsInZip>false</IncludeKitsInZip>
+      <IncludeMediaInZip>false</IncludeMediaInZip>
+      <Platform>Gaming.Xbox.XboxOne.x64</Platform>
+      <Owner>Brian Peek (brpeek@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <FolderDist Include="Tools\XboxAgentServerSample\">
+      <DistributionItemGroup>
+        <Files Include="**\*.*" />
+      </DistributionItemGroup>
+      <Platform>$(Platform_Default_from_Outlet)</Platform>
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample is a functioning web service to show how to manage a set of devkits within your studio using the Xbox Devkit Agent</Description>
+      <Owner>Cameron Goodwin (Cameron.Goodwin@microsoft.com)</Owner>
+      <CodeLanguage>csharp</CodeLanguage>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </FolderDist>
+
+    <SlnDist Include="Tools\xtexconv\xtexconv.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample is a PC side command-line tool which extends the standard TexConv command-line tool for texture conversion and preparation to support Xbox offline texture tiling for use with the CreatePlacedResourceX APIs in DirectX 12.X.</Description>
+      <IncludeMediaInZip>false</IncludeMediaInZip>
+      <Platform>Gaming.Xbox.XboxOne.x64</Platform>
+      <Owner>Claude Marais (cmarais@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <SlnDist Include="Tools\RemoteIterationToolsSample\RemoteIterationToolsSample.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>A WPF sample application demonstrating how to use the Remote Iteration Client API</Description>
+      <Owner>Edward Umana (eumanawillia@microsoft.com)</Owner>
+      <Author>Edward Umana (eumanawillia@microsoft.com)</Author>
+      <CodeLanguage>csharp</CodeLanguage>
+      <ReadmeFileName>README.md</ReadmeFileName>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+  </ItemGroup>
+</Project>

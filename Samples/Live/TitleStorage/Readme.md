@@ -1,32 +1,96 @@
----
-page_type: sample
-languages:
-- cpp
-products:
-- gdk
-urlFragment: "titlestorage"
-extendedZipContent:
-- path: LICENSE
-  target: LICENSE
-- path: Kits
-  target: Kits
-- path: Media
-  target: Media
-description: "This sample demonstrates Title Storage API provided by the Microsoft Game Development Kit (GDK)."
----
+  ![](./media/image1.png)
 
-# TitleStorage
+#   Title Storage Sample
 
-For more information see: 
-- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Live/TitleStorage/readme_en-us.md)
-- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Live/TitleStorage/readme_ja-jp.md)
-- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Live/TitleStorage/readme_ko-kr.md)
-- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Live/TitleStorage/readme_zh-cn.md)
+*This sample is compatible with the Microsoft GDKX (August 2020)*
 
-## Privacy statement
+# Description
 
-For more information about Microsoft's privacy policies in general, see the [Microsoft Privacy Statement](https://privacy.microsoft.com/privacystatement/).
+This sample demonstrates Title Storage API provided by the Microsoft
+Game Development Kit (GDK). The sample includes scenarios for:
 
-## Trademarks
+-   Enumerating and downloading Global Storage data
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
+-   Enumerating, uploading, downloading and deleting Universal Storage
+    data
+
+-   Enumerating, uploading, downloading and deleting Trusted Platform
+    Storage data
+
+-   Retrieving Quota information
+
+# Building the sample
+
+If using an Xbox One devkit, set the active solution platform to `Gaming.Xbox.XboxOne.x64`.
+
+If using an Xbox Series X|S devkit, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
+
+*For more information, see* __Running samples__, *in the GDK documentation.*
+
+# Running the sample
+
+-   You will need a signed-in Xbox Live test account
+
+-   Xbox One devkit: set the console's sandbox to XDKS.1
+
+# Using the sample
+
+## 
+
+![](./media/image3.png)
+
+| Action                                 |  Gamepad                     |
+|----------------------------------------|-----------------------------|
+| Select the storage and scenario to run |  D-Pad Up/Down               |
+| Confirm the storage and run a scenario |  A Button                    |
+| View button                            |  Exit                        |
+
+The black area (list window) will display Blob Path, Blob Type, Display
+Name, Length (data size) and XUID of the uploaded user. For Global
+Storage, you can only enumerate, download and display data which is
+configured in MPC in advance. In this sample, there is data already
+uploaded to Global Storage of this product in XDKS.1. For other
+storages, in addition to those, you can also upload and delete data.
+
+# Scenarios to try
+
+-   Selecting storage
+
+    -   Pressing A button when focusing on "Select Storage Location"
+        will display the list window of the corresponding storage. You
+        can move to the list window with D-Pad and by pressing A button
+        you can download its data. By default, Global Storage data is
+        being displayed in the list window when you launch this sample.
+
+> ![](./media/image4.png)
+
+-   Uploading data
+
+    -   After selecting any storage with A button other than Global
+        Storage in "Select Storage Location", you can upload data in any
+        format by moving to "Upload" and then pressing A button.
+
+> ![](./media/image5.png)
+
+-   Downloading and deleting Title Storage data
+
+    -   When the selected storage has data, the data will be enumerated
+        in the list window automatically. By selecting any data with A
+        button, you can download and delete the data.
+
+> ![](./media/image6.png)
+
+# Update history
+
+**Initial Release**: November 2020
+
+# Privacy Statement
+
+When compiling and running a sample, the file name of the sample
+executable will be sent to Microsoft to help track sample usage. To
+opt-out of this data collection, you can remove the block of code in
+Main.cpp labeled "Sample Usage Telemetry".
+
+For more information about Microsoft's privacy policies in general, see
+the [Microsoft Privacy
+Statement](https://privacy.microsoft.com/en-us/privacystatement/).

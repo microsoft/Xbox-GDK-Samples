@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Distribute" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--
+    ================================================================================
+    Gaming.*.x64 (combo) Samples
+    ================================================================================
+  -->
+  <ItemGroup Label="Combo">
+    <!-- UnityA -->
+    <FolderDist Include="Unity\Live\UnityAchievements\">
+      <AllowStoreId>9NCDP31555HH</AllowStoreId>
+      <DistributionItemGroup>
+        <Files Include="*.md" />
+        <Files Include=".vsconfig" />
+        <Files Include="**\*.asset" />
+        <Files Include="**\*.config" />
+        <Files Include="**\*.cs" />
+        <Files Include="**\*.docx" />
+        <Files Include="**\*.dwlt" />
+        <Files Include="**\*.inputactions" />
+        <Files Include="**\*.json" />
+        <Files Include="**\*.meta" />
+        <Files Include="**\*.md" />
+        <Files Include="**\*.mgc" />
+        <Files Include="**\*.png" />
+        <Files Include="**\*.prefab" />
+        <Files Include="**\*.ttf" />
+        <Files Include="**\*.txt" />
+        <Files Include="**\*.unity" />
+      </DistributionItemGroup>
+      <Platform>Gaming.Xbox.XboxOne.x64</Platform>
+      <Outlet>$(Outlet_Unity_Public)</Outlet>
+      <Owner>Jon Martin (jonmartin@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+      <Description>This sample demonstrates using the Title-Managed Achievements C# API provided by the Unity GDK Wrapper.</Description>
+    </FolderDist>
+
+    <!-- UnityI -->
+    <FolderDist Include="Unity\Live\UnityInGameStore\">
+      <AllowStoreId>9NTL0QDWZ4FS</AllowStoreId>
+      <DistributionItemGroup>
+        <Files Include="*.md" />
+        <Files Include=".vsconfig" />
+        <Files Include="**\*.asset" />
+        <Files Include="**\*.config" />
+        <Files Include="**\*.cs" />
+        <Files Include="**\*.docx" />
+        <Files Include="**\*.dwlt" />
+        <Files Include="**\*.inputactions" />
+        <Files Include="**\*.json" />
+        <Files Include="**\*.meta" />
+        <Files Include="**\*.md" />
+        <Files Include="**\*.mgc" />
+        <Files Include="**\*.png" />
+        <Files Include="**\*.prefab" />
+        <Files Include="**\*.pri" />
+        <Files Include="**\*.resfiles" />
+        <Files Include="**\*.resw" />
+        <Files Include="**\*.ttf" />
+        <Files Include="**\*.txt" />
+        <Files Include="**\*.unity" />
+        <Files Include="**\*.xml" />
+      </DistributionItemGroup>
+      <Platform>Gaming.Xbox.XboxOne.x64</Platform>
+      <Outlet>$(Outlet_Unity_Public)</Outlet>
+      <Owner>Angela Hillier (anhillier@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+      <Description>This sample demonstrates the client-based operations used in presenting and operating an in-game storefront in Unity.</Description>
+    </FolderDist>
+
+    <!-- UnityL -->
+    <FolderDist Include="Unity\Live\UnityLeaderboardsTitleManaged\">
+      <AllowStoreId>9NNLVW0LPDBS</AllowStoreId>
+      <DistributionItemGroup>
+        <Files Include="*.md" />
+        <Files Include=".vsconfig" />
+        <Files Include="**\*.asset" />
+        <Files Include="**\*.config" />
+        <Files Include="**\*.cs" />
+        <Files Include="**\*.docx" />
+        <Files Include="**\*.dwlt" />
+        <Files Include="**\*.inputactions" />
+        <Files Include="**\*.json" />
+        <Files Include="**\*.meta" />
+        <Files Include="**\*.md" />
+        <Files Include="**\*.mgc" />
+        <Files Include="**\*.png" />
+        <Files Include="**\*.prefab" />
+        <Files Include="**\*.ttf" />
+        <Files Include="**\*.txt" />
+        <Files Include="**\*.unity" />
+      </DistributionItemGroup>
+      <Platform>Gaming.Xbox.XboxOne.x64</Platform>
+      <Outlet>$(Outlet_Unity_Public)</Outlet>
+      <Owner>Jon Martin (jonmartin@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+      <Description>The leaderboards sample demonstrates the usage of Xbox Live Leaderboards with Title-Managed stats in Unity.</Description>
+    </FolderDist>
+
+    <!-- UnityR -->
+    <FolderDist Include="Unity\Live\UnityRumble\">
+      <AllowStoreId>9PMG8FRGPQ2V</AllowStoreId>
+      <DistributionItemGroup>
+        <Files Include="*.md" />
+        <Files Include=".vsconfig" />
+        <Files Include="**\*.anim" />
+        <Files Include="**\*.asset" />
+        <Files Include="**\*.cginc" />
+        <Files Include="**\*.config" />
+        <Files Include="**\*.controller" />
+        <Files Include="**\*.cs" />
+        <Files Include="**\*.dwlt" />
+        <Files Include="**\*.inputactions" />
+        <Files Include="**\*.json" />
+        <Files Include="**\*.mat" />
+        <Files Include="**\*.md" />
+        <Files Include="**\*.mgc" />
+        <Files Include="**\*.meta" />
+        <Files Include="**\*.ogg" />
+        <Files Include="**\*.pdf" />
+        <Files Include="**\*.physicsMaterial2D" />
+        <Files Include="**\*.png" />
+        <Files Include="**\*.prefab" />
+        <Files Include="**\*.pri" />
+        <Files Include="**\*.renderTexture" />
+        <Files Include="**\*.resfiles" />
+        <Files Include="**\*.resw" />
+        <Files Include="**\*.shader" />
+        <Files Include="**\*.ttf" />
+        <Files Include="**\*.txt" />
+        <Files Include="**\*.unity" />
+        <Files Include="**\*.unitypackage" />
+        <Files Include="**\*.xml" />
+      </DistributionItemGroup>
+      <Platform>Gaming.Xbox.XboxOne.x64</Platform>
+      <Outlet>Unity</Outlet>
+      <Owner>Angela Hillier (anhillier@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+      <Description>This sample demonstrates multiplayer functionality using XblMultiplayerManager and PlayFab to build a complete end-to-end game experience in Unity.</Description>
+    </FolderDist>
+
+    <FolderDist Include="Unity\Live\UnityRumblePlayFabMultiplayer\">
+      <AllowStoreId>9P9KXF2Q0KT8</AllowStoreId>
+      <DistributionItemGroup>
+        <Files Include="*.md" />
+        <Files Include=".vsconfig" />
+        <Files Include="**\*.anim" />
+        <Files Include="**\*.asset" />
+        <Files Include="**\*.bat" />
+        <Files Include="**\*.cginc" />
+        <Files Include="**\*.config" />
+        <Files Include="**\*.controller" />
+        <Files Include="**\*.cs" />
+        <Files Include="**\*.dwlt" />
+        <Files Include="**\*.inputactions" />
+        <Files Include="**\*.json" />
+        <Files Include="**\*.mat" />
+        <Files Include="**\*.md" />
+        <Files Include="**\*.mgc" />
+        <Files Include="**\*.meta" />
+        <Files Include="**\*.ogg" />
+        <Files Include="**\*.pdf" />
+        <Files Include="**\*.physicsMaterial2D" />
+        <Files Include="**\*.png" />
+        <Files Include="**\*.prefab" />
+        <Files Include="**\*.pri" />
+        <Files Include="**\*.renderTexture" />
+        <Files Include="**\*.resfiles" />
+        <Files Include="**\*.resw" />
+        <Files Include="**\*.shader" />
+        <Files Include="**\*.ttf" />
+        <Files Include="**\*.txt" />
+        <Files Include="**\*.unity" />
+        <Files Include="**\*.unitypackage" />
+        <Files Include="**\*.xml" />
+      </DistributionItemGroup>
+      <Platform>Gaming.Xbox.XboxOne.x64</Platform>
+      <Outlet>Unity</Outlet>
+      <Owner>Angela Hillier (anhillier@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+      <Description>This sample demonstrates multiplayer functionality using XblMultiplayerActivity and PlayFab to build a complete end-to-end game experience in Unity.</Description>
+    </FolderDist>
+
+    <!-- UnityS -->
+    <FolderDist Include="Unity\Live\UnitySimpleHttpCall\">
+      <AllowStoreId>9PF9JVC354FM</AllowStoreId>
+      <DistributionItemGroup>
+        <Files Include="*.md" />
+        <Files Include=".vsconfig" />
+        <Files Include="**\*.asset" />
+        <Files Include="**\*.config" />
+        <Files Include="**\*.cs" />
+        <Files Include="**\*.docx" />
+        <Files Include="**\*.dwlt" />
+        <Files Include="**\*.inputactions" />
+        <Files Include="**\*.json" />
+        <Files Include="**\*.meta" />
+        <Files Include="**\*.md" />
+        <Files Include="**\*.mgc" />
+        <Files Include="**\*.png" />
+        <Files Include="**\*.prefab" />
+        <Files Include="**\*.ttf" />
+        <Files Include="**\*.txt" />
+        <Files Include="**\*.unity" />
+      </DistributionItemGroup>
+      <Platform>Gaming.Xbox.XboxOne.x64</Platform>
+      <Outlet>$(Outlet_Unity_Public)</Outlet>
+      <Owner>Angela Hillier (anhillier@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+      <Description>This sample demonstrates usage of Xbox Live Http Calls using Unity.</Description>
+    </FolderDist>
+
+    <FolderDist Include="Unity\Live\UnitySimpleMPSD\">
+      <AllowStoreId>9N659P9449HR</AllowStoreId>
+      <DistributionItemGroup>
+        <Files Include="*.md" />
+        <Files Include=".vsconfig" />
+        <Files Include="**\*.anim" />
+        <Files Include="**\*.asset" />
+        <Files Include="**\*.config" />
+        <Files Include="**\*.controller" />
+        <Files Include="**\*.cs" />
+        <Files Include="**\*.dwlt" />
+        <Files Include="**\*.inputactions" />
+        <Files Include="**\*.json" />
+        <Files Include="**\*.mat" />
+        <Files Include="**\*.md" />
+        <Files Include="**\*.meta" />
+        <Files Include="**\*.mgc" />
+        <Files Include="**\*.ogg" />
+        <Files Include="**\*.physicsMaterial2D" />
+        <Files Include="**\*.png" />
+        <Files Include="**\*.prefab" />
+        <Files Include="**\*.pri" />
+        <Files Include="**\*.renderTexture" />
+        <Files Include="**\*.resfiles" />
+        <Files Include="**\*.resw" />
+        <Files Include="**\*.shader" />
+        <Files Include="**\*.ttf" />
+        <Files Include="**\*.txt" />
+        <Files Include="**\*.unity" />
+        <Files Include="**\*.xml" />
+      </DistributionItemGroup>
+      <Platform>Gaming.Xbox.XboxOne.x64</Platform>
+      <Outlet>$(Outlet_Unity_Public)</Outlet>
+      <Owner>Angela Hillier (anhillier@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+      <Description>This sample demonstrates how to use MPSD to implement sessions and matchmaking for Unity games.</Description>
+    </FolderDist>
+
+    <FolderDist Include="Unity\System\UnitySimplePLM\">
+      <AllowStoreId>9NGDSVRB26W5</AllowStoreId>
+      <DistributionItemGroup>
+        <Files Include="*.md" />
+        <Files Include=".vsconfig" />
+        <Files Include="**\*.asset" />
+        <Files Include="**\*.config" />
+        <Files Include="**\*.cs" />
+        <Files Include="**\*.docx" />
+        <Files Include="**\*.dwlt" />
+        <Files Include="**\*.inputactions" />
+        <Files Include="**\*.json" />
+        <Files Include="**\*.meta" />
+        <Files Include="**\*.md" />
+        <Files Include="**\*.mgc" />
+        <Files Include="**\*.png" />
+        <Files Include="**\*.prefab" />
+        <Files Include="**\*.ttf" />
+        <Files Include="**\*.txt" />
+        <Files Include="**\*.unity" />
+      </DistributionItemGroup>
+      <Platform>Gaming.Xbox.XboxOne.x64</Platform>
+      <Outlet>$(Outlet_Unity_Public)</Outlet>
+      <Owner>Jon Martin (jonmartin@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+      <Description>This sample shows behavior of the Process Lifetime Management (PLM) events on Xbox in Unity.</Description>
+    </FolderDist>
+
+    <FolderDist Include="Unity\Live\UnitySimpleWebSockets\">
+      <AllowStoreId>9PF9JVC354FM</AllowStoreId>
+      <DistributionItemGroup>
+        <Files Include="*.md" />
+        <Files Include=".vsconfig" />
+        <Files Include="**\*.asset" />
+        <Files Include="**\*.config" />
+        <Files Include="**\*.cs" />
+        <Files Include="**\*.docx" />
+        <Files Include="**\*.dwlt" />
+        <Files Include="**\*.inputactions" />
+        <Files Include="**\*.json" />
+        <Files Include="**\*.meta" />
+        <Files Include="**\*.md" />
+        <Files Include="**\*.mgc" />
+        <Files Include="**\*.png" />
+        <Files Include="**\*.prefab" />
+        <Files Include="**\*.ttf" />
+        <Files Include="**\*.txt" />
+        <Files Include="**\*.unity" />
+      </DistributionItemGroup>
+      <Platform>Gaming.Xbox.XboxOne.x64</Platform>
+      <Outlet>$(Outlet_Unity_Public)</Outlet>
+      <Owner>Angela Hillier (anhillier@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+      <Description>This sample demonstrates usage of Http Client Web Sockets using the Unity game engine.</Description>
+    </FolderDist>
+
+    <FolderDist Include="Unity\Live\UnitySocialManager\">
+      <AllowStoreId>9P99RMP3BVG3</AllowStoreId>
+      <DistributionItemGroup>
+        <Files Include="*.md" />
+        <Files Include=".vsconfig" />
+        <Files Include="**\*.asset" />
+        <Files Include="**\*.config" />
+        <Files Include="**\*.cs" />
+        <Files Include="**\*.docx" />
+        <Files Include="**\*.dwlt" />
+        <Files Include="**\*.inputactions" />
+        <Files Include="**\*.json" />
+        <Files Include="**\*.meta" />
+        <Files Include="**\*.md" />
+        <Files Include="**\*.mgc" />
+        <Files Include="**\*.png" />
+        <Files Include="**\*.prefab" />
+        <Files Include="**\*.ttf" />
+        <Files Include="**\*.txt" />
+        <Files Include="**\*.unity" />
+      </DistributionItemGroup>
+      <Platform>Gaming.Xbox.XboxOne.x64</Platform>
+      <Outlet>$(Outlet_Unity_Public)</Outlet>
+      <Owner>Jon Martin (jonmartin@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+      <Description>This sample demonstrates usage of Xbox Live Social Manager using the Unity game engine.</Description>
+    </FolderDist>
+
+  </ItemGroup>
+
+  <!--
+    ================================================================================
+    Scarlett/XboxOne Samples
+    ================================================================================
+  -->
+  <ItemGroup Label="Console">
+      <!-- UnityA -->
+    <FolderDist Include="Unity\Tools\UnityAssetWorkflow_Xbox\">
+      <DistributionItemGroup>
+        <Files Include="*.md" />
+        <Files Include="**\*.asmdef" />
+        <Files Include="**\*.asset" />
+        <Files Include="**\*.bin" />
+        <Files Include="**\*.bundle" />
+        <Files Include="**\*.cginc" />
+        <Files Include="**\*.config" />
+        <Files Include="**\*.cs" />
+        <Files Include="**\*.dll" />
+        <Files Include="**\*.dwlt" />
+        <Files Include="**\*.inputactions" />
+        <Files Include="**\*.json" />
+        <Files Include="**\*.mat" />
+        <Files Include="**\*.meta" />
+        <Files Include="**\*.md" />
+        <Files Include="**\*.mgc" />
+        <Files Include="**\*.pdf" />
+        <Files Include="**\*.png" />
+        <Files Include="**\*.prefab" />
+        <Files Include="**\*.shader" />
+        <Files Include="**\*.ttf" />
+        <Files Include="**\*.txt" />
+        <Files Include="**\*.unity" />
+        <Files Include="**\*.xml" />
+      </DistributionItemGroup>
+      <Platform>Gaming.Xbox.XboxOne.x64</Platform>
+      <Outlet>Unity</Outlet>
+      <Owner>Angela Hillier (anhillier@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+      <Description>This sample demonstrates usage of Xbox console resources and tooling APIs available to GDK developers which can facilitate quick iteration of game assets in Unity.</Description>
+    </FolderDist>
+
+  </ItemGroup>
+
+  <!--
+    ================================================================================
+    Desktop Samples
+    ================================================================================
+  -->
+  <ItemGroup Label="PC">
+    <!-- UnityH -->
+    <FolderDist Include="Unity\System\UnityHandheldBestPractices\">
+      <DistributionItemGroup>
+        <Files Include="*.md" />
+        <Files Include=".vsconfig" />
+        <Files Include="**\*.asset" />
+        <Files Include="**\*.config" />
+        <Files Include="**\*.cpp" />
+        <Files Include="**\*.cs" />
+        <Files Include="**\*.docx" />
+        <Files Include="**\*.dll" />
+        <Files Include="**\*.dwlt" />
+        <Files Include="**\*.h" />
+        <Files Include="**\*.json" />
+        <Files Include="**\*.meta" />
+        <Files Include="**\*.md" />
+        <Files Include="**\*.png" />
+        <Files Include="**\*.prefab" />
+        <Files Include="**\*.sln" />
+        <Files Include="**\*.ttf" />
+        <Files Include="**\*.txt" />
+        <Files Include="**\*.unity" />
+        <Files Include="**\*.vcxproj" />
+        <Files Include="**\*.vcxproj.filters" />
+      </DistributionItemGroup>
+      <Platform>Gaming.Desktop.x64</Platform>
+      <Outlet>$(Outlet_Unity_Public)</Outlet>
+      <Owner>Jon Martin (jonmartin@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+      <Description>This sample demonstrates the best practices for running a title on handheld devices in Unity.</Description>
+    </FolderDist>
+
+    <SlnDist Include="Unity\System\HandheldHelper\HandheldHelper.sln">
+        <Outlet>$(Outlet_Unity_Public)</Outlet>
+        <Owner>Jon Martin (jonmartin@microsoft.com)</Owner>
+        <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+        <Description>Helper project for UnityHandheldBestPractices.</Description>
+    </SlnDist>
+
+  </ItemGroup>
+</Project>

@@ -1,0 +1,817 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>df0f35a8-8bf7-4f0d-bb99-b48a24ac0749</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>c39fec31-a852-4669-89c1-64858802f7a5</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>83cc3340-7ec0-450e-b8a8-523feed02632</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>ed703d17-a5ac-4b51-8cf0-9b38b3ccbdcf</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media">
+      <UniqueIdentifier>{cf83d327-5773-43cf-bdaa-25116703b88d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media\Meshes">
+      <UniqueIdentifier>{078910ce-a21c-4c01-a17a-430a5f0187a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media\Textures">
+      <UniqueIdentifier>{381bba2c-3fbb-4670-b6cc-000a8a550526}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{e0d343ef-ba86-4025-94df-98dbcbbf8ac2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\DirectionalBlur">
+      <UniqueIdentifier>{e2950295-fb8d-4d40-bf83-182e27e39a06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\LitWithShadow">
+      <UniqueIdentifier>{7fdd7194-5622-499d-b5cd-c4f9ae5ff8b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Resolve">
+      <UniqueIdentifier>{1fe741f1-36b9-444d-b0c9-175d23f1cc01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media\Fonts">
+      <UniqueIdentifier>{fdda724b-8362-472d-818d-40c7c6d26808}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="ShadowMapSample.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="Utils.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerHelp.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ReadData.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\OrbitCamera.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FlyCamera.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FreeCamera.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\PerformanceTimers.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\PerformanceTimersXbox.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\DeveloperMode.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="ShadowMapSample.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="..\..\..\Kits\ATGTK\ControllerHelp.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\OrbitCamera.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\FlyCamera.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\FreeCamera.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\PerformanceTimers.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\PerformanceTimersXbox.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\Common.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\PSDirectionalBlur\PSDirectionalBlur.hlsli">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </None>
+    <None Include="Shaders\PSLitWithShadow\PSLitWithShadow.hlsli">
+      <Filter>Shaders\LitWithShadow</Filter>
+    </None>
+    <None Include="Shaders\PSResolve\PSResolve.hlsli">
+      <Filter>Shaders\Resolve</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Media\Fonts</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+      <Filter>Media\Fonts</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Cathedral\cathedral.sdkmesh">
+      <Filter>Media\Meshes</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Cathedral\cathedral_high.sdkmesh">
+      <Filter>Media\Meshes</Filter>
+    </None>
+    <None Include="Scripts\Desktop.PostBuild.bat" />
+    <None Include="..\..\NuGet.config" />
+    <None Include="readme.md" />
+    <None Include="readme_ja-jp.md" />
+    <None Include="readme_ko-kr.md" />
+    <None Include="readme_zh-cn.md" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\GSFullScreenTriangle.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSLightSrc.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSUnlit.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\VSMesh.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\VSNull.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSResolve\PSResolveExponential.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSResolve\PSResolveExponentialVariance.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSResolve\PSResolveVariance.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSLitWithShadow\PSLitWithShadowExponential.hlsl">
+      <Filter>Shaders\LitWithShadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSLitWithShadow\PSLitWithShadowExponentialVariance.hlsl">
+      <Filter>Shaders\LitWithShadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSLitWithShadow\PSLitWithShadowPCF2x2GatherCmpGaussian.hlsl">
+      <Filter>Shaders\LitWithShadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSLitWithShadow\PSLitWithShadowPCF2x2GatherCmpSquare.hlsl">
+      <Filter>Shaders\LitWithShadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSLitWithShadow\PSLitWithShadowPCF2x2SampleCmpStep1Gaussian.hlsl">
+      <Filter>Shaders\LitWithShadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSLitWithShadow\PSLitWithShadowPCF2x2SampleCmpStep1Square.hlsl">
+      <Filter>Shaders\LitWithShadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSLitWithShadow\PSLitWithShadowPCF2x2SampleCmpStep2Gaussian.hlsl">
+      <Filter>Shaders\LitWithShadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSLitWithShadow\PSLitWithShadowPCF2x2SampleCmpStep2Square.hlsl">
+      <Filter>Shaders\LitWithShadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSLitWithShadow\PSLitWithShadowPCF4x4GatherCmpGaussian.hlsl">
+      <Filter>Shaders\LitWithShadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSLitWithShadow\PSLitWithShadowPCF4x4GatherCmpSquare.hlsl">
+      <Filter>Shaders\LitWithShadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSLitWithShadow\PSLitWithShadowPCF4x4SampleCmpStep1Gaussian.hlsl">
+      <Filter>Shaders\LitWithShadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSLitWithShadow\PSLitWithShadowPCF4x4SampleCmpStep1Square.hlsl">
+      <Filter>Shaders\LitWithShadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSLitWithShadow\PSLitWithShadowPCF4x4SampleCmpStep2Gaussian.hlsl">
+      <Filter>Shaders\LitWithShadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSLitWithShadow\PSLitWithShadowPCF4x4SampleCmpStep2Square.hlsl">
+      <Filter>Shaders\LitWithShadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSLitWithShadow\PSLitWithShadowPCF6x6GatherCmpGaussian.hlsl">
+      <Filter>Shaders\LitWithShadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSLitWithShadow\PSLitWithShadowPCF6x6GatherCmpSquare.hlsl">
+      <Filter>Shaders\LitWithShadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSLitWithShadow\PSLitWithShadowPCF6x6SampleCmpStep1Gaussian.hlsl">
+      <Filter>Shaders\LitWithShadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSLitWithShadow\PSLitWithShadowPCF6x6SampleCmpStep1Square.hlsl">
+      <Filter>Shaders\LitWithShadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSLitWithShadow\PSLitWithShadowPCF6x6SampleCmpStep2Gaussian.hlsl">
+      <Filter>Shaders\LitWithShadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSLitWithShadow\PSLitWithShadowPCF6x6SampleCmpStep2Square.hlsl">
+      <Filter>Shaders\LitWithShadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSLitWithShadow\PSLitWithShadowPCF8x8GatherCmpGaussian.hlsl">
+      <Filter>Shaders\LitWithShadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSLitWithShadow\PSLitWithShadowPCF8x8GatherCmpSquare.hlsl">
+      <Filter>Shaders\LitWithShadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSLitWithShadow\PSLitWithShadowPCF8x8SampleCmpStep1Gaussian.hlsl">
+      <Filter>Shaders\LitWithShadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSLitWithShadow\PSLitWithShadowPCF8x8SampleCmpStep1Square.hlsl">
+      <Filter>Shaders\LitWithShadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSLitWithShadow\PSLitWithShadowPCF8x8SampleCmpStep2Gaussian.hlsl">
+      <Filter>Shaders\LitWithShadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSLitWithShadow\PSLitWithShadowPCF8x8SampleCmpStep2Square.hlsl">
+      <Filter>Shaders\LitWithShadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSLitWithShadow\PSLitWithShadowPoint.hlsl">
+      <Filter>Shaders\LitWithShadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSLitWithShadow\PSLitWithShadowVariance.hlsl">
+      <Filter>Shaders\LitWithShadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurExponentialVarianceX1Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurExponentialVarianceX1Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurExponentialVarianceX2Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurExponentialVarianceX2Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurExponentialVarianceX4Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurExponentialVarianceX4Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurExponentialVarianceX6Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurExponentialVarianceX6Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurExponentialVarianceX8Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurExponentialVarianceX8Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurExponentialX1Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurExponentialX1Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurExponentialX2Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurExponentialX2Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurExponentialX4Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurExponentialX4Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurExponentialX6Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurExponentialX6Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurExponentialX8Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurExponentialX8Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat2X1Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat2X1Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat2X2Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat2X2Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat2X4Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat2X4Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat2X6Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat2X6Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat2X8Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat2X8Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat2Y1Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat2Y1Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat2Y2Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat2Y2Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat2Y4Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat2Y4Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat2Y6Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat2Y6Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat2Y8Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat2Y8Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat4X1Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat4X1Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat4X2Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat4X2Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat4X4Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat4X4Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat4X6Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat4X6Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat4X8Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat4X8Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat4Y1Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat4Y1Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat4Y2Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat4Y2Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat4Y4Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat4Y4Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat4Y6Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat4Y6Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat4Y8Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloat4Y8Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloatX1Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloatX1Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloatX2Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloatX2Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloatX4Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloatX4Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloatX6Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloatX6Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloatX8Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloatX8Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloatY1Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloatY1Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloatY2Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloatY2Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloatY4Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloatY4Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloatY6Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloatY6Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloatY8Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurFloatY8Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurVarianceX1Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurVarianceX1Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurVarianceX2Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurVarianceX2Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurVarianceX4Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurVarianceX4Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurVarianceX6Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurVarianceX6Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurVarianceX8Gaussian.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PSDirectionalBlur\PSDirectionalBlurVarianceX8Square.hlsl">
+      <Filter>Shaders\DirectionalBlur</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\cathedral_end_no.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\cathedral_end_normals.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\cathedral_end_occlusion.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\dias_pedastal_no.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\dias_pedastal_occlusion.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\dome_connector_no.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\dome_connector_normals.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\dome_connector_occlusion.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\dome_dias_no.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\dome_dias_normals.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\dome_dias_occlusion.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\dome_plug_no.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\dome_plug_normals.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\dome_plug_occlusion.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\dome_window_border_no.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\dome_window_border_normals.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\dome_window_border_occlusion.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\dome_window_normals.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\dome1_normals.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\dome2_normals.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\dome3_normals.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\dome4_normals.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\gargoyle_no.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\gargoyle_normals_working.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\gargoyle_occlusion_working.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\glass_pane.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\gothic_window_diffuse.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\gothic_window_diffuse_1024.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\gothic_window_normals.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\gothic_window_normals_1024.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\large_dome_pillar_no.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\large_dome_pillar_normal.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\large_dome_pillar_occlusion.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\large_dome1_no.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\large_dome1_occlusion.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\large_dome2_no.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\large_dome2_occlusion.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\large_dome3_no.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\large_dome3_occlusion.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\large_dome4_no.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\large_dome4_occlusion.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\marble_tile_normals.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\marble_tiles_diffuse.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\pedastal_normals.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\pillar_end_connector_no.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\pillar_end_connector_normals.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\pillar_end_connector_occlusion.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\pillar_no.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\pillar_normals.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\pillar_occlusion.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\pillar_support_no.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\pillar_support_normals.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\pillar_support_occlusion.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\pillar_supportocclusion.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\pillar_wall_middle_no.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\pillar_wall_middle_normals.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\pillar_wall_middle_occlusion.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\pillar_wall_section_no.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\pillar_wall_section_normals.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\pillar_wall_section_occlusion.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\round_window_no.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\round_window_occlusion.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\rug_tile.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\rug_tile_normals.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\small_dome_no.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\small_dome_normals.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\small_dome_occlusion.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\top_dome1_no.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\top_dome1_normals.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\top_dome1_occlusion.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\top_dome2.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\top_dome2_no.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\top_dome2_normals.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\top_dome3_no.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\top_dome3_normals.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\top_dome3_occlusion.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\top_dome4_no.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\top_dome4_normals.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\top_dome4_occlusion.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\window_wall_section_no.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\window_wall_section_normals.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cathedral\window_wall_section_occlusion.dds">
+      <Filter>Media\Textures</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

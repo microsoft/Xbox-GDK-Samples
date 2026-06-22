@@ -1,0 +1,25 @@
+{
+  "prefab": 
+  {
+    "id": "RuntimeLogEntryPanel",
+    "classId": "Panel",
+    "styleId": "invisible_panel_style",
+    "positioningAnchor": [ "left", "top" ],
+    "position": [ 0, 0 ],
+    "sizingAnchor": [ "left", "top" ],
+    "size": [1880, 36],
+    "subElements":
+    [
+      {
+        "classId": "StaticText",
+        "id": "RuntimeLogEntryText",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "text": "Log Text Value",
+        "styleId": "entry_text_style",
+        "size": [1860, 36],
+        "position": [10, 0]
+      }
+    ]
+  }
+}

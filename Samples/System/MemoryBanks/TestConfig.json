@@ -1,0 +1,141 @@
+{
+	"Configuration":
+	{
+		"Version": 1,
+		"ExcludedPlatforms": [ ]
+	},
+	"TestActions":
+	[
+		{
+			"Frame": 400,
+			"Action": "Input",
+			"InputParams":
+			{
+ 				"Inputs": [ "A" ],
+				"State": "Press"
+			}
+		},
+		{
+			"Frame": 450,
+			"Action": "Input",
+			"InputParams":
+			{
+				"Inputs": [ "B" ],
+				"State": "Press"
+			}
+		},
+		{
+			"Frame": 500,
+			"Action": "Input",
+			"InputParams":
+			{
+				"Inputs": [ "X" ],
+				"State": "Press"
+			}
+		},
+		{
+			"Frame": 550,
+			"Action": "Input",
+			"InputParams":
+			{
+				"Inputs": [ "Y" ],
+				"State": "Press"
+			}
+		},
+		{
+			"Frame": 600,
+			"Action": "Input",
+			"InputParams":
+			{
+				"Inputs": [ "LB" ],
+				"State": "Press"
+			}
+		},
+		{
+			"Frame": 700,
+			"Action": "Screenshot",
+			"ScreenshotParams":
+			{
+				"Filename": "screenshot1.png"
+			}
+		},
+		{
+			"Frame": 800,
+			"Action": "Input",
+			"InputParams":
+			{
+				"Inputs": [ "View" ],
+				"State": "Press"
+			}
+		}
+
+	],
+	"TestPostActions":
+	[
+		{
+			"Action": "OCRStringMatch",
+			"OCRParams":
+			{
+				"Filename": "screenshot1.png"
+			},
+			"StringMatchParams":
+			{
+				"Type": "RegEx",
+				"MatchString": "Random Address Test: ?success",
+				"Success": true
+			}
+		},
+		{
+			"Action": "OCRStringMatch",
+			"OCRParams":
+			{
+				"Filename": "screenshot1.png"
+			},
+			"StringMatchParams":
+			{
+				"Type": "RegEx",
+				"MatchString": "Fixed Address Test: ?success",
+				"Success": true
+			}
+		},
+		{
+			"Action": "OCRStringMatch",
+			"OCRParams":
+			{
+				"Filename": "screenshot1.png"
+			},
+			"StringMatchParams":
+			{
+				"Type": "RegEx",
+				"MatchString": "Bank Switching Test: ?success",
+				"Success": true
+			}
+		},
+		{
+			"Action": "OCRStringMatch",
+			"OCRParams":
+			{
+				"Filename": "screenshot1.png"
+			},
+			"StringMatchParams":
+			{
+				"Type": "RegEx",
+				"MatchString": "Shared Address Test: ?success",
+				"Success": true
+			}
+		},
+		{
+			"Action": "OCRStringMatch",
+			"OCRParams":
+			{
+				"Filename": "screenshot1.png"
+			},
+			"StringMatchParams":
+			{
+				"Type": "RegEx",
+				"MatchString": "Read Only Address Test: ?success",
+				"Success": true
+			}
+		}
+	]
+}

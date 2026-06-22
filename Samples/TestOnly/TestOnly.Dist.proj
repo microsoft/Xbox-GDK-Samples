@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Distribute" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--
+       ================================================================================
+       Gaming.Xbox.*.x64 Automated Testing Samples (Will be removed in the future)
+       ================================================================================
+  -->
+  <ItemGroup Label="Console">
+    <!-- D -->
+    <SlnDist Include="TestOnly\DLISample\DLISample.sln">
+      <Outlet>TestOnly</Outlet>
+      <Owner>Brian Peek (Brian.Peek@microsoft.com)</Owner>
+      <Author>Jeff Ballard</Author>
+    </SlnDist>
+
+    <!-- G -->
+    <SlnDist Include="TestOnly\GltfRender\GltfRender.sln">
+      <Outlet>TestOnly</Outlet>
+      <Owner>Jennifer Chandler (jennic@microsoft.com)</Owner>
+    </SlnDist>
+
+    <!-- S -->
+    <SlnDist Include="TestOnly\SimpleXAPU\SimpleXAPU.sln">
+      <Outlet>TestOnly</Outlet>
+      <Owner>Robert Ridihalgh (robertr@microsoft.com)</Owner>
+      <Author>Jeff Ballard</Author>
+    </SlnDist>
+  </ItemGroup>
+</Project>

@@ -1,32 +1,49 @@
----
-page_type: sample
-languages:
-- cpp
-products:
-- gdk
-urlFragment: "simplewasapicapture"
-extendedZipContent:
-- path: LICENSE
-  target: LICENSE
-- path: Kits
-  target: Kits
-- path: Media
-  target: Media
-description: "This sample demonstrates how to capture audio using WASAPI on Xbox."
----
+# Simple WASAPI Capture Sample
 
-# SimpleWASAPICapture
+*This sample is compatible with the Microsoft Game Development Kit (June
+2020)*
 
-For more information see: 
-- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Audio/SimpleWASAPICapture/readme_en-us.md)
-- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Audio/SimpleWASAPICapture/readme_ja-jp.md)
-- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Audio/SimpleWASAPICapture/readme_ko-kr.md)
-- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Audio/SimpleWASAPICapture/readme_zh-cn.md)
+# Description
 
-## Privacy statement
+This sample demonstrates how to capture audio using WASAPI on Xbox One.
 
-For more information about Microsoft's privacy policies in general, see the [Microsoft Privacy Statement](https://privacy.microsoft.com/privacystatement/).
+![Sample Screenshot](./media/image1.png)
 
-## Trademarks
+# Building the sample
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
+If using an Xbox One devkit, set the active solution platform to `Gaming.Xbox.XboxOne.x64`.
+
+If using Project Scarlett, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
+
+*For more information, see* __Running samples__, *in the GDK documentation.*
+
+# Using the sample
+
+Use a gamepad to select a capture device. The sample automatically uses
+the default audio rendere. **Note that there is no sample rate
+conversion between the capture and render, so playback will not sound
+correct unless the rates match.**
+
+# Implementation notes
+
+This sample demonstrates how to use WASAPI to capture audio. The samples
+captured are placed in a circular buffer that is then used for rendering
+samples. This example also uses a shared WASAPI instance between the
+renderer and capture. For a more advanced usage of WASAPI, please see
+the [Windows WASAPI
+Sample](https://code.msdn.microsoft.com/windowsapps/Windows-Audio-Session-22dcab6b)
+
+# Update history
+
+Initial release May 2019
+
+# Privacy statement
+
+When compiling and running a sample, the file name of the sample
+executable will be sent to Microsoft to help track sample usage. To
+opt-out of this data collection, you can remove the block of code in
+Main.cpp labeled "Sample Usage Telemetry".
+
+For more information about Microsoft's privacy policies in general, see
+the [Microsoft Privacy
+Statement](https://privacy.microsoft.com/en-us/privacystatement/).

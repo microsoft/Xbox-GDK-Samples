@@ -1,0 +1,45 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XboxAgentServerSample", "XboxAgentServerSample\XboxAgentServerSample.csproj", "{AEBFAB4B-B7A3-4865-8629-A76C91C89760}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ED2E4BC5-CDF7-4BA5-B7F0-D959D9898212} = {ED2E4BC5-CDF7-4BA5-B7F0-D959D9898212}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xbox.AgentProtocol", "Xbox.AgentProtocol\Xbox.AgentProtocol.csproj", "{03807F0C-833E-49C8-BCBF-D5FA193C4902}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.SimpleXboxSecureTokens", "Microsoft.SimpleXboxSecureTokens\Microsoft.SimpleXboxSecureTokens.csproj", "{ED2E4BC5-CDF7-4BA5-B7F0-D959D9898212}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6EBE4601-A9F1-4BA4-9ACE-463F9ED43A9F}"
+	ProjectSection(SolutionItems) = preProject
+		readme.md = readme.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AEBFAB4B-B7A3-4865-8629-A76C91C89760}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEBFAB4B-B7A3-4865-8629-A76C91C89760}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEBFAB4B-B7A3-4865-8629-A76C91C89760}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEBFAB4B-B7A3-4865-8629-A76C91C89760}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03807F0C-833E-49C8-BCBF-D5FA193C4902}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03807F0C-833E-49C8-BCBF-D5FA193C4902}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03807F0C-833E-49C8-BCBF-D5FA193C4902}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03807F0C-833E-49C8-BCBF-D5FA193C4902}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED2E4BC5-CDF7-4BA5-B7F0-D959D9898212}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED2E4BC5-CDF7-4BA5-B7F0-D959D9898212}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED2E4BC5-CDF7-4BA5-B7F0-D959D9898212}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED2E4BC5-CDF7-4BA5-B7F0-D959D9898212}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {903762D2-896D-4277-9AD5-BE4311119EBF}
+	EndGlobalSection
+EndGlobal

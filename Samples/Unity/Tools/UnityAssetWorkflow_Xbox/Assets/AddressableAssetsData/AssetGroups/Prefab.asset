@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Prefab
+  m_EditorClassIdentifier: 
+  m_GroupName: Prefab
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 6adcfc0e77a6b454aa100765692f6178
+  m_SerializeEntries:
+  - m_GUID: 85abe7d99fcc2244fb50946bbcacd9bc
+    m_Address: Assets/Assets/basic_material.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4058b723a2f2cef4dbf79a1ea4e88201
+    m_Address: Assets/Assets/xbox.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3b69410e247fb3a4c97d7e0a68ad4c5e
+    m_Address: Assets/Assets/RenderedAsset.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b6ec75850dfb1d54dab45e1eceec0497
+    m_Address: Assets/Assets/basic_shader.shader
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: a2076f0e796017547b5b2cb9c056edfc, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 9e34b5682c245d445828e32262fcb41a, type: 2}
+    - {fileID: 11400000, guid: e657a47f49f89dc4fae151844b3e66d5, type: 2}

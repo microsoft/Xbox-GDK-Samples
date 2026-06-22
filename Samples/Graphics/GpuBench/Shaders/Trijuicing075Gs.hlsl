@@ -1,0 +1,7 @@
+//--------------------------------------------------------------------------------------
+// Advanced Technology Group (ATG)
+// Copyright (C) Microsoft Corporation. All rights reserved.
+//--------------------------------------------------------------------------------------
+
+#define FETCH_LOD 0.75f
+#include "TrijuicingGs.hlsli"

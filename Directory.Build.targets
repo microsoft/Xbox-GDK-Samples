@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <!-- Exclude the extracted GDK SDK folders, third-party AMDTK code, and NuGet packages from code analysis since they contain third-party headers we cannot modify.
+         CAExcludePath must be a PropertyGroup property (not ClCompile item metadata) because Microsoft.CodeAnalysis.Targets
+         reads $(CAExcludePath) and passes it to the analyzer via SetEnv.
+         We use $(_ExtractedMicrosoftGDK) and $(_ExtractedWindowsSDKDir) because these BWOI properties are passed to
+         individual project builds via GXDKBuildProperties, whereas $(ExtractedFolder) is only available in the build
+         orchestrator context (ATGBuild_gxdk.targets) and is empty during individual .vcxproj compilation. -->
+    <CAExcludePath>$(ExtractedFolder);$(_ExtractedMicrosoftGDK);$(_ExtractedWindowsSDKDir);$(MSBuildThisFileDirectory)Kits\AMDTK\;$(MSBuildThisFileDirectory)Kits\DirectXTK12\;$(MSBuildThisFileDirectory)Samples\packages\;$(CAExcludePath)</CAExcludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(PlatformToolset)'=='clangcl'">
+    <EnableMicrosoftCodeAnalysis>false</EnableMicrosoftCodeAnalysis>
+  </PropertyGroup>
+  <!-- Suppress all compiler warnings for third-party AMDTK code we cannot modify -->
+  <ItemDefinitionGroup Condition="$(MSBuildProjectDirectory.Contains('Kits\AMDTK'))">
+    <ClCompile>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <!-- Import vcpkg.targets from VcpkgRoot detected in Directory.Build.props.
+       VCPkgLocalAppDataDisabled (set in .props) prevents stale vcpkg-integrate-install hooks. -->
+  <Import Condition="'$(VcpkgRoot)' != '' AND Exists('$(VcpkgRoot)\scripts\buildsystems\msbuild\vcpkg.targets')" Project="$(VcpkgRoot)\scripts\buildsystems\msbuild\vcpkg.targets" />
+  <!-- Emit a clear error when a project needs vcpkg but no vcpkg installation was found.
+       Without this, the build fails with cryptic 'Cannot open include file' errors. -->
+  <Target Name="_CheckVcpkgAvailable"
+          BeforeTargets="ClCompile"
+          Condition="'$(VcpkgRoot)' == '' AND ('$(VcpkgEnabled)' == 'true' OR '$(VcpkgEnableManifest)' == 'true')">
+    <Error Text="This project requires vcpkg but no vcpkg installation was found. Install the 'vcpkg package manager' component in the Visual Studio Installer, or set the VCPKG_ROOT environment variable to a standalone vcpkg installation." />
+  </Target>
+</Project>

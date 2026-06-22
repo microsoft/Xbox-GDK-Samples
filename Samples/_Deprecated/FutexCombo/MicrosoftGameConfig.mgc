@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Game configVersion="0">
+  <!-- Version "1" is supported by March 2022 GDK or later -->
+
+  <Identity Name="EB864136-F8FF-4E66-B321-D6D3BB5B7E3B"
+            Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+            Version="1.0.0.0" />
+
+  <ExecutableList>
+    <Executable Name="FutexCombo_xs.exe"
+                TargetDeviceFamily="Scarlett"
+                Id="Game" />
+    <Executable Name="FutexCombo_x.exe"
+                TargetDeviceFamily="XboxOne"
+                Id="Game" />
+    <Executable Name="FutexCombo_desktop.exe"
+                TargetDeviceFamily="PC"
+                Id="Game" />
+  </ExecutableList>
+
+  <ShellVisuals DefaultDisplayName="FutexCombo"
+                PublisherDisplayName="Xbox Advanced Technology Group"
+                StoreLogo="Assets\StoreLogo.png"
+                Square150x150Logo="Assets\Logo.png"
+                Square44x44Logo="Assets\SmallLogo.png"
+                Square480x480Logo="Assets\LargeLogo.png"
+                Description="FutexCombo"
+                ForegroundText="dark"
+                BackgroundColor="#000000"
+                SplashScreenImage="Assets\SplashScreen.png" />
+
+  <VirtualMachine>
+    <XboxAnacondaTitleMemory>Standard</XboxAnacondaTitleMemory>
+    <SMTEnabled>false</SMTEnabled>
+  </VirtualMachine>
+</Game>

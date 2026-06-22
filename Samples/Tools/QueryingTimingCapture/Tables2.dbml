@@ -1,0 +1,51 @@
+Table ContextSwitch
+{
+    Core INTEGER
+    Timestamp INTEGER
+    FromProcThreadId INTEGER
+    ToProcThreadId INTEGER
+    ReadyThreadId INTEGER
+    FromThreadPriority INTEGER
+    ToThreadPriority INTEGER
+    FromThreadWaitReason INTEGER
+}
+
+Table ReadyThread
+{
+    Id INTEGER [pk]
+    Timestamp INTEGER
+    Core INTEGER
+    ReadyingThreadRowId INTEGER
+    AdjustReason INTEGER
+    AdjustIncrement INTEGER
+}
+
+Table Threads
+{
+    Id INTEGER [pk]
+    ProcThreadId INTEGER
+    ThreadNameId INTEGER
+    MaxPixEventLevel INTEGER
+    StartTimestamp INTEGER
+    EndTimestamp INTEGER
+    PixEventCount INTEGER
+    ContextSwitchCount INTEGER
+    ProcessRowId INTEGER
+    SampleCount INTEGER
+    MarkerCount INTEGER
+    ApiMarkerCount INTEGER
+    ApiObjectEventCount INTEGER
+}
+
+Table Strings 
+{
+    Id INTEGER [pk]
+    Value TEXT   
+}
+
+Ref: ReadyThread.ReadyingThreadRowId - Threads.Id
+Ref: Threads.ThreadNameId - Strings.Id
+Ref: ContextSwitch.FromProcThreadId - Threads.ProcThreadId
+Ref: ContextSwitch.ToProcThreadId - Threads.ProcThreadId
+Ref: ContextSwitch.ReadyThreadId - ReadyThread.Id
+

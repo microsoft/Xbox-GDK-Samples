@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+      <Authors>Xbox Advanced Technology Group</Authors>
+      <PackageId>Microsoft.StoreServices</PackageId>
+      <Company>Microsoft</Company>
+      <Version>1.0.0</Version>
+      <PackageTags>Microsoft Store Services;Microsoft;Xbox</PackageTags>
+      <Description>
+          This client library enables working with the Microsoft Store Services to manage and validate user purchases within the Microsoft Store.  This library specifically has functionality to help request the needed Azure Active Directory access tokens and call the store services with this authorization.  More information can be found in the following articles:
+          Monetization, engagement, and Store services - https://docs.microsoft.com/en-us/windows/uwp/monetize/
+          Manage product entitlements from a service - https://docs.microsoft.com/en-us/windows/uwp/monetize/view-and-grant-products-from-a-service
+      </Description>
+      <Copyright>Copyright (C) Microsoft Corporation. All rights reserved.</Copyright>
+      <PackageIcon>Logo.png</PackageIcon>
+      <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+    <ItemGroup>
+        <Content Include="Media\Logo.png">
+            <Pack>True</Pack>
+            <PackagePath></PackagePath>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="jose-jwt" Version="3.0.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.3" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.3" />
+      <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
+      <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    </ItemGroup>
+
+</Project>

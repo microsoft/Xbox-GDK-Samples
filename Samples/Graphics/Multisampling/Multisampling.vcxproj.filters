@@ -1,0 +1,357 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>95b87336-8e23-4dcd-8fee-12af0e2ff327</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>d3c85b37-a8ae-41d4-8396-816fa603f267</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>6cfc6af6-2b68-47fc-a65d-c1912ffb283f</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{5b6bfd21-fe0c-4c72-8c1d-74d2fd8ad7d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Headers">
+      <UniqueIdentifier>{24915106-f4da-4aa4-8ce6-284ee4143ed1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Resolve">
+      <UniqueIdentifier>{55f21026-d5c9-48f6-9791-9537ab6307e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Fonts">
+      <UniqueIdentifier>{36ee3b11-18e6-453e-9622-41f62871358e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Textures">
+      <UniqueIdentifier>{6daede37-6bc3-49b4-ac21-57cbff2a3bf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Meshes">
+      <UniqueIdentifier>{cc6191d9-dfb8-46e9-a5f3-c1631120e7bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Meshes\Gothic_Window">
+      <UniqueIdentifier>{d7a7512a-c10f-4829-81b5-13edd3666cd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Meshes\Cactus">
+      <UniqueIdentifier>{efcc7dc4-6e30-422c-beb9-a1966be393f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Meshes\Controller">
+      <UniqueIdentifier>{c07c0ea8-71d2-48c3-b997-60e4921480d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Meshes\Sphere">
+      <UniqueIdentifier>{40360a54-14ab-4b37-b699-43a3419aa726}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Multisampling.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\Json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="Util.h" />
+    <ClInclude Include="EQAAConstants.h" />
+    <ClInclude Include="ConstantBufferIndirect.h" />
+    <ClInclude Include="DescriptorRing.h" />
+    <ClInclude Include="DescriptorHeapWithCount.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ReadData.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\DebugDraw.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Multisampling.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\DebugDraw.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Media\Textures\FragmentDot.dds">
+      <Filter>Assets\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SampleDot.dds">
+      <Filter>Assets\Textures</Filter>
+    </Image>
+    <Image Include="Assets\Logo.png">
+      <Filter>Assets\Textures</Filter>
+    </Image>
+    <Image Include="Assets\LargeLogo.png">
+      <Filter>Assets\Textures</Filter>
+    </Image>
+    <Image Include="Assets\SmallLogo.png">
+      <Filter>Assets\Textures</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.png">
+      <Filter>Assets\Textures</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.png">
+      <Filter>Assets\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\GothicWindow\gothic_window_diffuse_1024.dds">
+      <Filter>Assets\Meshes\Gothic_Window</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\GothicWindow\gothic_window_diffuse_alt.dds">
+      <Filter>Assets\Meshes\Gothic_Window</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\GothicWindow\gothic_window_normals_1024.dds">
+      <Filter>Assets\Meshes\Gothic_Window</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cactus\cactus_high_diffuse2_c.dds">
+      <Filter>Assets\Meshes\Cactus</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cactus\cactus_high_normals2.dds">
+      <Filter>Assets\Meshes\Cactus</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cactus\spine_cluster_diffuse2_c.dds">
+      <Filter>Assets\Meshes\Cactus</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Cactus\spine_cluster_normals2_n.dds">
+      <Filter>Assets\Meshes\Cactus</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Controller\default.dds">
+      <Filter>Assets\Meshes\Controller</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Controller\default-normalmap.dds">
+      <Filter>Assets\Meshes\Controller</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Sphere\default.dds">
+      <Filter>Assets\Meshes\Sphere</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Meshes\Sphere\default-normalmap.dds">
+      <Filter>Assets\Meshes\Sphere</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="GsPointSprite.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="VsConstantColor.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="VsColor.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="VsGrid.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="VsTexture.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="VsPointSprite.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="VsMesh.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PsConstantColor.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PsColor.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PsTexture.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PsPointSprite.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PsMesh.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PsTextureSingleSample.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PsTextureAllSamples.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PsTextureNearestSample.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PsResolveUbershader.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="CsResolveUbershader.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="CsResolve_1_Fragments_02_Samples_EQAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="CsResolve_1_Fragments_04_Samples_EQAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="CsResolve_1_Fragments_08_Samples_EQAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="CsResolve_1_Fragments_16_Samples_EQAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="CsResolve_2_Fragments_02_Samples_EQAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="CsResolve_2_Fragments_04_Samples_EQAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="CsResolve_2_Fragments_08_Samples_EQAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="CsResolve_2_Fragments_16_Samples_EQAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="CsResolve_4_Fragments_04_Samples_EQAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="CsResolve_4_Fragments_08_Samples_EQAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="CsResolve_4_Fragments_16_Samples_EQAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="CsResolve_8_Fragments_08_Samples_EQAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="CsResolve_8_Fragments_16_Samples_EQAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="CsResolve_2xMSAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="CsResolve_1xMSAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="CsResolve_4xMSAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="CsResolve_8xMSAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="PsResolve_1xMSAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="PsResolve_2xMSAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="PsResolve_4xMSAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="PsResolve_8xMSAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="PsResolve_1_Fragments_02_Samples_EQAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="PsResolve_1_Fragments_04_Samples_EQAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="PsResolve_1_Fragments_08_Samples_EQAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="PsResolve_1_Fragments_16_Samples_EQAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="PsResolve_2_Fragments_02_Samples_EQAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="PsResolve_2_Fragments_04_Samples_EQAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="PsResolve_2_Fragments_08_Samples_EQAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="PsResolve_2_Fragments_16_Samples_EQAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="PsResolve_4_Fragments_04_Samples_EQAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="PsResolve_4_Fragments_08_Samples_EQAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="PsResolve_4_Fragments_16_Samples_EQAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="PsResolve_8_Fragments_08_Samples_EQAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+    <FxCompile Include="PsResolve_8_Fragments_16_Samples_EQAA.hlsl">
+      <Filter>Shaders\Resolve</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PsCommon.hlsli">
+      <Filter>Shaders\Headers</Filter>
+    </None>
+    <None Include="PsResolve.hlsli">
+      <Filter>Shaders\Headers</Filter>
+    </None>
+    <None Include="CsResolve.hlsli">
+      <Filter>Shaders\Headers</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\Courier_16.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\GothicWindow\gothic_window.sdkmesh">
+      <Filter>Assets\Meshes\Gothic_Window</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Cactus\cactus.sdkmesh">
+      <Filter>Assets\Meshes\Cactus</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Controller\controller.sdkmesh">
+      <Filter>Assets\Meshes\Controller</Filter>
+    </None>
+    <None Include="..\..\..\Media\Meshes\Sphere\sphere.sdkmesh">
+      <Filter>Assets\Meshes\Sphere</Filter>
+    </None>
+    <None Include="RootSignature.hlsli">
+      <Filter>Shaders\Headers</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </None>
+    <None Include="EQAA.hlsli">
+      <Filter>Shaders\Headers</Filter>
+    </None>
+    <None Include="FMask.hlsli">
+      <Filter>Shaders\Headers</Filter>
+    </None>
+    <None Include="FMaskConstants.hlsli">
+      <Filter>Shaders\Headers</Filter>
+    </None>
+    <None Include="ReadMe.docx" />
+    <None Include="Multisampling_ReadMe_ja-jp.docx" />
+    <None Include="Multisampling_ReadMe_ko-kr.docx" />
+    <None Include="Multisampling_ReadMe_zh-cn.docx" />
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
+  </ItemGroup>
+</Project>

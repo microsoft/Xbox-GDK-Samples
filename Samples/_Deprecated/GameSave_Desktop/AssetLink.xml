@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectSchemaDefinitions xmlns="http://schemas.microsoft.com/build/2009/properties" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <Rule Name="AssetLinkRule"
+        PageTemplate="generic"
+        DisplayName="Metadata Extensions"
+        Order="500">
+
+    <!-- Your rule can have more than one category. Each category corresponds to a different tab in the property page. -->
+    <Rule.Categories>
+      <Category Name="Misc" DisplayName="Misc" />
+    </Rule.Categories>
+
+    <!-- The datasource describes how data is persisted for the property page:
+         ProjectFile: data will be persisted as $(Properties) or %(item_metadata) in the .vcxproj file
+         UserFile: data will be persisted in the .user file associated with the project -->
+    <Rule.DataSource>
+      <DataSource Persistence="ProjectFile" ItemType="{}{AnyType}" Label="" HasConfigurationCondition="false"/>
+    </Rule.DataSource>
+
+    <StringProperty
+      Name="Link"
+      DisplayName="Asset Link"
+      Description="Specify the build output path and filename to use for the asset."
+      Category="Misc">
+    </StringProperty>
+    
+  </Rule>
+  
+</ProjectSchemaDefinitions>
+  

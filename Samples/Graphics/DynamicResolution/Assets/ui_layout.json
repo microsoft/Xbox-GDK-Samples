@@ -1,0 +1,420 @@
+{
+  "styles": [
+    {
+      "classId": "SpriteStyle",
+      "id": "background_panel_gray",
+      "colorUsage": "override",
+      "color": [ 25, 25, 25, 0.75 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "info_panel_gray",
+      "colorUsage": "override",
+      "color": [ 25, 25, 25, 0.80 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "legend_panel_gray",
+      "colorUsage": "override",
+      "color": [ 25, 25, 25, 0.85 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "graph_panel_gray",
+      "colorUsage": "override",
+      "color": [ 25, 25, 25, 0.95 ]
+    },
+    {
+      "classId": "TextStyle",
+      "id": "label_text",
+      "colorUsage": "override",
+      "color": [ 140, 198, 199, 1.0 ],
+      "verticalAlign": "center"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "highlight_label_text",
+      "colorUsage": "override",
+      "color": [ 219, 73, 28, 1.0 ],
+      "verticalAlign": "center"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "legend_text",
+      "colorUsage": "override",
+      "color": [ 140, 198, 199, 1.0 ],
+      "verticalAlign": "center",
+      "horizontalAlign": "center",
+      "legendFont": "Assets/Fonts/XboxOneControllerLegendSmall"
+    }
+  ],
+  "layout": {
+    "classId": "Panel",
+    "id": "root",
+    "positioningAnchor": [ "left", "top" ],
+    "position": [ 0, 0 ],
+    "sizingAnchor": [ "left", "top" ],
+    "size": [ 1920, 1080 ],
+    "style": {
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 0, 0, 0, 0.0 ]
+    },
+    "childElements": [
+      {
+        "classId": "Panel",
+        "id": "info_panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 0, 0 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 580, 1080 ],
+        "styleId": "background_panel_gray",
+        "childElements": [
+          {
+            "classId": "Panel",
+            "id": "resolution_panel",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 0, 0 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 571, 154 ],
+            "styleId": "info_panel_gray",
+            "childElements": [
+              {
+                "classId": "Image",
+                "id": "atg_logo",
+                "positioningAnchor": [ "left", "top" ],
+                "position": [ 40, 25 ],
+                "sizingAnchor": [ "left", "top" ],
+                "size": [ 105, 115 ],
+
+                "focusable": true,
+
+                "style": {
+                  "classId": "spriteStyle",
+                  "texture": "Assets/LOGO_ATG.png",
+                  "colorUsage": "override",
+                  "color": [ 140, 198, 199, 0.75 ]
+                }
+              },
+              {
+                "classId": "StaticText",
+                "id": "dynamic_rez_label",
+                "positioningAnchor": [ "left", "top" ],
+                "position": [ 160, 50 ],
+                "sizingAnchor": [ "left", "top" ],
+                "size": [ 275, 30 ],
+                "text": "Dynamic Resolution",
+                "styleId": "label_text"
+              },
+              {
+                "classId": "StaticText",
+                "id": "width_label",
+                "positioningAnchor": [ "left", "top" ],
+                "position": [ 160, 80 ],
+                "sizingAnchor": [ "left", "top" ],
+                "size": [ 275, 30 ],
+                "text": "Frame buffer width",
+                "styleId": "label_text"
+              },
+              {
+                "classId": "StaticText",
+                "id": "height_label",
+                "positioningAnchor": [ "left", "top" ],
+                "position": [ 160, 110 ],
+                "sizingAnchor": [ "left", "top" ],
+                "size": [ 275, 30 ],
+                "text": "Frame buffer height",
+                "styleId": "label_text"
+              },
+              {
+                "classId": "StaticText",
+                "id": "dynamic_rez_value",
+                "positioningAnchor": [ "left", "top" ],
+                "position": [ 450, 50 ],
+                "sizingAnchor": [ "left", "top" ],
+                "size": [ 100, 30 ],
+                "text": "ON",
+                "styleId": "highlight_label_text"
+              },
+              {
+                "classId": "StaticText",
+                "id": "width_value",
+                "positioningAnchor": [ "left", "top" ],
+                "position": [ 450, 80 ],
+                "sizingAnchor": [ "left", "top" ],
+                "size": [ 100, 30 ],
+                "text": "1920",
+                "styleId": "label_text"
+              },
+              {
+                "classId": "StaticText",
+                "id": "height_value",
+                "positioningAnchor": [ "left", "top" ],
+                "position": [ 450, 110 ],
+                "sizingAnchor": [ "left", "top" ],
+                "size": [ 100, 30 ],
+                "text": "1080",
+                "styleId": "label_text"
+              }
+            ]
+          },
+          {
+            "classId": "Panel",
+            "id": "pixel_count_panel",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 0, 164 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 570, 134 ],
+            "styleId": "graph_panel_gray"
+          },
+          {
+            "classId": "Panel",
+            "id": "frame_time_panel",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 0, 308 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 570, 134 ],
+            "styleId": "graph_panel_gray"
+          },
+          {
+            "classId": "Panel",
+            "id": "vsync_margin_panel",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 0, 452 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 570, 134 ],
+            "styleId": "graph_panel_gray"
+          },
+          {
+            "classId": "Panel",
+            "id": "settings_panel",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 0, 596 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 570, 484 ],
+            "styleId": "info_panel_gray",
+            "childElements": [
+              {
+                "classId": "Panel",
+                "id": "preset_panel",
+                "positioningAnchor": [ "center", "top" ],
+                "position": [ 0, 0 ],
+                "sizingAnchor": [ "center", "top" ],
+                "size": [ 570, 56 ],
+                "styleId": "graph_panel_gray",
+                "childElements": [
+                  {
+                    "classId": "StaticText",
+                    "id": "lb_label",
+                    "positioningAnchor": [ "left", "top" ],
+                    "position": [ 95, 11 ],
+                    "text": "[LB]",
+                    "isLegend": true,
+                    "style": {
+                      "classId": "TextStyle",
+                      "inheritsFrom": "legend_text",
+                      "horizontalAlign": "left"
+                    }
+                  },
+                  {
+                    "classId": "StaticText",
+                    "id": "rb_label",
+                    "positioningAnchor": [ "left", "top" ],
+                    "position": [ 453, 11 ],
+                    "text": "[RB]",
+                    "isLegend": true,
+                    "style": {
+                      "classId": "TextStyle",
+                      "inheritsFrom": "legend_text",
+                      "horizontalAlign": "left"
+                    }
+                  },
+                  {
+                    "classId": "StaticText",
+                    "id": "preset_label",
+                    "positioningAnchor": [ "left", "top" ],
+                    "position": [ 0, 10 ],
+                    "text": "Preset: Custom",
+                    "styleId": "legend_text"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "classId": "Panel",
+            "id": "navigate_legend",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 96, 1007 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 155, 52 ],
+            "styleId": "legend_panel_gray",
+            "childElements": [
+              {
+                "classId": "StaticText",
+                "id": "navigate_legend_text",
+                "positioningAnchor": [ "left", "top" ],
+                "position": [ 0, 10 ],
+                "text": "[LThumb] Navigate",
+                "isLegend": true,
+                "styleId": "legend_text"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "classId": "Panel",
+        "id": "dr_legend",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 590, 10 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 352, 52 ],
+        "styleId": "legend_panel_gray",
+        "childElements": [
+          {
+            "classId": "StaticText",
+            "id": "dr_legend_text",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 0, 10 ],
+            "text": "[Y] Dynamic Resolution Toggle",
+            "isLegend": true,
+            "styleId": "legend_text"
+          }
+        ]
+      },
+      {
+        "classId": "Panel",
+        "id": "camera_legend",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 962, 10 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 227, 52 ],
+        "styleId": "legend_panel_gray",
+        "childElements": [
+          {
+            "classId": "StaticText",
+            "id": "camera_legend_text",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 0, 10 ],
+            "text": "[X] Camera Toggle",
+            "isLegend": true,
+            "styleId": "legend_text"
+          }
+        ]
+      },
+      {
+        "classId": "Panel",
+        "id": "hide_panel_legend",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 1209, 10 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 300, 52 ],
+        "styleId": "legend_panel_gray",
+        "childElements": [
+          {
+            "classId": "StaticText",
+            "id": "hide_panel_legend_text",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 0, 10 ],
+            "text": "[A] Show/Hide Side Panel",
+            "isLegend": true,
+            "styleId": "legend_text"
+          }
+        ]
+      },
+      {
+        "classId": "Panel",
+        "id": "exit_legend",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 1529, 10 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 112, 52 ],
+        "styleId": "legend_panel_gray",
+        "childElements": [
+          {
+            "classId": "StaticText",
+            "id": "exit_legend_text",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 0, 10 ],
+            "text": "[View] Exit",
+            "isLegend": true,
+            "styleId": "legend_text"
+          }
+        ]
+      },
+      {
+        "classId": "Panel",
+        "id": "tear_indicator_background",
+        "positioningAnchor": [ "right", "top" ],
+        "position": [ 0, 0 ],
+        "sizingAnchor": [ "right", "top" ],
+        "size": [ 189, 1080 ],
+        "styleId": "background_panel_gray"
+      },
+      {
+        "classId": "Panel",
+        "id": "tear_indicator_border",
+        "positioningAnchor": [ "right", "top" ],
+        "position": [ -189, 0 ],
+        "sizingAnchor": [ "right", "top" ],
+        "size": [ 3, 1080 ],
+        "style": {
+          "classId": "SpriteStyle",
+          "colorUsage": "override",
+          "color": [ 140, 198, 199, 1.0 ]
+        }
+      },
+      {
+        "classId": "Panel",
+        "id": "fps_num_background",
+        "positioningAnchor": [ "right", "top" ],
+        "position": [ -192, 65 ],
+        "sizingAnchor": [ "right", "top" ],
+        "size": [ 108, 79 ],
+        "styleId": "graph_panel_gray",
+        "childElements": [
+          {
+            "classId": "StaticText",
+            "id": "fps_num",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 10, -5 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 90, 60 ],
+            "text": "",
+            "style": {
+              "classId": "TextStyle",
+              "inheritsFromId": "highlight_label_text",
+              "size": 48
+            }
+          }
+        ]
+      },
+      {
+        "classId": "Panel",
+        "id": "fps_label_background",
+        "positioningAnchor": [ "right", "top" ],
+        "position": [ -300, 65 ],
+        "sizingAnchor": [ "right", "top" ],
+        "size": [ 129, 79 ],
+        "styleId": "info_panel_gray",
+        "childElements": [
+          {
+            "classId": "StaticText",
+            "id": "fps_label",
+            "positioningAnchor": [ "right", "top" ],
+            "position": [ -10, 5 ],
+            "sizingAnchor": [ "right", "top" ],
+            "size": [ 100, 30 ],
+            "text": "average\nfps",
+            "style": {
+              "classId": "TextStyle",
+              "inheritsFromId": "label_text",
+              "horizontalAlign": "right"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

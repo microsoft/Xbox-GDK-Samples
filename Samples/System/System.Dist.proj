@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Distribute" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--
+       ================================================================================
+       PC Samples
+       ================================================================================
+  -->
+  <ItemGroup Label="PC">
+    <!-- H -->
+    <SlnDist Include="System\Haptics\Haptics.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates Advanced Haptics APIs.</Description>
+      <Owner>Brian Peek (brpeek@microsoft.com)</Owner>
+      <Author>Brian Peek (brpeek@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+  </ItemGroup>
+  <!--
+       ================================================================================
+       Gaming.*.x64 (combo) Samples
+       ================================================================================
+  -->
+  <ItemGroup Label="Combo">
+    <!-- A -->
+    <SlnDist Include="System\AccessibilitySample\AccessibilitySample.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to implement cross-platform accessibility features for a title.</Description>
+      <Owner>Andrew Banks(anbanks@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <SlnDist Include="System\AdvancedExceptionHandling\AdvancedExceptionHandling.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>Demonstrates various ways that C++ and SEH exceptions can occur in Microsoft GDK titles including advanced scenarios.</Description>
+      <Owner>Andrew Farrier (Andrew.Farrier@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <SlnDist Include="System\AsynchronousProgramming\AsynchronousProgramming.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample shows how to use XAsync, XTaskQueue, and XAsyncProvider to implement asynchronous programming and task handling in various ways.</Description>
+      <Owner>Andrew Farrier (andrew.farrier@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- C -->
+    <SlnDist Include="System\Collision\Collision.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates DirectXMath's collision types for simple bounding volume tests.</Description>
+      <Owner>Andrew Farrier (Andrew.Farrier@microsoft.com)</Owner>
+      <Author>Chuck Walbourn (chuckw@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- D -->
+    <SlnDist Include="System\DataBreakPoints\DataBreakPoints.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample shows how to create hardware data breakpoints that are useful for detecting different types of memory access on Xbox.</Description>
+      <Owner>Andrew Farrier (Andrew.Farrier@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- G -->
+    <SlnDist Include="System\Gamepad\Gamepad.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to read inputs from a gamepad on Xbox.</Description>
+      <Owner>Brian Peek (brpeek@microsoft.com)</Owner>
+      <Author>Chuck Walbourn (chuckw@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="System\GamepadKeyboardMouse\GamepadKeyboardMouse.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to read and process inputs from gamepad, mouse, and keyboard using GameInput.</Description>
+      <Owner>Jon Martin (jonmartin@microsoft.com)</Owner>
+      <Author>Jon Martin (jonmartin@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="System\GamepadVibration\GamepadVibration.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to use vibration with a gamepad on an Xbox.</Description>
+      <Owner>Brian Peek (brpeek@microsoft.com)</Owner>
+      <Author>Jeff Ballard</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="System\GameSaveCombo\GameSaveCombo.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates the use of the XGameSave APIs to save and load game save data on Xbox.</Description>
+      <Owner>Andrew Banks (anbanks@microsoft.com)</Owner>
+      <Author>Andrew Banks</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="System\GameSaveFilesCombo\GameSaveFilesCombo.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates the use of the XGameSaveFiles APIs to access folders on Xbox.</Description>
+      <Owner>Andrew Banks (anbanks@microsoft.com)</Owner>
+      <Author>Andrew Banks</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- I -->
+    <SlnDist Include="System\IntelligentDelivery\IntelligentDelivery.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates Intelligent Delivery APIs.</Description>
+      <Owner>Tim Chen (timch@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- L -->
+    <SlnDist Include="System\Lighting\Lighting.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample shows how to use the LampArray API.</Description>
+      <Owner>Brian Peek (brpeek@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="System\LocalStorage\LocalStorage.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample shows how to use different local storage locations in a title for both Xbox and PC platforms.</Description>
+      <Owner>Andrew Farrier (andrew.farrier@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- M -->
+    <SlnDist Include="System\ModernGamertag\ModernGamertag.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates the use of a Glyph cache that can be used to store and render strings to a screen on Xbox.</Description>
+      <Owner>Andrew Banks (anbanks@microsoft.com)</Owner>
+      <Author>Andrew Banks</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="System\MultiExecutablePackage\MultiExecutablePackage.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to manage multiple projects, dlls, and utility processes within a single solution.</Description>
+      <Owner>Andrew Banks (anbanks@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="System\MultiPackage\MultiPackage.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to manage multiple packages that are capable of launching between each other.</Description>
+      <Owner>Andrew Banks (anbanks@microsoft.com)</Owner>
+      <Author>Andrew Banks</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- N -->
+    <SlnDist Include="System\NLSAndLocalization\NLSAndLocalization.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to localize package manifest as well as in-title resources. It also demonstrate usage of the NLS APIs on Xbox.</Description>
+      <Owner>Ken Nagao (kenagao@microsoft.com)</Owner>
+      <Author>Steven Hammond</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- P -->
+    <SlnDist Include="System\PIXCircularCaptureCombo\PIXCircularCaptureCombo.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample shows how to use the PIX[Begin/End]Capture APIs to implement a circular buffer of captures.</Description>
+      <Owner>Andrew Farrier (Andrew.Farrier@microsoft.com)</Owner>
+      <Author>Andrew Farrier (Andrew.Farrier@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- S -->
+    <SlnDist Include="System\SimpleMultiExePackage\SimpleMultiExePackage.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to manage multiple projects with executables within a single solution.</Description>
+      <Owner>Andrew Banks (anbanks@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="System\SimpleDirectStorageCombo\SimpleDirectStorageCombo.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>Demonstrates several ways to use DirectStorage on Xbox Series X|S, Desktop, and Xbox One. DirectStorage on Xbox One is handled through an emulation layer</Description>
+      <Owner>Andrew Farrier (Andrew.Farrier@microsoft.com) </Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="System\SimpleExceptionHandling\SimpleExceptionHandling.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>Demonstrates various ways that C++ and SEH exceptions can occur in Microsoft GDK titles.</Description>
+      <Owner>Andrew Farrier (Andrew.Farrier@microsoft.com) </Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="System\SimpleFFBWheel\SimpleFFBWheel.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to use a force feedback steering wheel in the Microsoft GDK.</Description>
+      <Owner>Brian Peek (brpeek@microsoft.com)</Owner>
+      <Author>Jeff Ballard</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="System\SimpleUserModel\SimpleUserModel.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample shows how to use the new Simple User Model introduced with the Microsoft Game Development Kit (April 2021).</Description>
+      <Owner>Andrew Banks(anbanks@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="System\SystemInfo\SystemInfo.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates a number of APIs for querying system information and hardware capabilities.</Description>
+      <Owner>Andrew Farrier (Andrew.Farrier@microsoft.com)</Owner>
+      <Author>Chuck Walbourn (chuckw@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+  </ItemGroup>
+  <!--
+       ================================================================================
+       Gaming.Xbox.*.x64 Samples
+       ================================================================================
+  -->
+  <ItemGroup Label="Console">
+    <!-- C -->
+    <SlnDist Include="System\CustomEventProvider\CustomEventProvider.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to use custom ETW event providers on Xbox.</Description>
+      <Owner>Philip Niemeyer-Farquharson (Philip.Farquharson@microsoft.com)</Owner>
+      <Author>Simon Cooke</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- D -->
+    <SlnDist Include="System\DeepLinking\DeepLinking.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to deep link players from a Microsoft Store URL into a specific destination inside a GDK title via protocol activation.</Description>
+      <Owner>Brian Peek (brpeek@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- F -->
+    <SlnDist Include="System\FrontPanelDemo\FrontPanelDemo.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>FrontPanelDemo combines several samples into one executable and then ties together the functionality with a menu system all hosted entirely on the Xbox DevKit front panel.</Description>
+      <Owner>Jon Martin (jonmartin@microsoft.com)</Owner>
+      <Author>Greg Pettyjon</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="System\FrontPanelDolphin\FrontPanelDolphin.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>FrontPanelDolphin demonstrates how to use the GPU to render to the Xbox DevKit FrontPanel.</Description>
+      <Owner>Philip Niemeyer-Farquharson (Philip.Farquharson@microsoft.com)</Owner>
+      <Author>Greg Pettyjon</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="System\FrontPanelGame\FrontPanelGame.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>FrontPanelGame is the classic 'snake game' implemented completely on the Xbox DevKit Front Panel.</Description>
+      <Owner>Philip Niemeyer-Farquharson (Philip.Farquharson@microsoft.com)</Owner>
+      <Author>Greg Pettyjon</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="System\FrontPanelLogo\FrontPanelLogo.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample provides some starting code to help you render an image the Xbox Devkit front panel display using a standard image format.</Description>
+      <Owner>Philip Niemeyer-Farquharson (Philip.Farquharson@microsoft.com)</Owner>
+      <Author>Greg Pettyjon</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="System\FrontPanelText\FrontPanelText.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>The FrontPanelText sample demonstrates how to use the CPU to draw text on the Xbox Devkit Front Panel Display.</Description>
+      <Owner>Philip Niemeyer-Farquharson (Philip.Farquharson@microsoft.com)</Owner>
+      <Author>Greg Pettyjon</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- G -->
+    <SlnDist Include="System\GameInputInterfacing\GameInputInterfacing.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to effectively interface and read inputs from a gamepad, arcade sticks, racing wheels, and more in the Microsoft GDK.</Description>
+      <Owner>Brian Peek (brpeek@microsoft.com)</Owner>
+      <Author>Jeff Ballard</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="System\GameInputSequential\GameInputSequential.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to read inputs sequentially from a gamepad using GameInput.</Description>
+      <Owner>Brian Peek (brpeek@microsoft.com)</Owner>
+      <Author>Jeff Ballard</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- M -->
+    <SlnDist Include="System\MemoryBanks\MemoryBanks.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates several different methods available for managing memory banks.</Description>
+      <Owner>Andrew Farrier (Andrew.Farrier@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="System\MemoryPlaceholders\MemoryPlaceholders.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates how to use memory place holders, which are a way to reserve virtual address space ahead of time.</Description>
+      <Owner>Andrew Farrier (Andrew.Farrier@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="System\MemoryStatistics\MemoryStatistics.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates querying memory usage at runtime in your Xbox game.</Description>
+      <Owner>Richie Meyer (richiem@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="System\MouseInput\MouseInput.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates how to implement mouse controls with GameInput.</Description>
+      <Owner>Brian Peek (brpeek@microsoft.com)</Owner>
+      <Author>Jeff Ballard</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- R -->
+    <SlnDist Include="System\RawDevice\RawDevice.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates how to read and write raw device messages using GameInput.</Description>
+      <Owner>Brian Peek (brpeek@microsoft.com)</Owner>
+      <Author>Jeff Ballard</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- S -->
+
+    <SlnDist Include="System\SimpleFrontPanel\SimpleFrontPanel.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>The SimpleFrontPanel sample demonstrates the API covering the basic functionality that you will need to get started programming for the Xbox DevKit Front Panel.</Description>
+      <Owner>Philip Niemeyer-Farquharson (Philip.Farquharson@microsoft.com)</Owner>
+      <Author>Greg Pettyjon</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="System\SimpleMDU\SimpleMDU.sln">
+      <Outlet>$(Outlet_GDK_NDA_Restricted)</Outlet>
+      <Description>This sample demonstrates the basic properties of the Memory Decompression Unit (MDU).</Description>
+      <Platform>Gaming.Xbox.Scarlett.x64</Platform>
+      <Owner>Richie Meyer (richiem@microsoft.com)</Owner>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+    <SlnDist Include="System\SimplePLM\SimplePLM.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample shows the behavior of the Process Lifetime Management (PLM) events on Xbox.</Description>
+      <Owner>Jon Martin (jonmartin@microsoft.com)</Owner>
+      <Author>Chuck Walbourn (chuckw@microsoft.com)</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+
+    <!-- U -->
+    <SlnDist Include="System\UserManagement\UserManagement.sln">
+      <Outlet>$(Outlet_GDK_Public)</Outlet>
+      <Description>This sample demonstrates user management with gamepad association for both single-user and multi-user scenarios on Xbox.</Description>
+      <Owner>Andrew Banks(anbanks@microsoft.com)</Owner>
+      <Author>Simon Cooke</Author>
+      <FriendlyURL>https://aka.ms/xgdsamples</FriendlyURL>
+    </SlnDist>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,70 @@
+Table PixEventInfo
+{
+    Id INTEGER [pk]
+    NameId INTEGER
+    FormatNameId INTEGER
+    Count INTEGER
+    GpuCount INTEGER
+    MinCpuLevel INTEGER
+    MinGpuLevel INTEGER
+}
+
+Table PixCpuExecution
+{
+    BeginTimestamp INTEGER
+    EndTimestamp INTEGER
+    Level INTEGER
+    ThreadRowId INTEGER
+    EventId INTEGER
+    Color INTEGER
+}
+
+Table PixCpuExecutionTimes
+{
+    Duration INTEGER
+    Execution INTEGER
+    Stall INTEGER
+    EventId INTEGER
+    BeginTimestamp INTEGER
+    EndTimestamp INTEGER
+}
+
+Table PixEventInfoThreadMap
+{
+    EventId INTEGER
+    ThreadId INTEGER
+    Count INTEGER
+}
+
+Table Strings 
+{
+    Id INTEGER [pk]
+    Value TEXT   
+}
+
+Table Threads
+{
+    Id INTEGER [pk]
+    ProcThreadId INTEGER
+    ThreadNameId INTEGER
+    MaxPixEventLevel INTEGER
+    StartTimestamp INTEGER
+    EndTimestamp INTEGER
+    PixEventCount INTEGER
+    ContextSwitchCount INTEGER
+    ProcessRowId INTEGER
+    SampleCount INTEGER
+    MarkerCount INTEGER
+    ApiMarkerCount INTEGER
+    ApiObjectEventCount INTEGER
+}
+
+Ref: PixEventInfo.NameId - Strings.Id
+Ref: PixEventInfo.FormatNameId - Strings.Id
+Ref: PixEventInfoThreadMap.ThreadId - Threads.Id
+Ref: PixCpuExecutionTimes.EventId - PixEventInfo.Id
+Ref: PixEventInfoThreadMap.EventId - PixEventInfo.Id
+Ref: Threads.ThreadNameId - Strings.Id
+Ref: PixCpuExecution.ThreadRowId - Threads.Id
+Ref: PixCpuExecution.EventId - PixEventInfo.Id
+

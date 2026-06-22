@@ -1,0 +1,56 @@
+{
+  "prefab": 
+  {
+    "id": "BrowserEntryPanel",
+    "classId": "Panel",
+    "styleId": "unfocused_browser_item_style",
+    "positioningAnchor": [ "left", "top" ],
+    "position": [ 0, 0 ],
+    "sizingAnchor": [ "left", "top" ],
+    "size": [1880, 36],
+    "subElements":
+    [
+      {
+        "classId": "HorizontalStackPanel",
+        "id": "BrowserItemHorizontalStack",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "position": [ 0, 0 ],
+        "size": [ 1880, 36 ],
+        "styleId": "invisible_panel_style",
+        "stackingOrientation": "right",
+        "subElements":
+        [
+          {
+            "id": "BrowserItemSpacerPanel",
+            "classId": "Panel",
+            "styleId": "invisible_panel_style",
+            "panel":
+            {
+              "positioningAnchor": [ "left", "top" ],
+              "sizingAnchor": [ "left", "top" ],
+              "size": [40, 36]
+            }
+          },
+          {
+            "classId": "StaticText",
+            "id": "BrowserExpanderText",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "text": "+",
+            "styleId": "entry_text_style_centered",
+            "size": [24, 36]
+          },
+          {
+            "classId": "StaticText",
+            "id": "BrowserEntryText",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "text": "BrowserEntry",
+            "styleId": "entry_text_style"
+          }
+        ]
+      }
+    ]
+  }
+}

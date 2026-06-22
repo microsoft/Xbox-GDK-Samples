@@ -1,32 +1,60 @@
----
-page_type: sample
-languages:
-- cpp
-products:
-- gdk
-urlFragment: "gameinputsequential"
-extendedZipContent:
-- path: LICENSE
-  target: LICENSE
-- path: Kits
-  target: Kits
-- path: Media
-  target: Media
-description: "This sample demonstrates how to read inputs sequentially from a gamepad using GameInput."
----
+![](./media/image1.png)
 
-# GameInputSequential
+#   Gamepad Sequential Sample
 
-For more information see: 
-- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/GameInputSequential/readme_en-us.md)
-- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/GameInputSequential/readme_ja-jp.md)
-- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/GameInputSequential/readme_ko-kr.md)
-- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/GameInputSequential/readme_zh-cn.md)
+*This sample is compatible with the Microsoft Game Development Kit (August 2020)*
 
-## Privacy statement
+# Description
 
-For more information about Microsoft's privacy policies in general, see the [Microsoft Privacy Statement](https://privacy.microsoft.com/privacystatement/).
+This sample demonstrates how to read inputs sequentially from a gamepad using GameInput.
 
-## Trademarks
+![](./media/image3.png)
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
+# Building the sample
+
+- If building for Xbox One, set the active solution platform to `Gaming.Xbox.XboxOne.x64`.
+- If building for Xbox Series X|S, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
+- If building for PC, set the active solution platform to x64.\
+**NOTE: This requires the [GameInput NuGet package](https://www.nuget.org/packages/Microsoft.GameInput) and its 
+included redistributable to be installed.  Please see 
+[GameInput on PC](https://learn.microsoft.com/gaming/gdk/_content/gc/input/overviews/input-nuget) for more information.**.
+
+*For more information, see* __Running samples__, *in the GDK documentation.*
+
+# Running the sample
+
+Ensure the GameInput Redistributable (GameInputRedist.msi) is installed.  This installer can be found in the NuGet package,
+or it can be installed separately using WinGet via a command prompt with the following command:
+
+`winget install Microsoft.GameInput`
+
+# Using the sample
+
+Press buttons to see them displayed and move the thumbsticks and
+triggers to see their readings. Use the sequences of inputs listed at
+the bottom to see the complete "moves".
+
+# Implementation notes
+
+This sample demonstrates how to use the GameInput API to read input from
+a gamepad sequentially. While GetCurrentReading can be used to get the
+current state of input, this sample then uses the GetNextReading call to
+walk through the sequential recent history of input events to read them
+in order.
+
+# Version History
+
+- March 2025: Added support for GameInput v1.x on PC via the
+  [GameInput NuGet package](https://www.nuget.org/packages/Microsoft.GameInput)
+- July 2025: Added support for GameInput v2.x on PC via the
+  [GameInput NuGet package](https://www.nuget.org/packages/Microsoft.GameInput)
+
+# Privacy statement
+
+When compiling and running a sample, the file name of the sample
+executable will be sent to Microsoft to help track sample usage. To
+opt-out of this data collection, you can remove the block of code in
+Main.cpp labeled "Sample Usage Telemetry".
+
+For more information about Microsoft's privacy policies in general, see
+the [Microsoft Privacy Statement](https://privacy.microsoft.com/en-us/privacystatement/).

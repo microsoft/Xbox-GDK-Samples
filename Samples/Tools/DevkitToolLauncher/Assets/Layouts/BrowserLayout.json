@@ -1,0 +1,69 @@
+{
+  "includes":
+  [
+    "Assets/Layouts/Definitions.json",
+    "Assets/Layouts/Styles.json"
+  ],
+  "layout":
+  {
+    "id": "BrowserBackgroundPanel",
+    "classId": "Panel",
+    "styleId": "background_panel_style",
+    "panel":
+    {
+      "positioningAnchor": [ "left", "top" ],
+      "position": [ 0, 0 ],
+      "sizingAnchor": [ "left", "top" ],
+      "size": "#fullscreen"
+    },
+    "childElements":
+    [
+      {
+        "classId": "StaticText",
+        "id": "BrowserLabel",
+        "positioningAnchor": [ "left", "top" ],
+        "sizingAnchor": [ "left", "top" ],
+        "text": "Tool Browser",
+        "styleId": "title_text_style_centered",
+        "size": [1920, 48],
+        "position": [0, 0]
+      },
+      {
+        "classId": "StaticText",
+        "id": "BrowserButtonPromptText",
+        "positioningAnchor": [ "center", "top" ],
+        "sizingAnchor": [ "center", "top" ],
+        "text": "[DPad]Up/[DPad]Down: Navigate   [DPad]Left/[DPad]Right: Expand/Collapse   [A]: Select   Hold [Y]: Refresh Browser",
+        "isLegend": true,
+        "styleId": "label_text_style_centered",
+        "size": [1920, 48],
+        "position": [0, 1018]
+      },
+      {
+        "id": "BrowserColorBackgroundPanel",
+        "classId": "Panel",
+        "styleId": "border_panel_style",
+        "panel":
+        {
+          "positioningAnchor": [ "left", "top" ],
+          "size": [ 1880, 972 ],
+          "position": [20, 46],
+          "sizingAnchor": [ "left", "top" ]
+        },
+        "childElements":
+        [
+          {
+            "classId": "VerticalStackPanel",
+            "id": "BrowserVerticalStack",
+            "positioningAnchor": [ "left", "top" ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 1880, 972 ],
+            "position": [0, 0],
+            "styleId": "invisible_panel_style",
+            "stackingOrientation": "down"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.5.11626.173 insiders
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryingTimingCapture", "QueryingTimingCapture.csproj", "{4E7B3BA5-2FF7-44B1-A957-9D3395751559}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4E7B3BA5-2FF7-44B1-A957-9D3395751559}.Debug|x64.ActiveCfg = Debug|x64
+		{4E7B3BA5-2FF7-44B1-A957-9D3395751559}.Debug|x64.Build.0 = Debug|x64
+		{4E7B3BA5-2FF7-44B1-A957-9D3395751559}.Release|x64.ActiveCfg = Release|x64
+		{4E7B3BA5-2FF7-44B1-A957-9D3395751559}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A6B28349-D0E7-4C17-80A4-A33D5CA52EDF}
+	EndGlobalSection
+EndGlobal

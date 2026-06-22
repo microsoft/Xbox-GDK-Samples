@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Game configVersion="1">
+  <!-- Version "1" is supported by March 2022 GDK or later -->
+
+  <Identity Name="41336MicrosoftATG.CustomHttp"
+            Version="1.0.0.0"
+            Publisher="CN=A4954634-DF4B-47C7-AB70-D3215D246AF1" />
+
+  <TitleId>FFFFFFFF</TitleId>
+  <MSAAppId>0000000000000000</MSAAppId>
+
+  <ExecutableList>
+    <Executable Name="CustomHttp.exe" Id="Game"/>
+  </ExecutableList>
+
+  <ShellVisuals DefaultDisplayName="CustomHttp"
+                PublisherDisplayName="Xbox Advanced Technology Group"
+                StoreLogo="Assets\StoreLogo.png"
+                Square150x150Logo="Assets\Logo.png"
+                Square44x44Logo="Assets\SmallLogo.png"
+                Square480x480Logo="Assets\LargeLogo.png"
+                Description="CustomHttp"
+                ForegroundText="dark"
+                BackgroundColor="#000000"
+                SplashScreenImage="Assets\SplashScreen.png"/>
+
+  <DesktopRegistration>
+    <MultiplayerProtocol>true</MultiplayerProtocol>
+  </DesktopRegistration>
+</Game>

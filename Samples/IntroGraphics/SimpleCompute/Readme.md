@@ -1,32 +1,67 @@
----
-page_type: sample
-languages:
-- cpp
-products:
-- gdk
-urlFragment: "simplecompute"
-extendedZipContent:
-- path: LICENSE
-  target: LICENSE
-- path: Kits
-  target: Kits
-- path: Media
-  target: Media
-description: "SimpleCompute shows how to use DirectCompute (i.e. Direct3D Compute Shader) for DirectX 12 on Xbox."
----
+  ![](./media/image1.png)
 
-# SimpleCompute
+#   SimpleCompute Sample
 
-For more information see: 
-- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/IntroGraphics/SimpleCompute/readme_en-us.md)
-- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/IntroGraphics/SimpleCompute/readme_ja-jp.md)
-- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/IntroGraphics/SimpleCompute/readme_ko-kr.md)
-- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/IntroGraphics/SimpleCompute/readme_zh-cn.md)
+*This sample is compatible with the Microsoft Game Development Kit (June
+2020)*
 
-## Privacy statement
+# Description
 
-For more information about Microsoft's privacy policies in general, see the [Microsoft Privacy Statement](https://privacy.microsoft.com/privacystatement/).
+![Sample Screenshot](./media/image3.png)
 
-## Trademarks
+SimpleCompute shows how to use DirectCompute™ (i.e. Direct3D Compute
+Shader) with DirectX 12. The sample demonstrates submitting compute work
+to both the graphics command list and how to use the
+D3D12_COMMAND_LIST_TYPE_COMPUTE interface to submit asynchronous compute
+shader workloads. It updates a texture by computing the Mandelbrot set
+using a compute shader.
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
+# Building the sample
+
+If using an Xbox One devkit, set the active solution platform to `Gaming.Xbox.XboxOne.x64`.
+
+If using an Xbox One X|S devkit, set the active solution platform to `Gaming.Xbox.Scarlett.x64`.
+
+*For more information, see* __Running samples__, *in the GDK documentation.*
+
+# Using the sample
+
+| Action                             |  Gamepad                         |
+|------------------------------------|---------------------------------|
+| Toggle Async Compute               |  A button                        |
+| Reset Viewport to Default          |  Y button                        |
+| Pan Viewport                       |  Left stick                      |
+| Zoom Viewport                      |  Right stick                     |
+| Increase Zoom Speed                |  Right trigger                   |
+| Exit                               |  View Button                     |
+| Menu                               |  Show/hide help                  |
+
+# Implementation notes
+
+The primary purpose of this sample is to familiarize the reader with
+creating and using a simple compute shader.
+
+-   **CreateDeviceDependentResources**: This is where the compiled
+    compute shader is loaded and the various Direct3D rendering
+    resources are created. The shaders are compiled by Visual Studio.
+
+-   **Render**: If the sample is not using asynchronous compute the
+    compute shader is dispatched before the draw call that needs the
+    results is dispatched. This updates the texture every frame.
+
+-   **AsyncComputeProc**: If the sample is using asynchronous compute
+    the compute shader is dispatched from this thread as soon as it's
+    told to start processing. Render will wait until it's told the
+    asynchronous task is complete before performing the dependent draw
+    call.
+
+# Privacy Statement
+
+When compiling and running a sample, the file name of the sample
+executable will be sent to Microsoft to help track sample usage. To
+opt-out of this data collection, you can remove the block of code in
+Main.cpp labeled "Sample Usage Telemetry".
+
+For more information about Microsoft's privacy policies in general, see
+the [Microsoft Privacy
+Statement](https://privacy.microsoft.com/en-us/privacystatement/).

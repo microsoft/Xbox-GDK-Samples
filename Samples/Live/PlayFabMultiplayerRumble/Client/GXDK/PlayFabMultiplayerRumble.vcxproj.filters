@@ -1,0 +1,716 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Assets">
+      <UniqueIdentifier>67bac39e-6477-47c0-b6a5-8873f8ab239d</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{073efdd8-e10f-48ce-9fd9-29c5104d9d3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Fonts">
+      <UniqueIdentifier>{dc4fc2ce-5989-41c7-bb90-b823b7b27ea1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Textures">
+      <UniqueIdentifier>{b2b96cc4-93fb-4ffa-b684-c098a9abc102}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameScreens">
+      <UniqueIdentifier>{9b2ac6e9-097a-403a-b59c-4524f45b8dab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Managers">
+      <UniqueIdentifier>{63e46e97-880f-4b9e-bc6e-4c7d71bfa331}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Engine">
+      <UniqueIdentifier>{5038f883-d1ce-4328-90d2-e18b780f249d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Utils">
+      <UniqueIdentifier>{b0957e52-871c-4661-a746-3c41d23d9466}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Engine\GameObjects">
+      <UniqueIdentifier>{4d71d2fc-e143-450b-a021-b825cb4d6a98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Engine\GameObjects\PowerUps">
+      <UniqueIdentifier>{0142be39-91cb-4092-a28f-b709dd3389ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Engine\GameObjects\Projectiles">
+      <UniqueIdentifier>{c96610b2-62aa-4024-ab1e-aebd8d7fbc21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Engine\Weapons">
+      <UniqueIdentifier>{cf1fff2a-60b7-47f8-838f-296050cf93a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Managers\Renderer">
+      <UniqueIdentifier>{b72f5e02-0ec6-47b0-9017-2e1fece80686}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Managers\UserManager">
+      <UniqueIdentifier>{c366d54f-788f-45f8-9a35-de2d93c69ea2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Managers\GameManagers">
+      <UniqueIdentifier>{506b5591-af62-42ea-bb20-c1bdecbf7c71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Managers\SystemManagers">
+      <UniqueIdentifier>{9787f237-0d37-4466-88ae-c6d97154a18c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Managers\Online">
+      <UniqueIdentifier>{1449e867-2a11-45f0-b3ba-6ea580624c19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ATG ToolKit">
+      <UniqueIdentifier>{b297b59b-aeaa-4b71-8894-56523b184457}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Audio">
+      <UniqueIdentifier>{e4f66477-6857-4dc7-8b68-51c45e5dec4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Configs">
+      <UniqueIdentifier>{d6e7f66c-dc97-46c8-b356-a812b93e7cdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Configs\XboxOne">
+      <UniqueIdentifier>{d453531a-627a-4598-85a2-01ebfc4383e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Configs\Scarlett">
+      <UniqueIdentifier>{d5d83155-4618-4bd2-8715-1d73b14ce47a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="..\..\Common\GameScreen.h">
+      <Filter>Common\GameScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\MenuScreen.h">
+      <Filter>Common\GameScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Starfield.h">
+      <Filter>Common\GameScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\StarfieldScreen.h">
+      <Filter>Common\GameScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\TitleBackgroundScreen.h">
+      <Filter>Common\GameScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Managers.h">
+      <Filter>Common\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\MainMenuScreen.h">
+      <Filter>Common\GameScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\GameLobbyScreen.h">
+      <Filter>Common\GameScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\ShipInput.h">
+      <Filter>Common\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\RandomMath.h">
+      <Filter>Common\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\ErrorScreen.h">
+      <Filter>Common\GameScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\NetworkMessages.h">
+      <Filter>Common\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\DataBuffer.h">
+      <Filter>Common\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Debug.h">
+      <Filter>Common\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\StepTimer.h">
+      <Filter>Common\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\World.h">
+      <Filter>Common\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\PlayerState.h">
+      <Filter>Common\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\RocketWeapon.h">
+      <Filter>Common\Engine\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\LaserWeapon.h">
+      <Filter>Common\Engine\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\DoubleLaserWeapon.h">
+      <Filter>Common\Engine\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\TripleLaserWeapon.h">
+      <Filter>Common\Engine\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\LaserProjectile.h">
+      <Filter>Common\Engine\GameObjects\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Projectile.h">
+      <Filter>Common\Engine\GameObjects\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\RocketProjectile.h">
+      <Filter>Common\Engine\GameObjects\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\TripleLaserPowerUp.h">
+      <Filter>Common\Engine\GameObjects\PowerUps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\RocketPowerUp.h">
+      <Filter>Common\Engine\GameObjects\PowerUps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\DoubleLaserPowerUp.h">
+      <Filter>Common\Engine\GameObjects\PowerUps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\MineWeapon.h">
+      <Filter>Common\Engine\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\MineProjectile.h">
+      <Filter>Common\Engine\GameObjects\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\PowerUp.h">
+      <Filter>Common\Engine\GameObjects\PowerUps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\CollisionMath.h">
+      <Filter>Common\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Asteroid.h">
+      <Filter>Common\Engine\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\GameplayObject.h">
+      <Filter>Common\Engine\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Ship.h">
+      <Filter>Common\Engine\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Weapon.h">
+      <Filter>Common\Engine\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\BatchRemovalCollection.h">
+      <Filter>Common\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Timer.h">
+      <Filter>Common\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\GamePlayScreen.h">
+      <Filter>Common\GameScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Kits\ATGTK\Texture.h">
+      <Filter>Common\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\DebugOverlayScreen.h">
+      <Filter>Common\GameScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Renderer\DX12\ContentManager.h">
+      <Filter>Common\Managers\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Renderer\DX12\DeviceResources.h">
+      <Filter>Common\Managers\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Renderer\DX12\RenderContext.h">
+      <Filter>Common\Managers\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Renderer\DX12\RenderManager.h">
+      <Filter>Common\Managers\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\CollisionManager.h">
+      <Filter>Common\Managers\GameManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\ParticleManager.h">
+      <Filter>Common\Managers\GameManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\ScreenManager.h">
+      <Filter>Common\Managers\GameManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\GameStateManager.h">
+      <Filter>Common\Managers\GameManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\InputManager.h">
+      <Filter>Common\Managers\SystemManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\AudioManager.h">
+      <Filter>Common\Managers\SystemManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\AsyncTaskManager.h">
+      <Filter>Common\Managers\SystemManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\User.h">
+      <Filter>Common\Managers\UserManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\XboxUser.h">
+      <Filter>Common\Managers\UserManager</Filter>
+    </ClInclude>
+    <ClInclude Include="XboxHandle.h">
+      <Filter>Common\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\ArrayView.h">
+      <Filter>Common\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\JoinFriendsMenu.h">
+      <Filter>Common\GameScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\AsyncHelper.h">
+      <Filter>Common\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG ToolKit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Kits\ATGTK\Json.h">
+      <Filter>ATG ToolKit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG ToolKit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\PlayFabPartyManager.h">
+      <Filter>Common\Managers\Online</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\OptionsPopUpScreen.h">
+      <Filter>Common\Managers\GameManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\STTOverlayScreen.h">
+      <Filter>Common\Managers\GameManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Kits\ATGTK\d3dx12.h">
+      <Filter>ATG ToolKit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\UserStartupScreen.h">
+      <Filter>Common\GameScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\IManager.h">
+      <Filter>Common\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\SampleConfig.h">
+      <Filter>Common\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\IUserManager.h">
+      <Filter>Common\Managers\UserManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\XboxUserManager.h">
+      <Filter>Common\Managers\UserManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\IOnlineManager.h">
+      <Filter>Common\Managers\Online</Filter>
+    </ClInclude>
+    <ClInclude Include="MPAManager.h">
+      <Filter>Common\Managers\GameManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="FriendsManager.h">
+      <Filter>Common\Managers\GameManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\OnlineManager.h">
+      <Filter>Common\Managers\Online</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayFabUtils.h">
+      <Filter>Common\Managers\Online</Filter>
+    </ClInclude>
+    <ClInclude Include="LobbyBrowserMenu.h">
+      <Filter>Common\GameScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Kits\ATGTK\GuidUtil.h">
+      <Filter>ATG ToolKit</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="..\..\Common\GameScreen.cpp">
+      <Filter>Common\GameScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\MenuScreen.cpp">
+      <Filter>Common\GameScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Starfield.cpp">
+      <Filter>Common\GameScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\StarfieldScreen.cpp">
+      <Filter>Common\GameScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\TitleBackgroundScreen.cpp">
+      <Filter>Common\GameScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Managers.cpp">
+      <Filter>Common\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\MainMenuScreen.cpp">
+      <Filter>Common\GameScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\GameLobbyScreen.cpp">
+      <Filter>Common\GameScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\ShipInput.cpp">
+      <Filter>Common\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\ErrorScreen.cpp">
+      <Filter>Common\GameScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\NetworkMessages.cpp">
+      <Filter>Common\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\DataBuffer.cpp">
+      <Filter>Common\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Debug.cpp">
+      <Filter>Common\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\World.cpp">
+      <Filter>Common\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\PlayerState.cpp">
+      <Filter>Common\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\RocketWeapon.cpp">
+      <Filter>Common\Engine\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\LaserWeapon.cpp">
+      <Filter>Common\Engine\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\DoubleLaserWeapon.cpp">
+      <Filter>Common\Engine\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\TripleLaserWeapon.cpp">
+      <Filter>Common\Engine\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\LaserProjectile.cpp">
+      <Filter>Common\Engine\GameObjects\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Projectile.cpp">
+      <Filter>Common\Engine\GameObjects\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\RocketProjectile.cpp">
+      <Filter>Common\Engine\GameObjects\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\TripleLaserPowerUp.cpp">
+      <Filter>Common\Engine\GameObjects\PowerUps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\RocketPowerUp.cpp">
+      <Filter>Common\Engine\GameObjects\PowerUps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\DoubleLaserPowerUp.cpp">
+      <Filter>Common\Engine\GameObjects\PowerUps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\MineWeapon.cpp">
+      <Filter>Common\Engine\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\MineProjectile.cpp">
+      <Filter>Common\Engine\GameObjects\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\PowerUp.cpp">
+      <Filter>Common\Engine\GameObjects\PowerUps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Asteroid.cpp">
+      <Filter>Common\Engine\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\GameplayObject.cpp">
+      <Filter>Common\Engine\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Ship.cpp">
+      <Filter>Common\Engine\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Weapon.cpp">
+      <Filter>Common\Engine\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\GamePlayScreen.cpp">
+      <Filter>Common\GameScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Kits\ATGTK\Texture.cpp">
+      <Filter>Common\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\DebugOverlayScreen.cpp">
+      <Filter>Common\GameScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Renderer\DX12\ContentManager.cpp">
+      <Filter>Common\Managers\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Renderer\DX12\DeviceResources.cpp">
+      <Filter>Common\Managers\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Renderer\DX12\RenderContext.cpp">
+      <Filter>Common\Managers\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Renderer\DX12\RenderManager.cpp">
+      <Filter>Common\Managers\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\CollisionManager.cpp">
+      <Filter>Common\Managers\GameManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\ParticleManager.cpp">
+      <Filter>Common\Managers\GameManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\ScreenManager.cpp">
+      <Filter>Common\Managers\GameManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\GameStateManager.cpp">
+      <Filter>Common\Managers\GameManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\InputManager.cpp">
+      <Filter>Common\Managers\SystemManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\AudioManager.cpp">
+      <Filter>Common\Managers\SystemManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\AsyncTaskManager.cpp">
+      <Filter>Common\Managers\SystemManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\XboxUser.cpp">
+      <Filter>Common\Managers\UserManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\JoinFriendsMenu.cpp">
+      <Filter>Common\GameScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG ToolKit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG ToolKit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\PlayFabPartyManager.cpp">
+      <Filter>Common\Managers\Online</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\OptionsPopUpScreen.cpp">
+      <Filter>Common\Managers\GameManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\STTOverlayScreen.cpp">
+      <Filter>Common\Managers\GameManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\UserStartupScreen.cpp">
+      <Filter>Common\GameScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\XboxUserManager.cpp">
+      <Filter>Common\Managers\UserManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\IOnlineManager.cpp">
+      <Filter>Common\Managers\Online</Filter>
+    </ClCompile>
+    <ClCompile Include="MPAManager.cpp">
+      <Filter>Common\Managers\GameManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="FriendsManager.cpp">
+      <Filter>Common\Managers\GameManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\OnlineManager.cpp">
+      <Filter>Common\Managers\Online</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbyBrowserMenu.cpp">
+      <Filter>Common\GameScreens</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="..\Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Audio\powerup_spawn.wav">
+      <Filter>Assets\Audio</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Audio\powerup_touch.wav">
+      <Filter>Assets\Audio</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Audio\rocket.wav">
+      <Filter>Assets\Audio</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\asteroid0.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\asteroid1.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\asteroid2.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\asteroidX.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\asteroidX2.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\barrierEnd.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\barrierPurple.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\barrierRed.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\blank.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\chatAble.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\chatMute.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\chatTalking.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\clouds.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\Particles\defaultParticle.PNG">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\desertbackground.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\dreadnaught1.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\dreadnaught1Overlay.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\laser.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\mic.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\mine.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\Particles\particle.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\playfablogo.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\powerupDoubleLaser.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\powerupRocket.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\powerupTripleLaser.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\ready.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\rocket.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\ship0.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\ship0Overlay.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\ship1.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\ship1Overlay.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\ship2.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\ship2Overlay.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\ship3.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\ship3Overlay.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\ship4.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\ship4Overlay.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\shipShields.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\Particles\smoke.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\Particles\spark.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\text.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\title.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\title2.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\titleCP.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Textures\Xbox_One_Controller_Front.png">
+      <Filter>Assets\Textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Audio\asteroid_touch.wav">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Audio\explosion_large.wav">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Audio\explosion_medium.wav">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Audio\explosion_shockwave.wav">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Audio\fire_laser1.wav">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Audio\fire_laser2.wav">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Audio\fire_laser3.wav">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Audio\fire_rocket1.wav">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Audio\fire_rocket2.wav">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Audio\menu_scroll.wav">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Audio\menu_select.wav">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Audio\player_spawn.wav">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Fonts\SegoeUILight_72.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Fonts\SegoeUI_64.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Fonts\Consolas_32.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Fonts\NetRumble.spritefont">
+      <Filter>Assets\Fonts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Assets\Audio\OneStepBeyond.xwma">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="Configs\Scarlett\MicrosoftGameConfig.mgc">
+      <Filter>Configs\Scarlett</Filter>
+    </MGCCompile>
+    <MGCCompile Include="Configs\XboxOne\MicrosoftGameConfig.mgc">
+      <Filter>Configs\XboxOne</Filter>
+    </MGCCompile>
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\readme.md" />
+    <None Include="..\..\readme_ja-jp.md" />
+    <None Include="..\..\readme_ko-kr.md" />
+    <None Include="..\..\readme_zh-cn.md" />
+  </ItemGroup>
+</Project>

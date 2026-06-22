@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>17a40295-216e-4dff-bb10-753971a5e32a</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>2a0b5242-f39d-42d2-834f-f35135bdf8b9</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ATG Tool Kit">
+      <UniqueIdentifier>d2a936b9-bc21-4816-9aa4-839770f2aa37</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ATG Tool Kit\zlib">
+      <UniqueIdentifier>{1c60358a-1f4d-4e51-ab48-afc3c2981ca5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="SimpleMDU.h" />
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="CompressedDataStream.h" />
+    <ClInclude Include="DSQueueHandler.h" />
+    <ClInclude Include="InMemoryQueueHandler.h" />
+    <ClInclude Include="FromStorageQueueHandler.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\crc32.h">
+      <Filter>ATG Tool Kit\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\deflate.h">
+      <Filter>ATG Tool Kit\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\gzguts.h">
+      <Filter>ATG Tool Kit\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\inffast.h">
+      <Filter>ATG Tool Kit\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\inffixed.h">
+      <Filter>ATG Tool Kit\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\inftrees.h">
+      <Filter>ATG Tool Kit\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\inflate.h">
+      <Filter>ATG Tool Kit\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\zutil.h">
+      <Filter>ATG Tool Kit\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\zlib.h">
+      <Filter>ATG Tool Kit\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\zconf.h">
+      <Filter>ATG Tool Kit\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\zlib\include\trees.h">
+      <Filter>ATG Tool Kit\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="SimpleMDU.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="CompressedDataStream.cpp" />
+    <ClCompile Include="DSQueueHandler.cpp" />
+    <ClCompile Include="InMemoryQueueHandler.cpp" />
+    <ClCompile Include="FromStorageQueueHandler.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
+      <Filter>Assets</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\..\Kits\OpenSource\zlib\lib\Debug\zlibstatic.lib">
+      <Filter>ATG Tool Kit\zlib</Filter>
+    </Library>
+    <Library Include="..\..\..\Kits\OpenSource\zlib\lib\Release\zlibstatic.lib">
+      <Filter>ATG Tool Kit\zlib</Filter>
+    </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneController.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_24.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Readme.docx" />
+    <None Include="Readme_ja-JP.docx" />
+    <None Include="Readme_ko-KR.docx" />
+    <None Include="Readme_zh-CN.docx" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,33 @@
+//--------------------------------------------------------------------------------------
+// File: CSFeedbackResolve.cfx
+//
+// This is a compute shader that copies feedback map texels from an array texture UAV
+// into a linear buffer UAV.
+//
+// Copyright (c) Microsoft Corporation. All rights reserved.
+//--------------------------------------------------------------------------------------
+
+#include "RootSignature.hlsli"
+
+RWTexture2DArray<uint> SrcTexture : register(u0);
+RWBuffer<uint> DestBuffer : register(u1);
+
+cbuffer cb0 : register(b0)                                                                   
+{                                                                              
+    uint4 RowSliceStrides : packoffset(c0);                        
+};                                                                             
+
+[RootSignature(RS_FeedbackResolve)]
+[numthreads(8,8,1)]
+void main(
+    uint3 DTid : SV_DispatchThreadID
+)
+{
+    if (DTid.x < RowSliceStrides.x && DTid.y < RowSliceStrides.z)
+    {
+        uint DestCoord = DTid.x + (DTid.y * RowSliceStrides.x) + (DTid.z * RowSliceStrides.y) + RowSliceStrides.w;
+
+        uint Value = SrcTexture[DTid.xyz];
+        DestBuffer[DestCoord] = Value;
+    }
+}

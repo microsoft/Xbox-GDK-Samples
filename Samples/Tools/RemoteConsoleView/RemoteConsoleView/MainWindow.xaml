@@ -1,0 +1,34 @@
+﻿<Window x:Class="RemoteConsoleView.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xboxvideo="clr-namespace:Microsoft.Xbox.Tools.RemoteVideo;assembly=Microsoft.Xbox.Tools.RemoteVideo"
+        xmlns:local="clr-namespace:RemoteConsoleView"
+        mc:Ignorable="d"
+        Title="RemoteConsoleView" Height="450" Width="764">
+    <Grid>
+        <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="200"/>
+        <ColumnDefinition Width="1*"/>
+        <ColumnDefinition Width="2*"/>
+        <ColumnDefinition Width="1*"/>
+        <ColumnDefinition Width="1*"/>
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+        <RowDefinition Height="20"/>
+        <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    <TextBox Grid.Column="0" x:Name="NameText" Text="ConsoleName"/>
+    <Button Grid.Column="1" Content="Connect" Click="OnPlay" IsDefault="True"/>
+    <TextBlock Grid.Column="2" Text="{Binding ElementName=VideoControl, Path=StatusMessage}" Foreground="Red"/>
+    <CheckBox Grid.Column="3" x:Name="MuteButton" Content="Mute" VerticalAlignment="Center" HorizontalAlignment="Right" />
+    <Slider Grid.Column="4" x:Name="VolumeSlider" Maximum="100" Minimum="0" Value="100" VerticalAlignment="Center" Margin="4,0,4,0"/>
+    <xboxvideo:VideoStreamingControl 
+            x:Name="VideoControl" 
+            Grid.Row="1" Grid.ColumnSpan="5"
+            IsMuted="{Binding ElementName=MuteButton, Path=IsChecked, Mode=TwoWay}"
+            Volume="{Binding ElementName=VolumeSlider, Path=Value, Mode=TwoWay}"
+        />
+    </Grid>
+</Window>

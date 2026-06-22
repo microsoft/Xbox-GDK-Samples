@@ -1,29 +1,56 @@
----
-page_type: sample
-languages:
-- cpp
-products:
-- gdk
-urlFragment: "unityhandheldbestpractices"
-extendedZipContent:
-- path: LICENSE
-  target: LICENSE
-- path: Kits
-  target: Kits
-- path: Media
-  target: Media
-description: "This sample demonstrates the best practices for running a title on handheld devices in Unity."
----
+# Microsoft GDK Sample: Handheld Best Practices
 
-# UnityHandheldBestPractices
+**Relevant areas:** Handheld, Input, Audio, Graphics, CPU
 
-For more information see: 
-- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/Unity/System/UnityHandheldBestPractices/readme_en-us.md)
+# Description
 
-## Privacy statement
+This sample demonstrates the best practices for running a title on handheld devices, including how to:
 
-For more information about Microsoft's privacy policies in general, see the [Microsoft Privacy Statement](https://privacy.microsoft.com/privacystatement/).
+- Determine if the device is a handheld
+- Get various device properties
+- Get integrated display properties
+- Handle DPI changes and scale UI
+- Display the virtual keyboard for text entry, and get user-entered text
+- Determine network and Bluetooth connectivity
+- Determine network devices and types
+- Determine properties of current audio endpoint
+- Handle input from Gamepad, Keyboard and Mouse
+- Determine input modality (i.e. last input device used)
 
-## Trademarks
+![Screenshot of sample](./readme_images/HHBestPractices-001.png)
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
+# Running the Sample
+
+This sample does not use the GDK, so it can simply be run from the editor or built via __File > Build And Run__.
+
+# Notable Code Files
+
+**HandheldBestPracticesManager.cs**: Contains code for acquiring and displaying system information, as well as setting up listeners for input, audio, and memory changes.
+
+**DeviceInfo.cpp**: Uses Win32 APIs to get system information; exported in HandheldHelper.dll files
+
+**VirtualKeyboard.cpp**: Uses Windows Runtime APIs to show and hide the virtual keyboard; exported in HandheldHelper.dll files
+
+# Implementation Notes
+
+## Windows Runtime Functionality
+
+This sample uses as many of Unity's built-in functionalities as possible to obtain system information. However, at the time of writing, certain functionalities such as identifying if Bluetooth is enabled or using the WinRT virtual keyboard (without building for UWP) are not available. To expose these capabilities, the _HandheldHelper_ DLL project was created.
+
+The exported DLL's from this project are included in the `Plugins` directory for `x64` and `x86`. If further functionality is required, the source was included in the `HandheldHelper` project and can be extended. Simply rebuild the DLL's for both `x64` and `x86` targets, and replace the ones in the `Plugins` directory to update.
+
+## UI Scaling
+
+The `CanvasScaler` component for text and buttons was set up using the `Constant Physical Size` option. With conjunction with proper UI anchors and pivots, using this option ensures that the physical text size and placement are the same on any screen.
+
+Check [Unity's documentation](https://docs.unity3d.com/Packages/com.unity.ugui@2.0/manual/script-CanvasScaler.html) for more information on the Canvas Scaler.
+
+# Known Issues/Expectations
+
+- If a device is in desktop or mouse/keyboard mode, Gamepad inputs will not be recognized. Ensure
+the device is set to Gamepad mode via Armoury Crate or other OEM software.
+- The Gamepad virtual keyboard requires Windows 11 24H2 or greater. If the device is running
+an older version of Windows, the sample will not display the virtual keyboard.
+- When running on a device that isn't a handheld, you may see errors regarding
+GetDeviceScreenDiagonalSizeInInches and GetDeviceHDRStatus. These snippets are written
+to only look at integrated displays, which may not exist on non-handheld devices.

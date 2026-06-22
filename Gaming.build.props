@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--
+  This file sets up all the properties needed for building against the various Gaming SDKS (GXDK,
+  GRDK, GDK) and the WindowsSDK
+  -->
+
+  <!--
+  ****************************************************************************************************
+  Building without Installing BWOI Properties
+  ****************************************************************************************************
+  A number of properties need to be set so that the project system will be able to find the files it
+  needs from the extracted SDKs folder. Which properties need to be set will depend on what platforms
+  are targeted in the .vcxproj file(s) that are included in the solution that is being built
+  
+  Background "Hard" overrides vs. "Soft" overrides:
+  
+  Soft:
+  When you set a property in the environment or if you set it within a project file or .props file then
+  that is a "soft" override for the property. This is "soft" in the sense that the property can be
+  subsequently re-defined within the project system
+  * Soft overrides are more flexible because they can be affected by conditional defines
+  * When using soft overrides, you have to be careful how you define the properties and take into 
+    account whether the properties will be redefined etc.
+  
+  Hard:
+  When you set a property on the command line for msbuild via /p:<NAME>=<VALUE> or if you pass the
+  property in via the "Properties" attribute for an <MSBuild> task invocation then that will be a
+  "hard" override for the property. This is "hard" in the sense that any subsequent definitions for
+  the property within the project system will be ignored.
+  * Hard overrides are less flexible because they cannot be affected by Conditional defines
+  * Hard overrides are "clean" in the sense that they don't pollute the environment with extra properties
+  
+  The ATG BWOI implementation uses both hard and soft overrides:
+  * Hard overrides are used for BWOI-specific "meta" properties. These properties are consumed by the ATG
+    Build Hooks in order to define "soft" property overrides. The BWOI-specific properties are all defined
+    as Items in this file and are named using a leading underscore character.
+  * Currently using a hard override for the XDKEditionTarget. This is acceptable because this property 
+    is used consistently for all platforms
+    
+  * Soft overrides for properties are defined in the .props file that is referenced via the ATGBuildProps
+    value (see definition below). This props file contains conditional property definitions for the various 
+    platforms supported by the build system. This setup makes it possible to create a solution file 
+    and/or project file(s) that can build against several Platform targets:
+    E.g.: A solution file that contains both a Gaming.Xbox.XboxOne.x64 project and a x64 project
+    E.g. : A project file that supports both Gaming.Xbox.XboxOne.x64 and Gaming.Desktop.x64
+  -->
+  
+  <!--
+  GXDLBuildPropertyHooks specifies the ATGBuildProps property which value is the filename for
+  a .props file that will be conditionally imported. The .props file contain "soft" overrides
+  for build properties.
+  -->
+  <ItemGroup>
+    <GXDKBuildPropertyHooks Include="ATGBuildProps">
+      <VALUE>$(BranchRoot)Infrastructure\build\ATGBuildHooks.props</VALUE>
+    </GXDKBuildPropertyHooks>
+  </ItemGroup>
+
+  <!--
+  GXDK property overrides that are common between the GXDKBuildProperties and GXDKBuildCommandLineProperties
+  -->
+  <ItemGroup>
+    <GXDKBuildCommonProperties Include="XDKEditionTarget=$(XDKEditionTarget)" />
+    <GXDKBuildCommonProperties Include="SkipXVDDeploy=$(SkipXVDDeploy)" />
+  </ItemGroup>
+
+  <!--
+  The GXDKBuildFolders Item defines a collection of properties who's values are folders. 
+  The values of these properties may contain spaces are assumed to always end with '\'
+  These values are separated out because they need to have special treatment/quoting when passed as
+  command line arguments
+  -->
+  <ItemGroup>
+    <GXDKBuildFolders Include="_ExtractedWindowsSDKDir">
+      <VALUE>$(ExtractedFolder)Windows Kits\10\</VALUE>
+    </GXDKBuildFolders>
+    <GXDKBuildFolders Include="_ExtractedMicrosoftSDKs">
+      <VALUE>$(ExtractedFolder)Microsoft SDKs\</VALUE>
+    </GXDKBuildFolders>
+    <GXDKBuildFolders Include="_ExtractedMicrosoftGDK">
+      <VALUE>$(ExtractedFolder)Microsoft GDK\</VALUE>
+    </GXDKBuildFolders>
+    <GXDKBuildFolders Include="GDKPCEditionPath">
+      <VALUE>$(ExtractedFolder)Microsoft GDK\$(XDKEditionTarget)\GRDK\</VALUE>
+    </GXDKBuildFolders>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(VisualStudioVersion)' == '15.0'">
+    <GXDKBuildFolders Include="_XboxFlatDeploymentRoot">
+      <VALUE>$(ExtractedFolder)Microsoft GDK\$(XDKEditionTarget)\GXDK\</VALUE>
+    </GXDKBuildFolders>
+    <GXDKBuildFolders Include="_DesktopFlatDeploymentRoot">
+      <VALUE>$(ExtractedFolder)Microsoft GDK\$(XDKEditionTarget)\GRDK\</VALUE>
+    </GXDKBuildFolders>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(VisualStudioVersion)' == '16.0'">
+    <GXDKBuildFolders Condition="'$(XDKEditionTarget)' &lt; '241000'" Include="_AlternativeVCTargetsPath150">
+      <VALUE>$(ExtractedFolder)VCTargets150\</VALUE>
+    </GXDKBuildFolders>
+    <GXDKBuildFolders Include="_AlternativeVCTargetsPath160">
+      <VALUE>$(ExtractedFolder)VCTargets160\</VALUE>
+    </GXDKBuildFolders>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(VisualStudioVersion)' == '17.0'">
+    <GXDKBuildFolders Condition="'$(XDKEditionTarget)' &lt; '241000'" Include="_AlternativeVCTargetsPath150">
+      <VALUE>$(ExtractedFolder)VCTargets150\</VALUE>
+    </GXDKBuildFolders>
+    <GXDKBuildFolders Include="_AlternativeVCTargetsPath160">
+      <VALUE>$(ExtractedFolder)VCTargets160\</VALUE>
+    </GXDKBuildFolders>
+    <GXDKBuildFolders Include="_AlternativeVCTargetsPath170">
+      <VALUE>$(ExtractedFolder)VCTargets170\</VALUE>
+    </GXDKBuildFolders>
+  </ItemGroup>
+
+  <!--
+  The GXDKBuildProperties Item takes a form that is suitable for using with the <MSBuild> build task
+  -->
+  <ItemGroup>
+    <GXDKBuildProperties Include="@(GXDKBuildCommonProperties)" />
+    <GXDKBuildProperties Include="@(GXDKBuildPropertyHooks->'%(Identity)=%(VALUE)')" />
+    <GXDKBuildProperties Include="@(GXDKBuildFolders->'%(Identity)=%(VALUE)')" />
+  </ItemGroup>
+
+  <!--
+  The GXDKBuildCommandLineProperties Item takes a form that is suitable for using on the msbuild.exe
+  command line
+  -->
+  <ItemGroup>
+    <GXDKBuildCommandLineProperties Include="@(GXDKBuildCommonProperties)" />
+    <GXDKBuildCommandLineProperties Include="@(GXDKBuildPropertyHooks->'%(Identity)=&quot;%(VALUE)&quot;')" />
+    <GXDKBuildCommandLineProperties Include="@(GXDKBuildFolders->'%(Identity)=&quot;%(VALUE)\&quot;')" />
+  </ItemGroup>
+
+</Project>
