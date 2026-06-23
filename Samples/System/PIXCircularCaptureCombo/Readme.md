@@ -1,32 +1,51 @@
----
-page_type: sample
-languages:
-- cpp
-products:
-- gdk
-urlFragment: "pixcircularcapturecombo"
-extendedZipContent:
-- path: LICENSE
-  target: LICENSE
-- path: Kits
-  target: Kits
-- path: Media
-  target: Media
-description: "This sample shows how to use the PIX[Begin/End]Capture APIs to implement a circular buffer of captures."
----
+  ![](./media/image1.png)
 
-# PIXCircularCaptureCombo
+#   SimpleDirectStorageCombo Sample
 
-For more information see: 
-- [Readme](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/PIXCircularCaptureCombo/readme_en-us.md)
-- [Readme 日本語](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/PIXCircularCaptureCombo/readme_ja-jp.md)
-- [Readme 한국어](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/PIXCircularCaptureCombo/readme_ko-kr.md)
-- [Readme 中文 (简体)](https://github.com/microsoft/Xbox-GDK-Samples/blob/main/Samples/System/PIXCircularCaptureCombo/readme_zh-cn.md)
+*This sample is compatible with the Microsoft Game Development Kit (October
+2023)*
 
-## Privacy statement
+# Description
 
-For more information about Microsoft's privacy policies in general, see the [Microsoft Privacy Statement](https://privacy.microsoft.com/privacystatement/).
+This sample shows how to use the Circular mode of the PIXBeginCapture API
+to be always recording performance data into a circular buffer, and then save
+the buffer to a capture file on demand.
 
-## Trademarks
+# Building the sample
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
+This sample supports the following platforms
+
+-   Gaming.Scarlett.xbox.x64
+-   Gaming.XboxOne.xbox.x64
+
+*For more information, see* __Running samples__, *in the GDK documentation.*
+
+# Using the sample
+
+The sample will automatically start capturing in a circular buffer. 
+Every 1000 frames, or when the 'a' button is pressed, the sample will 
+save the capture to a file and then restart the capture. If the 'b' button
+is pressed the buffer is flushed but the capture is discarded.
+
+# Implementation notes
+
+On Xbox, the API produces a 'pevt' file that must be converted to a Timing Capture
+via the PIX UI.
+
+The Xbox version of PIXEndCapture is asynchronous and returns E_PENDING until the
+capture is fully stopped.
+
+# Update history
+
+Initial release October 2023
+
+# Privacy statement
+
+When compiling and running a sample, the file name of the sample
+executable will be sent to Microsoft to help track sample usage. To
+opt-out of this data collection, you can remove the block of code in
+Main.cpp labeled "Sample Usage Telemetry".
+
+For more information about Microsoft's privacy policies in general, see
+the [Microsoft Privacy
+Statement](https://privacy.microsoft.com/en-us/privacystatement/).

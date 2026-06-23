@@ -37,6 +37,7 @@
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
     <GDKCrossPlatform>true</GDKCrossPlatform>
     <VcpkgEnableManifest>true</VcpkgEnableManifest>
+    <VcpkgTriplet>x64-windows</VcpkgTriplet>
   </PropertyGroup>
   <Import Condition="Exists($(ATGBuildProps))" Project="$(ATGBuildProps)" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

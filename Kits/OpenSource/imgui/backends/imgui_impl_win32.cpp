@@ -893,6 +893,7 @@ typedef DPI_AWARENESS_CONTEXT(WINAPI* PFN_SetThreadDpiAwarenessContext)(DPI_AWAR
 // Helper function to enable DPI awareness without setting up a manifest
 void ImGui_ImplWin32_EnableDpiAwareness()
 {
+#ifndef _GAMING_XBOX
     if (_IsWindows10OrGreater())
     {
         static HINSTANCE user32_dll = ::LoadLibraryA("user32.dll"); // Reference counted per-process
@@ -916,6 +917,7 @@ void ImGui_ImplWin32_EnableDpiAwareness()
 #if _WIN32_WINNT >= 0x0600 && !defined(_GAMING_XBOX)
     ::SetProcessDPIAware();
 #endif
+#endif // _GAMING_XBOX
 }
 
 #if defined(_MSC_VER) && !defined(NOGDI)

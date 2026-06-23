@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Distribution Directory.Build.props: Disables code analysis and auto-detects vcpkg.
+     VcpkgRoot detection and VCPkgLocalAppDataDisabled must live in .props (imported before
+     Microsoft.Cpp.props) so that stale vcpkg-integrate-install hooks are blocked early. -->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <!-- Auto-detect vcpkg root: VCPKG_ROOT env > VS-bundled > repo-local. -->
+  <PropertyGroup Condition="'$(VcpkgRoot)' == ''">
+    <VcpkgRoot Condition="'$(VCPKG_ROOT)' != '' AND Exists('$(VCPKG_ROOT)\scripts\buildsystems\msbuild\vcpkg.targets')">$(VCPKG_ROOT)</VcpkgRoot>
+    <VcpkgRoot Condition="'$(VcpkgRoot)' == '' AND '$(VSINSTALLDIR)' != '' AND Exists('$(VSINSTALLDIR)VC\vcpkg\scripts\buildsystems\msbuild\vcpkg.targets')">$(VSINSTALLDIR)VC\vcpkg</VcpkgRoot>
+    <!-- Derive VS root from MSBuildExtensionsPath (<VSRoot>\MSBuild) when VSINSTALLDIR is not set. -->
+    <VcpkgRoot Condition="'$(VcpkgRoot)' == '' AND Exists('$(MSBuildExtensionsPath)\..\VC\vcpkg\scripts\buildsystems\msbuild\vcpkg.targets')">$([System.IO.Path]::GetFullPath('$(MSBuildExtensionsPath)\..\VC\vcpkg'))</VcpkgRoot>
+    <VcpkgRoot Condition="'$(VcpkgRoot)' == '' AND Exists('$(MSBuildThisFileDirectory)vcpkg\scripts\buildsystems\msbuild\vcpkg.targets')">$(MSBuildThisFileDirectory)vcpkg</VcpkgRoot>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(VcpkgRoot)' != ''">
+    <VCPkgLocalAppDataDisabled>true</VCPkgLocalAppDataDisabled>
+  </PropertyGroup>
+</Project>

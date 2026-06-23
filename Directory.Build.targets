@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Distribution Directory.Build.targets: Imports vcpkg.targets from VcpkgRoot detected
+     in Directory.Build.props. VCPkgLocalAppDataDisabled (set in .props) prevents stale
+     vcpkg-integrate-install hooks from loading a different vcpkg version. -->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Condition="'$(VcpkgRoot)' != '' AND Exists('$(VcpkgRoot)\scripts\buildsystems\msbuild\vcpkg.targets')" Project="$(VcpkgRoot)\scripts\buildsystems\msbuild\vcpkg.targets" />
+  <!-- Emit a clear error when a project needs vcpkg but no vcpkg installation was found.
+       Without this, the build fails with cryptic 'Cannot open include file' errors. -->
+  <Target Name="_CheckVcpkgAvailable"
+          BeforeTargets="ClCompile"
+          Condition="'$(VcpkgRoot)' == '' AND ('$(VcpkgEnabled)' == 'true' OR '$(VcpkgEnableManifest)' == 'true')">
+    <Error Text="This project requires vcpkg but no vcpkg installation was found. Install the 'vcpkg package manager' component in the Visual Studio Installer, or set the VCPKG_ROOT environment variable to a standalone vcpkg installation." />
+  </Target>
+</Project>
