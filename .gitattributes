@@ -1,7 +1,6 @@
-# Auto detect text files and perform LF normalization
 * text=auto
-
 # Explicitly declare code/VS files as CRLF
+*.cs eol=crlf
 *.cpp eol=crlf
 *.cmd eol=crlf
 *.h eol=crlf
@@ -11,17 +10,82 @@
 *.fxh eol=crlf
 *.inc eol=crlf
 *.inl eol=crlf
+*.csproj eol=crlf
 *.vcxproj eol=crlf
 *.filters eol=crlf
 *.sln eol=crlf
-
-# Explicitly declare resource files as binary
-*.docx binary
-*.pdb binary
-*.dds binary
-*.sdkmesh binary
-*.spritefont binary
-*.wav binary
-*.xwb binary
-*.jpg binary
-*.png binary
+# Binary
+*.bin filter=lfs diff=lfs merge=lfs -text
+*.BIN filter=lfs diff=lfs merge=lfs -text
+*.exe filter=lfs diff=lfs merge=lfs -text
+*.dll filter=lfs diff=lfs merge=lfs -text
+*.pdb filter=lfs diff=lfs merge=lfs -text
+*.pdn filter=lfs diff=lfs merge=lfs -text
+*.vsix filter=lfs diff=lfs merge=lfs -text
+*.*_ filter=lfs diff=lfs merge=lfs -text
+# Assets
+*.xbtc filter=lfs diff=lfs merge=lfs -text
+*.fbx filter=lfs diff=lfs merge=lfs -text
+*.glb filter=lfs diff=lfs merge=lfs -text
+*.gltf filter=lfs diff=lfs merge=lfs -text
+*.mb filter=lfs diff=lfs merge=lfs -text
+*.rasterfont filter=lfs diff=lfs merge=lfs -text
+*.sdkmesh filter=lfs diff=lfs merge=lfs -text
+*.sdkmesh_anim filter=lfs diff=lfs merge=lfs -text
+*.spritefont filter=lfs diff=lfs merge=lfs -text
+*.ttf filter=lfs diff=lfs merge=lfs -text
+*.otf filter=lfs diff=lfs merge=lfs -text
+# Unity Assets
+*.unitypackage filter=lfs diff=lfs merge=lfs -text
+# Images
+*.bmp filter=lfs diff=lfs merge=lfs -text
+*.BMP filter=lfs diff=lfs merge=lfs -text
+*.dds filter=lfs diff=lfs merge=lfs -text
+*.DDS filter=lfs diff=lfs merge=lfs -text
+*.gif filter=lfs diff=lfs merge=lfs -text
+*.hdr filter=lfs diff=lfs merge=lfs -text
+*.jpg filter=lfs diff=lfs merge=lfs -text
+*.JPG filter=lfs diff=lfs merge=lfs -text
+*.jpeg filter=lfs diff=lfs merge=lfs -text
+*.pfm filter=lfs diff=lfs merge=lfs -text
+*.png filter=lfs diff=lfs merge=lfs -text
+*.PNG filter=lfs diff=lfs merge=lfs -text
+*.svg filter=lfs diff=lfs merge=lfs -text
+*.tga filter=lfs diff=lfs merge=lfs -text
+*.TGA filter=lfs diff=lfs merge=lfs -text
+*.tif filter=lfs diff=lfs merge=lfs -text
+*.TIF filter=lfs diff=lfs merge=lfs -text
+*.tiff filter=lfs diff=lfs merge=lfs -text
+*.wdp filter=lfs diff=lfs merge=lfs -text
+# Video/Audio
+*.mp4 filter=lfs diff=lfs merge=lfs -text
+*.wav filter=lfs diff=lfs merge=lfs -text
+*.xwb filter=lfs diff=lfs merge=lfs -text
+*.xwma filter=lfs diff=lfs merge=lfs -text
+*.ogg filter=lfs diff=lfs merge=lfs -text
+# Misc
+*.docx filter=lfs diff=lfs merge=lfs -text
+*.pptx filter=lfs diff=lfs merge=lfs -text
+*.xvd filter=lfs diff=lfs merge=lfs -text
+*.zip filter=lfs diff=lfs merge=lfs -text
+*.snk filter=lfs diff=lfs merge=lfs -text
+*.AlignmentChunk filter=lfs diff=lfs merge=lfs -text
+# Exceptions needed for build
+*.lib -text
+Infrastructure/Policheck/*.mdb filter= diff= merge= -text
+Infrastructure/Automation/dependencies/XTF/*.dll filter= diff= merge= -text
+Infrastructure/Tools/InstallerWait.exe filter= diff= merge= -text
+Infrastructure/Tools/nuget.exe filter= diff= merge= -text
+Samples/Live/GameService/Game_Service_Configuration_and_Documentation.docx filter=lfs diff=lfs merge=lfs -text
+Samples/Live/GameService/Readme.docx filter=lfs diff=lfs merge=lfs -text
+Samples/Live/MicrosoftStoreService/MicrosoftStoreService/Microsoft_Store_Service_Configuration_and_Documentation.docx filter=lfs diff=lfs merge=lfs -text
+Samples/Live/MicrosoftStoreService/MicrosoftStoreService/Readme.docx filter=lfs diff=lfs merge=lfs -text
+Samples/_Deprecated/GameService_LegacyXTokens/GameService_ReadMe_ja-jp.docx filter=lfs diff=lfs merge=lfs -text
+Samples/_Deprecated/GameService_LegacyXTokens/GameService_ReadMe_ko-kr.docx filter=lfs diff=lfs merge=lfs -text
+Samples/_Deprecated/GameService_LegacyXTokens/GameService_ReadMe_zh-cn.docx filter=lfs diff=lfs merge=lfs -text
+Samples/_Deprecated/GameService_LegacyXTokens/LocalizedDocumentation/Game_Service_Readme_ja-jp.docx filter=lfs diff=lfs merge=lfs -text
+Samples/_Deprecated/GameService_LegacyXTokens/LocalizedDocumentation/Game_Service_Readme_ko-kr.docx filter=lfs diff=lfs merge=lfs -text
+Samples/_Deprecated/GameService_LegacyXTokens/LocalizedDocumentation/Game_Service_Readme_zh-cn.docx filter=lfs diff=lfs merge=lfs -text
+Kits/AMDTK/fidelityfx/tools/binary_store/FidelityFX_SC.exe filter= diff= merge= -text
+Kits/AMDTK/fidelityfx/tools/binary_store/glslangValidator.exe filter= diff= merge= -text
+Wiki/Media/*.png filter= diff= merge= -text

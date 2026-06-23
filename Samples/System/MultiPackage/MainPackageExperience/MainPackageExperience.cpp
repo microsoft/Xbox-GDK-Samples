@@ -11,7 +11,7 @@
 #include "ATGColors.h"
 #include "FindMedia.h"
 #include "XLauncher.h"
-#include "XGameProtocol.h"
+#include <XGameActivation.h>
 
 extern void ExitSample() noexcept;
 
@@ -21,12 +21,15 @@ using namespace ATG::UITK;
 using Microsoft::WRL::ComPtr;
 
 // Handle the custom URI when this package is launched from a custom protocol.
-void CALLBACK CustomProtocolCallback(void* context, const char* protocolUri)
+void CALLBACK CustomProtocolCallback(void* context, const XGameActivationInfo* activationInfo)
 {
-    Sample* pThis = reinterpret_cast<Sample*>(context);
-    std::string protocolDescription = "Launched with protocol: ";
-    protocolDescription.append(protocolUri);
-    pThis->Log(protocolDescription);
+    if (activationInfo->type == XGameActivationType::Protocol && activationInfo->protocolUri != nullptr)
+    {
+        Sample* pThis = reinterpret_cast<Sample*>(context);
+        std::string protocolDescription = "Launched with protocol: ";
+        protocolDescription.append(activationInfo->protocolUri);
+        pThis->Log(protocolDescription);
+    }
 }
 
 Sample::Sample() noexcept(false) :
@@ -39,7 +42,7 @@ Sample::Sample() noexcept(false) :
 
 Sample::~Sample()
 {
-    XGameProtocolUnregisterForActivation(m_protocolRegistrationToken, false);
+    XGameActivationUnregisterForEvent(m_protocolRegistrationToken, false);
     XTaskQueueTerminate(m_taskQueue, false, nullptr, nullptr);
     XTaskQueueDispatch(m_taskQueue, XTaskQueuePort::Work, INFINITE);
     XTaskQueueDispatch(m_taskQueue, XTaskQueuePort::Completion, INFINITE);
@@ -79,14 +82,14 @@ void Sample::Initialize(HWND window, int width, int height)
         XTaskQueueDispatchMode::ThreadPool,
         &m_taskQueue));
 
-    HRESULT result = XGameProtocolRegisterForActivation(m_taskQueue, this, CustomProtocolCallback, &m_protocolRegistrationToken);
+    HRESULT result = XGameActivationRegisterForEvent(m_taskQueue, this, CustomProtocolCallback, &m_protocolRegistrationToken);
     if (result == S_OK)
     {
         Log("Successfully registered a callback for protocol activation.");
     }
     else
     {
-        LogFailedHR(result,"XGameProtocolRegisterForActivation");
+        LogFailedHR(result,"XGameActivationRegisterForEvent");
     }
 
     RegisterUIEventHandlers();

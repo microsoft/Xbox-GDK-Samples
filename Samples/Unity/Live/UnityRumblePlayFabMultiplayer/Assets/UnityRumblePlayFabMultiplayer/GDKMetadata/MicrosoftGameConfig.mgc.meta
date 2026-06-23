@@ -1,0 +1,79 @@
+fileFormatVersion: 2
+guid: 3a22716d5ad10094ba8d977e80bc72fe
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 3e8e5a87a551bfc45aa0ac07bcf83cf4, type: 3}
+  titleId: 664cd024
+  sCID: 00000000-0000-0000-0000-0000664cd024
+  mSAAppId: 000000004C7F5E0C
+  identityName: 41336MicrosoftATG.PlayFabMultiplayerRumble
+  identityPublisher: CN=A4954634-DF4B-47C7-AB70-D3215D246AF1
+  identityVersion: 1.2.0.0
+  storeId: 9P9KXF2Q0KT8
+  languagePairResources:
+    keys:
+    - en_US
+    - en_CA
+    - en_AU
+    - en_GB
+    - en_NZ
+    - en_IE
+    - en_CZ
+    - en_GR
+    - en_HK
+    - en_HU
+    - en_IN
+    - en_IL
+    - en_SA
+    - en_SG
+    - en_SK
+    - en_ZA
+    - en_AE
+    - ar_AE
+    - ar_SA
+    - cs_CZ
+    - nl_BE
+    - nl_NL
+    - fr_FR
+    - fr_CA
+    - fr_BE
+    - fr_CH
+    - it_IT
+    - es_AR
+    - es_ES
+    - es_MX
+    - es_CL
+    - es_CO
+    - de_DE
+    - de_AT
+    - de_CH
+    - he_IL
+    - hu_HU
+    - pt_PT
+    - pt_BR
+    - ru_RU
+    - pl_PL
+    - zh_CN
+    - zh_HK
+    - zh_SG
+    - zh_TW
+    - da_DK
+    - fi_FI
+    - ja_JP
+    - nb_NO
+    - ko_KR
+    - sk_SK
+    - sv_SE
+    - tr_TR
+    values: 0100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  shellVisualsResourcePath: {fileID: 102900000, guid: dbccfc97b4fe8f9409f299270e7338a9,
+    type: 3}
+  builtResourcesPriPath: {fileID: 102900000, guid: dbccfc97b4fe8f9409f299270e7338a9,
+    type: 3}
+  contentIdOverride: 
+  eKBIDOverride: 
