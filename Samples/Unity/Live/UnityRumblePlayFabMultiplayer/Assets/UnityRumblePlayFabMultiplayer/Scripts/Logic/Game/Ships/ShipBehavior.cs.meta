@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 3b55e4ec992fa43b6a00d4d0e7bf6ba9
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - ShipBaseSprite: {fileID: 21300000, guid: 98325c70ad2a14c8bbe333dc4d1b549e, type: 3}
+  - ShipOverlaySprite: {fileID: 21300000, guid: 42131fb0d2bd244f2aac4d2ae7fbe8d7,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

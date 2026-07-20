@@ -23,9 +23,6 @@
     <Filter Include="Assets\Fonts">
       <UniqueIdentifier>{e65d62dc-259e-43b0-8218-b3da56bbcc65}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts">
-      <UniqueIdentifier>{8e5bda05-932a-4f52-b6ce-d12989d7c691}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -168,9 +165,6 @@
     <None Include="Readme_ko-KR.docx" />
     <None Include="Readme_zh-CN.docx" />
     <None Include="Readme.docx" />
-    <None Include="Scripts\Desktop.PostBuild.bat">
-      <Filter>Scripts</Filter>
-    </None>
     <CopyFileToFolders Include="Assets\Fonts\XboxOneControllerLegendSmall.spritefont">
       <Filter>Assets\Fonts</Filter>
     </CopyFileToFolders>

@@ -240,6 +240,11 @@ void DeviceResources::CreateDeviceResources()
             // Workarounds for debug layer issues on hybrid-graphics systems
             D3D12_MESSAGE_ID_EXECUTECOMMANDLISTS_WRONGSWAPCHAINBUFFERREFERENCE,
             D3D12_MESSAGE_ID_RESOURCE_BARRIER_MISMATCHING_COMMAND_LIST_TYPE,
+            // The AMD FidelityFX frame interpolation swap chain performs cross-queue
+            // synchronization on internal fences that are still at value 0 on the first
+            // frame. Waiting for a fence value of 0 always succeeds, so this warning is
+            // benign and comes from third-party middleware we do not own.
+            D3D12_MESSAGE_ID_FENCE_ZERO_WAIT,
         };
         D3D12_INFO_QUEUE_FILTER filter = {};
         filter.DenyList.NumIDs = static_cast<UINT>(std::size(hide));

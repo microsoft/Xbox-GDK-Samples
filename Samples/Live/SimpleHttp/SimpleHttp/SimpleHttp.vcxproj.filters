@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Common">
@@ -16,9 +16,6 @@
     </Filter>
     <Filter Include="External">
       <UniqueIdentifier>2242d999-ad99-42a6-82a5-0b3f58ad96b6</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts">
-      <UniqueIdentifier>{bf98768e-025d-4970-8800-4125f11f4359}</UniqueIdentifier>
     </Filter>
     <Filter Include="Assets\Layouts">
       <UniqueIdentifier>{6ed3dfb4-7c86-4a4e-b71c-432c77a99261}</UniqueIdentifier>
@@ -111,9 +108,6 @@
     <None Include="Readme_ja-JP.docx" />
     <None Include="Readme_ko-KR.docx" />
     <None Include="Readme_zh-CN.docx" />
-    <None Include="Scripts\Desktop.PostBuild.bat">
-      <Filter>Scripts</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Assets\Logo.png">

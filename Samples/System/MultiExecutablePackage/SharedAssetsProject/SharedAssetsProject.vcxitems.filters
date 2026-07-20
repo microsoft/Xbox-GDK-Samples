@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UserManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UITKLogManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UtilityProcessManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)UserManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UITKLogManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UtilityProcessManager.cpp" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,8 @@
+<Package>
+  <Chunk Id="1000" Marker="Launch">
+    <FileGroup DestinationPath="." SourcePath="." Include="*.*" />
+    <FileGroup DestinationPath=".\Alternat.0aa09b0a.tlog" SourcePath=".\Alternat.0aa09b0a.tlog" Include="*.*" />
+    <FileGroup DestinationPath=".\Assets" SourcePath=".\Assets" Include="*.*" />
+    <FileGroup DestinationPath=".\Assets\Fonts" SourcePath=".\Assets\Fonts" Include="*.*" />
+  </Chunk>
+</Package>

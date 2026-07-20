@@ -1,0 +1,24 @@
+{
+  "operationName": "PublishPackages",
+
+  "productId": "",
+  "bigId": "9N3KNR1TDV5V",
+
+  "flightName": "",
+  
+  "branchFriendlyName": "Main",
+  "destinationSandboxName": "XDKS.1",
+
+  "minutesToWaitForPublishing": 60,
+  
+  "publishConfiguration": {
+    "releaseTime": "",
+    "IsManualPublish" : false,
+    "CertificationNotes": "No Notes for CERT at this time"
+  },
+
+  "aadAuthInfo": {
+    "clientId": "2d452b4f-564b-4c2c-9440-de31cde51e99",
+    "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+  }
+} 

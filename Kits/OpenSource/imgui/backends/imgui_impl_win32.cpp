@@ -26,6 +26,7 @@
 
 // CHANGELOG
 // (minor and older changes stripped away, please see git history for details)
+//  2025-12-03: Inputs: handle WM_IME_CHAR/WM_IME_COMPOSITION messages to support Unicode inputs on MBCS (non-Unicode) Windows. (#9099, #3653, #5961)
 //  2025-09-23: Inputs: Minor optimization not submitting gamepad input if packet number has not changed.
 //  2025-09-18: Call platform_io.ClearPlatformHandlers() on shutdown.
 //  2025-04-30: Inputs: Fixed an issue where externally losing mouse capture (due to e.g. focus loss) would fail to claim it again the next subsequent click. (#8594)
@@ -809,10 +810,30 @@ IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandlerEx(HWND hwnd, UINT msg, WPA
 #endif
         {
             wchar_t wch = 0;
-            ::MultiByteToWideChar(bd->KeyboardCodePage, MB_PRECOMPOSED, (char*)&wParam, 1, &wch, 1);
+            ::MultiByteToWideChar(bd->KeyboardCodePage, MB_PRECOMPOSED, (char*)&wParam, 2, &wch, 1);
             io.AddInputCharacter(wch);
         }
         return 0;
+#ifndef _GAMING_XBOX
+    case WM_IME_COMPOSITION:
+    {
+        // Handling WM_IME_COMPOSITION ensure that WM_IME_CHAR value is correct even for MBCS apps.
+        // (see #9099, #3653 and https://stackoverflow.com/questions/77450354 topics)
+        LRESULT result = ::DefWindowProcW(hwnd, msg, wParam, lParam);
+        return (lParam & GCS_RESULTSTR) ? 1 : result;
+    }
+    case WM_IME_CHAR:
+        if (::IsWindowUnicode(hwnd) == FALSE)
+        {
+            if (::IsDBCSLeadByte(HIBYTE(wParam)))
+                wParam = (WPARAM)MAKEWORD(HIBYTE(wParam), LOBYTE(wParam));
+            wchar_t wch = 0;
+            ::MultiByteToWideChar(bd->KeyboardCodePage, MB_PRECOMPOSED, (char*)&wParam, 2, &wch, 1);
+            io.AddInputCharacterUTF16(wch);
+            return 1;
+        }
+        return 0;
+#endif
     case WM_SETCURSOR:
         // This is required to restore cursor when transitioning from e.g resize borders to client area.
         if (LOWORD(lParam) == HTCLIENT && ImGui_ImplWin32_UpdateMouseCursor(io, bd->LastMouseCursor))
@@ -893,6 +914,7 @@ typedef DPI_AWARENESS_CONTEXT(WINAPI* PFN_SetThreadDpiAwarenessContext)(DPI_AWAR
 // Helper function to enable DPI awareness without setting up a manifest
 void ImGui_ImplWin32_EnableDpiAwareness()
 {
+#ifndef _GAMING_XBOX
     if (_IsWindows10OrGreater())
     {
         static HINSTANCE user32_dll = ::LoadLibraryA("user32.dll"); // Reference counted per-process
@@ -916,6 +938,7 @@ void ImGui_ImplWin32_EnableDpiAwareness()
 #if _WIN32_WINNT >= 0x0600 && !defined(_GAMING_XBOX)
     ::SetProcessDPIAware();
 #endif
+#endif // _GAMING_XBOX
 }
 
 #if defined(_MSC_VER) && !defined(NOGDI)

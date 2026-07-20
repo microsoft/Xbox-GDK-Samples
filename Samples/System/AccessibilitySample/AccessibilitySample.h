@@ -5,67 +5,32 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.
 //--------------------------------------------------------------------------------------
 
-#include "DeviceResources.h"
-#include "StepTimer.h"
-#include "imgui.h"
-#include "backends/imgui_impl_dx12.h"
-#include "backends/imgui_impl_win32.h"
-#include "ATG/imgui_allocator.h"
+#pragma once
+
 #include "ImGuiAcc.h"
 
-// A basic sample implementation that creates a D3D12 device and
-// provides a render loop.
-class Sample final : public DX::IDeviceNotify
+class Sample
 {
 public:
-
-    Sample() noexcept(false);
+    Sample() = default;
     ~Sample();
-
-    Sample(Sample&&) = default;
-    Sample& operator= (Sample&&) = default;
 
     Sample(Sample const&) = delete;
     Sample& operator= (Sample const&) = delete;
 
-    // Initialization and management
-    void Initialize(HWND window, int width, int height);
+    void Initialize(HWND window);
+    void Update();
+    void Draw();
+    void Shutdown();
+    void Activated();
+    void Deactivated();
+    LRESULT WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-    // Basic render loop
-    void Tick();
-
-    // IDeviceNotify
-    void OnDeviceLost() override;
-    void OnDeviceRestored() override;
-
-    // Messages
-    void OnActivated() {}
-    void OnDeactivated() {}
-    void OnSuspending();
-    void OnResuming();
-    void OnWindowMoved();
-    void OnWindowSizeChanged(int width, int height);
-
-    // Properties
-    void GetDefaultSize(int& width, int& height) const noexcept;
-
+#ifdef _GAMING_XBOX
+    void Suspend(ImGuiAtg::DeviceContext* dc);
+    void Resume(ImGuiAtg::DeviceContext* dc);
+#endif
 
 private:
-    void Render();
-
-    void Clear();
-
-    void CreateDeviceDependentResources();
-
-    // Device resources.
-    std::unique_ptr<DX::DeviceResources>        m_deviceResources;
-
-    // Rendering loop timer.
-    uint64_t                                    m_frame;
-    DX::StepTimer                               m_timer;
-
-    // Descriptor heap for ImGui
-    DescriptorHeapAllocator                     m_pd3dSrvDescHeapAlloc;
-
-    ImGuiAcc* imguiAcc = nullptr;
+    ImGuiAcc*   m_imguiAcc = nullptr;
 };
