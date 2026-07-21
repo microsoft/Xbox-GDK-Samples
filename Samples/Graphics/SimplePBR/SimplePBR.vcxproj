@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Gaming.Xbox.Scarlett.x64">
@@ -786,7 +786,6 @@
     <None Include="readme_zh-cn.md" />
     <None Include="readme.md" />
     <None Include="..\..\NuGet.config" />
-    <None Include="Scripts\Desktop.PostBuild.bat" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\..\..\Kits\ATGTK\Skybox\SkyboxEffect_PS.hlsl">

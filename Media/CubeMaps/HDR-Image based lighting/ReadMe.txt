@@ -1,0 +1,4 @@
+A series of HDR radiance and irradiance cubemaps created from panoramas of the Microsoft Commons campus. These are original and can be freely distributed. 
+These are HDR images designed for Image Based Lighting created specifically for Mini-Engine. There are two cubes for each scene which are called diffuse and specular. These are often referred to as irradiance and radiance in PBR documentation. The Specular/Radiance map has additional blurring in higher mips to facilitate representing different levels of roughness in materials and are sometimes referred to as PMREM
+In addition to the full 1024px per face specular and 128px per face resolution version, there are lower resolution versions of the maps. These are designated with the letters H for half linear resolution, Q for quarter linear resolution, and E for eighth linear resolution.
+Dave McCoy

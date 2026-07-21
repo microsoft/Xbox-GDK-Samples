@@ -1,0 +1,2 @@
+cd .\doxy
+doxygen Doxyfile

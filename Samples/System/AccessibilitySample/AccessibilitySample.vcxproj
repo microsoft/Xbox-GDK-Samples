@@ -55,6 +55,7 @@
     <ProjectGuid>{acdb529c-7d1c-4036-a7f9-0beee2f397b8}</ProjectGuid>
     <DefaultLanguage>en-US</DefaultLanguage>
     <Keyword>Win32Proj</Keyword>
+    <AtgImGuiSample>true</AtgImGuiSample>
     <!-- - - - -->
     <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
     <TargetRuntime>Native</TargetRuntime>
@@ -457,42 +458,30 @@
       <DestinationFolders>$(OutDir)Assets</DestinationFolders>
     </CopyFileToFolders>
     <ClCompile>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch.h</ForcedIncludeFiles>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">pch.h</ForcedIncludeFiles>
       <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</ForcedIncludeFiles>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">pch.h</ForcedIncludeFiles>
       <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">pch.h</ForcedIncludeFiles>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Profile|ARM64'">pch.h</ForcedIncludeFiles>
       <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">pch.h</ForcedIncludeFiles>
       <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">pch.h</ForcedIncludeFiles>
       <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">pch.h</ForcedIncludeFiles>
       <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">pch.h</ForcedIncludeFiles>
       <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">pch.h</ForcedIncludeFiles>
       <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">pch.h</ForcedIncludeFiles>
       <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -687,28 +676,35 @@
     </FXCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\d3dx12.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_allocator.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_atg.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_atg_file.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\Json.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\imgui\imgui_atg.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\imgui\imgui_atg_file.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\imgui\imgui_atg_device_context.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_dx12.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_win32.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_ps.h" />
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_ps_point.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_rs.h" />
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_rs_point.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_vs.h" />
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_vs_point.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_ps.h" />
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_ps_point.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_rs.h" />
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_rs_point.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_vs.h" />
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_vs_point.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_ps.h" />
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_ps_point.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_rs.h" />
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_rs_point.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_vs.h" />
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_vs_point.h" />
     <ClInclude Include="AccessibilitySample.h" />
     <ClInclude Include="GameInputManager.h" />
     <ClInclude Include="ImguiAcc.h" />
     <ClInclude Include="Narrator.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="StepTimer.h" />
-    <ClInclude Include="DeviceResources.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imconfig.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imgui.h">
       <DisableSpecificWarnings>VCR001</DisableSpecificWarnings>
@@ -719,40 +715,47 @@
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imstb_rectpack.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imstb_textedit.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imstb_truetype.h" />
-    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h" />
     <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h" />
-    <ClInclude Include="..\..\..\Kits\ATGTK\Json.h" />
-    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp" />
-    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h" />
     <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h" />
-    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_dx12.cpp">
       <DisableSpecificWarnings>6011;6387;26819;28182;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_win32.cpp">
       <DisableSpecificWarnings>6011;6387;26819;28182;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="AccessibilitySample.cpp" />
     <ClCompile Include="GameInputManager.cpp" />
     <ClCompile Include="ImguiAcc.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="DeviceResources.cpp" />
+    <ClCompile Include="..\..\..\Kits\ATGTK\imgui\imgui_atg_device_context.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\imgui\imgui_atg.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui.cpp">
       <DisableSpecificWarnings>4365;6011;6387;26819;28182;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_draw.cpp">
       <DisableSpecificWarnings>4365;6011;6387;26819;28182;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_tables.cpp">
       <DisableSpecificWarnings>4365;6011;6387;26819;28182;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_widgets.cpp">
       <DisableSpecificWarnings>4365;6011;6387;26819;28182;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp" />
     <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp" />
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp" />
     <ClCompile Include="Narrator.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">Create</PrecompiledHeader>

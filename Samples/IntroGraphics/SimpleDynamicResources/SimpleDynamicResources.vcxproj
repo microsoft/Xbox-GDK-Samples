@@ -408,7 +408,7 @@
       <DisableSpecificWarnings>5204;5204</DisableSpecificWarnings>
     </ClCompile>
     <FXCompile>
-      <ShaderModel>6.0</ShaderModel>
+      <ShaderModel>6.6</ShaderModel>
       <EnableDebuggingInformation>true</EnableDebuggingInformation>
       <AdditionalOptions>/Fd "$(OutDir)%(Filename).pdb" %(AdditionalOptions)</AdditionalOptions>
     </FXCompile>
@@ -441,7 +441,7 @@
       <DisableSpecificWarnings>5204;5204</DisableSpecificWarnings>
     </ClCompile>
     <FXCompile>
-      <ShaderModel>6.0</ShaderModel>
+      <ShaderModel>6.6</ShaderModel>
       <EnableDebuggingInformation>true</EnableDebuggingInformation>
       <AdditionalOptions>/Fd "$(OutDir)%(Filename).pdb" %(AdditionalOptions)</AdditionalOptions>
     </FXCompile>
@@ -474,7 +474,7 @@
       <DisableSpecificWarnings>5204;5204</DisableSpecificWarnings>
     </ClCompile>
     <FXCompile>
-      <ShaderModel>6.0</ShaderModel>
+      <ShaderModel>6.6</ShaderModel>
       <EnableDebuggingInformation>true</EnableDebuggingInformation>
       <AdditionalOptions>/Fd "$(OutDir)%(Filename).pdb" %(AdditionalOptions)</AdditionalOptions>
     </FXCompile>

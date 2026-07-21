@@ -1,158 +1,181 @@
 //--------------------------------------------------------------------------------------
 // Lighting.h
 //
+// Header for sample
+//
 // Advanced Technology Group (ATG)
 // Copyright (C) Microsoft Corporation. All rights reserved.
 //--------------------------------------------------------------------------------------
 
 #pragma once
 
-#include "DeviceResources.h"
-#include "StepTimer.h"
-#include "TextConsole.h"
+#include <lamparray.h>
 
-#include <LampArray.h>
-#include <map>
+#include <array>
+#include <memory>
+#include <mutex>
+#include <string>
+#include <vector>
 
-using Microsoft::WRL::ComPtr;
-
-namespace
+// The set of lighting effects a device can run. Each connected device is
+// independently assigned exactly one of these.
+enum class Effect : uint32_t
 {
-    static constexpr uint32_t NUM_EFFECTS = 6;
-    enum LightingEffect
-    {
-        ColorCycle,
-        ColorWave,
-        ColorWheel,
-        Blink,
-        WASD,
-        Solid,
-    };
+    ColorCycle,
+    ColorWave,
+    ColorWheel,
+    Blink,
+    WASD,
+    Purposes,
+    Solid,
+    Health,
+    Ripple,
+    Reactive,
+    Manual,
+    Count
 };
 
-// A struct that holds information regarding a LampArray device for quick access
-typedef struct LampArrayContext
+// The maximum number of user-adjustable colors any single effect exposes (WASD
+// uses two: a keyboard base color and a highlight color for the W/A/S/D keys).
+constexpr uint32_t c_MaxEffectColors = 2;
+
+// Everything the sample needs to drive a single connected LampArray device.
+//
+// Each device owns its own effect assignment and the per-effect animation state
+// that effect needs (an elapsed-time accumulator) plus its user-adjustable
+// colors. It also caches data that is expensive to recompute every frame: a flat
+// lamp-index array, a scratch color buffer, and per-lamp position values used by
+// the position-aware effects. The cached values are filled in once, when the
+// device attaches.
+struct LampArrayDevice
 {
-    ComPtr<ILampArray> lampArray;
-    std::unique_ptr<LampArrayColor[]> lampColors;
-    std::unique_ptr<uint32_t[]> lampIndices;
+    Microsoft::WRL::ComPtr<ILampArray>      lampArray;
 
-    std::map<uint32_t, double> lampXPositions;
-    std::map<uint32_t, double> lampWheelAngles;
+    // Scratch buffers sized to the device's lamp count. lampIndices is the
+    // identity mapping [0, lampCount) used with SetColorsForIndices; lampColors
+    // receives each frame's per-lamp colors before it is submitted.
+    std::unique_ptr<uint32_t[]>             lampIndices;
+    std::unique_ptr<LampArrayColor[]>       lampColors;
 
-    LampArrayColor lastRandomColor = {};
-    LampArrayPosition centerPoint = {};
+    // Per-lamp values cached on attach to keep the effects cheap:
+    //  - normalizedX: lamp X position as a fraction of the device width [0,1]
+    //  - wheelAngle:  lamp angle around the device center, in radians
+    std::vector<double>                     normalizedX;
+    std::vector<double>                     wheelAngle;
 
-    uint32_t frameCount = 0;
-} LampArrayContext;
+    // Lamp indices sorted left-to-right by normalized X position, cached on attach.
+    // The Health effect fills its bar in this order so it grows from one edge of
+    // the device regardless of the order the hardware reports its lamps in.
+    std::vector<uint32_t>                   xOrder;
 
-// A basic sample implementation that creates a D3D12 device and
-// provides a render loop.
-class Sample final : public DX::IDeviceNotify
+    // Each lamp's distance from the device center, normalized to [0,1] against the
+    // farthest lamp, cached on attach. The Ripple effect uses it to expand a ring
+    // of color outward from the center.
+    std::vector<double>                     radius;
+
+    // Per-scan-code trail intensity in [0,1] for the Reactive effect, indexed by
+    // the keyboard scan code's low byte. A key press sets its entry to 1.0 (in
+    // WndProcHandler) and the effect fades it back to 0 over time.
+    std::array<float, 256>                  keyIntensity = {};
+
+    // Per-lamp colors for the Manual effect, one entry per lamp (normalized RGB),
+    // sized on attach. The Manual effect lets a non-keyboard device's lamps each be
+    // set to an individually chosen color, demonstrating addressing lamps by index.
+    std::vector<std::array<float, 3>>       manualColors;
+
+    // Per-device animation clock. elapsedSeconds accumulates effect time while the
+    // current effect runs (reset when the effect is reassigned); lastCounter is the
+    // QueryPerformanceCounter value from the previous run, used to measure the delta.
+    double                                  elapsedSeconds = 0.0;
+    uint64_t                                lastCounter = 0;
+
+    // Per-effect color-picker values (normalized RGB), kept per effect so adjusting
+    // one effect's color does not disturb another's. Slot meaning is per effect:
+    // Solid and Blink use [0]; WASD uses [0] for the base and [1] for the W/A/S/D
+    // highlight. speedScale multiplies the rate of the time-based effects.
+    float                                   colors[static_cast<size_t>(Effect::Count)][c_MaxEffectColors][3] = {};
+    float                                   speedScale = 1.0f;
+
+    // Simulated health [0, 1] driven by a slider in the device panel and consumed
+    // by the Health effect: it fills a green-to-red bar across the lamps and pulses
+    // the lit lamps when health is critically low.
+    float                                   health = 1.0f;
+
+    // The effect currently assigned to this device, and a flag that requests a
+    // one-time reset of the animation state the next time the effect runs (set
+    // when the effect changes or the device first attaches).
+    Effect                                  effect = Effect::ColorCycle;
+    bool                                    effectChanged = true;
+
+    // Number of lamps on the device (GetLampCount), captured on attach. This is the
+    // dimension of the cached buffers above and is read every frame by the effects.
+    uint32_t                                lampCount = 0;
+
+    // Connection/availability state from the status callback. Available means this
+    // app controls the lighting; a device can be Connected but not Available when
+    // another app or the system owns it. Defaults to available so the common case is
+    // correct the instant the device attaches; the callback downgrades it if control
+    // is lost.
+    LampArrayStatus                         status = LampArrayStatus::Connected | LampArrayStatus::Available;
+
+    // Whole-device brightness [0, 1]. Seeded from GetBrightnessLevel on attach and
+    // applied via SetBrightnessLevel from the panel slider.
+    float                                   brightness = 1.0f;
+
+    // Display label and ImGui widget id, derived on attach from kind and VID/PID.
+    std::string                             label;
+
+    // Which lamp the per-lamp inspector currently displays. Pure UI state for the
+    // device panel; the inspector reads this lamp's ILampInfo live for display.
+    uint32_t                                inspectorLamp = 0;
+};
+
+// The sample owns the lifetime of the LampArray callback and the collection of
+// connected devices. The collection is touched from two threads -- the worker
+// thread that delivers status callbacks and the main thread that runs and draws
+// the effects -- so it is guarded by m_devicesMutex.
+namespace ImGuiAtg { class DeviceContext; }
+
+class Sample
 {
 public:
-
-    Sample() noexcept(false);
-    ~Sample();
-
-    Sample(Sample&&) = default;
-    Sample& operator= (Sample&&) = default;
+    Sample() = default;
+    ~Sample() = default;
 
     Sample(Sample const&) = delete;
     Sample& operator= (Sample const&) = delete;
 
-    // Initialization and management
-    void Initialize(HWND window, int width, int height);
+    void Initialize(HWND hWnd);
+    void Update();
+    void Draw();
+    void Shutdown();
+    void Activated();
+    void Deactivated();
+    LRESULT WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-    // Basic render loop
-    void Tick();
-
-    // IDeviceNotify
-    void OnDeviceLost() override;
-    void OnDeviceRestored() override;
-
-    // Messages
-    void OnActivated() {}
-    void OnDeactivated() {}
-    void OnSuspending();
-    void OnResuming();
-    void OnWindowMoved();
-    void OnWindowSizeChanged(int width, int height);
-
-    // Properties
-    void GetDefaultSize(int& width, int& height) const noexcept;
+#ifdef _GAMING_XBOX
+    void Suspend(ImGuiAtg::DeviceContext* dc);
+    void Resume(ImGuiAtg::DeviceContext* dc);
+#endif
 
 private:
+    // The LampArray status callback. Its LampArrayStatus flags report presence
+    // (Connected) and control (Available), covering attach, detach, and
+    // availability changes. It runs on a LampArray worker thread.
+    static void CALLBACK LampArrayStatusCallback(void* context, LampArrayStatus currentStatus, LampArrayStatus previousStatus, ILampArray* lampArray);
 
-    void Update(DX::StepTimer const& timer);
-    void Render();
+    void OnDeviceStatusChanged(ILampArray* lampArray, LampArrayStatus currentStatus);
 
-    void Clear();
+    void AddDevice(ILampArray* lampArray, LampArrayStatus currentStatus);
+    void RemoveDevice(ILampArray* lampArray);
 
-    void CreateDeviceDependentResources();
-    void CreateWindowSizeDependentResources();
+    void DrawDevicePanel(LampArrayDevice& device);
+    void DrawLampInspector(LampArrayDevice& device, ILampArray* lampArray);
 
-    // Device resources.
-    std::unique_ptr<DX::DeviceResources>            m_deviceResources;
+    LampArrayCallbackToken                          m_callbackToken = LAMPARRAY_INVALID_CALLBACK_TOKEN_VALUE;
 
-    // Rendering loop timer.
-    uint64_t                                        m_frame;
-    DX::StepTimer                                   m_timer;
-
-    // Input devices.
-    std::unique_ptr<DirectX::GamePad>               m_gamePad;
-    std::unique_ptr<DirectX::Keyboard>              m_keyboard;
-
-    DirectX::GamePad::ButtonStateTracker            m_gamePadButtons;
-    DirectX::Keyboard::KeyboardStateTracker         m_keyboardButtons;
-
-    // DirectXTK objects.
-    std::unique_ptr<DirectX::GraphicsMemory>        m_graphicsMemory;
-    std::unique_ptr<DirectX::DescriptorPile>        m_resourceDescriptors;
-
-    // UI
-    std::unique_ptr<DX::TextConsoleImage>           m_log;
-    std::unique_ptr<DirectX::SpriteBatch>           m_spriteBatch;
-    std::unique_ptr<DirectX::SpriteFont>            m_ctrlFont;
-    std::unique_ptr<DirectX::SpriteFont>            m_font;
-
-    // LampArray
-    LampArrayCallbackToken                          m_callbackToken{};
-    std::vector<std::shared_ptr<LampArrayContext>>  m_lampArrays;
-    LightingEffect                                  m_currentLightingEffect;
-    bool                                            m_effectChanged;
-
-    static void LampArrayCallback(void* context, bool isAttached, ILampArray* pLampArray);
-
-    void PreviousEffect()
-    {
-        uint32_t index = static_cast<uint32_t>(m_currentLightingEffect);
-        if(index == 0)
-            return;
-
-        m_currentLightingEffect = static_cast<LightingEffect>((index - 1) % NUM_EFFECTS);
-        m_effectChanged = true;
-    }
-
-    void NextEffect()
-    {
-        uint32_t index = static_cast<uint32_t>(m_currentLightingEffect);
-        if(index == NUM_EFFECTS-1)
-            return;
-
-        m_currentLightingEffect = static_cast<LightingEffect>((static_cast<uint32_t>(m_currentLightingEffect) + 1) % NUM_EFFECTS);
-        m_effectChanged = true;
-    }
-
-    // Resource descriptors
-    enum Descriptors
-    {
-        Font,
-        ConsoleFont,
-        ControllerFont,
-        Background,
-        ConsoleBackground,
-        Reserve,
-        Count = 32,
-    };
+    // Guards m_devices: the status callback runs on a worker thread while Update()
+    // and Draw() run on the main thread.
+    std::mutex                                      m_devicesMutex;
+    std::vector<std::unique_ptr<LampArrayDevice>>   m_devices;
 };

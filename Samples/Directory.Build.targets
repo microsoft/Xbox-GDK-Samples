@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- Chain-import the root Directory.Build.targets. MSBuild only auto-imports the
+       nearest Directory.Build.targets walking up from the project, so adding this
+       file would otherwise hide the repo-root one (vcpkg import, CAExcludePath, etc.). -->
+  <PropertyGroup>
+    <_ParentBuildTargets>$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))</_ParentBuildTargets>
+  </PropertyGroup>
+  <Import Project="$(_ParentBuildTargets)" Condition="'$(_ParentBuildTargets)' != ''" />
+
+  <!-- ImGui-framework samples render gamepad/keyboard glyphs with PromptFont. The
+       ImGuiAtg Kit loads "Media\promptfont.ttf" relative to the working directory or
+       the executable, so copy the shared font into each ImGui sample's output.
+
+       This is opt-in: only projects that set <AtgImGuiSample>true</AtgImGuiSample> in
+       their .vcxproj receive the font, so classic (DeviceResources) samples are
+       unaffected. The new-sample templates set this marker automatically. -->
+  <ItemGroup Condition="'$(AtgImGuiSample)' == 'true'">
+    <CopyFileToFolders Include="$(MSBuildThisFileDirectory)..\Media\Fonts\PromptFont\promptfont.ttf">
+      <DestinationFolders>$(OutDir)Media</DestinationFolders>
+    </CopyFileToFolders>
+  </ItemGroup>
+
+</Project>
