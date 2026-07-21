@@ -479,7 +479,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">
     <Link>
-      <AdditionalDependencies>uuid.lib;Microsoft.Xbox.Services.$(XSAPIVersion).C.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>uuid.lib;Microsoft.Xbox.Services.$(XSAPIVersion).C.lib;PlayFabCore.lib;PlayFabServices.lib;PlayFabGameSave.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -488,7 +488,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;..\..\..\Kits\PlayFabGDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories />
       <ForcedUsingFiles />
       <Optimization>MaxSpeed</Optimization>
@@ -506,7 +506,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">
     <Link>
-      <AdditionalDependencies>uuid.lib;Microsoft.Xbox.Services.$(XSAPIVersion).C.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>uuid.lib;Microsoft.Xbox.Services.$(XSAPIVersion).C.lib;PlayFabCore.lib;PlayFabServices.lib;PlayFabGameSave.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -515,7 +515,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;..\..\..\Kits\PlayFabGDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories />
       <ForcedUsingFiles />
       <Optimization>MaxSpeed</Optimization>
@@ -533,7 +533,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">
     <Link>
-      <AdditionalDependencies>uuid.lib;Microsoft.Xbox.Services.$(XSAPIVersion).C.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>uuid.lib;Microsoft.Xbox.Services.$(XSAPIVersion).C.lib;PlayFabCore.lib;PlayFabServices.lib;PlayFabGameSave.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -542,7 +542,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;..\..\..\Kits\PlayFabGDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories />
       <ForcedUsingFiles />
       <Optimization>MaxSpeed</Optimization>
@@ -560,7 +560,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">
     <Link>
-      <AdditionalDependencies>uuid.lib;Microsoft.Xbox.Services.$(XSAPIVersion).C.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>uuid.lib;Microsoft.Xbox.Services.$(XSAPIVersion).C.lib;PlayFabCore.lib;PlayFabServices.lib;PlayFabGameSave.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -569,7 +569,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;..\..\..\Kits\PlayFabGDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories />
       <ForcedUsingFiles />
       <Optimization>MaxSpeed</Optimization>

@@ -10,16 +10,20 @@
 #pragma once
 
 #include <winsdkver.h>
+#ifndef _WIN32_WINNT
 #define _WIN32_WINNT 0x0A00
+#endif
 #include <sdkddkver.h>
 
 // Use the C++ standard templated min/max
 #define NOMINMAX
 
-// DirectX apps don't need GDI
+// On Xbox the ImGui desktop GDI paths are not needed
+#ifdef _GAMING_XBOX
 #define NODRAWTEXT
 #define NOGDI
 #define NOBITMAP
+#endif
 
 // Include <mcx.h> if you need this
 #define NOMCX
@@ -36,18 +40,18 @@
 
 #include <Windows.h>
 
+#ifndef _GAMING_XBOX
+#include <shellapi.h>
+#endif
+
 #include <wrl/client.h>
 #include <wrl/event.h>
 
+#ifdef _GAMING_XBOX
 #include <grdk.h>
 
-#if _GRDK_VER < 0x585D0BEF /* GDK Edition 230301 */
-#error This sample requires the March 2023 GDK Update 1 or later
-#endif
-
-#if defined(_M_ARM64)
-#if _GRDK_EDITION < 260400
-#error ARM64 support requires April 2026 GDK or later
+#if _GRDK_VER < 0x65F41800 /* GDK Edition 251000 */
+#error This sample requires the October 2025 GDK or later
 #endif
 #endif
 
@@ -64,56 +68,24 @@
 #ifdef _DEBUG
 #include <dxgidebug.h>
 #endif
-
-#include "d3dx12.h"
 #endif
 
-#define _XM_NO_XMVECTOR_OVERLOADS_
-
-#include <DirectXMath.h>
-#include <DirectXColors.h>
-
+#include <array>
 #include <algorithm>
-#include <atomic>
-#include <cassert>
-#define _USE_MATH_DEFINES
-#include <cmath>
-#include <cstddef>
-#include <cstdint>
-#include <cstdio>
-#include <cstring>
-#include <cwchar>
-#include <exception>
-#include <functional>
-#include <future>
-#include <iterator>
-#include <memory>
-#include <stdexcept>
-#include <string>
-#include <system_error>
-#include <tuple>
+#include <filesystem>
 
 #ifdef _GAMING_XBOX
 #include <pix3.h>
 #else
-// To use graphics markup events with the latest version of PIX, change this to include <pix3.h>
+// To use graphics and CPU markup events with the latest version of PIX, change this to include <pix3.h>
 // then add the NuGet package WinPixEventRuntime to the project.
 #include <pix.h>
 #endif
-#include <XGame.h>
-#include <XSystem.h>
 
-#include "DescriptorHeap.h"
-#include "DirectXHelpers.h"
-#include "GamePad.h"
-#include "GraphicsMemory.h"
-#include "Keyboard.h"
-#include "Mouse.h"
-#include "RenderTargetState.h"
-#include "CommonStates.h"
-
-// To opt-out of telemetry uncomment the following line
-//#define ATG_DISABLE_TELEMETRY
+#include "imgui.h"
+#include "backends/imgui_impl_dx12.h"
+#include "backends/imgui_impl_win32.h"
+#include "imgui/imgui_atg.h"
 
 namespace DX
 {
@@ -123,7 +95,7 @@ namespace DX
     public:
         com_exception(HRESULT hr) noexcept : result(hr) {}
 
-        const char* what() const noexcept override
+        const char* what() const override
         {
             static char s_str[64] = {};
             sprintf_s(s_str, "Failure with HRESULT of %08X", static_cast<unsigned int>(result));
@@ -139,12 +111,7 @@ namespace DX
     {
         if (FAILED(hr))
         {
-#ifdef _DEBUG
-            char str[64] = {};
-            sprintf_s(str, "**ERROR** Fatal Error with HRESULT of %08X\n", static_cast<unsigned int>(hr));
-            OutputDebugStringA(str);
-            __debugbreak();
-#endif
+            // Set a breakpoint on this line to catch DirectX API errors
             throw com_exception(hr);
         }
     }

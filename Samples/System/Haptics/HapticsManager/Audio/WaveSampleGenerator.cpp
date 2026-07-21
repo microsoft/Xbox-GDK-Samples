@@ -292,6 +292,21 @@ namespace ATG
 
         WaveSampleReader reader(pWaveData, waveSize, pSourceWfx);
 
+        // Resample the source to the destination sample rate using nearest-neighbor
+        // selection. A phase accumulator tracks how many source frames have been consumed
+        // versus destination frames written: each destination frame maps back to source
+        // frame (dstFrame / sampleRatio), and the source is advanced until it reaches that
+        // position. This works for any ratio, including fractional ratios and downsampling.
+        constexpr uint32_t nMaxChannels = 8;
+        float currentBlock[nMaxChannels] = {};
+        double srcFramesConsumed = 0.0;   // number of source frames read so far
+        double dstFramesWritten = 0.0;    // number of destination frames written so far
+        bool readerEOF = false;
+
+        // Prime the first source frame.
+        reader.ReadBlock(currentBlock, nMaxChannels);
+        srcFramesConsumed = 1.0;
+
         for (uint32_t i = 0; i < renderBufferCount; i++)
         {
             RenderBuffer* sampleBuffer = new RenderBuffer();
@@ -304,18 +319,23 @@ namespace ATG
 
             while (!writer.IsEOF())
             {
-                constexpr uint32_t nMaxChannels = 8;
-                float channelData[nMaxChannels];
-
-                //  Get a block of channel data (as much as we're interested in).
-                //  If the reader is at end of file then this returns a block
-                //  of zeroed samples.
-                reader.ReadBlock(channelData, nMaxChannels);
-
-                for (unsigned int j = 0; j < sampleRatio; j++)
+                //  Advance the source until it corresponds to the destination frame we are
+                //  about to write (source frame = dstFrame / sampleRatio).
+                double neededSrcFrames = (dstFramesWritten + 1.0) / (double)sampleRatio;
+                while (srcFramesConsumed < neededSrcFrames && !readerEOF)
                 {
-                    writer.WriteBlock(channelData, nMaxChannels);
+                    if (reader.IsEOF())
+                    {
+                        readerEOF = true;
+                        ZeroMemory(currentBlock, sizeof(currentBlock));
+                        break;
+                    }
+                    reader.ReadBlock(currentBlock, nMaxChannels);
+                    srcFramesConsumed += 1.0;
                 }
+
+                writer.WriteBlock(currentBlock, nMaxChannels);
+                dstFramesWritten += 1.0;
             }
 
             *m_SampleQueueTail = sampleBuffer;
@@ -348,6 +368,11 @@ namespace ATG
         CopyMemory(pData, sampleBuffer->Buffer, bytesToRead);
 
         m_SampleQueue = m_SampleQueue->Next;
+        if (m_SampleQueue == nullptr)
+        {
+            m_SampleQueueTail = &m_SampleQueue;
+        }
+        delete sampleBuffer;   // free the consumed buffer (~RenderBuffer frees Buffer)
 
         return S_OK;
     }
@@ -364,6 +389,8 @@ namespace ATG
         {
             RenderBuffer* sampleBuffer = m_SampleQueue;
             m_SampleQueue = sampleBuffer->Next;
+            delete sampleBuffer;   // ~RenderBuffer frees Buffer
         }
+        m_SampleQueueTail = &m_SampleQueue;
     }
 }

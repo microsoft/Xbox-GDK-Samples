@@ -1,0 +1,17 @@
+{
+  "includes": [
+    "Assets/Layouts/defs.json",
+    "Assets/Layouts/styles.json"
+  ],
+  "layout": {
+    "id": "products",
+    "classId": "Panel",
+    "size": [ 1920, 1080 ],
+    "style": {
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": "#background_color"
+    }
+
+  }
+}

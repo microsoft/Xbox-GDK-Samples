@@ -12,6 +12,8 @@
 
 #include <wrl.h>
 
+#include <atomic>
+
 #include <Audioclient.h>
 #include <mmdeviceapi.h>
 
@@ -50,7 +52,7 @@ namespace ATG
             WASAPIManager& operator= (WASAPIManager const&) = delete;
 
             HRESULT InitializeDevice(wchar_t* endpoint, uint32_t locationCount, GUID* locations);
-            bool IsPlaying() const { return m_state == DeviceState::DeviceStatePlaying; };
+            bool IsPlaying() const { return m_clipActive.load(); };
             HRESULT OnAudioSampleRequested(bool bIsSilence);
             HRESULT Restart();
             HRESULT Play();
@@ -60,6 +62,7 @@ namespace ATG
             HRESULT ConfigureWaveSource(const uint8_t* wavData, size_t wavDataSize);
 
             bool                        m_playingSound;
+            std::atomic<bool>           m_clipActive { false };   // true while a clip is actively being rendered
             HANDLE                      m_sampleReadyEvent;
             DeviceState                 m_state;
 

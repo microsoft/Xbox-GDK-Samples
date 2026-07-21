@@ -1,0 +1,38 @@
+{
+  "operationName": "UploadXvcPackage",
+
+  "productId": "",
+  "bigId": "9N3KNR1TDV5V",
+
+  "branchFriendlyName": "Main",
+  "flightName": "",
+
+  "marketGroupName": "default",
+
+  "packageFilePath": "E:\\Repos\\ATGgit\\gx_dev\\Samples\\System\\IntelligentDelivery\\x64\\Layout\\Image\\41336MicrosoftATG.ATGIntelligentDeliverySample_2022.3.7.0_x64__dspnxghe87tn0.msixvc",
+  "gameAssets": {
+    "ekbFilePath": "E:\\Repos\\ATGgit\\gx_dev\\Samples\\System\\IntelligentDelivery\\x64\\Layout\\Image\\41336MicrosoftATG.ATGIntelligentDeliverySample_2022.3.7.0_x64__dspnxghe87tn0_Full_33ec8436-5a0e-4f0d-b1ce-3f29c3955039.ekb",
+    "subValFilePath": "E:\\Repos\\ATGgit\\gx_dev\\Samples\\System\\IntelligentDelivery\\x64\\Layout\\Image\\Validator_41336MicrosoftATG.ATGIntelligentDeliverySample_2022.3.7.0_x64__dspnxghe87tn0.xml",
+    "symbolsFilePath": "E:\\Repos\\ATGgit\\gx_dev\\Samples\\System\\IntelligentDelivery\\x64\\Layout\\Image\\41336MicrosoftATG.ATGIntelligentDeliverySample_2022.3.7.0_x64__dspnxghe87tn0.zip",
+    "discLayoutFilePath": "E:\\Repos\\ATGgit\\gx_dev\\Samples\\System\\IntelligentDelivery\\x64\\Layout\\Image\\layout_663f985e-85a4-f8ba-f4ca-0c134fe3c9b0.xml"
+  },
+  "minutesToWaitForProcessing": 60,
+
+  "availabilityDate": {
+    "isEnabled": false,
+    "effectiveDate": ""
+  },
+
+  "aadAuthInfo": {
+    "clientId": "2d452b4f-564b-4c2c-9440-de31cde51e99",
+    "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+  },  
+  "uploadConfig": {
+    "httpTimeoutMs": 5000,
+    "httpUploadTimeoutMs": 300000,
+    "maxParallelism": 24,
+    "defaultConnectionLimit": -1,
+    "expect100Continue": false,
+    "useNagleAlgorithm": false
+  }
+} 
