@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+         xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+         xmlns:uap7="http://schemas.microsoft.com/appx/manifest/uap/windows10/7"
+         IgnorableNamespaces="uap">
+
+    <Identity Name='41336MicrosoftATG.ATGInGameStoreSample' Version="1.6.0.0" Publisher='CN=A4954634-DF4B-47C7-AB70-D3215D246AF1' ProcessorArchitecture = "x64" />
+
+  <Properties>
+    <DisplayName>ATG In-Game Store Sample</DisplayName>
+    <PublisherDisplayName>Xbox Advanced Technology Group</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+    <Description>InGameStore</Description>
+    <uap:SupportedUsers>multiple</uap:SupportedUsers>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.10586.0" MaxVersionTested="10.0.10586.0" />
+    <uap7:OSPackageDependency Name="Microsoft.GameOs" Version="10.0.17670.0"/>
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="en-us"/>
+  </Resources>
+
+  <Applications>
+    <Application Id="App"
+        Executable="$targetnametoken$.exe"
+        EntryPoint="GamingProxyApp.Application.EntryPoint">
+      <uap:VisualElements
+          DisplayName="ATG In-Game Store Sample"
+          Square150x150Logo="Assets\Logo.png"
+          Square44x44Logo="Assets\SmallLogo.png"
+          Description="InGameStore"
+          BackgroundColor="#000000">
+          <!--ForegroundText="dark"-->
+          
+        <uap:DefaultTile Wide310x150Logo="Assets\WideLogo.png"/>
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+      </uap:VisualElements>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <DeviceCapability Name="5012DC0D-21CC-4D8A-AE07-326E86FE5258" />
+  </Capabilities>
+</Package>
+  

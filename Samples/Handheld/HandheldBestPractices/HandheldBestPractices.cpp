@@ -53,9 +53,16 @@ using namespace GameInput::v3;
 #include "GetActiveInput.cpp"
 #include "IsDeviceTouchEnabled.cpp"
 
-// NOTE: Only include one of these
+// NOTE: Only include one of these.
+// The CppWinRT implementation includes winrt/base.h, which under /std:c++17 pulls in the MSVC
+// <experimental/coroutine> header. That header hard-errors under clang-cl, so when building with
+// clang we fall back to the ABI/WRL "Alt" implementation, which provides the same helpers without
+// CppWinRT. MSVC builds keep the CppWinRT path.
+#ifdef __clang__
+#include "VirtualKeyboardAlt.cpp"     // Downlevel-compatible, no-CppWinRT implementation (clang-safe)
+#else
 #include "VirtualKeyboard.cpp"        // CppWinRT-based implementation
-//#include "VirtualKeyboardAlt.cpp"   // Downlevel-compatible with no exceptions implementation
+#endif
 
 // Text entry via dialog box
 #include "TextEntry.cpp"
@@ -64,8 +71,6 @@ using namespace GameInput::v3;
 #include "AudioDeviceManager.cpp"
 
 // Forward decls
-static void LoadFont();
-static void SetUIScale(float scale);
 static void ConnectivityHintChangedCallback(PVOID, NL_NETWORK_CONNECTIVITY_HINT);
 static std::wstring ActiveInputTypeToString(ActiveInputType t);
 static std::wstring GetWindowsBuildInfo();
@@ -75,12 +80,8 @@ namespace
     // constants
     constexpr float    DefaultDpi = 96.0f;
     constexpr uint32_t OneMegabyte = (1024*1024);
-    constexpr int      FirstColWidth = 450;
-
     // ImGui globals
-    static std::unique_ptr<AppLog> g_appLog{};
     static ImGuiStyle              g_imGuiStyle{};
-    static bool                    g_firstDraw = true;
 
     // GameInput object
     static ComPtr<IGameInput> g_gameInput = nullptr;
@@ -110,8 +111,7 @@ namespace
     static size_t       g_dedicatedVideoRAM = 0, g_sharedVideoRAM = 0;
     static UINT         g_minWave = 0, g_maxWave = 0, g_lanes = 0;
     static UINT         g_vendorId = 0, g_deviceId = 0, g_revision = 0;
-    static float        g_uiScale = 1.0f;
-    static bool         g_dpiChange = true, g_resetUI = false;
+    static bool         g_resetUI = false;
     static bool         g_hdrAvailable = false, g_hdrEnabled = false;
     static UINT         g_dpiX = 0, g_dpiY = 0;
     static DWORD        g_resWidth = 0, g_resHight = 0, g_refresh = 0;
@@ -121,12 +121,9 @@ namespace
     static std::wstring                    g_connectivity{};
 };
 
-void Sample_Initialize(HWND hWnd)
+void Sample::Initialize(HWND hWnd)
 {
     g_hWnd = hWnd;
-    g_appLog = std::make_unique<AppLog>();
-
-    LoadFont();
 
     // get current/default style for later use with DPI and resolution changes
     g_imGuiStyle = ImGui::GetStyle();
@@ -139,9 +136,9 @@ void Sample_Initialize(HWND hWnd)
 
     // get device properties
     g_isHandheld         = IsDeviceHandheld();     // see IsDeviceHandheld.cpp for a downlevel-compilable version of this function
-    g_isPowered          = IsDevicePowered();      // see Sample_WndProcHandler and WM_POWERBROADCAST handler for power state change handling
-    g_isTouchEnabled     = IsDeviceTouchEnabled(); // see Sample_WndProcHandler and WM_POINTERDEVICECHANGE handler for touch capability change handling
-    g_isBluetoothEnabled = IsBluetoothEnabled();   // see below for event registration, and Sample_WndProcHandler and WM_DEVICECHANGE handler for bluetooth capability change handling
+    g_isPowered          = IsDevicePowered();      // see Sample::WndProcHandler and WM_POWERBROADCAST handler for power state change handling
+    g_isTouchEnabled     = IsDeviceTouchEnabled(); // see Sample::WndProcHandler and WM_POINTERDEVICECHANGE handler for touch capability change handling
+    g_isBluetoothEnabled = IsBluetoothEnabled();   // see below for event registration, and Sample::WndProcHandler and WM_DEVICECHANGE handler for bluetooth capability change handling
 
     // snapshots, use the refresh button in the sample UI to get latest memory information
     LOG_IF_FAILED(GetMemoryInfo(&g_totalMemory, &g_availableMemory));
@@ -157,20 +154,17 @@ void Sample_Initialize(HWND hWnd)
     LOG_IF_FAILED(GetDeviceScreenDiagonalSizeInInches(&g_screenSize));
     LOG_IF_FAILED(GetGPUInfo(g_displayAdapterName, &g_vendorId, &g_deviceId, &g_revision, &g_dedicatedVideoRAM, &g_sharedVideoRAM, &g_minWave, &g_maxWave, &g_lanes));
     LOG_IF_FAILED(GetDeviceHDRStatus(&g_hdrAvailable, &g_hdrEnabled));
-    GetDeviceScreenResolutionAndRefresh(&g_resWidth, &g_resHight, &g_refresh); // see Sample_WndProcHandler for WM_DISPLAYCHANGE handler
+    GetDeviceScreenResolutionAndRefresh(&g_resWidth, &g_resHight, &g_refresh); // see Sample::WndProcHandler for WM_DISPLAYCHANGE handler
     g_resolutions = GetAllScreenResolutions();
 
     // get current DPI and set UI scale
-    GetDeviceDpi(&g_dpiX, &g_dpiY); // see Sample_WndProcHandler and WM_DPICHANGED / WM_DISPLAYCHANGED handler for responding to DPI and resolution changes
-    g_uiScale = (g_dpiX / DefaultDpi);
-    SetUIScale(g_uiScale);
-
+    GetDeviceDpi(&g_dpiX, &g_dpiY); // see WndProc WM_DPICHANGED handler for responding to DPI changes
     // get network properties and register callback for network changes
     g_networkAdapterList = ListNetworkAdapters();
     LOG_IF_FAILED(NotifyNetworkConnectivityHintChange(ConnectivityHintChangedCallback, nullptr, true, &g_connectivityChangedHandle));
 
     // setup notifications for changes in Bluetooth state
-    // this will broadcast WM_DEVICECHANGE messages, see Sample_WndProcHandler below for more info
+    // this will broadcast WM_DEVICECHANGE messages, see Sample::WndProcHandler below for more info
     DEV_BROADCAST_DEVICEINTERFACE ndi {};
     ndi.dbcc_size       = sizeof(DEV_BROADCAST_DEVICEINTERFACE);
     ndi.dbcc_devicetype = DBT_DEVTYP_DEVICEINTERFACE;
@@ -186,19 +180,27 @@ void Sample_Initialize(HWND hWnd)
     LOG("%ws\n", build.c_str());
 }
 
-void Sample_Draw()
+void Sample::Draw()
 {
-    // reset window positions and sizes on DPI or other display changes
-    if(g_dpiChange || g_resetUI)
+    ImGuiAtg::BeginFullscreenLayout();
+
+    // Reserve space for the standard sample footer below the split
+    float footerH = ImGuiAtg::GetFooterHeight();
+    ImGui::BeginChild("##SplitArea", ImVec2(0, ImGui::GetContentRegionAvail().y - footerH));
+
+    // Content on top, log on bottom, with draggable splitter
+    ImGuiAtg::BeginSplitH("##LogSplit", 180.0f);
+
+    // Three-column layout: Interactive | Device/CPU/GPU/Display | Integrated/Resolutions/Input/Network/Audio
+    float availWidth = ImGui::GetContentRegionAvail().x;
+    float spacing = ImGui::GetStyle().ItemSpacing.x;
+    float colWidth = (availWidth - spacing * 2) / 3.0f;
+    float colHeight = ImGui::GetContentRegionAvail().y;
+
+    // Column 1: Interactive controls
+    ImGui::BeginChild("Interactive", ImVec2(colWidth, colHeight), ImGuiChildFlags_None);
+    if (ImGui::CollapsingHeader("Interactive", ImGuiTreeNodeFlags_DefaultOpen))
     {
-        ImGui::SetNextWindowPos(ImVec2(5, 5), ImGuiCond_None);
-        ImGui::SetNextWindowSize(ImVec2(FirstColWidth * g_uiScale, 485 * g_uiScale), ImGuiCond_None);
-        g_resetUI = false;
-    }
-
-    ImGui::Begin("Interactive", nullptr, ImGuiWindowFlags_NoCollapse);
-
-        // see Sample_WndProcHandler for WM_CHAR and WM_KEYDOWN handling for this textbox
         ImGui::Text("Click, tap, or highlight with DPad and press Y to edit text");
         ImGui::InputText("<-- TextBox", g_inputText, ARRAYSIZE(g_inputText), 0, nullptr, nullptr);
 
@@ -209,7 +211,7 @@ void Sample_Draw()
             LOG("Virtual keyboard: %d\n", b);
         }
 
-        if (ImGui::Button("Open Text Entry Dialog", ImVec2(300 * g_uiScale, 50 * g_uiScale)))
+        if (ImGui::Button("Open Text Entry Dialog", ImVec2(ImGuiAtg::Scaled(300), ImGuiAtg::Scaled(50))))
         {
             // disable gamepad input for main window
             ImGui::GetIO().ConfigFlags &= ~ImGuiConfigFlags_NavEnableGamepad;
@@ -231,12 +233,12 @@ void Sample_Draw()
             }, nullptr);
         }
 
-        ImGui::Dummy(ImVec2(0, 5 * g_uiScale));
+        ImGui::Dummy(ImVec2(0, ImGuiAtg::Scaled(5)));
         ImGui::Separator();
-        ImGui::Dummy(ImVec2(0, 5 * g_uiScale));
+        ImGui::Dummy(ImVec2(0, ImGuiAtg::Scaled(5)));
 
         // buttons to refresh information or exit the application
-        if(ImGui::Button("Refresh Network Adapters", ImVec2(200 * g_uiScale, 50 * g_uiScale)))
+        if(ImGui::Button("Refresh Network Adapters", ImVec2(ImGuiAtg::Scaled(200), ImGuiAtg::Scaled(50))))
         {
             LOG("Refreshing network adapter list...\n");
             g_networkAdapterList = ListNetworkAdapters();
@@ -244,14 +246,14 @@ void Sample_Draw()
 
         ImGui::SameLine();
 
-        if(ImGui::Button("Refresh Memory Info", ImVec2(200 * g_uiScale, 50 * g_uiScale)))
+        if(ImGui::Button("Refresh Memory Info", ImVec2(ImGuiAtg::Scaled(200), ImGuiAtg::Scaled(50))))
         {
             LOG("Refreshing memory info...\n");
             LOG_IF_FAILED(GetMemoryInfo(&g_totalMemory, &g_availableMemory));
             LOG_IF_FAILED(GetProcessMemory(&g_pageFaultCount, &g_workingSetSize));
         }
 
-        if(ImGui::Button("Reset UI", ImVec2(200 * g_uiScale, 50 * g_uiScale)))
+        if(ImGui::Button("Reset UI", ImVec2(ImGuiAtg::Scaled(200), ImGuiAtg::Scaled(50))))
         {
             LOG("Resetting window sizes and positions...\n");
             g_resetUI = true;
@@ -259,106 +261,98 @@ void Sample_Draw()
 
         ImGui::SameLine();
 
-        if(ImGui::Button("Exit", ImVec2(200 * g_uiScale, 50 * g_uiScale)))
+        if(ImGui::Button("Exit", ImVec2(ImGuiAtg::Scaled(200), ImGuiAtg::Scaled(50))))
         {
             LOG("Exiting sample...\n");
             PostQuitMessage(0);
         }
 
-        ImGui::Dummy(ImVec2(0, 15 * g_uiScale));
+        ImGui::Dummy(ImVec2(0, ImGuiAtg::Scaled(15)));
 
-        ImGui::Text("Gamepad Controls");
-        ImGui::Separator();
-
-        ImGui::BeginTable("Gamepad Controls", 2, ImGuiTableFlags_SizingFixedFit | ImGuiTableFlags_BordersInner);
-            DrawNameValueTable("Dpad",           "Move between controls");
-            DrawNameValueTable("A",              "Activate");
-            DrawNameValueTable("Y",              "Edit text");
-            DrawNameValueTable("X + LB/RB",      "Select Window");
-            DrawNameValueTable("X + Left Stick", "Move Selected Window");
-            DrawNameValueTable("X + DPad",       "Resize Selected Window");
-            DrawNameValueTable("View",           "Exit");
-        ImGui::EndTable();
-    ImGui::End();
-
-    if(g_dpiChange || g_resetUI)
-    {
-        ImGui::SetNextWindowPos(ImVec2(5, 485 * g_uiScale), ImGuiCond_None);
-        ImGui::SetNextWindowSize(ImVec2(FirstColWidth * g_uiScale, 229 * g_uiScale), ImGuiCond_None);
+        if(ImGui::CollapsingHeader("Gamepad Controls##Header", ImGuiTreeNodeFlags_DefaultOpen))
+        {
+            ImGui::BeginTable("Gamepad Controls##Table", 2, ImGuiTableFlags_SizingFixedFit | ImGuiTableFlags_BordersInner);
+                ImGuiAtg::DrawNameValueTable("Dpad",           "Move between controls");
+                ImGuiAtg::DrawNameValueTable("A",              "Activate");
+                ImGuiAtg::DrawNameValueTable("Y",              "Edit text");
+                ImGuiAtg::DrawNameValueTable("X + LB/RB",      "Select Window");
+                ImGuiAtg::DrawNameValueTable("X + Left Stick", "Move Selected Window");
+                ImGuiAtg::DrawNameValueTable("X + DPad",       "Resize Selected Window");
+            ImGui::EndTable();
+        }
     }
+    ImGui::EndChild(); // end Interactive
 
-    g_appLog->Draw("Log", -200.0f * g_uiScale);
+    ImGui::SameLine();
 
-    if(g_dpiChange || g_resetUI)
-    {
-        ImGui::SetNextWindowPos(ImVec2((FirstColWidth+5) * g_uiScale, 5), ImGuiCond_None);
-        ImGui::SetNextWindowSize(ImVec2(800 * g_uiScale, 710 * g_uiScale), ImGuiCond_None);
-    }
-
-    ImGui::Begin("Device Properties", nullptr, ImGuiWindowFlags_NoCollapse);
-        ImGui::Columns(2);
+    // Column 2: Device Info, CPU Info, GPU Info
+    ImGui::BeginChild("DeviceProperties", ImVec2(colWidth, colHeight), ImGuiChildFlags_None);
 
         if(ImGui::CollapsingHeader("Device Info", ImGuiTreeNodeFlags_DefaultOpen))
         {
             ImGui::BeginTable("DeviceInfo", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg);
-                DrawNameValueTable("Manufacturer",             "%ws",             g_manufacturer.c_str());
-                DrawNameValueTable("Product Name",             "%ws",             g_productName.c_str());
-                DrawNameValueTable("System Family",            "%ws",             g_systemFamily.c_str());
-                DrawNameValueTable("Baseboard Product",        "%ws",             g_baseboardProduct.c_str());
-                DrawNameValueTable("Total / Available Memory", "%zu MB / %zu MB", g_totalMemory / OneMegabyte, g_availableMemory / OneMegabyte);
-                DrawNameValueTable("Working Set Size",         "%zu MB",          g_workingSetSize / OneMegabyte);
-                DrawNameValueTable("Page Faults",              "%d",              g_pageFaultCount);
-                DrawNameBoolValueTable("IsHandheld",                              g_isHandheld);
-                DrawNameBoolValueTable("IsPowered",                               g_isPowered);
-                DrawNameBoolValueTable("IsTouchEnabled",                          g_isTouchEnabled);
-                DrawNameBoolValueTable("IsBluetoothEnabled",                      g_isBluetoothEnabled);
+                ImGuiAtg::DrawNameValueTable("Manufacturer",             "%ws",             g_manufacturer.c_str());
+                ImGuiAtg::DrawNameValueTable("Product Name",             "%ws",             g_productName.c_str());
+                ImGuiAtg::DrawNameValueTable("System Family",            "%ws",             g_systemFamily.c_str());
+                ImGuiAtg::DrawNameValueTable("Baseboard Product",        "%ws",             g_baseboardProduct.c_str());
+                ImGuiAtg::DrawNameValueTable("Total / Available Memory", "%zu MB / %zu MB", g_totalMemory / OneMegabyte, g_availableMemory / OneMegabyte);
+                ImGuiAtg::DrawNameValueTable("Working Set Size",         "%zu MB",          g_workingSetSize / OneMegabyte);
+                ImGuiAtg::DrawNameValueTable("Page Faults",              "%d",              g_pageFaultCount);
+                ImGuiAtg::DrawNameBoolValueTable("IsHandheld",                              g_isHandheld);
+                ImGuiAtg::DrawNameBoolValueTable("IsPowered",                               g_isPowered);
+                ImGuiAtg::DrawNameBoolValueTable("IsTouchEnabled",                          g_isTouchEnabled);
+                ImGuiAtg::DrawNameBoolValueTable("IsBluetoothEnabled",                      g_isBluetoothEnabled);
             ImGui::EndTable();
         }
 
         if(ImGui::CollapsingHeader("CPU Info", ImGuiTreeNodeFlags_DefaultOpen))
         {
             ImGui::BeginTable("CPUInfo", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg);
-                DrawNameValueTable("CPU Name",                 "%ws",     ATG::GetProcessorName().c_str());
-                DrawNameValueTable("Physical / Logical Cores", "%d / %d", ATG::GetNumberPhysicalCores(), ATG::GetNumberLogicalCores());
+                ImGuiAtg::DrawNameValueTable("CPU Name",                 "%ws",     ATG::GetProcessorName().c_str());
+                ImGuiAtg::DrawNameValueTable("Physical / Logical Cores", "%d / %d", ATG::GetNumberPhysicalCores(), ATG::GetNumberLogicalCores());
             ImGui::EndTable();
         }
 
         if(ImGui::CollapsingHeader("GPU Info", ImGuiTreeNodeFlags_DefaultOpen))
         {
             ImGui::BeginTable("GPUInfo", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg);
-                DrawNameValueTable("GPU Name",            "%ws",              g_displayAdapterName.c_str());
-                DrawNameValueTable("VEN / DEV / Rev",     "%04X / %04X / %d", g_vendorId, g_deviceId, g_revision);
-                DrawNameValueTable("Dedicated VRAM",      "%zu MB",           g_dedicatedVideoRAM / OneMegabyte);
-                DrawNameValueTable("Shared VRAM",         "%zu MB",           g_sharedVideoRAM / OneMegabyte);
-                DrawNameValueTable("Min / Max Wave Size", "%d / %d",          g_minWave, g_maxWave);
-                DrawNameValueTable("Total Lanes",         "%d",               g_lanes);
+                ImGuiAtg::DrawNameValueTable("GPU Name",            "%ws",              g_displayAdapterName.c_str());
+                ImGuiAtg::DrawNameValueTable("VEN / DEV / Rev",     "%04X / %04X / %d", g_vendorId, g_deviceId, g_revision);
+                ImGuiAtg::DrawNameValueTable("Dedicated VRAM",      "%zu MB",           g_dedicatedVideoRAM / OneMegabyte);
+                ImGuiAtg::DrawNameValueTable("Shared VRAM",         "%zu MB",           g_sharedVideoRAM / OneMegabyte);
+                ImGuiAtg::DrawNameValueTable("Min / Max Wave Size", "%d / %d",          g_minWave, g_maxWave);
+                ImGuiAtg::DrawNameValueTable("Total Lanes",         "%d",               g_lanes);
             ImGui::EndTable();
         }
 
         if(ImGui::CollapsingHeader("Current Display Info", ImGuiTreeNodeFlags_DefaultOpen))
         {
             ImGui::BeginTable("DisplayInfo", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg);
-                DrawNameValueTable("Resolution",       "%dx%d",               g_resWidth, g_resHight);
-                DrawNameValueTable("Vertical Refresh", "%dHz",                g_refresh);
-                DrawNameValueTable("Effective DPI",    "%dx%d, scale %.02fx", g_dpiX, g_dpiY, g_uiScale);
+                ImGuiAtg::DrawNameValueTable("Resolution",       "%dx%d @ %dHz",        g_resWidth, g_resHight, g_refresh);
+                ImGuiAtg::DrawNameValueTable("Effective DPI",    "%dx%d, scale %.02fx", g_dpiX, g_dpiY, ImGuiAtg::GetCurrentScale());
             ImGui::EndTable();
         }
 
-        ImGui::NextColumn();
+    ImGui::EndChild(); // end DeviceProperties
+
+    ImGui::SameLine();
+
+    // Column 3: Integrated Display, Resolutions, Input, Network, Audio
+    ImGui::BeginChild("DisplayNetwork", ImVec2(colWidth, colHeight), ImGuiChildFlags_None);
 
         if(ImGui::CollapsingHeader("Integrated Display Info", ImGuiTreeNodeFlags_DefaultOpen))
         {
             ImGui::BeginTable("DisplayInfo", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg);
-                DrawNameValueTable("Screen Size", "%.2f inches", g_screenSize);
-                DrawNameBoolValueTable("HDR Capable",            g_hdrAvailable);
-                DrawNameBoolValueTable("HDR Enabled",            g_hdrEnabled);
+                ImGuiAtg::DrawNameValueTable("Screen Size", "%.2f inches", g_screenSize);
+                ImGuiAtg::DrawNameBoolValueTable("HDR Capable",            g_hdrAvailable);
+                ImGuiAtg::DrawNameBoolValueTable("HDR Enabled",            g_hdrEnabled);
             ImGui::EndTable();
         }
 
         if(ImGui::CollapsingHeader("Supported Resolutions", ImGuiTreeNodeFlags_DefaultOpen))
         {
             ImGui::PushItemWidth(-1);
-            if(ImGui::BeginListBox("##resolutions", ImVec2(0, 100 * g_uiScale)))
+            if(ImGui::BeginListBox("##resolutions", ImVec2(0, ImGuiAtg::Scaled(100))))
             {
                 for(auto& r : g_resolutions)
                 {
@@ -385,19 +379,14 @@ void Sample_Draw()
 
                 ImGui::BeginTable("InputInfo", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg);
 
-                    // get state of Gamepad, display 1 property, handle View button pressed to exit app
+                    // get state of Gamepad and display 1 property. Standard footer combos
+                    // are handled centrally by ImGuiAtg::HandleStandardInput in Main.cpp.
                     HRESULT hr = g_gameInput->GetCurrentReading(GameInputKindGamepad, nullptr, &gpReading);
                     if(SUCCEEDED(hr))
                     {
-                        if(gpReading->GetGamepadState(&gpState))
-                        {
-                            if(gpState.buttons & GameInputGamepadView)
-                            {
-                                PostQuitMessage(0);
-                            }
-                        }
+                        gpReading->GetGamepadState(&gpState);
                     }
-                    DrawNameValueTableHRESULT("LThumbstick X/Y", hr, "%f, %f", gpState.leftThumbstickX, gpState.leftThumbstickY);
+                    ImGuiAtg::DrawNameValueTableHRESULT("LThumbstick X/Y", hr, "%f, %f", gpState.leftThumbstickX, gpState.leftThumbstickY);
 
                     // get state of keyboard, display first pressed key, if any
                     hr = g_gameInput->GetCurrentReading(GameInputKindKeyboard, nullptr, &kbReading);
@@ -405,7 +394,7 @@ void Sample_Draw()
                     {
                         kbReading->GetKeyState(_countof(keyState), keyState);
                     }
-                    DrawNameValueTableHRESULT("Key Pressed", hr, "%02X", keyState[0].scanCode);
+                    ImGuiAtg::DrawNameValueTableHRESULT("Key Pressed", hr, "%02X", keyState[0].scanCode);
 
                     // get state of mouse, display absolute X/Y coords
                     hr = g_gameInput->GetCurrentReading(GameInputKindMouse, nullptr, &mReading);
@@ -413,11 +402,12 @@ void Sample_Draw()
                     {
                         mReading->GetMouseState(&mState);
                     }
-                    DrawNameValueTableHRESULT("Mouse X/Y", hr, "%d, %d", mState.absolutePositionX, mState.absolutePositionY);
-
+#ifdef GAMEINPUT_API_VERSION
+                    ImGuiAtg::DrawNameValueTableHRESULT("Mouse X/Y", hr, "%d, %d", mState.absolutePositionX, mState.absolutePositionY);
+#endif
                     // "calculate" active/last used input and display
                     ActiveInputType last = GetActiveInputType(g_gameInput.Get());
-                    DrawNameValueTable("Active input", "%ws", ActiveInputTypeToString(last).c_str());
+                    ImGuiAtg::DrawNameValueTable("Active input", "%ws", ActiveInputTypeToString(last).c_str());
                 ImGui::EndTable();
             }
         }
@@ -425,14 +415,14 @@ void Sample_Draw()
         if(ImGui::CollapsingHeader("Network Info", ImGuiTreeNodeFlags_DefaultOpen))
         {
             ImGui::BeginTable("NetworkInfo", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg);
-                DrawNameValueTable("Connectivity", "%ws", g_connectivity.c_str());
+                ImGuiAtg::DrawNameValueTable("Connectivity", "%ws", g_connectivity.c_str());
             ImGui::EndTable();
         }
 
         if(ImGui::CollapsingHeader("Network Adapters", ImGuiTreeNodeFlags_DefaultOpen))
         {
             ImGui::PushItemWidth(-1);
-            if(ImGui::BeginListBox("##netadapters", ImVec2(0, 50 * g_uiScale)))
+            if(ImGui::BeginListBox("##netadapters", ImVec2(0, ImGuiAtg::Scaled(75))))
             {
                 ImGui::Columns(2);
                 for(auto& i : g_networkAdapterList)
@@ -453,7 +443,7 @@ void Sample_Draw()
         if(ImGui::CollapsingHeader("Audio Info", ImGuiTreeNodeFlags_DefaultOpen))
         {
             ImGui::PushItemWidth(-1);
-            if(ImGui::BeginListBox("##audiodevices", ImVec2(0, 50 * g_uiScale)))
+            if(ImGui::BeginListBox("##audiodevices", ImVec2(0, ImGuiAtg::Scaled(75))))
             {
                 for(auto& a : g_audioDevices)
                 {
@@ -472,19 +462,23 @@ void Sample_Draw()
             }
             ImGui::PopItemWidth();
         }
-    ImGui::End();
+    ImGui::EndChild(); // end DisplayNetwork
 
-    // set the "interactive" window to focus when the app starts
-    if(g_firstDraw)
-    {
-        ImGui::SetWindowFocus("Interactive");
-        g_firstDraw = false;
-    }
+    ImGuiAtg::SplitNext();
 
-    g_dpiChange = false;
+    // Log panel
+    ImGuiAtg::DrawLogPanel(0);
+
+    ImGuiAtg::EndSplit();
+    ImGui::EndChild();
+
+    // Standard exit / theme-toggle footer
+    ImGuiAtg::DrawFooter();
+
+    ImGuiAtg::EndFullscreenLayout();
 }
 
-void Sample_Shutdown()
+void Sample::Shutdown()
 {
     // remove network callback
     if(g_connectivityChangedHandle)
@@ -508,77 +502,13 @@ void Sample_Shutdown()
     StopAudioDeviceMonitoring();
 }
 
-static void LoadFont()
-{
-    bool useDefault = true;
-    char windir[MAX_PATH]{};
-    char fontpath[MAX_PATH]{};
-
-    // clear out current font
-    ImGuiIO& io = ImGui::GetIO();
-
-    // load font at new scale
-    // first try to find SegoeUI, if that fails, use the built-in ImGui font
-    if(GetWindowsDirectoryA(windir, MAX_PATH))
-    {
-        sprintf_s(fontpath, "%s\\fonts\\segoeui.ttf", windir);
-        if(std::filesystem::exists(fontpath))
-        {
-            io.Fonts->AddFontFromFileTTF(fontpath);
-            useDefault = false;
-        }
-    }
-
-    // if we couldn't find it, default to the ImGui native font
-    if(useDefault)
-    {
-        LOG("Font not found, reverting to default\n");
-        ImFontConfig ifc{};
-        ifc.SizePixels = 16;
-        io.Fonts->AddFontDefault(&ifc);
-    }
-}
-
-static void SetUIScale(float scale)
-{
-    // get current style and save off copy to restore colors later
-    ImGuiStyle& currentStyle = ImGui::GetStyle();
-    ImGuiStyle originalStyle = currentStyle;
-
-    // clear out the style and scale a default style + font
-    currentStyle = ImGuiStyle();
-    currentStyle.ScaleAllSizes(scale);
-    currentStyle.FontScaleDpi = scale;
-
-    // replace the colors we saved off
-    memcpy(currentStyle.Colors, originalStyle.Colors, sizeof(currentStyle.Colors));
-
-    // used to reset window sizes and positions on the next draw
-    g_dpiChange = true;
-}
-
 extern ImGuiKey ImGui_ImplWin32_KeyEventToImGuiKey(WPARAM wParam, LPARAM lParam);
 
-LRESULT Sample_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT Sample::WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     switch(msg)
     {
-        // fired when screen DPI changes
-        // https://learn.microsoft.com/windows/win32/hidpi/wm-dpichanged
-        case WM_DPICHANGED:
-            {
-                LOG("WM_DPICHANGED\n");
-                // place the window at new OS-provided location
-                RECT* rect = (RECT*)lParam;
-                SetWindowPos(hWnd, NULL, rect->left, rect->top, rect->right - rect->left, rect->bottom - rect->top, SWP_NOZORDER);
-
-                // set our scale factor and scale the ImGui controls
-                g_dpiX = LOWORD(wParam);
-                g_dpiY = HIWORD(wParam);
-                g_uiScale = g_dpiX / DefaultDpi;
-                SetUIScale(g_uiScale);
-            }
-            break;
+        // WM_DPICHANGED handled in Main.cpp
 
         // fired when device resolution, HDR mode, or refresh changes
         // https://learn.microsoft.com/windows/win32/gdi/wm-displaychange
@@ -645,7 +575,7 @@ LRESULT Sample_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     HideVirtualKeyboard();
                 }
             }
-            return 1;
+            return 0;
 
         case WM_CHAR:
             // add the currently pressed keyboard key to ImGui's processor which will put it in the textbox
@@ -663,7 +593,7 @@ LRESULT Sample_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
                 MultiByteToWideChar(CP_UTF8, MB_PRECOMPOSED, (char*)&wParam, 1, &wch, 1);
                 ImGui::GetIO().AddInputCharacter(wch);
             }
-            return 1;
+            return 0;
     }
 
     // continue processing by ImGui and DefWindowProc
@@ -722,6 +652,14 @@ static std::wstring GetWindowsBuildInfo()
     return (status == ERROR_SUCCESS) ? build : L"";
 }
 
-void Sample_Update()
+void Sample::Update()
+{
+}
+
+void Sample::Activated()
+{
+}
+
+void Sample::Deactivated()
 {
 }

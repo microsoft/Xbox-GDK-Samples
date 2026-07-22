@@ -9,77 +9,22 @@
 
 #pragma once
 
-#define LOG(f, ...) \
-{ \
-    g_appLog->AddLog(f, __VA_ARGS__); \
-}
-
-#define LOG_IF_FAILED(f) \
-{ \
-    HRESULT _hr = f; \
-    if(FAILED(_hr)) { g_appLog->AddLog("%08X - "#f"\n", _hr); } \
-}
-
-#define LOG_AND_RETURN_IF_FAILED(f) \
-{ \
-    HRESULT _hr = f; \
-    g_appLog->AddLog("%08X - "#f"\n", _hr); \
-    if(FAILED(_hr)) return; \
-}
-
-#define LOG_IF_FAILED_AND_RETURN(f) \
-{ \
-    HRESULT _hr = f; \
-    if(FAILED(_hr)) { g_appLog->AddLog("%08X - "#f"\n", _hr); return; } \
-}
-
-#define LOG_AND_CONTNUE(f) \
-{ \
-    HRESULT _hr = f; \
-    g_appLog->AddLog("%08X - "#f"\n", _hr); \
-}
-
-constexpr ImU32 COLOR_ERROR = IM_COL32(255, 0, 0, 255);
-
-template<typename... Args>
-static void DrawNameValueTableHRESULT(const char* name, HRESULT hr, const char* fmt, const Args&... args)
+class Sample
 {
-    ImGui::TableNextColumn(); ImGui::Text("%s", name);
-    ImGui::TableNextColumn();
-    if(SUCCEEDED(hr))
-    {
-        ImGui::Text(fmt, args...);
-    }
-    else
-    {
-        ImGui::PushStyleColor(ImGuiCol_Text, COLOR_ERROR);
-        ImGui::Text("Error %08X", static_cast<unsigned int>(hr));
-        ImGui::PopStyleColor();
-    }
-}
+public:
+    Sample() = default;
+    ~Sample() = default;
 
-template<typename... Args>
-static void DrawNameValueTable(const char* name, const char* fmt, const Args&... args)
-{
-    ImGui::TableNextColumn(); ImGui::Text("%s", name);
-    ImGui::TableNextColumn();
-    if constexpr (sizeof...(Args) == 0)
-        ImGui::Text("%s", fmt);
-    else
-        ImGui::Text(fmt, args...);
-}
+    Sample(Sample const&) = delete;
+    Sample& operator= (Sample const&) = delete;
 
-template<typename... Args>
-static void DrawNameBoolValueTable(const char* name, int32_t value)
-{
-    ImGui::TableNextColumn(); ImGui::Text("%s", name);
-    ImGui::TableNextColumn(); ImGui::Text("%s", value ? "TRUE" : "FALSE");
-}
+    void Initialize(HWND hWnd);
+    void Update();
+    void Draw();
+    void Shutdown();
+    void Activated();
+    void Deactivated();
+    LRESULT WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-void Sample_Initialize(HWND hWnd);
-void Sample_Update();
-void Sample_Draw();
-void Sample_Shutdown();
-LRESULT Sample_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-
-
+private:
+};

@@ -1,4 +1,4 @@
-///--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
 // haptics.cpp
 //
 // Advanced Technology Group (ATG)
@@ -28,11 +28,6 @@ struct DeviceContext
     MediaItem mediaItem;
     GameInputGamepadState lastGamepadState = {};
 };
-
-extern HWND g_hWnd;
-
-std::unique_ptr<AppLog> g_appLog {};
-static bool g_firstDraw = true;
 
 ComPtr<IGameInput> g_gameInput {};
 GameInputCallbackToken g_deviceCallbackToken {};
@@ -84,9 +79,9 @@ static void StopAllHapticEffects()
     }
 }
 
-void Sample_Initialize()
+void Sample::Initialize(HWND hWnd)
 {
-    g_appLog = std::make_unique<AppLog>();
+    m_window = hWnd;
 
     // add the current directory to all of the media file paths
     wchar_t exePath[MAX_PATH];
@@ -121,12 +116,14 @@ void Sample_Initialize()
     LOG_IF_FAILED_AND_RETURN(g_hapticsManager->Initialize(g_gameInput.Get()));
 }
 
-void Sample_Draw(float uiScale)
+void Sample::Draw()
 {
-    ImGui::SetNextWindowPos(ImVec2(5 * uiScale, 5 * uiScale), ImGuiCond_None);
-    ImGui::SetNextWindowSize(ImVec2(700 * uiScale, 810 * uiScale), ImGuiCond_None);
+    ImGuiAtg::BeginFullscreenLayout();
 
-    ImGui::Begin("Advanced Haptics", nullptr, ImGuiWindowFlags_NoCollapse);
+    // Content on left, log on right, with draggable splitter
+    ImGuiAtg::BeginSplitV("##LogSplit", 800.0f);
+
+    ImGui::CollapsingHeader("Attached Gamepads", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Leaf);
 
     if(g_devices.size() == 0)
     {
@@ -187,9 +184,9 @@ void Sample_Draw(float uiScale)
                     ImGui::EndCombo();
                 }
 
-                if (ImGui::Button("Browse for file...", ImVec2(160*uiScale, 50*uiScale)))
+                if (ImGui::Button("Browse for file...", ImVec2(ImGuiAtg::Scaled(160), ImGuiAtg::Scaled(50))))
                 {
-                    std::wstring selectedFile = OpenWavFileDialog(g_hWnd);
+                    std::wstring selectedFile = OpenWavFileDialog(m_window);
                     if (!selectedFile.empty())
                     {
                         MediaItem mi;
@@ -203,13 +200,15 @@ void Sample_Draw(float uiScale)
                 ImGui::Dummy(ImVec2(0, 20));
 
                 ImGui::BeginDisabled(hapticsDevice->IsPlaying());
-                    if(ImGui::Button("Play WASAPI (L1)", ImVec2(160*uiScale, 50*uiScale)) || IsButtonPressed(state.buttons, context.lastGamepadState.buttons, GameInputGamepadButtons::GameInputGamepadLeftShoulder))
+                    if(ImGui::Button("Play WASAPI (L1)", ImVec2(ImGuiAtg::Scaled(160), ImGuiAtg::Scaled(50))) ||
+                        (IsButtonPressed(state.buttons, context.lastGamepadState.buttons, GameInputGamepadButtons::GameInputGamepadLeftShoulder) && !hapticsDevice->IsPlaying()))
                     {
                         hapticsDevice->PlayWAVFile(context.mediaItem.filename.c_str(), HapticPlaybackEngine::WASAPI);
                     }
                     ImGui::SameLine();
 
-                    if(ImGui::Button("Play XAudio2 (R1)", ImVec2(160*uiScale, 50*uiScale)) || IsButtonPressed(state.buttons, context.lastGamepadState.buttons, GameInputGamepadButtons::GameInputGamepadRightShoulder))
+                    if(ImGui::Button("Play XAudio2 (R1)", ImVec2(ImGuiAtg::Scaled(160), ImGuiAtg::Scaled(50))) ||
+                        (IsButtonPressed(state.buttons, context.lastGamepadState.buttons, GameInputGamepadButtons::GameInputGamepadRightShoulder) && !hapticsDevice->IsPlaying()))
                     {
                         hapticsDevice->PlayWAVFile(context.mediaItem.filename.c_str(), HapticPlaybackEngine::XAudio2);
                     }
@@ -217,7 +216,7 @@ void Sample_Draw(float uiScale)
 
                 ImGui::SameLine();
 
-                if (ImGui::Button("Stop (B/Circle)", ImVec2(160*uiScale, 50*uiScale)) || IsButtonPressed(state.buttons, context.lastGamepadState.buttons, GameInputGamepadButtons::GameInputGamepadB))
+                if (ImGui::Button("Stop (B/Circle)", ImVec2(ImGuiAtg::Scaled(160), ImGuiAtg::Scaled(50))) || IsButtonPressed(state.buttons, context.lastGamepadState.buttons, GameInputGamepadButtons::GameInputGamepadB))
                 {
                     hapticsDevice->Stop();
                 }
@@ -237,31 +236,37 @@ void Sample_Draw(float uiScale)
         if(g_hapticsManager->GetDeviceCount() > 1)
         {
             ImGui::Indent(16.0f);
-            if(ImGui::Button("Stop All", ImVec2(120*uiScale, 50*uiScale)))
+            if(ImGui::Button("Stop All", ImVec2(ImGuiAtg::Scaled(120), ImGuiAtg::Scaled(50))))
             {
                 StopAllHapticEffects();
             }
         }
     }
 
-    ImGui::SetNextWindowPos(ImVec2(710 * uiScale, 5 * uiScale), ImGuiCond_None);
-    ImGui::SetNextWindowSize(ImVec2(800 * uiScale, 810 * uiScale), ImGuiCond_None);
-    g_appLog->Draw("Log", -200.0f * uiScale);
+    ImGuiAtg::SplitNext();
+    ImGuiAtg::DrawLogPanel();
+    ImGuiAtg::EndSplit();
 
-    ImGui::End();
-
-    // set the main window to focus when the app starts
-    if(g_firstDraw)
-    {
-        ImGui::SetWindowFocus("Advanced Haptics");
-        g_firstDraw = false;
-    }
+    ImGuiAtg::EndFullscreenLayout();
 }
 
-void Sample_Shutdown()
+void Sample::Shutdown()
 {
     StopAllHapticEffects();
     g_gameInput->UnregisterCallback(g_deviceCallbackToken);
+}
+
+void Sample::Activated()
+{
+}
+
+void Sample::Deactivated()
+{
+}
+
+LRESULT Sample::WndProcHandler(HWND /*hWnd*/, UINT /*msg*/, WPARAM /*wParam*/, LPARAM /*lParam*/)
+{
+    return 0;
 }
 
 std::wstring OpenWavFileDialog(HWND owner)
@@ -312,7 +317,7 @@ bool IsButtonPressed(GameInputGamepadButtons buttons, GameInputGamepadButtons la
     return (buttons & button) && !(lastButtons & button);
 }
 
-void Sample_Update()
+void Sample::Update()
 {
 }
 
