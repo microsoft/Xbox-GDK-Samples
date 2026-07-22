@@ -14,9 +14,6 @@
     <Filter Include="External">
       <UniqueIdentifier>abda6d31-1d33-436d-a9cf-e31395c89176</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts">
-      <UniqueIdentifier>{f3a93a79-2fce-4508-908a-e61c6f75622f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ATG Tool Kit\Skybox">
       <UniqueIdentifier>{50924767-b827-4946-9434-13d493bcf9af}</UniqueIdentifier>
     </Filter>
@@ -174,9 +171,6 @@
     </None>
     <None Include="..\..\..\Media\PBR\XboxOrb\XboxOrb.sdkmesh">
       <Filter>Assets\Models\XboxOrb</Filter>
-    </None>
-    <None Include="Scripts\Desktop.PostBuild.bat">
-      <Filter>Scripts</Filter>
     </None>
     <None Include="..\..\NuGet.config" />
     <None Include="readme_ja-jp.md" />

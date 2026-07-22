@@ -376,7 +376,6 @@
     <PostBuildEvent>
       <Command>copy $(SolutionDir)OutOfProcDumpTool.exe $(SolutionDir)$(Platform)\$(Configuration)\
 copy $(SolutionDir)OutOfProcDumpTool.pdb $(SolutionDir)$(Platform)\$(Configuration)\
-$(ProjectDir)Scripts\Desktop.PostBuild.bat "$(ProjectDir)" "$(TargetDir)"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -416,7 +415,6 @@ $(ProjectDir)Scripts\Desktop.PostBuild.bat "$(ProjectDir)" "$(TargetDir)"
     <PostBuildEvent>
       <Command>copy $(SolutionDir)OutOfProcDumpTool.exe $(SolutionDir)$(Platform)\$(Configuration)\
 copy $(SolutionDir)OutOfProcDumpTool.pdb $(SolutionDir)$(Platform)\$(Configuration)\
-$(ProjectDir)Scripts\Desktop.PostBuild.bat "$(ProjectDir)" "$(TargetDir)"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -544,7 +542,6 @@ $(ProjectDir)Scripts\Desktop.PostBuild.bat "$(ProjectDir)" "$(TargetDir)"
     <PostBuildEvent>
       <Command>copy $(SolutionDir)OutOfProcDumpTool.exe $(SolutionDir)$(Platform)\$(Configuration)\
 copy $(SolutionDir)OutOfProcDumpTool.pdb $(SolutionDir)$(Platform)\$(Configuration)\
-$(ProjectDir)Scripts\Desktop.PostBuild.bat "$(ProjectDir)" "$(TargetDir)"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -581,7 +578,6 @@ $(ProjectDir)Scripts\Desktop.PostBuild.bat "$(ProjectDir)" "$(TargetDir)"
     <PostBuildEvent>
       <Command>copy $(SolutionDir)OutOfProcDumpTool.exe $(SolutionDir)$(Platform)\$(Configuration)\
 copy $(SolutionDir)OutOfProcDumpTool.pdb $(SolutionDir)$(Platform)\$(Configuration)\
-$(ProjectDir)Scripts\Desktop.PostBuild.bat "$(ProjectDir)" "$(TargetDir)"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -619,7 +615,6 @@ $(ProjectDir)Scripts\Desktop.PostBuild.bat "$(ProjectDir)" "$(TargetDir)"
     <PostBuildEvent>
       <Command>copy $(SolutionDir)OutOfProcDumpTool.exe $(SolutionDir)$(Platform)\$(Configuration)\
 copy $(SolutionDir)OutOfProcDumpTool.pdb $(SolutionDir)$(Platform)\$(Configuration)\
-$(ProjectDir)Scripts\Desktop.PostBuild.bat "$(ProjectDir)" "$(TargetDir)"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -657,7 +652,6 @@ $(ProjectDir)Scripts\Desktop.PostBuild.bat "$(ProjectDir)" "$(TargetDir)"
     <PostBuildEvent>
       <Command>copy $(SolutionDir)OutOfProcDumpTool.exe $(SolutionDir)$(Platform)\$(Configuration)\
 copy $(SolutionDir)OutOfProcDumpTool.pdb $(SolutionDir)$(Platform)\$(Configuration)\
-$(ProjectDir)Scripts\Desktop.PostBuild.bat "$(ProjectDir)" "$(TargetDir)"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -802,6 +796,14 @@ $(ProjectDir)Scripts\Desktop.PostBuild.bat "$(ProjectDir)" "$(TargetDir)"
     <Image Include="Assets\StoreLogo.png" />
   </ItemGroup>
   <ItemGroup>
+    <CopyFileToFolders Include="Assets\atg.ico" />
+    <CopyFileToFolders Include="Assets\LargeLogo.png" />
+    <CopyFileToFolders Include="Assets\Logo.png" />
+    <CopyFileToFolders Include="Assets\SmallLogo.png" />
+    <CopyFileToFolders Include="Assets\SplashScreen.png" />
+    <CopyFileToFolders Include="Assets\StoreLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
       <DeploymentContent>true</DeploymentContent>
     </None>
@@ -833,8 +835,12 @@ $(ProjectDir)Scripts\Desktop.PostBuild.bat "$(ProjectDir)" "$(TargetDir)"
     <None Include="readme.md">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </None>
-    <None Include="Scripts\Desktop.PostBuild.bat" />
   </ItemGroup>
+  <ItemDefinitionGroup>
+    <CopyFileToFolders>
+      <DestinationFolders>$(OutDir)Assets</DestinationFolders>
+    </CopyFileToFolders>
+  </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

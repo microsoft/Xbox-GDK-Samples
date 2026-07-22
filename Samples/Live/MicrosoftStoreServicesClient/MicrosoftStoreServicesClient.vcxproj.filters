@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Common">
@@ -16,9 +16,6 @@
     </Filter>
     <Filter Include="External">
       <UniqueIdentifier>f75398f4-f17f-4122-8801-80eb624a130e</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts">
-      <UniqueIdentifier>{12b89356-b6b9-4494-a525-3e610043a468}</UniqueIdentifier>
     </Filter>
     <Filter Include="Assets\UI">
       <UniqueIdentifier>{79f270a1-d61b-4e2b-a12a-0c3e39696a11}</UniqueIdentifier>
@@ -111,9 +108,6 @@
     <None Include="Readme_ja-JP.docx" />
     <None Include="Readme_ko-KR.docx" />
     <None Include="Readme_zh-CN.docx" />
-    <None Include="Scripts\Desktop.PostBuild.bat">
-      <Filter>Scripts</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Assets\UILayout.json">

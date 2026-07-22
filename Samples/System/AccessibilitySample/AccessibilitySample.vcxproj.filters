@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Common">
-      <UniqueIdentifier>aab1344e-d2a7-4df1-88c2-53041e71d435</UniqueIdentifier>
-    </Filter>
     <Filter Include="Assets">
       <UniqueIdentifier>125b73c9-834a-47a7-917e-173f8e31a1dc</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="ATG Tool Kit">
       <UniqueIdentifier>d83d2aab-0aeb-48bb-9970-9b3de91d28fe</UniqueIdentifier>
-    </Filter>
-    <Filter Include="External">
-      <UniqueIdentifier>fb9b9d9a-4f9b-4446-8e38-b608a33e8737</UniqueIdentifier>
     </Filter>
     <Filter Include="ImGui">
       <UniqueIdentifier>{5539f2d3-8b11-4cc9-bde1-83d577be9448}</UniqueIdentifier>
@@ -30,32 +24,14 @@
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="AccessibilitySample.h" />
-    <ClInclude Include="StepTimer.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="DeviceResources.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
-      <Filter>ATG Tool Kit</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
-      <Filter>ATG Tool Kit</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h">
-      <Filter>ATG Tool Kit</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Kits\ATGTK\json.h">
+    <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h">
       <Filter>ATG Tool Kit</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
-      <Filter>External</Filter>
     </ClInclude>
     <ClInclude Include="Narrator.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imconfig.h">
@@ -83,40 +59,67 @@
       <Filter>ImGui\Backends</Filter>
     </ClInclude>
     <ClInclude Include="ImguiAcc.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_allocator.h">
+    <ClInclude Include="..\..\..\Kits\ATGTK\imgui\imgui_atg.h">
       <Filter>ImGui\ATG</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_atg.h">
+    <ClInclude Include="..\..\..\Kits\ATGTK\imgui\imgui_atg_file.h">
       <Filter>ImGui\ATG</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_atg_file.h">
+    <ClInclude Include="..\..\..\Kits\ATGTK\imgui\imgui_atg_device_context.h">
       <Filter>ImGui\ATG</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_ps.h">
       <Filter>ImGui\Backends\Shaders</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_ps_point.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_rs.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_rs_point.h">
       <Filter>ImGui\Backends\Shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_vs.h">
       <Filter>ImGui\Backends\Shaders</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_vs_point.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_ps.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_ps_point.h">
       <Filter>ImGui\Backends\Shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_rs.h">
       <Filter>ImGui\Backends\Shaders</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_rs_point.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_vs.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_vs_point.h">
       <Filter>ImGui\Backends\Shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_ps.h">
       <Filter>ImGui\Backends\Shaders</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_ps_point.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_rs.h">
       <Filter>ImGui\Backends\Shaders</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_rs_point.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_vs.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_vs_point.h">
       <Filter>ImGui\Backends\Shaders</Filter>
     </ClInclude>
     <ClInclude Include="GameInputManager.h" />
@@ -126,9 +129,6 @@
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="AccessibilitySample.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="DeviceResources.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
       <Filter>ATG Tool Kit</Filter>
     </ClCompile>
@@ -136,6 +136,12 @@
       <Filter>ATG Tool Kit</Filter>
     </ClCompile>
     <ClCompile Include="Narrator.cpp" />
+    <ClCompile Include="..\..\..\Kits\ATGTK\imgui\imgui_atg.cpp">
+      <Filter>ImGui\ATG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\imgui\imgui_atg_device_context.cpp">
+      <Filter>ImGui\ATG</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui.cpp">
       <Filter>ImGui</Filter>
     </ClCompile>

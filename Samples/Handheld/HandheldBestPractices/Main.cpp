@@ -11,44 +11,38 @@
 
 #include "HandheldBestPractices.h"
 
-LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+namespace
+{
+    static constexpr int c_WindowWidth = 1920;
+    static constexpr int c_WindowHeight = 1080;
+
+    static std::unique_ptr<ImGuiAtg::DeviceContext> g_d3dDeviceContext;
+    static std::unique_ptr<Sample> g_sample;
+}
+
+static LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 // Main code
-int WINAPI wWinMain(_In_ HINSTANCE /*hInstance*/, _In_opt_ HINSTANCE /*hPrevInstance*/, _In_ LPWSTR lpCmdLine, _In_ int /*nCmdShow*/)
+int WINAPI wWinMain(_In_ HINSTANCE /*hInstance*/, _In_opt_ HINSTANCE /*hPrevInstance*/, _In_ LPWSTR /*lpCmdLine*/, _In_ int /*nCmdShow*/)
 {
-    bool windowed = false;
-
-    int numArgs = 0;
-    auto argv = CommandLineToArgvW(lpCmdLine, &numArgs);
-    for(int i = 0; i < numArgs; i++)
-    {
-        if(wcscmp(argv[i], L"-windowed") == 0)
-        {
-            windowed = true;
-        }
-    }
-
     // Create application window
     ImGui_ImplWin32_EnableDpiAwareness();
-    WNDCLASSEXW wc = { sizeof(wc), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(nullptr), nullptr, nullptr, nullptr, nullptr, L"Handheld Best Practices", nullptr };
+    WNDCLASSEXW wc = { sizeof(wc), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(nullptr), nullptr, nullptr, nullptr, nullptr, L"HandheldBestPractices", nullptr };
     RegisterClassExW(&wc);
 
-    int width = windowed ? 1920 : CW_USEDEFAULT;
-    int height = windowed ? 1080 : CW_USEDEFAULT;
-
-    HWND hWnd   = CreateWindowW(wc.lpszClassName, L"Handheld Best Practices", windowed ? WS_OVERLAPPEDWINDOW : WS_POPUP | WS_MINIMIZEBOX,
-                                CW_USEDEFAULT, CW_USEDEFAULT, width, height, nullptr, nullptr, wc.hInstance, nullptr);
+    HWND hWnd = CreateWindowW(wc.lpszClassName, L"HandheldBestPractices", WS_OVERLAPPEDWINDOW,
+                              CW_USEDEFAULT, CW_USEDEFAULT, c_WindowWidth, c_WindowHeight, nullptr, nullptr, wc.hInstance, nullptr);
 
     // Initialize Direct3D
-    if (!CreateDeviceD3D(hWnd, 1920, 1080))
+    g_d3dDeviceContext = std::make_unique<ImGuiAtg::DeviceContext>();
+    if (!g_d3dDeviceContext->CreateDevice(hWnd, c_WindowWidth, c_WindowHeight))
     {
-        CleanupDeviceD3D();
         UnregisterClassW(wc.lpszClassName, wc.hInstance);
         return 1;
     }
 
     // Show the window, top of z-order
-    ShowWindow(hWnd, windowed ? SW_SHOWNORMAL : SW_SHOWMAXIMIZED);
+    ShowWindow(hWnd, SW_SHOWNORMAL);
     UpdateWindow(hWnd);
     SetForegroundWindow(hWnd);
 
@@ -61,82 +55,163 @@ int WINAPI wWinMain(_In_ HINSTANCE /*hInstance*/, _In_opt_ HINSTANCE /*hPrevInst
     io.IniFilename = nullptr;                                 // Disable INI file creation
 
     // Setup Dear ImGui style
-    ImGui::StyleColorsDark();
+    ImGuiAtg::SetAtgStyle();
+    ImGuiAtg::SetDpiScale(hWnd);
 
     // Setup Platform/Renderer backends
     ImGui_ImplWin32_Init(hWnd);
-    ImGui_Sample_DX12_Init();
+    g_d3dDeviceContext->DX12_Init();
 
-    Sample_Initialize(hWnd);
+    g_sample = std::make_unique<Sample>();
+    g_sample->Initialize(hWnd);
 
     // Main loop
-    bool done = false;
-    while (!done)
+    MSG msg = {};
+    while (msg.message != WM_QUIT)
     {
-        MSG msg;
-        while (::PeekMessage(&msg, nullptr, 0U, 0U, PM_REMOVE))
+        if (PeekMessage(&msg, nullptr, 0U, 0U, PM_REMOVE))
         {
             TranslateMessage(&msg);
             DispatchMessage(&msg);
-            if (msg.message == WM_QUIT)
-                done = true;
         }
-        if (done)
-            break;
+        else
+        {
+            g_sample->Update();
 
-        Sample_Update();
+            // Start the Dear ImGui frame
+            g_d3dDeviceContext->DX12_PreRender();
+            ImGui_ImplDX12_NewFrame();
+            ImGui_ImplWin32_NewFrame();
+            ImGui::NewFrame();
 
-        // Start the Dear ImGui frame
-        ImGui_Sample_DX12_PreRender();
-        ImGui_ImplDX12_NewFrame();
-        ImGui_ImplWin32_NewFrame();
-        ImGui::NewFrame();
+            ImGuiAtg::HandleStandardInput();
 
-        Sample_Draw();
+            // Draw the ImGui controls
+            g_sample->Draw();
 
-        // Rendering
-        ImGui::Render();
-
-        ImGui_Sample_DX12_PostRender();
+            // Rendering
+            ImGui::Render();
+            g_d3dDeviceContext->DX12_PostRender();
+        }
     }
 
-    ImGui_Sample_DX12_Shutdown();
-
-    Sample_Shutdown();
-
-    // Cleanup
+    // Shutdown and cleanup
+    g_d3dDeviceContext->DX12_Shutdown();
+    g_sample->Shutdown();
+    g_sample.reset();
     ImGui_ImplDX12_Shutdown();
     ImGui_ImplWin32_Shutdown();
     ImGui::DestroyContext();
 
-    CleanupDeviceD3D();
+    g_d3dDeviceContext.reset();
     DestroyWindow(hWnd);
     UnregisterClassW(wc.lpszClassName, wc.hInstance);
 
     return 0;
 }
 
-// Forward declare message handler from imgui_impl_win32.cpp
+static void ToggleFullscreen(HWND hWnd)
+{
+    static bool isFullscreen = false;
+    static RECT windowRect = {};
+
+    if (isFullscreen)
+    {
+        // Restore windowed mode
+        SetWindowLongPtr(hWnd, GWL_STYLE, WS_OVERLAPPEDWINDOW | WS_VISIBLE);
+        SetWindowPos(hWnd, HWND_TOP,
+            windowRect.left, windowRect.top,
+            windowRect.right - windowRect.left, windowRect.bottom - windowRect.top,
+            SWP_FRAMECHANGED);
+    }
+    else
+    {
+        // Switch to borderless fullscreen
+        GetWindowRect(hWnd, &windowRect);
+        SetWindowLongPtr(hWnd, GWL_STYLE, WS_POPUP | WS_VISIBLE);
+        SetWindowPos(hWnd, HWND_TOP, 0, 0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), SWP_FRAMECHANGED);
+    }
+    isFullscreen = !isFullscreen;
+}
+
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     // insert our sample's WndProc before passing messages off to ImGui or Windows
-    if (Sample_WndProcHandler(hWnd, msg, wParam, lParam))
-        return true;
+    if (g_sample && g_sample->WndProcHandler(hWnd, msg, wParam, lParam))
+    {
+        return 1;
+    }
 
+    // now give ImGui it's chance at the message
     if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
-        return true;
+    {
+        return 1;
+    }
 
+    // and now let us respond to any messages we care about that ImGui doesn't handle
     switch (msg)
     {
-        case WM_SIZE:
-            ImGui_Sample_DX12_Resize(lParam, wParam);
+        case WM_GETMINMAXINFO:
+            {
+                // Enforce a minimum window size on desktop.
+                MINMAXINFO* mmi = (MINMAXINFO*)lParam;
+                mmi->ptMinTrackSize.x = 1280;
+                mmi->ptMinTrackSize.y = 720;
+            }
             return 0;
+
+        case WM_KEYDOWN:
+            if (wParam == VK_F11)
+            {
+                ToggleFullscreen(hWnd);
+                return 0;
+            }
+            break;
+
+        case WM_SYSKEYDOWN:
+            if (wParam == VK_RETURN && (lParam & 0x60000000) == 0x20000000)
+            {
+                ToggleFullscreen(hWnd);
+                return 0;
+            }
+            break;
+
+        case WM_ACTIVATEAPP:
+            if (g_sample)
+            {
+                if (wParam)
+                {
+                    g_sample->Activated();
+                }
+                else
+                {
+                    g_sample->Deactivated();
+                }
+            }
+            break;
+
+        case WM_SIZE:
+            if (g_d3dDeviceContext)
+                g_d3dDeviceContext->DX12_Resize(lParam, wParam);
+            return 0;
+
+        case WM_DPICHANGED:
+            {
+                RECT* rect = (RECT*)lParam;
+                SetWindowPos(hWnd, NULL, rect->left, rect->top, rect->right - rect->left, rect->bottom - rect->top, SWP_NOZORDER);
+                ImGuiAtg::SetDpiScale(hWnd);
+            }
+            return 0;
+
         case WM_SYSCOMMAND:
             if ((wParam & 0xfff0) == SC_KEYMENU) // Disable ALT application menu
+            {
                 return 0;
+            }
             break;
+
         case WM_DESTROY:
             PostQuitMessage(0);
             return 0;
