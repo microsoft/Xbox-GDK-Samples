@@ -85,6 +85,7 @@
 #include <cstring>
 #include <cwchar>
 #include <exception>
+#include <filesystem>
 #include <functional>
 #include <future>
 #include <iterator>
@@ -103,6 +104,11 @@
 #endif
 #include <XGame.h>
 #include <XSystem.h>
+
+#include "imgui.h"
+#include "backends/imgui_impl_dx12.h"
+#include "backends/imgui_impl_win32.h"
+#include "imgui/imgui_atg.h"
 
 // To opt-out of telemetry uncomment the following line
 //#define ATG_DISABLE_TELEMETRY

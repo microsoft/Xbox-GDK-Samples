@@ -1,4 +1,4 @@
-# Microsoft Game Development Kit samples list
+﻿# Microsoft Game Development Kit samples list
 
 ## Categories
 
@@ -77,6 +77,7 @@ Following is a list of categories for the samples.
 | __SmokeSimulation__ | This sample demonstrates how to use Compute Shader 6.0 and 3D textures to implement basic 3D Navier-Stokes flow simulation. | ✓ |  | 
 | __TemporalAntialiasing__ | This sample demonstrates how to implement Temporal Antialiasing (TAA), plus a series of other techniques which help improve the algoritm stability and fix some of its inherent issues. | ✓ | ✓ | 
 | __VisibilityBuffer__ | Demonstrates a visibility buffer (deferred) rendering technique, making use of Mesh Shaders and HLSL 6.6 Dynamic Resources. | ✓ | ✓ | 
+| __VisibilityBufferIndexReorder__ | This sample augments the VisibilityBuffer sample with a simple index buffer reordering to improve vertex shader performance on Xbox. | ✓ | ✓ | 
  
 <a id="handheld"></a> 
  
@@ -159,7 +160,7 @@ Following is a list of categories for the samples.
 | __IntelligentDelivery__ | This sample demonstrates Intelligent Delivery APIs. | ✓ | ✓ | 
 | __Lighting__ | This sample shows how to use the LampArray API. | ✓ | ✓ | 
 | __LocalStorage__ | This sample shows how to use different local storage locations in a title for both Xbox and PC platforms. | ✓ | ✓ | 
-| __ModernGamertag__ | This sample demonstrates the use of a Glyph cache that can be used to store and render strings to a screen on Xbox. | ✓ | ✓ | 
+| __ModernGamerTag__ | This sample demonstrates the use of a Glyph cache that can be used to store and render strings to a screen on Xbox. | ✓ | ✓ | 
 | __MouseInput__ | This sample demonstrates how to implement mouse controls with GameInput. | ✓ |  | 
 | __MultiExecutablePackage__ | This sample demonstrates how to manage multiple projects, dlls, and utility processes within a single solution. | ✓ | ✓ | 
 | __MultiPackage__ | This sample demonstrates how to manage multiple packages that are capable of launching between each other. | ✓ | ✓ | 

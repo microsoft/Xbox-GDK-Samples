@@ -1,0 +1,549 @@
+{
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 63180,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 16225,
+      "max": [
+        0.181519076228142,
+        0.574948489665985,
+        0.231594681739807
+      ],
+      "min": [
+        0.00881476700305939,
+        0.375819742679596,
+        0.0912753194570541
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 16225,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 16225,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5125,
+      "count": 63180,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 5,
+      "componentType": 5126,
+      "count": 16225,
+      "max": [
+        0.840510785579681,
+        0.999999940395355,
+        0.611734330654144
+      ],
+      "min": [
+        -0.840516567230225,
+        -1.0,
+        -0.6117342710495
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 6,
+      "componentType": 5126,
+      "count": 16225,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 7,
+      "componentType": 5126,
+      "count": 16225,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 8,
+      "componentType": 5125,
+      "count": 19794,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 9,
+      "componentType": 5126,
+      "count": 5555,
+      "max": [
+        0.661789953708649,
+        0.648350775241852,
+        0.513136744499207
+      ],
+      "min": [
+        -0.517463803291321,
+        -0.139054536819458,
+        -0.526601552963257
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 10,
+      "componentType": 5126,
+      "count": 5555,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 11,
+      "componentType": 5126,
+      "count": 5555,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 12,
+      "componentType": 5125,
+      "count": 34920,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 13,
+      "componentType": 5126,
+      "count": 13120,
+      "max": [
+        0.142428949475288,
+        -0.138457715511322,
+        0.0326342508196831
+      ],
+      "min": [
+        -0.205141887068748,
+        -0.490721881389618,
+        -0.212504833936691
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 14,
+      "componentType": 5126,
+      "count": 13120,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 15,
+      "componentType": 5126,
+      "count": 13120,
+      "type": "VEC2"
+    }
+  ],
+  "asset": {
+    "generator": "Substance Painter 2017.4.2",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 252720,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 194700,
+      "byteOffset": 252720,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 194700,
+      "byteOffset": 447420,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 129800,
+      "byteOffset": 642120,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 252720,
+      "byteOffset": 771920,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 194700,
+      "byteOffset": 1024640,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 194700,
+      "byteOffset": 1219340,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 129800,
+      "byteOffset": 1414040,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 79176,
+      "byteOffset": 1543840,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 66660,
+      "byteOffset": 1623016,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 66660,
+      "byteOffset": 1689676,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 44440,
+      "byteOffset": 1756336,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 139680,
+      "byteOffset": 1800776,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 157440,
+      "byteOffset": 1940456,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 157440,
+      "byteOffset": 2097896,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 104960,
+      "byteOffset": 2255336,
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 2360296,
+      "uri": "RobotInternalsPainted.bin"
+    }
+  ],
+  "images": [
+    {
+      "uri": "GearsMaterial_baseColor.png"
+    },
+    {
+      "uri": "GearsMaterial_occlusionRoughnessMetallic.png"
+    },
+    {
+      "uri": "GearsMaterial_normal.png"
+    },
+    {
+      "uri": "InteriorMaterial_baseColor.png"
+    },
+    {
+      "uri": "InteriorMaterial_occlusionRoughnessMetallic.png"
+    },
+    {
+      "uri": "InteriorMaterial_normal.png"
+    },
+    {
+      "uri": "MechMaterial_baseColor.png"
+    },
+    {
+      "uri": "MechMaterial_occlusionRoughnessMetallic.png"
+    },
+    {
+      "uri": "MechMaterial_normal.png"
+    },
+    {
+      "uri": "RobotMaterial_baseColor.png"
+    },
+    {
+      "uri": "RobotMaterial_occlusionRoughnessMetallic.png"
+    },
+    {
+      "uri": "RobotMaterial_normal.png"
+    }
+  ],
+  "materials": [
+    {
+      "alphaMode": "OPAQUE",
+      "name": "GearsMaterial",
+      "normalTexture": {
+        "index": 2
+      },
+      "occlusionTexture": {
+        "index": 1
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicRoughnessTexture": {
+          "index": 1
+        }
+      }
+    },
+    {
+      "alphaMode": "OPAQUE",
+      "name": "InteriorMaterial",
+      "normalTexture": {
+        "index": 5
+      },
+      "occlusionTexture": {
+        "index": 4
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 3
+        },
+        "metallicRoughnessTexture": {
+          "index": 4
+        }
+      }
+    },
+    {
+      "alphaMode": "OPAQUE",
+      "name": "MechMaterial",
+      "normalTexture": {
+        "index": 8
+      },
+      "occlusionTexture": {
+        "index": 7
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 6
+        },
+        "metallicRoughnessTexture": {
+          "index": 7
+        }
+      }
+    },
+    {
+      "alphaMode": "OPAQUE",
+      "name": "RobotMaterial",
+      "normalTexture": {
+        "index": 11
+      },
+      "occlusionTexture": {
+        "index": 10
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 9
+        },
+        "metallicRoughnessTexture": {
+          "index": 10
+        }
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "InternalRobot",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 2,
+            "POSITION": 1,
+            "TEXCOORD_0": 3
+          },
+          "indices": 0,
+          "material": 3,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "MechRobot",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 6,
+            "POSITION": 5,
+            "TEXCOORD_0": 7
+          },
+          "indices": 4,
+          "material": 2,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "InteriorFurnishings",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 10,
+            "POSITION": 9,
+            "TEXCOORD_0": 11
+          },
+          "indices": 8,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Gears",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 14,
+            "POSITION": 13,
+            "TEXCOORD_0": 15
+          },
+          "indices": 12,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1,
+        3,
+        5,
+        7
+      ],
+      "name": "root",
+      "scale": [
+        7.32759952545166,
+        7.32759952545166,
+        7.32759952545166
+      ],
+      "translation": [
+        0.822422504425049,
+        7.29689788818359,
+        -0.339598178863525
+      ]
+    },
+    {
+      "children": [
+        2
+      ],
+      "name": "InternalRobot"
+    },
+    {
+      "mesh": 0,
+      "name": "InternalRobot"
+    },
+    {
+      "children": [
+        4
+      ],
+      "name": "MechRobot"
+    },
+    {
+      "mesh": 1,
+      "name": "MechRobot"
+    },
+    {
+      "children": [
+        6
+      ],
+      "name": "InteriorFurnishings"
+    },
+    {
+      "mesh": 2,
+      "name": "InteriorFurnishings"
+    },
+    {
+      "children": [
+        8
+      ],
+      "name": "Gears"
+    },
+    {
+      "mesh": 3,
+      "name": "Gears"
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9985,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    },
+    {
+      "sampler": 0,
+      "source": 2
+    },
+    {
+      "sampler": 0,
+      "source": 3
+    },
+    {
+      "sampler": 0,
+      "source": 4
+    },
+    {
+      "sampler": 0,
+      "source": 5
+    },
+    {
+      "sampler": 0,
+      "source": 6
+    },
+    {
+      "sampler": 0,
+      "source": 7
+    },
+    {
+      "sampler": 0,
+      "source": 8
+    },
+    {
+      "sampler": 0,
+      "source": 9
+    },
+    {
+      "sampler": 0,
+      "source": 10
+    },
+    {
+      "sampler": 0,
+      "source": 11
+    }
+  ]
+}

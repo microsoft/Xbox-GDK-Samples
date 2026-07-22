@@ -69,6 +69,9 @@
 #include "shaders/imgui_impl_dx12_xs_vs.h"
 #include "shaders/imgui_impl_dx12_xs_ps.h"
 #include "shaders/imgui_impl_dx12_xs_rs.h"
+#include "shaders/imgui_impl_dx12_xs_vs_point.h"
+#include "shaders/imgui_impl_dx12_xs_ps_point.h"
+#include "shaders/imgui_impl_dx12_xs_rs_point.h"
 #elif defined(_GAMING_XBOX)
 #define TEXTURE_PITCH D3D12XBOX_TEXTURE_DATA_PITCH_ALIGNMENT
 #include <d3d12_x.h>
@@ -76,10 +79,13 @@
 #include "shaders/imgui_impl_dx12_x_vs.h"
 #include "shaders/imgui_impl_dx12_x_ps.h"
 #include "shaders/imgui_impl_dx12_x_rs.h"
+#include "shaders/imgui_impl_dx12_x_vs_point.h"
+#include "shaders/imgui_impl_dx12_x_ps_point.h"
+#include "shaders/imgui_impl_dx12_x_rs_point.h"
 #else
 #define TEXTURE_PITCH D3D12_TEXTURE_DATA_PITCH_ALIGNMENT
 #ifdef _GAMING_DESKTOP
-#include "ATG/d3dx12.h"
+#include "d3dx12.h"
 #endif
 #include <d3d12.h>
 #include <dxgi1_6.h>
@@ -87,6 +93,9 @@
 #include "shaders/imgui_impl_dx12_vs.h"
 #include "shaders/imgui_impl_dx12_ps.h"
 #include "shaders/imgui_impl_dx12_rs.h"
+#include "shaders/imgui_impl_dx12_vs_point.h"
+#include "shaders/imgui_impl_dx12_ps_point.h"
+#include "shaders/imgui_impl_dx12_rs_point.h"
 
 #ifdef _DEBUG
 #include <dxgidebug.h>
@@ -117,10 +126,13 @@ struct ImGui_ImplDX12_Texture
 struct ImGui_ImplDX12_Data
 {
     ImGui_ImplDX12_InitInfo     InitInfo;
+    ImGui_ImplDX12_RenderState* RenderState;
     IDXGIFactory2*              pdxgiFactory;
     ID3D12Device*               pd3dDevice;
     ID3D12RootSignature*        pRootSignature;
+    ID3D12RootSignature*        pRootSignatureNearest;
     ID3D12PipelineState*        pPipelineState;
+    ID3D12PipelineState*        pPipelineStateNearest;
     ID3D12CommandQueue*         pCommandQueue;
     bool                        commandQueueOwned;
     DXGI_FORMAT                 RTVFormat;
@@ -166,10 +178,27 @@ struct VERTEX_CONSTANT_BUFFER_DX12
 };
 
 // Functions
-static void ImGui_ImplDX12_SetupRenderState(ImDrawData* draw_data, ID3D12GraphicsCommandList* command_list, ImGui_ImplDX12_RenderBuffers* fr)
+static void ImGui_ImplDX12_SetupSamplerLinear(ID3D12GraphicsCommandList* command_list)
 {
     ImGui_ImplDX12_Data* bd = ImGui_ImplDX12_GetBackendData();
+    command_list->SetPipelineState(bd->pPipelineState);
+    command_list->SetGraphicsRootSignature(bd->pRootSignature);
+}
 
+static void ImGui_ImplDX12_SetupSamplerNearest(ID3D12GraphicsCommandList* command_list)
+{
+    ImGui_ImplDX12_Data* bd = ImGui_ImplDX12_GetBackendData();
+    command_list->SetPipelineState(bd->pPipelineStateNearest);
+    command_list->SetGraphicsRootSignature(bd->pRootSignatureNearest);
+}
+
+// Draw callbacks
+static void ImGui_ImplDX12_DrawCallback_ResetRenderState(const ImDrawList*, const ImDrawCmd*)   {} // Intentionally empty. Used as an identifier for rendering loop to call its code. Simpler to implement this way.
+static void ImGui_ImplDX12_DrawCallback_SetSamplerLinear(const ImDrawList*, const ImDrawCmd*)   { ImGui_ImplDX12_Data* bd = ImGui_ImplDX12_GetBackendData(); ImGui_ImplDX12_SetupSamplerLinear(bd->RenderState->CommandList); }
+static void ImGui_ImplDX12_DrawCallback_SetSamplerNearest(const ImDrawList*, const ImDrawCmd*)  { ImGui_ImplDX12_Data* bd = ImGui_ImplDX12_GetBackendData(); ImGui_ImplDX12_SetupSamplerNearest(bd->RenderState->CommandList); }
+
+static void ImGui_ImplDX12_SetupRenderState(ImDrawData* draw_data, ID3D12GraphicsCommandList* command_list, ImGui_ImplDX12_RenderBuffers* fr)
+{
     // Setup orthographic projection matrix into our constant buffer
     // Our visible imgui space lies from draw_data->DisplayPos (top left) to draw_data->DisplayPos+data_data->DisplaySize (bottom right).
     VERTEX_CONSTANT_BUFFER_DX12 vertex_constant_buffer;
@@ -211,8 +240,7 @@ static void ImGui_ImplDX12_SetupRenderState(ImDrawData* draw_data, ID3D12Graphic
     ibv.Format = sizeof(ImDrawIdx) == 2 ? DXGI_FORMAT_R16_UINT : DXGI_FORMAT_R32_UINT;
     command_list->IASetIndexBuffer(&ibv);
     command_list->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-    command_list->SetPipelineState(bd->pPipelineState);
-    command_list->SetGraphicsRootSignature(bd->pRootSignature);
+    ImGui_ImplDX12_SetupSamplerLinear(command_list);
     command_list->SetGraphicsRoot32BitConstants(0, 16, &vertex_constant_buffer, 0);
 
     // Setup blend factor
@@ -325,7 +353,7 @@ void ImGui_ImplDX12_RenderDrawData(ImDrawData* draw_data, ID3D12GraphicsCommandL
     ImGui_ImplDX12_RenderState render_state;
     render_state.Device = bd->pd3dDevice;
     render_state.CommandList = command_list;
-    platform_io.Renderer_RenderState = &render_state;
+    platform_io.Renderer_RenderState = bd->RenderState = &render_state;
 
     // Render command lists
     // (Because we merged all buffers into a single one, we maintain our own offset into them)
@@ -342,7 +370,7 @@ void ImGui_ImplDX12_RenderDrawData(ImDrawData* draw_data, ID3D12GraphicsCommandL
             {
                 // User callback, registered via ImDrawList::AddCallback()
                 // (ImDrawCallback_ResetRenderState is a special callback value used by the user to request the renderer to reset render state.)
-                if (pcmd->UserCallback == ImDrawCallback_ResetRenderState)
+                if (pcmd->UserCallback == ImGui_ImplDX12_DrawCallback_ResetRenderState)
                     ImGui_ImplDX12_SetupRenderState(draw_data, command_list, fr);
                 else
                     pcmd->UserCallback(draw_list, pcmd);
@@ -589,56 +617,19 @@ bool    ImGui_ImplDX12_CreateDeviceObjects()
     if (bd->pPipelineState)
         ImGui_ImplDX12_InvalidateDeviceObjects();
 
-    // Create the root signature
+    // Create the root signatures from the precompiled blobs. Both blobs match the root signature
+    // emplaced in their respective shader permutations (linear and point), so neither pipeline
+    // state triggers a runtime shader recompile on Xbox.
+    // ATG change (remove shader setup)
     {
-        D3D12_DESCRIPTOR_RANGE descRange = {};
-        descRange.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
-        descRange.NumDescriptors = 1;
-        descRange.BaseShaderRegister = 0;
-        descRange.RegisterSpace = 0;
-        descRange.OffsetInDescriptorsFromTableStart = 0;
-
-        D3D12_ROOT_PARAMETER param[2] = {};
-
-        param[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_32BIT_CONSTANTS;
-        param[0].Constants.ShaderRegister = 0;
-        param[0].Constants.RegisterSpace = 0;
-        param[0].Constants.Num32BitValues = 16;
-        param[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
-
-        param[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
-        param[1].DescriptorTable.NumDescriptorRanges = 1;
-        param[1].DescriptorTable.pDescriptorRanges = &descRange;
-        param[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-
-        // Bilinear sampling is required by default. Set 'io.Fonts->Flags |= ImFontAtlasFlags_NoBakedLines' or 'style.AntiAliasedLinesUseTex = false' to allow point/nearest sampling.
-        D3D12_STATIC_SAMPLER_DESC staticSampler[1] = {};
-        staticSampler[0].Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
-        staticSampler[0].AddressU = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
-        staticSampler[0].AddressV = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
-        staticSampler[0].AddressW = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
-        staticSampler[0].MipLODBias = 0.f;
-        staticSampler[0].MaxAnisotropy = 0;
-        staticSampler[0].ComparisonFunc = D3D12_COMPARISON_FUNC_ALWAYS;
-        staticSampler[0].BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;
-        staticSampler[0].MinLOD = 0.f;
-        staticSampler[0].MaxLOD = D3D12_FLOAT32_MAX;
-        staticSampler[0].ShaderRegister = 0;
-        staticSampler[0].RegisterSpace = 0;
-        staticSampler[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-
-        D3D12_ROOT_SIGNATURE_DESC desc = {};
-        desc.NumParameters = _countof(param);
-        desc.pParameters = param;
-        desc.NumStaticSamplers = 1;
-        desc.pStaticSamplers = &staticSampler[0];
-        desc.Flags =
-            D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT |
-            D3D12_ROOT_SIGNATURE_FLAG_DENY_HULL_SHADER_ROOT_ACCESS |
-            D3D12_ROOT_SIGNATURE_FLAG_DENY_DOMAIN_SHADER_ROOT_ACCESS |
-            D3D12_ROOT_SIGNATURE_FLAG_DENY_GEOMETRY_SHADER_ROOT_ACCESS;
-
         bd->pd3dDevice->CreateRootSignature(0, g_imgui_impl_dx12_rs, sizeof(g_imgui_impl_dx12_rs), IID_GRAPHICS_PPV_ARGS(&bd->pRootSignature));
+
+        // Nearest sampler root signature. Created from a separate precompiled blob whose static
+        // sampler uses point filtering. The nearest pipeline state below pairs this root signature
+        // with the point shader permutation so the emplaced root signature matches, avoiding a
+        // shader recompile on Xbox that a mismatched root signature would otherwise trigger.
+        // ATG change (remove nearest sampler setup)
+        bd->pd3dDevice->CreateRootSignature(0, g_imgui_impl_dx12_rs_point, sizeof(g_imgui_impl_dx12_rs_point), IID_GRAPHICS_PPV_ARGS(&bd->pRootSignatureNearest));
     }
 
     // By using D3DCompile() from <d3dcompiler.h> / d3dcompiler.lib, we introduce a dependency to a given version of d3dcompiler_XX.dll (see D3DCOMPILER_DLL_A)
@@ -722,6 +713,21 @@ bool    ImGui_ImplDX12_CreateDeviceObjects()
     }
 
     HRESULT result_pipeline_state = bd->pd3dDevice->CreateGraphicsPipelineState(&psoDesc, IID_GRAPHICS_PPV_ARGS(&bd->pPipelineState));
+    // ATG change (remove ShaderBlob releases)
+    if (result_pipeline_state != S_OK)
+        return false;
+
+    // Pipeline State for ImDrawCallback_SetSamplerNearest. Uses the point shader permutation so the
+    // shaders' emplaced root signature matches pRootSignatureNearest (no Xbox runtime recompile).
+    psoDesc.pRootSignature = bd->pRootSignatureNearest;
+    // ATG change
+    psoDesc.VS.pShaderBytecode = g_imgui_impl_dx12_vs_point;
+    psoDesc.VS.BytecodeLength = sizeof(g_imgui_impl_dx12_vs_point);
+    psoDesc.PS.pShaderBytecode = g_imgui_impl_dx12_ps_point;
+    psoDesc.PS.BytecodeLength = sizeof(g_imgui_impl_dx12_ps_point);
+
+    result_pipeline_state = bd->pd3dDevice->CreateGraphicsPipelineState(&psoDesc, IID_GRAPHICS_PPV_ARGS(&bd->pPipelineStateNearest));
+    // ATG change (remove ShaderBlob releases)
     if (result_pipeline_state != S_OK)
         return false;
 
@@ -752,7 +758,9 @@ void    ImGui_ImplDX12_InvalidateDeviceObjects()
         SafeRelease(bd->pCommandQueue);
     bd->commandQueueOwned = false;
     SafeRelease(bd->pRootSignature);
+    SafeRelease(bd->pRootSignatureNearest);
     SafeRelease(bd->pPipelineState);
+    SafeRelease(bd->pPipelineStateNearest);
     if (bd->pTexUploadBufferMapped)
     {
         D3D12_RANGE range = { 0, bd->pTexUploadBufferSize };
@@ -802,6 +810,11 @@ bool ImGui_ImplDX12_Init(ImGui_ImplDX12_InitInfo* init_info)
     io.BackendRendererName = "imgui_impl_dx12";
     io.BackendFlags |= ImGuiBackendFlags_RendererHasVtxOffset;  // We can honor the ImDrawCmd::VtxOffset field, allowing for large meshes.
     io.BackendFlags |= ImGuiBackendFlags_RendererHasTextures;   // We can honor ImGuiPlatformIO::Textures[] requests during render.
+
+    ImGuiPlatformIO& platform_io = ImGui::GetPlatformIO();
+    platform_io.DrawCallback_ResetRenderState = ImGui_ImplDX12_DrawCallback_ResetRenderState;
+    platform_io.DrawCallback_SetSamplerLinear = ImGui_ImplDX12_DrawCallback_SetSamplerLinear;
+    platform_io.DrawCallback_SetSamplerNearest = ImGui_ImplDX12_DrawCallback_SetSamplerNearest;
 
     IM_ASSERT(init_info->SrvDescriptorAllocFn != nullptr && init_info->SrvDescriptorFreeFn != nullptr);
 

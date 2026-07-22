@@ -1,0 +1,10 @@
+{
+  "operationName": "GetProduct",
+
+  "bigId": "9N3KNR1TDV5V",
+
+  "aadAuthInfo": {
+    "clientId": "2d452b4f-564b-4c2c-9440-de31cde51e99",
+    "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+  }
+}

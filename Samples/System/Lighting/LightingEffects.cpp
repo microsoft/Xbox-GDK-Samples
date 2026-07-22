@@ -6,249 +6,498 @@
 //--------------------------------------------------------------------------------------
 
 #include "pch.h"
-#include "Lighting.h"
 #include "LightingEffects.h"
+#include "EffectHelpers.h"
 
-#include <LampArray.h>
+#include <algorithm>
+#include <cmath>
+#include <iterator>
+#include <vector>
+
+// The color and timing utilities the effects are built from live in
+// EffectHelpers.h; pulling them in here lets each effect below read as a
+// self-contained technique.
+using namespace EffectHelpers;
 
 namespace
 {
-    // Color Cycle effect parameters
-    static constexpr uint32_t COLOR_CYCLE_EFFECT_FRAME_COUNT = 180;
-    static constexpr double M_TWOPI = 2 * M_PI;
-    static constexpr double M_TWOPI_THREE = M_TWOPI / 3;
-    static constexpr double M_FOURPI_THREE = 2 * M_TWOPI / 3;
+    // Effect metadata, indexed by the Effect enum
+    using LightingEffects::EffectInfo;
 
-    // Blink effect parameters
-    static constexpr uint32_t BLINK_EFFECT_FRAME_COUNT = 60;
-    static constexpr uint32_t BLINK_EFFECT_RAMP_UP_MAX = BLINK_EFFECT_FRAME_COUNT / 4;
-    static constexpr uint32_t BLINK_EFFECT_SOLID_MAX = BLINK_EFFECT_FRAME_COUNT / 2;
-    static constexpr uint32_t BLINK_EFFECT_RAMP_DOWN_MAX = 3 * BLINK_EFFECT_FRAME_COUNT / 4;
-
-    // Color Wave effect parameters
-    static constexpr uint32_t COLOR_WAVE_EFFECT_FRAME_COUNT = 60;
-
-    // WASD effect parameters
-    static constexpr uint8_t SC_A = 0x1E;
-    static constexpr uint8_t SC_D = 0x20;
-    static constexpr uint8_t SC_S = 0x1F;
-    static constexpr uint8_t SC_W = 0x11;
-
-    // Color Wheel effect parameters
-    static constexpr uint32_t COLOR_WHEEL_EFFECT_FRAME_COUNT = 90;
-}
-
-void LightingEffects::UpdateColorCycleEffect(LampArrayContext* device)
-{
-    // Reset our effect if we've gone past the repeat threshold
-    if (device->frameCount >= COLOR_CYCLE_EFFECT_FRAME_COUNT)
+    constexpr EffectInfo c_Effects[] =
     {
-        device->frameCount = 0;
-    }
+        { Effect::ColorCycle, "Color Cycle", "Uniformly cycles colors across all lamps.",                             { 0, { nullptr, nullptr },    true  } },
+        { Effect::ColorWave,  "Color Wave",  "Rainbow that scrolls horizontally across the device.",                  { 0, { nullptr, nullptr },    true  } },
+        { Effect::ColorWheel, "Color Wheel", "Rainbow that rotates around the center of the device.",                 { 0, { nullptr, nullptr },    true  } },
+        { Effect::Blink,      "Blink",       "Fades a chosen color off and on across all lamps.",                     { 1, { "Color", nullptr },    true  } },
+        { Effect::WASD,       "WASD",        "Highlights the W/A/S/D keys against a colored keyboard.",               { 2, { "Base", "Highlight" }, false } },
+        { Effect::Purposes,   "Purposes",    "Colors each lamp by its declared purpose (control, accent, etc.).",     { 0, { nullptr, nullptr },    false } },
+        { Effect::Solid,      "Solid",       "A single solid color you choose.",                                      { 1, { "Color", nullptr },    false } },
+        { Effect::Health,     "Health",      "Green-to-red health bar that pulses when health is low.",               { 0, { nullptr, nullptr },    true  } },  // speed sets the low-health pulse rate
+        { Effect::Ripple,     "Ripple",      "Rings of color expand outward from the center of the device.",          { 1, { "Color", nullptr },    true  } },
+        { Effect::Reactive,   "Reactive",    "Lights each key as you press it, then fades it out (keyboards only).",  { 1, { "Color", nullptr },    false } },
+        { Effect::Manual,     "Manual",      "Set each lamp to its own color.",                                       { 0, { nullptr, nullptr },    false } },
+    };
 
-    // We can create an RGB cycle effect using a sine wave.
-    // First, figure out how far into our effect we are, and find a corresponding angle
-    // for which we will compute our color based on its sine value.
-    double angle = 2 * M_PI * (float)device->frameCount / (float)COLOR_CYCLE_EFFECT_FRAME_COUNT;
-
-    device->lampArray->SetColor(GetLampArrayColorForAngle(angle));
-    device->frameCount++;
-}
-
-void LightingEffects::UpdateBlinkEffect(LampArrayContext* device)
-{
-    // We can construct a blink effect by repeating these four sequences:
-    // 1. Attack (ramp up from black to desired color)
-    // 2. Sustain (retain full desired color)
-    // 3. Decay (fade from desired color to black)
-    // 4. Delay (all lamps off prior to repeating)
+    //==================================================================================
+    // Lighting effects
     //
-    // Steps 1 and 3 will be done with a linear scale.
-    LampArrayColor finalColor = {};
-    finalColor.a = 0xFF;
+    // Each routine below is one self-contained technique. It reads the device's
+    // cached lamp geometry and per-effect state, computes colors, and pushes them to
+    // the LampArray. Animated effects use WrapTime/TickDelta; one-shot effects are
+    // applied once by Run(). Any tuning constants sit directly above their effect.
+    //==================================================================================
 
-    // Reset our effect if we've gone past the repeat threshold
-    if (device->frameCount >= BLINK_EFFECT_FRAME_COUNT)
+    //----------------------------------------------------------------------------------
+    // Color Cycle
+    //
+    // Uniformly cycles a rainbow across every lamp on the device.
+    //----------------------------------------------------------------------------------
+
+    constexpr double c_ColorCyclePeriod = 10.0;     // seconds per full rainbow loop
+
+    void ColorCycle(LampArrayDevice& device)
     {
-        device->frameCount = 0;
+        WrapTime(device, c_ColorCyclePeriod);
+
+        const double angle = c_TwoPi * device.elapsedSeconds / c_ColorCyclePeriod;
+        device.lampArray->SetColor(ColorForAngle(angle));
     }
 
-    // 1. Attack: scale our color based on how far into the first set of frames we are.
-    if (device->frameCount < BLINK_EFFECT_RAMP_UP_MAX)
+    //----------------------------------------------------------------------------------
+    // Color Wave
+    //
+    // A rainbow that scrolls horizontally: each lamp's hue is offset by its
+    // normalized X position, so the colors appear to travel across the device.
+    //----------------------------------------------------------------------------------
+
+    constexpr double c_ColorWavePeriod = 2.0;       // seconds per full scroll
+
+    void ColorWave(LampArrayDevice& device)
     {
-        float multiplier = (float)(device->frameCount) / (float)BLINK_EFFECT_RAMP_UP_MAX;
+        WrapTime(device, c_ColorWavePeriod);
 
-        finalColor.r = (uint8_t)((float)device->lastRandomColor.r * multiplier);
-        finalColor.g = (uint8_t)((float)device->lastRandomColor.g * multiplier);
-        finalColor.b = (uint8_t)((float)device->lastRandomColor.b * multiplier);
-
-        device->lampArray->SetColor(finalColor);
-    }
-
-    // 2. Sustain: use the full color
-    else if (device->frameCount < BLINK_EFFECT_SOLID_MAX)
-    {
-        device->lampArray->SetColor(device->lastRandomColor);
-    }
-
-    // 3. Decay: scale our color based on how many frames are left in this set of frames. 
-    else if (device->frameCount < BLINK_EFFECT_RAMP_DOWN_MAX)
-    {
-        float multiplier = (float)(BLINK_EFFECT_RAMP_DOWN_MAX - device->frameCount) /
-                            (float)(BLINK_EFFECT_RAMP_DOWN_MAX - BLINK_EFFECT_SOLID_MAX);
-
-        finalColor.r = (uint8_t)((float)device->lastRandomColor.r * multiplier);
-        finalColor.g = (uint8_t)((float)device->lastRandomColor.g * multiplier);
-        finalColor.b = (uint8_t)((float)device->lastRandomColor.b * multiplier);
-
-        device->lampArray->SetColor(finalColor);
-    }
-
-    // 4. Delay: use black
-    else
-    {
-        device->lampArray->SetColor(finalColor);
-    }
-}
-
-void LightingEffects::UpdateColorWaveEffect(LampArrayContext* device)
-{
-    LampArrayColor finalColor = {};
-    finalColor.a = 0xFF;
-
-    // Reset our effect if we've gone past the repeat threshold
-    if (device->frameCount >= COLOR_WAVE_EFFECT_FRAME_COUNT)
-    {
-        device->frameCount = 0;
-    }
-
-    // This effect will use the LampArray's size and lamp positions
-    // to create a color wave effect. To optimize performance, we have cached each lamp's
-    // X position when the device was attached.
-    LampArrayPosition lampArrayBoundingBox = {};
-    device->lampArray->GetBoundingBox(&lampArrayBoundingBox);
-
-    // First, figure out how far into our effect we are, and find a corresponding angle
-    // for which we will compute our color based on its sine value.
-    double angle = 2 * M_PI * (float)device->frameCount / (float)COLOR_WAVE_EFFECT_FRAME_COUNT;
-
-    // To produce the wave effect, for each lamp we'll add an offset to the angle,
-    // based on the lamp's X position relative to the width of the device.
-    // The offset will be in the range [0, 2pi] inclusive.
-    for (uint32_t i = 0; i < device->lampArray->GetLampCount(); i++)
-    {
-        double angleOffset = 2 * M_PI * device->lampXPositions[i];
-        device->lampColors.get()[i] = GetLampArrayColorForAngle(angle + angleOffset);
-    }
-
-    device->lampArray->SetColorsForIndices(
-        device->lampArray->GetLampCount(),
-        device->lampIndices.get(),
-        device->lampColors.get());
-}
-
-void LightingEffects::UpdateColorWheelEffect(LampArrayContext* device)
-{
-    LampArrayColor finalColor = {};
-    finalColor.a = 0xFF;
-
-    // Reset our effect if we've gone past the repeat threshold
-    if (device->frameCount >= COLOR_WHEEL_EFFECT_FRAME_COUNT)
-    {
-        device->frameCount = 0;
-    }
-
-    // This effect will use the LampArray's size and lamp positions
-    // to create a color wheel effect. Each lamp's angle for the color wheel is based on its
-    // X and Y position relative to the center point of the device, and these were cached
-    // when the device was attached.
-
-    // First, figure out how far into our effect we are, and find a corresponding angle
-    // for which we will compute our color based on its sine value.
-    double angle = 2 * M_PI * (float)device->frameCount / (float)COLOR_WHEEL_EFFECT_FRAME_COUNT;
-
-    // To produce the color wheel effect, for each lamp we'll add an offset to the angle,
-    // based on the lamp's angle relative to the center point of the device.
-    for (uint32_t i = 0; i < device->lampArray->GetLampCount(); i++)
-    {
-        device->lampColors.get()[i] = GetLampArrayColorForAngle(angle + device->lampWheelAngles[i]);
-    }
-
-    device->lampArray->SetColorsForIndices(
-        device->lampArray->GetLampCount(),
-        device->lampIndices.get(),
-        device->lampColors.get());
-
-    device->frameCount++;
-}
-
-void LightingEffects::UpdateWASDEffect(LampArrayContext* device)
-{
-    // Set all lamps to blue, except for WASD to yellow, if supported
-    LampArrayColor blueColor = { 0x00, 0x00, 0xFF, 0xFF }; // RGBA
-    device->lampArray->SetColor(blueColor);
-
-    if (device->lampArray->SupportsScanCodes())
-    {
-        LampArrayColor yellowColor = { 0xFF, 0xFF, 0x00, 0xFF }; // RGBA
-
-        std::vector<uint32_t> scanCodesForWASD = { SC_W, SC_A, SC_S, SC_D };
-        std::vector<LampArrayColor> colors;
-
-        for (uint32_t i = 0; i < scanCodesForWASD.size(); i++)
+        const double angle = c_TwoPi * device.elapsedSeconds / c_ColorWavePeriod;
+        for (uint32_t i = 0; i < device.lampCount; ++i)
         {
-            colors.push_back(yellowColor);
+            const double angleOffset = c_TwoPi * device.normalizedX[i];
+            device.lampColors[i] = ColorForAngle(angle + angleOffset);
         }
 
-        device->lampArray->SetColorsForScanCodes(
-            static_cast<uint32_t>(scanCodesForWASD.size()),
-            scanCodesForWASD.data(),
-            colors.data());
-    }  
-}
-
-void LightingEffects::UpdateSolidEffect(LampArrayContext* device)
-{
-    // Set all lamps on the device to a random color.
-    device->lampArray->SetColor(device->lastRandomColor);
-}
-
-void LightingEffects::ResetEffects(LampArrayContext* device)
-{
-    const LampArrayColor emptyColor = {};
-
-    // Reset all lamp colors to black in preparation for new effect
-    for (uint32_t i = 0; i < device->lampArray->GetLampCount(); i++)
-    {
-        device->lampColors.get()[i] = emptyColor;
+        device.lampArray->SetColorsForIndices(device.lampCount, device.lampIndices.get(), device.lampColors.get());
     }
 
-    device->lastRandomColor = GetRandomColor();
-    device->frameCount = 0;
+    //----------------------------------------------------------------------------------
+    // Color Wheel
+    //
+    // A rainbow that rotates around the center of the device: each lamp's hue is
+    // offset by its angle relative to the device center.
+    //----------------------------------------------------------------------------------
+
+    constexpr double c_ColorWheelPeriod = 2.0;      // seconds per full rotation
+
+    void ColorWheel(LampArrayDevice& device)
+    {
+        WrapTime(device, c_ColorWheelPeriod);
+
+        const double angle = c_TwoPi * device.elapsedSeconds / c_ColorWheelPeriod;
+        for (uint32_t i = 0; i < device.lampCount; ++i)
+        {
+            device.lampColors[i] = ColorForAngle(angle + device.wheelAngle[i]);
+        }
+
+        device.lampArray->SetColorsForIndices(device.lampCount, device.lampIndices.get(), device.lampColors.get());
+    }
+
+    //----------------------------------------------------------------------------------
+    // Blink
+    //
+    // Fades the chosen color in and out across all lamps using a linear
+    // attack/sustain/decay/delay envelope across c_BlinkPeriod seconds.
+    //----------------------------------------------------------------------------------
+
+    constexpr double c_BlinkPeriod = 1.0;
+    constexpr double c_BlinkAttackEnd = c_BlinkPeriod / 4.0;         // fade in until here
+    constexpr double c_BlinkSustainEnd = c_BlinkPeriod / 2.0;        // hold full color until here
+    constexpr double c_BlinkDecayEnd = 3.0 * c_BlinkPeriod / 4.0;    // fade out until here, then off
+
+    void Blink(LampArrayDevice& device)
+    {
+        WrapTime(device, c_BlinkPeriod);
+
+        const double elapsed = device.elapsedSeconds;
+        const LampArrayColor base = ToColor(device.colors[static_cast<size_t>(Effect::Blink)][0]);
+        LampArrayColor color = {};
+        color.a = 0xFF;
+
+        if (elapsed < c_BlinkAttackEnd)
+        {
+            // Attack: scale up from black to the full color.
+            const float t = static_cast<float>(elapsed / c_BlinkAttackEnd);
+            color.r = static_cast<uint8_t>(base.r * t);
+            color.g = static_cast<uint8_t>(base.g * t);
+            color.b = static_cast<uint8_t>(base.b * t);
+            device.lampArray->SetColor(color);
+        }
+        else if (elapsed < c_BlinkSustainEnd)
+        {
+            // Sustain: hold the full color.
+            device.lampArray->SetColor(base);
+        }
+        else if (elapsed < c_BlinkDecayEnd)
+        {
+            // Decay: scale back down to black.
+            const float t = static_cast<float>((c_BlinkDecayEnd - elapsed) /
+                            (c_BlinkDecayEnd - c_BlinkSustainEnd));
+            color.r = static_cast<uint8_t>(base.r * t);
+            color.g = static_cast<uint8_t>(base.g * t);
+            color.b = static_cast<uint8_t>(base.b * t);
+            device.lampArray->SetColor(color);
+        }
+        else
+        {
+            // Delay: lamps off until the envelope repeats.
+            device.lampArray->SetColor(color);
+        }
+    }
+
+    //----------------------------------------------------------------------------------
+    // WASD
+    //
+    // Lights the whole keyboard with the base color and the W/A/S/D keys with the
+    // highlight color. Only meaningful for devices that expose scan codes, which
+    // the caller has already verified.
+    //----------------------------------------------------------------------------------
+
+    constexpr uint32_t c_ScanCodeW = 0x11;
+    constexpr uint32_t c_ScanCodeA = 0x1E;
+    constexpr uint32_t c_ScanCodeS = 0x1F;
+    constexpr uint32_t c_ScanCodeD = 0x20;
+
+    void WASD(LampArrayDevice& device)
+    {
+        const LampArrayColor base = ToColor(device.colors[static_cast<size_t>(Effect::WASD)][0]);
+        device.lampArray->SetColor(base);
+
+        const LampArrayColor highlight = ToColor(device.colors[static_cast<size_t>(Effect::WASD)][1]);
+        const uint32_t scanCodes[] = { c_ScanCodeW, c_ScanCodeA, c_ScanCodeS, c_ScanCodeD };
+        const LampArrayColor colors[] = { highlight, highlight, highlight, highlight };
+
+        device.lampArray->SetColorsForScanCodes(static_cast<uint32_t>(std::size(scanCodes)), scanCodes, colors);
+    }
+
+    //----------------------------------------------------------------------------------
+    // Solid
+    //
+    // Lights every lamp with a single chosen color.
+    //----------------------------------------------------------------------------------
+
+    void Solid(LampArrayDevice& device)
+    {
+        device.lampArray->SetColor(ToColor(device.colors[static_cast<size_t>(Effect::Solid)][0]));
+    }
+
+    //----------------------------------------------------------------------------------
+    // Purposes
+    //
+    // Colors each lamp by its declared role. A lamp can be tagged with one or more
+    // LampPurposes (control keys, accent lighting, status indicators, etc.); this
+    // asks the device for the lamps serving each purpose and tints them, addressing
+    // lamps by role instead of by raw index.
+    //----------------------------------------------------------------------------------
+
+    void Purposes(LampArrayDevice& device)
+    {
+        // Start from all-off so lamps with no matching purpose stay dark.
+        device.lampArray->SetColor(LampArrayColor{});
+
+        struct PurposeColor
+        {
+            LampPurposes purpose;
+            LampArrayColor color;
+        };
+
+        const PurposeColor purposeColors[] =
+        {
+            { LampPurposes::Control,      { 0x00, 0xFF, 0x00, 0xFF } },   // green
+            { LampPurposes::Accent,       { 0xFF, 0x00, 0xFF, 0xFF } },   // magenta
+            { LampPurposes::Branding,     { 0xFF, 0x80, 0x00, 0xFF } },   // orange
+            { LampPurposes::Status,       { 0xFF, 0xFF, 0x00, 0xFF } },   // yellow
+            { LampPurposes::Illumination, { 0xFF, 0xFF, 0xFF, 0xFF } },   // white
+            { LampPurposes::Presentation, { 0x00, 0x80, 0xFF, 0xFF } },   // blue
+        };
+
+        for (const PurposeColor& entry : purposeColors)
+        {
+            // GetIndicesCountForPurposes / GetIndicesForPurposes return the lamps
+            // serving a purpose; tint them with SetColorsForIndices.
+            const uint32_t count = device.lampArray->GetIndicesCountForPurposes(entry.purpose);
+            if (count == 0)
+            {
+                continue;
+            }
+
+            std::vector<uint32_t> indices(count);
+            device.lampArray->GetIndicesForPurposes(entry.purpose, count, indices.data());
+
+            std::vector<LampArrayColor> colors(count, entry.color);
+            device.lampArray->SetColorsForIndices(count, indices.data(), colors.data());
+        }
+    }
+
+    //----------------------------------------------------------------------------------
+    // Health
+    //
+    // Visualizes simulated health on the device. Above the critical threshold, a
+    // multi-lamp device shows a bar that fills in proportion to health (green at
+    // full, red as it drains) and a single-lamp device shows that color; at or below
+    // the threshold the whole device pulses red as a low-health warning.
+    //----------------------------------------------------------------------------------
+
+    // Health at or below c_LowHealthThreshold is critical; c_HealthPulsePeriod is
+    // one full dim-to-bright-to-dim pulse, scaled by the device's speed setting.
+    constexpr double c_LowHealthThreshold = 0.25;
+    constexpr double c_HealthPulsePeriod = 0.8;
+
+    void Health(LampArrayDevice& device)
+    {
+        WrapTime(device, c_HealthPulsePeriod);
+
+        // Critical health: pulse every lamp red as a heartbeat warning.
+        if (device.health <= static_cast<float>(c_LowHealthThreshold))
+        {
+            const double phase = c_TwoPi * device.elapsedSeconds / c_HealthPulsePeriod;
+            const double intensity = 0.3 + 0.7 * (0.5 + 0.5 * std::sin(phase));
+            device.lampArray->SetColor(ScaleColor(LampArrayColor{ 0xFF, 0x00, 0x00, 0xFF }, intensity));
+            return;
+        }
+
+        const LampArrayColor color = HealthColor(device.health);
+
+        if (device.lampCount <= 1)
+        {
+            // One lamp can only show an aggregate status color, not a bar.
+            device.lampArray->SetColor(color);
+            return;
+        }
+
+        // Light the first round(health * lampCount) lamps in left-to-right order
+        // and leave the rest dark, so the bar degrades one lamp at a time and reads
+        // as a coarse bar even on a two-lamp device.
+        const uint32_t litCount = static_cast<uint32_t>(std::lround(device.health * device.lampCount));
+        const LampArrayColor off = {};
+        for (uint32_t k = 0; k < device.lampCount; ++k)
+        {
+            device.lampColors[device.xOrder[k]] = (k < litCount) ? color : off;
+        }
+
+        device.lampArray->SetColorsForIndices(device.lampCount, device.lampIndices.get(), device.lampColors.get());
+    }
+
+    //----------------------------------------------------------------------------------
+    // Manual
+    //
+    // Applies the per-lamp colors chosen in the device panel, driving each lamp
+    // independently with SetColorsForIndices.
+    //----------------------------------------------------------------------------------
+
+    void Manual(LampArrayDevice& device)
+    {
+        if (device.manualColors.size() < device.lampCount)
+        {
+            return;
+        }
+
+        for (uint32_t i = 0; i < device.lampCount; ++i)
+        {
+            device.lampColors[i] = ToColor(device.manualColors[i].data());
+        }
+
+        device.lampArray->SetColorsForIndices(device.lampCount, device.lampIndices.get(), device.lampColors.get());
+    }
+
+    //----------------------------------------------------------------------------------
+    // Ripple
+    //
+    // Expands a ring of the chosen color outward from the device center: a lamp
+    // brightens as the ring front passes its radius and dims behind it. The radial
+    // counterpart to Color Wave (linear) and Color Wheel (angular), using each
+    // lamp's cached normalized distance from center.
+    //----------------------------------------------------------------------------------
+
+    // The ring sweeps center-to-edge once per c_RipplePeriod seconds;
+    // c_RippleBandWidth is the bright ring's half-width in normalized radius.
+    constexpr double c_RipplePeriod = 1.5;
+    constexpr double c_RippleBandWidth = 0.30;
+
+    void Ripple(LampArrayDevice& device)
+    {
+        WrapTime(device, c_RipplePeriod);
+
+        const LampArrayColor color = ToColor(device.colors[static_cast<size_t>(Effect::Ripple)][0]);
+        const double front = device.elapsedSeconds / c_RipplePeriod;    // 0 (center) to 1 (edge)
+
+        for (uint32_t i = 0; i < device.lampCount; ++i)
+        {
+            const double distance = std::abs(device.radius[i] - front);
+            const double intensity = (distance < c_RippleBandWidth)
+                ? (1.0 - distance / c_RippleBandWidth) : 0.0;
+            device.lampColors[i] = ScaleColor(color, intensity);
+        }
+
+        device.lampArray->SetColorsForIndices(device.lampCount, device.lampIndices.get(), device.lampColors.get());
+    }
+
+    //----------------------------------------------------------------------------------
+    // Reactive
+    //
+    // Lights each key as it is pressed and fades it out, the trail effect common on
+    // gaming keyboards. WndProcHandler sets a pressed key's intensity to 1.0; here
+    // each intensity fades toward 0 and the still-glowing keys are lit by scan code
+    // over an unlit base.
+    //----------------------------------------------------------------------------------
+
+    constexpr double c_ReactiveFadeSeconds = 0.6;   // full brightness to off
+
+    void Reactive(LampArrayDevice& device, double deltaSeconds)
+    {
+        // Start from an unlit keyboard so only recently pressed keys glow.
+        device.lampArray->SetColor(LampArrayColor{});
+
+        const LampArrayColor trail = ToColor(device.colors[static_cast<size_t>(Effect::Reactive)][0]);
+        const float fade = static_cast<float>(deltaSeconds / c_ReactiveFadeSeconds);
+
+        uint32_t scanCodes[256] = {};
+        LampArrayColor colors[256] = {};
+        uint32_t litCount = 0;
+
+        for (uint32_t scanCode = 0; scanCode < std::size(device.keyIntensity); ++scanCode)
+        {
+            float intensity = device.keyIntensity[scanCode];
+            if (intensity <= 0.0f)
+            {
+                continue;
+            }
+
+            intensity = (std::max)(0.0f, intensity - fade);
+            device.keyIntensity[scanCode] = intensity;
+
+            if (intensity > 0.0f)
+            {
+                scanCodes[litCount] = scanCode;
+                colors[litCount] = ScaleColor(trail, intensity);
+                ++litCount;
+            }
+        }
+
+        if (litCount > 0)
+        {
+            device.lampArray->SetColorsForScanCodes(litCount, scanCodes, colors);
+        }
+    }
 }
 
-// This helper function is used to help make color cycles based on sine waves.
-LampArrayColor LightingEffects::GetLampArrayColorForAngle(double angle)
+//==================================================================================
+// Public interface: effect metadata accessors and the per-frame dispatch.
+//==================================================================================
+
+const char* LightingEffects::Name(Effect effect)
 {
-    LampArrayColor color = {};
-    color.a = 0xFF;
-
-    // The sine value will be in the range of [-1, 1] inclusive.
-    // Normalize that value so it falls between 0 and 1, and use it for the color's R value.
-    color.r = (uint8_t)(0xFF * ((sin(angle) + 1) / 2));
-
-    // The color's G and B values will come from angles with offsets of 2pi/3 and 4pi/3, respectively.
-    color.g = (uint8_t)(0xFF * ((sin(angle + M_TWOPI_THREE) + 1) / 2));
-    color.b = (uint8_t)(0xFF * ((sin(angle + M_FOURPI_THREE) + 1) / 2));
-    return color;
+    return c_Effects[static_cast<size_t>(effect)].name;
 }
 
-LampArrayColor LightingEffects::GetRandomColor()
+const char* LightingEffects::Description(Effect effect)
 {
-    LampArrayColor color = {};
-    color.a = 0xFF;
-    color.r = static_cast<uint8_t>(rand() % 0xFF);
-    color.g = static_cast<uint8_t>(rand() % 0xFF);
-    color.b = static_cast<uint8_t>(rand() % 0xFF);
-    return color;
+    return c_Effects[static_cast<size_t>(effect)].description;
+}
+
+const LightingEffects::EffectControls& LightingEffects::Controls(Effect effect)
+{
+    return c_Effects[static_cast<size_t>(effect)].controls;
+}
+
+void LightingEffects::Run(LampArrayDevice& device)
+{
+    const bool justChanged = device.effectChanged;
+    if (justChanged)
+    {
+        Reset(device);
+    }
+
+    // Real time elapsed since this effect last ran. Reset zeroes lastCounter, so a
+    // freshly assigned effect reports zero and renders its starting phase.
+    const double deltaSeconds = TickDelta(device);
+
+    // Animated effects render at the current elapsed time, then advance it scaled by
+    // the device's speed. The static effects (WASD, Solid, Purposes) only need to be
+    // applied once, when first assigned (or when their color changes).
+    const double scaledDelta = deltaSeconds * device.speedScale;
+    switch (device.effect)
+    {
+    case Effect::ColorCycle:
+        ColorCycle(device);
+        device.elapsedSeconds += scaledDelta;
+        break;
+
+    case Effect::ColorWave:
+        ColorWave(device);
+        device.elapsedSeconds += scaledDelta;
+        break;
+
+    case Effect::ColorWheel:
+        ColorWheel(device);
+        device.elapsedSeconds += scaledDelta;
+        break;
+
+    case Effect::Blink:
+        Blink(device);
+        device.elapsedSeconds += scaledDelta;
+        break;
+
+    case Effect::WASD:
+        if (justChanged)
+        {
+            WASD(device);
+        }
+        break;
+
+    case Effect::Purposes:
+        if (justChanged)
+        {
+            Purposes(device);
+        }
+        break;
+
+    case Effect::Solid:
+        if (justChanged)
+        {
+            Solid(device);
+        }
+        break;
+
+    case Effect::Health:
+        Health(device);
+        device.elapsedSeconds += scaledDelta;
+        break;
+
+    case Effect::Manual:
+        // Re-applied every frame so color-picker edits show at once.
+        Manual(device);
+        break;
+
+    case Effect::Ripple:
+        Ripple(device);
+        device.elapsedSeconds += scaledDelta;
+        break;
+
+    case Effect::Reactive:
+        // Re-applied every frame so trails fade and new presses appear; the fade
+        // uses real (unscaled) time, independent of the speed setting.
+        Reactive(device, deltaSeconds);
+        break;
+
+    case Effect::Count:
+    default:
+        break;
+    }
 }
