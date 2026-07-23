@@ -1,0 +1,156 @@
+{
+    "styles": [
+        {
+            "classId": "SpriteStyle",
+            "id": "Basic_Panel_Style",
+            "colorUsage": "override",
+            "color": [ 192, 192, 192, 1.0 ],
+            "texture": "Assets/Textures/roundy-border.png",
+            "spriteType": "nineSliced",
+            "innerUVExtents": [ 0.1, 0.1, 0.9, 0.9 ],
+            "padding": [ 0, 40, 0, 0 ]
+        },
+        {
+            "classId": "TextStyle",
+            "id": "Basic_Label_Style",
+            "colorUsage": "override",
+            "color": [ 0, 0, 0, 1.0 ],
+            "verticalAlign": "middle"
+        },
+        {
+            "classId": "TextStyle",
+            "id": "Basic_Title_Style",
+            "colorUsage": "override",
+            "color": [ 0, 0, 128, 1.0 ],
+            "verticalAlign": "middle",
+            "horizontalAlign": "center"
+        },
+        {
+            "classId": "SpriteStyle",
+            "id": "Basic_Button_Style",
+            "inheritsFromId": "Basic_Panel_Style",
+            "colorUsage": "setExisting",
+            "color": [ 255, 255, 255, 1.0 ],
+            "padding": [ 20, 0, 0, 0 ]
+        },
+        {
+            "classId": "SpriteStyle",
+            "id": "Focused_Button_Style",
+            "inheritsFromId": "Basic_Button_Style",
+            "color": [ 0, 255, 255, 1.0 ]
+        },
+        {
+            "classId": "SpriteStyle",
+            "id": "Disabled_Button_Style",
+            "inheritsFromId": "Basic_Button_Style",
+            "color": [ 128, 128, 128, 1.0 ]
+        },
+        {
+            "classId": "SpriteStyle",
+            "id": "Pressed_Button_Style",
+            "inheritsFromId": "Basic_Button_Style",
+            "color": [ 0, 192, 192, 1.0 ]
+        },
+        {
+            "classId": "SpriteStyle",
+            "id": "Hovered_Button_Style",
+            "inheritsFromId": "Basic_Button_Style",
+            "color": [ 128, 255, 128, 1.0 ]
+        }
+    ],
+    "layout": {
+      "classId": "Panel",
+      "id": "Control_Panel",
+      "positioningAnchor": [ "right", "top" ],
+      "position": [ -100, 100 ],
+      "sizingAnchor": [ "right", "top" ],
+      "size": [ 400, 800 ],
+      "styleId": "Basic_Panel_Style",
+      "childElements": [
+        {
+          "classId": "StaticText",
+          "id": "Panel_Title_Label",
+          "positioningAnchor": [ "center", "top" ],
+          "sizingAnchor": [ "center", "top" ],
+          "text": "Panel Title",
+          "styleId": "Basic_Title_Style"
+        },
+        {
+          "classId": "Button",
+          "id": "Hello_World_Button",
+          "positioningAnchor": [ "center", "top" ],
+          "position": [ 0, 100 ],
+          "sizingAnchor": [ "center", "top" ],
+          "size": [ 300, 150 ],
+          "styleId": "Basic_Button_Style",
+          "focusable": true,
+          "disabledStyleId": "Disabled_Button_Style",
+          "focusedStyleId": "Focused_Button_Style",
+          "hoveredStyleId": "Hovered_Button_Style",
+          "pressedStyleId": "Pressed_Button_Style",
+          "childElements": [
+            {
+              "classId": "StaticText",
+              "id": "Hello_World_Label",
+              "positioningAnchor": [ "left", "middle" ],
+              "sizingAnchor": [ "left", "middle" ],
+              "text": "Hello World",
+              "styleId": "Basic_Label_Style",
+              "size": [400, 100]
+            }
+          ]
+        },
+        {
+          "classId": "Button",
+          "id": "Clear_Button",
+          "positioningAnchor": [ "center", "top" ],
+          "position": [ 0, 300 ],
+          "sizingAnchor": [ "center", "top" ],
+          "size": [ 300, 150 ],
+          "styleId": "Basic_Button_Style",
+          "focusable": true,
+          "disabledStyleId": "Disabled_Button_Style",
+          "focusedStyleId": "Focused_Button_Style",
+          "hoveredStyleId": "Hovered_Button_Style",
+          "pressedStyleId": "Pressed_Button_Style",
+          "childElements": [
+            {
+              "classId": "StaticText",
+              "id": "Clear_Label",
+              "positioningAnchor": [ "left", "middle" ],
+              "sizingAnchor": [ "left", "middle" ],
+              "text": "Clear",
+              "styleId": "Basic_Label_Style",
+              "size": [400, 100]
+            }
+          ]
+        },
+        {
+          "classId": "Button",
+          "id": "Toggle_Button",
+          "positioningAnchor": [ "center", "top" ],
+          "position": [ 0, 500 ],
+          "sizingAnchor": [ "center", "top" ],
+          "size": [ 300, 150 ],
+          "styleId": "Basic_Button_Style",
+          "focusable": true,
+          "disabledStyleId": "Disabled_Button_Style",
+          "focusedStyleId": "Focused_Button_Style",
+          "hoveredStyleId": "Hovered_Button_Style",
+          "pressedStyleId": "Pressed_Button_Style",
+          "childElements": [
+            {
+              "classId": "StaticText",
+              "id": "Toggle_Label",
+              "positioningAnchor": [ "left", "middle" ],
+              "sizingAnchor": [ "left", "middle" ],
+              "text": "Toggle",
+              "styleId": "Basic_Label_Style",
+              "size": [400, 100]
+            }
+          ]
+        }
+      ]
+    }
+  }
+  

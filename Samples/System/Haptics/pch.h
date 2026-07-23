@@ -1,4 +1,4 @@
-///--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
 // pch.h
 //
 // Advanced Technology Group (ATG)
@@ -29,6 +29,9 @@
 
 #include <Windows.h>
 
+#include <wrl/client.h>
+#include <wrl/event.h>
+
 #include <d3d12.h>
 #include <dxgi1_6.h>
 
@@ -51,6 +54,7 @@
 #include <cstring>
 #include <cwchar>
 #include <exception>
+#include <filesystem>
 #include <fstream>
 #include <iterator>
 #include <map>
@@ -63,16 +67,14 @@
 
 #include "StringUtil.h"
 
-#include "imgui.h"
-#include "backends/imgui_impl_win32.h"
-#include "backends/imgui_impl_dx12.h"
-#include "ATG/imgui_sample.h"
-#include "ATG/imgui_applog.h"
-#include "ATG/imgui_deviceresources.h"
-
 // To use graphics markup events with the latest version of PIX, change this to include <pix3.h>
 // then add the NuGet package WinPixEventRuntime to the project.
 #include <pix.h>
+
+#include "imgui.h"
+#include "backends/imgui_impl_dx12.h"
+#include "backends/imgui_impl_win32.h"
+#include "imgui/imgui_atg.h"
 
 namespace DX
 {
@@ -82,7 +84,7 @@ namespace DX
     public:
         com_exception(HRESULT hr) noexcept : result(hr) {}
 
-        const char* what() const override
+        const char* what() const noexcept override
         {
             static char s_str[64] = {};
             sprintf_s(s_str, "Failure with HRESULT of %08X", static_cast<unsigned int>(result));
@@ -98,11 +100,16 @@ namespace DX
     {
         if (FAILED(hr))
         {
-            // Set a breakpoint on this line to catch DirectX API errors
+#ifdef _DEBUG
+            char str[64] = {};
+            sprintf_s(str, "**ERROR** Fatal Error with HRESULT of %08X\n", static_cast<unsigned int>(hr));
+            OutputDebugStringA(str);
+            __debugbreak();
+#endif
             throw com_exception(hr);
         }
     }
 }
 
 // Enable off by default warnings to improve code conformance
-#pragma warning(default : 4061 4062 4191 4242 4263 4264 4265 4266 4289 4365 4746 4826 4841 4986 4987 5029 5038 5042)
+#pragma warning(default : 4061 4062 4191 4263 4264 4265 4266 4289 4365 4746 4826 4841 4986 4987 5029 5038 5042)

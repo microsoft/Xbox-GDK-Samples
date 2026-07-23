@@ -14,9 +14,6 @@
     <Filter Include="External">
       <UniqueIdentifier>c3e855ca-698f-48a0-a00a-ee2f42783d96</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts">
-      <UniqueIdentifier>{ee99bbe9-0dde-49db-ab57-a1ed863f214c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shaders">
       <UniqueIdentifier>{3dc58fdb-a56e-404f-afcc-73b360d70eea}</UniqueIdentifier>
     </Filter>
@@ -166,9 +163,6 @@
     </None>
     <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
       <Filter>Media\Fonts</Filter>
-    </None>
-    <None Include="Scripts\Desktop.PostBuild.bat">
-      <Filter>Scripts</Filter>
     </None>
     <None Include="..\..\NuGet.config" />
     <None Include="readme.md" />

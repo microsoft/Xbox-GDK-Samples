@@ -1,0 +1,7 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/xbox-game-streaming-tools/main/touch-adaptation-kit/schemas/manifest/v2.0/manifest.json",
+  "contextFile": "context.json",
+  "layouts": "layouts",
+  "defaultLayout": "standard-variable-replacement",
+  "version": "10.0.0.0"
+}
