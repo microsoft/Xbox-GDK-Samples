@@ -25,3 +25,6 @@
 *.xwb binary
 *.jpg binary
 *.png binary
+# Radiance HDR images are RGBE binary; without this Git diffs them as text
+# (tens of thousands of phantom "lines" per file in the public mirror).
+*.hdr binary

@@ -33,6 +33,7 @@
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <GDKCrossPlatform>true</GDKCrossPlatform>
     <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
+    <AtgImGuiSample>true</AtgImGuiSample>
   </PropertyGroup>
   <Import Condition="Exists($(ATGBuildProps))" Project="$(ATGBuildProps)" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -138,7 +139,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -166,7 +167,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -196,7 +197,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -228,7 +229,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -260,7 +261,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>PROFILE;WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -292,7 +293,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>PROFILE;WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -314,24 +315,29 @@
     </FXCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\atg\d3dx12.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_allocator.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_applog.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_atg.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_atg_file.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_deviceresources.h" />
-    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_sample.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\imgui\imgui_atg.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\imgui\imgui_atg_file.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\imgui\imgui_atg_device_context.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_dx12.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_win32.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_ps.h" />
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_ps_point.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_rs.h" />
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_rs_point.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_vs.h" />
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_vs_point.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_ps.h" />
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_ps_point.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_rs.h" />
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_rs_point.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_vs.h" />
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_vs_point.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_ps.h" />
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_ps_point.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_rs.h" />
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_rs_point.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_vs.h" />
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_vs_point.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imconfig.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imgui.h" />
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imgui_internal.h" />
@@ -351,9 +357,8 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_applog.cpp" />
-    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_deviceresources.cpp" />
-    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_sample.cpp" />
+    <ClCompile Include="..\..\..\Kits\ATGTK\imgui\imgui_atg.cpp" />
+    <ClCompile Include="..\..\..\Kits\ATGTK\imgui\imgui_atg_device_context.cpp" />
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_dx12.cpp">
       <DisableSpecificWarnings>6011;6387;26819;28182;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
@@ -586,7 +591,7 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\..\packages\Microsoft.GameInput.3.3.195\build\native\targets\Microsoft.GameInput.targets" Condition="Exists('..\..\packages\Microsoft.GameInput.3.3.195\build\native\targets\Microsoft.GameInput.targets')" />
+    <Import Project="..\..\packages\Microsoft.GameInput.3.4.218\build\native\targets\Microsoft.GameInput.targets" Condition="Exists('..\..\packages\Microsoft.GameInput.3.4.218\build\native\targets\Microsoft.GameInput.targets')" />
   </ImportGroup>
   <Target Name="GDKEditionCheck" BeforeTargets="PrepareForBuild">
     <Error Condition="'$(GameDK)'==''" Text="GameDK property is required" />
@@ -606,6 +611,6 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Microsoft.GameInput.3.3.195\build\native\targets\Microsoft.GameInput.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.GameInput.3.3.195\build\native\targets\Microsoft.GameInput.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.GameInput.3.4.218\build\native\targets\Microsoft.GameInput.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.GameInput.3.4.218\build\native\targets\Microsoft.GameInput.targets'))" />
   </Target>
 </Project>

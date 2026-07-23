@@ -14,10 +14,10 @@ permissions:
 jobs:
   generate-summary:
     # Run when:
-    # 1. A PR is opened without a description, OR
+    # 1. A bot opens a PR (the automated internal-to-public sync), OR
     # 2. Someone comments "/generate-summary" on a PR
     if: |
-      (github.event_name == 'pull_request' && (github.event.pull_request.body == '' || github.event.pull_request.body == null)) ||
+      (github.event_name == 'pull_request' && endsWith(github.event.pull_request.user.login, '[bot]')) ||
       (github.event_name == 'issue_comment' && github.event.issue.pull_request && contains(github.event.comment.body, '/generate-summary'))
     runs-on: ubuntu-latest
     outputs:

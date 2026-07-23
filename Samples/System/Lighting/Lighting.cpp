@@ -1,6 +1,10 @@
 //--------------------------------------------------------------------------------------
 // Lighting.cpp
 //
+// Demonstrates the Win32 LampArray API (lamparray.h) for controlling RGB
+// lighting devices such as keyboards and mice. Each connected device is tracked
+// independently and can be assigned its own lighting effect.
+//
 // Advanced Technology Group (ATG)
 // Copyright (C) Microsoft Corporation. All rights reserved.
 //--------------------------------------------------------------------------------------
@@ -9,469 +13,620 @@
 #include "Lighting.h"
 #include "LightingEffects.h"
 
-#include "ATGColors.h"
-#include "FindMedia.h"
-#include "ControllerFont.h"
-
-#ifndef _GAMING_XBOX
-#pragma comment(lib, "lamparray.lib")
+#ifdef _GAMING_XBOX
+#include "imgui/imgui_atg_device_context.h"
 #endif
 
-extern void ExitSample() noexcept;
+#include <algorithm>
+#include <cmath>
+#include <numeric>
+
+// The LampArray entry points live in lamparray.lib. Linking it here keeps the
+// dependency next to the code that uses it.
+#pragma comment(lib, "lamparray.lib")
 
 using Microsoft::WRL::ComPtr;
-using namespace DirectX;
 
 namespace
 {
-    const wchar_t* g_EffectName[] = { L"Color Cycle", L"Color Wave", L"Color Wheel", L"Blink", L"WASD", L"Solid" };
-    const wchar_t* g_EffectDesc[] =
+    void SetColorSlot(float slot[3], float r, float g, float b)
     {
-        L"Uniformly cycles colors across all lamps",
-        L"Rainbow effect that moves from right to left",
-        L"Rainbow effect that moves in a circle",
-        L"Fades a single color off and on across all lamps",
-        L"WASD keys set to a different color than the rest of the keyboard",
-        L"Single random color displayed across all lamps"
-    };
-};
+        slot[0] = r;
+        slot[1] = g;
+        slot[2] = b;
+    }
 
-// Called any time a LampArray device is connected or disconnected
-void Sample::LampArrayCallback(void* context, bool isAttached, ILampArray* lampArray)
-{
-    Sample* sample = reinterpret_cast<Sample*>(context);
-
-    if (isAttached)
+    const char* KindName(LampArrayKind kind)
     {
-        // Set up a new context for this device so our effects can operate on it
-        std::shared_ptr<LampArrayContext> lampArrayContext = std::make_shared<LampArrayContext>();
-
-        LampArrayColor emptyColor = {};
-        LampArrayPosition lampPosition = {};
-        LampArrayPosition boundingBox = {};
-        uint32_t lampCount = lampArray->GetLampCount();
-
-        lampArrayContext->lampArray.Swap(lampArray);
-        lampArrayContext->lampColors.reset(new LampArrayColor[lampCount]);
-        lampArrayContext->lampIndices.reset(new uint32_t[lampCount]);
-
-        lampArray->GetBoundingBox(&boundingBox);
-        float centerPointX = boundingBox.xInMeters / 2;
-        float centerPointY = boundingBox.yInMeters / 2;
-
-        // Set up caches for more efficient effect updates
-        for (uint32_t i = 0; i < lampCount; i++)
+        switch (kind)
         {
-            lampArrayContext->lampColors.get()[i] = emptyColor;
-            lampArrayContext->lampIndices.get()[i] = i;
+        case LampArrayKind::Keyboard:       return "Keyboard";
+        case LampArrayKind::Mouse:          return "Mouse";
+        case LampArrayKind::GameController: return "Game Controller";
+        case LampArrayKind::Peripheral:     return "Peripheral";
+        case LampArrayKind::Scene:          return "Scene";
+        case LampArrayKind::Notification:   return "Notification";
+        case LampArrayKind::Chassis:        return "Chassis";
+        case LampArrayKind::Wearable:       return "Wearable";
+        case LampArrayKind::Furniture:      return "Furniture";
+        case LampArrayKind::Art:            return "Art";
+        case LampArrayKind::Headset:        return "Headset";
+        case LampArrayKind::Microphone:     return "Microphone";
+        case LampArrayKind::Speaker:        return "Speaker";
+        case LampArrayKind::Undefined:      return "Undefined";
+        default:                            return "Undefined";
+        }
+    }
 
-            // Cache some lamp position values that will help optimize our effects
-            ComPtr<ILampInfo> lampInfo;
-            HRESULT hr = lampArray->GetLampInfo(i, &lampInfo);
-            if(FAILED(hr))
-            {
-                sample->m_log->Format(L"GetLampInfo failed: %d, %08X\n", i, hr);
-            }
-            lampInfo->GetPosition(&lampPosition);
-            lampArrayContext->lampXPositions[i] = lampPosition.xInMeters / boundingBox.xInMeters;
-            lampArrayContext->lampWheelAngles[i] = atan2(lampPosition.yInMeters - centerPointY, lampPosition.xInMeters - centerPointX);
+    // A lamp can declare one or more LampPurposes (it is a flag set), so build a
+    // comma-separated list of the roles it serves.
+    std::string PurposesText(LampPurposes purposes)
+    {
+        if (purposes == LampPurposes::Undefined)
+        {
+            return "Undefined";
         }
 
-        sample->m_lampArrays.insert(sample->m_lampArrays.end(), lampArrayContext);
-        sample->m_log->Format(L"LampArray with VID/PID %04X/%04X connected with %d lamps\n",
-                              lampArray->GetVendorId(), lampArray->GetProductId(), lampCount);
+        std::string result;
+        const auto append = [&](LampPurposes flag, const char* name)
+        {
+            if ((purposes & flag) == flag)
+            {
+                if (!result.empty())
+                {
+                    result += ", ";
+                }
+                result += name;
+            }
+        };
+
+        append(LampPurposes::Control, "Control");
+        append(LampPurposes::Accent, "Accent");
+        append(LampPurposes::Branding, "Branding");
+        append(LampPurposes::Status, "Status");
+        append(LampPurposes::Illumination, "Illumination");
+        append(LampPurposes::Presentation, "Presentation");
+        return result;
+    }
+
+    // A device's LampArrayStatus is a flag set: Connected means it is present,
+    // Available means this app currently controls its lighting. A device can be
+    // Connected without being Available when another app or the system owns it; in
+    // that state our color writes are silently ignored.
+    bool IsConnected(LampArrayStatus status)
+    {
+        return (status & LampArrayStatus::Connected) == LampArrayStatus::Connected;
+    }
+
+    bool IsAvailable(LampArrayStatus status)
+    {
+        return (status & LampArrayStatus::Available) == LampArrayStatus::Available;
+    }
+
+    const char* StatusText(LampArrayStatus status)
+    {
+        if (IsAvailable(status))
+        {
+            return "Available (this app controls the lighting)";
+        }
+        if (IsConnected(status))
+        {
+            return "Connected, not available (another app owns the lighting)";
+        }
+        return "Disconnected";
+    }
+
+    ImVec4 StatusColor(LampArrayStatus status)
+    {
+        if (IsAvailable(status))
+        {
+            return ImVec4(0.4f, 0.85f, 0.4f, 1.0f);
+        }
+        if (IsConnected(status))
+        {
+            return ImVec4(1.0f, 0.6f, 0.2f, 1.0f);
+        }
+        return ImVec4(0.9f, 0.3f, 0.3f, 1.0f);
+    }
+}
+
+void Sample::Initialize(HWND /*hWnd*/)
+{
+    // RegisterLampArrayStatusCallback is the entry point for LampArray: a single
+    // callback reports presence and availability for every device, now and as
+    // devices come and go. LampArrayEnumerationKind::Async enumerates the
+    // already-connected devices on a LampArray worker thread rather than blocking
+    // here, so the callback can fire on that thread at any time after this call.
+    HRESULT hr = RegisterLampArrayStatusCallback(Sample::LampArrayStatusCallback, LampArrayEnumerationKind::Async, this, &m_callbackToken);
+    if (FAILED(hr))
+    {
+        LOG("RegisterLampArrayStatusCallback failed (0x%08X)\n", static_cast<unsigned int>(hr));
     }
     else
     {
-        // Find the attached device's context and remove it
-        for (auto iter = sample->m_lampArrays.begin(); iter != sample->m_lampArrays.end(); iter++)
+        LOG("Waiting for LampArray devices...\n");
+    }
+}
+
+void CALLBACK Sample::LampArrayStatusCallback(void* context, LampArrayStatus currentStatus, LampArrayStatus /*previousStatus*/, ILampArray* lampArray)
+{
+    static_cast<Sample*>(context)->OnDeviceStatusChanged(lampArray, currentStatus);
+}
+
+// Runs on a LampArray worker thread. Translates a status change into an add,
+// remove, or availability update. A device is identified by its ILampArray
+// pointer, which is stable for the life of the connection.
+void Sample::OnDeviceStatusChanged(ILampArray* lampArray, LampArrayStatus currentStatus)
+{
+    std::lock_guard<std::mutex> lock(m_devicesMutex);
+
+    LampArrayDevice* existing = nullptr;
+    for (auto& device : m_devices)
+    {
+        if (device->lampArray.Get() == lampArray)
         {
-            if ((*iter)->lampArray.Get() == lampArray)
-            {
-                sample->m_lampArrays.erase(iter);
-                sample->m_log->Format(L"LampArray with VID/PID %04X/%04X disconnected\n",
-                                      lampArray->GetVendorId(), lampArray->GetProductId());
-                break;
-            }
+            existing = device.get();
+            break;
+        }
+    }
+
+    if (IsConnected(currentStatus) && existing == nullptr)
+    {
+        AddDevice(lampArray, currentStatus);
+    }
+    else if (!IsConnected(currentStatus) && existing != nullptr)
+    {
+        RemoveDevice(lampArray);
+    }
+    else if (existing != nullptr)
+    {
+        // The device regained availability: another app may have driven its lamps
+        // while we were not in control, so flag the assigned effect to reapply.
+        if (IsAvailable(currentStatus) && !IsAvailable(existing->status))
+        {
+            existing->effectChanged = true;
+        }
+        existing->status = currentStatus;
+    }
+}
+
+// Builds a LampArrayDevice for a newly connected device: caches its lamp count
+// and per-lamp geometry so the effects stay cheap, then adds it to the collection.
+void Sample::AddDevice(ILampArray* lampArray, LampArrayStatus currentStatus)
+{
+    auto device = std::make_unique<LampArrayDevice>();
+
+    device->lampArray = lampArray;
+    device->status = currentStatus;
+    device->lampCount = lampArray->GetLampCount();
+    device->brightness = static_cast<float>(lampArray->GetBrightnessLevel());
+
+    // Starting colors for the effects that expose color pickers.
+    SetColorSlot(device->colors[static_cast<size_t>(Effect::Solid)][0], 0.0f, 0.6f, 1.0f);   // blue
+    SetColorSlot(device->colors[static_cast<size_t>(Effect::Blink)][0], 1.0f, 0.0f, 1.0f);   // magenta
+    SetColorSlot(device->colors[static_cast<size_t>(Effect::WASD)][0],  0.0f, 0.0f, 1.0f);   // keyboard base: blue
+    SetColorSlot(device->colors[static_cast<size_t>(Effect::WASD)][1],  1.0f, 1.0f, 0.0f);   // W/A/S/D highlight: yellow
+    SetColorSlot(device->colors[static_cast<size_t>(Effect::Ripple)][0], 0.0f, 1.0f, 1.0f);  // cyan
+    SetColorSlot(device->colors[static_cast<size_t>(Effect::Reactive)][0], 1.0f, 1.0f, 1.0f); // white trail
+
+    // lampIndices is the identity map [0, lampCount) passed to SetColorsForIndices;
+    // lampColors is the scratch buffer the effects fill each frame.
+    device->lampIndices.reset(new uint32_t[device->lampCount]);
+    device->lampColors.reset(new LampArrayColor[device->lampCount]);
+    device->normalizedX.resize(device->lampCount);
+    device->wheelAngle.resize(device->lampCount);
+    device->radius.resize(device->lampCount);
+
+    device->manualColors.assign(device->lampCount, { 1.0f, 1.0f, 1.0f });
+
+    // GetBoundingBox returns the device's physical extent (in meters) enclosing
+    // every lamp; the spatial effects normalize each lamp's position against it.
+    LampArrayPosition boundingBox = {};
+    lampArray->GetBoundingBox(&boundingBox);
+    const float centerX = boundingBox.xInMeters / 2.0f;
+    const float centerY = boundingBox.yInMeters / 2.0f;
+
+    // GetLampInfo exposes each lamp's physical position. Precompute the values the
+    // spatial effects need: normalized X (Color Wave), angle about the center
+    // (Color Wheel), and distance from the center (Ripple).
+    for (uint32_t i = 0; i < device->lampCount; ++i)
+    {
+        device->lampIndices[i] = i;
+        device->lampColors[i] = LampArrayColor{};
+
+        LampArrayPosition position = {};
+        ComPtr<ILampInfo> lampInfo;
+        if (SUCCEEDED(lampArray->GetLampInfo(i, &lampInfo)))
+        {
+            lampInfo->GetPosition(&position);
+        }
+
+        device->normalizedX[i] = (boundingBox.xInMeters > 0.0f)
+            ? position.xInMeters / boundingBox.xInMeters : 0.0;
+        device->wheelAngle[i] = std::atan2(position.yInMeters - centerY, position.xInMeters - centerX);
+
+        const double dx = position.xInMeters - centerX;
+        const double dy = position.yInMeters - centerY;
+        device->radius[i] = std::sqrt(dx * dx + dy * dy);
+    }
+
+    // Normalize distance against the farthest lamp so the Ripple front sweeps from
+    // 0 (center) to 1 (edge).
+    const double maxRadius = device->lampCount > 0
+        ? *std::max_element(device->radius.begin(), device->radius.end()) : 0.0;
+    if (maxRadius > 0.0)
+    {
+        for (double& r : device->radius)
+        {
+            r /= maxRadius;
+        }
+    }
+
+    // Order lamps left-to-right so the Health bar fills from one edge regardless of
+    // the order the hardware reports its lamps.
+    device->xOrder.resize(device->lampCount);
+    std::iota(device->xOrder.begin(), device->xOrder.end(), 0u);
+    std::sort(device->xOrder.begin(), device->xOrder.end(),
+        [&](uint32_t a, uint32_t b) { return device->normalizedX[a] < device->normalizedX[b]; });
+
+    char label[128] = {};
+    sprintf_s(label, "%s (VID %04X / PID %04X)", KindName(lampArray->GetLampArrayKind()), lampArray->GetVendorId(), lampArray->GetProductId());
+    device->label = label;
+
+    LOG("%s connected with %u lamps\n", label, device->lampCount);
+    m_devices.push_back(std::move(device));
+}
+
+void Sample::RemoveDevice(ILampArray* lampArray)
+{
+    for (auto it = m_devices.begin(); it != m_devices.end(); ++it)
+    {
+        if ((*it)->lampArray.Get() == lampArray)
+        {
+            LOG("%s disconnected\n", (*it)->label.c_str());
+            m_devices.erase(it);
+            break;
         }
     }
 }
 
-Sample::Sample() noexcept(false) :
-    m_frame(0),
-    m_currentLightingEffect(LightingEffect::ColorCycle),
-    m_effectChanged(true)
+void Sample::Update()
 {
-    // Renders only 2D, so no need for a depth buffer.
-    m_deviceResources = std::make_unique<DX::DeviceResources>();
-    m_deviceResources->SetClearColor(ATG::Colors::Background);
-    m_deviceResources->RegisterDeviceNotify(this);
-
-    m_log = std::make_unique<DX::TextConsoleImage>();
-}
-
-Sample::~Sample()
-{
-    if (m_callbackToken)
+    // Run each device's assigned effect. A device that is not Available is skipped:
+    // we do not control its lighting, so its color writes would be ignored.
+    std::lock_guard<std::mutex> lock(m_devicesMutex);
+    for (auto& device : m_devices)
     {
-        // unregister the LampArray callback
-        UnregisterLampArrayCallback(m_callbackToken, 5000);
-    }
-
-    if (m_deviceResources)
-    {
-        m_deviceResources->WaitForGpu();
-    }
-}
-
-// Initialize the Direct3D resources required to run.
-void Sample::Initialize(HWND window, int width, int height)
-{
-    m_gamePad = std::make_unique<GamePad>();
-
-    m_keyboard = std::make_unique<Keyboard>();
-
-    m_deviceResources->SetWindow(window, width, height);
-
-    m_deviceResources->CreateDeviceResources();
-    CreateDeviceDependentResources();
-
-    m_deviceResources->CreateWindowSizeDependentResources();
-    CreateWindowSizeDependentResources();
-
-    m_log->WriteLine(L"Please connect a supported LampArray device...");
-
-    // Setup the LampArray connect/disconnect callback
-    HRESULT hr = RegisterLampArrayCallback(Sample::LampArrayCallback, this, &m_callbackToken);
-    if(FAILED(hr))
-    {
-        m_log->Format(L"RegisterLampArrayCallback failed: %08X", hr);
-    }
-}
-
-#pragma region Frame Update
-// Executes basic render loop.
-void Sample::Tick()
-{
-    PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
-
-#ifdef _GAMING_XBOX
-    m_deviceResources->WaitForOrigin();
-#endif
-
-    m_timer.Tick([&]()
-    {
-        Update(m_timer);
-    });
-
-    Render();
-
-    PIXEndEvent();
-    m_frame++;
-}
-
-// Updates the world.
-void Sample::Update(DX::StepTimer const& timer)
-{
-    UNREFERENCED_PARAMETER(timer);
-
-    PIXBeginEvent(PIX_COLOR_DEFAULT, L"Update");
-
-    if(m_lampArrays.size() > 0)
-    {
-        // Run the effect per LampArray device
-        for(auto &lampArray : m_lampArrays)
+        if (!IsAvailable(device->status))
         {
-            // If we changed effects, reset the lamps to a known good state
-            if(m_effectChanged)
-            {
-                LightingEffects::ResetEffects(lampArray.get());
-            }
+            continue;
+        }
+        LightingEffects::Run(*device);
+    }
+}
 
-            // Run the actual effect
-            // The implementations can be found in LightingEffects.cpp/.h
-            switch(m_currentLightingEffect)
-            {
-                // These effects are dynamic and should be updated every frame
-                case LightingEffect::ColorCycle:
-                    LightingEffects::UpdateColorCycleEffect(lampArray.get());
-                    break;
-                case LightingEffect::Blink:
-                    LightingEffects::UpdateBlinkEffect(lampArray.get());
-                    break;
-                case LightingEffect::ColorWave:
-                    LightingEffects::UpdateColorWaveEffect(lampArray.get());
-                    break;
-                case LightingEffect::ColorWheel:
-                    LightingEffects::UpdateColorWheelEffect(lampArray.get());
-                    break;
+void Sample::Draw()
+{
+    ImGuiAtg::BeginFullscreenLayout();
 
-                // These effects are not dynamic, so only need to be called once
-                case LightingEffect::WASD:
-                    if(m_effectChanged)
-                    {
-                        LightingEffects::UpdateWASDEffect(lampArray.get());
-                    }
-                    break;
-                case LightingEffect::Solid:
-                    if(m_effectChanged)
-                    {
-                        LightingEffects::UpdateSolidEffect(lampArray.get());
-                    }
-                    break;
-            }
+    ImGui::BeginChild("##SplitArea", ImVec2(0, ImGui::GetContentRegionAvail().y - ImGuiAtg::GetFooterHeight()));
 
-            lampArray->frameCount++;
+    ImGuiAtg::BeginSplitV("##LogSplit", 760.0f);
+
+    {
+        if (ImGui::IsWindowAppearing())
+        {
+            ImGui::SetWindowFocus();
         }
 
-        m_effectChanged = false;
-    }
+        std::lock_guard<std::mutex> lock(m_devicesMutex);
 
-    auto pad = m_gamePad->GetState(0);
-    if (pad.IsConnected())
-    {
-        m_gamePadButtons.Update(pad);
-
-        if (pad.IsViewPressed())
+        if (m_devices.empty())
         {
-            ExitSample();
-        }
-        else if(m_gamePadButtons.dpadUp == GamePad::ButtonStateTracker::PRESSED)
-        {
-            PreviousEffect();
-        }
-        else if(m_gamePadButtons.dpadDown == GamePad::ButtonStateTracker::PRESSED)
-        {
-            NextEffect();
-        }
-    }
-    else
-    {
-        m_gamePadButtons.Reset();
-    }
-
-    auto kb = m_keyboard->GetState();
-    m_keyboardButtons.Update(kb);
-
-    if (kb.Escape)
-    {
-        ExitSample();
-    }
-    else if(m_keyboardButtons.IsKeyReleased(Keyboard::Keys::Up))
-    {
-        PreviousEffect();
-    }
-    else if(m_keyboardButtons.IsKeyReleased(Keyboard::Keys::Down))
-    {
-        NextEffect();
-    }
-
-    PIXEndEvent();
-}
-#pragma endregion
-
-#pragma region Frame Render
-// Draws the scene.
-void Sample::Render()
-{
-    // Don't try to render anything before the first Update.
-    if (m_timer.GetFrameCount() == 0)
-    {
-        return;
-    }
-
-    // Prepare the command list to render a new frame.
-    m_deviceResources->Prepare();
-    Clear();
-
-    auto commandList = m_deviceResources->GetCommandList();
-    PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Render");
-
-    ID3D12DescriptorHeap* heaps[] = { m_resourceDescriptors->Heap() };
-    commandList->SetDescriptorHeaps(static_cast<UINT>(std::size(heaps)), heaps);
-
-    m_spriteBatch->Begin(commandList);
-        if(m_lampArrays.size() == 0)
-        {
-            m_font->DrawString(m_spriteBatch.get(), L"Please connect a supported LampArray device...", XMFLOAT2(100, 100));
+            ImGui::TextDisabled("No LampArray devices connected. Connect a supported keyboard or mouse.");
         }
         else
         {
-            m_font->DrawString(m_spriteBatch.get(), L"Select an effect using the arrow keys or the DPad.", XMFLOAT2(100, 100));
-            m_font->DrawString(m_spriteBatch.get(), L"Effect Description:", XMFLOAT2(640, 196));
-            DX::DrawControllerString(m_spriteBatch.get(), m_font.get(), m_ctrlFont.get(), L"[Dpad] / Arrows - Change Effect\r\n[View] / Esc - Exit", XMFLOAT2(80, 960));
-
-            for (uint32_t i = 0; i < NUM_EFFECTS; i++)
+            for (auto& device : m_devices)
             {
-                bool current = (i == static_cast<uint32_t>(m_currentLightingEffect));
-                m_font->DrawString(m_spriteBatch.get(), g_EffectName[i], XMFLOAT2(140, 200 + (i * 32.0f)), current ? Colors::Yellow : Colors::White);
-                if(current)
+                DrawDevicePanel(*device);
+            }
+        }
+    }
+
+    ImGuiAtg::SplitNext();
+
+    ImGuiAtg::DrawLogPanel();
+
+    ImGuiAtg::EndSplit();
+    ImGui::EndChild();
+
+    ImGuiAtg::DrawFooter();
+
+    ImGuiAtg::EndFullscreenLayout();
+}
+
+// Draws one device: its capabilities and an effect selector.
+void Sample::DrawDevicePanel(LampArrayDevice& device)
+{
+    ImGui::PushID(&device);
+
+    ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+    if (ImGui::CollapsingHeader(device.label.c_str()))
+    {
+        ILampArray* lampArray = device.lampArray.Get();
+
+        // SupportsScanCodes reports whether the device can be addressed by keyboard
+        // scan code; it gates the keyboard-only effects below.
+        const bool supportsScanCodes = lampArray->SupportsScanCodes();
+
+        LampArrayPosition boundingBox = {};
+        lampArray->GetBoundingBox(&boundingBox);
+
+        // Device-level capabilities, read live from ILampArray getters.
+        if (ImGui::BeginTable("##info", 2, ImGuiTableFlags_SizingFixedFit | ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg))
+        {
+            ImGuiAtg::DrawNameValueTable("Kind", "%s", KindName(lampArray->GetLampArrayKind()));
+            ImGuiAtg::DrawNameValueTable("VID / PID", "0x%04X / 0x%04X", lampArray->GetVendorId(), lampArray->GetProductId());
+            ImGuiAtg::DrawNameValueTable("Hardware version", "0x%04X", lampArray->GetHardwareVersion());
+            ImGuiAtg::DrawNameValueTable("Lamp count", "%u", device.lampCount);
+            ImGuiAtg::DrawNameValueTable("Bounding box (mm)", "%.1f x %.1f x %.1f",
+                boundingBox.xInMeters * 1000.0f, boundingBox.yInMeters * 1000.0f, boundingBox.zInMeters * 1000.0f);
+            ImGuiAtg::DrawNameValueTable("Min update interval", "%llu us", lampArray->GetMinUpdateIntervalInMicroseconds());
+            ImGuiAtg::DrawNameBoolValueTable("Enabled", lampArray->GetIsEnabled());
+            ImGuiAtg::DrawNameValueTableColored("Status", StatusColor(device.status), "%s", StatusText(device.status));
+            ImGuiAtg::DrawNameBoolValueTable("Supports scan codes", supportsScanCodes);
+            ImGui::EndTable();
+        }
+
+        DrawLampInspector(device, lampArray);
+
+        ImGui::Spacing();
+
+        // Disable the controls when we do not control the lighting; our writes
+        // would be ignored (see the Status row).
+        const bool available = IsAvailable(device.status);
+        ImGui::BeginDisabled(!available);
+
+        ImGui::PushItemWidth(300.0f);
+
+        // Effect selector. The scan-code- and lamp-count-dependent effects are
+        // offered only on devices that support them, queried above.
+        const auto currentIndex = static_cast<size_t>(device.effect);
+        if (ImGui::BeginCombo("##Effect", LightingEffects::Name(device.effect), ImGuiComboFlags_HeightLarge))
+        {
+            for (size_t i = 0; i < static_cast<size_t>(Effect::Count); ++i)
+            {
+                // WASD and Reactive light physical keys, so they require scan codes.
+                if ((static_cast<Effect>(i) == Effect::WASD || static_cast<Effect>(i) == Effect::Reactive) && !supportsScanCodes)
                 {
-                    m_font->DrawString(m_spriteBatch.get(), L"->", XMFLOAT2(100, 200 + (i * 32.0f)), Colors::Yellow);
-                    m_font->DrawString(m_spriteBatch.get(), g_EffectDesc[i], XMFLOAT2(640, 230), Colors::Yellow);
+                    continue;
+                }
+
+                // Manual exposes one picker per lamp, so it is offered only on the
+                // low-lamp-count non-keyboard devices.
+                if (static_cast<Effect>(i) == Effect::Manual && supportsScanCodes)
+                {
+                    continue;
+                }
+
+                const bool selected = (i == currentIndex);
+                if (ImGui::Selectable(LightingEffects::Name(static_cast<Effect>(i)), selected) && !selected)
+                {
+                    device.effect = static_cast<Effect>(i);
+                    device.effectChanged = true;        // Reset the effect's animation state before it next runs.
+                }
+                if (selected)
+                {
+                    ImGui::SetItemDefaultFocus();
+                }
+            }
+            ImGui::EndCombo();
+        }
+
+        ImGui::SameLine(); ImGui::Dummy(ImVec2(10.0f, 0)); ImGui::SameLine();
+        ImGui::TextWrapped("%s", LightingEffects::Description(device.effect));
+
+        const LightingEffects::EffectControls& controls = LightingEffects::Controls(device.effect);
+
+        // Whole-device brightness, scaling whatever the effect outputs.
+        if (ImGui::SliderFloat("##Brightness", &device.brightness, 0.0f, 1.0f, "Brightness %.2f"))
+        {
+            device.lampArray->SetBrightnessLevel(device.brightness);
+        }
+
+        if (controls.usesSpeed)
+        {
+            ImGui::SameLine(); ImGui::Dummy(ImVec2(10.0f, 0)); ImGui::SameLine();
+            ImGui::SliderFloat("##Speed", &device.speedScale, 0.25f, 4.0f, "Speed %.2fx");
+        }
+
+        for (uint32_t i = 0; i < controls.colorCount; ++i)
+        {
+            ImGui::SameLine(); ImGui::Dummy(ImVec2(10.0f, 0)); ImGui::SameLine();
+
+            // Solid and WASD are sent only when (re)applied, so a color change must
+            // request a reapply; the animated effects re-read their color each frame.
+            if (ImGui::ColorEdit3(controls.colorLabels[i], device.colors[currentIndex][i], ImGuiColorEditFlags_NoInputs))
+            {
+                if (device.effect == Effect::Solid || device.effect == Effect::WASD)
+                {
+                    device.effectChanged = true;
                 }
             }
         }
-    m_spriteBatch->End();
 
-    m_log->Render(commandList);
+        if (device.effect == Effect::Health)
+        {
+            ImGui::SameLine(); ImGui::Dummy(ImVec2(10.0f, 0)); ImGui::SameLine();
+            ImGui::SliderFloat("##Health", &device.health, 0.0f, 1.0f, "Health %.2f");
+        }
 
-    PIXEndEvent(commandList);
+        // Manual: one color picker per lamp, under a single group label since a
+        // per-swatch label will not fit the packed grid.
+        if (device.effect == Effect::Manual)
+        {
+            ImGui::AlignTextToFramePadding();
+            ImGui::TextUnformatted("Colors");
 
-    // Show the new frame.
-    PIXBeginEvent(PIX_COLOR_DEFAULT, L"Present");
-    m_deviceResources->Present();
-    m_graphicsMemory->Commit(m_deviceResources->GetCommandQueue());
-    PIXEndEvent();
-}
+            for (uint32_t i = 0; i < device.lampCount; ++i)
+            {
+                // Keep the first swatch on the label's line; wrap every 8.
+                if (i == 0 || i % 8 != 0)
+                {
+                    ImGui::SameLine();
+                }
 
-// Helper method to clear the back buffers.
-void Sample::Clear()
-{
-    auto commandList = m_deviceResources->GetCommandList();
-    PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
+                ImGui::PushID(static_cast<int>(i));
+                ImGui::ColorEdit3("##lamp", device.manualColors[i].data(), ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
+                ImGui::PopID();
+            }
+        }
 
-    // Clear the views.
-    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
-    auto const dsvDescriptor = m_deviceResources->GetDepthStencilView();
-
-    commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, nullptr);
-    commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
-    commandList->ClearDepthStencilView(dsvDescriptor, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
-
-    // Set the viewport and scissor rect.
-    auto const viewport = m_deviceResources->GetScreenViewport();
-    auto const scissorRect = m_deviceResources->GetScissorRect();
-    commandList->RSSetViewports(1, &viewport);
-    commandList->RSSetScissorRects(1, &scissorRect);
-
-    PIXEndEvent(commandList);
-}
-#pragma endregion
-
-#pragma region Message Handlers
-// Message handlers
-void Sample::OnSuspending()
-{
-    m_deviceResources->Suspend();
-}
-
-void Sample::OnResuming()
-{
-    m_deviceResources->Resume();
-    m_timer.ResetElapsedTime();
-    m_gamePadButtons.Reset();
-    m_keyboardButtons.Reset();
-}
-
-void Sample::OnWindowMoved()
-{
-    auto const r = m_deviceResources->GetOutputSize();
-    m_deviceResources->WindowSizeChanged(r.right, r.bottom);
-}
-
-void Sample::OnWindowSizeChanged(int width, int height)
-{
-    if (!m_deviceResources->WindowSizeChanged(width, height))
-        return;
-
-    CreateWindowSizeDependentResources();
-}
-
-// Properties
-void Sample::GetDefaultSize(int& width, int& height) const noexcept
-{
-    width = 1920;
-    height = 1080;
-}
-#pragma endregion
-
-#pragma region Direct3D Resources
-// These are the resources that depend on the device.
-void Sample::CreateDeviceDependentResources()
-{
-    auto device = m_deviceResources->GetD3DDevice();
-
-#ifdef _GAMING_DESKTOP
-    D3D12_FEATURE_DATA_SHADER_MODEL shaderModel = { D3D_SHADER_MODEL_6_0 };
-    if (FAILED(device->CheckFeatureSupport(D3D12_FEATURE_SHADER_MODEL, &shaderModel, sizeof(shaderModel)))
-        || (shaderModel.HighestShaderModel < D3D_SHADER_MODEL_6_0))
-    {
-        throw std::runtime_error("Shader Model 6.0 is not supported!");
+        ImGui::PopItemWidth();
+        ImGui::EndDisabled();
     }
+
+    ImGui::Spacing();
+    ImGui::PopID();
+}
+
+// Per-lamp inspector. A device can expose well over a hundred lamps, so the panel
+// inspects one at a time. The details come from that lamp's ILampInfo: its
+// position, the per-channel level counts that define how finely it can reproduce
+// color, its purposes and scan code, and whether it has a fixed (non-settable)
+// color.
+void Sample::DrawLampInspector(LampArrayDevice& device, ILampArray* lampArray)
+{
+    if (!ImGui::TreeNode("Lamp inspector"))
+    {
+        return;
+    }
+
+    if (device.lampCount == 0)
+    {
+        ImGui::TextUnformatted("Device reports no lamps.");
+        ImGui::TreePop();
+        return;
+    }
+
+    int lamp = static_cast<int>(device.inspectorLamp);
+    ImGui::PushItemWidth(300.0f);
+    ImGui::SliderInt("##LampIndex", &lamp, 0, static_cast<int>(device.lampCount) - 1, "Lamp %d");
+    ImGui::PopItemWidth();
+    device.inspectorLamp = static_cast<uint32_t>(std::clamp(lamp, 0, static_cast<int>(device.lampCount) - 1));
+
+    // GetLampInfo returns an ILampInfo describing a single lamp.
+    ComPtr<ILampInfo> lampInfo;
+    if (FAILED(lampArray->GetLampInfo(device.inspectorLamp, &lampInfo)) || !lampInfo)
+    {
+        ImGui::TextUnformatted("Lamp info unavailable.");
+        ImGui::TreePop();
+        return;
+    }
+
+    LampArrayPosition position = {};
+    lampInfo->GetPosition(&position);
+
+    // GetFixedColor returns true when the lamp's color is fixed in hardware (for
+    // example an indicator LED); such a lamp ignores color writes. The per-channel
+    // level counts (below) give how many discrete steps each channel supports -- a
+    // low count means the lamp can only show a coarse palette.
+    LampArrayColor fixedColor = {};
+    const bool hasFixedColor = lampInfo->GetFixedColor(&fixedColor);
+
+    if (ImGui::BeginTable("##lampinfo", 2, ImGuiTableFlags_SizingFixedFit | ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg))
+    {
+        ImGuiAtg::DrawNameValueTable("Purposes", "%s", PurposesText(lampInfo->GetPurposes()).c_str());
+        ImGuiAtg::DrawNameValueTable("Position (mm)", "%.1f, %.1f, %.1f",
+            position.xInMeters * 1000.0f, position.yInMeters * 1000.0f, position.zInMeters * 1000.0f);
+        ImGuiAtg::DrawNameValueTable("RGB level counts", "%u / %u / %u",
+            lampInfo->GetRedLevelCount(), lampInfo->GetGreenLevelCount(), lampInfo->GetBlueLevelCount());
+        ImGuiAtg::DrawNameValueTable("Gain level count", "%u", lampInfo->GetGainLevelCount());
+        ImGuiAtg::DrawNameValueTable("Update latency", "%llu us", lampInfo->GetUpdateLatencyInMicroseconds());
+        if (lampArray->SupportsScanCodes())
+        {
+            ImGuiAtg::DrawNameValueTable("Scan code", "0x%02X", lampInfo->GetScanCode());
+        }
+        if (hasFixedColor)
+        {
+            ImGuiAtg::DrawNameValueTable("Fixed color", "R%u G%u B%u", fixedColor.r, fixedColor.g, fixedColor.b);
+        }
+        else
+        {
+            ImGuiAtg::DrawNameValueTable("Fixed color", "%s", "None (color is settable)");
+        }
+        ImGui::EndTable();
+    }
+
+    ImGui::TreePop();
+}
+
+void Sample::Shutdown()
+{
+    // UnregisterLampArrayCallback waits (up to the timeout, in microseconds) for any
+    // in-flight callback to finish, after which no callback can touch m_devices. It
+    // returns false on timeout, so retry until it confirms before releasing.
+    if (m_callbackToken != LAMPARRAY_INVALID_CALLBACK_TOKEN_VALUE)
+    {
+        while (!UnregisterLampArrayCallback(m_callbackToken, 5000000))
+        {
+        }
+        m_callbackToken = LAMPARRAY_INVALID_CALLBACK_TOKEN_VALUE;
+    }
+
+    std::lock_guard<std::mutex> lock(m_devicesMutex);
+    m_devices.clear();
+}
+
+void Sample::Activated()
+{
+}
+
+void Sample::Deactivated()
+{
+}
+
+LRESULT Sample::WndProcHandler(HWND /*hWnd*/, UINT msg, WPARAM /*wParam*/, LPARAM lParam)
+{
+    // Drive the Reactive effect from key input. A WM_KEYDOWN carries the keyboard
+    // scan code in bits 16-23 of lParam -- the same scan-code space passed to
+    // ILampArray::SetColorsForScanCodes -- so the pressed key can be lit directly
+    // by scan code. We light it on every keyboard running Reactive and let the
+    // effect fade it out. The message is not consumed (return 0).
+    if (msg == WM_KEYDOWN)
+    {
+        const uint32_t scanCode = (static_cast<uint32_t>(lParam) >> 16) & 0xFF;
+
+        std::lock_guard<std::mutex> lock(m_devicesMutex);
+        for (auto& device : m_devices)
+        {
+            if (device->effect == Effect::Reactive)
+            {
+                device->keyIntensity[scanCode] = 1.0f;
+            }
+        }
+    }
+
+    return 0;
+}
+
+#ifdef _GAMING_XBOX
+void Sample::Suspend(ImGuiAtg::DeviceContext* dc)
+{
+    dc->Suspend();
+}
+
+// On resume, force every device to reapply its effect: while the title was
+// suspended the system or another app may have driven the lamps.
+void Sample::Resume(ImGuiAtg::DeviceContext* dc)
+{
+    dc->Resume();
+
+    std::lock_guard<std::mutex> lock(m_devicesMutex);
+    for (auto& device : m_devices)
+    {
+        device->effectChanged = true;
+    }
+}
 #endif
-
-    m_graphicsMemory = std::make_unique<GraphicsMemory>(device);
-
-    RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(), m_deviceResources->GetDepthBufferFormat());
-
-    m_resourceDescriptors = std::make_unique<DirectX::DescriptorPile>(device,
-        Descriptors::Count,
-        Descriptors::Reserve
-        );
-
-    ResourceUploadBatch resourceUpload(device);
-    resourceUpload.Begin();
-
-    wchar_t font[MAX_PATH];
-    DX::FindMediaFile(font, MAX_PATH, L"courier_16.spritefont");
-
-    wchar_t background[MAX_PATH];
-    DX::FindMediaFile(background, MAX_PATH, L"ATGSampleBackground.DDS");
-
-    m_log->RestoreDevice(
-        device,
-        resourceUpload,
-        rtState,
-        font,
-        background,
-        m_resourceDescriptors->GetCpuHandle(Descriptors::ConsoleFont),
-        m_resourceDescriptors->GetGpuHandle(Descriptors::ConsoleFont),
-        m_resourceDescriptors->GetCpuHandle(Descriptors::Background),
-        m_resourceDescriptors->GetGpuHandle(Descriptors::Background)
-    );
-
-    DX::FindMediaFile(font, MAX_PATH, L"XboxOneControllerLegend.spritefont");
-    m_ctrlFont = std::make_unique<SpriteFont>(device, resourceUpload,
-        font,
-        m_resourceDescriptors->GetCpuHandle(Descriptors::ControllerFont),
-        m_resourceDescriptors->GetGpuHandle(Descriptors::ControllerFont));
-
-    DX::FindMediaFile(font, MAX_PATH, L"SegoeUI_24.spritefont");
-    m_font = std::make_unique<SpriteFont>(device, resourceUpload,
-        font,
-        m_resourceDescriptors->GetCpuHandle(Descriptors::Font),
-        m_resourceDescriptors->GetGpuHandle(Descriptors::Font));
-
-    SpriteBatchPipelineStateDescription pd(rtState, &CommonStates::AlphaBlend);
-    m_spriteBatch = std::make_unique<SpriteBatch>(device, resourceUpload, pd);
-
-    auto uploadResourcesFinished = resourceUpload.End(m_deviceResources->GetCommandQueue());
-    uploadResourcesFinished.wait();
-}
-
-// Allocate all memory resources that change on a window SizeChanged event.
-void Sample::CreateWindowSizeDependentResources()
-{
-    auto const viewport = m_deviceResources->GetScreenViewport();
-
-    static const RECT logSize = { 980, 800, 1780, 1050 };
-    m_log->SetWindow(logSize, false);
-    m_log->SetViewport(viewport);
-
-    m_spriteBatch->SetViewport(viewport);
-}
-
-void Sample::OnDeviceLost()
-{
-    m_graphicsMemory.reset();
-    m_resourceDescriptors.reset();
-
-}
-
-void Sample::OnDeviceRestored()
-{
-    CreateDeviceDependentResources();
-    CreateWindowSizeDependentResources();
-}
-#pragma endregion

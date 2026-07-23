@@ -17,9 +17,6 @@
     <Filter Include="External">
       <UniqueIdentifier>2242d999-ad99-42a6-82a5-0b3f58ad96b6</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts">
-      <UniqueIdentifier>{bf98768e-025d-4970-8800-4125f11f4359}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Assets\Layouts">
       <UniqueIdentifier>{6ed3dfb4-7c86-4a4e-b71c-432c77a99261}</UniqueIdentifier>
     </Filter>
@@ -110,9 +107,6 @@
     <None Include="readme_ja-jp.md" />
     <None Include="readme_ko-kr.md" />
     <None Include="readme_zh-cn.md" />
-    <None Include="Scripts\Desktop.PostBuild.bat">
-      <Filter>Scripts</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Assets\Logo.png">
