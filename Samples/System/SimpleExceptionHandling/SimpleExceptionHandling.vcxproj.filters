@@ -14,9 +14,6 @@
     <Filter Include="Examples">
       <UniqueIdentifier>{e3cb8b93-17ef-4c82-8564-ef444c8fdcb2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts">
-      <UniqueIdentifier>{262b5a74-8b9b-4547-b904-05f71e1d3b7f}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -115,8 +112,5 @@
     <None Include="readme_ja-jp.md" />
     <None Include="readme_ko-kr.md" />
     <None Include="readme_zh-cn.md" />
-    <None Include="Scripts\Desktop.PostBuild.bat">
-      <Filter>Scripts</Filter>
-    </None>
   </ItemGroup>
 </Project>

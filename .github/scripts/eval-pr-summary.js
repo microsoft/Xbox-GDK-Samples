@@ -50,8 +50,14 @@ const CRITERIA = [
   },
 ];
 
+function stripHtmlComments(markdown) {
+  return String(markdown).replace(/<!--[\s\S]*?-->/g, '');
+}
+
 function evaluate(prBody) {
-  if (!prBody || prBody.trim().length === 0) {
+  const body = stripHtmlComments(prBody);
+
+  if (!body || body.trim().length === 0) {
     return {
       score: 0,
       maxScore: 100,
@@ -66,7 +72,7 @@ function evaluate(prBody) {
   }
 
   const results = CRITERIA.map((criterion) => {
-    const passed = criterion.test(prBody);
+    const passed = criterion.test(body);
     return {
       id: criterion.id,
       name: criterion.name,

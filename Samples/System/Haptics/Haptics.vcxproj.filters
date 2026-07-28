@@ -27,7 +27,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="haptics.cpp" />
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui.cpp">
@@ -42,7 +42,10 @@
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_widgets.cpp">
       <Filter>ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_applog.cpp">
+    <ClCompile Include="..\..\..\Kits\ATGTK\imgui\imgui_atg.cpp">
+      <Filter>ImGui\ATG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\imgui\imgui_atg_device_context.cpp">
       <Filter>ImGui\ATG</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_dx12.cpp">
@@ -51,10 +54,7 @@
     <ClCompile Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_win32.cpp">
       <Filter>ImGui\Backends</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_deviceresources.cpp">
-      <Filter>ImGui\ATG</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_sample.cpp">
+    <ClCompile Include="..\..\..\Kits\ATGTK\imgui\imgui_atg_device_context.cpp">
       <Filter>ImGui\ATG</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
@@ -100,43 +100,64 @@
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imstb_truetype.h">
       <Filter>ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_allocator.h">
+    <ClInclude Include="..\..\..\Kits\ATGTK\imgui\imgui_atg.h">
       <Filter>ImGui\ATG</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_applog.h">
-      <Filter>ImGui\ATG</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_atg.h">
-      <Filter>ImGui\ATG</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_atg_file.h">
+    <ClInclude Include="..\..\..\Kits\ATGTK\imgui\imgui_atg_file.h">
       <Filter>ImGui\ATG</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_ps.h">
       <Filter>ImGui\Backends\Shaders</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_ps_point.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_rs.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_rs_point.h">
       <Filter>ImGui\Backends\Shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_vs.h">
       <Filter>ImGui\Backends\Shaders</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_vs_point.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_ps.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_ps_point.h">
       <Filter>ImGui\Backends\Shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_rs.h">
       <Filter>ImGui\Backends\Shaders</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_rs_point.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_vs.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_vs_point.h">
       <Filter>ImGui\Backends\Shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_ps.h">
       <Filter>ImGui\Backends\Shaders</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_ps_point.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_rs.h">
       <Filter>ImGui\Backends\Shaders</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_rs_point.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_vs.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_vs_point.h">
       <Filter>ImGui\Backends\Shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_dx12.h">
@@ -145,17 +166,11 @@
     <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_win32.h">
       <Filter>ImGui\Backends</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_deviceresources.h">
-      <Filter>ImGui\ATG</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\ATG\imgui_sample.h">
+    <ClInclude Include="..\..\..\Kits\ATGTK\imgui\imgui_atg_device_context.h">
       <Filter>ImGui\ATG</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
       <Filter>ATG Tool Kit</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\atg\d3dx12.h">
-      <Filter>ImGui\ATG</Filter>
     </ClInclude>
     <ClInclude Include="HapticsManager\HapticsDevice.h">
       <Filter>HapticsManager</Filter>

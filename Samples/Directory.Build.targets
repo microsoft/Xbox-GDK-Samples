@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- Chain-import the root Directory.Build.targets. MSBuild only auto-imports the
+       nearest Directory.Build.targets walking up from the project, so adding this
+       file would otherwise hide the repo-root one (vcpkg import, CAExcludePath, etc.). -->
+  <PropertyGroup>
+    <_ParentBuildTargets>$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))</_ParentBuildTargets>
+  </PropertyGroup>
+  <Import Project="$(_ParentBuildTargets)" Condition="'$(_ParentBuildTargets)' != ''" />
+
+  <!-- Suppress all compiler warnings for third-party AMDTK code we cannot modify -->
+  <ItemDefinitionGroup Condition="$(MSBuildProjectDirectory.Contains('Kits\AMDTK'))">
+    <ClCompile>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+  </ItemDefinitionGroup>
+
+  <!-- Import vcpkg.targets from VcpkgRoot detected in Directory.Build.props.
+       VCPkgLocalAppDataDisabled (set in .props) prevents stale vcpkg-integrate-install hooks. -->
+  <Import Condition="'$(VcpkgRoot)' != '' AND Exists('$(VcpkgRoot)\scripts\buildsystems\msbuild\vcpkg.targets')" Project="$(VcpkgRoot)\scripts\buildsystems\msbuild\vcpkg.targets" />
+  <!-- Emit a clear error when a project needs vcpkg but no vcpkg installation was found.
+       Without this, the build fails with cryptic 'Cannot open include file' errors. -->
+  <Target Name="_CheckVcpkgAvailable"
+          BeforeTargets="ClCompile"
+          Condition="'$(VcpkgRoot)' == '' AND ('$(VcpkgEnabled)' == 'true' OR '$(VcpkgEnableManifest)' == 'true')">
+    <Error Text="This project requires vcpkg but no vcpkg installation was found. Install the 'vcpkg package manager' component in the Visual Studio Installer, or set the VCPKG_ROOT environment variable to a standalone vcpkg installation." />
+  </Target>
+
+  <!-- ImGui-framework samples render gamepad/keyboard glyphs with PromptFont. The
+       ImGuiAtg Kit loads "Media\promptfont.ttf" relative to the working directory or
+       the executable, so copy the shared font into each ImGui sample's output.
+
+       This is opt-in: only projects that set <AtgImGuiSample>true</AtgImGuiSample> in
+       their .vcxproj receive the font, so classic (DeviceResources) samples are
+       unaffected. The new-sample templates set this marker automatically. -->
+  <ItemGroup Condition="'$(AtgImGuiSample)' == 'true'">
+    <CopyFileToFolders Include="$(MSBuildThisFileDirectory)..\Media\Fonts\PromptFont\promptfont.ttf">
+      <DestinationFolders>$(OutDir)Media</DestinationFolders>
+    </CopyFileToFolders>
+  </ItemGroup>
+
+</Project>

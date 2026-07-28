@@ -14,9 +14,6 @@
     <Filter Include="External">
       <UniqueIdentifier>942a236f-8b4e-4cfa-8835-40a95dac4645</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts">
-      <UniqueIdentifier>{4366c2a1-96e9-45f5-ae95-d7b2c7c1805e}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -102,9 +99,6 @@
     </None>
     <None Include="Assets\XboxOneController.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="Scripts\Desktop.PostBuild.bat">
-      <Filter>Scripts</Filter>
     </None>
     <None Include="readme_ja-jp.md" />
     <None Include="readme_ko-kr.md" />

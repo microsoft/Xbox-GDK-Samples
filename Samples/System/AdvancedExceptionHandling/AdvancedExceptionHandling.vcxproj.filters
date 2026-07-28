@@ -14,9 +14,6 @@
     <Filter Include="Examples">
       <UniqueIdentifier>{e3cb8b93-17ef-4c82-8564-ef444c8fdcb2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts">
-      <UniqueIdentifier>{262b5a74-8b9b-4547-b904-05f71e1d3b7f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="DumpToolExecutable">
       <UniqueIdentifier>{1100435d-934f-490d-a5da-e11e4a6effba}</UniqueIdentifier>
     </Filter>
@@ -114,6 +111,26 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
+    <CopyFileToFolders Include="Assets\atg.ico">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
       <Filter>Assets</Filter>
     </None>
@@ -122,9 +139,6 @@
     </None>
     <None Include="..\..\..\Media\Fonts\XboxOneController.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="Scripts\Desktop.PostBuild.bat">
-      <Filter>Scripts</Filter>
     </None>
     <None Include="OutOfProcDumpTool.pdb">
       <Filter>DumpToolExecutable</Filter>

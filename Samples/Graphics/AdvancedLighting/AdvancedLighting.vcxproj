@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Gaming.Xbox.Scarlett.x64">
@@ -803,7 +803,6 @@
     <None Include="readme_ko-kr.md" />
     <None Include="readme_zh-cn.md" />
     <None Include="..\..\NuGet.config" />
-    <None Include="Scripts\Desktop.PostBuild.bat" />
     <None Include="Shaders\GPassCommon.hlsli" />
     <None Include="Shaders\InstancedLightVolumesCommon.hlsli" />
     <None Include="Shaders\ParticleCommon.hlsli" />
