@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "dynamiccubemap"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how to render the scene to a cubemap at runtime and then sample from the cubemap."
+---
+----->
+
   ![](./media/image1.png)
 
 #   DynamicCubeMap Sample

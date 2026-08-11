@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "microsoftstoreservicesclient"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample works with the Microsoft.StoreServices Sample and demonstrates the client side call pattern to do service-to-service auth with the Store Services"
+---
+----->
+
   ![](./media/image1.png)
 
 #   Microsoft.StoreServices Client Sample

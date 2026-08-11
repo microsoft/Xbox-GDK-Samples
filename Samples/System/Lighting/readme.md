@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "lighting"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample shows how to use the LampArray API."
+---
+----->
+
 # Lighting Sample
 
 # Description

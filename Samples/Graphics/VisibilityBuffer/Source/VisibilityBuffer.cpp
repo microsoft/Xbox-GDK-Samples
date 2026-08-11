@@ -668,13 +668,8 @@ void Sample::LoadModels()
 
     // Load sdkmesh models.
     OutputDebugStringA("Loading model...\n");
-#ifdef _GAMING_DESKTOP
     const wchar_t* dragonPath = L"ATGDragonPosedWithBakedDiffuse\\Dragon_LOD1_993KTri.sdkmes_";
     const wchar_t* cityPath   = L"AliasSampleCityBlock\\CityBlockConcrete.sdkmesh";
-#else
-    const wchar_t* dragonPath = L"Dragon_LOD1_993KTri.sdkmes_";
-    const wchar_t* cityPath = L"CityBlockConcrete.sdkmesh";
-#endif
 
     wchar_t strFilePath[MAX_PATH] = {};
     DX::FindMediaFile(strFilePath, MAX_PATH, dragonPath);
@@ -1040,13 +1035,8 @@ void Sample::BuildObjectBuffer()
 
 void Sample::LoadTextures()
 {
-#ifdef _GAMING_DESKTOP
     const wchar_t* dragonTexture = L"ATGDragonPosedWithBakedDiffuse\\Dragon_diffuse.DD_";
     const wchar_t* cityTexture = L"AliasSampleCityBlock\\Concrete.DDS";
-#else
-    const wchar_t* dragonTexture = L"Dragon_diffuse.DD_";
-    const wchar_t* cityTexture = L"Concrete.DDS";
-#endif
 
     wchar_t strFilePath[MAX_PATH] = {};
     DX::FindMediaFile(strFilePath, MAX_PATH, dragonTexture);

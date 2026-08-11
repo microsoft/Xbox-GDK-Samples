@@ -243,36 +243,32 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-    </None>
-    <None Include="Assets\Textures\BC1_shuffled_compressed.bin">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-    </None>
-    <None Include="Assets\Textures\BC3_shuffled_compressed.bin">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-    </None>
-    <None Include="Assets\Textures\BC4_shuffled_compressed.bin">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-    </None>
-    <None Include="Assets\Textures\BC5_shuffled_compressed.bin">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-    </None>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\BC1_shuffled_compressed.bin">
+      <DestinationFolders>$(OutDir)Assets\Textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\BC3_shuffled_compressed.bin">
+      <DestinationFolders>$(OutDir)Assets\Textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\BC4_shuffled_compressed.bin">
+      <DestinationFolders>$(OutDir)Assets\Textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\BC5_shuffled_compressed.bin">
+      <DestinationFolders>$(OutDir)Assets\Textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
     <None Include="readme.md" />
     <None Include="Shaders\Shared.hlsli" />
   </ItemGroup>

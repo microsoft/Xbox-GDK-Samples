@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- csharp
+products:
+- gdk
+urlFragment: "unityingamestore"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates the client-based operations used in presenting and operating an in-game storefront in Unity."
+---
+----->
+
   ![ATG Xbox and Windows logos](./media/logoImage.png)
 
 # Unity In-Game Store

@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "simple120hz"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates the basics of rendering at several refresh rates on Xbox: 30Hz, 40Hz, 60Hz, and 120Hz."
+---
+----->
+
 # Simple 120 Hz Sample
 
 *This sample is compatible with the Microsoft Game Development Kit

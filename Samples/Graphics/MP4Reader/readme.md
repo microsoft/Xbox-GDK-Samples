@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "mp4reader"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample shows how the Media Foundation Source Reader can be used to read a MP4 file which contains an H264 or HEVC video stream, and decode it using hardware acceleration on Xbox."
+---
+----->
+
   ![](./media/image1.png)
 
 #   MP4Reader Sample (DirectX 12)

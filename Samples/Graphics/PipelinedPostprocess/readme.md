@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "pipelinedpostprocess"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how to overlap the postprocess phase of one frame with the beginning of the next frame, potentially achieving some performance benefit from parallelization."
+---
+----->
+
 ![](./media/image1.png)
 
 # Pipeline Postprocess Sample

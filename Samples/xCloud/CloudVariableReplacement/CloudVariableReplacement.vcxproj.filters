@@ -49,12 +49,12 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
+    <CopyFileToFolders Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Textures\callout_circle.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Textures\callout_circle.dds">
       <Filter>Assets</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Assets\SmallLogo.png">
@@ -74,15 +74,15 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_24.spritefont">
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_24.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
       <Filter>Assets</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="sample-layouts\context.json">
       <Filter>TAK</Filter>
     </None>

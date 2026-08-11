@@ -142,38 +142,38 @@
     <Image Include="Assets\StoreLogo.png">
       <Filter>Assets\Logos</Filter>
     </Image>
-    <Image Include="..\..\..\Media\Meshes\MicroscopeCity\city.dds">
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\MicroscopeCity\city.dds">
       <Filter>Assets\Meshes</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\MicroscopeCity\column.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\MicroscopeCity\column.dds">
       <Filter>Assets\Meshes</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\MicroscopeCity\scanner.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\MicroscopeCity\scanner.dds">
       <Filter>Assets\Meshes</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
     <None Include="PageAllocator.inl">
       <Filter>TransientAllocator</Filter>
     </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\MicroscopeCity\column.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\MicroscopeCity\column.sdkmesh">
       <Filter>Assets\Meshes</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\MicroscopeCity\occcity.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\MicroscopeCity\occcity.sdkmesh">
       <Filter>Assets\Meshes</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\MicroscopeCity\occluder.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\MicroscopeCity\occluder.sdkmesh">
       <Filter>Assets\Meshes</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\MicroscopeCity\scanner.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\MicroscopeCity\scanner.sdkmesh">
       <Filter>Assets\Meshes</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="ReadMe.docx" />
     <None Include="AdvancedESRAM_ReadMe_ja-jp.docx" />
     <None Include="AdvancedESRAM_ReadMe_ko-kr.docx" />

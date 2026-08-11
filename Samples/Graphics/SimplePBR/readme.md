@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "simplepbr"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates physically based rendering (PBR) on Xbox using DirectX 12."
+---
+----->
+
   ![](./media/image1.png)
 
 #   SimplePBR Sample

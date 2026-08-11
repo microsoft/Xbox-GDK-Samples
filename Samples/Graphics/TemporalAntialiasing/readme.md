@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "temporalantialiasing"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how to implement Temporal Antialiasing (TAA), plus a series of other techniques which help improve the algoritm stability and fix some of its inherent issues."
+---
+----->
+
 ![](./media/image1.png)
 
 # Temporal AntiAliasing

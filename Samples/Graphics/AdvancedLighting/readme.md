@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "advancedlighting"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates different techniques to improve performance of deferred rendering with many lights."
+---
+----->
+
 ![](./media/image1.png)
 
 # Advanced Lighting Sample

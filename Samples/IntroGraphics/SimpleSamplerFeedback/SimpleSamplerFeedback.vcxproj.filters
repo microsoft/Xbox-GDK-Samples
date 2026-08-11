@@ -70,9 +70,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\clouds.dds">
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\clouds.dds">
       <Filter>Assets</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Assets\LargeLogo.png">
@@ -94,12 +94,12 @@
   <ItemGroup>
     <None Include="Readme.docx" />
     <None Include="Shared.hlsli" />
-    <None Include="..\..\..\Media\Fonts\Courier_36.spritefont">
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\Courier_36.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
       <Filter>Assets</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="SimpleSamplerFeedback_ReadMe_ja-jp.docx" />
     <None Include="SimpleSamplerFeedback_ReadMe_ko-kr.docx" />
     <None Include="SimpleSamplerFeedback_ReadMe_zh-cn.docx" />

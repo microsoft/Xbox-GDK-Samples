@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "amdfidelityfxcacao"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates AMD's FidelityFX Combined Adaptive Compute Ambient Occlusion (CACAO) algorithm."
+---
+----->
+
   ![](./media/image1.png)![](./media/image2.png)
 
 #   FidelityFX Ambient Occlusion (CACAO)

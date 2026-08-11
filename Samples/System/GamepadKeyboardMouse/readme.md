@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "gamepadkeyboardmouse"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how to read and process inputs from gamepad, mouse, and keyboard using GameInput."
+---
+----->
+
 ![ATG Logo](./media/image1.png)
 
 #   GameInput Gamepad Keyboard Mouse

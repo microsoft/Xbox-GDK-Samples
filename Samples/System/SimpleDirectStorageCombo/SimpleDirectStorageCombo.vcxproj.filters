@@ -180,20 +180,20 @@
     <Image Include="Assets\LargeLogo.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
+    <CopyFileToFolders Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
       <Filter>Assets</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Media\Fonts\XboxOneController.spritefont">
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneController.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_24.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_24.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
       <Filter>Assets</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="..\..\NuGet.config" />
     <None Include="readme.md" />
     <None Include="readme_ja-jp.md" />

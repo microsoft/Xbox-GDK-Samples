@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "haptics"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates Advanced Haptics APIs."
+---
+----->
+
 # Advanced Haptics Sample
 
 # Description
@@ -68,7 +87,7 @@ if (hapticsDevice)
 
 # Known Issues/Expectations
 
-At present, the only haptics-enabled controller supported by GameInput is the PlayStation®5 DualSense® controller.
+At present, the only haptics-enabled controller supported by GameInput is the PlayStationï¿½5 DualSenseï¿½ controller.
 
 # Update history
 

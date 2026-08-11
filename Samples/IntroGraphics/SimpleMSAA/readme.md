@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "simplemsaa"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample implements an MSAA render target and depth/stencil buffer for a 3D scene using DirectX 12 on Xbox."
+---
+----->
+
 # Simple MSAA
 
 *This sample is compatible with the Microsoft Game Development Kit (June

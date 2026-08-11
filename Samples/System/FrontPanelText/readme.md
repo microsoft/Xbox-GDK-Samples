@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "frontpaneltext"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "The FrontPanelText sample demonstrates how to use the CPU to draw text on the Xbox Devkit Front Panel Display."
+---
+----->
+
   ![](./media/image1.png)
 
 #   FrontPanelText Sample

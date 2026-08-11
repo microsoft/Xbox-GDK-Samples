@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "meshletcull"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how to leverage amplification shaders to cull meshlets against the camera using per-meshlet culling metadata on Xbox Series X|S and PC."
+---
+----->
+
   ![](./media/image1.png)
 
 #   Meshlet Culling Sample

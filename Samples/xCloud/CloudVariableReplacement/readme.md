@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "cloudvariablereplacement"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how to alter the state of the touch adaptation kit from within a game."
+---
+----->
+
 # Cloud Variable Replacement Sample
 
 *This sample is compatible with the Microsoft Game Development Kit

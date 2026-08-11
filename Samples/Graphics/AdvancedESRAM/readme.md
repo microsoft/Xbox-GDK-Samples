@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "advancedesram"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates the use of advanced DirectX 12.x memory features on Xbox One to effectively alias memory for Direct3D resources."
+---
+----->
+
   ![](./media/image1.png)
 
 #   Advanced ESRAM Sample

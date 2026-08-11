@@ -82,12 +82,12 @@
     <Image Include="Assets\StoreLogo.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\FullScreenLogo.png">
+    <CopyFileToFolders Include="Assets\FullScreenLogo.png">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\FrontPanelLogo.png">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\FrontPanelLogo.png">
       <Filter>Assets</Filter>
-    </Image>
+    </CopyFileToFolders>
     <Image Include="Assets\LargeLogo.png">
       <Filter>Assets</Filter>
     </Image>

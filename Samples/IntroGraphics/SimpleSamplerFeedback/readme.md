@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "simplesamplerfeedback"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "Simple example of using DirectX 12 Sampler Feedback."
+---
+----->
+
   ![](./media/image1.png)
 
 #   Simple SamplerFeedback Sample

@@ -362,7 +362,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\Media\Textures\sunset.jpg" />
+    <CopyFileToFolders Include="..\..\..\Media\Textures\sunset.jpg">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Assets\LargeLogo.png" />

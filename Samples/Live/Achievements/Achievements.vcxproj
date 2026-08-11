@@ -691,88 +691,134 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Media\Fonts\Courier_16.spritefont">
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\Courier_16.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
-      <Link>%(Filename)%(Extension)</Link>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18_Bold.spritefont">
-      <Link>%(Filename)%(Extension)</Link>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18_Bold.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18_Italic.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18_Italic.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_22.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_22.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_22_Bold.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_22_Bold.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_22_Italic.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_22_Italic.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_24.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_24.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_24_Bold.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_24_Bold.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_24_Italic.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_24_Italic.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_30.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_30.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_30_Bold.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_30_Bold.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_30_Italic.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_30_Italic.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_34.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_34.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
-      <Link>%(Filename)%(Extension)</Link>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_36_Bold.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_36_Bold.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_36_Italic.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_36_Italic.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_48.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_48.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_48_Bold.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_48_Bold.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_48_Italic.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_48_Italic.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneController.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneController.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
+    </CopyFileToFolders>
     <None Include="readme.md" />
     <None Include="readme_ja-jp.md" />
     <None Include="readme_ko-kr.md" />
     <None Include="readme_zh-cn.md" />
-    <None Include="Assets\SampleUI.csv">
+    <CopyFileToFolders Include="Assets\SampleUI.csv">
+      <DestinationFolders>$(OutDir)Assets</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Kits\DirectXTK12\DirectXTK12_GDKX_2022.vcxproj">
@@ -805,9 +851,11 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
+    <CopyFileToFolders Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Textures</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup Condition="'$(Platform)'=='x64'">
     <ReferenceCopyLocalPaths Include="$(GDKCrossPlatformPath)windows\bin\x64\libHttpClient.dll" />

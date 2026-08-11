@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- csharp
+products:
+- gdk
+urlFragment: "unitysimplempsd"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how to use MPSD to implement sessions and matchmaking for Unity games."
+---
+----->
+
 ![ATG Xbox and Windows logos](./media/atgLogo.png)
 
 # Unity Simple MPSD

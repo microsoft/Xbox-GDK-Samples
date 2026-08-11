@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "simpletriangle"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how to create a static Direct3D 12 vertex buffer to render a triangle on screen on Xbox."
+---
+----->
+
 # Simple Triangle Sample
 
 *This sample is compatible with the Microsoft Game Development Kit (October 2024 or later)*

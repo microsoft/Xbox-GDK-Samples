@@ -72,17 +72,17 @@
     <Image Include="Assets\StoreLogo.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
+    <CopyFileToFolders Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
       <Filter>Assets</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
       <Filter>Assets</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="Readme.docx" />
     <None Include="SimpleWASAPIPlaySound_ReadMe_ja-jp.docx" />
     <None Include="SimpleWASAPIPlaySound_ReadMe_ko-kr.docx" />

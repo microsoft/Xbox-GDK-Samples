@@ -179,9 +179,9 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Layouts\leaderboards-panel.json">
+    <CopyFileToFolders Include="Assets\Layouts\leaderboards-panel.json">
       <Filter>Assets\Layouts</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="Readme.md" />
     <None Include="Readme_ja-jp.md" />
   </ItemGroup>

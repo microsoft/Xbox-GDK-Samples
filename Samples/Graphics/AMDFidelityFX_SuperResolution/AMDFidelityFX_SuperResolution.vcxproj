@@ -318,24 +318,30 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuad.hlsli" />
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <DestinationFolders>$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+      <DestinationFolders>$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneController.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneController.spritefont">
+      <DestinationFolders>$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
+      <DestinationFolders>$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+      <DestinationFolders>$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
+      <DestinationFolders>$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
+    </CopyFileToFolders>
     <None Include="..\..\..\Kits\AMDTK\GLTF\Shaders\functions.hlsi" />
     <None Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPBRLighting.hlsi" />
     <None Include="..\..\..\Kits\AMDTK\GLTF\Shaders\GLTFPbrPass-IO.hlsi" />
@@ -345,14 +351,14 @@
     <None Include="..\..\..\Kits\AMDTK\GLTF\Shaders\PixelParams.hlsi" />
     <None Include="..\..\..\Kits\AMDTK\GLTF\Shaders\Skinning.hlsi" />
     <None Include="..\..\..\Kits\AMDTK\GLTF\Shaders\textures.hlsi" />
-    <None Include="..\..\..\Media\Meshes\AMDCorridor\Corridor.bin">
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Corridor.bin">
+      <DestinationFolders>$(OutDir)Media\Meshes\AMDCorridor</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-      <FileType>Document</FileType>
-    </None>
-    <None Include="..\..\..\Media\Meshes\AMDCorridor\Corridor.gltf">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Corridor.gltf">
+      <DestinationFolders>$(OutDir)Media\Meshes\AMDCorridor</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-      <FileType>Document</FileType>
-    </None>
+    </CopyFileToFolders>
     <None Include="packages.config" />
     <None Include="readme_ja-jp.md" />
     <None Include="readme_ko-kr.md" />
@@ -577,25 +583,82 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Box_prop_color.jpg" />
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Box_prop_normal.png" />
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Box_prop_roughness_metallic.jpg" />
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Cockpit-LP_BaseColor.jpg" />
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Cockpit-LP_Normal.jpg" />
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Cockpit-LP_Roughness_Metallic.jpg" />
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-LP_2_BaseColor.jpg" />
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-LP_2_Normal.jpg" />
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-LP_2_Roughness_Metallic.jpg" />
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-v2-1_BaseColor.jpg" />
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-v2-1_Emissive.jpg" />
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-v2-1_Normal.jpg" />
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-v2-1_Roughness_Metallic.jpg" />
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\MI_Trims_B_Roughness_green_channel.png" />
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\T_Metal_Scratches_M7_green_channel.png" />
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\T_Terminal_UI_alpha.png" />
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Weapon_Shelf_prop_color.jpg" />
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Weapon_Shelf_prop_normal.jpg" />
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Weapon_Shelf_prop_roughness_metallic.jpg" />
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Box_prop_color.jpg">
+      <DestinationFolders>$(OutDir)Media\Meshes\AMDCorridor</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Box_prop_normal.png">
+      <DestinationFolders>$(OutDir)Media\Meshes\AMDCorridor</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Box_prop_roughness_metallic.jpg">
+      <DestinationFolders>$(OutDir)Media\Meshes\AMDCorridor</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Cockpit-LP_BaseColor.jpg">
+      <DestinationFolders>$(OutDir)Media\Meshes\AMDCorridor</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Cockpit-LP_Normal.jpg">
+      <DestinationFolders>$(OutDir)Media\Meshes\AMDCorridor</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Cockpit-LP_Roughness_Metallic.jpg">
+      <DestinationFolders>$(OutDir)Media\Meshes\AMDCorridor</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-LP_2_BaseColor.jpg">
+      <DestinationFolders>$(OutDir)Media\Meshes\AMDCorridor</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-LP_2_Normal.jpg">
+      <DestinationFolders>$(OutDir)Media\Meshes\AMDCorridor</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-LP_2_Roughness_Metallic.jpg">
+      <DestinationFolders>$(OutDir)Media\Meshes\AMDCorridor</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-v2-1_BaseColor.jpg">
+      <DestinationFolders>$(OutDir)Media\Meshes\AMDCorridor</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-v2-1_Emissive.jpg">
+      <DestinationFolders>$(OutDir)Media\Meshes\AMDCorridor</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-v2-1_Normal.jpg">
+      <DestinationFolders>$(OutDir)Media\Meshes\AMDCorridor</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-v2-1_Roughness_Metallic.jpg">
+      <DestinationFolders>$(OutDir)Media\Meshes\AMDCorridor</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\MI_Trims_B_Roughness_green_channel.png">
+      <DestinationFolders>$(OutDir)Media\Meshes\AMDCorridor</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\T_Metal_Scratches_M7_green_channel.png">
+      <DestinationFolders>$(OutDir)Media\Meshes\AMDCorridor</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\T_Terminal_UI_alpha.png">
+      <DestinationFolders>$(OutDir)Media\Meshes\AMDCorridor</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Weapon_Shelf_prop_color.jpg">
+      <DestinationFolders>$(OutDir)Media\Meshes\AMDCorridor</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Weapon_Shelf_prop_normal.jpg">
+      <DestinationFolders>$(OutDir)Media\Meshes\AMDCorridor</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Weapon_Shelf_prop_roughness_metallic.jpg">
+      <DestinationFolders>$(OutDir)Media\Meshes\AMDCorridor</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
     <CopyFileToFolders Include="Assets\LargeLogo.png" />
     <CopyFileToFolders Include="..\..\..\Media\Textures\DeferredParticle.dds">
       <DeploymentContent Condition="'$(Platform)'=='x64'">true</DeploymentContent>

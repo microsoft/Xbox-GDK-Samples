@@ -90,65 +90,65 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\background_flat.png">
+    <CopyFileToFolders Include="Assets\background_flat.png">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\green_tile.png">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\green_tile.png">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\green_tile_border.png">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\green_tile_border.png">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\RTSMap\LabelBase.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\RTSMap\LabelBase.dds">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\RTSMap\Labels.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\RTSMap\Labels.dds">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\ABox001LightingMap.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\ABox001LightingMap.dds">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\ACeilingLightingMap.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\ACeilingLightingMap.dds">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\AFloortLightingMap.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\AFloortLightingMap.dds">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\AWallsLightingMap.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\AWallsLightingMap.dds">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\Ceiling.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\Ceiling.dds">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\Cement.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\Cement.dds">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\clouds.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\clouds.dds">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\Pillar.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\Pillar.dds">
       <Filter>Assets</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Media\Fonts\Courier_36.spritefont">
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\Courier_36.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_22.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_22.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_24.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_24.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_34.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_34.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\FPSRoom\FPSRoom.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\FPSRoom.sdkmesh">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\RTSMap\3DRTSMap.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\RTSMap\3DRTSMap.sdkmesh">
       <Filter>Assets</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="Readme_ja-JP.docx" />
     <None Include="Readme_ko-KR.docx" />
     <None Include="Readme_zh-CN.docx" />

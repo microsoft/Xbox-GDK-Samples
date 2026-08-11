@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "histogramcs"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates some performance considerations for Compute Shaders on Xbox."
+---
+----->
+
   ![](./media/image1.png)
 
 #   Histogram CS Sample

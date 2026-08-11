@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- csharp
+products:
+- gdk
+urlFragment: "unitysocialmanager"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates usage of Xbox Live Social Manager using the Unity game engine."
+---
+----->
+
 # Microsoft GDK Sample: Social Manager
 
 **Relevant areas:** User Sign-in, Social Manager API, Friends

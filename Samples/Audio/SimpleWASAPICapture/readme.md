@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "simplewasapicapture"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how to capture audio using WASAPI on Xbox."
+---
+----->
+
 # Simple WASAPI Capture Sample
 
 *This sample is compatible with the Microsoft Game Development Kit (June

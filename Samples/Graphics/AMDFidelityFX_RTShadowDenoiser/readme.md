@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "amdfidelityfxrtshadowdenoiser"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample shows an implementation of the AMD's FidelityFX RT Shadow Denoiser applied against a basic implementation of DXR 1.0 Raytraced Shadows."
+---
+----->
+
 <img style="float: left" src="./media/image1.png" /><img style="float: right" src="./media/image3.png" />
 <br/><br/><br/><br/><br/>
 

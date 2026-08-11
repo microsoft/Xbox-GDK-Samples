@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "accessibilitysample"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how to implement cross-platform accessibility features for a title."
+---
+----->
+
   ![](./media/image1.png)
 
 #   Accessibility Sample (PC, XBOX)

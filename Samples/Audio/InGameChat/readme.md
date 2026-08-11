@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "ingamechat"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "The InGameChat sample provides a working example of integrating the GameChat2 library into an Xbox title. It brings together the pieces needed to demonstrate in-title VOIP communications: GameChat, Multiplayer Sessions, and Peer Networking."
+---
+----->
+
   ![](./media/image1.png)
 
 #   InGameChat Sample

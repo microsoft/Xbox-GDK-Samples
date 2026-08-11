@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "simpleplaysound"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how to play a wav file using XAudio2 on the Xbox."
+---
+----->
+
 # Simple Play Sound Sample
 
 *This sample is compatible with the Microsoft Game Development Kit (June

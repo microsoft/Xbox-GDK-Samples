@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "antialiasing"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample shows different antialiasing methods (SMAA, SMAA2x, and FXAA) on Xbox."
+---
+----->
+
   ![](./media/image1.png)
 
 # Antialiasing Sample

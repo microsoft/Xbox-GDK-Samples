@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "leaderboardstitlemanaged"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "The leaderboards sample demonstrates the usage of Xbox Live Leaderboards with Title-Managed stats."
+---
+----->
+
   ![](./media/image1.png)
 
 #   Title-managed Leaderboard Sample

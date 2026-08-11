@@ -1,3 +1,18 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "cmakexboxconsoleapp"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+description: "This is an example of using the CMake cross-platform build system to produce a 'Win32 console' application that can be executed on the Xbox hardware using the Microsoft GDK."
+---
+----->
+
 # Cmake Xbox Console App
 
 *This sample is compatible with the Microsoft Game Development Kit (March 2022)*

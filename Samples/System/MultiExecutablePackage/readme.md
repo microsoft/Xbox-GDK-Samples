@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "multiexecutablepackage"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how to manage multiple projects, dlls, and utility processes within a single solution."
+---
+----->
+
 # MultiExecutable Package Sample
 
 _This sample is compatible with the Microsoft Game Development Kit (March 2022)_

@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "geometricexpansion"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates the geometric expansion capabilities of mesh shaders for Xbox Series X|S and PC."
+---
+----->
+
   ![](./media/image1.png)
 
 #   Geometric Expansion Sample

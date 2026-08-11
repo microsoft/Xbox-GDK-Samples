@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "msquicecho"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample is to demonstrate how to implement MsQuic using a simple Echo Server as an example."
+---
+----->
+
 This sample is to demonstrate how to implement MsQuic using a simple Echo Server as an example. 
 
 // Here is how the echo server works:

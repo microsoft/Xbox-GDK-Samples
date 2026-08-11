@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "hdrprecision"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how precision and GPU performance are affected when using different formats and color spaces while rendering HDR on Xbox Series X|S."
+---
+----->
+
 # HDR Precision Sample
 
 *This sample is compatible with the Microsoft Game Development Kit (March 2022)*

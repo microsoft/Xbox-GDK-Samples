@@ -102,38 +102,38 @@
     <Image Include="Assets\StoreLogo.png">
       <Filter>Assets\Logo</Filter>
     </Image>
-    <Image Include="..\..\..\Media\Meshes\MicroscopeCity\city.dds">
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\MicroscopeCity\city.dds">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\MicroscopeCity\column.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\MicroscopeCity\column.dds">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\MicroscopeCity\scanner.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\MicroscopeCity\scanner.dds">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\LOGO_ATG.png">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\LOGO_ATG.png">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\xboxlogovertical.png">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\xboxlogovertical.png">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\xboxlogohorizontal.png">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\xboxlogohorizontal.png">
       <Filter>Assets</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Media\Meshes\MicroscopeCity\column.sdkmesh">
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\MicroscopeCity\column.sdkmesh">
       <Filter>Assets\Models</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\MicroscopeCity\occcity.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\MicroscopeCity\occcity.sdkmesh">
       <Filter>Assets\Models</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\MicroscopeCity\occluder.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\MicroscopeCity\occluder.sdkmesh">
       <Filter>Assets\Models</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\MicroscopeCity\scanner.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\MicroscopeCity\scanner.sdkmesh">
       <Filter>Assets\Models</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="Time.hlsli">
       <Filter>Assets</Filter>
     </None>

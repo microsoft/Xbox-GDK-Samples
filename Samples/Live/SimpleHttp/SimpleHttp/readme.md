@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "simplehttp"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates using XCurl to make HTTP requests including adding the user token and signature to the headers for authenticated Xbox LIVE calls."
+---
+----->
+
   ![](./media/image1.png)
 
 #   SimpleHttp Sample

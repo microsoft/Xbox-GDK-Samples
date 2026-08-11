@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "simpleplay3dsound"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how use XAudio2 and X3DAudio to playback positional audio on Xbox."
+---
+----->
+
 # Simple Play 3D Sound Sample
 
 *This sample is compatible with the Microsoft Game Development Kit (June

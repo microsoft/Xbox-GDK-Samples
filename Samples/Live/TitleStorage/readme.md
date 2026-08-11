@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "titlestorage"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates Title Storage API provided by the Microsoft Game Development Kit (GDK)."
+---
+----->
+
   ![](./media/image1.png)
 
 #   Title Storage Sample

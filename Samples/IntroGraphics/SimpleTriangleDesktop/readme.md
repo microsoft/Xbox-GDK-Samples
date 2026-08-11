@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "simpletriangledesktop"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how to create a static Direct3D 12 vertex buffer to render a triangle on screen."
+---
+----->
+
 # Simple Triangle Sample (PC)
 
 *This sample is compatible with the Microsoft Game Development Kit

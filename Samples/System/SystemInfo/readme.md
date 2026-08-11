@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "systeminfo"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates a number of APIs for querying system information and hardware capabilities."
+---
+----->
+
   ![](./media/image1.png)
 
 #   SystemInfo Sample

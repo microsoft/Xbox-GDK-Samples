@@ -1138,11 +1138,7 @@ void Sample::CreateDeviceDependentResources()
     m_gltfModel = new AMDTK::GLTFFile();
 
     wchar_t filepath[MAX_PATH];
-#ifdef _GAMING_XBOX
-    DX::FindMediaFile(filepath, _countof(filepath), L"Corridor.gltf");
-#else
     DX::FindMediaFile(filepath, _countof(filepath), L"AMDCorridor\\Corridor.gltf");
-#endif
 
     bool modelStatus = m_gltfModel->Load(filepath);
 

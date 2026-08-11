@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "simpledynamicresources"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "Demonstrates how to use HLSL Dynamic Resources in HLSL Shader Model 6.6. This sample is functionally identical to SimpleTexture, except resources are accessed directly through the heap using ResourceDescriptorHeap[] and SamplerDescriptorHeap[] in HLSL."
+---
+----->
+
 # Simple Dynamic Resources Sample
 
 *This sample is compatible with the Microsoft Game Development Kit

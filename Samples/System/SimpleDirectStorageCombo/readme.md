@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "simpledirectstoragecombo"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "Demonstrates several ways to use DirectStorage on Xbox Series X|S, Desktop, and Xbox One. DirectStorage on Xbox One is handled through an emulation layer"
+---
+----->
+
   ![](./media/image1.png)
 
 #   SimpleDirectStorageCombo Sample

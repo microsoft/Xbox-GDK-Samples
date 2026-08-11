@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "intelligentdelivery"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates Intelligent Delivery APIs."
+---
+----->
+
   ![](./media/image1.png)
 
 #   Intelligent Delivery

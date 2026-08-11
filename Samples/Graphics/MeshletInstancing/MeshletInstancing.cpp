@@ -35,21 +35,12 @@ namespace
 
     const wchar_t* s_lodFilenames[] =
     {
-#ifdef _GAMING_DESKTOP
         L"ATGDragon\\Dragon_LOD0.sdkmesh",
         L"ATGDragon\\Dragon_LOD1.sdkmesh",
         L"ATGDragon\\Dragon_LOD2.sdkmesh",
         L"ATGDragon\\Dragon_LOD3.sdkmesh",
         L"ATGDragon\\Dragon_LOD4.sdkmesh",
         L"ATGDragon\\Dragon_LOD5.sdkmesh",
-#else
-        L"Dragon_LOD0.sdkmesh",
-        L"Dragon_LOD1.sdkmesh",
-        L"Dragon_LOD2.sdkmesh",
-        L"Dragon_LOD3.sdkmesh",
-        L"Dragon_LOD4.sdkmesh",
-        L"Dragon_LOD5.sdkmesh",
-#endif
     };
     constexpr uint32_t c_lodCount = _countof(s_lodFilenames);
 

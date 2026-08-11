@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "dxrsimplelighting"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how diffuse lighting and animated cubes can be rendered with the DirectX Raytracing API on a Xbox Series X|S device."
+---
+----->
+
   ![](./media/image1.png)
 
 #   DXRSimpleLighting Sample

@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "simplemeshlet"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample introduces the meshlet data structure and provides an example of rendering using meshlets on Xbox Series X|S and PC."
+---
+----->
+
   ![](./media/image1.png)
 
 #   Simple Meshlet Sample

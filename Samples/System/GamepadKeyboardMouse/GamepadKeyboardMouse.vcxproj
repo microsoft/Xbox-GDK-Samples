@@ -695,7 +695,11 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">true</DeploymentContent>
     </CopyFileToFolders>
-    <Image Include="..\..\..\Media\Textures\gamepad.dds" />
+    <CopyFileToFolders Include="..\..\..\Media\Textures\gamepad.dds">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
     <CopyFileToFolders Include="Assets\TransparentBox.png" />
     <CopyFileToFolders Include="Assets\GamerPic_Transparent.png" />
     <CopyFileToFolders Include="Assets\GamerPic_Pointer.png" />
@@ -764,7 +768,7 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\..\packages\Microsoft.GameInput.3.3.195\build\native\targets\Microsoft.GameInput.targets" Condition="Exists('..\..\packages\Microsoft.GameInput.3.3.195\build\native\targets\Microsoft.GameInput.targets')" />
+    <Import Project="..\..\packages\Microsoft.GameInput.3.5.268\build\native\targets\Microsoft.GameInput.targets" Condition="Exists('..\..\packages\Microsoft.GameInput.3.5.268\build\native\targets\Microsoft.GameInput.targets')" />
   </ImportGroup>
   <Target Name="GDKEditionCheck" BeforeTargets="PrepareForBuild">
     <Error Condition="'$(GameDK)'==''" Text="GameDK property is required" />
@@ -788,6 +792,6 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Microsoft.GameInput.3.3.195\build\native\targets\Microsoft.GameInput.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.GameInput.3.3.195\build\native\targets\Microsoft.GameInput.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.GameInput.3.5.268\build\native\targets\Microsoft.GameInput.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.GameInput.3.5.268\build\native\targets\Microsoft.GameInput.targets'))" />
   </Target>
 </Project>

@@ -121,24 +121,24 @@
     <None Include="Common.hlsli">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
       <Filter>Media\Fonts</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
       <Filter>Media\Fonts</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\AbstractCathedral\AbstractCathedral.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AbstractCathedral\AbstractCathedral.sdkmesh">
       <Filter>Media\Meshes\AbstractCathedral</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="..\..\..\Media\Meshes\AbstractCathedral\AbstractCathedral.sdkmes_">
       <Filter>Media\Meshes\AbstractCathedral</Filter>
     </None>
-    <None Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD0.sdkmesh">
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD0.sdkmesh">
       <Filter>Media\Meshes\ATGDragon</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD0.sdkmesh.bin">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD0.sdkmesh.bin">
       <Filter>Media\Meshes\ATGDragon</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="Time.hlsli">
       <Filter>Shaders</Filter>
     </None>
@@ -162,65 +162,65 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\CelingCubesLightingMap.dds">
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AbstractCathedral\CelingCubesLightingMap.dds">
       <Filter>Media\Meshes\AbstractCathedral</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\Cement.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AbstractCathedral\Cement.dds">
       <Filter>Media\Meshes\AbstractCathedral</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\CenterCubes.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AbstractCathedral\CenterCubes.dds">
       <Filter>Media\Meshes\AbstractCathedral</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\CenterCubesLightingMap.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AbstractCathedral\CenterCubesLightingMap.dds">
       <Filter>Media\Meshes\AbstractCathedral</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\CenterLightingMap.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AbstractCathedral\CenterLightingMap.dds">
       <Filter>Media\Meshes\AbstractCathedral</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\CenterPool.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AbstractCathedral\CenterPool.dds">
       <Filter>Media\Meshes\AbstractCathedral</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\CenterRimLightingMap.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AbstractCathedral\CenterRimLightingMap.dds">
       <Filter>Media\Meshes\AbstractCathedral</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\EndBoxes2LightingMap.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AbstractCathedral\EndBoxes2LightingMap.dds">
       <Filter>Media\Meshes\AbstractCathedral</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\EndCubes1LightingMap.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AbstractCathedral\EndCubes1LightingMap.dds">
       <Filter>Media\Meshes\AbstractCathedral</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\FloorLightingMap .dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AbstractCathedral\FloorLightingMap .dds">
       <Filter>Media\Meshes\AbstractCathedral</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\GridLightingMap.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AbstractCathedral\GridLightingMap.dds">
       <Filter>Media\Meshes\AbstractCathedral</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\Light.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AbstractCathedral\Light.dds">
       <Filter>Media\Meshes\AbstractCathedral</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\Mosaic3.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AbstractCathedral\Mosaic3.dds">
       <Filter>Media\Meshes\AbstractCathedral</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\Pillar.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AbstractCathedral\Pillar.dds">
       <Filter>Media\Meshes\AbstractCathedral</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\PillarBase.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AbstractCathedral\PillarBase.dds">
       <Filter>Media\Meshes\AbstractCathedral</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\PillarBasesLightingMap.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AbstractCathedral\PillarBasesLightingMap.dds">
       <Filter>Media\Meshes\AbstractCathedral</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\PillarsLightingMap.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AbstractCathedral\PillarsLightingMap.dds">
       <Filter>Media\Meshes\AbstractCathedral</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\Rust.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AbstractCathedral\Rust.dds">
       <Filter>Media\Meshes\AbstractCathedral</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\Sky.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AbstractCathedral\Sky.dds">
       <Filter>Media\Meshes\AbstractCathedral</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AbstractCathedral\StripeConcrete.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AbstractCathedral\StripeConcrete.dds">
       <Filter>Media\Meshes\AbstractCathedral</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

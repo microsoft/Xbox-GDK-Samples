@@ -73,20 +73,20 @@
     <Image Include="Assets\StoreLogo.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
+    <CopyFileToFolders Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Textures\circle.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Textures\circle.dds">
       <Filter>Assets</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
       <Filter>Assets</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="Readme.docx" />
     <None Include="SimplePlay3DSound_ReadMe_ja-jp.docx" />
     <None Include="SimplePlay3DSound_ReadMe_ko-kr.docx" />
@@ -96,8 +96,8 @@
     <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
-    <Media Include="..\..\..\Media\Sounds\ATG_SpatialMotion_monoFunkDrums1Loop.wav">
+    <CopyFileToFolders Include="..\..\..\Media\Sounds\ATG_SpatialMotion_monoFunkDrums1Loop.wav">
       <Filter>Assets</Filter>
-    </Media>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

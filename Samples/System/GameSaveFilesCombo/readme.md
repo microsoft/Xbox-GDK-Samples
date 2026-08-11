@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "gamesavefilescombo"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates the use of the XGameSaveFiles APIs to access folders on Xbox."
+---
+----->
+
   ![](./media/image1.png)
 
 #   GameSaveFilesCombo Sample (PC, XBOX)

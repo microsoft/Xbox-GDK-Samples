@@ -1,3 +1,18 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "cmakeexample"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+description: "This is an example of using the CMake cross-platform build system to build an executable with the Microsoft Game Development Kit via the Ninja generator."
+---
+----->
+
 # CMake Example
 
 *This sample is compatible with the Microsoft Game Development Kit (October 2024)*

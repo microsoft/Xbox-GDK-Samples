@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "simplempa"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how to use the Multiplayer Activity Service for activities and invites."
+---
+----->
+
   ![](./media/image1.png)
 
 #   SimpleMPA Sample

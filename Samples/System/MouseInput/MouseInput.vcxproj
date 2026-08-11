@@ -391,19 +391,68 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\ABox001LightingMap.dds" />
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\ACeilingLightingMap.dds" />
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\AFloortLightingMap.dds" />
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\AWallsLightingMap.dds" />
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\Ceiling.dds" />
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\Cement.dds" />
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\clouds.dds" />
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\Pillar.dds" />
-    <Image Include="..\..\..\Media\Meshes\RTSMap\LabelBase.dds" />
-    <Image Include="..\..\..\Media\Meshes\RTSMap\Labels.dds" />
-    <Image Include="Assets\background_flat.png" />
-    <Image Include="Assets\green_tile.png" />
-    <Image Include="Assets\green_tile_border.png" />
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\ABox001LightingMap.dds">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Meshes\FPSRoom</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\ACeilingLightingMap.dds">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Meshes\FPSRoom</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\AFloortLightingMap.dds">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Meshes\FPSRoom</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\AWallsLightingMap.dds">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Meshes\FPSRoom</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\Ceiling.dds">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Meshes\FPSRoom</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\Cement.dds">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Meshes\FPSRoom</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\clouds.dds">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Meshes\FPSRoom</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\Pillar.dds">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Meshes\FPSRoom</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\RTSMap\LabelBase.dds">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Meshes\RTSMap</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\RTSMap\Labels.dds">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Meshes\RTSMap</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\background_flat.png">
+      <DestinationFolders>$(OutDir)Assets</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\green_tile.png">
+      <DestinationFolders>$(OutDir)Assets</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\green_tile_border.png">
+      <DestinationFolders>$(OutDir)Assets</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\Media\Meshes\RTSMap\Map3DColor.dd_">
@@ -414,54 +463,36 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
     </None>
-    <None Include="..\..\..\Media\Fonts\Courier_36.spritefont">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_22.spritefont">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_24.spritefont">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_34.spritefont">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Meshes\FPSRoom\FPSRoom.sdkmesh">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Meshes\RTSMap\3DRTSMap.sdkmesh">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-    </None>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\Courier_36.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_22.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_24.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_34.spritefont">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Fonts</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\FPSRoom.sdkmesh">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Meshes\FPSRoom</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\RTSMap\3DRTSMap.sdkmesh">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Meshes\RTSMap</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
     <None Include="readme_ja-jp.md" />
     <None Include="readme_ko-kr.md" />
     <None Include="readme_zh-cn.md" />

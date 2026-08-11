@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "visibilitybufferindexreorder"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample augments the VisibilityBuffer sample with a simple index buffer reordering to improve vertex shader performance on Xbox."
+---
+----->
+
 # Visibility Buffer Sample (Index Reorder)
 
 *This sample is compatible with the Microsoft Game Development Kit

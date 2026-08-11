@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "advancedspatialsounds"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how use ISpatialAudioClient to playback both static and dynamic positional audio using Windows Sonic technologies in an Xbox title."
+---
+----->
+
 # Advanced Spatial Sound Sample
 
 *This sample is compatible with the Microsoft Game Development Kit (March 2022)*

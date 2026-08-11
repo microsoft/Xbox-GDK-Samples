@@ -398,41 +398,146 @@
     <Image Include="Assets\LargeLogo.png" />
     <Image Include="Assets\SplashScreen.png" />
     <Image Include="Assets\StoreLogo.png" />
-    <Image Include="Assets\textures\caust00.DDS" />
-    <Image Include="Assets\textures\caust01.DDS" />
-    <Image Include="Assets\textures\caust02.DDS" />
-    <Image Include="Assets\textures\caust03.DDS" />
-    <Image Include="Assets\textures\caust04.DDS" />
-    <Image Include="Assets\textures\caust05.DDS" />
-    <Image Include="Assets\textures\caust06.DDS" />
-    <Image Include="Assets\textures\caust07.DDS" />
-    <Image Include="Assets\textures\caust08.DDS" />
-    <Image Include="Assets\textures\caust09.DDS" />
-    <Image Include="Assets\textures\caust10.DDS" />
-    <Image Include="Assets\textures\caust11.DDS" />
-    <Image Include="Assets\textures\caust12.DDS" />
-    <Image Include="Assets\textures\caust13.DDS" />
-    <Image Include="Assets\textures\caust14.DDS" />
-    <Image Include="Assets\textures\caust15.DDS" />
-    <Image Include="Assets\textures\caust16.DDS" />
-    <Image Include="Assets\textures\caust17.DDS" />
-    <Image Include="Assets\textures\caust18.DDS" />
-    <Image Include="Assets\textures\caust19.DDS" />
-    <Image Include="Assets\textures\caust20.DDS" />
-    <Image Include="Assets\textures\caust21.DDS" />
-    <Image Include="Assets\textures\caust22.DDS" />
-    <Image Include="Assets\textures\caust23.DDS" />
-    <Image Include="Assets\textures\caust24.DDS" />
-    <Image Include="Assets\textures\caust25.DDS" />
-    <Image Include="Assets\textures\caust26.DDS" />
-    <Image Include="Assets\textures\caust27.DDS" />
-    <Image Include="Assets\textures\caust28.DDS" />
-    <Image Include="Assets\textures\caust29.DDS" />
-    <Image Include="Assets\textures\caust30.DDS" />
-    <Image Include="Assets\textures\caust31.DDS" />
-    <Image Include="Assets\textures\dolphin.bmp" />
-    <Image Include="Assets\textures\seafloor.bmp" />
-    <Image Include="Assets\textures\ui2.DDS" />
+    <CopyFileToFolders Include="Assets\textures\caust00.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust01.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust02.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust03.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust04.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust05.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust06.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust07.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust08.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust09.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust10.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust11.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust12.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust13.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust14.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust15.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust16.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust17.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust18.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust19.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust20.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust21.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust22.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust23.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust24.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust25.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust26.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust27.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust28.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust29.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust30.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust31.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\dolphin.bmp">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\seafloor.bmp">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\ui2.DDS">
+      <DestinationFolders>$(OutDir)Assets\textures</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\ArialNarrow12.rasterfont">
@@ -515,38 +620,22 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
     </None>
-    <None Include="Assets\mesh\Dolphin1.sdkmesh">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-    </None>
-    <None Include="Assets\mesh\Dolphin2.sdkmesh">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-    </None>
-    <None Include="Assets\mesh\Dolphin3.sdkmesh">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-    </None>
-    <None Include="Assets\mesh\seafloor.sdkmesh">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
-    </None>
+    <CopyFileToFolders Include="Assets\mesh\Dolphin1.sdkmesh">
+      <DestinationFolders>$(OutDir)Assets\mesh</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\mesh\Dolphin2.sdkmesh">
+      <DestinationFolders>$(OutDir)Assets\mesh</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\mesh\Dolphin3.sdkmesh">
+      <DestinationFolders>$(OutDir)Assets\mesh</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\mesh\seafloor.sdkmesh">
+      <DestinationFolders>$(OutDir)Assets\mesh</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
     <None Include="Assets\Segoe_UI12.rasterfont">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>

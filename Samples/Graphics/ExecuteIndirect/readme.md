@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "executeindirect"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates usage of DirectX 12's ExecuteIndirect API for asynchronously building rendering commands."
+---
+----->
+
   ![](./media/image1.png)
 
 # ExecuteIndirect Sample

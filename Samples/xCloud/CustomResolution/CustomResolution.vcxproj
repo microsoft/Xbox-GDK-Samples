@@ -381,17 +381,38 @@
     <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\Media\Meshes\MicroscopeCity\city.dds" />
-    <Image Include="..\..\..\Media\Meshes\MicroscopeCity\column.dds" />
-    <Image Include="..\..\..\Media\Meshes\MicroscopeCity\scanner.dds" />
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\MicroscopeCity\city.dds">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Meshes\MicroscopeCity</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\MicroscopeCity\column.dds">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Meshes\MicroscopeCity</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\MicroscopeCity\scanner.dds">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Meshes\MicroscopeCity</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
     <Image Include="Assets\Logo.png" />
     <Image Include="Assets\LargeLogo.png" />
-    <Image Include="Assets\LOGO_ATG.png" />
+    <CopyFileToFolders Include="Assets\LOGO_ATG.png">
+      <DestinationFolders>$(OutDir)Assets</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
     <Image Include="Assets\SmallLogo.png" />
     <Image Include="Assets\SplashScreen.png" />
     <Image Include="Assets\StoreLogo.png" />
-    <Image Include="Assets\xboxlogohorizontal.png" />
-    <Image Include="Assets\xboxlogovertical.png" />
+    <CopyFileToFolders Include="Assets\xboxlogohorizontal.png">
+      <DestinationFolders>$(OutDir)Assets</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\xboxlogovertical.png">
+      <DestinationFolders>$(OutDir)Assets</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="..\..\..\Media\Textures\roundy-border.png">
@@ -447,18 +468,26 @@
       <FileType>Document</FileType>
       <DestinationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">Assets/Fonts/%(Filename)%(Extension)</DestinationFileName>
     </CopyFileToFolders>
-    <None Include="..\..\..\Media\Meshes\MicroscopeCity\column.sdkmesh">
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\MicroscopeCity\column.sdkmesh">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Meshes\MicroscopeCity</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Meshes\MicroscopeCity\occcity.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\MicroscopeCity\occcity.sdkmesh">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Meshes\MicroscopeCity</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Meshes\MicroscopeCity\occluder.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\MicroscopeCity\occluder.sdkmesh">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Meshes\MicroscopeCity</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="..\..\..\Media\Meshes\MicroscopeCity\scanner.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\MicroscopeCity\scanner.sdkmesh">
+      <DestinationFolders Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">$(OutDir)</DestinationFolders>
+      <DestinationFolders Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64' And '$(Platform)'!='Gaming.Xbox.XboxOne.x64'">$(OutDir)Media\Meshes\MicroscopeCity</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
-    </None>
+    </CopyFileToFolders>
     <CopyFileToFolders Include="Assets\ui_layout.json">
       <FileType>Document</FileType>
       <DestinationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">Assets/%(Filename)%(Extension)</DestinationFileName>

@@ -91,9 +91,9 @@
     <Image Include="Assets\StoreLogo.png">
       <Filter>Assets\Logos</Filter>
     </Image>
-    <Image Include="..\..\..\Media\Textures\iris.dds">
+    <CopyFileToFolders Include="..\..\..\Media\Textures\iris.dds">
       <Filter>Assets\Textures</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shaders\Expand3GS.hlsl">
@@ -176,18 +176,18 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="Shaders\Shared.hlsli">
       <Filter>Shaders</Filter>
     </None>

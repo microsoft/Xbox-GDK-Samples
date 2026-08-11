@@ -1,3 +1,18 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "wpaprofiles"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+description: "These are WPA profiles for the Windows Performance Analyzer tool."
+---
+----->
+
 # WPA Profiles
 
 # Description

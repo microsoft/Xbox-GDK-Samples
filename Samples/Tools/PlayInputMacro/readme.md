@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- csharp
+products:
+- gdk
+urlFragment: "playinputmacro"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This tool allows play back of recorded XBOM macros to a console from the command line."
+---
+----->
+
   ![](./media/image1.png)
 
 # PlayInputMacro Sample

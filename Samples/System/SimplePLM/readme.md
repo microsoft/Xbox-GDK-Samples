@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "simpleplm"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample shows the behavior of the Process Lifetime Management (PLM) events on Xbox."
+---
+----->
+
   ![](./media/image1.png)
 
 #   SimplePLM Sample

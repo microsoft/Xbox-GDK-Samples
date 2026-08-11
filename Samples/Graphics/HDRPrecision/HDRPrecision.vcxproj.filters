@@ -130,21 +130,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\Kits\ATGTK\HDR\HDRCommon.hlsli" />
-    <None Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuad.hlsli">
       <Filter>ATG Tool Kit</Filter>
     </None>
-    <None Include="..\..\..\Media\HDR\graffiti_shelter_2k.hdr">
+    <CopyFileToFolders Include="..\..\..\Media\HDR\graffiti_shelter_2k.hdr">
       <Filter>Assets\HDR Images</Filter>
-    </None>
-    <None Include="..\..\..\Media\HDR\HDR_029_Sky_Cloudy_Ref.hdr">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\HDR\HDR_029_Sky_Cloudy_Ref.hdr">
       <Filter>Assets\HDR Images</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="readme_ja-jp.md" />
     <None Include="readme_ko-kr.md" />
     <None Include="readme_zh-cn.md" />

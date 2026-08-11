@@ -10,6 +10,8 @@
 #include "pch.h"
 #include "ParticleSystem.h"
 
+#include "FindMedia.h"
+
 // C4238: nonstandard extension used: class rvalue used as lvalue
 #pragma warning(disable : 4238)
 
@@ -281,7 +283,9 @@ namespace ATG
 		}
 
 		// Load the particle alpha-mask texture.
-		DX::ThrowIfFailed(CreateDDSTextureFromFile(device, resourceUpload, L"particle.dds", m_particleTex.ReleaseAndGetAddressOf()));
+		wchar_t particlePath[MAX_PATH] = {};
+		DX::FindMediaFile(particlePath, MAX_PATH, L"particle.dds");
+		DX::ThrowIfFailed(CreateDDSTextureFromFile(device, resourceUpload, particlePath, m_particleTex.ReleaseAndGetAddressOf()));
 		device->CreateShaderResourceView(m_particleTex.Get(), nullptr, m_srvPile->GetCpuHandle(SRV_Particle));
 	}
 

@@ -91,41 +91,41 @@
     <Image Include="Assets\SplashScreen.png">
       <Filter>Assets\Logos</Filter>
     </Image>
-    <Image Include="..\..\..\Media\Textures\particle.dds">
+    <CopyFileToFolders Include="..\..\..\Media\Textures\particle.dds">
       <Filter>Assets\Textures</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\Gargoyle\gargoyle_diffuse.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\Gargoyle\gargoyle_diffuse.dds">
       <Filter>Assets\Meshes</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\Gargoyle\gargoyle_normals.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\Gargoyle\gargoyle_normals.dds">
       <Filter>Assets\Meshes</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\ParticleSample\particle_sample_diffuse.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\ParticleSample\particle_sample_diffuse.dds">
       <Filter>Assets\Meshes</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\ParticleSample\particle_sample_normals.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\ParticleSample\particle_sample_normals.dds">
       <Filter>Assets\Meshes</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Media\Meshes\Gargoyle\gargoyle.sdkmesh">
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\Gargoyle\gargoyle.sdkmesh">
       <Filter>Assets\Meshes</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\ParticleSample\particle_sample.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\ParticleSample\particle_sample.sdkmesh">
       <Filter>Assets\Meshes</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="readme.docx" />
     <None Include="ComputeCommon.hlsli">
       <Filter>Shaders</Filter>

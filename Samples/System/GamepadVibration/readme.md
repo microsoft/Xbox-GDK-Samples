@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "gamepadvibration"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how to use vibration with a gamepad on an Xbox."
+---
+----->
+
 ![](./media/image1.png)
 
 # Gamepad Vibration Sample

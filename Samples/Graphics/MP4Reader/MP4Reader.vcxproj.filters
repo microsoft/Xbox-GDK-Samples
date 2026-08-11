@@ -74,12 +74,12 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
       <Filter>Assets</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="readme_ja-jp.md" />
     <None Include="readme_ko-kr.md" />
     <None Include="readme_zh-cn.md" />
@@ -92,11 +92,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Media Include="..\..\..\Media\Videos\FluidParticles_1080p_AVC.mp4">
+    <CopyFileToFolders Include="..\..\..\Media\Videos\FluidParticles_1080p_AVC.mp4">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="..\..\..\Media\Videos\FluidParticles_UHD_HEVC.mp4">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Videos\FluidParticles_UHD_HEVC.mp4">
       <Filter>Assets</Filter>
-    </Media>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

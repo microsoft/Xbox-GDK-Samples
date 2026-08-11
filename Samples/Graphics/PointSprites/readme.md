@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "pointsprites"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "Demonstrates ten methods of rendering point sprites in DirectX 12."
+---
+----->
+
   ![](./media/image1.png)
 
 #   Point Sprites

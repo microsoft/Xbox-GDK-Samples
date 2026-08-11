@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "frontpaneldemo"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "FrontPanelDemo combines several samples into one executable and then ties together the functionality with a menu system all hosted entirely on the Xbox DevKit front panel."
+---
+----->
+
   ![](./media/image1.png)
 
 #   FrontPanelDemo Sample

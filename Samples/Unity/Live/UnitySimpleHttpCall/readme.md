@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- csharp
+products:
+- gdk
+urlFragment: "unitysimplehttpcall"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates usage of Xbox Live Http Calls using Unity."
+---
+----->
+
 ![ATG Xbox and Windows logos](./media/atgLogo.png)
 
 # Unity Simple Http

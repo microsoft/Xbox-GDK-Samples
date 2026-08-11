@@ -70,14 +70,14 @@
     <Image Include="Assets\StoreLogo.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
+    <CopyFileToFolders Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
       <Filter>Assets</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
       <Filter>Assets</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="Readme.docx" />
     <None Include="SimplePlaySound_ReadMe_ja-jp.docx" />
     <None Include="SimplePlaySound_ReadMe_ko-kr.docx" />
@@ -87,23 +87,23 @@
     <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
-    <Media Include="..\..\..\Media\Sounds\71_setup_sweep_xbox.wav">
+    <CopyFileToFolders Include="..\..\..\Media\Sounds\71_setup_sweep_xbox.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="..\..\..\Media\Sounds\MusicMono.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Sounds\MusicMono.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="..\..\..\Media\Sounds\sine.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Sounds\sine.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="..\..\..\Media\Sounds\musicmono_adpcm.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Sounds\musicmono_adpcm.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="..\..\..\Media\Sounds\musicmono_xwma.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Sounds\musicmono_xwma.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="..\..\..\Media\Sounds\MusicMono_xma.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Sounds\MusicMono_xma.wav">
       <Filter>Assets</Filter>
-    </Media>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

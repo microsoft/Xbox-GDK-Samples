@@ -93,33 +93,33 @@
     <Image Include="Assets\StoreLogo.png">
       <Filter>Assets\Logos</Filter>
     </Image>
-    <Image Include="..\..\..\Media\Meshes\TankScene\default-normalmap.dds">
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\TankScene\default-normalmap.dds">
       <Filter>Assets\Meshes</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\TankScene\desert_sky.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\TankScene\desert_sky.dds">
       <Filter>Assets\Meshes</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\TankScene\ground_diff.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\TankScene\ground_diff.dds">
       <Filter>Assets\Meshes</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\TankScene\ground_norm.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\TankScene\ground_norm.dds">
       <Filter>Assets\Meshes</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\TankScene\left_engine_diff.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\TankScene\left_engine_diff.dds">
       <Filter>Assets\Meshes</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\TankScene\left_engine_norm.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\TankScene\left_engine_norm.dds">
       <Filter>Assets\Meshes</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\TankScene\turret_diff.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\TankScene\turret_diff.dds">
       <Filter>Assets\Meshes</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\TankScene\turret_norm.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\TankScene\turret_norm.dds">
       <Filter>Assets\Meshes</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Textures\DeferredParticle.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Textures\DeferredParticle.dds">
       <Filter>Assets\Textures</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="DeferredLightingPS.hlsl">
@@ -151,27 +151,27 @@
     <None Include="Shared.hlsli">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="..\..\..\Media\Meshes\TankScene\desertsky.sdkmesh">
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\TankScene\desertsky.sdkmesh">
       <Filter>Assets\Meshes</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\TankScene\tank_barricades.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\TankScene\tank_barricades.sdkmesh">
       <Filter>Assets\Meshes</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\TankScene\terrain.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\TankScene\terrain.sdkmesh">
       <Filter>Assets\Meshes</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="readme.docx" />
     <None Include="DeferredParticles_ReadMe_ja-jp.docx" />
     <None Include="DeferredParticles_ReadMe_ko-kr.docx" />

@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "autorgb"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how to extract a single, representative ambient color from a given scene and use it to light up lamps from connected devices (HID). Uses the LampArray api."
+---
+----->
+
 ![](./media/image1.png)
 
 # AutoRGB Sample

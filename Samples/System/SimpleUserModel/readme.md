@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "simpleusermodel"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample shows how to use the new Simple User Model introduced with the Microsoft Game Development Kit (April 2021)."
+---
+----->
+
   ![](./media/image1.png)
 
 #   Simple User Model Sample

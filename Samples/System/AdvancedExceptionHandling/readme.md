@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "advancedexceptionhandling"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "Demonstrates various ways that C++ and SEH exceptions can occur in Microsoft GDK titles including advanced scenarios."
+---
+----->
+
   ![](./media/image1.png)
 
 #   AdvancedExceptionHandling Sample

@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "playfabstore"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates the client-based operations used in presenting and operating an in-game economy with PlayFab Economy v2."
+---
+----->
+
 _This sample is compatible with March 2023 GDK_
 
 # PlayFab Store

@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "fundamentalsdesktop"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates signing into Xbox Live and making a license check to ensure that the game is owned by the currently signed in user on PC."
+---
+----->
+
   ![](./media/image1.png)
 
 #   Windows PC Fundamentals Sample

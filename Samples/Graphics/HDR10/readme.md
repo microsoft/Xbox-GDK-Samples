@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "hdr10"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "Switch a UHD TV into HDR mode and render a HDR10 scene with values higher than 1.0f, which will be displayed as brighter than white on a UHD TV using DirectX 12 on Xbox."
+---
+----->
+
 # HDR10 Sample
 
 *This sample is compatible with the Microsoft Game Development Kit (March 2022)*

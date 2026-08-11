@@ -1,3 +1,18 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "xbgamepad"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+description: "This testing tool forwards XINPUT gamepad input on PC to a Xbox console."
+---
+----->
+
 # xbgamepad
 
 *This sample is compatible with the Microsoft Game Development Kit (March 2022)*

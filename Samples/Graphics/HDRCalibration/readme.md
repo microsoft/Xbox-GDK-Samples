@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "hdrcalibration"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample switches an HDR TV to HDR mode and then presents the user with several calibration options to adjust the visible detail in brights and darks, the overall brightness and color saturation of the image."
+---
+----->
+
 # HDR Calibration Sample
 
 *This sample is compatible with the Microsoft Game Development Kit (March 2022)*

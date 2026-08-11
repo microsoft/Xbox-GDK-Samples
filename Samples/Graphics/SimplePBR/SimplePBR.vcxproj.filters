@@ -148,30 +148,30 @@
     <None Include="..\..\..\Kits\ATGTK\Skybox\SkyboxEffect_Common.hlsli">
       <Filter>ATG Tool Kit\Skybox</Filter>
     </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="..\..\..\Media\PBR\ToyRobot\Floor\Floor.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\PBR\ToyRobot\Floor\Floor.sdkmesh">
       <Filter>Assets\Models\ToyRobot\Floor</Filter>
-    </None>
-    <None Include="..\..\..\Media\PBR\ToyRobot\ToyRobot\ToyRobot.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\PBR\ToyRobot\ToyRobot\ToyRobot.sdkmesh">
       <Filter>Assets\Models\ToyRobot\ToyRobot</Filter>
-    </None>
-    <None Include="..\..\..\Media\PBR\ToyRobot\WoodBlocks\WoodBlocks.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\PBR\ToyRobot\WoodBlocks\WoodBlocks.sdkmesh">
       <Filter>Assets\Models\ToyRobot\WoodBlocks</Filter>
-    </None>
-    <None Include="..\..\..\Media\PBR\XboxOrb\XboxOrb.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\PBR\XboxOrb\XboxOrb.sdkmesh">
       <Filter>Assets\Models\XboxOrb</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="..\..\NuGet.config" />
     <None Include="readme_ja-jp.md" />
     <None Include="readme_ko-kr.md" />
@@ -188,38 +188,38 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\Media\HDR\Stonewall_Ref_irradiance.dds">
+    <CopyFileToFolders Include="..\..\..\Media\HDR\Stonewall_Ref_irradiance.dds">
       <Filter>Assets\Backgrounds</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\HDR\Stonewall_Ref_radiance.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\HDR\Stonewall_Ref_radiance.dds">
       <Filter>Assets\Backgrounds</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\PBR\ToyRobot\Floor\Floor_BaseColor.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\PBR\ToyRobot\Floor\Floor_BaseColor.dds">
       <Filter>Assets\Models\ToyRobot\Floor</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\PBR\ToyRobot\Floor\Floor_Normal.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\PBR\ToyRobot\Floor\Floor_Normal.DDS">
       <Filter>Assets\Models\ToyRobot\Floor</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\PBR\ToyRobot\Floor\Floor_RMA.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\PBR\ToyRobot\Floor\Floor_RMA.DDS">
       <Filter>Assets\Models\ToyRobot\Floor</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\PBR\ToyRobot\ToyRobot\ToyRobot_BaseColor.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\PBR\ToyRobot\ToyRobot\ToyRobot_BaseColor.dds">
       <Filter>Assets\Models\ToyRobot\ToyRobot</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\PBR\ToyRobot\ToyRobot\Toyrobot_Normal.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\PBR\ToyRobot\ToyRobot\Toyrobot_Normal.DDS">
       <Filter>Assets\Models\ToyRobot\ToyRobot</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\PBR\ToyRobot\ToyRobot\Toyrobot_RMA.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\PBR\ToyRobot\ToyRobot\Toyrobot_RMA.DDS">
       <Filter>Assets\Models\ToyRobot\ToyRobot</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\PBR\ToyRobot\WoodBlocks\WoodBlocks_BaseColor.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\PBR\ToyRobot\WoodBlocks\WoodBlocks_BaseColor.dds">
       <Filter>Assets\Models\ToyRobot\WoodBlocks</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\PBR\ToyRobot\WoodBlocks\WoodBlocks_Normal.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\PBR\ToyRobot\WoodBlocks\WoodBlocks_Normal.DDS">
       <Filter>Assets\Models\ToyRobot\WoodBlocks</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\PBR\ToyRobot\WoodBlocks\WoodBlocks_RMA.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\PBR\ToyRobot\WoodBlocks\WoodBlocks_RMA.DDS">
       <Filter>Assets\Models\ToyRobot\WoodBlocks</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

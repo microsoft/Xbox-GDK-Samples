@@ -89,17 +89,17 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\ATGSampleBackground.DDS">
+    <CopyFileToFolders Include="Assets\ATGSampleBackground.DDS">
       <Filter>Assets</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\SegoeUI_18.spritefont">
+    <CopyFileToFolders Include="Assets\SegoeUI_18.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="Assets\XboxOneController.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\XboxOneController.spritefont">
       <Filter>Assets</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="readme_ja-jp.md" />
     <None Include="readme_ko-kr.md" />
     <None Include="readme_zh-cn.md" />

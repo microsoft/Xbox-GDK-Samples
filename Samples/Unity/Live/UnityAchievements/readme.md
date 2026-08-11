@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- csharp
+products:
+- gdk
+urlFragment: "unityachievements"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates using the Title-Managed Achievements C# API provided by the Unity GDK Wrapper."
+---
+----->
+
 ![ATG Xbox and Windows logos](./media/image1.png)
 
 # Unity Achievements

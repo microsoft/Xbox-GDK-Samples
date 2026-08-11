@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "simplewebsockets"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates using LibHttpClient to connect, send, and receive messages to/from a host via Web Sockets."
+---
+----->
+
   ![](./media/image1.png)
 
 #   SimpleWebSockets Sample

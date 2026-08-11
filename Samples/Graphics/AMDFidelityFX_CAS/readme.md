@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "amdfidelityfxcas"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates AMD's FidelityFX Contrast Adaptive Sharpening (CAS) algorithm."
+---
+----->
+
 <img style="float: left" src="./media/image1.png" /><img style="float: right" src="./media/image3.png" />
 <br/><br/><br/><br/><br/>
 

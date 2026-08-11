@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "mdns"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates using mDNS to register a game service and broadcasting it across your local network, as well as demonstrating network discovery and resolving on Xbox."
+---
+----->
+
   ![](./media/image1.png)
 
 #   mDNS Sample

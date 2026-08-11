@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "socialmanager"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates the Social Manager C-API provided by the Microsoft Gaming SDK (GDK)."
+---
+----->
+
   ![](./media/image1.png)
 
 #   SocialManager Sample

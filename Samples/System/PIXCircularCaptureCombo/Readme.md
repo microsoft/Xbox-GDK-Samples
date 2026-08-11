@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "pixcircularcapturecombo"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample shows how to use the PIX[Begin/End]Capture APIs to implement a circular buffer of captures."
+---
+----->
+
   ![](./media/image1.png)
 
 #   SimpleDirectStorageCombo Sample

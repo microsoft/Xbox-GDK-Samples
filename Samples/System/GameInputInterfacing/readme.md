@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "gameinputinterfacing"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how to effectively interface and read inputs from a gamepad, arcade sticks, racing wheels, and more in the Microsoft GDK."
+---
+----->
+
   ![](./media/image1.png)
 
 #   GameInputInterfacing Sample

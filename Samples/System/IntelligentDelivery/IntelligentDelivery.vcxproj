@@ -810,9 +810,18 @@
     </MGCCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\feature2.png" />
-    <Image Include="Assets\feature3.png" />
-    <Image Include="Assets\feature4.png" />
+    <CopyFileToFolders Include="Assets\feature2.png">
+      <DestinationFolders>$(OutDir)Assets</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\feature3.png">
+      <DestinationFolders>$(OutDir)Assets</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\feature4.png">
+      <DestinationFolders>$(OutDir)Assets</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup Condition="'$(Platform)'=='x64'">
     <ReferenceCopyLocalPaths Include="$(GDKCrossPlatformPath)windows\bin\x64\libHttpClient.dll" />

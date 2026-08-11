@@ -108,47 +108,47 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\ABox001LightingMap.dds">
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\ABox001LightingMap.dds">
       <Filter>Assets\FPSRoom</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\ACeilingLightingMap.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\ACeilingLightingMap.dds">
       <Filter>Assets\FPSRoom</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\AFloortLightingMap.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\AFloortLightingMap.dds">
       <Filter>Assets\FPSRoom</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\AWallsLightingMap.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\AWallsLightingMap.dds">
       <Filter>Assets\FPSRoom</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\Ceiling.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\Ceiling.dds">
       <Filter>Assets\FPSRoom</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\Cement.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\Cement.dds">
       <Filter>Assets\FPSRoom</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\clouds.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\clouds.dds">
       <Filter>Assets\FPSRoom</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\Pillar.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\Pillar.dds">
       <Filter>Assets\FPSRoom</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Media\Meshes\FPSRoom\FPSRoom.sdkmesh">
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\FPSRoom.sdkmesh">
       <Filter>Assets\FPSRoom</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
       <Filter>Assets</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="Readme_ja-JP.docx" />
     <None Include="Readme_ko-KR.docx" />
     <None Include="Readme_zh-CN.docx" />
@@ -156,12 +156,12 @@
     <None Include="Shaders\HistogramCS.hlsli">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneController.spritefont">
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneController.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
       <Filter>Assets</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuad.hlsli">
       <Filter>ATG Tool Kit\FullScreenQuad</Filter>
     </None>

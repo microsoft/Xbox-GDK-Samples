@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "directstoragetextureshuffling"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how to use DirectStorage swizzle modes together with shuffling (deinterleaving) the data of BC1, BC3, BC4 and BC5 textures in specific ways to improve ZLib compression.The sample consists of an offline tool to prepare the texture data, and runtime code with compute shaders to unshuffle the texture data."
+---
+----->
+
 # DirectStorage Texture Shuffling sample
 
 *This sample is compatible with the Microsoft Game Development Kit (March 2024)*

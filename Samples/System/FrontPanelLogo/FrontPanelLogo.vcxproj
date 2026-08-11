@@ -365,8 +365,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\FrontPanelLogo.png" />
-    <Image Include="Assets\FullScreenLogo.png" />
+    <CopyFileToFolders Include="Assets\FrontPanelLogo.png">
+      <DestinationFolders>$(OutDir)Assets</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\FullScreenLogo.png">
+      <DestinationFolders>$(OutDir)Assets</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
     <Image Include="Assets\Logo.png" />
     <Image Include="Assets\SmallLogo.png" />
     <Image Include="Assets\LargeLogo.png" />

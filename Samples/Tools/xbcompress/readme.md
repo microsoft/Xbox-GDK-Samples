@@ -1,3 +1,18 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "xbcompress"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+description: "This samples demonstrates the Compression API introduced with Windows 8 which is supported for all Gaming.*.x64 platforms."
+---
+----->
+
 # xbcompress Sample
 
 *This sample is compatible with the Microsoft Game Development Kit (March 2022)*

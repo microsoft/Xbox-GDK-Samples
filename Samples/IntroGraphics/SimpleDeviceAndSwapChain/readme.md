@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "simpledeviceandswapchain"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how to create a Direct3D 12 device and swap chain for an GameCore on Xbox title."
+---
+----->
+
 # Simple Device and SwapChain Sample
 
 *This sample is compatible with the Microsoft Game Development Kit

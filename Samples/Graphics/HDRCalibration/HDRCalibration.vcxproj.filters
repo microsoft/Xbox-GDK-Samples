@@ -119,23 +119,23 @@
     <Image Include="Assets\StoreLogo.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="..\..\..\Media\Textures\RedCircle.DDS">
+    <CopyFileToFolders Include="..\..\..\Media\Textures\RedCircle.DDS">
       <Filter>Assets</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\FH3.hdr">
+    <CopyFileToFolders Include="Assets\FH3.hdr">
       <Filter>HDR\HDR Images</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="..\..\..\Kits\ATGTK\HDR\HDRCommon.hlsli">
       <Filter>HDR</Filter>
     </None>
-    <None Include="..\..\..\Media\Fonts\Courier_36.spritefont">
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\Courier_36.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
       <Filter>Assets</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuad.hlsli">
       <Filter>ATG Tool Kit\FullScreenQuad</Filter>
     </None>

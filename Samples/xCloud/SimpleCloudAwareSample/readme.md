@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "simplecloudawaresample"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how to detect game streaming clients, change onscreen control layouts, and read touch points."
+---
+----->
+
 # Simple Cloud Aware Sample
 
 *This sample is compatible with the Microsoft Game Development Kit

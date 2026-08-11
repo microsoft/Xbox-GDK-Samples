@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "simpleffbwheel"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how to use a force feedback steering wheel in the Microsoft GDK."
+---
+----->
+
 ![](./media/image1.png)
 
 # SimpleFFBWheel Sample

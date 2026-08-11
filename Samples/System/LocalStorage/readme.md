@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "localstorage"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample shows how to use different local storage locations in a title for both Xbox and PC platforms."
+---
+----->
+
   ![](./media/image1.png)
 
 #   Local Storage Sample

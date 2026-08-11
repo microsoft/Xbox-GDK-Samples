@@ -90,25 +90,25 @@
     <None Include="Shaders\Shared.hlsli">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="readme.md" />
-    <None Include="Assets\Textures\BC1_shuffled_compressed.bin">
+    <CopyFileToFolders Include="Assets\Textures\BC1_shuffled_compressed.bin">
       <Filter>Assets\Textures</Filter>
-    </None>
-    <None Include="Assets\Textures\BC3_shuffled_compressed.bin">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\BC3_shuffled_compressed.bin">
       <Filter>Assets\Textures</Filter>
-    </None>
-    <None Include="Assets\Textures\BC4_shuffled_compressed.bin">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\BC4_shuffled_compressed.bin">
       <Filter>Assets\Textures</Filter>
-    </None>
-    <None Include="Assets\Textures\BC5_shuffled_compressed.bin">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\BC5_shuffled_compressed.bin">
       <Filter>Assets\Textures</Filter>
-    </None>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shaders\SimplePS.hlsl">

@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "moderngamertag"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates the use of a Glyph cache that can be used to store and render strings to a screen on Xbox."
+---
+----->
+
   ![](./media/image1.png)
 
 #   Modern Gamertag

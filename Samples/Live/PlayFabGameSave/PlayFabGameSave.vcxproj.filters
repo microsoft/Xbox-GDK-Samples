@@ -200,8 +200,8 @@
     <None Include="Readme.md" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\screenshot.png">
+    <CopyFileToFolders Include="Assets\screenshot.png">
       <Filter>Assets</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

@@ -121,9 +121,9 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Media\Fonts\Courier_36.spritefont">
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\Courier_36.spritefont">
       <Filter>Standard Sample Files\Assets</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="..\..\..\Kits\ATGTK\HDR\HDRCommon.hlsli">
       <Filter>HDR</Filter>
     </None>
@@ -131,24 +131,24 @@
       <Filter>Standard Sample Files\ATG Tool Kit\FullScreenQuad</Filter>
     </None>
     <None Include="Readme.docx" />
-    <None Include="..\..\..\Media\HDR\blender_institute_2k.hdr">
+    <CopyFileToFolders Include="..\..\..\Media\HDR\blender_institute_2k.hdr">
       <Filter>HDR\HDR Images</Filter>
-    </None>
-    <None Include="..\..\..\Media\HDR\georgentor_2k.hdr">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\HDR\georgentor_2k.hdr">
       <Filter>HDR\HDR Images</Filter>
-    </None>
-    <None Include="..\..\..\Media\HDR\graffiti_shelter_2k.hdr">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\HDR\graffiti_shelter_2k.hdr">
       <Filter>HDR\HDR Images</Filter>
-    </None>
-    <None Include="..\..\..\Media\HDR\HDR_029_Sky_Cloudy_Ref.hdr">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\HDR\HDR_029_Sky_Cloudy_Ref.hdr">
       <Filter>HDR\HDR Images</Filter>
-    </None>
-    <None Include="..\..\..\Media\HDR\HDR_112_River_Road_2_Ref.hdr">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\HDR\HDR_112_River_Road_2_Ref.hdr">
       <Filter>HDR\HDR Images</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
       <Filter>Standard Sample Files\Assets</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="HDRDisplayMapping_ReadMe_ja-jp.docx" />
     <None Include="HDRDisplayMapping_ReadMe_ko-kr.docx" />
     <None Include="HDRDisplayMapping_ReadMe_zh-cn.docx" />
@@ -171,8 +171,8 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\..\Media\HDR\Readme.txt">
+    <CopyFileToFolders Include="..\..\..\Media\HDR\Readme.txt">
       <Filter>HDR\HDR Images</Filter>
-    </Text>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "downloadablecontent"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how to implement enumeration and loading of downloadable content for Xbox LIVE services."
+---
+----->
+
   ![](./media/image1.png)
 
 #   Downloadable Content (DLC) Sample

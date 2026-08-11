@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "simplewasapiplaysound"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how to play setup and play a simple sound (sine tone) to a WASAPI render endpoint on Xbox."
+---
+----->
+
 # Simple WASAPI Play Sound Sample
 
 *This sample is compatible with the Microsoft Game Development Kit (June

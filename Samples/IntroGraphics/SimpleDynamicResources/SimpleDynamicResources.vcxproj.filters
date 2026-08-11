@@ -106,8 +106,8 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\Media\Textures\sunset.jpg">
+    <CopyFileToFolders Include="..\..\..\Media\Textures\sunset.jpg">
       <Filter>Assets</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

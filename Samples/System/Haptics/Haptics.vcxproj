@@ -95,7 +95,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
-    <Import Project="..\..\packages\Microsoft.GameInput.3.3.195\build\native\targets\Microsoft.GameInput.targets" Condition="Exists('..\..\packages\Microsoft.GameInput.3.3.195\build\native\targets\Microsoft.GameInput.targets')" />
+    <Import Project="..\..\packages\Microsoft.GameInput.3.5.268\build\native\targets\Microsoft.GameInput.targets" Condition="Exists('..\..\packages\Microsoft.GameInput.3.5.268\build\native\targets\Microsoft.GameInput.targets')" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
@@ -574,6 +574,6 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Microsoft.GameInput.3.3.195\build\native\targets\Microsoft.GameInput.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.GameInput.3.3.195\build\native\targets\Microsoft.GameInput.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.GameInput.3.5.268\build\native\targets\Microsoft.GameInput.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.GameInput.3.5.268\build\native\targets\Microsoft.GameInput.targets'))" />
   </Target>
 </Project>

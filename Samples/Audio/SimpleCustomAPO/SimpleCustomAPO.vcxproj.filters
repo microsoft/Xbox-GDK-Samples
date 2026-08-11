@@ -97,27 +97,27 @@
     <None Include="readme_ja-jp.md" />
     <None Include="readme_ko-kr.md" />
     <None Include="readme_zh-cn.md" />
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
       <Filter>Assets</Filter>
-    </None>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
+    <CopyFileToFolders Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
       <Filter>Assets</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <Media Include="..\..\..\Media\Sounds\MusicMono.wav">
+    <CopyFileToFolders Include="..\..\..\Media\Sounds\MusicMono.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="..\..\..\Media\Sounds\sine.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Sounds\sine.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="..\..\..\Media\Sounds\71_setup_sweep_xbox.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Sounds\71_setup_sweep_xbox.wav">
       <Filter>Assets</Filter>
-    </Media>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

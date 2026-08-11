@@ -201,24 +201,24 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneController.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneController.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
       <Filter>Assets</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuad.hlsli">
       <Filter>ATG Tool Kit\FullScreenQuad</Filter>
     </None>
@@ -252,12 +252,12 @@
     <None Include="..\..\..\Kits\AMDTK\GLTF\Shaders\textures.hlsi">
       <Filter>AMD Tool Kit\Shaders</Filter>
     </None>
-    <None Include="..\..\..\Media\Meshes\AMDCorridor\Corridor.bin">
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Corridor.bin">
       <Filter>Assets\Corridor</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\AMDCorridor\Corridor.gltf">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Corridor.gltf">
       <Filter>Assets\Corridor</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="..\..\NuGet.config" />
     <None Include="readme_ja-jp.md" />
     <None Include="readme_ko-kr.md" />
@@ -352,65 +352,65 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Box_prop_color.jpg">
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Box_prop_color.jpg">
       <Filter>Assets\Corridor</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Box_prop_normal.png">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Box_prop_normal.png">
       <Filter>Assets\Corridor</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Box_prop_roughness_metallic.jpg">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Box_prop_roughness_metallic.jpg">
       <Filter>Assets\Corridor</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Cockpit-LP_BaseColor.jpg">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Cockpit-LP_BaseColor.jpg">
       <Filter>Assets\Corridor</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Cockpit-LP_Normal.jpg">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Cockpit-LP_Normal.jpg">
       <Filter>Assets\Corridor</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Cockpit-LP_Roughness_Metallic.jpg">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Cockpit-LP_Roughness_Metallic.jpg">
       <Filter>Assets\Corridor</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-LP_2_BaseColor.jpg">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-LP_2_BaseColor.jpg">
       <Filter>Assets\Corridor</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-LP_2_Normal.jpg">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-LP_2_Normal.jpg">
       <Filter>Assets\Corridor</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-LP_2_Roughness_Metallic.jpg">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-LP_2_Roughness_Metallic.jpg">
       <Filter>Assets\Corridor</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-v2-1_BaseColor.jpg">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-v2-1_BaseColor.jpg">
       <Filter>Assets\Corridor</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-v2-1_Emissive.jpg">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-v2-1_Emissive.jpg">
       <Filter>Assets\Corridor</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-v2-1_Normal.jpg">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-v2-1_Normal.jpg">
       <Filter>Assets\Corridor</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-v2-1_Roughness_Metallic.jpg">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Corridor-v2-1_Roughness_Metallic.jpg">
       <Filter>Assets\Corridor</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\MI_Trims_B_Roughness_green_channel.png">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\MI_Trims_B_Roughness_green_channel.png">
       <Filter>Assets\Corridor</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\T_Metal_Scratches_M7_green_channel.png">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\T_Metal_Scratches_M7_green_channel.png">
       <Filter>Assets\Corridor</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\T_Terminal_UI_alpha.png">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\T_Terminal_UI_alpha.png">
       <Filter>Assets\Corridor</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\T_Terminal_UI_alpha_orig.png">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\T_Terminal_UI_alpha_orig.png">
       <Filter>Assets\Corridor</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Weapon_Shelf_prop_color.jpg">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Weapon_Shelf_prop_color.jpg">
       <Filter>Assets\Corridor</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Weapon_Shelf_prop_normal.jpg">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Weapon_Shelf_prop_normal.jpg">
       <Filter>Assets\Corridor</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\AMDCorridor\Weapon_Shelf_prop_roughness_metallic.jpg">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AMDCorridor\Weapon_Shelf_prop_roughness_metallic.jpg">
       <Filter>Assets\Corridor</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

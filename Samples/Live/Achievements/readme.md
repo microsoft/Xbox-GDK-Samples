@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "achievements"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates using the Title-Managed Achievements C-API provided by the Microsoft Game Development Kit."
+---
+----->
+
   ![](./media/image1.png)
 
 #   Title-Managed Achievements Sample

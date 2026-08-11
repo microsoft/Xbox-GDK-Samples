@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "simplecompute"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "SimpleCompute shows how to use DirectCompute (i.e. Direct3D Compute Shader) for DirectX 12 on Xbox."
+---
+----->
+
   ![](./media/image1.png)
 
 #   SimpleCompute Sample

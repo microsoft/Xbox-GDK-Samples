@@ -138,65 +138,65 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\ABox001LightingMap.dds">
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\ABox001LightingMap.dds">
       <Filter>Media\Meshes\FPSRoom</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\ACeilingLightingMap.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\ACeilingLightingMap.dds">
       <Filter>Media\Meshes\FPSRoom</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\AFloortLightingMap.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\AFloortLightingMap.dds">
       <Filter>Media\Meshes\FPSRoom</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\AWallsLightingMap.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\AWallsLightingMap.dds">
       <Filter>Media\Meshes\FPSRoom</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\Ceiling.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\Ceiling.dds">
       <Filter>Media\Meshes\FPSRoom</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\Cement.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\Cement.dds">
       <Filter>Media\Meshes\FPSRoom</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\clouds.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\clouds.dds">
       <Filter>Media\Meshes\FPSRoom</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\FPSRoom\Pillar.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\Pillar.dds">
       <Filter>Media\Meshes\FPSRoom</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\Cactus\cactus_high_diffuse2_c.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\Cactus\cactus_high_diffuse2_c.dds">
       <Filter>Media\Meshes\Cactus</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\Cactus\cactus_high_normals2.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\Cactus\cactus_high_normals2.dds">
       <Filter>Media\Meshes\Cactus</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\Cactus\spine_cluster_diffuse2_c.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\Cactus\spine_cluster_diffuse2_c.dds">
       <Filter>Media\Meshes\Cactus</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\Cactus\spine_cluster_normals2_n.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\Cactus\spine_cluster_normals2_n.dds">
       <Filter>Media\Meshes\Cactus</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Meshes\Dragon\Dragon_Normal.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\Dragon\Dragon_Normal.dds">
       <Filter>Media\Meshes\Dragon</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Media\Meshes\FPSRoom\FPSRoom.sdkmesh">
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\FPSRoom\FPSRoom.sdkmesh">
       <Filter>Media\Meshes\FPSRoom</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
       <Filter>Media\Fonts</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
       <Filter>Media\Fonts</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\Cactus\cactus.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\Cactus\cactus.sdkmesh">
       <Filter>Media\Meshes\Cactus</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\Cactus\cactus.sdkmesh.bin">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\Cactus\cactus.sdkmesh.bin">
       <Filter>Media\Meshes\Cactus</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\Dragon\Dragon.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\Dragon\Dragon.sdkmesh">
       <Filter>Media\Meshes\Dragon</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="readme.md" />
     <None Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuad.hlsli">
       <Filter>ATG Tool Kit</Filter>

@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "playfableaderboards"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample displays the data of the leaderboard registered in PlayFab Leaderboards (v2). As an option, a tool is provided to create PlayFab Leaderboards and write any number of player entities and scores to them."
+---
+----->
+
 _This sample is compatible with the October 2024 GDK._
 
 # PlayFab Leaderboards

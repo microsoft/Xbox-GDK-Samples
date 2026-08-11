@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "leaderboardseventbased"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates the usage of Xbox Live Leaderboards with Events-Based stats."
+---
+----->
+
   ![](./media/image1.png)
 
 #   Event-based Leaderboard Sample

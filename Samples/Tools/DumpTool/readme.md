@@ -1,3 +1,20 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "dumptool"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+description: "DumpTool runs in the Xbox Game OS and generates a crash dump for another process that you specify by name as an argument to the tool."
+---
+----->
+
   ![](./media/image1.png)
 
 #   DumpTool Sample

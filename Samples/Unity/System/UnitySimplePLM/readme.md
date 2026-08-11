@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- csharp
+products:
+- gdk
+urlFragment: "unitysimpleplm"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample shows behavior of the Process Lifetime Management (PLM) events on Xbox in Unity."
+---
+----->
+
 ![ATG Xbox and Windows logos](./media/image1.png)
 
 # Unity Simple PLM

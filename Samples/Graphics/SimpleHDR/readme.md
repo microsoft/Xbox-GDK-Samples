@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "simplehdr"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This is a simple sample showing how to implement HDR on Xbox."
+---
+----->
+
 # SimpleHDR Sample
 
 *This sample is compatible with the Microsoft Game Development Kit

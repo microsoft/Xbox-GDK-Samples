@@ -69,17 +69,17 @@
     <Image Include="Assets\StoreLogo.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="..\..\..\Media\Textures\callout_circle.dds">
+    <CopyFileToFolders Include="..\..\..\Media\Textures\callout_circle.dds">
       <Filter>Assets</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
       <Filter>Assets</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="Readme.docx" />
     <None Include="AdvancedSpatialSounds_ReadMe_ja-jp.docx" />
     <None Include="AdvancedSpatialSounds_ReadMe_ko-kr.docx" />
@@ -89,77 +89,77 @@
     <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
-    <Media Include="Assets\Jungle_RainThunder_5.1_mixdown.wav">
+    <CopyFileToFolders Include="Assets\Jungle_RainThunder_5.1_mixdown.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="Assets\Jungle_RainThunder_SideSurroundL-R.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Jungle_RainThunder_SideSurroundL-R.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="Assets\Jungle_RainThunder_TopFrontL-R.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Jungle_RainThunder_TopFrontL-R.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="Assets\Jungle_RainThunder_TopRearL-R.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Jungle_RainThunder_TopRearL-R.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="Assets\SFX_height_birdHawk01.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SFX_height_birdHawk01.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="Assets\SFX_height_birdLoon01.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SFX_height_birdLoon01.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="Assets\SFX_moving_BirdFlap01.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SFX_moving_BirdFlap01.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="Assets\SFX_moving_birdFlicker01.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SFX_moving_birdFlicker01.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="Assets\SFX_moving_birdFlycatcher01.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SFX_moving_birdFlycatcher01.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="Assets\SFX_moving_birdLark01.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SFX_moving_birdLark01.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="Assets\SFX_moving_birdLoop01.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SFX_moving_birdLoop01.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="Assets\SFX_moving_birdLoop02.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SFX_moving_birdLoop02.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="Assets\SFX_moving_birdLoop03.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SFX_moving_birdLoop03.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="Assets\SFX_moving_birdLoop04.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SFX_moving_birdLoop04.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="Assets\SFX_moving_birdLoop05.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SFX_moving_birdLoop05.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="Assets\SFX_moving_birdLoop06.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SFX_moving_birdLoop06.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="Assets\SFX_moving_birdSparrow01.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SFX_moving_birdSparrow01.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="Assets\SFX_moving_birdSparrow02.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SFX_moving_birdSparrow02.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="Assets\SFX_moving_birdWarbler01.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SFX_moving_birdWarbler01.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="Assets\SFX_moving_Fly01.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SFX_moving_Fly01.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="Assets\SFX_moving_Fly02.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SFX_moving_Fly02.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="Assets\SFX_stationary_cicada01.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SFX_stationary_cicada01.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="Assets\SFX_stationary_grasshopper01.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SFX_stationary_grasshopper01.wav">
       <Filter>Assets</Filter>
-    </Media>
-    <Media Include="Assets\SFX_stationary_grasshopper02.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SFX_stationary_grasshopper02.wav">
       <Filter>Assets</Filter>
-    </Media>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

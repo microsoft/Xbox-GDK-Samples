@@ -101,42 +101,42 @@
     <Image Include="Assets\StoreLogo.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\alpha.DDS">
+    <CopyFileToFolders Include="Assets\alpha.DDS">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\alpha_offline_bc3.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\alpha_offline_bc3.DDS">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\alpha_offline_bc7.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\alpha_offline_bc7.dds">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\normal.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\normal.dds">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\normal_offline_bc5.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\normal_offline_bc5.DDS">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\normal_offline_bc7.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\normal_offline_bc7.dds">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\opaque_512.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\opaque_512.dds">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\opaque_512_offline_bc1.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\opaque_512_offline_bc1.DDS">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\opaque_512_offline_bc7.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\opaque_512_offline_bc7.dds">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\opaque_1024.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\opaque_1024.DDS">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\opaque_1024_offline_bc1.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\opaque_1024_offline_bc1.DDS">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\opaque_1024_offline_bc7.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\opaque_1024_offline_bc7.dds">
       <Filter>Assets</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shaders\BC1Compress.hlsl">
@@ -192,15 +192,15 @@
     <None Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuad.hlsli">
       <Filter>ATG Tool Kit\FullScreenQuad</Filter>
     </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
       <Filter>Assets</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="Readme.docx" />
     <None Include="FastBlockCompress_ReadMe_ja-jp.docx" />
     <None Include="FastBlockCompress_ReadMe_ko-kr.docx" />

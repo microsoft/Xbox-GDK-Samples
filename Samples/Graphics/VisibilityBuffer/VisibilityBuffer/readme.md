@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "visibilitybuffer"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "Demonstrates a visibility buffer (deferred) rendering technique, making use of Mesh Shaders and HLSL 6.6 Dynamic Resources."
+---
+----->
+
 # Visibility Buffer Sample
 
 *This sample is compatible with the Microsoft Game Development Kit

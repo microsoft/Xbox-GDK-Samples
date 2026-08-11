@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "customresolution"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how to change rendering resolution and set streaming resolution to match streaming client characteristics."
+---
+----->
+
 # Custom Resolution Sample
 
 *This sample is compatible with the Microsoft Game Development Kit

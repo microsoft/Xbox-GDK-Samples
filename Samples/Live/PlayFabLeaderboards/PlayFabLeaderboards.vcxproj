@@ -1072,7 +1072,10 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Layouts\leaderboards-panel.json" />
+    <CopyFileToFolders Include="Assets\Layouts\leaderboards-panel.json">
+      <DestinationFolders>$(OutDir)Assets\Layouts</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
     <CopyFileToFolders Include="Assets\Layouts\select-leaderboard-button.json">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
       <FileType>Document</FileType>

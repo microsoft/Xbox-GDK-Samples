@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "frontpaneldolphin"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "FrontPanelDolphin demonstrates how to use the GPU to render to the Xbox DevKit FrontPanel."
+---
+----->
+
   ![](./media/image1.png)
 
 #   FrontPanelDolphin Sample

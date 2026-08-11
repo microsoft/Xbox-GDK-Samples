@@ -107,12 +107,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\Kits\ATGTK\HDR\HDRCommon.hlsli" />
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="Readme_ja-JP.docx" />
     <None Include="Readme_ko-KR.docx" />
     <None Include="Readme_zh-CN.docx" />

@@ -84,26 +84,26 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\Media\Textures\callout_circle.dds">
+    <CopyFileToFolders Include="..\..\..\Media\Textures\callout_circle.dds">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
       <Filter>Assets</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_24.spritefont">
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_24.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
       <Filter>Assets</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="Readme_ja-JP.docx" />
     <None Include="Readme_ko-KR.docx" />
     <None Include="Readme_zh-CN.docx" />
     <None Include="Readme.docx" />
-    <None Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
       <Filter>Assets</Filter>
-    </None>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

@@ -193,14 +193,14 @@
     <MGCCompile Include="MicrosoftGameConfig_PC.mgc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\feature4.png">
+    <CopyFileToFolders Include="Assets\feature4.png">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\feature2.png">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\feature2.png">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\feature3.png">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\feature3.png">
       <Filter>Assets</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

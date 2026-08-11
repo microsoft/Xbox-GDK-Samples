@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "shaderreflect"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how you can access shader reflection information and how it relates to the root signature."
+---
+----->
+
   ![](./media/image1.png)
 
 #   Shader Reflection Tool

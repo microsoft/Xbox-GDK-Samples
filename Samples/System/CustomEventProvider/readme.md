@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "customeventprovider"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how to use custom ETW event providers on Xbox."
+---
+----->
+
   ![](./media/image1.png)
 
 #   Custom Event Provider Sample

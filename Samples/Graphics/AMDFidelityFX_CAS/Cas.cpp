@@ -895,11 +895,7 @@ void Sample::CreateDeviceDependentResources()
 
     m_states = std::make_unique<CommonStates>(device);
     wchar_t filepath[MAX_PATH];
-#ifdef _GAMING_XBOX
-    DX::FindMediaFile(filepath, _countof(filepath), L"AbstractCathedral.sdkmes_");
-#else
     DX::FindMediaFile(filepath, _countof(filepath), L"AbstractCathedral\\AbstractCathedral.sdkmes_");
-#endif
 
     {
         auto modelBlob = DX::ReadCompressedData(filepath);

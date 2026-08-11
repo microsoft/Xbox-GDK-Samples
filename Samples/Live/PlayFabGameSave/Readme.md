@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "playfabgamesave"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how to use PlayFab Game Saves with the Microsoft Game Development Kit (GDK)."
+---
+----->
+
 _This sample is compatible with the October 2025 GDK_
 
 # PlayFab Game Saves

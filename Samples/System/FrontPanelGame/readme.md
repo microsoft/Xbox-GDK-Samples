@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "frontpanelgame"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "FrontPanelGame is the classic 'snake game' implemented completely on the Xbox DevKit Front Panel."
+---
+----->
+
   ![](./media/image1.png)
 
 #   FrontPanelGame Sample

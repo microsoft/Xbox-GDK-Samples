@@ -161,128 +161,128 @@
     <Image Include="Assets\StoreLogo.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\textures\caust07.DDS">
+    <CopyFileToFolders Include="Assets\textures\caust07.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust08.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust08.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust09.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust09.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust10.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust10.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust11.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust11.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust12.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust12.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust13.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust13.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust14.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust14.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust15.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust15.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust16.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust16.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust17.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust17.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust18.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust18.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust19.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust19.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust20.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust20.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust21.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust21.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust22.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust22.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust23.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust23.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust24.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust24.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust25.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust25.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust26.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust26.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust27.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust27.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust28.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust28.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust29.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust29.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust30.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust30.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust31.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust31.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\dolphin.bmp">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\dolphin.bmp">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\seafloor.bmp">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\seafloor.bmp">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\ui2.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\ui2.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust00.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust00.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust01.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust01.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust02.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust02.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust03.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust03.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust04.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust04.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust05.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust05.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\caust06.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\textures\caust06.DDS">
       <Filter>Assets\textures</Filter>
-    </Image>
+    </CopyFileToFolders>
     <Image Include="Assets\LargeLogo.png">
       <Filter>Assets</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\mesh\seafloor.sdkmesh">
+    <CopyFileToFolders Include="Assets\mesh\seafloor.sdkmesh">
       <Filter>Assets\mesh</Filter>
-    </None>
-    <None Include="Assets\mesh\Dolphin1.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\mesh\Dolphin1.sdkmesh">
       <Filter>Assets\mesh</Filter>
-    </None>
-    <None Include="Assets\mesh\Dolphin2.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\mesh\Dolphin2.sdkmesh">
       <Filter>Assets\mesh</Filter>
-    </None>
-    <None Include="Assets\mesh\Dolphin3.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\mesh\Dolphin3.sdkmesh">
       <Filter>Assets\mesh</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="PixelShaders.hlsli">
       <Filter>shaders</Filter>
     </None>

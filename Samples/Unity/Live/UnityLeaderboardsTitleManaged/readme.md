@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- csharp
+products:
+- gdk
+urlFragment: "unityleaderboardstitlemanaged"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "The leaderboards sample demonstrates the usage of Xbox Live Leaderboards with Title-Managed stats in Unity."
+---
+----->
+
 ![ATG Xbox and Windows logos](./media/image1.png)
 
 # Unity Leaderboards (Title Managed)

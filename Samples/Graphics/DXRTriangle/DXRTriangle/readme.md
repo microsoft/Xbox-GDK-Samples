@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "dxrtriangle"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates the basic use of the DirectX Raytracing API on Xbox Series X|S and PC."
+---
+----->
+
   ![](./media/image1.png)
 
 #   DXR Triangle Sample

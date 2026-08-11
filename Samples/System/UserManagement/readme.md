@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "usermanagement"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates user management with gamepad association for both single-user and multi-user scenarios on Xbox."
+---
+----->
+
 ![](./media/image1.png)
 
 User Management Sample

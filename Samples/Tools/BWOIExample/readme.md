@@ -1,3 +1,18 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "bwoiexample"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+description: "This example demonstrates a method for building MSBuild-based projects using the Gaming.*.x64 platforms without having the Microsoft GDK installed."
+---
+----->
+
 # Build W/O Installing (BWOI) Example
 
 *This sample is compatible with the Microsoft Game Development Kit (October 2024)*

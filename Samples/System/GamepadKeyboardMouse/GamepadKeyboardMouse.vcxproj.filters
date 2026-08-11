@@ -114,9 +114,9 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\Media\Textures\gamepad.dds">
+    <CopyFileToFolders Include="..\..\..\Media\Textures\gamepad.dds">
       <Filter>Assets</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
     <None Include="readme.md" />

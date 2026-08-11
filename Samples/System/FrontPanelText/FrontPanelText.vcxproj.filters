@@ -100,12 +100,12 @@
     <Image Include="Assets\StoreLogo.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="..\..\..\Media\Textures\FrontPanelPresent.png">
+    <CopyFileToFolders Include="..\..\..\Media\Textures\FrontPanelPresent.png">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Textures\NoFrontPanel.png">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Textures\NoFrontPanel.png">
       <Filter>Assets</Filter>
-    </Image>
+    </CopyFileToFolders>
     <Image Include="Assets\LargeLogo.png">
       <Filter>Assets</Filter>
     </Image>

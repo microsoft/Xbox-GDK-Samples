@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "hlslcompile"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "The sample compiles the same pixel shader in a number of different ways, to illustrate different options for PC-side asset build."
+---
+----->
+
   ![](./media/image1.png)
 
 #   HlslCompile Sample

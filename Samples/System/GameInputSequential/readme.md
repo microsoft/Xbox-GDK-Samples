@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "gameinputsequential"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how to read inputs sequentially from a gamepad using GameInput."
+---
+----->
+
 ![](./media/image1.png)
 
 #   Gamepad Sequential Sample

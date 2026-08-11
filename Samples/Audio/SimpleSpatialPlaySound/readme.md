@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "simplespatialplaysound"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates how use ISpatialAudioClient to playback static audio with height channels using Windows Sonic technologies in an Xbox title."
+---
+----->
+
 # Simple Spatial Sound Sample
 
 *This sample is compatible with the Microsoft Game Development Kit (June

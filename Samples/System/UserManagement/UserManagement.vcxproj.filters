@@ -406,60 +406,60 @@
     <Image Include="Assets\StoreLogo.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\Textures\invis_panel.png">
+    <CopyFileToFolders Include="Assets\Textures\invis_panel.png">
       <Filter>Assets\Textures</Filter>
-    </Image>
-    <Image Include="Assets\Textures\crown.png">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\crown.png">
       <Filter>Assets\Textures</Filter>
-    </Image>
-    <Image Include="Assets\Layouts\menu-screen.json">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Layouts\menu-screen.json">
       <Filter>Assets\Layouts</Filter>
-    </Image>
-    <Image Include="Assets\Layouts\multiuser-screen.json">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Layouts\multiuser-screen.json">
       <Filter>Assets\Layouts</Filter>
-    </Image>
-    <Image Include="Assets\Layouts\defs.json">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Layouts\defs.json">
       <Filter>Assets\Layouts</Filter>
-    </Image>
-    <Image Include="Assets\Layouts\styles.json">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Layouts\styles.json">
       <Filter>Assets\Layouts</Filter>
-    </Image>
-    <Image Include="Assets\Layouts\devices-panel.json">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Layouts\devices-panel.json">
       <Filter>Assets\Layouts</Filter>
-    </Image>
-    <Image Include="Assets\Layouts\device-prefab.json">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Layouts\device-prefab.json">
       <Filter>Assets\Layouts</Filter>
-    </Image>
-    <Image Include="Assets\Textures\LOGO_ATG.png">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\LOGO_ATG.png">
       <Filter>Assets\Textures</Filter>
-    </Image>
-    <Image Include="Assets\Textures\frame_panel_3.png">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\frame_panel_3.png">
       <Filter>Assets\Textures</Filter>
-    </Image>
-    <Image Include="Assets\Textures\divider_line.png">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\divider_line.png">
       <Filter>Assets\Textures</Filter>
-    </Image>
-    <Image Include="Assets\Textures\checked.png">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\checked.png">
       <Filter>Assets\Textures</Filter>
-    </Image>
-    <Image Include="Assets\Textures\unchecked.png">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\unchecked.png">
       <Filter>Assets\Textures</Filter>
-    </Image>
-    <Image Include="Assets\Textures\GFX_Disabled_Button.png">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Textures\GFX_Disabled_Button.png">
       <Filter>Assets\Textures</Filter>
-    </Image>
-    <Image Include="Assets\Layouts\user-prefab.json">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Layouts\user-prefab.json">
       <Filter>Assets\Layouts</Filter>
-    </Image>
-    <Image Include="Assets\Layouts\warning-screen.json">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Layouts\warning-screen.json">
       <Filter>Assets\Layouts</Filter>
-    </Image>
-    <Image Include="Assets\Layouts\singleuser-screen.json">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Layouts\singleuser-screen.json">
       <Filter>Assets\Layouts</Filter>
-    </Image>
-    <Image Include="Assets\Layouts\title-screen.json">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Layouts\title-screen.json">
       <Filter>Assets\Layouts</Filter>
-    </Image>
+    </CopyFileToFolders>
     <Image Include="Assets\LargeLogo.png">
       <Filter>Assets</Filter>
     </Image>
@@ -469,39 +469,39 @@
     <None Include="UserManagement_ko-kr.docx" />
     <None Include="UserManagement_zh-cn.docx" />
     <None Include="UserManagement_ja-jp.docx" />
-    <None Include="Assets\Fonts\segoeui_27pt_sharp_36_Bold.spritefont">
+    <CopyFileToFolders Include="Assets\Fonts\segoeui_27pt_sharp_36_Bold.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="Assets\Fonts\segoeuisb_27pt_sharp_36.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\segoeuisb_27pt_sharp_36.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="Assets\Fonts\segoeuisb_27pt_sharp_36_Bold.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\segoeuisb_27pt_sharp_36_Bold.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="Assets\Fonts\segoeui_36pt_sharp_48.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\segoeui_36pt_sharp_48.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="Assets\Fonts\segoeui_36pt_sharp_48_Bold.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\segoeui_36pt_sharp_48_Bold.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="Assets\Fonts\segoeui_72pt_sharp_96.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\segoeui_72pt_sharp_96.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="Assets\Fonts\SegoeUI_18.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\SegoeUI_18.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="Assets\Fonts\segoeui_18pt_sharp_24_Bold.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\segoeui_18pt_sharp_24_Bold.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="Assets\Fonts\segoeui_24pt_sharp_32_Bold.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\segoeui_24pt_sharp_32_Bold.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="Assets\Fonts\segoeui_24pt_sharp_32.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\segoeui_24pt_sharp_32.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="Assets\Fonts\segoeui_27pt_sharp_36.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Fonts\segoeui_27pt_sharp_36.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\..\..\Kits\OpenSource\FreeType2\lib\x64\ReleaseStatic\freetype.lib">

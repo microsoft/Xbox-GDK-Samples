@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "databreakpoints"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample shows how to create hardware data breakpoints that are useful for detecting different types of memory access on Xbox."
+---
+----->
+
   ![](./media/image1.png)
 
 #   Data Breakpoints

@@ -1,3 +1,20 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "xtexconv"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+description: "This sample is a PC side command-line tool which extends the standard TexConv command-line tool for texture conversion and preparation to support Xbox offline texture tiling for use with the CreatePlacedResourceX APIs in DirectX 12.X."
+---
+----->
+
 # xtexconv Sample
 
 *This sample is compatible with the Microsoft Game Development Kit (March 2022)*

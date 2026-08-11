@@ -136,77 +136,77 @@
     <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\Media\Textures\gamepad.dds">
+    <CopyFileToFolders Include="..\..\..\Media\Textures\gamepad.dds">
       <Filter>Assets\Textures</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
       <Filter>Assets\Textures</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Textures\callout_circle.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Textures\callout_circle.dds">
       <Filter>Assets\Textures</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Textures\RedCircle.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Textures\RedCircle.DDS">
       <Filter>Assets\Textures</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
     <None Include="Common.hlsli">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD0.sdkmesh">
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD0.sdkmesh">
       <Filter>Assets\Meshes</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD0.sdkmesh.bin">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD0.sdkmesh.bin">
       <Filter>Assets\Meshes</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="CommonMS.hlsli">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD1.sdkmesh">
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD1.sdkmesh">
       <Filter>Assets\Meshes</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD1.sdkmesh.bin">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD1.sdkmesh.bin">
       <Filter>Assets\Meshes</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD2.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD2.sdkmesh">
       <Filter>Assets\Meshes</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD2.sdkmesh.bin">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD2.sdkmesh.bin">
       <Filter>Assets\Meshes</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD3.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD3.sdkmesh">
       <Filter>Assets\Meshes</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD3.sdkmesh.bin">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD3.sdkmesh.bin">
       <Filter>Assets\Meshes</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD4.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD4.sdkmesh">
       <Filter>Assets\Meshes</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD4.sdkmesh.bin">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD4.sdkmesh.bin">
       <Filter>Assets\Meshes</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD5.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD5.sdkmesh">
       <Filter>Assets\Meshes</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD5.sdkmesh.bin">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\ATGDragon\dragon_LOD5.sdkmesh.bin">
       <Filter>Assets\Meshes</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\Camera\camera.sdkmesh">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\Camera\camera.sdkmesh">
       <Filter>Assets\Meshes</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_22.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_22.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="..\..\NuGet.config" />
     <None Include="readme_ja-jp.md" />
     <None Include="readme_ko-kr.md" />

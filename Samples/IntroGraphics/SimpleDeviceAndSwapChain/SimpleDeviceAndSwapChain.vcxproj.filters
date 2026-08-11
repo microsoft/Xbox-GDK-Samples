@@ -60,18 +60,18 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\Media\Textures\1920x1080.DDS">
+    <CopyFileToFolders Include="..\..\..\Media\Textures\1920x1080.DDS">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Textures\3840x2160.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Textures\3840x2160.DDS">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Textures\1920x1080_basic.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Textures\1920x1080_basic.DDS">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="..\..\..\Media\Textures\2560x1440.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Textures\2560x1440.DDS">
       <Filter>Assets</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
     <None Include="Readme.docx" />

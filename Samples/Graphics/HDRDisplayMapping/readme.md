@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "hdrdisplaymapping"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample shows that even when rendering a HDR scene on a HDR capable TV, some tone mapping is still needed, referred to as 'HDR display mapping'."
+---
+----->
+
 # HDR Display Mapping Sample
 
 *This sample is compatible with the Microsoft Game Development Kit (March 2022)*

@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "meshletinstancing"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "Demonstrates GPU instancing for DirectX 12 Mesh Shaders."
+---
+----->
+
   ![](./media/image1.png)
 
 #   Meshlet Instancing Sample

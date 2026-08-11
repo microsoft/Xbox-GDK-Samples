@@ -973,7 +973,10 @@
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Assets\Textures</DestinationFolders>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">$(OutDir)Assets\Textures</DestinationFolders>
     </CopyFileToFolders>
-    <Image Include="Assets\screenshot.png" />
+    <CopyFileToFolders Include="Assets\screenshot.png">
+      <DestinationFolders>$(OutDir)Assets</DestinationFolders>
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

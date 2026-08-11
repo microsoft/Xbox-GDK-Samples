@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- csharp
+products:
+- gdk
+urlFragment: "unityhandheldbestpractices"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample demonstrates the best practices for running a title on handheld devices in Unity."
+---
+----->
+
 # Microsoft GDK Sample: Handheld Best Practices
 
 **Relevant areas:** Handheld, Input, Audio, Graphics, CPU

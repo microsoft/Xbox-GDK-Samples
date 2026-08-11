@@ -97,12 +97,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Mesh.hlsli" />
-    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
       <Filter>Assets</Filter>
-    </None>
-    <None Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerSmall.spritefont">
       <Filter>Assets</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="Readme.docx" />
     <None Include="ExecuteIndirect_ReadMe_ja-jp.docx" />
     <None Include="ExecuteIndirect_ReadMe_ko-kr.docx" />

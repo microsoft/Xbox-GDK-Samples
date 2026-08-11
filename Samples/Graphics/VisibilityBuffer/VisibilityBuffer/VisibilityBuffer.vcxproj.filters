@@ -132,9 +132,9 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\Media\Meshes\AliasSampleCityBlock\CityBlockConcrete.sdkmesh">
+    <CopyFileToFolders Include="..\..\..\..\Media\Meshes\AliasSampleCityBlock\CityBlockConcrete.sdkmesh">
       <Filter>Assets</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="..\..\..\..\Media\Meshes\ATGDragonPosedWithBakedDiffuse\Dragon_diffuse.dd_">
       <Filter>Assets</Filter>
     </None>
@@ -144,18 +144,18 @@
     <None Include="..\Source\common.hlsli">
       <Filter>Assets\Shaders</Filter>
     </None>
-    <None Include="..\..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
+    <CopyFileToFolders Include="..\..\..\..\Media\Fonts\XboxOneControllerLegend.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="..\..\..\..\Media\Fonts\SegoeUI_36.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\..\Media\Fonts\SegoeUI_36.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="..\..\..\..\Media\Fonts\SegoeUI_22.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\..\Media\Fonts\SegoeUI_22.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
-    <None Include="..\..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\..\Media\Fonts\SegoeUI_18.spritefont">
       <Filter>Assets\Fonts</Filter>
-    </None>
+    </CopyFileToFolders>
     <None Include="..\..\..\NuGet.config" />
     <None Include="packages.config" />
     <None Include="readme_ja-jp.md" />
@@ -184,17 +184,17 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\..\Media\Meshes\AliasSampleCityBlock\Concrete.dds">
+    <CopyFileToFolders Include="..\..\..\..\Media\Meshes\AliasSampleCityBlock\Concrete.dds">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="..\..\..\..\Media\Textures\ATGSampleBackground.DDS">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\..\Media\Textures\ATGSampleBackground.DDS">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="..\..\..\..\Media\Textures\callout_circle.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\..\Media\Textures\callout_circle.dds">
       <Filter>Assets</Filter>
-    </Image>
-    <Image Include="..\..\..\..\Media\Textures\gamepad.dds">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\..\Media\Textures\gamepad.dds">
       <Filter>Assets</Filter>
-    </Image>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

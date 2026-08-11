@@ -1,3 +1,22 @@
+<!-----
+---
+page_type: sample
+languages:
+- cpp
+products:
+- gdk
+urlFragment: "frontpanellogo"
+extendedZipContent:
+- path: LICENSE
+  target: LICENSE
+- path: Kits
+  target: Kits
+- path: Media
+  target: Media
+description: "This sample provides some starting code to help you render an image the Xbox Devkit front panel display using a standard image format."
+---
+----->
+
   ![](./media/image1.png)
 
 #   FrontPanelLogo Sample
