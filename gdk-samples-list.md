@@ -144,6 +144,7 @@ Following is a list of categories for the samples.
 | __Collision__ | This sample demonstrates DirectXMath's collision types for simple bounding volume tests. | ✓ | ✓ | 
 | __CustomEventProvider__ | This sample demonstrates how to use custom ETW event providers on Xbox. | ✓ |  | 
 | __DataBreakPoints__ | This sample shows how to create hardware data breakpoints that are useful for detecting different types of memory access on Xbox. | ✓ | ✓ | 
+| __DeepLinking__ | This sample shows how a GDK title can receive a protocol (URI) activation to 'deep link' the player directly into a specific area of the game. | ✓ |  | 
 | __FrontPanelDemo__ | FrontPanelDemo combines several samples into one executable and then ties together the functionality with a menu system all hosted entirely on the Xbox DevKit front panel. | ✓ |  | 
 | __FrontPanelDolphin__ | FrontPanelDolphin demonstrates how to use the GPU to render to the Xbox DevKit FrontPanel. | ✓ |  | 
 | __FrontPanelGame__ | FrontPanelGame is the classic 'snake game' implemented completely on the Xbox DevKit Front Panel. | ✓ |  | 
