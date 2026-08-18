@@ -37,13 +37,13 @@ jobs:
           fi
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           fetch-depth: 0
 
       - name: React to comment
         if: github.event_name == 'issue_comment'
-        uses: actions/github-script@v7
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
         with:
           script: |
             await github.rest.reactions.createForIssueComment({
@@ -71,7 +71,7 @@ jobs:
 
       - name: Generate summary with GitHub Models
         id: generate
-        uses: actions/github-script@v7
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -156,7 +156,7 @@ jobs:
 
       - name: Update PR title and description
         if: steps.generate.outputs.summary != ''
-        uses: actions/github-script@v7
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
         env:
           PR_TITLE: ${{ steps.generate.outputs.title }}
           PR_NUMBER: ${{ steps.pr-number.outputs.number }}
