@@ -48,24 +48,12 @@ namespace ImGuiAtg
     // Use for fixed widget sizes: ImGuiAtg::Scaled(180) instead of 180 * scale.
     inline float Scaled(float value) { return value * GetCurrentScale(); }
 
-    // Full-screen layout -- creates a single borderless ImGui window filling the framebuffer.
-    //
-    // titleSafe controls the TV title-safe inset (a 5%-per-edge margin that protects
-    // content from being cropped by TV overscan):
-    //   std::nullopt (default) -- automatic: enabled on Xbox console builds (_GAMING_XBOX),
-    //                             disabled on PC builds.
-    //   true                   -- force the inset on, regardless of platform.
-    //   false                  -- force the inset off, regardless of platform.
-    void BeginFullscreenLayout(std::optional<bool> titleSafe = std::nullopt);
+    // Full-screen layout -- creates a single borderless ImGui window filling the framebuffer, title-safe on console
+    void BeginFullscreenLayout();
     void EndFullscreenLayout();
 
-    // Standard sample footer -- a single-line strip with exit and theme toggle hints:
-    //   [Alt]+[F4] / [LB]+[RB]+[View]+[Menu] Exit       [F2] / [LB]+[RB]+[Y] Toggle Light/Dark
-    //
-    // DrawFooter() renders the visual footer only. The matching keyboard/gamepad
-    // shortcuts are processed by ImGuiAtg::HandleStandardInput(), which the sample
-    // Main.cpp calls automatically once per frame.
-    //
+    // Standard sample footer -- a single-line strip with exit and theme toggle hints
+    // 
     // Use GetFooterHeight() to reserve space when laying out scrollable content above
     // the footer, e.g.:
     //   ImGui::BeginChild("##Content", ImVec2(0, ImGui::GetContentRegionAvail().y - ImGuiAtg::GetFooterHeight()));
@@ -73,21 +61,27 @@ namespace ImGuiAtg
     //   ImGui::EndChild();
     //   ImGuiAtg::DrawFooter();
     float GetFooterHeight();
+
+    // DrawFooter() renders the standard footer with no custom items. Equivalent to
+    // calling BeginFooter() immediately followed by EndFooter().
     void DrawFooter();
+
+    // BeginFooter()/EndFooter() let a sample append its own hints after the standard
+    // ones.  Example:
+    //   ImGuiAtg::BeginFooter();
+    //   if (ImGuiAtg::FooterItem("[F5] Reset"))
+    //       Reset();
+    //   ImGuiAtg::EndFooter();
+    void BeginFooter();
+    void EndFooter();
+
+    // FooterItem() renders one footer hint between BeginFooter() and EndFooter().
+    bool FooterItem(const char* text);
 
     // Handles standard sample input -- the same shortcuts that DrawFooter() advertises:
     //
     //   Alt+F4 / LB+RB+View+Menu    -- exit the app (Alt+F4 is handled by Windows)
     //   F2     / LB+RB+Y            -- toggle light/dark theme
-    //
-    // Call once per frame from the main loop between ImGui::NewFrame() and Render
-    // (the sample Main.cpp does this for you). Maintains its own previous-frame
-    // gamepad state for edge detection. Keyboard shortcuts are suppressed while
-    // ImGui is capturing keyboard input for a text widget. Gamepad handling uses
-    // the v0 GameInput API (always available via the Windows SDK or the
-    // Microsoft.GameInput NuGet package) so this works in any sample regardless of
-    // which GameInput API version the sample itself targets. The kit creates its
-    // own IGameInput instance on first use.
     void HandleStandardInput();
 
     // Splitter -- splits the current region into two resizable panels.
