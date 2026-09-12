@@ -7,6 +7,7 @@ Following is a list of categories for the samples.
 - [Microsoft Game Development Kit samples](#microsoft-game-development-kit-samples-list) 
   - [Categories](#categories)
     - [Audio](#audio)
+    - [Godot](#godot)
     - [Graphics](#graphics)
     - [Handheld](#handheld)
     - [IntroGraphics](#intrographics)
@@ -31,6 +32,17 @@ Following is a list of categories for the samples.
 | __SimpleSpatialPlaySound__ | This sample demonstrates how use ISpatialAudioClient to playback static audio with height channels using Windows Sonic technologies in an Xbox title. | ✓ |  | 
 | __SimpleWASAPICapture__ | This sample demonstrates how to capture audio using WASAPI on Xbox. | ✓ |  | 
 | __SimpleWASAPIPlaySound__ | This sample demonstrates how to play setup and play a simple sound (sine tone) to a WASAPI render endpoint on Xbox. | ✓ |  | 
+ 
+<a id="godot"></a> 
+ 
+### Godot 
+ 
+External samples, built by XBOX, that demonstrate GDK integration with Godot. These are maintained in their own repositories rather than in this one; see [Samples/Godot](Samples/Godot/readme.md). 
+ 
+| Sample | Description | Console | PC | 
+| ------ | ----------- | ------- | -- | 
+| __[XBOX Godot Sample](https://github.com/microsoft/XBOX-Godot-Sample)__ | Reference GDExtension addons binding the Microsoft GDK, XBOX Services, PlayFab, and GameInput into Godot 4, usable from both GDScript and C#/.NET. |  | ✓ | 
+| __[XBOX Godot NetRumble](https://github.com/microsoft/XBOX-Godot-NetRumble)__ | A complete multiplayer XBOX game built in Godot 4, wiring the Microsoft GDK and PlayFab services into a real game loop. | ✓ | ✓ | 
  
 <a id="graphics"></a> 
  

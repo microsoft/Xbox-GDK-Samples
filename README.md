@@ -6,6 +6,7 @@ This repo contains game development samples written by the Microsoft Xbox Advanc
 * [Media](/Media) contains media files used by the samples
 * [Samples](gdk-samples-list.md) contains samples
   * [Audio](gdk-samples-list.md#Audio)
+  * [Godot](gdk-samples-list.md#Godot)
   * [Graphics](gdk-samples-list.md#Graphics)
   * [Handheld](gdk-samples-list.md#Handheld)
   * [IntroGraphics](gdk-samples-list.md#IntroGraphics)
