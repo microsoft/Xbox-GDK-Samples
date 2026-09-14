@@ -23,6 +23,29 @@
 namespace ImGuiAtg
 {
     //--------------------------------------------------------------------------------------
+    // Input helpers
+    //--------------------------------------------------------------------------------------
+    
+    void HandleStandardInput()
+    {
+        if ((!ImGui::GetIO().WantTextInput && ImGui::IsKeyPressed(ImGuiKey_F2, false)) ||
+            (ImGui::IsKeyDown(ImGuiKey_GamepadL1) &&
+             ImGui::IsKeyDown(ImGuiKey_GamepadR1) &&
+             ImGui::IsKeyPressed(ImGuiKey_GamepadFaceUp, false)))
+        {
+            ToggleTheme();
+        }
+
+        if (ImGui::IsKeyDown(ImGuiKey_GamepadL1) &&
+            ImGui::IsKeyDown(ImGuiKey_GamepadR1) &&
+            ImGui::IsKeyDown(ImGuiKey_GamepadBack) &&
+            ImGui::IsKeyDown(ImGuiKey_GamepadStart))
+        {
+            PostQuitMessage(0);
+        }
+    }
+
+    //--------------------------------------------------------------------------------------
     // Style / Font helpers
     //--------------------------------------------------------------------------------------
 
@@ -227,14 +250,14 @@ namespace ImGuiAtg
     // Fullscreen layout -- a single borderless window filling the framebuffer.
     //--------------------------------------------------------------------------------------
 
-    void BeginFullscreenLayout(std::optional<bool> titleSafe)
+    void BeginFullscreenLayout()
     {
         // Resolve the title-safe choice: explicit caller value wins, otherwise default
         // to "on" for console builds and "off" for PC.
 #ifdef _GAMING_XBOX
-        const bool applyTitleSafe = titleSafe.value_or(true);
+        const bool applyTitleSafe = true;
 #else
-        const bool applyTitleSafe = titleSafe.value_or(false);
+        const bool applyTitleSafe = false;
 #endif
 
         ImVec2 displaySize = ImGui::GetIO().DisplaySize;
@@ -277,88 +300,46 @@ namespace ImGuiAtg
 
     void DrawFooter()
     {
+        BeginFooter();
+        EndFooter();
+    }
+
+    void BeginFooter()
+    {
         // Collapse vertical spacing so the footer takes the minimum height possible
         const ImVec2 spacing = ImGui::GetStyle().ItemSpacing;
         ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(spacing.x, 0.0f));
 
         ImGui::Separator();
 
-        // Exit hint -- click to quit. ControllerText wraps its output in a Group,
-        // so the IsItem* queries here apply to the entire glyph+text run.
-        ControllerText("[Alt]+[F4] / [LB]+[RB]+[View]+[Menu] Exit");
-        if (ImGui::IsItemHovered())
-        {
-            ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
-            if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
-                PostQuitMessage(0);
-        }
-
-        ImGui::SameLine(0, Scaled(80.0f));
+        // Exit hint -- click to quit.
+        if (FooterItem("[Alt]+[F4] / [LB]+[RB]+[View]+[Menu] Exit"))
+            PostQuitMessage(0);
 
         // Theme toggle hint -- click to flip light/dark.
-        ControllerText("[F2] / [LB]+[RB]+[Y] Toggle Light/Dark");
+        if (FooterItem("[F2] / [LB]+[RB]+[Y] Toggle Light/Dark"))
+            ToggleTheme();
+
+        // Cursor is left on the footer line. A sample may append its own hints here
+        // with FooterItem() before calling EndFooter().
+    }
+
+    bool FooterItem(const char* text)
+    {
+        ControllerText(text);
+        ImGui::SameLine(0, Scaled(80.0f));
         if (ImGui::IsItemHovered())
         {
             ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
             if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
-                ToggleTheme();
+                return true;
         }
-
-        ImGui::PopStyleVar();
+        return false;
     }
 
-    void HandleStandardInput()
+    void EndFooter()
     {
-        // Theme toggle. Exit via Alt+F4 is handled by Windows (DefWindowProc), so we
-        // only wire up F2 here. Suppressed while ImGui is capturing keyboard input
-        // for a text widget so typing in a text box doesn't flip the theme.
-        if (!ImGui::GetIO().WantTextInput)
-        {
-            if (ImGui::IsKeyPressed(ImGuiKey_F2, false))
-                ToggleTheme();
-        }
-
-        using Microsoft::WRL::ComPtr;
-        static ComPtr<IGameInput> s_gameInput;
-        static GameInputGamepadState s_prevGamepadState{};
-
-        if (!s_gameInput)
-        {
-            if (FAILED(::GameInputCreate(&s_gameInput)))
-                return;
-        }
-
-        ComPtr<::IGameInputReading> reading;
-        if (FAILED(s_gameInput->GetCurrentReading(::GameInputKindGamepad, nullptr, &reading)))
-            return;
-
-        ::GameInputGamepadState curr{};
-        if (!reading->GetGamepadState(&curr))
-            return;
-
-        const auto buttons = curr.buttons;
-        const auto prevButtons = s_prevGamepadState.buttons;
-
-        // Exit combo: LB + RB + View + Menu
-        if ((buttons & ::GameInputGamepadLeftShoulder) &&
-            (buttons & ::GameInputGamepadRightShoulder) &&
-            (buttons & ::GameInputGamepadMenu) &&
-            (buttons & ::GameInputGamepadView))
-        {
-            PostQuitMessage(0);
-        }
-
-        // Theme toggle combo: LB + RB + Y (edge-triggered to fire once per press)
-        const bool themeCombo = (buttons & ::GameInputGamepadLeftShoulder) &&
-                                (buttons & ::GameInputGamepadRightShoulder) &&
-                                (buttons & ::GameInputGamepadY);
-        const bool wasThemeCombo = (prevButtons & ::GameInputGamepadLeftShoulder) &&
-                                   (prevButtons & ::GameInputGamepadRightShoulder) &&
-                                   (prevButtons & ::GameInputGamepadY);
-        if (themeCombo && !wasThemeCombo)
-            ToggleTheme();
-
-        s_prevGamepadState = curr;
+        ImGui::PopStyleVar();
     }
 
     //--------------------------------------------------------------------------------------
@@ -457,26 +438,6 @@ namespace ImGuiAtg
     //--------------------------------------------------------------------------------------
     // Controller string -- mixed text and glyph font rendering
     //--------------------------------------------------------------------------------------
-
-    // Encode a Unicode codepoint (BMP) to a 4-byte UTF-8 buffer. Returns length written.
-    static int EncodeUtf8(uint32_t cp, char* buf)
-    {
-        if (cp < 0x80)
-        {
-            buf[0] = static_cast<char>(cp);
-            return 1;
-        }
-        if (cp < 0x800)
-        {
-            buf[0] = static_cast<char>(0xC0 | (cp >> 6));
-            buf[1] = static_cast<char>(0x80 | (cp & 0x3F));
-            return 2;
-        }
-        buf[0] = static_cast<char>(0xE0 | (cp >> 12));
-        buf[1] = static_cast<char>(0x80 | ((cp >> 6) & 0x3F));
-        buf[2] = static_cast<char>(0x80 | (cp & 0x3F));
-        return 3;
-    }
 
     // Case-insensitive comparator for glyph tag lookup
     struct CaseInsensitiveLess
@@ -708,8 +669,8 @@ namespace ImGuiAtg
             {
                 if (!first) ImGui::SameLine(0.0f, 0.0f);
                 ImGui::SetCursorPosY(rowY);
-                char utf8[4];
-                int len = EncodeUtf8(static_cast<uint32_t>(glyph), utf8);
+                char utf8[5];
+                int len = ImTextCharToUtf8(utf8, static_cast<uint32_t>(glyph));
                 ImGui::PushFont(glyphFont, glyphSizeBase);  // base size; ImGui scales by FontScaleDpi
                 ImGui::TextUnformatted(utf8, utf8 + len);
                 ImGui::PopFont();
@@ -736,21 +697,27 @@ namespace ImGuiAtg
         ImFont* glyphFont = s_glyphFont;
         if (static_cast<uint32_t>(glyph) != 0 && glyphFont)
         {
-            char utf8[4];
-            int len = EncodeUtf8(static_cast<uint32_t>(glyph), utf8);
+            char utf8[5];
+            int len = ImTextCharToUtf8(utf8, static_cast<uint32_t>(glyph));
             ImGui::PushFont(glyphFont, size);
             ImGui::TextUnformatted(utf8, utf8 + len);
             ImGui::PopFont();
         }
         else if (fallback)
         {
-            // Vertically center fallback text within the glyph-sized row
-            float textHeight = ImGui::GetFontSize();
-            float rowHeight = size * GetCurrentScale();
-            float offsetY = (rowHeight - textHeight) * 0.5f;
-            if (offsetY > 0.0f)
-                ImGui::SetCursorPosY(ImGui::GetCursorPosY() + offsetY);
-            ImGui::TextUnformatted(fallback);
+            // Vertically center fallback text within the glyph-sized row. The item must
+            // reserve the full row height (like a real glyph) so it aligns consistently
+            // whether or not a glyph precedes it on the line -- otherwise the first item
+            // on an all-fallback row sits higher than its SameLine siblings. We draw the
+            // text manually at the centered offset and reserve the height with a Dummy.
+            const float textHeight = ImGui::GetFontSize();
+            const float rowHeight = ImMax(size * GetCurrentScale(), textHeight);
+            const float offsetY = (rowHeight - textHeight) * 0.5f;
+            const ImVec2 pos = ImGui::GetCursorScreenPos();
+            const ImVec2 textSize = ImGui::CalcTextSize(fallback);
+            ImGui::GetWindowDrawList()->AddText(ImVec2(pos.x, pos.y + offsetY),
+                ImGui::GetColorU32(ImGuiCol_Text), fallback);
+            ImGui::Dummy(ImVec2(textSize.x, rowHeight));
         }
     }
 
