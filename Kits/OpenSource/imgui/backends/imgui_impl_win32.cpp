@@ -99,6 +99,8 @@
 #include <dwmapi.h>
 #include <wrl.h>
 using Microsoft::WRL::ComPtr;
+#include <mutex>
+#include <vector>
 
 #include <GameInput.h>
 #if GAMEINPUT_API_VERSION == 1
@@ -124,21 +126,25 @@ using namespace GameInput::v3;
 
 struct ImGui_ImplWin32_Data
 {
-    HWND                        hWnd;
-    HWND                        MouseHwnd;
-    int                         MouseTrackedArea;   // 0: not tracked, 1: client area, 2: non-client area
-    int                         MouseButtonsDown;
-    INT64                       Time;
-    INT64                       TicksPerSecond;
-    ImGuiMouseCursor            LastMouseCursor;
-    UINT32                      KeyboardCodePage;
+    HWND                        hWnd = nullptr;
+    HWND                        MouseHwnd = nullptr;
+    int                         MouseTrackedArea = 0;   // 0: not tracked, 1: client area, 2: non-client area
+    int                         MouseButtonsDown = 0;
+    INT64                       Time = 0;
+    INT64                       TicksPerSecond = 0;
+    ImGuiMouseCursor            LastMouseCursor = ImGuiMouseCursor_Arrow;
+    UINT32                      KeyboardCodePage = 0;
 
 #ifndef IMGUI_IMPL_WIN32_DISABLE_GAMEPAD
-    bool                        HasGamepad;
-    ComPtr<IGameInput>          GameInput;
+    bool                        HasGamepad = false;
+    GameInputCallbackToken      DeviceCallbackToken = 0;
+
+    ComPtr<IGameInput>                    GameInput{};
+    std::vector<ComPtr<IGameInputDevice>> Gamepads{};
+    std::mutex                            GamepadsMutex{};
 #endif
 
-    ImGui_ImplWin32_Data()      { memset((void*)this, 0, sizeof(*this)); }
+    ImGui_ImplWin32_Data() = default;
 };
 
 // Backend data stored in io.BackendPlatformUserData to allow support for multiple Dear ImGui contexts
@@ -169,6 +175,39 @@ static void ImGui_ImplWin32_UpdateKeyboardCodePage(ImGuiIO& io)
 #endif
 }
 
+static void CALLBACK ImGui_ImplWin32_DeviceCallback(
+    _In_ GameInputCallbackToken,
+    _In_ void* context,
+    _In_ IGameInputDevice* device,
+    _In_ uint64_t,
+    _In_ GameInputDeviceStatus current,
+    _In_ GameInputDeviceStatus previous) noexcept
+{
+    auto* bd = static_cast<ImGui_ImplWin32_Data*>(context);
+
+    const bool wasConnected = (previous & GameInputDeviceConnected) != 0;
+    const bool isConnected = (current & GameInputDeviceConnected) != 0;
+
+    std::lock_guard<std::mutex> lock(bd->GamepadsMutex);
+
+    // newly connected device, add to our list
+    if (isConnected && !wasConnected)
+    {
+        bd->Gamepads.emplace_back(device);
+    }
+
+    // newly disconnected device, remove from our list
+    else if (wasConnected && !isConnected)
+    {
+        bd->Gamepads.erase(
+            std::remove_if(bd->Gamepads.begin(), bd->Gamepads.end(), [device](ComPtr<IGameInputDevice> const& entry)
+            {
+                return entry.Get() == device;
+            }), bd->Gamepads.end()
+        );
+    }
+}
+
 static bool ImGui_ImplWin32_InitEx(void* hwnd, bool platform_has_own_dc)
 {
     ImGuiIO& io = ImGui::GetIO();
@@ -181,29 +220,50 @@ static bool ImGui_ImplWin32_InitEx(void* hwnd, bool platform_has_own_dc)
     if (!::QueryPerformanceCounter((LARGE_INTEGER*)&perf_counter))
         return false;
 
-    // Setup backend capabilities flags
     ImGui_ImplWin32_Data* bd = IM_NEW(ImGui_ImplWin32_Data)();
+    bd->hWnd = (HWND)hwnd;
+    bd->TicksPerSecond = perf_frequency;
+    bd->Time = perf_counter;
+    bd->LastMouseCursor = ImGuiMouseCursor_COUNT;
+
+    // Setup GameInput
+#ifndef IMGUI_IMPL_GDK_DISABLE_GAMEPAD
+    HRESULT hr = GameInputCreate(&bd->GameInput);
+    if (FAILED(hr))
+    {
+        IM_DELETE(bd);
+        return false;
+    }
+
+    hr = bd->GameInput->RegisterDeviceCallback(
+        nullptr,
+        GameInputKindGamepad,
+        GameInputDeviceConnected,
+        GameInputBlockingEnumeration,
+        bd,
+        ImGui_ImplWin32_DeviceCallback,
+        &bd->DeviceCallbackToken);
+
+    if (FAILED(hr))
+    {
+        IM_DELETE(bd);
+        return false;
+    }
+
+#endif // IMGUI_IMPL_GDK_DISABLE_GAMEPAD
+
+    // Setup backend capabilities flags
     io.BackendPlatformUserData = (void*)bd;
     io.BackendPlatformName = "imgui_impl_win32";
     io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;         // We can honor GetMouseCursor() values (optional)
     io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;          // We can honor io.WantSetMousePos requests (optional, rarely used)
 
-    bd->hWnd = (HWND)hwnd;
-    bd->TicksPerSecond = perf_frequency;
-    bd->Time = perf_counter;
-    bd->LastMouseCursor = ImGuiMouseCursor_COUNT;
     ImGui_ImplWin32_UpdateKeyboardCodePage(io);
 
     // Set platform dependent data in viewport
     ImGuiViewport* main_viewport = ImGui::GetMainViewport();
     main_viewport->PlatformHandle = main_viewport->PlatformHandleRaw = (void*)bd->hWnd;
     IM_UNUSED(platform_has_own_dc); // Used in 'docking' branch
-
-    // Setup GameInput
-#ifndef IMGUI_IMPL_GDK_DISABLE_GAMEPAD
-    if(GameInputCreate(&bd->GameInput) != S_OK)
-        return false;
-#endif // IMGUI_IMPL_GDK_DISABLE_GAMEPAD
 
     return true;
 }
@@ -225,6 +285,18 @@ void    ImGui_ImplWin32_Shutdown()
     IM_ASSERT(bd != nullptr && "No platform backend to shutdown, or already shutdown?");
     ImGuiIO& io = ImGui::GetIO();
     ImGuiPlatformIO& platform_io = ImGui::GetPlatformIO();
+
+#ifndef IMGUI_IMPL_WIN32_DISABLE_GAMEPAD
+    if (bd->GameInput != nullptr && bd->DeviceCallbackToken != 0)
+    {
+#if defined(GAMEINPUT_API_VERSION) && (GAMEINPUT_API_VERSION >= 1)
+        bd->GameInput->UnregisterCallback(bd->DeviceCallbackToken);
+#else
+        bd->GameInput->UnregisterCallback(bd->DeviceCallbackToken, UINT64_MAX);
+#endif
+        bd->DeviceCallbackToken = 0;
+    }
+#endif
 
     io.BackendPlatformName = nullptr;
     io.BackendPlatformUserData = nullptr;
@@ -344,8 +416,14 @@ static void ImGui_ImplWin32_UpdateGamepads(ImGuiIO& io)
 #ifndef IMGUI_IMPL_WIN32_DISABLE_GAMEPAD
     ImGui_ImplWin32_Data* bd = ImGui_ImplWin32_GetBackendData(io);
 
-    if(bd->GameInput == nullptr)
+    std::lock_guard<std::mutex> lock(bd->GamepadsMutex);
+
+    if(bd->GameInput == nullptr || bd->Gamepads.empty() || bd->Gamepads.back() == nullptr)
+    {
+        io.BackendFlags &= ~ImGuiBackendFlags_HasGamepad;
+        bd->HasGamepad = false;
         return;
+    }
 
 #if GAMEINPUT_API_VERSION == 1
     ComPtr<GameInput::v1::IGameInputReading> reading;
@@ -357,7 +435,7 @@ static void ImGui_ImplWin32_UpdateGamepads(ImGuiIO& io)
     ComPtr<IGameInputReading> reading;
 #endif
 
-    HRESULT hr = bd->GameInput->GetCurrentReading(GameInputKindGamepad, nullptr, &reading);
+    HRESULT hr = bd->GameInput->GetCurrentReading(GameInputKindGamepad, bd->Gamepads.back().Get(), &reading);
     bd->HasGamepad = hr == S_OK;
 
     io.BackendFlags &= ~ImGuiBackendFlags_HasGamepad;

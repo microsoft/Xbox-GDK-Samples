@@ -1,0 +1,7 @@
+// GPU graphics time spikes periodically
+Period: 120
+CpuUpdate: 120 14.0
+CpuRender: 120 13.0
+CpuGpuLag: 120 2.0
+GpuGraphics: 10 20.0 110 15.0
+GpuCompute: 120 1.0
