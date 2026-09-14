@@ -16,18 +16,54 @@
 #include <ShellScalingApi.h>
 #pragma comment(lib, "shcore.lib") // GetDpiForMonitor
 #endif
+#include <algorithm>
 #include <map>
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 namespace ImGuiAtg
 {
     //--------------------------------------------------------------------------------------
     // Input helpers
     //--------------------------------------------------------------------------------------
-    
+
+    namespace
+    {
+        std::vector<std::string> g_navigationGroups;
+        std::string g_currentNavigationGroup;
+        std::string g_requestedNavigationGroup;
+        int g_navigationGroupDepth = 0;
+        bool g_navigationGroupInputActive = false;
+    }
+
+    void BeginNavigationGroup(const char* id)
+    {
+        IM_ASSERT(id != nullptr && id[0] != '\0');
+        IM_ASSERT(g_navigationGroupDepth == 0);
+        IM_ASSERT(std::find(g_navigationGroups.cbegin(), g_navigationGroups.cend(), id) == g_navigationGroups.cend());
+        g_navigationGroupDepth++;
+        g_navigationGroups.emplace_back(id);
+
+        if (g_requestedNavigationGroup == id)
+        {
+            ImGui::SetNavCursorVisible(true);
+            ImGui::SetKeyboardFocusHere();
+            g_currentNavigationGroup = id;
+            g_requestedNavigationGroup.clear();
+        }
+    }
+
+    void EndNavigationGroup()
+    {
+        IM_ASSERT(g_navigationGroupDepth > 0);
+        g_navigationGroupDepth--;
+    }
+
     void HandleStandardInput()
     {
+        IM_ASSERT(g_navigationGroupDepth == 0);
+
         if ((!ImGui::GetIO().WantTextInput && ImGui::IsKeyPressed(ImGuiKey_F2, false)) ||
             (ImGui::IsKeyDown(ImGuiKey_GamepadL1) &&
              ImGui::IsKeyDown(ImGuiKey_GamepadR1) &&
@@ -43,6 +79,57 @@ namespace ImGuiAtg
         {
             PostQuitMessage(0);
         }
+
+        const bool groupNavigationChord = ImGui::IsKeyDown(ImGuiKey_GamepadL1)
+            && ImGui::IsKeyDown(ImGuiKey_GamepadR1);
+        const bool previousGroupPressed = groupNavigationChord
+            && ImGui::IsKeyPressed(ImGuiKey_GamepadDpadUp, false);
+        const bool nextGroupPressed = groupNavigationChord
+            && ImGui::IsKeyPressed(ImGuiKey_GamepadDpadDown, false);
+        const bool groupNavigationInputDown = groupNavigationChord
+            && (ImGui::IsKeyDown(ImGuiKey_GamepadDpadUp)
+                || ImGui::IsKeyDown(ImGuiKey_GamepadDpadDown));
+
+        if (!g_requestedNavigationGroup.empty()
+            && std::find(
+                g_navigationGroups.cbegin(),
+                g_navigationGroups.cend(),
+                g_requestedNavigationGroup) == g_navigationGroups.cend())
+        {
+            g_requestedNavigationGroup.clear();
+        }
+
+        if (!g_navigationGroups.empty() && (previousGroupPressed || nextGroupPressed))
+        {
+            auto currentGroup = std::find(
+                g_navigationGroups.cbegin(),
+                g_navigationGroups.cend(),
+                g_currentNavigationGroup);
+
+            size_t requestedGroupIndex = 0;
+            if (currentGroup == g_navigationGroups.cend())
+            {
+                requestedGroupIndex = previousGroupPressed ? g_navigationGroups.size() - 1 : 0;
+            }
+            else
+            {
+                const size_t currentGroupIndex = static_cast<size_t>(currentGroup - g_navigationGroups.cbegin());
+                requestedGroupIndex = previousGroupPressed
+                    ? (currentGroupIndex + g_navigationGroups.size() - 1) % g_navigationGroups.size()
+                    : (currentGroupIndex + 1) % g_navigationGroups.size();
+            }
+
+            g_requestedNavigationGroup = g_navigationGroups[requestedGroupIndex];
+            g_navigationGroupInputActive = true;
+            ImGui::GetIO().ConfigFlags &= ~ImGuiConfigFlags_NavEnableGamepad;
+        }
+        else if (g_navigationGroupInputActive && !groupNavigationInputDown)
+        {
+            ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+            g_navigationGroupInputActive = false;
+        }
+
+        g_navigationGroups.clear();
     }
 
     //--------------------------------------------------------------------------------------
@@ -324,11 +411,11 @@ namespace ImGuiAtg
         // with FooterItem() before calling EndFooter().
     }
 
-    bool FooterItem(const char* text)
+    bool FooterItem(const char* text, bool clickable)
     {
         ControllerText(text);
-        ImGui::SameLine(0, Scaled(80.0f));
-        if (ImGui::IsItemHovered())
+        ImGui::SameLine(0, Scaled(40.0f));
+        if (clickable && ImGui::IsItemHovered())
         {
             ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
             if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))

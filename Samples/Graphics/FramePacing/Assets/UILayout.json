@@ -1,0 +1,509 @@
+﻿{
+  "styles": [
+    {
+      "classId": "SpriteStyle",
+      "id": "background_panel_gray",
+      "colorUsage": "override",
+      "color": [ 25, 25, 25, 0.75 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "info_panel_gray",
+      "colorUsage": "override",
+      "color": [ 25, 25, 25, 0.80 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "legend_panel_gray",
+      "colorUsage": "override",
+      "color": [ 25, 25, 25, 0.85 ]
+    },
+    {
+      "classId": "SpriteStyle",
+      "id": "graph_panel_gray",
+      "colorUsage": "override",
+      "color": [ 25, 25, 25, 0.95 ]
+    },
+    {
+      "classId": "TextStyle",
+      "id": "label_text",
+      "colorUsage": "override",
+      "color": [ 140, 198, 199, 1.0 ],
+      "verticalAlign": "middle"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "highlight_label_text",
+      "colorUsage": "override",
+      "color": [ 219, 73, 28, 1.0 ],
+      "verticalAlign": "middle"
+    },
+    {
+      "classId": "TextStyle",
+      "id": "legend_text",
+      "colorUsage": "override",
+      "color": [ 140, 198, 199, 1.0 ],
+      "verticalAlign": "middle",
+      "horizontalAlign": "center",
+      "legendFont": "Assets/Fonts/XboxOneControllerLegendSmall"
+    }
+  ],
+  "layout": {
+    "classId": "Panel",
+    "id": "root",
+    "positioningAnchor": [ "left", "top" ],
+    "position": [ 0, 0 ],
+    "sizingAnchor": [ "left", "top" ],
+    "size": [ 1920, 1080 ],
+    "style": {
+      "classId": "SpriteStyle",
+      "colorUsage": "override",
+      "color": [ 0, 0, 0, 0.0 ]
+    },
+    "childElements": [
+      {
+        "classId": "Panel",
+        "id": "stats_panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 785, 0 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 946, 460 ],
+        "styleId": "background_panel_gray",
+        "childElements": [
+          {
+            "classId": "Panel",
+            "id": "frame_time_panel",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 14, 14 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 570, 134 ],
+            "styleId": "graph_panel_gray"
+          },
+          {
+            "classId": "Panel",
+            "id": "fps_label_background",
+            "positioningAnchor": [ "right", "top" ],
+            "position": [ -199, 14 ],
+            "sizingAnchor": [ "right", "top" ],
+            "size": [ 149, 134 ],
+            "styleId": "info_panel_gray",
+            "childElements": [
+              {
+                "classId": "StaticText",
+                "id": "fps_label",
+                "positioningAnchor": [ "right", "top" ],
+                "position": [ -10, 5 ],
+                "sizingAnchor": [ "right", "top" ],
+                "size": [ 100, 124 ],
+                "text": "average\nfps",
+                "style": {
+                  "classId": "TextStyle",
+                  "inheritsFromId": "label_text",
+                  "horizontalAlign": "right"
+                }
+              }
+            ]
+          },
+          {
+            "classId": "Panel",
+            "id": "fps_num_background",
+            "positioningAnchor": [ "right", "top" ],
+            "position": [ 0, 14 ],
+            "sizingAnchor": [ "right", "top" ],
+            "size": [ 199, 134 ],
+            "styleId": "graph_panel_gray",
+            "childElements": [
+              {
+                "classId": "StaticText",
+                "id": "fps_num",
+                "positioningAnchor": [ "left", "top" ],
+                "position": [ 10, 5 ],
+                "sizingAnchor": [ "left", "top" ],
+                "size": [ 90, 124 ],
+                "text": "",
+                "style": {
+                  "classId": "TextStyle",
+                  "inheritsFromId": "highlight_label_text",
+                  "size": 48
+                }
+              }
+            ]
+          },
+          {
+            "classId": "Panel",
+            "id": "latency_panel",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 14, 162 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 570, 134 ],
+            "styleId": "graph_panel_gray"
+          },
+          {
+            "classId": "Panel",
+            "id": "latency_label_background",
+            "positioningAnchor": [ "right", "top" ],
+            "position": [ -199, 162 ],
+            "sizingAnchor": [ "right", "top" ],
+            "size": [ 149, 134 ],
+            "styleId": "info_panel_gray",
+            "childElements": [
+              {
+                "classId": "StaticText",
+                "id": "latency_label",
+                "positioningAnchor": [ "right", "top" ],
+                "position": [ -10, 5 ],
+                "sizingAnchor": [ "right", "top" ],
+                "size": [ 100, 124 ],
+                "text": "ideal\nlatency (ms)",
+                "style": {
+                  "classId": "TextStyle",
+                  "inheritsFromId": "label_text",
+                  "horizontalAlign": "right"
+                }
+              }
+            ]
+          },
+          {
+            "classId": "Panel",
+            "id": "latency_num_background",
+            "positioningAnchor": [ "right", "top" ],
+            "position": [ 0, 162 ],
+            "sizingAnchor": [ "right", "top" ],
+            "size": [ 199, 134 ],
+            "styleId": "graph_panel_gray",
+            "childElements": [
+              {
+                "classId": "StaticText",
+                "id": "latency_num",
+                "positioningAnchor": [ "left", "top" ],
+                "position": [ 10, 5 ],
+                "sizingAnchor": [ "left", "top" ],
+                "size": [ 90, 124 ],
+                "text": "",
+                "style": {
+                  "classId": "TextStyle",
+                  "inheritsFromId": "highlight_label_text",
+                  "size": 48
+                }
+              }
+            ]
+          },
+          {
+            "classId": "Panel",
+            "id": "margin_panel",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 14, 308 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 570, 134 ],
+            "styleId": "graph_panel_gray"
+          },
+          {
+            "classId": "Panel",
+            "id": "margin_label_background",
+            "positioningAnchor": [ "right", "top" ],
+            "position": [ -199, 308 ],
+            "sizingAnchor": [ "right", "top" ],
+            "size": [ 149, 134 ],
+            "styleId": "info_panel_gray",
+            "childElements": [
+              {
+                "classId": "StaticText",
+                "id": "margin_label",
+                "positioningAnchor": [ "right", "top" ],
+                "position": [ -10, 5 ],
+                "sizingAnchor": [ "right", "top" ],
+                "size": [ 100, 124 ],
+                "text": "latency\nmargin (ms)",
+                "style": {
+                  "classId": "TextStyle",
+                  "inheritsFromId": "label_text",
+                  "horizontalAlign": "right"
+                }
+              }
+            ]
+          },
+          {
+            "classId": "Panel",
+            "id": "margin_num_background",
+            "positioningAnchor": [ "right", "top" ],
+            "position": [ 0, 308 ],
+            "sizingAnchor": [ "right", "top" ],
+            "size": [ 199, 134 ],
+            "styleId": "graph_panel_gray",
+            "childElements": [
+              {
+                "classId": "StaticText",
+                "id": "margin_num",
+                "positioningAnchor": [ "left", "top" ],
+                "position": [ 10, 5 ],
+                "sizingAnchor": [ "left", "top" ],
+                "size": [ 90, 124 ],
+                "text": "",
+                "style": {
+                  "classId": "TextStyle",
+                  "inheritsFromId": "highlight_label_text",
+                  "size": 48
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "classId": "Panel",
+        "id": "timelines_panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 15, 480 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 1700, 515 ],
+        "styleId": "background_panel_gray",
+        "childElements": [
+          {
+            "classId": "Panel",
+            "id": "cpu_update_panel",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 15, 15 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 1670, 85 ],
+            "styleId": "graph_panel_gray"
+          },
+          {
+            "classId": "Panel",
+            "id": "cpu_render_panel",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 15, 115 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 1670, 85 ],
+            "styleId": "graph_panel_gray"
+          },
+          {
+            "classId": "Panel",
+            "id": "gpu_graphics_panel",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 15, 215 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 1670, 85 ],
+            "styleId": "graph_panel_gray"
+          },
+          {
+            "classId": "Panel",
+            "id": "gpu_compute_panel",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 15, 315 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 1670, 85 ],
+            "styleId": "graph_panel_gray"
+          },
+          {
+            "classId": "Panel",
+            "id": "flip_panel",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 15, 415 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 1670, 85 ],
+            "styleId": "graph_panel_gray"
+          }
+        ]
+      },
+      {
+        "classId": "Panel",
+        "id": "control_panel",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 0, 0 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 770, 460 ],
+        "styleId": "background_panel_gray",
+        "childElements": [
+          {
+            "classId": "Panel",
+            "id": "x_legend",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 15, 100 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 175, 145 ],
+            "styleId": "legend_panel_gray",
+            "childElements": [
+              {
+                "classId": "StaticText",
+                "id": "x_legend_text",
+                "positioningAnchor": [ "left", "top" ],
+                "position": [ 0, 0 ],
+                "text": "Frame load\nauto/manual\n[X]",
+                "isLegend": true,
+                "styleId": "legend_text"
+              },
+              {
+                "classId": "Panel",
+                "id": "x_legend_border",
+                "positioningAnchor": [ "right", "top" ],
+                "position": [ 0, 0 ],
+                "sizingAnchor": [ "right", "top" ],
+                "size": [ 3, 145 ],
+                "style": {
+                  "classId": "SpriteStyle",
+                  "colorUsage": "override",
+                  "color": [ 122, 104, 238, 1.0 ]
+                }
+              }
+            ]
+          },
+          {
+            "classId": "Panel",
+            "id": "a_legend",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 15, 250 ],
+            "sizingAnchor": [ "left", "top" ],
+            "size": [ 175, 145 ],
+            "styleId": "legend_panel_gray",
+            "childElements": [
+              {
+                "classId": "StaticText",
+                "id": "a_legend_text",
+                "positioningAnchor": [ "left", "top" ],
+                "position": [ 0, 0 ],
+                "text": "Frame pacing\nauto/manual\n[A]",
+                "isLegend": true,
+                "styleId": "legend_text"
+              },
+              {
+                "classId": "Panel",
+                "id": "a_legend_border",
+                "positioningAnchor": [ "right", "top" ],
+                "position": [ 0, 0 ],
+                "sizingAnchor": [ "right", "top" ],
+                "size": [ 3, 145 ],
+                "style": {
+                  "classId": "SpriteStyle",
+                  "colorUsage": "override",
+                  "color": [ 34, 139, 34, 1.0 ]
+                }
+              }
+            ]
+          },
+          {
+            "classId": "Panel",
+            "id": "menu_panel",
+            "positioningAnchor": [ "right", "bottom" ],
+            "position": [ -15, -15 ],
+            "sizingAnchor": [ "right", "bottom" ],
+            "size": [ 550, 380 ],
+            "styleId": "legend_panel_gray"
+          },
+          {
+            "classId": "StaticText",
+            "id": "navigate_legend_text",
+            "positioningAnchor": [ "right", "top" ],
+            "position": [ -15, 10 ],
+            "sizingAnchor": [ "right", "top" ],
+            "size": [ 550, 50 ],
+            "text": "[LThumb] Navigate",
+            "isLegend": true,
+            "styleId": "legend_text"
+          }
+        ]
+      },
+      {
+        "classId": "Panel",
+        "id": "rs_legend",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 593, 1007 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 224, 52 ],
+        "styleId": "legend_panel_gray",
+        "childElements": [
+          {
+            "classId": "StaticText",
+            "id": "rs_legend_text",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 0, 0 ],
+            "text": "[RThumb] Pan left/right",
+            "isLegend": true,
+            "styleId": "legend_text"
+          }
+        ]
+      },
+      {
+        "classId": "Panel",
+        "id": "ltrt_legend",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 905, 1007 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 224, 52 ],
+        "styleId": "legend_panel_gray",
+        "childElements": [
+          {
+            "classId": "StaticText",
+            "id": "ltrt_legend_text",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 0, 0 ],
+            "text": "[LT]/[RT] Zoom out/in",
+            "isLegend": true,
+            "styleId": "legend_text"
+          }
+        ]
+      },
+      {
+        "classId": "Panel",
+        "id": "b_legend",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 1217, 1007 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 224, 52 ],
+        "styleId": "legend_panel_gray",
+        "childElements": [
+          {
+            "classId": "StaticText",
+            "id": "b_legend_text",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 0, 0 ],
+            "text": "[B] Pause/Resume",
+            "isLegend": true,
+            "styleId": "legend_text"
+          }
+        ]
+      },
+      {
+        "classId": "Panel",
+        "id": "exit_legend",
+        "positioningAnchor": [ "left", "top" ],
+        "position": [ 1529, 1007 ],
+        "sizingAnchor": [ "left", "top" ],
+        "size": [ 112, 52 ],
+        "styleId": "legend_panel_gray",
+        "childElements": [
+          {
+            "classId": "StaticText",
+            "id": "exit_legend_text",
+            "positioningAnchor": [ "left", "top" ],
+            "position": [ 0, 0 ],
+            "text": "[View] Exit",
+            "isLegend": true,
+            "styleId": "legend_text"
+          }
+        ]
+      },
+      {
+        "classId": "Panel",
+        "id": "tear_indicator_background",
+        "positioningAnchor": [ "right", "top" ],
+        "position": [ 0, 0 ],
+        "sizingAnchor": [ "right", "top" ],
+        "size": [ 189, 1080 ],
+        "styleId": "background_panel_gray"
+      },
+      {
+        "classId": "Panel",
+        "id": "tear_indicator_border",
+        "positioningAnchor": [ "right", "top" ],
+        "position": [ -189, 0 ],
+        "sizingAnchor": [ "right", "top" ],
+        "size": [ 3, 1080 ],
+        "style": {
+          "classId": "SpriteStyle",
+          "colorUsage": "override",
+          "color": [ 140, 198, 199, 1.0 ]
+        }
+      }
+    ]
+  }
+}

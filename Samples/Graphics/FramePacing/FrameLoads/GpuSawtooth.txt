@@ -1,0 +1,7 @@
+// GPU graphics time goes over based on a sawtooth pattern
+Period: 70
+CpuUpdate: 70 10.0
+CpuRender: 70 10.0
+CpuGpuLag: 70 2.0
+GpuGraphics: 10 16.0 10 17.0 10 18.0 10 19.0 10 18.0 10 17.0 10 16.0 
+GpuCompute: 70 1.0

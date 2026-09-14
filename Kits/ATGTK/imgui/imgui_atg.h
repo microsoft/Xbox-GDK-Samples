@@ -76,13 +76,24 @@ namespace ImGuiAtg
     void EndFooter();
 
     // FooterItem() renders one footer hint between BeginFooter() and EndFooter().
-    bool FooterItem(const char* text);
+    bool FooterItem(const char* text, bool clickable = true);
 
     // Handles standard sample input -- the same shortcuts that DrawFooter() advertises:
     //
     //   Alt+F4 / LB+RB+View+Menu    -- exit the app (Alt+F4 is handled by Windows)
     //   F2     / LB+RB+Y            -- toggle light/dark theme
     void HandleStandardInput();
+
+    // Ordered gamepad navigation groups. LB+RB+D-pad up/down moves between the groups
+    // submitted during Draw(), in submission order. When a group is selected, its first
+    // navigable item receives focus.
+    //
+    // Group IDs must be unique within a frame. Groups cannot be nested, and every
+    // BeginNavigationGroup() must have a matching EndNavigationGroup(). Conditional groups
+    // participate only on frames where they are submitted. The standard frame loop must call
+    // HandleStandardInput() once after ImGui::NewFrame() and before submitting groups.
+    void BeginNavigationGroup(const char* id);
+    void EndNavigationGroup();
 
     // Splitter -- splits the current region into two resizable panels.
     //

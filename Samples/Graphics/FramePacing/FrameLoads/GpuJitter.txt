@@ -1,0 +1,7 @@
+// GPU graphics time jitters up and down
+Period: 2
+CpuUpdate: 2 10.0
+CpuRender: 2 13.0
+CpuGpuLag: 2 2.0
+GpuGraphics: 1 15.0 1 17.0
+GpuCompute: 2 1.0
