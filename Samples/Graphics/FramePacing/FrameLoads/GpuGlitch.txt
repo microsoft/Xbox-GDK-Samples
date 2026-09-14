@@ -1,0 +1,7 @@
+// GPU graphics time goes over budget for a frame
+Period: 60
+CpuUpdate: 60 14.0
+CpuRender: 60 13.0
+CpuGpuLag: 60 2.0
+GpuGraphics: 1 20.0 59 15.0
+GpuCompute: 60 1.0

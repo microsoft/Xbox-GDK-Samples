@@ -57,6 +57,7 @@ Following is a list of categories for the samples.
 | __DynamicLOD__ | This sample demonstrates how to leverage amplification shaders to do per-instance frustum culling and mesh level-of-detail (LOD) selection entirely on the GPU for an arbitrary number of instances on Xbox Series X\|S and PC. | ✓ | ✓ | 
 | __ExecuteIndirect__ | This sample demonstrates usage of DirectX 12's ExecuteIndirect API for asynchronously building rendering commands. | ✓ |  | 
 | __FastBlockCompress__ | This sample demonstrates how you can use DirectCompute to perform fast texture compression at run time to the BC1, BC3, and BC5 formats based on the classic Fast Block Compression algorithm on Xbox. | ✓ |  | 
+| __FramePacing__ | This sample demonstrates how CPU work, GPU work, swap chain buffers, and Xbox frame scheduling interact to affect frame rate, latency, and presentation margin. | ✓ |  | 
 | __GeometricExpansion__ | This sample demonstrates the geometric expansion capabilities of mesh shaders for Xbox Series X\|S and PC. | ✓ | ✓ | 
 | __HDR10__ | Switch a UHD TV into HDR mode and render a HDR10 scene with values higher than 1.0f, which will be displayed as brighter than white on a UHD TV using DirectX 12 on Xbox. | ✓ |  | 
 | __HDRCalibration__ | This sample switches an HDR TV to HDR mode and then presents the user with several calibration options to adjust the visible detail in brights and darks, the overall brightness and color saturation of the image. | ✓ |  | 
