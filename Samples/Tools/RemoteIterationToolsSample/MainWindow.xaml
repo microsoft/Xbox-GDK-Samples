@@ -5,12 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Remote Deployment" Height="961" Width="752"
-        Background="#FF1E1E24" WindowStartupLocation="CenterScreen">
+        Background="#FF1E1E24" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
     <Window.Resources>
         <SolidColorBrush x:Key="CardBackground" Color="#FF2C2C34"/>
         <SolidColorBrush x:Key="AccentBrush" Color="#FF4E9AF1"/>
         <Style TargetType="TextBlock">
             <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style x:Key="StepHeading" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="0 0 0 8"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+        <Style x:Key="GuidanceText" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#AAAAAA"/>
+            <Setter Property="Margin" Value="0 0 0 6"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>
         <Style TargetType="TextBox">
             <Setter Property="Margin" Value="0 4 0 12"/>
@@ -88,7 +100,7 @@
         </Style>
     </Window.Resources>
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
         <Grid Margin="28">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -97,7 +109,7 @@
             </Grid.RowDefinitions>
 
             <!-- Header -->
-            <TextBlock Grid.Row="0" Text="Remote Iteration Tools" FontSize="26" FontWeight="SemiBold"/>
+            <TextBlock Grid.Row="0" Text="Remote Iteration Tools" FontSize="26" FontWeight="SemiBold" TextWrapping="Wrap"/>
 
             <!-- Inputs Card -->
             <Border Grid.Row="1" Background="{StaticResource CardBackground}" Padding="20" CornerRadius="10" Margin="0 20 0 16">
@@ -117,78 +129,113 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <StackPanel Grid.ColumnSpan="2" Grid.Row="0">
-                        <TextBlock Text="Device" FontWeight="Bold" Margin="0 0 0 4"/>
-                        <TextBox x:Name="DeviceIpTextBox" ToolTip="e.g. 192.168.1.25" Width="224" HorizontalAlignment="Left" AutomationProperties.Name="Device name or IP address"/>
+                    <StackPanel x:Name="DeviceInputs" Grid.ColumnSpan="2" Grid.Row="0">
+                        <TextBlock Text="1. Choose a paired device" Style="{StaticResource StepHeading}"/>
+                        <TextBlock Text="Device (IP address or host name)" FontWeight="Bold" Margin="0 0 0 4"/>
+                        <TextBlock Text="Use a target with Remote Tools running, already paired with this PC. Example: 192.168.1.100 or MyDevPC."
+                                   Style="{StaticResource GuidanceText}"/>
+                        <TextBox x:Name="DeviceIpTextBox" ToolTip="IP address or resolvable host name of an already-paired device. This sample does not discover or pair devices." Width="224" HorizontalAlignment="Left" AutomationProperties.Name="Device name or IP address"/>
                     </StackPanel>
 
-                    <StackPanel Grid.Row="1" Grid.Column="0" Margin="0 8 0 0">
-                        <TextBlock Text="Source Folder" FontWeight="Bold" Margin="0 0 0 4"/>
-                        <DockPanel>
-                            <TextBox x:Name="FolderPathTextBox" MinWidth="420" ToolTip="Type a path or use Browse to select a folder" Width="524" Height="40" AutomationProperties.Name="Source folder path"/>
-                            <Button Content="Browse" Click="BrowseFolder_Click" DockPanel.Dock="Left" MinWidth="100" Height="40" Margin="10,0,0,10" HorizontalAlignment="Left" AutomationProperties.Name="Browse for source folder"/>
-                        </DockPanel>
+                    <StackPanel x:Name="SourceInputs" Grid.Row="1" Grid.Column="0" Margin="0 8 0 0">
+                        <TextBlock Text="2. Deploy a local build" Style="{StaticResource StepHeading}"/>
+                        <TextBlock Text="Source Folder (this PC)" FontWeight="Bold" Margin="0 0 0 4"/>
+                        <TextBlock Text="Local folder containing your build, e.g. C:\Builds\MyGame." Style="{StaticResource GuidanceText}"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" MaxWidth="524"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="FolderPathTextBox" ToolTip="Type a path or use Browse to select a folder" Height="40" AutomationProperties.Name="Source folder path"/>
+                            <Button Grid.Column="1" Content="Browse" Click="BrowseFolder_Click" MinWidth="100" Height="40" Margin="10,0,0,10" HorizontalAlignment="Left" AutomationProperties.Name="Browse for source folder"/>
+                        </Grid>
                     </StackPanel>
 
-                    <StackPanel Grid.Row="2" Grid.Column="0" Margin="0 8 0 0">
-                        <TextBlock Text="Destination Folder" FontWeight="Bold" Margin="0 0 0 4"/>
-                        <DockPanel>
-                            <TextBox x:Name="DestinationPathTextBox" MinWidth="420" ToolTip="Remote destination relative to game root" Width="524" HorizontalAlignment="Left" AutomationProperties.Name="Destination folder path"/>
-                        </DockPanel>
+                    <StackPanel x:Name="DestinationInputs" Grid.Row="2" Grid.Column="0" Margin="0 8 0 0">
+                        <TextBlock Text="Destination Folder (device)" FontWeight="Bold" Margin="0 0 0 4"/>
+                        <TextBlock Text="Example: MyGame under the device's default Common Root, or an absolute path on the device."
+                                   Style="{StaticResource GuidanceText}"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" MaxWidth="524"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="DestinationPathTextBox" ToolTip="Remote destination relative to the device's default Common Root, or an absolute device path." AutomationProperties.Name="Destination folder path"/>
+                        </Grid>
                     </StackPanel>
 
-                    <Expander Grid.Row="3" Grid.ColumnSpan="2" Header="Advanced Options" IsExpanded="False" Margin="0 8 0 0" Foreground="White" Style="{StaticResource ArrowExpander}">
-                        <StackPanel Margin="0 8 0 0">
-                            <TextBlock Text="Include File Pattern" FontWeight="Bold" Margin="0 0 0 4" 
-                   ToolTip="Includes files that match the exact specified names. Wildcard characters * and ? are supported. List of patterns can be separated by semicolon (;). Files with spaces in the name must be quoted. Default is everything is included."/>
-                            <TextBox x:Name="IncludeFilePatternTextBox" MinWidth="420" Width="524" HorizontalAlignment="Left" AutomationProperties.Name="Include file pattern" 
-                  ToolTip="Includes files that match the exact specified names. Wildcard characters * and ? are supported. List of patterns can be separated by semicolon (;). Files with spaces in the name must be quoted. Default is everything is included."/>
+                    <Expander x:Name="AdvancedOptions" Grid.Row="3" Grid.ColumnSpan="2" Header="Advanced Options" IsExpanded="False" Margin="0 8 0 0" Foreground="White" Style="{StaticResource ArrowExpander}">
+                        <Grid Margin="0 8 0 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" MaxWidth="524"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="Optional copy filters. Leave these blank for an unfiltered first deployment; blank attribute masks mean 0."
+                                           Style="{StaticResource GuidanceText}"/>
+                                <TextBlock Text="Include File Pattern" FontWeight="Bold" Margin="0 0 0 4"
+                                           ToolTip="Includes files that match the specified names. Wildcards * and ? and semicolon-separated patterns are supported. Default includes everything. Exclusions take precedence over inclusions."/>
+                                <TextBox x:Name="IncludeFilePatternTextBox" AutomationProperties.Name="Include file pattern"
+                                         ToolTip="Includes files that match the specified names. Wildcards * and ? and semicolon-separated patterns are supported. Default includes everything. Exclusions take precedence over inclusions."/>
 
-                            <TextBlock Text="Exclude File Pattern" FontWeight="Bold" Margin="0 0 0 4" 
-                  ToolTip="Excludes files that match the exact specified names. Wildcard characters * and ? are supported. List of patterns can be separated by semicolon (;). Files with spaces in the name must be quoted. Default is empty (no excluded files)."/>
-                            <TextBox x:Name="ExcludeFilePatternTextBox" MinWidth="420" Width="524" HorizontalAlignment="Left" AutomationProperties.Name="Exclude file pattern" 
-                  ToolTip="Excludes files that match the exact specified names. Wildcard characters * and ? are supported. List of patterns can be separated by semicolon (;). Files with spaces in the name must be quoted. Default is empty (no excluded files)."/>
+                                <TextBlock Text="Exclude File Pattern" FontWeight="Bold" Margin="0 0 0 4"
+                                           ToolTip="Excludes files that match the specified names. Wildcards * and ? and semicolon-separated patterns are supported. Default excludes nothing. Exclusions take precedence over inclusions."/>
+                                <TextBox x:Name="ExcludeFilePatternTextBox" AutomationProperties.Name="Exclude file pattern"
+                                         ToolTip="Excludes files that match the specified names. Wildcards * and ? and semicolon-separated patterns are supported. Default excludes nothing. Exclusions take precedence over inclusions."/>
 
-                            <TextBlock Text="Exclude Directory Pattern" FontWeight="Bold" Margin="0 0 0 4" 
-                  ToolTip="Excludes directories that match the specified names and paths. Wildcard characters * and ? are supported. Default is empty, no excluded directories from being copied."/>
-                            <TextBox x:Name="ExcludeDirPatternTextBox" MinWidth="420" Width="524" HorizontalAlignment="Left" AutomationProperties.Name="Exclude directory pattern" 
-                  ToolTip="Excludes directories that match the specified names and paths. Wildcard characters * and ? are supported. Default is empty, no excluded directories from being copied."/>
+                                <TextBlock Text="Exclude Directory Pattern" FontWeight="Bold" Margin="0 0 0 4"
+                                           ToolTip="Excludes directories by name, not path. Wildcards * and ? are supported. Default excludes no directories. Exclusions take precedence over inclusions."/>
+                                <TextBox x:Name="ExcludeDirPatternTextBox" AutomationProperties.Name="Exclude directory pattern"
+                                         ToolTip="Excludes directories by name, not path. Wildcards * and ? are supported. Default excludes no directories. Exclusions take precedence over inclusions."/>
 
-                            <TextBlock Text="Include File Attributes" FontWeight="Bold" Margin="0 0 0 4" 
-                  ToolTip="Include files for which any of the specified file attributes are set. Supported options are FILE_ATTRIBUTE_READONLY, FILE_ATTRIBUTE_ARCHIVE, FILE_ATTRIBUTE_SYSTEM, and FILE_ATTRIBUTE_HIDDEN. Default is 0 (All attributes are included)."/>
-                            <TextBox x:Name="IncludeFileAttributesTextBox" MinWidth="420" Width="524" HorizontalAlignment="Left" AutomationProperties.Name="Include file attributes" 
-                  ToolTip="Include files for which any of the specified file attributes are set. Supported options are FILE_ATTRIBUTE_READONLY, FILE_ATTRIBUTE_ARCHIVE, FILE_ATTRIBUTE_SYSTEM, and FILE_ATTRIBUTE_HIDDEN. Default is 0 (All attributes are included)."/>
+                                <TextBlock Text="Include File Attributes" FontWeight="Bold" Margin="0 0 0 4"
+                                           ToolTip="Decimal uint mask (0 to 4294967295). Includes files with any specified attribute: READONLY (1), HIDDEN (2), SYSTEM (4), ARCHIVE (32). Default 0 includes all attributes. Exclusions take precedence."/>
+                                <TextBox x:Name="IncludeFileAttributesTextBox" AutomationProperties.Name="Include file attributes"
+                                         ToolTip="Decimal uint mask (0 to 4294967295). Includes files with any specified attribute: READONLY (1), HIDDEN (2), SYSTEM (4), ARCHIVE (32). Default 0 includes all attributes. Exclusions take precedence."/>
 
-                            <TextBlock Text="Exclude File Attributes" FontWeight="Bold" Margin="0 0 0 4" 
-                  ToolTip="Exclude files for which any of the specified file attributes are set. Supported options are FILE_ATTRIBUTE_READONLY, FILE_ATTRIBUTE_ARCHIVE, FILE_ATTRIBUTE_SYSTEM, and FILE_ATTRIBUTE_HIDDEN. Default is 0 (no attributes excluded)."/>
-                            <TextBox x:Name="ExcludeFileAttributesTextBox" MinWidth="420" Width="524" HorizontalAlignment="Left" AutomationProperties.Name="Exclude file attributes" 
-                  ToolTip="Exclude files for which any of the specified file attributes are set. Supported options are FILE_ATTRIBUTE_READONLY, FILE_ATTRIBUTE_ARCHIVE, FILE_ATTRIBUTE_SYSTEM, and FILE_ATTRIBUTE_HIDDEN. Default is 0 (no attributes excluded)."/>
-                        </StackPanel>
+                                <TextBlock Text="Exclude File Attributes" FontWeight="Bold" Margin="0 0 0 4"
+                                           ToolTip="Decimal uint mask (0 to 4294967295). Excludes files with any specified attribute: READONLY (1), HIDDEN (2), SYSTEM (4), ARCHIVE (32). Default 0 excludes no attributes. Exclusions take precedence."/>
+                                <TextBox x:Name="ExcludeFileAttributesTextBox" AutomationProperties.Name="Exclude file attributes"
+                                         ToolTip="Decimal uint mask (0 to 4294967295). Excludes files with any specified attribute: READONLY (1), HIDDEN (2), SYSTEM (4), ARCHIVE (32). Default 0 excludes no attributes. Exclusions take precedence."/>
+                            </StackPanel>
+                        </Grid>
                     </Expander>
 
-                    <StackPanel Grid.Row="4" Grid.Column="0" Margin="0 8 0 0" Orientation="Horizontal">
-                        <Button Content="Deploy" MinWidth="120" Height="35" HorizontalAlignment="Left" Click="Deploy_Click" Grid.ColumnSpan="2" AutomationProperties.Name="Deploy build"/>
-                        <Button Content="Cancel" MinWidth="120" Height="35" HorizontalAlignment="Left" Click="Cancel_Click" Grid.ColumnSpan="2" AutomationProperties.Name="Cancel deployment"/>
+                    <StackPanel Grid.Row="4" Grid.Column="0" Margin="0 8 0 0">
+                        <TextBlock Text="Deploy copies the build, then validates its remote path. It does not install or register the game. Cancel requests cancellation; wait for the final result."
+                                   Style="{StaticResource GuidanceText}"/>
+                        <WrapPanel>
+                            <Button x:Name="DeployButton" Content="Deploy" MinWidth="120" Height="35" HorizontalAlignment="Left" Click="Deploy_Click" Grid.ColumnSpan="2" AutomationProperties.Name="Deploy build"/>
+                            <Button x:Name="CancelButton" Content="Cancel" IsEnabled="False" MinWidth="120" Height="35" HorizontalAlignment="Left" Click="Cancel_Click" Grid.ColumnSpan="2" AutomationProperties.Name="Cancel deployment" ToolTip="Request copy cancellation, then wait for the native result. This does not confirm a complete deployment."/>
+                        </WrapPanel>
                     </StackPanel>
 
                     <StackPanel Grid.Row="5" Grid.Column="0" Margin="0 8 0 0" x:Name="ProgressPanel" Visibility="Visible" Grid.ColumnSpan="2">
-                        <TextBlock x:Name="ProgressStatusText" Text="Deploy Progress" FontSize="12" Margin="0 0 0 4" Foreground="#AAAAAA"/>
+                        <TextBlock x:Name="ProgressStatusText" Text="Deploy Progress" FontSize="12" Margin="0 0 0 4" Foreground="#AAAAAA" TextWrapping="Wrap"/>
                         <ProgressBar x:Name="DeploymentProgressBar" HorizontalAlignment="Stretch" Height="20" Minimum="0" Maximum="100" Value="0" Background="#222" Foreground="{StaticResource AccentBrush}" BorderBrush="#555" BorderThickness="1" AutomationProperties.Name="Deployment progress"/>
                         <TextBlock x:Name="ProgressPercentText" Text="0%" FontSize="11" Margin="0 4 25 0" Foreground="#AAAAAA" HorizontalAlignment="Right"/>
                     </StackPanel>
 
-                    <StackPanel Grid.Row="6" Grid.Column="0" Margin="0 8 0 0" >
-                        <TextBlock Text="Executable to launch" FontWeight="Bold" Margin="0 0 0 4"/>
-                        <DockPanel>
-                            <TextBox x:Name="ExecutablePathTextBox" MinWidth="420" ToolTip="Remote path relative to game root" Width="524" HorizontalAlignment="Left" AutomationProperties.Name="Executable path"/>
-                        </DockPanel>
+                    <StackPanel x:Name="ExecutableInputs" Grid.Row="6" Grid.Column="0" Margin="0 8 0 0" >
+                        <TextBlock Text="3. Launch and control the remote game" Style="{StaticResource StepHeading}"/>
+                        <TextBlock Text="Executable to launch (device)" FontWeight="Bold" Margin="0 0 0 4"/>
+                        <TextBlock Text="Example: MyGame\MyGame.exe. Relative paths start at the device's default Common Root, not Destination Folder. Absolute device paths also work."
+                                   Style="{StaticResource GuidanceText}"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" MaxWidth="524"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="ExecutablePathTextBox" ToolTip="Remote executable relative to the device's default Common Root, or an absolute device path. This is not relative to Destination Folder." AutomationProperties.Name="Executable path"/>
+                        </Grid>
                     </StackPanel>
 
-                    <StackPanel Grid.Row="7" Grid.Column="0" Margin="0 8 0 0" Orientation="Horizontal">
-                        <Button Content="Launch" MinWidth="120" Height="35" HorizontalAlignment="Left" Click="Launch_Click" Grid.ColumnSpan="2" AutomationProperties.Name="Launch game"/>
-                        <Button Content="Launch Suspended" MinWidth="120" Height="35" HorizontalAlignment="Left" Click="LaunchSuspended_Click" Grid.ColumnSpan="2" AutomationProperties.Name="Launch game suspended"/>
-                        <Button Content="Resume" MinWidth="120" Height="35" HorizontalAlignment="Left" Click="Resume_Click" Grid.ColumnSpan="2" AutomationProperties.Name="Resume game"/>
-                        <Button Content="Terminate" MinWidth="120" Height="35" HorizontalAlignment="Left" Click="Terminate_Click" Grid.ColumnSpan="2" AutomationProperties.Name="Terminate game"/>
+                    <StackPanel x:Name="GameActions" Grid.Row="7" Grid.Column="0" Margin="0 8 0 0">
+                        <TextBlock Text="Deploy first, or use an existing build on the device. Choose Launch, or Launch Suspended then Resume. Terminate stops the last game launched through this API on that device."
+                                   Style="{StaticResource GuidanceText}"/>
+                        <WrapPanel>
+                            <Button Content="Launch" MinWidth="120" Height="35" HorizontalAlignment="Left" Click="Launch_Click" Grid.ColumnSpan="2" AutomationProperties.Name="Launch game"/>
+                            <Button Content="Launch Suspended" MinWidth="120" Height="35" HorizontalAlignment="Left" Click="LaunchSuspended_Click" Grid.ColumnSpan="2" AutomationProperties.Name="Launch game suspended"/>
+                            <Button Content="Resume" MinWidth="120" Height="35" HorizontalAlignment="Left" Click="Resume_Click" Grid.ColumnSpan="2" AutomationProperties.Name="Resume game"/>
+                            <Button Content="Terminate" MinWidth="120" Height="35" HorizontalAlignment="Left" Click="Terminate_Click" Grid.ColumnSpan="2" AutomationProperties.Name="Terminate game"/>
+                        </WrapPanel>
                     </StackPanel>
                 </Grid>
             </Border>
@@ -200,9 +247,13 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Text="Command Output" FontWeight="Bold" Margin="0 0 0 8"/>
+                    <StackPanel>
+                        <TextBlock Text="Command Output" FontWeight="Bold" Margin="0 0 0 8"/>
+                        <TextBlock Text="Read the final result here and in the status above. Progress alone does not confirm completion."
+                                   Style="{StaticResource GuidanceText}"/>
+                    </StackPanel>
 
-                    <TextBox x:Name="OutputTextBox" Grid.Row="1" MaxHeight="300" TextWrapping="Wrap" IsReadOnly="True" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Background="#00111111" BorderThickness="0" FontFamily="Consolas" Foreground="#DDDDDD" AutomationProperties.Name="Command output"/>
+                    <TextBox x:Name="OutputTextBox" Grid.Row="1" MaxHeight="300" TextWrapping="Wrap" IsReadOnly="True" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Background="#00111111" BorderThickness="0" FontFamily="Consolas" Foreground="#DDDDDD" AutomationProperties.Name="Command output"/>
                 </Grid>
             </Border>
         </Grid>

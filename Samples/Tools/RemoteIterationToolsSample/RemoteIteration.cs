@@ -25,8 +25,6 @@ namespace RemoteIterationToolsSample
         {
             return Task.Run(() =>
             {
-                Thread.CurrentThread.Name = "CopyAsync Worker";
-
                 HRESULT hr;
                 unsafe
                 {
@@ -40,11 +38,14 @@ namespace RemoteIterationToolsSample
                         nativeSearchOptions.excludeDirPattern = new PCSTR(excludeDirPatternBytes);
                         nativeSearchOptions.includeFileAttributes = searchOptions?.IncludeFileAttributes ?? 0;
                         nativeSearchOptions.excludeFileAttributes = searchOptions?.ExcludeFileAttributes ?? 0;
+                        nativeSearchOptions.includeDirectoryAttributes = searchOptions?.IncludeDirectoryAttributes ?? 0;
+                        nativeSearchOptions.excludeDirectoryAttributes = searchOptions?.ExcludeDirectoryAttributes ?? 0;
 
+                        // CsWin32's string overload uses UTF-8 on .NET 8, but does not append NUL.
                         hr = PInvoke.WdRemoteCopy(
-                            remoteDevice,
-                            localSourcePath,
-                            remoteDestPath,
+                            remoteDevice + '\0',
+                            localSourcePath + '\0',
+                            remoteDestPath + '\0',
                             copyOptions,
                             nativeSearchOptions,
                             statusCallbacks,
@@ -56,7 +57,8 @@ namespace RemoteIterationToolsSample
             });
         }
 
-        /* The WdRegisterRemoteXboxGame API registers a game on a remote device. */
+        /* WdRegisterRemoteXboxGame resolves and validates a remote folder path.
+         * It does not perform platform game registration. */
         public static Task<HRESULT> RegisterRemoteXboxGameAsync(
             string remoteDevice,
             string remoteFolderPath,
@@ -64,9 +66,16 @@ namespace RemoteIterationToolsSample
         {
             return Task.Run(() =>
             {
-                Thread.CurrentThread.Name = "RegisterAsync Worker";
-                HRESULT hr = PInvoke.WdRegisterRemoteXboxGame(remoteDevice, remoteFolderPath, commonRootAlias);
-                return hr;
+                unsafe
+                {
+                    fixed (byte* deviceBytes = Encoding.UTF8.GetBytes(remoteDevice + '\0'))
+                    fixed (byte* folderBytes = Encoding.UTF8.GetBytes(remoteFolderPath + '\0'))
+                    fixed (byte* aliasBytes = string.IsNullOrEmpty(commonRootAlias) ? null : Encoding.UTF8.GetBytes(commonRootAlias + '\0'))
+                    {
+                        return PInvoke.WdRegisterRemoteXboxGame(
+                            new PCSTR(deviceBytes), new PCSTR(folderBytes), new PCSTR(aliasBytes));
+                    }
+                }
             });
         }
 
@@ -78,9 +87,7 @@ namespace RemoteIterationToolsSample
         {
             return Task.Run(() =>
             {
-                Thread.CurrentThread.Name = "TerminateAsync Worker";
-
-                HRESULT hr = PInvoke.WdTerminateRemoteGame(remoteDevice);
+                HRESULT hr = PInvoke.WdTerminateRemoteGame(remoteDevice + '\0');
 
                 return hr;
             });
@@ -100,23 +107,25 @@ namespace RemoteIterationToolsSample
         {
             return Task.Run(() =>
             {
-                Thread.CurrentThread.Name = "LaunchAsync Worker";
-
                 unsafe
                 {
-                    uint processId;
-                    uint threadId;
-                    HRESULT hr;
-                    hr = PInvoke.WdLaunchRemoteGame(
-                        remoteDevice,
-                        remotePath,
-                        args,
-                        launchOptions,
-                        out processId,
-                        out threadId
-                        );
+                    fixed (byte* deviceBytes = Encoding.UTF8.GetBytes(remoteDevice + '\0'))
+                    fixed (byte* pathBytes = Encoding.UTF8.GetBytes(remotePath + '\0'))
+                    fixed (byte* argsBytes = string.IsNullOrEmpty(args) ? null : Encoding.UTF8.GetBytes(args + '\0'))
+                    {
+                        WdLaunchOptions nativeOptions = launchOptions.GetValueOrDefault();
+                        uint processId = 0;
+                        uint threadId = 0;
+                        HRESULT hr = PInvoke.WdLaunchRemoteGame(
+                            new PCSTR(deviceBytes),
+                            new PCSTR(pathBytes),
+                            new PCSTR(argsBytes),
+                            launchOptions.HasValue ? &nativeOptions : null,
+                            &processId,
+                            &threadId);
 
-                    return (hr, new ProcThreadId(processId, threadId));
+                        return (hr, new ProcThreadId(processId, threadId));
+                    }
                 }
             });
         }
@@ -128,8 +137,7 @@ namespace RemoteIterationToolsSample
         {
             return Task.Run(() =>
             {
-                Thread.CurrentThread.Name = "ResumeGameAsync Worker";
-                HRESULT hr = PInvoke.WdResumeRemoteGame(remoteDevice);
+                HRESULT hr = PInvoke.WdResumeRemoteGame(remoteDevice + '\0');
                 return hr;
             });
         }
@@ -137,18 +145,14 @@ namespace RemoteIterationToolsSample
 
         /* Cancels an ongoing WdRemoteCopy operation. This is a non-blocking call that signals the
          * copy operation to stop as soon as possible. */
-        public static Task CancelDeployAsync(WdCancellationHandleWrapper cancellationHandleWrapper)
+        public static HRESULT RequestCopyCancellation(WdCancellationHandleWrapper cancellationHandleWrapper)
         {
-            return Task.Run(() =>
+            if (cancellationHandleWrapper.Handle.IsInvalid)
             {
-                Thread.CurrentThread.Name = "CancelDeployAsync Worker";
-                if(cancellationHandleWrapper.Handle.IsInvalid)
-                {
-                    throw new ArgumentException("Invalid cancellation handle.");
-                }
+                throw new ArgumentException("Invalid cancellation handle.");
+            }
 
-                PInvoke.WdCancelRemoteCopy(cancellationHandleWrapper.Handle);
-            });
+            return PInvoke.WdCancelRemoteCopy(cancellationHandleWrapper.Handle);
         }
     }
 
