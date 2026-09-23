@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.GDK.RemoteIterationClientApi" Version="0.1.1-preview.26.3.27002" />
+    <PackageReference Include="Microsoft.GDK.RemoteIterationClientApi" Version="0.1.2-preview.26.9.9002" />
     <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.269">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

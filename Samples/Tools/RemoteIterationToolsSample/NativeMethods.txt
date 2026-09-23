@@ -7,3 +7,5 @@ WdLaunchRemoteGame
 WdResumeRemoteGame
 WdTerminateRemoteGame
 WdRegisterRemoteXboxGame
+WdDeleteRemoteFiles
+WdCancelRemoteDelete

@@ -144,7 +144,7 @@ namespace DX
 
             void BeginFrame(_In_ t_CommandList* commandList);
             void EndFrame(_In_ t_CommandList* commandList);
-            void ComputeFrame(_In_ t_CommandList* commandList, _Out_writes_(c_maxTimers) float* lastUpdatedValues);
+            void ComputeFrame(_In_ t_CommandList* commandList, _Inout_updates_(c_maxTimers) float* lastUpdatedValues);
 
             void Start(_In_ t_CommandList* commandList, uint32_t timerid = 0);
             void Stop(_In_ t_CommandList* commandList, uint32_t timerid = 0);

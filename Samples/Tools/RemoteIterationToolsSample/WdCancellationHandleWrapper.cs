@@ -17,7 +17,7 @@ namespace RemoteIterationToolsSample
             HRESULT hr = PInvoke.WdCreateCancellationHandle(out _handle);
             if (hr.Failed)
             {
-                throw new RemoteIterationException("Failed to create copy cancellation handle", hr);
+                throw new RemoteIterationException("Failed to create cancellation handle", hr);
             }
         }
 

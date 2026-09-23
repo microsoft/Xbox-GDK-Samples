@@ -18,7 +18,7 @@ class Sample final : public IXAudio2EngineCallback
 public:
 
     Sample() noexcept(false);
-    virtual ~Sample();
+    ~Sample();
 
     Sample(Sample&&) = delete;
     Sample& operator= (Sample&&) = delete;
