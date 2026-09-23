@@ -330,7 +330,7 @@ void GPUCommandListTimer<t_CommandList>::Frame::EndFrame(_In_ t_CommandList* /*c
 }
 
 template<typename t_CommandList>
-void GPUCommandListTimer<t_CommandList>::Frame::ComputeFrame(_In_ t_CommandList* commandList, _Out_writes_(c_maxTimers) float* lastUpdatedValues)
+void GPUCommandListTimer<t_CommandList>::Frame::ComputeFrame(_In_ t_CommandList* commandList, _Inout_updates_(c_maxTimers) float* lastUpdatedValues)
 {
 #if defined(_DEBUG) || defined(PROFILE)
     bool blocked = false;
@@ -341,7 +341,6 @@ void GPUCommandListTimer<t_CommandList>::Frame::ComputeFrame(_In_ t_CommandList*
         if (!m_used[j])
         {
             m_timing[j] = 0.f;
-            lastUpdatedValues[j] = 0.f;
             continue;
         }
 

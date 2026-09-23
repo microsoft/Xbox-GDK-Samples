@@ -1,4 +1,4 @@
-﻿# Microsoft Game Development Kit samples list
+# Microsoft Game Development Kit samples list
 
 ## Categories
 

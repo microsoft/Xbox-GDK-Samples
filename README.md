@@ -15,6 +15,12 @@ This repo contains game development samples written by the Microsoft Xbox Advanc
   * [Unity](gdk-samples-list.md#Unity)
   * [xCloud](gdk-samples-list.md#xCloud)
 
+## Other Samples
+
+For more samples, see [XBOX-Godot-NetRumble](https://github.com/microsoft/XBOX-Godot-NetRumble), and [XBOX-Godot-Sample](https://github.com/microsoft/XBOX-Godot-Sample).
+
+Legacy samples are also available at [DirectML Samples](https://github.com/microsoft/DirectML), [PlayFab-Samples](https://github.com/PlayFab/PlayFab-Samples), [Xbox-ATG-Samples](https://github.com/microsoft/Xbox-ATG-Samples), and [Xbox-LIVE-Samples](https://github.com/microsoft/xbox-live-samples).
+
 # Requirements
 
 * Visual Studio 2022 or later
@@ -63,10 +69,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 ## Trademarks
 
 This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
-
-## Other Samples
-
-For more ATG samples, see [DirectML Samples](https://github.com/microsoft/DirectML), [PlayFab-Samples](https://github.com/PlayFab/PlayFab-Samples), [Xbox-ATG-Samples](https://github.com/microsoft/Xbox-ATG-Samples), and [Xbox-LIVE-Samples](https://github.com/microsoft/xbox-live-samples).
 
 ## Samples list by category
 
