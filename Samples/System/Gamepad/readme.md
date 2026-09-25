@@ -31,7 +31,7 @@ interface (using the repository's `ImGuiAtg` framework) with a tab per connected
 - **Multiple gamepad support** -- each connected gamepad gets its own tab
 - **Gamepad state reading** -- buttons, analog triggers, and thumbstick axes
 - **Visual analog indicators** -- vertical trigger bars and 2D thumbstick crosshairs with live values
-- **Sensor/motion data** -- accelerometer, gyroscope, and orientation quaternion (requires a motion-capable controller such as the DualSense)
+- **Sensor/motion data** -- accelerometer, gyroscope, and orientation quaternion
 - **3D controller model** -- real-time orientation visualization driven by sensor data, rendered with DirectXTK12
 - **Vibration control** -- interactive sliders and preset effects for all four rumble motors (low/high frequency and the two impulse triggers)
 - **Haptic playback** -- WAV-based haptic feedback via WASAPI and XAudio2 on supported controllers
@@ -111,8 +111,8 @@ disconnects, navigation falls back to the next most recently connected gamepad.
 
 # Known issues / expectations
 
-- Motion sensor data (accelerometer, gyroscope, orientation) is currently only available on
-  controllers that report sensor support, such as the DualSense.
+- Motion sensor data (accelerometer, gyroscope, orientation) and audio-drive haptics are currently only 
+- available on controllers that report sensor and haptic support, such as the DualSense®.
 - The 3D controller model requires orientation sensor support; otherwise the section displays an
   unsupported message.
 
@@ -133,3 +133,5 @@ block of code in Main.cpp labeled "Sample Usage Telemetry".
 
 For more information about Microsoft's privacy policies in general, see the
 [Microsoft Privacy Statement](https://privacy.microsoft.com/en-us/privacystatement/).
+
+"DualSense" is a registered trademark or trademark of Sony Interactive Entertainment Inc.
