@@ -177,6 +177,8 @@ namespace ImGuiAtg
         DPadDown        = 0x227D,
         DPadLeft        = 0x227A,
         DPadRight       = 0x227C,
+        DPadUpDown      = 0x227F,
+        DPadLeftRight   = 0x227E,
 
         // D-Pad (generic)
         Up              = 0x219F,

@@ -1,103 +1,318 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Common">
-      <UniqueIdentifier>AEFBF7B3-C825-439E-86F4-E4AE6393100F</UniqueIdentifier>
+    <Filter Include="ImGui">
+      <UniqueIdentifier>{d0c8dfa4-19bb-457b-8e2d-15c5b3b861c0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assets">
-      <UniqueIdentifier>A41B0F38-92C1-457C-AB72-94AA7593A1FE</UniqueIdentifier>
-      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="ImGui\ATG">
+      <UniqueIdentifier>{cb0fb046-6df5-4057-a3e2-92d0a38f9921}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGui\Backends">
+      <UniqueIdentifier>{b89cf65d-98a1-4857-a1fb-1b0ab4f7da11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGui\Backends\Shaders">
+      <UniqueIdentifier>{83199e07-dff2-4569-83c5-43f08286201e}</UniqueIdentifier>
     </Filter>
     <Filter Include="ATG Tool Kit">
-      <UniqueIdentifier>85E16375-51BA-4398-B6C1-7359C2F48746</UniqueIdentifier>
+      <UniqueIdentifier>{dd386775-11b9-4b4e-98aa-4851f7260408}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HapticsManager">
+      <UniqueIdentifier>{e2b45a9b-4b32-4c24-9f94-088331907962}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HapticsManager\Audio">
+      <UniqueIdentifier>{29aa3a1a-3bc9-4139-be4f-92669d76f012}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media">
+      <UniqueIdentifier>{5dad6bcb-15ed-4aa4-ae8a-2a82fd8e377c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media\Haptics">
+      <UniqueIdentifier>{456b65ae-1508-42f4-b4e6-94a21b237be1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media\Model">
+      <UniqueIdentifier>{32090d51-a68a-4062-82ac-266d5acf98d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{cefa3d70-7d29-425b-b5f8-4543514645ac}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Gamepad.cpp" />
+    <ClCompile Include="GamepadReadings.cpp" />
+    <ClCompile Include="GamepadVibration.cpp" />
+    <ClCompile Include="GamepadHaptics.cpp" />
+    <ClCompile Include="GamepadModel.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>ATG Tool Kit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\imgui\imgui_atg.cpp">
+      <Filter>ImGui\ATG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\imgui\imgui_atg_device_context.cpp">
+      <Filter>ImGui\ATG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\imgui\imgui_atg_texture.cpp">
+      <Filter>ImGui\ATG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\imgui\imgui_atg_render_target.cpp">
+      <Filter>ImGui\ATG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\imgui\imgui_atg_model_viewer.cpp">
+      <Filter>ImGui\ATG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_dx12.cpp">
+      <Filter>ImGui\Backends</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_win32.cpp">
+      <Filter>ImGui\Backends</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_draw.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_tables.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\OpenSource\imgui\imgui_widgets.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="HapticsManager\HapticsManager.cpp">
+      <Filter>HapticsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="HapticsManager\HapticsDevice.cpp">
+      <Filter>HapticsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="HapticsManager\Audio\WASAPIManager.cpp">
+      <Filter>HapticsManager\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="HapticsManager\Audio\XAudio2Manager.cpp">
+      <Filter>HapticsManager\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="HapticsManager\Audio\WaveSampleGenerator.cpp">
+      <Filter>HapticsManager\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="HapticsManager\Audio\WAVFileReader.cpp">
+      <Filter>HapticsManager\Audio</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Gamepad.h" />
+    <ClInclude Include="GamepadHaptics.h" />
+    <ClInclude Include="GamepadVibration.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="StepTimer.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="DeviceResources.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
-      <Filter>ATG Tool Kit</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
-      <Filter>ATG Tool Kit</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Kits\ATGTK\Json.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h">
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
-    <ClInclude Include="Gamepad.h" />
     <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h">
-      <Filter>ATG Tool Kit</Filter>
+    <ClInclude Include="..\..\..\Kits\ATGTK\imgui\imgui_atg.h">
+      <Filter>ImGui\ATG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\imgui\imgui_atg_device_context.h">
+      <Filter>ImGui\ATG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\imgui\imgui_atg_render_target.h">
+      <Filter>ImGui\ATG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\imgui\imgui_atg_model_viewer.h">
+      <Filter>ImGui\ATG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\imgui\imgui_atg_texture.h">
+      <Filter>ImGui\ATG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imgui.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imgui_internal.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imconfig.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imstb_rectpack.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imstb_textedit.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\imstb_truetype.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_dx12.h">
+      <Filter>ImGui\Backends</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\imgui_impl_win32.h">
+      <Filter>ImGui\Backends</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_ps.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_ps_point.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_rs.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_rs_point.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_vs.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_vs_point.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_ps.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_ps_point.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_rs.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_rs_point.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_vs.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_x_vs_point.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_ps.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_ps_point.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_rs.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_rs_point.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_vs.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\OpenSource\imgui\backends\shaders\imgui_impl_dx12_xs_vs_point.h">
+      <Filter>ImGui\Backends\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="HapticsManager\HapticsManager.h">
+      <Filter>HapticsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="HapticsManager\HapticsDevice.h">
+      <Filter>HapticsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="HapticsManager\Audio\WASAPIManager.h">
+      <Filter>HapticsManager\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="HapticsManager\Audio\XAudio2Manager.h">
+      <Filter>HapticsManager\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="HapticsManager\Audio\WaveSampleGenerator.h">
+      <Filter>HapticsManager\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="HapticsManager\Audio\WAVFileReader.h">
+      <Filter>HapticsManager\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="HapticsManager\Audio\IGenerator.h">
+      <Filter>HapticsManager\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="HapticsManager\Audio\RenderBuffer.h">
+      <Filter>HapticsManager\Audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="DeviceResources.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
-      <Filter>ATG Tool Kit</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
-      <Filter>ATG Tool Kit</Filter>
-    </ClCompile>
-    <ClCompile Include="Gamepad.cpp" />
+    <CopyFileToFolders Include="media\Haptics\AhoogaHorn.wav">
+      <Filter>Media\Haptics</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="media\Haptics\car.wav">
+      <Filter>Media\Haptics</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="media\Haptics\fireworks.wav">
+      <Filter>Media\Haptics</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="media\Haptics\gun_shot.wav">
+      <Filter>Media\Haptics</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="media\Haptics\PenScratch.wav">
+      <Filter>Media\Haptics</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="media\Haptics\ShakeEffect.wav">
+      <Filter>Media\Haptics</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="media\Haptics\TommyGun.wav">
+      <Filter>Media\Haptics</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="media\Model\colors-on-black.dds">
+      <Filter>Media\Model</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="media\Model\noise-normal.dds">
+      <Filter>Media\Model</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="media\Model\noise-roughness.dds">
+      <Filter>Media\Model</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="media\Model\occ-1.dds">
+      <Filter>Media\Model</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="media\Model\occ-2.dds">
+      <Filter>Media\Model</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="media\Model\occ-nexus.dds">
+      <Filter>Media\Model</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="media\Model\ports-diffuse.dds">
+      <Filter>Media\Model</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="media\Model\ports-metalness.dds">
+      <Filter>Media\Model</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="media\Model\toppers-normals.dds">
+      <Filter>Media\Model</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="media\Model\viewmenushare-gray-on-black.dds">
+      <Filter>Media\Model</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="media\Model\XboxControllerGen3.sdkmesh">
+      <Filter>Media\Model</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="readme_ja-jp.md" />
-    <None Include="readme_ko-kr.md" />
-    <None Include="readme_zh-cn.md" />
     <None Include="readme.md" />
     <None Include="..\..\NuGet.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <MGCCompile Include="MicrosoftGameConfig.mgc" />
-  </ItemGroup>
-  <ItemGroup>
-    <CopyFileToFolders Include="Assets\LargeLogo.png">
-      <Filter>Assets</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="Assets\Logo.png">
-      <Filter>Assets</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="Assets\SmallLogo.png">
-      <Filter>Assets</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="Assets\SplashScreen.png">
-      <Filter>Assets</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="Assets\StoreLogo.png">
-      <Filter>Assets</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
-      <Filter>Assets</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="..\..\..\Media\Textures\gamepad.dds">
-      <Filter>Assets</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
-      <Filter>Assets</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_24.spritefont">
-      <Filter>Assets</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
-      <Filter>Assets</Filter>
-    </CopyFileToFolders>
   </ItemGroup>
 </Project>

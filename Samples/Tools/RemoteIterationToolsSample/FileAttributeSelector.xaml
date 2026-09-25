@@ -2,6 +2,7 @@
              x:Name="Selector"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:RemoteIterationToolsSample"
              Focusable="False">
     <GroupBox Header="{Binding Label, ElementName=Selector}" Foreground="White"
               BorderThickness="0" Padding="0" Margin="0 4 0 8">
@@ -14,10 +15,10 @@
                     <Setter Property="IsThreeState" Value="False"/>
                 </Style>
             </WrapPanel.Resources>
-            <CheckBox x:Name="ReadOnlyCheckBox" Content="Read-only"/>
-            <CheckBox x:Name="HiddenCheckBox" Content="Hidden"/>
-            <CheckBox x:Name="SystemCheckBox" Content="System"/>
-            <CheckBox x:Name="ArchiveCheckBox" Content="Archive"/>
+            <CheckBox x:Name="ReadOnlyCheckBox" Content="{x:Static local:Messages.ReadOnlyAttributeText}"/>
+            <CheckBox x:Name="HiddenCheckBox" Content="{x:Static local:Messages.HiddenAttributeText}"/>
+            <CheckBox x:Name="SystemCheckBox" Content="{x:Static local:Messages.SystemAttributeText}"/>
+            <CheckBox x:Name="ArchiveCheckBox" Content="{x:Static local:Messages.ArchiveAttributeText}"/>
         </WrapPanel>
     </GroupBox>
 </UserControl>
