@@ -5,58 +5,68 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RemoteIterationToolsSample"
         mc:Ignorable="d"
-        Title="Remote Deployment" Height="961" Width="752"
+        Title="{x:Static local:Messages.AppWindowTitle}" Height="961" Width="752"
         Background="#FF1E1E24" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
     <Window.Resources>
-        <SolidColorBrush x:Key="CardBackground" Color="#FF2C2C34"/>
-        <SolidColorBrush x:Key="AccentBrush" Color="#FF4E9AF1"/>
+        <SolidColorBrush x:Key="CardBackground" Color="#FF2C2C34" />
+        <SolidColorBrush x:Key="AccentBrush" Color="#FF4E9AF1" />
         <Style TargetType="TextBlock">
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="White" />
         </Style>
-        <Style x:Key="StepHeading" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Margin" Value="0 0 0 8"/>
-            <Setter Property="TextWrapping" Value="Wrap"/>
+        <Style
+            x:Key="StepHeading"
+            BasedOn="{StaticResource {x:Type TextBlock}}"
+            TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Margin" Value="0,0,0,8" />
+            <Setter Property="TextWrapping" Value="Wrap" />
         </Style>
-        <Style x:Key="GuidanceText" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="Foreground" Value="#AAAAAA"/>
-            <Setter Property="Margin" Value="0 0 0 6"/>
-            <Setter Property="TextWrapping" Value="Wrap"/>
+        <Style
+            x:Key="GuidanceText"
+            BasedOn="{StaticResource {x:Type TextBlock}}"
+            TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="#AAAAAA" />
+            <Setter Property="Margin" Value="0,0,0,6" />
+            <Setter Property="TextWrapping" Value="Wrap" />
         </Style>
         <Style TargetType="TextBox">
-            <Setter Property="Margin" Value="0 4 0 12"/>
-            <Setter Property="Padding" Value="8"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Background" Value="#33111111"/>
-            <Setter Property="BorderBrush" Value="#555"/>
-            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0,4,0,12" />
+            <Setter Property="Padding" Value="8" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="#33111111" />
+            <Setter Property="BorderBrush" Value="#555" />
+            <Setter Property="BorderThickness" Value="1" />
         </Style>
         <Style TargetType="Button">
-            <Setter Property="Margin" Value="0 4 8 12"/>
-            <Setter Property="Padding" Value="12 8"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Background" Value="#333F51"/>
-            <Setter Property="BorderBrush" Value="#555"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,4,8,12" />
+            <Setter Property="Padding" Value="12,8" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="#333F51" />
+            <Setter Property="BorderBrush" Value="#555" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Border
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+                                <Setter Property="Background" Value="{StaticResource AccentBrush}" />
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Opacity" Value="0.85"/>
+                                <Setter Property="Opacity" Value="0.85" />
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Background" Value="#444"/>
-                                <Setter Property="Foreground" Value="#888"/>
+                                <Setter Property="Background" Value="#444" />
+                                <Setter Property="Foreground" Value="#888" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -68,31 +78,40 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Expander">
                         <StackPanel>
-                            <ToggleButton x:Name="HeaderToggle"
-                                          Content="{TemplateBinding Header}"
-                                          IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                          Cursor="Hand">
+                            <ToggleButton
+                                x:Name="HeaderToggle"
+                                Content="{TemplateBinding Header}"
+                                Cursor="Hand"
+                                IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
                                 <ToggleButton.Template>
                                     <ControlTemplate TargetType="ToggleButton">
                                         <Border Background="Transparent">
                                             <StackPanel Orientation="Horizontal" TextElement.Foreground="White">
-                                                <TextBlock x:Name="Arrow" Text="▶" FontSize="12" VerticalAlignment="Center" Margin="0 0 8 0"/>
-                                                <ContentPresenter VerticalAlignment="Center"/>
+                                                <TextBlock
+                                                    x:Name="Arrow"
+                                                    Margin="0,0,8,0"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="12"
+                                                    Text="▶" />
+                                                <ContentPresenter VerticalAlignment="Center" />
                                             </StackPanel>
                                         </Border>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsChecked" Value="True">
-                                                <Setter TargetName="Arrow" Property="Text" Value="▼"/>
+                                                <Setter TargetName="Arrow" Property="Text" Value="▼" />
                                             </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
                                 </ToggleButton.Template>
                             </ToggleButton>
-                            <ContentPresenter x:Name="ExpanderContent" Visibility="Collapsed" Margin="0 8 0 0"/>
+                            <ContentPresenter
+                                x:Name="ExpanderContent"
+                                Margin="0,8,0,0"
+                                Visibility="Collapsed" />
                         </StackPanel>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsExpanded" Value="True">
-                                <Setter TargetName="ExpanderContent" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="ExpanderContent" Property="Visibility" Value="Visible" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -101,7 +120,7 @@
         </Style>
     </Window.Resources>
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
         <Grid Margin="28">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -110,194 +129,467 @@
                 <RowDefinition Height="*" MinHeight="200"/>
             </Grid.RowDefinitions>
 
-            <!-- Header -->
-            <TextBlock Grid.Row="0" Text="Remote Iteration Tools" FontSize="26" FontWeight="SemiBold" TextWrapping="Wrap"/>
+            <!--  Header  -->
+            <TextBlock
+                Grid.Row="0"
+                FontSize="26"
+                FontWeight="SemiBold"
+                Text="{x:Static local:Messages.MainHeading}"
+                TextWrapping="Wrap" />
 
-            <!-- Inputs Card -->
-            <Border Grid.Row="1" Background="{StaticResource CardBackground}" Padding="20" CornerRadius="10" Margin="0 20 0 16">
+            <!--  Inputs Card  -->
+            <Border
+                Grid.Row="1"
+                Margin="0,20,0,16"
+                Padding="20"
+                Background="{StaticResource CardBackground}"
+                CornerRadius="10">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <StackPanel x:Name="DeviceInputs" Grid.ColumnSpan="2" Grid.Row="0">
-                        <TextBlock Text="1. Choose a paired device" Style="{StaticResource StepHeading}"/>
-                        <TextBlock Text="Device (IP address or host name)" FontWeight="Bold" Margin="0 0 0 4"/>
-                        <TextBlock Text="Use a target with Remote Tools running, already paired with this PC. Example: 192.168.1.100 or MyDevPC."
-                                   Style="{StaticResource GuidanceText}"/>
-                        <TextBox x:Name="DeviceIpTextBox" ToolTip="IP address or resolvable host name of an already-paired device. This sample does not discover or pair devices." Width="224" HorizontalAlignment="Left" AutomationProperties.Name="Device name or IP address"/>
+                    <StackPanel
+                        x:Name="DeviceInputs"
+                        Grid.Row="0"
+                        Grid.ColumnSpan="2">
+                        <TextBlock Style="{StaticResource StepHeading}" Text="{x:Static local:Messages.DeviceStepHeading}" />
+                        <TextBlock
+                            Margin="0,0,0,4"
+                            FontWeight="Bold"
+                            Text="{x:Static local:Messages.DeviceLabel}" />
+                        <TextBlock Style="{StaticResource GuidanceText}" Text="{x:Static local:Messages.DeviceGuidance}" />
+                        <TextBox
+                            x:Name="DeviceIpTextBox"
+                            Width="224"
+                            HorizontalAlignment="Left"
+                            AutomationProperties.Name="{x:Static local:Messages.DeviceAutomationName}"
+                            ToolTip="{x:Static local:Messages.DeviceToolTip}" />
                     </StackPanel>
 
-                    <StackPanel x:Name="SourceInputs" Grid.Row="1" Grid.Column="0" Margin="0 8 0 0">
-                        <TextBlock Text="2. Deploy a local build" Style="{StaticResource StepHeading}"/>
-                        <TextBlock Text="Source Folder (this PC)" FontWeight="Bold" Margin="0 0 0 4"/>
-                        <TextBlock Text="Local folder containing your build, e.g. C:\Builds\MyGame." Style="{StaticResource GuidanceText}"/>
+                    <StackPanel
+                        x:Name="SourceInputs"
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="0,8,0,0">
+                        <TextBlock Style="{StaticResource StepHeading}" Text="{x:Static local:Messages.DeployStepHeading}" />
+                        <TextBlock
+                            Margin="0,0,0,4"
+                            FontWeight="Bold"
+                            Text="{x:Static local:Messages.DeploySourceLabel}" />
+                        <TextBlock Style="{StaticResource GuidanceText}" Text="{x:Static local:Messages.DeploySourceGuidance}" />
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" MaxWidth="524"/>
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*" MaxWidth="524" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <TextBox x:Name="FolderPathTextBox" ToolTip="Type a path or use Browse to select a folder" Height="40" AutomationProperties.Name="Source folder path"/>
-                            <Button Grid.Column="1" Content="Browse" Click="BrowseFolder_Click" MinWidth="100" Height="40" Margin="10,0,0,10" HorizontalAlignment="Left" AutomationProperties.Name="Browse for source folder"/>
+                            <TextBox
+                                x:Name="FolderPathTextBox"
+                                Height="40"
+                                AutomationProperties.Name="{x:Static local:Messages.DeploySourceAutomationName}"
+                                ToolTip="{x:Static local:Messages.DeploySourceToolTip}" />
+                            <Button
+                                Grid.Column="1"
+                                Height="40"
+                                MinWidth="100"
+                                Margin="10,0,0,10"
+                                HorizontalAlignment="Left"
+                                AutomationProperties.Name="{x:Static local:Messages.DeployBrowseButtonAutomationName}"
+                                Click="BrowseFolder_Click"
+                                Content="{x:Static local:Messages.BrowseButtonText}" />
                         </Grid>
                     </StackPanel>
 
-                    <StackPanel x:Name="DestinationInputs" Grid.Row="2" Grid.Column="0" Margin="0 8 0 0">
-                        <TextBlock Text="Destination Folder (device)" FontWeight="Bold" Margin="0 0 0 4"/>
-                        <TextBlock Text="Example: MyGame under the device's default Common Root, or an absolute path on the device."
-                                   Style="{StaticResource GuidanceText}"/>
+                    <StackPanel
+                        x:Name="DestinationInputs"
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Margin="0,8,0,0">
+                        <TextBlock
+                            Margin="0,0,0,4"
+                            FontWeight="Bold"
+                            Text="{x:Static local:Messages.DeployDestinationLabel}" />
+                        <TextBlock Style="{StaticResource GuidanceText}" Text="{x:Static local:Messages.DeployDestinationGuidance}" />
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" MaxWidth="524"/>
+                                <ColumnDefinition Width="*" MaxWidth="524" />
                             </Grid.ColumnDefinitions>
-                            <TextBox x:Name="DestinationPathTextBox" ToolTip="Remote destination relative to the device's default Common Root, or an absolute device path." AutomationProperties.Name="Destination folder path"/>
+                            <TextBox
+                                x:Name="DestinationPathTextBox"
+                                AutomationProperties.Name="{x:Static local:Messages.DeployDestinationAutomationName}"
+                                ToolTip="{x:Static local:Messages.DeployDestinationToolTip}" />
                         </Grid>
                     </StackPanel>
 
-                    <Expander x:Name="AdvancedOptions" Grid.Row="3" Grid.ColumnSpan="2" Header="Advanced Options" IsExpanded="False" Margin="0 8 0 0" Foreground="White" Style="{StaticResource ArrowExpander}">
-                        <Grid Margin="0 8 0 0">
+                    <Expander
+                        x:Name="AdvancedOptions"
+                        Grid.Row="3"
+                        Grid.ColumnSpan="2"
+                        Margin="0,8,0,0"
+                        Foreground="White"
+                        Header="{x:Static local:Messages.DeployAdvancedOptionsHeader}"
+                        IsExpanded="False"
+                        Style="{StaticResource ArrowExpander}">
+                        <Grid Margin="0,8,0,0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" MaxWidth="524"/>
+                                <ColumnDefinition Width="*" MaxWidth="524" />
                             </Grid.ColumnDefinitions>
                             <StackPanel>
-                                <TextBlock Text="Optional copy filters. Leave patterns blank and attributes unchecked for an unfiltered deployment."
+                                <TextBlock Style="{StaticResource GuidanceText}" Text="{x:Static local:Messages.DeployFiltersGuidance}" />
+                                <TextBlock
+                                    Margin="0,0,0,4"
+                                    FontWeight="Bold"
+                                    Text="{x:Static local:Messages.IncludeFilePatternLabel}"
+                                    ToolTip="{x:Static local:Messages.CopyIncludeFilePatternToolTip}" />
+                                <TextBox
+                                    x:Name="IncludeFilePatternTextBox"
+                                    AutomationProperties.Name="{x:Static local:Messages.CopyIncludeFilePatternAutomationName}"
+                                    ToolTip="{x:Static local:Messages.CopyIncludeFilePatternToolTip}" />
+
+                                <TextBlock
+                                    Margin="0,0,0,4"
+                                    FontWeight="Bold"
+                                    Text="{x:Static local:Messages.ExcludeFilePatternLabel}"
+                                    ToolTip="{x:Static local:Messages.CopyExcludeFilePatternToolTip}" />
+                                <TextBox
+                                    x:Name="ExcludeFilePatternTextBox"
+                                    AutomationProperties.Name="{x:Static local:Messages.CopyExcludeFilePatternAutomationName}"
+                                    ToolTip="{x:Static local:Messages.CopyExcludeFilePatternToolTip}" />
+
+                                <TextBlock
+                                    Margin="0,0,0,4"
+                                    FontWeight="Bold"
+                                    Text="{x:Static local:Messages.ExcludeDirectoryPatternLabel}"
+                                    ToolTip="{x:Static local:Messages.CopyExcludeDirectoryPatternToolTip}" />
+                                <TextBox
+                                    x:Name="ExcludeDirPatternTextBox"
+                                    AutomationProperties.Name="{x:Static local:Messages.CopyExcludeDirectoryPatternAutomationName}"
+                                    ToolTip="{x:Static local:Messages.CopyExcludeDirectoryPatternToolTip}" />
+
+                                <TextBlock Text="{x:Static local:Messages.AttributeFilterGuidance}"
                                            Style="{StaticResource GuidanceText}"/>
-                                <TextBlock Text="Include File Pattern" FontWeight="Bold" Margin="0 0 0 4"
-                                           ToolTip="Includes files that match the specified names. Wildcards * and ? and semicolon-separated patterns are supported. Default includes everything. Exclusions take precedence over inclusions."/>
-                                <TextBox x:Name="IncludeFilePatternTextBox" AutomationProperties.Name="Include file pattern"
-                                         ToolTip="Includes files that match the specified names. Wildcards * and ? and semicolon-separated patterns are supported. Default includes everything. Exclusions take precedence over inclusions."/>
-
-                                <TextBlock Text="Exclude File Pattern" FontWeight="Bold" Margin="0 0 0 4"
-                                           ToolTip="Excludes files that match the specified names. Wildcards * and ? and semicolon-separated patterns are supported. Default excludes nothing. Exclusions take precedence over inclusions."/>
-                                <TextBox x:Name="ExcludeFilePatternTextBox" AutomationProperties.Name="Exclude file pattern"
-                                         ToolTip="Excludes files that match the specified names. Wildcards * and ? and semicolon-separated patterns are supported. Default excludes nothing. Exclusions take precedence over inclusions."/>
-
-                                <TextBlock Text="Exclude Directory Pattern" FontWeight="Bold" Margin="0 0 0 4"
-                                           ToolTip="Excludes directories by name, not path. Wildcards * and ? are supported. Default excludes no directories. Exclusions take precedence over inclusions."/>
-                                <TextBox x:Name="ExcludeDirPatternTextBox" AutomationProperties.Name="Exclude directory pattern"
-                                         ToolTip="Excludes directories by name, not path. Wildcards * and ? are supported. Default excludes no directories. Exclusions take precedence over inclusions."/>
-
-                                <TextBlock Text="Match any selected attribute. No selection means no attribute filtering; exclusions win."
-                                           Style="{StaticResource GuidanceText}"/>
-                                <local:FileAttributeSelector x:Name="IncludeFileAttributesSelector" Label="Include file attributes"
-                                                             AutomationProperties.Name="Copy include file attributes"/>
-                                <local:FileAttributeSelector x:Name="ExcludeFileAttributesSelector" Label="Exclude file attributes"
-                                                             AutomationProperties.Name="Copy exclude file attributes"/>
+                                <local:FileAttributeSelector x:Name="IncludeFileAttributesSelector" Label="{x:Static local:Messages.IncludeFileAttributesLabel}"
+                                                             AutomationProperties.Name="{x:Static local:Messages.CopyIncludeFileAttributesAutomationName}"/>
+                                <local:FileAttributeSelector x:Name="ExcludeFileAttributesSelector" Label="{x:Static local:Messages.ExcludeFileAttributesLabel}"
+                                                             AutomationProperties.Name="{x:Static local:Messages.CopyExcludeFileAttributesAutomationName}"/>
+                                <local:FileAttributeSelector x:Name="IncludeDirectoryAttributesSelector" Label="{x:Static local:Messages.IncludeDirectoryAttributesLabel}"
+                                                             AutomationProperties.Name="{x:Static local:Messages.CopyIncludeDirectoryAttributesAutomationName}"/>
+                                <local:FileAttributeSelector x:Name="ExcludeDirectoryAttributesSelector" Label="{x:Static local:Messages.ExcludeDirectoryAttributesLabel}"
+                                                             AutomationProperties.Name="{x:Static local:Messages.CopyExcludeDirectoryAttributesAutomationName}"/>
                             </StackPanel>
                         </Grid>
                     </Expander>
 
-                    <StackPanel Grid.Row="4" Grid.Column="0" Margin="0 8 0 0">
-                        <TextBlock Text="Deploy copies the build, then validates its remote path. It does not install or register the game. Cancel requests cancellation; wait for the final result."
-                                   Style="{StaticResource GuidanceText}"/>
+                    <StackPanel
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        Margin="0,8,0,0">
+                        <TextBlock Style="{StaticResource GuidanceText}" Text="{x:Static local:Messages.DeployActionGuidance}" />
                         <WrapPanel>
-                            <Button x:Name="DeployButton" Content="Deploy" MinWidth="120" Height="35" HorizontalAlignment="Left" Click="Deploy_Click" Grid.ColumnSpan="2" AutomationProperties.Name="Deploy build"/>
-                            <Button x:Name="CancelButton" Content="Cancel" IsEnabled="False" MinWidth="120" Height="35" HorizontalAlignment="Left" Click="Cancel_Click" Grid.ColumnSpan="2" AutomationProperties.Name="Cancel deployment" ToolTip="Request copy cancellation, then wait for the native result. This does not confirm a complete deployment."/>
+                            <Button
+                                x:Name="DeployButton"
+                                Grid.ColumnSpan="2"
+                                Height="35"
+                                MinWidth="120"
+                                HorizontalAlignment="Left"
+                                AutomationProperties.Name="{x:Static local:Messages.DeployButtonAutomationName}"
+                                Click="Deploy_Click"
+                                Content="{x:Static local:Messages.DeployButtonText}" />
+                            <Button
+                                x:Name="CancelButton"
+                                Grid.ColumnSpan="2"
+                                Height="35"
+                                MinWidth="120"
+                                HorizontalAlignment="Left"
+                                AutomationProperties.Name="{x:Static local:Messages.DeployCancelButtonAutomationName}"
+                                Click="Cancel_Click"
+                                Content="{x:Static local:Messages.CancelButtonText}"
+                                IsEnabled="False"
+                                ToolTip="{x:Static local:Messages.DeployCancelButtonToolTip}" />
                         </WrapPanel>
                     </StackPanel>
 
-                    <StackPanel Grid.Row="5" Grid.Column="0" Margin="0 8 0 0" x:Name="ProgressPanel" Visibility="Visible" Grid.ColumnSpan="2">
-                        <TextBlock x:Name="ProgressStatusText" Text="Deploy Progress" FontSize="12" Margin="0 0 0 4" Foreground="#AAAAAA" TextWrapping="Wrap"/>
-                        <ProgressBar x:Name="DeploymentProgressBar" HorizontalAlignment="Stretch" Height="20" Minimum="0" Maximum="100" Value="0" Background="#222" Foreground="{StaticResource AccentBrush}" BorderBrush="#555" BorderThickness="1" AutomationProperties.Name="Deployment progress"/>
-                        <TextBlock x:Name="ProgressPercentText" Text="0%" FontSize="11" Margin="0 4 25 0" Foreground="#AAAAAA" HorizontalAlignment="Right"/>
+                    <StackPanel
+                        x:Name="ProgressPanel"
+                        Grid.Row="5"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Margin="0,8,0,0"
+                        Visibility="Visible">
+                        <TextBlock
+                            x:Name="ProgressStatusText"
+                            Margin="0,0,0,4"
+                            FontSize="12"
+                            Foreground="#AAAAAA"
+                            Text="{x:Static local:Messages.DeployProgressLabel}"
+                            TextWrapping="Wrap" />
+                        <ProgressBar
+                            x:Name="DeploymentProgressBar"
+                            Height="20"
+                            HorizontalAlignment="Stretch"
+                            AutomationProperties.Name="{x:Static local:Messages.DeployProgressAutomationName}"
+                            Background="#222"
+                            BorderBrush="#555"
+                            BorderThickness="1"
+                            Foreground="{StaticResource AccentBrush}"
+                            Maximum="100"
+                            Minimum="0"
+                            Value="0" />
+                        <TextBlock
+                            x:Name="ProgressPercentText"
+                            Margin="0,4,25,0"
+                            HorizontalAlignment="Right"
+                            FontSize="11"
+                            Foreground="#AAAAAA"
+                            Text="0%" />
                     </StackPanel>
 
-                    <StackPanel x:Name="ExecutableInputs" Grid.Row="6" Grid.Column="0" Margin="0 8 0 0" >
-                        <TextBlock Text="3. Launch and control the remote game" Style="{StaticResource StepHeading}"/>
-                        <TextBlock Text="Executable to launch (device)" FontWeight="Bold" Margin="0 0 0 4"/>
-                        <TextBlock Text="Example: MyGame\MyGame.exe. Relative paths start at the device's default Common Root, not Destination Folder. Absolute device paths also work."
-                                   Style="{StaticResource GuidanceText}"/>
+                    <StackPanel
+                        x:Name="ExecutableInputs"
+                        Grid.Row="6"
+                        Grid.Column="0"
+                        Margin="0,8,0,0">
+                        <TextBlock Style="{StaticResource StepHeading}" Text="{x:Static local:Messages.LaunchStepHeading}" />
+                        <TextBlock
+                            Margin="0,0,0,4"
+                            FontWeight="Bold"
+                            Text="{x:Static local:Messages.ExecutableLabel}" />
+                        <TextBlock Style="{StaticResource GuidanceText}" Text="{x:Static local:Messages.ExecutableGuidance}" />
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" MaxWidth="524"/>
+                                <ColumnDefinition Width="*" MaxWidth="524" />
                             </Grid.ColumnDefinitions>
-                            <TextBox x:Name="ExecutablePathTextBox" ToolTip="Remote executable relative to the device's default Common Root, or an absolute device path. This is not relative to Destination Folder." AutomationProperties.Name="Executable path"/>
+                            <TextBox
+                                x:Name="ExecutablePathTextBox"
+                                AutomationProperties.Name="{x:Static local:Messages.ExecutableAutomationName}"
+                                ToolTip="{x:Static local:Messages.ExecutableToolTip}" />
                         </Grid>
                     </StackPanel>
 
-                    <StackPanel x:Name="GameActions" Grid.Row="7" Grid.Column="0" Margin="0 8 0 0">
-                        <TextBlock Text="Deploy first, or use an existing build on the device. Choose Launch, or Launch Suspended then Resume. Terminate stops the last game launched through this API on that device."
-                                   Style="{StaticResource GuidanceText}"/>
+                    <StackPanel
+                        x:Name="GameActions"
+                        Grid.Row="7"
+                        Grid.Column="0"
+                        Margin="0,8,0,0">
+                        <TextBlock Style="{StaticResource GuidanceText}" Text="{x:Static local:Messages.GameActionsGuidance}" />
                         <WrapPanel>
-                            <Button Content="Launch" MinWidth="120" Height="35" HorizontalAlignment="Left" Click="Launch_Click" Grid.ColumnSpan="2" AutomationProperties.Name="Launch game"/>
-                            <Button Content="Launch Suspended" MinWidth="120" Height="35" HorizontalAlignment="Left" Click="LaunchSuspended_Click" Grid.ColumnSpan="2" AutomationProperties.Name="Launch game suspended"/>
-                            <Button Content="Resume" MinWidth="120" Height="35" HorizontalAlignment="Left" Click="Resume_Click" Grid.ColumnSpan="2" AutomationProperties.Name="Resume game"/>
-                            <Button Content="Terminate" MinWidth="120" Height="35" HorizontalAlignment="Left" Click="Terminate_Click" Grid.ColumnSpan="2" AutomationProperties.Name="Terminate game"/>
+                            <Button
+                                Grid.ColumnSpan="2"
+                                Height="35"
+                                MinWidth="120"
+                                HorizontalAlignment="Left"
+                                AutomationProperties.Name="{x:Static local:Messages.LaunchButtonAutomationName}"
+                                Click="Launch_Click"
+                                Content="{x:Static local:Messages.LaunchButtonText}" />
+                            <Button
+                                Grid.ColumnSpan="2"
+                                Height="35"
+                                MinWidth="120"
+                                HorizontalAlignment="Left"
+                                AutomationProperties.Name="{x:Static local:Messages.LaunchSuspendedButtonAutomationName}"
+                                Click="LaunchSuspended_Click"
+                                Content="{x:Static local:Messages.LaunchSuspendedButtonText}" />
+                            <Button
+                                Grid.ColumnSpan="2"
+                                Height="35"
+                                MinWidth="120"
+                                HorizontalAlignment="Left"
+                                AutomationProperties.Name="{x:Static local:Messages.ResumeButtonAutomationName}"
+                                Click="Resume_Click"
+                                Content="{x:Static local:Messages.ResumeButtonText}" />
+                            <Button
+                                Grid.ColumnSpan="2"
+                                Height="35"
+                                MinWidth="120"
+                                HorizontalAlignment="Left"
+                                AutomationProperties.Name="{x:Static local:Messages.TerminateButtonAutomationName}"
+                                Click="Terminate_Click"
+                                Content="{x:Static local:Messages.TerminateButtonText}" />
                         </WrapPanel>
+                    </StackPanel>
+
+                    <StackPanel
+                        x:Name="RetrieveInputs"
+                        Grid.Row="8"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Margin="0,20,0,0">
+                        <TextBlock Style="{StaticResource StepHeading}" Text="{x:Static local:Messages.RetrieveStepHeading}" />
+                        <TextBlock Style="{StaticResource GuidanceText}" Text="{x:Static local:Messages.RetrieveOverview}" />
+
+                        <TextBlock
+                            Margin="0,0,0,4"
+                            FontWeight="Bold"
+                            Text="{x:Static local:Messages.RetrieveSourceLabel}" />
+                        <TextBlock Style="{StaticResource GuidanceText}" Text="{x:Static local:Messages.RetrieveSourceGuidance}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" MaxWidth="524" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox
+                                x:Name="RetrieveSourcePathTextBox"
+                                AutomationProperties.Name="{x:Static local:Messages.RetrieveSourceAutomationName}"
+                                ToolTip="{x:Static local:Messages.RetrieveSourceToolTip}" />
+                        </Grid>
+
+                        <TextBlock
+                            Margin="0,0,0,4"
+                            FontWeight="Bold"
+                            Text="{x:Static local:Messages.RetrieveCommonRootLabel}" />
+                        <TextBlock Style="{StaticResource GuidanceText}" Text="{x:Static local:Messages.RetrieveCommonRootGuidance}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" MaxWidth="524" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox
+                                x:Name="RetrieveCommonRootAliasTextBox"
+                                AutomationProperties.Name="{x:Static local:Messages.RetrieveCommonRootAutomationName}"
+                                ToolTip="{x:Static local:Messages.RetrieveCommonRootToolTip}" />
+                        </Grid>
+
+                        <TextBlock
+                            Margin="0,0,0,4"
+                            FontWeight="Bold"
+                            Text="{x:Static local:Messages.RetrieveDestinationLabel}" />
+                        <TextBlock Style="{StaticResource GuidanceText}" Text="{x:Static local:Messages.RetrieveDestinationGuidance}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" MaxWidth="524" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox
+                                x:Name="RetrieveDestinationPathTextBox"
+                                Height="40"
+                                AutomationProperties.Name="{x:Static local:Messages.RetrieveDestinationAutomationName}"
+                                ToolTip="{x:Static local:Messages.RetrieveDestinationToolTip}" />
+                            <Button
+                                x:Name="RetrieveBrowseButton"
+                                Grid.Column="1"
+                                Height="40"
+                                MinWidth="100"
+                                Margin="10,0,0,10"
+                                HorizontalAlignment="Left"
+                                AutomationProperties.Name="{x:Static local:Messages.RetrieveBrowseButtonAutomationName}"
+                                Click="BrowseRetrieveDestination_Click"
+                                Content="{x:Static local:Messages.BrowseButtonText}" />
+                        </Grid>
+
+                        <TextBlock Style="{StaticResource GuidanceText}" Text="{x:Static local:Messages.RetrieveActionGuidance}" />
+                        <WrapPanel>
+                            <Button
+                                x:Name="RetrieveButton"
+                                Height="35"
+                                MinWidth="120"
+                                HorizontalAlignment="Left"
+                                AutomationProperties.Name="{x:Static local:Messages.RetrieveButtonAutomationName}"
+                                Click="Retrieve_Click"
+                                Content="{x:Static local:Messages.RetrieveButtonText}" />
+                            <Button
+                                x:Name="CancelRetrieveButton"
+                                Height="35"
+                                MinWidth="120"
+                                HorizontalAlignment="Left"
+                                AutomationProperties.Name="{x:Static local:Messages.RetrieveCancelButtonAutomationName}"
+                                Click="Cancel_Click"
+                                Content="{x:Static local:Messages.CancelButtonText}"
+                                IsEnabled="False"
+                                ToolTip="{x:Static local:Messages.RetrieveCancelButtonToolTip}" />
+                        </WrapPanel>
+
+                        <StackPanel x:Name="RetrieveProgressPanel">
+                            <TextBlock
+                                x:Name="RetrieveProgressStatusText"
+                                Margin="0,0,0,4"
+                                FontSize="12"
+                                Foreground="#AAAAAA"
+                                Text="{x:Static local:Messages.RetrieveProgressLabel}"
+                                TextWrapping="Wrap" />
+                            <ProgressBar
+                                x:Name="RetrieveProgressBar"
+                                Height="20"
+                                HorizontalAlignment="Stretch"
+                                AutomationProperties.Name="{x:Static local:Messages.RetrieveProgressAutomationName}"
+                                Background="#222"
+                                BorderBrush="#555"
+                                BorderThickness="1"
+                                Foreground="{StaticResource AccentBrush}"
+                                IsIndeterminate="False" />
+                        </StackPanel>
                     </StackPanel>
                 </Grid>
             </Border>
 
             <Border Grid.Row="2" Background="{StaticResource CardBackground}" Padding="20" CornerRadius="10" Margin="0 0 0 16">
                 <StackPanel>
-                    <TextBlock Text="Remote deletion (optional)" Style="{StaticResource StepHeading}"/>
-                    <TextBlock Text="Delete files or folder contents on the selected device."
+                    <TextBlock Text="{x:Static local:Messages.DeleteSectionHeading}" Style="{StaticResource StepHeading}"/>
+                    <TextBlock Text="{x:Static local:Messages.DeleteOverview}"
                                Style="{StaticResource GuidanceText}"/>
                     <Grid x:Name="DeleteInputs">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" MaxWidth="524"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel>
-                            <TextBlock Text="Device (selected above)" FontWeight="Bold"/>
+                            <TextBlock Text="{x:Static local:Messages.DeleteSelectedDeviceLabel}" FontWeight="Bold"/>
                             <TextBlock Text="{Binding Text, ElementName=DeviceIpTextBox}" TextWrapping="Wrap" Margin="0 0 0 12"
-                                       AutomationProperties.Name="Remote delete device"/>
-                            <TextBlock Text="Remote folder or single-file path to delete" FontWeight="Bold" TextWrapping="Wrap"/>
-                            <TextBox x:Name="DeleteRemotePathTextBox" AutomationProperties.Name="Remote path to delete"
-                                     ToolTip="Relative to a Common Root, or an absolute path on the device."/>
-                            <TextBlock Text="Common Root alias (optional)" FontWeight="Bold"/>
-                            <TextBox x:Name="DeleteCommonRootAliasTextBox" AutomationProperties.Name="Delete Common Root alias"
-                                     ToolTip="Blank uses the default Common Root. Ignored for absolute paths."/>
+                                       AutomationProperties.Name="{x:Static local:Messages.DeleteDeviceAutomationName}"/>
+                            <TextBlock Text="{x:Static local:Messages.DeletePathLabel}" FontWeight="Bold" TextWrapping="Wrap"/>
+                            <TextBox x:Name="DeleteRemotePathTextBox" AutomationProperties.Name="{x:Static local:Messages.DeletePathAutomationName}"
+                                     ToolTip="{x:Static local:Messages.DeletePathToolTip}"/>
+                            <TextBlock Text="{x:Static local:Messages.DeleteCommonRootLabel}" FontWeight="Bold"/>
+                            <TextBox x:Name="DeleteCommonRootAliasTextBox" AutomationProperties.Name="{x:Static local:Messages.DeleteCommonRootAutomationName}"
+                                     ToolTip="{x:Static local:Messages.DeleteCommonRootToolTip}"/>
                             <CheckBox x:Name="DeleteRootFolderCheckBox" IsChecked="False" Foreground="White" Margin="0 0 0 12"
-                                      HorizontalContentAlignment="Stretch" AutomationProperties.Name="Remove delete root folder"
-                                      ToolTip="Applies to folder targets only.">
-                                <TextBlock Text="Remove root folder if empty" TextWrapping="Wrap"/>
+                                      HorizontalContentAlignment="Stretch" AutomationProperties.Name="{x:Static local:Messages.DeleteRootFolderAutomationName}"
+                                      ToolTip="{x:Static local:Messages.DeleteRootFolderToolTip}">
+                                <TextBlock Text="{x:Static local:Messages.DeleteRootFolderLabel}" TextWrapping="Wrap"/>
                             </CheckBox>
-                            <Expander x:Name="DeleteFiltersExpander" Header="Delete filters (folders only)" Style="{StaticResource ArrowExpander}" Foreground="White" Margin="0 0 0 12">
+                            <Expander x:Name="DeleteFiltersExpander" Header="{x:Static local:Messages.DeleteFiltersHeader}" Style="{StaticResource ArrowExpander}" Foreground="White" Margin="0 0 0 12">
                                 <StackPanel Margin="0 8 0 0">
-                                    <TextBlock Text="Ignored for single-file targets. Exclusions take precedence."
+                                    <TextBlock Text="{x:Static local:Messages.DeleteFiltersGuidance}"
                                                Style="{StaticResource GuidanceText}"/>
-                                    <TextBlock Text="Include file pattern" FontWeight="Bold"/>
-                                    <TextBox x:Name="DeleteIncludeFilePatternTextBox" AutomationProperties.Name="Delete include file pattern"
-                                             ToolTip="Names with * and ? wildcards; separate patterns with semicolons. Blank includes all."/>
-                                    <TextBlock Text="Exclude file pattern" FontWeight="Bold"/>
-                                    <TextBox x:Name="DeleteExcludeFilePatternTextBox" AutomationProperties.Name="Delete exclude file pattern"
-                                             ToolTip="Names with * and ? wildcards; separate patterns with semicolons. Blank excludes none."/>
-                                    <TextBlock Text="Exclude directory names" FontWeight="Bold"/>
-                                    <TextBox x:Name="DeleteExcludeDirPatternTextBox" AutomationProperties.Name="Delete exclude directory pattern"
-                                             ToolTip="Directory names, not paths. Supports * and ? wildcards. Blank excludes none."/>
-                                    <TextBlock Text="Match any selected attribute. No selection means no attribute filtering."
+                                    <TextBlock Text="{x:Static local:Messages.IncludeFilePatternLabel}" FontWeight="Bold"/>
+                                    <TextBox x:Name="DeleteIncludeFilePatternTextBox" AutomationProperties.Name="{x:Static local:Messages.DeleteIncludeFilePatternAutomationName}"
+                                             ToolTip="{x:Static local:Messages.DeleteIncludeFilePatternToolTip}"/>
+                                    <TextBlock Text="{x:Static local:Messages.ExcludeFilePatternLabel}" FontWeight="Bold"/>
+                                    <TextBox x:Name="DeleteExcludeFilePatternTextBox" AutomationProperties.Name="{x:Static local:Messages.DeleteExcludeFilePatternAutomationName}"
+                                             ToolTip="{x:Static local:Messages.DeleteExcludeFilePatternToolTip}"/>
+                                    <TextBlock Text="{x:Static local:Messages.DeleteExcludeDirectoryLabel}" FontWeight="Bold"/>
+                                    <TextBox x:Name="DeleteExcludeDirPatternTextBox" AutomationProperties.Name="{x:Static local:Messages.DeleteExcludeDirectoryAutomationName}"
+                                             ToolTip="{x:Static local:Messages.DeleteExcludeDirectoryToolTip}"/>
+                                    <TextBlock Text="{x:Static local:Messages.AttributeFilterGuidance}"
                                                Style="{StaticResource GuidanceText}"/>
-                                    <local:FileAttributeSelector x:Name="DeleteIncludeFileAttributesSelector" Label="Include file attributes"
-                                                                 AutomationProperties.Name="Delete include file attributes"/>
-                                    <local:FileAttributeSelector x:Name="DeleteExcludeFileAttributesSelector" Label="Exclude file attributes"
-                                                                 AutomationProperties.Name="Delete exclude file attributes"/>
-                                    <local:FileAttributeSelector x:Name="DeleteIncludeDirAttributesSelector" Label="Include directory attributes"
-                                                                 AutomationProperties.Name="Delete include directory attributes"/>
-                                    <local:FileAttributeSelector x:Name="DeleteExcludeDirAttributesSelector" Label="Exclude directory attributes"
-                                                                 AutomationProperties.Name="Delete exclude directory attributes"/>
+                                    <local:FileAttributeSelector x:Name="DeleteIncludeFileAttributesSelector" Label="{x:Static local:Messages.IncludeFileAttributesLabel}"
+                                                                 AutomationProperties.Name="{x:Static local:Messages.DeleteIncludeFileAttributesAutomationName}"/>
+                                    <local:FileAttributeSelector x:Name="DeleteExcludeFileAttributesSelector" Label="{x:Static local:Messages.ExcludeFileAttributesLabel}"
+                                                                 AutomationProperties.Name="{x:Static local:Messages.DeleteExcludeFileAttributesAutomationName}"/>
+                                    <local:FileAttributeSelector x:Name="DeleteIncludeDirAttributesSelector" Label="{x:Static local:Messages.IncludeDirectoryAttributesLabel}"
+                                                                 AutomationProperties.Name="{x:Static local:Messages.DeleteIncludeDirectoryAttributesAutomationName}"/>
+                                    <local:FileAttributeSelector x:Name="DeleteExcludeDirAttributesSelector" Label="{x:Static local:Messages.ExcludeDirectoryAttributesLabel}"
+                                                                 AutomationProperties.Name="{x:Static local:Messages.DeleteExcludeDirectoryAttributesAutomationName}"/>
                                 </StackPanel>
                             </Expander>
                         </StackPanel>
                     </Grid>
                     <WrapPanel>
-                        <Button x:Name="DeleteButton" Content="Delete..." Click="Delete_Click" MinWidth="120" Height="35"
-                                AutomationProperties.Name="Delete remote content" ToolTip="Review the request before deleting."/>
-                        <Button x:Name="StopWaitingDeleteButton" Content="Stop waiting" Click="StopWaitingDelete_Click" IsEnabled="False" MinWidth="120" Height="35"
-                                AutomationProperties.Name="Stop waiting for delete" ToolTip="Stops the client wait, not deletion already started on the endpoint."/>
+                        <Button x:Name="DeleteButton" Content="{x:Static local:Messages.DeleteButtonText}" Click="Delete_Click" MinWidth="120" Height="35"
+                                AutomationProperties.Name="{x:Static local:Messages.DeleteButtonAutomationName}" ToolTip="{x:Static local:Messages.DeleteButtonToolTip}"/>
+                        <Button x:Name="StopWaitingDeleteButton" Content="{x:Static local:Messages.StopWaitingButtonText}" Click="StopWaitingDelete_Click" IsEnabled="False" MinWidth="120" Height="35"
+                                AutomationProperties.Name="{x:Static local:Messages.StopWaitingButtonAutomationName}" ToolTip="{x:Static local:Messages.StopWaitingButtonToolTip}"/>
                     </WrapPanel>
-                    <ProgressBar x:Name="DeleteProgressBar" Height="12" IsIndeterminate="False" Value="0" AutomationProperties.Name="Delete request activity"/>
-                    <TextBlock x:Name="DeleteStatusText" Text="No delete request active." TextWrapping="Wrap" Margin="0 8 0 0"/>
+                    <ProgressBar x:Name="DeleteProgressBar" Height="12" IsIndeterminate="False" Value="0" AutomationProperties.Name="{x:Static local:Messages.DeleteProgressAutomationName}"/>
+                    <TextBlock x:Name="DeleteStatusText" Text="{x:Static local:Messages.DeleteIdleStatus}" TextWrapping="Wrap" Margin="0 8 0 0"/>
                 </StackPanel>
             </Border>
 
@@ -305,16 +597,31 @@
             <Border Grid.Row="3" Background="{StaticResource CardBackground}" Padding="16" CornerRadius="10" Margin="0">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <StackPanel>
-                        <TextBlock Text="Command Output" FontWeight="Bold" Margin="0 0 0 8"/>
-                        <TextBlock Text="Read the final result here and in the status above. Progress alone does not confirm completion."
-                                   Style="{StaticResource GuidanceText}"/>
+                        <TextBlock
+                            Margin="0,0,0,8"
+                            FontWeight="Bold"
+                            Text="{x:Static local:Messages.CommandOutputHeading}" />
+                        <TextBlock Style="{StaticResource GuidanceText}" Text="{x:Static local:Messages.CommandOutputGuidance}" />
                     </StackPanel>
 
-                    <TextBox x:Name="OutputTextBox" Grid.Row="1" MaxHeight="300" TextWrapping="Wrap" IsReadOnly="True" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Background="#00111111" BorderThickness="0" FontFamily="Consolas" Foreground="#DDDDDD" AutomationProperties.Name="Command output"/>
+                    <TextBox
+                        x:Name="OutputTextBox"
+                        Grid.Row="1"
+                        MaxHeight="300"
+                        AcceptsReturn="True"
+                        AutomationProperties.Name="{x:Static local:Messages.CommandOutputAutomationName}"
+                        Background="#00111111"
+                        BorderThickness="0"
+                        FontFamily="Consolas"
+                        Foreground="#DDDDDD"
+                        HorizontalScrollBarVisibility="Disabled"
+                        IsReadOnly="True"
+                        TextWrapping="Wrap"
+                        VerticalScrollBarVisibility="Auto" />
                 </Grid>
             </Border>
         </Grid>

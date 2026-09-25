@@ -551,11 +551,13 @@ namespace ImGuiAtg
         { "Triangle",  ControllerGlyph::BtnTriangle },
 
         // Xbox D-Pad
-        { "DPad",      ControllerGlyph::DPad },
-        { "DPadUp",    ControllerGlyph::DPadUp },
-        { "DPadDown",  ControllerGlyph::DPadDown },
-        { "DPadLeft",  ControllerGlyph::DPadLeft },
-        { "DPadRight", ControllerGlyph::DPadRight },
+        { "DPad",          ControllerGlyph::DPad },
+        { "DPadUp",        ControllerGlyph::DPadUp },
+        { "DPadDown",      ControllerGlyph::DPadDown },
+        { "DPadLeft",      ControllerGlyph::DPadLeft },
+        { "DPadRight",     ControllerGlyph::DPadRight },
+        { "DPadUpDown",    ControllerGlyph::DPadUpDown },
+        { "DPadLeftRight", ControllerGlyph::DPadLeftRight },
 
         // Generic D-Pad
         { "Up",        ControllerGlyph::Up },
@@ -1059,7 +1061,9 @@ namespace ImGuiAtg
 
     void DrawLogPanel(float height, bool wrap)
     {
+        ImGuiAtg::BeginNavigationGroup("Log");
         DrawLogContent(GetState(), "Log", height, wrap);
+        ImGuiAtg::EndNavigationGroup();
     }
 
     void ClearLog()

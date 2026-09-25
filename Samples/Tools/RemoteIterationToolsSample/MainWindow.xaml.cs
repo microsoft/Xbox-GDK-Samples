@@ -33,6 +33,139 @@ namespace RemoteIterationToolsSample
             }
         }
 
+        private void BrowseRetrieveDestination_Click(object sender, RoutedEventArgs e)
+        {
+            if (_activeOperation != null)
+                return;
+
+            using var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            dialog.Description = "Select local destination for retrieved artifacts";
+            dialog.UseDescriptionForTitle = true;
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                RetrieveDestinationPathTextBox.Text = dialog.SelectedPath;
+            }
+        }
+
+        private async void Retrieve_Click(object sender, RoutedEventArgs e)
+        {
+            if (_activeOperation != null)
+                return;
+
+            string device = DeviceIpTextBox.Text.Trim();
+            string remoteSource = RetrieveSourcePathTextBox.Text.Trim();
+            string localDestination = RetrieveDestinationPathTextBox.Text.Trim();
+            string? commonRootAlias = string.IsNullOrWhiteSpace(RetrieveCommonRootAliasTextBox.Text)
+                ? null
+                : RetrieveCommonRootAliasTextBox.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(device) ||
+                string.IsNullOrWhiteSpace(remoteSource) ||
+                string.IsNullOrWhiteSpace(localDestination))
+            {
+                System.Windows.MessageBox.Show(
+                    Messages.RetrieveRequiredInputsMessage,
+                    Messages.RetrieveInvalidInputsTitle,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                return;
+            }
+
+            if (!System.IO.Directory.Exists(localDestination))
+            {
+                System.Windows.MessageBox.Show(
+                    string.Format(Messages.RetrieveDestinationNotFoundFormat, localDestination),
+                    Messages.RetrieveInvalidInputsTitle,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                return;
+            }
+
+            var operation = new OperationState("Retrieve", device)
+            {
+                SourcePath = remoteSource,
+                DestinationPath = localDestination,
+                CopyDirection = WdCopyDirection.CopyFrom,
+                CommonRootAlias = commonRootAlias
+            };
+            if (!BeginOperation(operation))
+                return;
+
+            try
+            {
+                RetrieveProgressBar.IsIndeterminate = true;
+                RetrieveProgressStatusText.Text = Messages.RetrieveProgressActive;
+                string commonRootDisplayName = operation.CommonRootAlias ?? Messages.DefaultCommonRootDisplayName;
+                AppendOutput(string.Format(
+                    Messages.RetrieveStartingFormat,
+                    operation.Device,
+                    operation.SourcePath,
+                    operation.DestinationPath,
+                    commonRootDisplayName));
+
+                WdCopyStatusCallbacks callbacks = operation.CreateCopyCallbacks();
+                operation.CopyActive = true;
+                SetCopyCancelEnabled(operation, true);
+                _progressTimer.Start();
+
+                HRESULT hr = await RemoteIteration.CopyAsync(
+                    remoteDevice: operation.Device,
+                    sourcePath: operation.SourcePath,
+                    destinationPath: operation.DestinationPath,
+                    copyDirection: operation.CopyDirection,
+                    commonRootAlias: operation.CommonRootAlias,
+                    cancellationHandleWrapper: operation.CancellationHandle,
+                    statusCallbacks: callbacks);
+
+                operation.CopyActive = false;
+                SetCopyCancelEnabled(operation, false);
+                _progressTimer.Stop();
+                RetrieveProgressBar.IsIndeterminate = false;
+                AppendOutput(string.Format(Messages.RetrieveCopyReturnedFormat, hr.Value));
+                SetCopyStatus(operation, Messages.RetrieveDisplayingRemainingOutput);
+                await DrainRemainingCopyUpdatesAsync(operation);
+                if (hr.Failed)
+                {
+                    SetCopyStatus(operation, Messages.RetrieveCopyFailedStatus);
+                    AppendOutput(string.Format(Messages.RetrieveCopyFailedFormat, hr.Value));
+                    if (operation.CancellationRequested)
+                        AppendOutput(Messages.CopyFailureCancellationNote);
+                    return;
+                }
+                if (operation.CancellationRequested)
+                {
+                    SetCopyStatus(operation, Messages.RetrieveCancellationUnconfirmedStatus);
+                    AppendOutput(Messages.RetrieveCancellationUnconfirmedMessage);
+                    return;
+                }
+                if (operation.CallbackFailure != null)
+                {
+                    SetCopyStatus(operation, Messages.RetrieveCallbackFailureStatus);
+                    AppendOutput(Messages.RetrieveCallbackFailureMessage);
+                    return;
+                }
+
+                SetCopyStatus(operation, Messages.RetrieveCompletedStatus);
+                AppendOutput(Messages.RetrieveCompletedMessage);
+            }
+            catch (Exception ex)
+            {
+                operation.CopyActive = false;
+                SetCopyCancelEnabled(operation, false);
+                _progressTimer.Stop();
+                RetrieveProgressBar.IsIndeterminate = false;
+                await DrainRemainingCopyUpdatesAsync(operation);
+                ShowOperationFailure(operation, ex);
+                SetCopyStatus(operation, Messages.RetrieveOperationFailed);
+            }
+            finally
+            {
+                operation.CopyActive = false;
+                RetrieveProgressBar.IsIndeterminate = false;
+                EndOperation(operation);
+            }
+        }
+
         private bool BeginOperation(OperationState operation)
         {
             if (_activeOperation != null)
@@ -53,6 +186,7 @@ namespace RemoteIterationToolsSample
                 _activeOperation = null;
                 CancelButton.IsEnabled = false;
                 StopWaitingDeleteButton.IsEnabled = false;
+                CancelRetrieveButton.IsEnabled = false;
                 SetInputsEnabled(true);
             }
         }
@@ -68,6 +202,27 @@ namespace RemoteIterationToolsSample
             GameActions.IsEnabled = enabled;
             DeleteInputs.IsEnabled = enabled;
             DeleteButton.IsEnabled = enabled;
+            RetrieveSourcePathTextBox.IsEnabled = enabled;
+            RetrieveCommonRootAliasTextBox.IsEnabled = enabled;
+            RetrieveDestinationPathTextBox.IsEnabled = enabled;
+            RetrieveBrowseButton.IsEnabled = enabled;
+            RetrieveButton.IsEnabled = enabled;
+        }
+
+        private void SetCopyCancelEnabled(OperationState operation, bool enabled)
+        {
+            if (operation.CopyDirection == WdCopyDirection.CopyFrom)
+                CancelRetrieveButton.IsEnabled = enabled;
+            else
+                CancelButton.IsEnabled = enabled;
+        }
+
+        private void SetCopyStatus(OperationState operation, string status)
+        {
+            if (operation.CopyDirection == WdCopyDirection.CopyFrom)
+                RetrieveProgressStatusText.Text = status;
+            else
+                ProgressStatusText.Text = status;
         }
 
         private void Window_Closing(object? sender, CancelEventArgs e)
@@ -76,10 +231,7 @@ namespace RemoteIterationToolsSample
                 return;
 
             e.Cancel = true;
-            AppendOutput("\nWait for the active operation to return before closing. " +
-                "If it appears stalled, choose Cancel for copy or Stop waiting for delete when available, then wait for the call to return. " +
-                "If it remains unresponsive, end RemoteIterationToolsSample.exe in Task Manager as a last resort. " +
-                "Force-closing does not undo completed transfers or deletions, or confirm that the remote operation stopped.\n");
+            AppendOutput(Messages.ActiveOperationClosingGuidance);
         }
 
         private void ProgressTimer_Tick(object? sender, EventArgs e)
@@ -108,7 +260,10 @@ namespace RemoteIterationToolsSample
                 if (callbackFailure != null)
                     operation.CallbackFailureReported = true;
 
-                if (operation.LatestSummary is WdCopyOperationSummary summary)
+                // CopyFrom summary totals describe files completed so far, not the full job.
+                // Keep Retrieve indeterminate and use its per-file callback messages instead.
+                if (operation.CopyDirection == WdCopyDirection.CopyTo &&
+                    operation.LatestSummary is WdCopyOperationSummary summary)
                 {
                     double percentage = summary.totalByteCount == 0
                         ? 0
@@ -117,10 +272,16 @@ namespace RemoteIterationToolsSample
                     ProgressPercentText.Text = $"{percentage:F1}%";
                     if (!operation.CancellationRequested)
                     {
-                        ProgressStatusText.Text =
-                            $"Copied {summary.bytesTransferredCount:N0} / {summary.totalByteCount:N0} bytes " +
-                            $"({summary.filesCompletedCount:N0} / {summary.totalFileCount:N0} files); " +
-                            (operation.CopyActive ? "waiting for copy result." : "displaying remaining copy output.");
+                        string progressState = operation.CopyActive
+                            ? Messages.CopyProgressWaitingForResult
+                            : Messages.CopyProgressDisplayingRemainingOutput;
+                        ProgressStatusText.Text = string.Format(
+                            Messages.CopyProgressStatusFormat,
+                            summary.bytesTransferredCount,
+                            summary.totalByteCount,
+                            summary.filesCompletedCount,
+                            summary.totalFileCount,
+                            progressState);
                     }
                 }
                 return true;
@@ -147,8 +308,7 @@ namespace RemoteIterationToolsSample
         }
 
         private static string FormatCallbackFailure(Exception ex) =>
-            $"\n✗ Callback processing failed: {ex.Message} (HRESULT 0x{ex.HResult:X8}). " +
-            "A callback failure does not stop native copy or replace its final HRESULT.\n";
+            string.Format(Messages.CallbackFailureFormat, ex.Message, ex.HResult);
 
         private void ReportCallbackFailure(OperationState operation)
         {
@@ -169,20 +329,24 @@ namespace RemoteIterationToolsSample
             string destination = DestinationPathTextBox.Text.Trim();
             if (string.IsNullOrWhiteSpace(ip) || string.IsNullOrWhiteSpace(folder) || string.IsNullOrWhiteSpace(destination))
             {
-                System.Windows.MessageBox.Show("Enter a device, a local source folder, and a remote destination folder.");
+                System.Windows.MessageBox.Show(Messages.DeployRequiredInputsMessage);
                 return;
             }
 
-            var operation = new OperationState("Deployment", ip, destination)
+            var operation = new OperationState("Deployment", ip)
             {
-                LocalSourcePath = folder,
+                SourcePath = folder,
+                DestinationPath = destination,
+                CopyDirection = WdCopyDirection.CopyTo,
                 SearchOptions = new CopySearchOptions
                 {
                     IncludeFilePattern = IncludeFilePatternTextBox.Text.Trim(),
                     ExcludeFilePattern = ExcludeFilePatternTextBox.Text.Trim(),
                     ExcludeDirPattern = ExcludeDirPatternTextBox.Text.Trim(),
                     IncludeFileAttributes = IncludeFileAttributesSelector.Mask,
-                    ExcludeFileAttributes = ExcludeFileAttributesSelector.Mask
+                    ExcludeFileAttributes = ExcludeFileAttributesSelector.Mask,
+                    IncludeDirectoryAttributes = IncludeDirectoryAttributesSelector.Mask,
+                    ExcludeDirectoryAttributes = ExcludeDirectoryAttributesSelector.Mask
                 }
             };
             if (!BeginOperation(operation))
@@ -193,22 +357,28 @@ namespace RemoteIterationToolsSample
                 DeploymentProgressBar.Value = 0;
                 ProgressPercentText.Text = "0%";
                 ProgressStatusText.Text = "Copying; waiting for progress.";
-                AppendOutput($"> Deploying to {operation.Device}:{operation.RemotePath}\nSource: {operation.LocalSourcePath}\n\n");
+                AppendOutput(string.Format(
+                    Messages.DeployStartingFormat,
+                    operation.Device,
+                    operation.DestinationPath,
+                    operation.SourcePath));
                 WdCopyStatusCallbacks callbacks = operation.CreateCopyCallbacks();
                 operation.CopyActive = true;
-                CancelButton.IsEnabled = true;
+                SetCopyCancelEnabled(operation, true);
                 _progressTimer.Start();
 
                 HRESULT hr = await RemoteIteration.CopyAsync(
                     remoteDevice: operation.Device,
-                    localSourcePath: operation.LocalSourcePath,
-                    remoteDestPath: operation.RemotePath,
+                    sourcePath: operation.SourcePath,
+                    destinationPath: operation.DestinationPath,
+                    copyDirection: operation.CopyDirection,
+                    commonRootAlias: operation.CommonRootAlias,
                     cancellationHandleWrapper: operation.CancellationHandle,
                     searchOptions: operation.SearchOptions,
                     statusCallbacks: callbacks);
 
                 operation.CopyActive = false;
-                CancelButton.IsEnabled = false;
+                SetCopyCancelEnabled(operation, false);
                 _progressTimer.Stop();
                 // Callbacks only enqueue owned data. Drain before setting the authoritative result.
                 AppendOutput($"\nCopy returned HRESULT 0x{hr.Value:X8}.\n");
@@ -217,27 +387,28 @@ namespace RemoteIterationToolsSample
                 if (hr.Failed)
                 {
                     ProgressStatusText.Text = "Deployment failed during copy.";
-                    AppendOutput($"✗ Copy failed: HRESULT 0x{hr.Value:X8}." +
-                        (operation.CancellationRequested ? " Cancellation was also requested; this does not establish the failure's cause." : "") +
-                        " Remote path validation skipped.\n");
+                    AppendOutput(string.Format(Messages.DeployCopyFailedFormat, hr.Value));
+                    if (operation.CancellationRequested)
+                        AppendOutput(Messages.CopyFailureCancellationNote);
+                    AppendOutput(Messages.RemotePathValidationSkippedMessage);
                     return;
                 }
                 if (operation.CancellationRequested)
                 {
                     ProgressStatusText.Text = "Cancellation requested; deployment completeness not confirmed.";
-                    AppendOutput("Cancellation was requested. Copy returning success does not confirm a complete deployment. Remote path validation skipped.\n");
+                    AppendOutput(Messages.DeployCancellationUnconfirmedMessage);
                     return;
                 }
                 if (operation.CallbackFailure != null)
                 {
                     ProgressStatusText.Text = "Copy returned success, but callback processing failed.";
-                    AppendOutput("Deployment status is not confirmed because callback processing failed. Remote path validation skipped.\n");
+                    AppendOutput(Messages.DeployCallbackFailureMessage);
                     return;
                 }
 
                 ProgressStatusText.Text = "Copy finished. Validating remote path.";
-                AppendOutput("Validating remote path with WdRegisterRemoteXboxGame (not platform game registration).\n");
-                hr = await RemoteIteration.RegisterRemoteXboxGameAsync(operation.Device, operation.RemotePath);
+                AppendOutput(Messages.RemotePathValidationStartingMessage);
+                hr = await RemoteIteration.RegisterRemoteXboxGameAsync(operation.Device, operation.DestinationPath);
                 AppendOutput($"Remote path validation returned HRESULT 0x{hr.Value:X8}.\n");
                 if (hr.Failed)
                 {
@@ -252,7 +423,7 @@ namespace RemoteIterationToolsSample
             catch (Exception ex)
             {
                 operation.CopyActive = false;
-                CancelButton.IsEnabled = false;
+                SetCopyCancelEnabled(operation, false);
                 _progressTimer.Stop();
                 await DrainRemainingCopyUpdatesAsync(operation);
                 ShowOperationFailure(operation, ex);
@@ -272,25 +443,28 @@ namespace RemoteIterationToolsSample
                 return;
 
             operation.CancellationRequested = true;
-            CancelButton.IsEnabled = false;
-            ProgressStatusText.Text = "Cancellation requested; waiting for copy to return.";
-            AppendOutput("\nCancellation requested; waiting for the copy result.\n");
+            SetCopyCancelEnabled(operation, false);
+            SetCopyStatus(operation, Messages.CopyCancellationRequestedStatus);
+            AppendOutput(Messages.CopyCancellationRequestedOutput);
             try
             {
                 // The signal is nonblocking. Running it on the UI thread prevents the awaited
                 // copy continuation from disposing its handle while cancellation uses it.
                 HRESULT hr = RemoteIteration.RequestCopyCancellation(operation.CancellationHandle);
-                AppendOutput($"Cancellation signal returned HRESULT 0x{hr.Value:X8}.\n");
+                AppendOutput(string.Format(Messages.CopyCancellationSignalReturnedFormat, hr.Value));
                 if (hr.Failed)
                 {
-                    ProgressStatusText.Text = "Cancellation signal failed; waiting for copy to return.";
-                    AppendOutput("✗ Cancellation signal failed; copy may continue. Cancellation intent is retained.\n");
+                    SetCopyStatus(operation, Messages.CopyCancellationSignalFailedStatus);
+                    AppendOutput(Messages.CopyCancellationSignalFailedOutput);
                 }
             }
             catch (Exception ex)
             {
-                AppendOutput($"✗ Cancellation signal failed: {ex.Message} (HRESULT 0x{ex.HResult:X8}). Copy may continue.\n");
-                ProgressStatusText.Text = "Cancellation signal failed; waiting for copy to return.";
+                AppendOutput(string.Format(
+                    Messages.CopyCancellationSignalExceptionFormat,
+                    ex.Message,
+                    ex.HResult));
+                SetCopyStatus(operation, Messages.CopyCancellationSignalFailedStatus);
             }
         }
 
@@ -326,7 +500,7 @@ namespace RemoteIterationToolsSample
                     operation.Device, operation.RemotePath, launchOptions: operation.LaunchOptions);
                 AppendOutput(hr.Failed
                     ? $"✗ Launch failed: HRESULT 0x{hr.Value:X8}.\n"
-                    : $"Launch succeeded (Process ID: {process.ProcessId}, Thread ID: {process.ThreadId}).\n");
+                    : string.Format(Messages.LaunchSucceededFormat, process.ProcessId, process.ThreadId));
             }
             catch (Exception ex)
             {
@@ -381,9 +555,19 @@ namespace RemoteIterationToolsSample
 
         private void ShowOperationFailure(OperationState operation, Exception ex)
         {
-            AppendOutput($"\n✗ {operation.Name} failed: {ex.Message} (HRESULT 0x{ex.HResult:X8})." +
-                (operation.CancellationRequested ? " Cancellation was also requested." : "") +
-                (operation.StopWaitingRequested ? " Remote deletion may continue." : "") + "\n");
+            string cancellationNote = operation.CancellationRequested
+                ? Messages.OperationFailureCancellationNote
+                : "";
+            string deleteNote = operation.StopWaitingRequested
+                ? Messages.OperationFailureDeleteMayContinueNote
+                : "";
+            AppendOutput(string.Format(
+                Messages.OperationFailureFormat,
+                operation.Name,
+                ex.Message,
+                ex.HResult,
+                cancellationNote,
+                deleteNote));
         }
 
         private void AppendOutput(string text)

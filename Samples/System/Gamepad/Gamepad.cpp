@@ -1,6 +1,8 @@
 //--------------------------------------------------------------------------------------
 // Gamepad.cpp
 //
+// GameInput initialization, device callbacks, and frame orchestration.
+//
 // Advanced Technology Group (ATG)
 // Copyright (C) Microsoft Corporation. All rights reserved.
 //--------------------------------------------------------------------------------------
@@ -8,503 +10,587 @@
 #include "pch.h"
 #include "Gamepad.h"
 
-#include "ATGColors.h"
-#include "ControllerFont.h"
-#include "FindMedia.h"
-
-extern void ExitSample() noexcept;
-
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
-
 using Microsoft::WRL::ComPtr;
 
-Sample::Sample() noexcept(false) :
-    m_frame(0),
-    m_deviceString{},
-    m_leftTrigger(0),
-    m_rightTrigger(0),
-    m_leftStickX(0),
-    m_leftStickY(0),
-    m_rightStickX(0),
-    m_rightStickY(0),
-    m_accelX(0),
-    m_accelY(0),
-    m_accelZ(0),
-    m_angularX(0),
-    m_angularY(0),
-    m_angularZ(0),
-    m_orientationX(0),
-    m_orientationY(0),
-    m_orientationZ(0),
-    m_orientationW(0)
+//--------------------------------------------------------------------------------------
+// Initialize GameInput and register callbacks.
+//--------------------------------------------------------------------------------------
+void Sample::Initialize(HWND hWnd, ImGuiAtg::DeviceContext* deviceContext)
 {
-    // Renders only 2D, so no need for a depth buffer.
-    m_deviceResources = std::make_unique<DX::DeviceResources>(DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_UNKNOWN);
-    m_deviceResources->SetClearColor(ATG::Colors::Background);
-}
-
-Sample::~Sample()
-{
-    if (m_deviceResources)
-    {
-        m_deviceResources->WaitForGpu();
-    }
-}
-
-// Initialize the Direct3D resources required to run.
-void Sample::Initialize(HWND window, int width, int height)
-{
-    m_deviceResources->SetWindow(window, width, height);
-
-    m_deviceResources->CreateDeviceResources();
-    CreateDeviceDependentResources();
-
-    m_deviceResources->CreateWindowSizeDependentResources();
-    CreateWindowSizeDependentResources();
+    m_hWnd = hWnd;
 
     HRESULT hr = GameInputCreate(&m_gameInput);
-
-#ifdef _GAMING_XBOX
-    DX::ThrowIfFailed(hr);
-#else
-    extern LPCWSTR g_szAppName;
 
     if (FAILED(hr))
     {
         wchar_t buff[256] = {};
-        swprintf_s(buff,
-            L"GameInput creation failed with error: %08X\n\nVerify that GameInputRedist.msi has been installed as noted in the README.",
-            static_cast<unsigned int>(hr));
-        _Analysis_assume_nullterminated_(g_szAppName);
-        std::ignore = MessageBoxW(window, buff, g_szAppName, MB_ICONERROR | MB_OK);
-        ExitSample();
-    }
-#endif
-}
-
-#pragma region Frame Update
-// Executes basic render loop.
-void Sample::Tick()
-{
-    PIXBeginEvent(PIX_COLOR_DEFAULT, L"Frame %llu", m_frame);
-
 #ifdef _GAMING_XBOX
-    m_deviceResources->WaitForOrigin();
+        swprintf_s(buff,
+            L"GameInput creation failed with error: %08X\n\n",
+            static_cast<unsigned int>(hr));
+        OutputDebugStringW(buff);
+#else
+        swprintf_s(buff,
+            L"GameInput creation failed with error: %08X\n\n"
+            L"Verify that the GameInput runtime has been installed that is included with\n"
+            L"the redist in the NuGet package or via 'winget install Microsoft.GameInput'",
+            static_cast<unsigned int>(hr));
+        MessageBoxW(hWnd, buff, L"Gamepad", MB_ICONERROR | MB_OK);
 #endif
+        PostQuitMessage(1);
+        return;
+    }
 
-    m_timer.Tick([&]()
+    ImGuiAtg::Log("GameInput created successfully\n");
+
+    QueryPerformanceFrequency(reinterpret_cast<LARGE_INTEGER*>(&m_perfFrequency));
+
+    if (deviceContext)
     {
-        Update(m_timer);
-    });
+        InitializeModelRenderer(deviceContext);
+    }
 
-    Render();
+    // Blocking enumeration reports already-connected matching devices before returning.
+    hr = m_gameInput->RegisterDeviceCallback(
+        nullptr,
+        GameInputKindGamepad | GameInputKindSensors,
+        GameInputDeviceAnyStatus,
+        GameInputBlockingEnumeration,
+        this,
+        OnDeviceChanged,
+        &m_deviceCallbackToken);
 
-    PIXEndEvent();
-    m_frame++;
+    if (FAILED(hr))
+    {
+        ImGuiAtg::Log("Failed to register device callback: %08X\n", static_cast<unsigned int>(hr));
+    }
+
+    // Guide and Share are system buttons, not GameInputGamepadState buttons.
+    hr = m_gameInput->RegisterSystemButtonCallback(
+        nullptr,
+        GameInputSystemButtonGuide | GameInputSystemButtonShare,
+        this,
+        OnSystemButtonChanged,
+        &m_systemButtonCallbackToken);
+
+    if (FAILED(hr))
+    {
+        ImGuiAtg::Log("Failed to register system button callback: %08X\n", static_cast<unsigned int>(hr));
+    }
+
+    InitializeHaptics();
 }
 
-// Updates the world.
-void Sample::Update(DX::StepTimer const&)
+//--------------------------------------------------------------------------------------
+// Track device connection and status changes.
+//
+// GameInput device pointers have stable identity. GetDeviceInfo returns data valid for
+// the lifetime of the device.
+//--------------------------------------------------------------------------------------
+void CALLBACK Sample::OnDeviceChanged(
+    GameInputCallbackToken /*token*/,
+    void* context,
+    IGameInputDevice* device,
+    uint64_t /*timestamp*/,
+    GameInputDeviceStatus currentStatus,
+    GameInputDeviceStatus previousStatus) noexcept
 {
-    PIXBeginEvent(PIX_COLOR_DEFAULT, L"Update");
+    auto* sample = static_cast<Sample*>(context);
 
-    // request Gamepad and Sensor input in readings
-    if (FAILED(m_gameInput->GetCurrentReading(GameInputKindGamepad | GameInputKindSensors, nullptr, &m_reading)))
+    const GameInputDeviceInfo* info = nullptr;
+    HRESULT infoResult = device->GetDeviceInfo(&info);
+
+    bool wasConnected = (previousStatus & GameInputDeviceConnected) != 0;
+    bool isConnected = (currentStatus & GameInputDeviceConnected) != 0;
+    bool hapticsReady = (currentStatus & GameInputDeviceHapticInfoReady) && !(previousStatus & GameInputDeviceHapticInfoReady);
+
+    std::lock_guard<std::mutex> lock(sample->m_gamepadsMutex);
+
+    if (wasConnected && !isConnected)
     {
-        // Failure indicates no gamepad is connected
-        m_buttonString.clear();
-    }
-    else
-    {
-        ComPtr<IGameInputDevice> device;
-        m_reading->GetDevice(&device);
-
-        int currentDevice = -1;
-
-        for (size_t i = 0; i< m_devices.size(); i++)
+        if (SUCCEEDED(infoResult))
         {
-            // GameInput device objects are singletons, and their lifetime is the same as the process.
-            // The API guarantees that IGameInputDevice instances can be directly compared for equality.
-            if (m_devices[i].Get() == device.Get())
+            ImGuiAtg::Log("Disconnected: %s (VID: %04X, PID: %04X) prev=0x%08X cur=0x%08X\n",
+                GetDeviceDisplayName(info), info->vendorId, info->productId, static_cast<unsigned int>(previousStatus), static_cast<unsigned int>(currentStatus));
+        }
+        else
+        {
+            ImGuiAtg::Log("Failed to get disconnected device info: %08X\n", static_cast<unsigned int>(infoResult));
+        }
+
+        for (auto it = sample->m_gamepads.begin(); it != sample->m_gamepads.end(); ++it)
+        {
+            if (it->device.Get() == device)
             {
-                currentDevice = static_cast<int>(i);
+                sample->m_gamepads.erase(it);
                 break;
             }
         }
 
-        if (currentDevice == -1)
-        {
-            currentDevice = static_cast<int>(m_devices.size());
-            m_devices.emplace_back(device);
-        }
-
-        swprintf(m_deviceString, 19, L"Gamepad index: %d", currentDevice);
-
-        GameInputGamepadState state = {};
-
-        if (m_reading->GetGamepadState(&state))
-        {
-            m_buttonString = L"Buttons pressed:  ";
-
-            int exitComboPressed = 0;
-
-            if (state.buttons & GameInputGamepadDPadUp)
-            {
-                m_buttonString += L"[DPad]Up ";
-            }
-
-            if (state.buttons & GameInputGamepadDPadDown)
-            {
-                m_buttonString += L"[DPad]Down ";
-            }
-
-            if (state.buttons & GameInputGamepadDPadRight)
-            {
-                m_buttonString += L"[DPad]Right ";
-            }
-
-            if (state.buttons & GameInputGamepadDPadLeft)
-            {
-                m_buttonString += L"[DPad]Left ";
-            }
-
-            if (state.buttons & GameInputGamepadA)
-            {
-                m_buttonString += L"[A] ";
-            }
-
-            if (state.buttons & GameInputGamepadB)
-            {
-                m_buttonString += L"[B] ";
-            }
-
-            if (state.buttons & GameInputGamepadX)
-            {
-                m_buttonString += L"[X] ";
-            }
-
-            if (state.buttons & GameInputGamepadY)
-            {
-                m_buttonString += L"[Y] ";
-            }
-
-            if (state.buttons & GameInputGamepadLeftShoulder)
-            {
-                m_buttonString += L"[LB] ";
-                exitComboPressed += 1;
-            }
-
-            if (state.buttons & GameInputGamepadRightShoulder)
-            {
-                m_buttonString += L"[RB] ";
-                exitComboPressed += 1;
-            }
-
-            if (state.buttons & GameInputGamepadLeftThumbstick)
-            {
-                m_buttonString += L"[LThumb] ";
-            }
-
-            if (state.buttons & GameInputGamepadRightThumbstick)
-            {
-                m_buttonString += L"[RThumb] ";
-            }
-
-            if (state.buttons & GameInputGamepadMenu)
-            {
-                m_buttonString += L"[Menu] ";
-                exitComboPressed += 1;
-            }
-
-            if (state.buttons & GameInputGamepadView)
-            {
-                m_buttonString += L"[View] ";
-                exitComboPressed += 1;
-            }
-
-            m_leftTrigger = state.leftTrigger;
-            m_rightTrigger = state.rightTrigger;
-            m_leftStickX = state.leftThumbstickX;
-            m_leftStickY = state.leftThumbstickY;
-            m_rightStickX = state.rightThumbstickX;
-            m_rightStickY = state.rightThumbstickY;
-
-            if (exitComboPressed == 4)
-                ExitSample();
-        }
-
-        // get current sensor state for display. Note that not all gamepads have sensors,
-        // so this may fail even if a gamepad is connected.
-        GameInputSensorsState sensorsState = {};
-        if (m_reading->GetSensorsState(&sensorsState))
-        {
-            m_accelX = sensorsState.accelerationInGX;
-            m_accelY = sensorsState.accelerationInGY;
-            m_accelZ = sensorsState.accelerationInGZ;
-
-            m_angularX = sensorsState.angularVelocityInRadPerSecX;
-            m_angularY = sensorsState.angularVelocityInRadPerSecY;
-            m_angularZ = sensorsState.angularVelocityInRadPerSecZ;
-
-            m_orientationX = sensorsState.orientationX;
-            m_orientationY = sensorsState.orientationY;
-            m_orientationZ = sensorsState.orientationZ;
-            m_orientationW = sensorsState.orientationW;
-        }
-    }
-
-    PIXEndEvent();
-}
-#pragma endregion
-
-#pragma region Frame Render
-// Draws the scene.
-void Sample::Render()
-{
-    // Don't try to render anything before the first Update.
-    if (m_timer.GetFrameCount() == 0)
-    {
         return;
     }
 
-    // Prepare the command list to render a new frame.
-    m_deviceResources->Prepare();
-    Clear();
-
-    auto commandList = m_deviceResources->GetCommandList();
-    PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Render");
-
-    auto const fullscreen = m_deviceResources->GetOutputSize();
-
-    auto const safeRect = Viewport::ComputeTitleSafeArea(UINT(fullscreen.right - fullscreen.left), UINT(fullscreen.bottom - fullscreen.top));
-
-    auto heap = m_resourceDescriptors->Heap();
-    commandList->SetDescriptorHeaps(1, &heap);
-
-    m_batch->Begin(commandList);
-
-    m_batch->Draw(m_resourceDescriptors->GetGpuHandle(Descriptors::Background), XMUINT2(1920, 1080), fullscreen);
-
-    wchar_t tempString[256] = {};
-    XMFLOAT2 pos(float(safeRect.left), float(safeRect.top));
-
-    m_font->DrawString(m_batch.get(), m_deviceString, pos, ATG::Colors::OffWhite);
-    pos.y += m_font->GetLineSpacing() * 1.5f;
-
-    if (!m_buttonString.empty())
+    if (FAILED(infoResult))
     {
-        DX::DrawControllerString(m_batch.get(), m_font.get(), m_ctrlFont.get(), m_buttonString.c_str(), pos);
-        pos.y += m_font->GetLineSpacing() * 1.5f;
+        ImGuiAtg::Log("Failed to get device info: %08X\n", static_cast<unsigned int>(infoResult));
+        return;
+    }
 
-        swprintf(tempString, 255, L"[LT]  %1.3f", m_leftTrigger);
-        DX::DrawControllerString(m_batch.get(), m_font.get(), m_ctrlFont.get(), tempString, pos);
-        pos.y += m_font->GetLineSpacing() * 1.5f;
+    if (isConnected && !wasConnected)
+    {
+        ImGuiAtg::Log("Connected: %s (VID: %04X, PID: %04X) prev=0x%08X cur=0x%08X\n",
+            GetDeviceDisplayName(info), info->vendorId, info->productId, static_cast<unsigned int>(previousStatus), static_cast<unsigned int>(currentStatus));
 
-        swprintf(tempString, 255, L"[RT]  %1.3f", m_rightTrigger);
-        DX::DrawControllerString(m_batch.get(), m_font.get(), m_ctrlFont.get(), tempString, pos);
-        pos.y += m_font->GetLineSpacing() * 1.5f;
+        GamepadDevice newDevice = {};
+        newDevice.device = device;
+        newDevice.deviceInfo = info;
 
-        swprintf(tempString, 255, L"[LThumb]  X: %1.3f  Y: %1.3f", m_leftStickX, m_leftStickY);
-        DX::DrawControllerString(m_batch.get(), m_font.get(), m_ctrlFont.get(), tempString, pos);
-        pos.y += m_font->GetLineSpacing() * 1.5f;
+        sample->m_gamepads.push_back(std::move(newDevice));
+        sample->m_selectedGamepad = static_cast<int>(sample->m_gamepads.size() - 1);
+    }
 
-        swprintf(tempString, 255, L"[RThumb]  X: %1.3f  Y: %1.3f", m_rightStickX, m_rightStickY);
-        DX::DrawControllerString(m_batch.get(), m_font.get(), m_ctrlFont.get(), tempString, pos);
-        pos.y += m_font->GetLineSpacing() * 5.0f;
+    if (hapticsReady)
+    {
+        // Haptic information may become ready after connection.
+        ImGuiAtg::Log("Haptics ready: %s (VID: %04X, PID: %04X) prev=0x%08X cur=0x%08X\n",
+            GetDeviceDisplayName(info), info->vendorId, info->productId, static_cast<unsigned int>(previousStatus), static_cast<unsigned int>(currentStatus));
+    }
+}
+
+//--------------------------------------------------------------------------------------
+// Track Guide and Share button state.
+//
+// Guide and Share require RegisterSystemButtonCallback. Guide delivery also depends
+// on the configured focus policy.
+//--------------------------------------------------------------------------------------
+void CALLBACK Sample::OnSystemButtonChanged(
+    GameInputCallbackToken /*token*/,
+    void* context,
+    IGameInputDevice* device,
+    uint64_t /*timestamp*/,
+    GameInputSystemButtons currentButtons,
+    GameInputSystemButtons /*previousButtons*/) noexcept
+{
+    auto* sample = static_cast<Sample*>(context);
+
+    std::lock_guard<std::mutex> lock(sample->m_gamepadsMutex);
+
+    for (auto& gamepad : sample->m_gamepads)
+    {
+        if (gamepad.device.Get() == device)
+        {
+            gamepad.systemButtons = currentButtons;
+            break;
+        }
+    }
+}
+
+//--------------------------------------------------------------------------------------
+// Update readings, vibration, and model orientation.
+//--------------------------------------------------------------------------------------
+void Sample::Update()
+{
+    if (!m_gameInput)
+        return;
+
+    std::lock_guard<std::mutex> lock(m_gamepadsMutex);
+
+    for (auto& gamepad : m_gamepads)
+    {
+        // Callback mode updates state on the GameInput worker thread.
+        if (!m_useCallbackMode)
+        {
+            PollGamepadReading(gamepad);
+        }
+
+        UpdateVibration(gamepad);
+    }
+
+    // render the 3D model for the visible tab
+    if (m_selectedGamepad >= 0 && m_selectedGamepad < static_cast<int>(m_gamepads.size()))
+    {
+        auto& gamepad = m_gamepads[static_cast<size_t>(m_selectedGamepad)];
+        if (gamepad.hasSensorsState)
+        {
+            RenderModel(gamepad.sensorsState);
+        }
+    }
+}
+
+//--------------------------------------------------------------------------------------
+// Draw the sample UI.
+//--------------------------------------------------------------------------------------
+void Sample::Draw()
+{
+    HandleSampleInput();
+
+    ImGuiAtg::BeginFullscreenLayout();
+
+    float footerH = ImGuiAtg::GetFooterHeight();
+    ImGui::BeginChild("##SplitArea", ImVec2(0, ImGui::GetContentRegionAvail().y - footerH));
+
+    ImGuiAtg::BeginSplitH("##LogSplit", 200.0f);
+
+    if (ImGui::IsWindowAppearing())
+    {
+        ImGui::SetWindowFocus();
+    }
+
+    // Focus policy controls foreground/background input and system-button routing.
+#ifndef _GAMING_XBOX
+    if (ImGui::CollapsingHeader("Focus Policy and Reading Mode", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Leaf))
+    {
+        ImGuiAtg::BeginNavigationGroup("FocusPolicy");
+
+        bool changed = false;
+        changed |= DrawFocusPolicyCheckbox("ExclusiveForegroundInput",       GameInputExclusiveForegroundInput);
+        changed |= DrawFocusPolicyCheckbox("ExclusiveForegroundGuideButton", GameInputExclusiveForegroundGuideButton);
+        changed |= DrawFocusPolicyCheckbox("ExclusiveForegroundShareButton", GameInputExclusiveForegroundShareButton);
+        changed |= DrawFocusPolicyCheckbox("EnableBackgroundInput",          GameInputEnableBackgroundInput);
+        changed |= DrawFocusPolicyCheckbox("EnableBackgroundGuideButton",    GameInputEnableBackgroundGuideButton);
+        changed |= DrawFocusPolicyCheckbox("EnableBackgroundShareButton",    GameInputEnableBackgroundShareButton);
+
+        if (changed && m_gameInput)
+        {
+            m_gameInput->SetFocusPolicy(m_focusPolicy);
+            ImGuiAtg::Log("Focus policy changed to: 0x%04X\n", static_cast<unsigned int>(m_focusPolicy));
+        }
+
+        ImGuiAtg::EndNavigationGroup();
+    }
+#endif
+
+    // Switch between polling and callback-driven readings.
+    {
+        ImGui::AlignTextToFramePadding();
+        ImGui::Text("Reading Mode:");
+        ImGui::SameLine();
+
+        ImGuiAtg::BeginNavigationGroup("ReadingMode");
+
+        if (ImGui::RadioButton("Polling", !m_useCallbackMode))
+        {
+            if (m_useCallbackMode)
+            {
+                UnregisterReadingCallbacks();
+                m_useCallbackMode = false;
+                ImGuiAtg::Log("Switched to polling mode\n");
+            }
+        }
+
+        ImGui::SameLine();
+
+        if (ImGui::RadioButton("Callback", m_useCallbackMode))
+        {
+            if (!m_useCallbackMode)
+            {
+                if (RegisterReadingCallbacks())
+                {
+                    m_useCallbackMode = true;
+                    ImGuiAtg::Log("Switched to callback mode\n");
+                }
+            }
+        }
+
+        ImGuiAtg::EndNavigationGroup();
+    }
+
+    {
+        std::lock_guard<std::mutex> lock(m_gamepadsMutex);
+
+        if (m_gamepads.empty())
+        {
+            ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "No gamepad connected.");
+            ImGui::TextWrapped("Connect a gamepad to see input readings.");
+        }
+        else
+        {
+            if (ImGui::BeginTabBar("GamepadTabs"))
+            {
+                for (size_t i = 0; i < m_gamepads.size(); i++)
+                {
+                    auto& gamepad = m_gamepads[i];
+
+                    ImGui::PushID(static_cast<int>(i));
+                    ImGuiTabItemFlags tabFlags = (m_requestedGamepadTab == static_cast<int>(i))
+                        ? ImGuiTabItemFlags_SetSelected
+                        : ImGuiTabItemFlags_None;
+                    if (ImGui::BeginTabItem(GetDeviceDisplayName(gamepad.deviceInfo), nullptr, tabFlags))
+                    {
+                        m_selectedGamepad = static_cast<int>(i);
+
+                        float availWidth = ImGui::GetContentRegionAvail().x;
+                        float spacing = ImGui::GetStyle().ItemSpacing.x;
+                        float colWidth = (availWidth - spacing * 2) / 3.0f;
+                        float colHeight = ImGui::GetContentRegionAvail().y - ImGuiAtg::Scaled(30);
+
+                        ImGui::BeginChild("LeftCol", ImVec2(colWidth, colHeight), ImGuiChildFlags_None);
+                        DrawDeviceInfoSection(gamepad);
+                        ImGui::Spacing();
+                        DrawButtonsSection(gamepad);
+                        ImGui::Spacing();
+                        DrawAnalogSection(gamepad.gamepadState);
+                        ImGui::EndChild();
+
+                        ImGui::SameLine();
+
+                        ImGui::BeginChild("CenterCol", ImVec2(colWidth, colHeight), ImGuiChildFlags_None);
+                        DrawSensorsSection(gamepad);
+                        ImGui::Spacing();
+                        DrawModelSection(gamepad);
+                        ImGui::EndChild();
+
+                        ImGui::SameLine();
+
+                        ImGui::BeginChild("RightCol", ImVec2(colWidth, colHeight), ImGuiChildFlags_None);
+                        DrawVibrationSection(gamepad);
+                        ImGui::Spacing();
+                        DrawHapticsSection(gamepad);
+                        ImGui::EndChild();
+
+                        ImGui::EndTabItem();
+                    }
+                    ImGui::PopID();
+                }
+
+                ImGui::EndTabBar();
+                m_requestedGamepadTab = -1;
+            }
+        }
+    }
+
+    ImGuiAtg::SplitNext();
+    ImGuiAtg::DrawLogPanel(0);
+    ImGuiAtg::EndSplit();
+
+    ImGui::EndChild();
+
+    ImGuiAtg::BeginFooter();
+        if (ImGuiAtg::FooterItem("[F3] / [LB]+[RB]+[X] Toggle Gamepad Nav"))
+            ToggleGamepadNavigation();
+
+        ImGuiAtg::FooterItem("[LB]+[RB]+[DPadUpDown] Prev/Next Item", false);
+        ImGuiAtg::FooterItem("[LB]+[RB]+[DPadLeftRight] Prev/Next Tab", false);
+
+    ImGuiAtg::EndFooter();
+
+    ImGuiAtg::EndFullscreenLayout();
+}
+
+//--------------------------------------------------------------------------------------
+// Display properties returned by GetDeviceInfo.
+//--------------------------------------------------------------------------------------
+void Sample::DrawDeviceInfoSection(const GamepadDevice& gamepad)
+{
+    if (ImGui::CollapsingHeader("Device Info", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Leaf))
+    {
+        if (ImGui::BeginTable("DeviceInfo", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg))
+        {
+            ImGui::TableSetupColumn("Property", ImGuiTableColumnFlags_WidthFixed, ImGuiAtg::Scaled(180));
+            ImGui::TableSetupColumn("Value");
+
+            ImGuiAtg::DrawNameValueTable("Name", "%s", GetDeviceDisplayName(gamepad.deviceInfo));
+            ImGuiAtg::DrawNameValueTable("VID / PID", "%04X / %04X", gamepad.deviceInfo->vendorId, gamepad.deviceInfo->productId);
+
+            const char* familyStr = "Unknown";
+            switch (gamepad.deviceInfo->deviceFamily)
+            {
+                case GameInputFamilyVirtual:
+                    familyStr = "Virtual";
+                    break;
+                case GameInputFamilyXboxOne:
+                    familyStr = "Xbox One";
+                    break;
+                case GameInputFamilyXbox360:
+                    familyStr = "Xbox 360";
+                    break;
+                case GameInputFamilyHid:
+                    familyStr = "HID";
+                    break;
+                case GameInputFamilyI8042:
+                    familyStr = "I8042";
+                    break;
+                case GameInputFamilyAggregate:
+                    familyStr = "Aggregate";
+                    break;
+                case GameInputFamilyUnknown:
+                    break;
+            }
+            ImGuiAtg::DrawNameValueTable("Device Family", "%s", familyStr);
+
+            std::string supportedInputText = GameInputKindToString(gamepad.deviceInfo->supportedInput);
+            ImGuiAtg::DrawNameValueTable("Supported Input", "%s", supportedInputText.c_str());
+            ImGuiAtg::DrawNameValueTable("Last Reading Timestamp", "%llu \xc2\xb5s", gamepad.readingTimestamp);
+
+#ifndef _GAMING_XBOX
+            ImGuiAtg::DrawNameValueTable("PnP Path", "%s", gamepad.deviceInfo->pnpPath);
+            if (ImGui::IsItemHovered())
+            {
+                ImGui::BeginTooltip();
+                ImGui::TextUnformatted(gamepad.deviceInfo->pnpPath);
+                ImGui::EndTooltip();
+            }
+#endif
+
+            ImGui::EndTable();
+        }
+    }
+}
+
+//--------------------------------------------------------------------------------------
+// Stop output and unregister callbacks.
+//--------------------------------------------------------------------------------------
+void Sample::Shutdown()
+{
+    UnregisterReadingCallbacks();
+
+    if (m_hapticsManager)
+    {
+        m_hapticsManager->StopAllDevices();
+        m_hapticsManager.reset();
+    }
+
+    StopVibration();
+
+    if (m_gameInput && m_deviceCallbackToken)
+    {
+        m_gameInput->UnregisterCallback(m_deviceCallbackToken);
+        m_deviceCallbackToken = 0;
+    }
+
+    if (m_gameInput && m_systemButtonCallbackToken)
+    {
+        m_gameInput->UnregisterCallback(m_systemButtonCallbackToken);
+        m_systemButtonCallbackToken = 0;
+    }
+
+    m_gamepads.clear();
+    m_gameInput.Reset();
+}
 
 #ifdef _GAMING_XBOX
-        pos.x = 1430;
-#else
-        pos.x = 930;
-#endif
-        pos.y = (float)safeRect.top;
+//--------------------------------------------------------------------------------------
+// Xbox suspend and resume.
+//--------------------------------------------------------------------------------------
+void Sample::Suspend(ImGuiAtg::DeviceContext* deviceContext)
+{
+    StopVibration();
 
-        m_font->DrawString(m_batch.get(), "Acceleration", pos, Colors::Green);
-        pos.y += m_font->GetLineSpacing();
-
-        swprintf(tempString, 255, L"  X: %1.2f\n  Y: %1.2f\n  Z: %1.2f", m_accelX, m_accelY, m_accelZ);
-        DX::DrawControllerString(m_batch.get(), m_font.get(), m_ctrlFont.get(), tempString, pos);
-        pos.y += m_font->GetLineSpacing() * 3.0f;
-
-        m_font->DrawString(m_batch.get(), "Angular Velocity", pos, Colors::Green);
-        pos.y += m_font->GetLineSpacing();
-
-        swprintf(tempString, 255, L"  X: %1.2f\n  Y: %1.2f\n  Z: %1.2f", m_angularX, m_angularY, m_angularZ);
-        DX::DrawControllerString(m_batch.get(), m_font.get(), m_ctrlFont.get(), tempString, pos);
-        pos.y += m_font->GetLineSpacing() * 3.0f;
-
-        m_font->DrawString(m_batch.get(), "Orientation", pos, Colors::Green);
-        pos.y += m_font->GetLineSpacing();
-
-        swprintf(tempString, 255, L"  X: %1.2f\n  Y: %1.2f\n  Z: %1.2f", m_orientationX, m_orientationY, m_orientationZ);
-        DX::DrawControllerString(m_batch.get(), m_font.get(), m_ctrlFont.get(), tempString, pos);
-    }
-    else
+    if (deviceContext)
     {
-        m_font->DrawString(m_batch.get(), L"No controller connected", pos, ATG::Colors::Orange);
+        deviceContext->Suspend();
     }
-
-    DX::DrawControllerString(m_batch.get(),
-        m_smallFont.get(), m_ctrlFont.get(),
-        L"[RB]+[LB]+[View]+[Menu] Exit",
-        XMFLOAT2(float(safeRect.left), float(safeRect.bottom) - m_font->GetLineSpacing()),
-        ATG::Colors::LightGrey);
-
-    m_batch->End();
-
-    PIXEndEvent(commandList);
-
-    // Show the new frame.
-    PIXBeginEvent(PIX_COLOR_DEFAULT, L"Present");
-    m_deviceResources->Present();
-    m_graphicsMemory->Commit(m_deviceResources->GetCommandQueue());
-    PIXEndEvent();
 }
 
-// Helper method to clear the back buffers.
-void Sample::Clear()
+void Sample::Resume(ImGuiAtg::DeviceContext* deviceContext)
 {
-    auto commandList = m_deviceResources->GetCommandList();
-    PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Clear");
-
-    // Clear the views.
-    auto const rtvDescriptor = m_deviceResources->GetRenderTargetView();
-
-    commandList->OMSetRenderTargets(1, &rtvDescriptor, FALSE, nullptr);
-    commandList->ClearRenderTargetView(rtvDescriptor, ATG::Colors::Background, 0, nullptr);
-
-    // Set the viewport and scissor rect.
-    auto const viewport = m_deviceResources->GetScreenViewport();
-    auto const scissorRect = m_deviceResources->GetScissorRect();
-    commandList->RSSetViewports(1, &viewport);
-    commandList->RSSetScissorRects(1, &scissorRect);
-
-    PIXEndEvent(commandList);
-}
-#pragma endregion
-
-#pragma region Message Handlers
-// Message handlers
-void Sample::OnSuspending()
-{
-    m_deviceResources->Suspend();
-}
-
-void Sample::OnResuming()
-{
-    m_deviceResources->Resume();
-    m_timer.ResetElapsedTime();
-}
-
-void Sample::OnWindowMoved()
-{
-    auto const r = m_deviceResources->GetOutputSize();
-    m_deviceResources->WindowSizeChanged(r.right, r.bottom);
-}
-
-void Sample::OnWindowSizeChanged(int width, int height)
-{
-    if (!m_deviceResources->WindowSizeChanged(width, height))
-        return;
-
-    CreateWindowSizeDependentResources();
-}
-
-// Properties
-void Sample::GetDefaultSize(int& width, int& height) const noexcept
-{
-    width = 1280;
-    height = 720;
-}
-#pragma endregion
-
-#pragma region Direct3D Resources
-// These are the resources that depend on the device.
-void Sample::CreateDeviceDependentResources()
-{
-    auto device = m_deviceResources->GetD3DDevice();
-
-#ifdef _GAMING_DESKTOP
-    D3D12_FEATURE_DATA_SHADER_MODEL shaderModel = { D3D_SHADER_MODEL_6_0 };
-    if (FAILED(device->CheckFeatureSupport(D3D12_FEATURE_SHADER_MODEL, &shaderModel, sizeof(shaderModel)))
-        || (shaderModel.HighestShaderModel < D3D_SHADER_MODEL_6_0))
+    if (deviceContext)
     {
-        throw std::runtime_error("Shader Model 6.0 is not supported!");
+        deviceContext->Resume();
     }
+}
 #endif
 
-    m_graphicsMemory = std::make_unique<GraphicsMemory>(device);
+//--------------------------------------------------------------------------------------
+// Sample input helpers.
+//--------------------------------------------------------------------------------------
+void Sample::ToggleGamepadNavigation()
+{
+    ImGuiIO& io = ImGui::GetIO();
+    io.ConfigFlags ^= ImGuiConfigFlags_NavEnableGamepad;
+}
 
-    m_resourceDescriptors = std::make_unique<DescriptorHeap>(device, Descriptors::Count);
+void Sample::HandleSampleInput()
+{
+    const bool gamepadChord = ImGui::IsKeyDown(ImGuiKey_GamepadL1)
+        && ImGui::IsKeyDown(ImGuiKey_GamepadR1);
 
-    const RenderTargetState rtState(m_deviceResources->GetBackBufferFormat(),
-        m_deviceResources->GetDepthBufferFormat());
-
-    ResourceUploadBatch upload(device);
-    upload.Begin();
-
+    if ((!ImGui::GetIO().WantTextInput && ImGui::IsKeyPressed(ImGuiKey_F3, false)) ||
+        (gamepadChord &&
+         ImGui::IsKeyPressed(ImGuiKey_GamepadFaceLeft, false)))
     {
-        const SpriteBatchPipelineStateDescription pd(
-            rtState,
-            &CommonStates::AlphaBlend);
-
-        m_batch = std::make_unique<SpriteBatch>(device, upload, pd);
+        ToggleGamepadNavigation();
     }
 
-    wchar_t strFilePath[MAX_PATH] = {};
-    DX::FindMediaFile(strFilePath, MAX_PATH, L"SegoeUI_24.spritefont");
-    m_font = std::make_unique<SpriteFont>(device, upload,
-        strFilePath,
-        m_resourceDescriptors->GetCpuHandle(Descriptors::PrintFont),
-        m_resourceDescriptors->GetGpuHandle(Descriptors::PrintFont));
+    int tabOffset = 0;
+    if (gamepadChord && ImGui::IsKeyPressed(ImGuiKey_GamepadDpadLeft, false))
+    {
+        tabOffset = -1;
+    }
+    else if (gamepadChord && ImGui::IsKeyPressed(ImGuiKey_GamepadDpadRight, false))
+    {
+        tabOffset = 1;
+    }
 
-    DX::FindMediaFile(strFilePath, MAX_PATH, L"SegoeUI_18.spritefont");
-    m_smallFont = std::make_unique<SpriteFont>(device, upload,
-        strFilePath,
-        m_resourceDescriptors->GetCpuHandle(Descriptors::TextFont),
-        m_resourceDescriptors->GetGpuHandle(Descriptors::TextFont));
-
-    DX::FindMediaFile(strFilePath, MAX_PATH, L"XboxOneControllerLegendSmall.spritefont");
-    m_ctrlFont = std::make_unique<SpriteFont>(device, upload,
-        strFilePath,
-        m_resourceDescriptors->GetCpuHandle(Descriptors::ControllerFont),
-        m_resourceDescriptors->GetGpuHandle(Descriptors::ControllerFont));
-
-    DX::FindMediaFile(strFilePath, MAX_PATH, L"gamepad.dds");
-    DX::ThrowIfFailed(CreateDDSTextureFromFile(device, upload, strFilePath,
-        m_background.ReleaseAndGetAddressOf()));
-
-    auto finish = upload.End(m_deviceResources->GetCommandQueue());
-    finish.wait();
-
-    m_deviceResources->WaitForGpu();
-
-    CreateShaderResourceView(device, m_background.Get(),
-        m_resourceDescriptors->GetCpuHandle(Descriptors::Background));
+    if (tabOffset != 0)
+    {
+        std::lock_guard<std::mutex> lock(m_gamepadsMutex);
+        if (m_gamepads.size() > 1)
+        {
+            const int gamepadCount = static_cast<int>(m_gamepads.size());
+            m_requestedGamepadTab = (m_selectedGamepad + tabOffset + gamepadCount) % gamepadCount;
+        }
+    }
 }
 
-// Allocate all memory resources that change on a window SizeChanged event.
-void Sample::CreateWindowSizeDependentResources()
+const char* Sample::GetDeviceDisplayName(const GameInputDeviceInfo* deviceInfo)
 {
-    auto const vp = m_deviceResources->GetScreenViewport();
-    m_batch->SetViewport(vp);
+    return deviceInfo->displayName[0] != '\0' ? deviceInfo->displayName : "Xbox Gamepad";
 }
 
-void Sample::OnDeviceLost()
+bool Sample::DrawFocusPolicyCheckbox(const char* label, GameInputFocusPolicy flag)
 {
-    m_font.reset();
-    m_smallFont.reset();
-    m_ctrlFont.reset();
-    m_batch.reset();
-    m_resourceDescriptors.reset();
-    m_graphicsMemory.reset();
+    const float rightEdge = ImGui::GetWindowPos().x + ImGui::GetWindowWidth() - ImGui::GetStyle().WindowPadding.x;
+    const float width = ImGui::CalcTextSize(label).x + ImGuiAtg::Scaled(30);
+    if (ImGui::GetItemRectMax().x + ImGui::GetStyle().ItemSpacing.x + width < rightEdge)
+        ImGui::SameLine();
+
+    bool enabled = (m_focusPolicy & flag) != 0;
+    if (ImGui::Checkbox(label, &enabled))
+    {
+        if (enabled)
+            m_focusPolicy = static_cast<GameInputFocusPolicy>(m_focusPolicy | flag);
+        else
+            m_focusPolicy = static_cast<GameInputFocusPolicy>(m_focusPolicy & ~flag);
+        return true;
+    }
+    return false;
 }
 
-void Sample::OnDeviceRestored()
+std::string Sample::GameInputKindToString(GameInputKind kind)
 {
-    CreateDeviceDependentResources();
+    std::string result;
+    auto append = [&](GameInputKind flag, const char* name)
+    {
+        if (kind & flag)
+        {
+            if (!result.empty())
+                result += " | ";
+            result += name;
+        }
+    };
 
-    CreateWindowSizeDependentResources();
+    append(GameInputKindGamepad, "Gamepad");
+    append(GameInputKindKeyboard, "Keyboard");
+    append(GameInputKindMouse, "Mouse");
+    append(GameInputKindArcadeStick, "ArcadeStick");
+    append(GameInputKindFlightStick, "FlightStick");
+    append(GameInputKindRacingWheel, "RacingWheel");
+    append(GameInputKindSensors, "Sensors");
+
+    return result.empty() ? "Unknown" : result;
 }
-#pragma endregion
+
+void Sample::Activated()
+{
+}
+
+void Sample::Deactivated()
+{
+}
+
+LRESULT Sample::WndProcHandler(HWND /*hWnd*/, UINT /*msg*/, WPARAM /*wParam*/, LPARAM /*lParam*/)
+{
+    return 0;
+}
+

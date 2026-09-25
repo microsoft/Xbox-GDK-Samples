@@ -1,112 +1,140 @@
 //--------------------------------------------------------------------------------------
 // Gamepad.h
 //
+// GameInput gamepad sample state and interface.
+//
 // Advanced Technology Group (ATG)
 // Copyright (C) Microsoft Corporation. All rights reserved.
 //--------------------------------------------------------------------------------------
 
 #pragma once
 
-#include "DeviceResources.h"
-#include "StepTimer.h"
+#include "GamepadHaptics.h"
+#include "GamepadVibration.h"
+#include "HapticsManager/HapticsManager.h"
 
-#include <GameInput.h>
-#if GAMEINPUT_API_VERSION == 1
-using namespace GameInput::v1;
-#elif GAMEINPUT_API_VERSION == 2
-using namespace GameInput::v2;
-#elif GAMEINPUT_API_VERSION == 3
-using namespace GameInput::v3;
-#endif
+//--------------------------------------------------------------------------------------
+// State associated with one connected gamepad. GameInput device pointers have stable
+// identity and can be compared directly.
+//--------------------------------------------------------------------------------------
+struct GamepadDevice
+{
+    Microsoft::WRL::ComPtr<IGameInputDevice> device;
 
-// A basic sample implementation that creates a D3D12 device and
-// provides a render loop.
-class Sample final : public DX::IDeviceNotify
+    // Valid for the lifetime of device.
+    const GameInputDeviceInfo* deviceInfo = nullptr;
+
+    GameInputGamepadState gamepadState = {};      // Buttons, triggers, thumbsticks
+    GameInputSensorsState sensorsState = {};      // Accelerometer, gyroscope, orientation
+    uint64_t readingTimestamp = 0;                 // Microseconds (from IGameInputReading::GetTimestamp)
+    bool hasGamepadState = false;
+    bool hasSensorsState = false;
+
+    // Guide/Share state from RegisterSystemButtonCallback.
+    GameInputSystemButtons systemButtons = {};
+
+    size_t selectedMediaIndex = 0;
+    VibrationEffectState vibEffect;
+};
+
+//--------------------------------------------------------------------------------------
+// Sample class
+//--------------------------------------------------------------------------------------
+class Sample
 {
 public:
-
-    Sample() noexcept(false);
-    ~Sample();
-
-    Sample(Sample&&) = default;
-    Sample& operator= (Sample&&) = default;
+    Sample() = default;
+    ~Sample() = default;
 
     Sample(Sample const&) = delete;
     Sample& operator= (Sample const&) = delete;
 
-    // Initialization and management
-    void Initialize(HWND window, int width, int height);
+    void Initialize(HWND hWnd, ImGuiAtg::DeviceContext* deviceContext);
+    void Update();
+    void Draw();
+    void Shutdown();
+    void Activated();
+    void Deactivated();
+    LRESULT WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-    // Basic render loop
-    void Tick();
-
-    // IDeviceNotify
-    void OnDeviceLost() override;
-    void OnDeviceRestored() override;
-
-    // Messages
-    void OnActivated() {}
-    void OnDeactivated() {}
-    void OnSuspending();
-    void OnResuming();
-    void OnWindowMoved();
-    void OnWindowSizeChanged(int width, int height);
-
-    // Properties
-    void GetDefaultSize(int& width, int& height) const noexcept;
+#ifdef _GAMING_XBOX
+    // PLM suspend/resume handling for Xbox console
+    void Suspend(ImGuiAtg::DeviceContext* deviceContext);
+    void Resume(ImGuiAtg::DeviceContext* deviceContext);
+#endif
 
 private:
+    // Gamepad.cpp
+    void DrawDeviceInfoSection(const GamepadDevice& gamepad);
+    bool DrawFocusPolicyCheckbox(const char* label, GameInputFocusPolicy flag);
+    static std::string GameInputKindToString(GameInputKind kind);
+    static const char* GetDeviceDisplayName(const GameInputDeviceInfo* deviceInfo);
+    void ToggleGamepadNavigation();
+    void HandleSampleInput();
 
-    void Update(DX::StepTimer const& timer);
-    void Render();
+    static void CALLBACK OnDeviceChanged(
+        GameInputCallbackToken token,
+        void* context,
+        IGameInputDevice* device,
+        uint64_t timestamp,
+        GameInputDeviceStatus currentStatus,
+        GameInputDeviceStatus previousStatus) noexcept;
 
-    void Clear();
+    static void CALLBACK OnSystemButtonChanged(
+        GameInputCallbackToken token,
+        void* context,
+        IGameInputDevice* device,
+        uint64_t timestamp,
+        GameInputSystemButtons currentButtons,
+        GameInputSystemButtons previousButtons) noexcept;
 
-    void CreateDeviceDependentResources();
-    void CreateWindowSizeDependentResources();
+    Microsoft::WRL::ComPtr<IGameInput> m_gameInput;         // Main GameInput interface
+    GameInputCallbackToken m_deviceCallbackToken = 0;       // Token for device callback
+    GameInputCallbackToken m_systemButtonCallbackToken = 0; // Token for Guide/Share callback
+    std::mutex m_gamepadsMutex;                             // Synchronization for m_gamepads
+    std::vector<GamepadDevice> m_gamepads;                  // All tracked gamepads
+    int m_selectedGamepad = 0;                              // Currently viewed tab
+    int m_requestedGamepadTab = -1;                         // Tab selected by a gamepad shortcut
+    GameInputFocusPolicy m_focusPolicy = GameInputDefaultFocusPolicy;
 
-    // Device resources.
-    std::unique_ptr<DX::DeviceResources>        m_deviceResources;
+    // GamepadReadings.cpp
+    void PollGamepadReading(GamepadDevice& gamepad);
+    static void CALLBACK OnReadingChanged(
+        GameInputCallbackToken token,
+        void* context,
+        IGameInputReading* reading) noexcept;
+    bool RegisterReadingCallbacks();
+    void UnregisterReadingCallbacks();
+    void DrawButtonsSection(const GamepadDevice& gamepad);
+    void DrawAnalogSection(const GameInputGamepadState& state);
+    void DrawSensorsSection(const GamepadDevice& gamepad);
 
-    // Rendering loop timer.
-    uint64_t                                    m_frame;
-    DX::StepTimer                               m_timer;
+    GameInputCallbackToken m_readingCallbackToken = 0;      // Token for reading callback
+    bool m_useCallbackMode = false;                         // false = polling, true = callback-driven
 
-    //Gamepad states
-    Microsoft::WRL::ComPtr<IGameInput>                      m_gameInput;
-    Microsoft::WRL::ComPtr<IGameInputReading>               m_reading;
-    std::vector<Microsoft::WRL::ComPtr<IGameInputDevice>>   m_devices;
+    // GamepadVibration.cpp
+    void InitializeVibrationEffect(GamepadDevice& gamepad);
+    void UpdateVibration(GamepadDevice& gamepad);
+    void StopVibration();
+    void DrawVibrationSection(GamepadDevice& gamepad);
 
-    wchar_t         m_deviceString[20];
-    std::wstring    m_buttonString;
-    double          m_leftTrigger;
-    double          m_rightTrigger;
-    double          m_leftStickX;
-    double          m_leftStickY;
-    double          m_rightStickX;
-    double          m_rightStickY;
-    float           m_accelX, m_accelY, m_accelZ;
-    float           m_angularX, m_angularY, m_angularZ;
-    float           m_orientationX, m_orientationY, m_orientationZ, m_orientationW;
+    uint64_t m_perfFrequency = 0;                           // QueryPerformanceFrequency result
 
-    // DirectXTK objects.
-    std::unique_ptr<DirectX::GraphicsMemory>    m_graphicsMemory;
-    std::unique_ptr<DirectX::DescriptorHeap>    m_resourceDescriptors;
+    // GamepadHaptics.cpp
+    void InitializeHaptics();
+    void DrawHapticsSection(GamepadDevice& gamepad);
+#ifndef _GAMING_XBOX
+    std::wstring OpenFileDialog(const wchar_t* filter);
+#endif
 
-    // UI
-    std::unique_ptr<DirectX::SpriteBatch>       m_batch;
-    std::unique_ptr<DirectX::SpriteFont>        m_font;
-    std::unique_ptr<DirectX::SpriteFont>        m_smallFont;
-    std::unique_ptr<DirectX::SpriteFont>        m_ctrlFont;
+    std::unique_ptr<ATG::HapticsManager> m_hapticsManager;  // Manages haptic audio endpoints
+    std::vector<MediaItem> m_mediaList;                     // Available WAV effects
+    HWND m_hWnd = nullptr;
 
-    Microsoft::WRL::ComPtr<ID3D12Resource>      m_background;
+    // GamepadModel.cpp
+    void InitializeModelRenderer(ImGuiAtg::DeviceContext* deviceContext);
+    void RenderModel(const GameInputSensorsState& sensors);
+    void DrawModelSection(const GamepadDevice& gamepad);
 
-    enum Descriptors : size_t
-    {
-        PrintFont,
-        TextFont,
-        ControllerFont,
-        Background,
-        Count,
-    };
+    ImGuiAtg::ModelViewer m_modelViewer;
 };

@@ -16,10 +16,12 @@
 // Use the C++ standard templated min/max
 #define NOMINMAX
 
-// DirectX apps don't need GDI
+// ImGui Desktop needs GDI
+#ifdef _GAMING_XBOX
 #define NODRAWTEXT
 #define NOGDI
 #define NOBITMAP
+#endif // !_GAMING_XBOX
 
 // Include <mcx.h> if you need this
 #define NOMCX
@@ -41,11 +43,6 @@
 
 #include <grdk.h>
 
-#ifdef _GAMING_DESKTOP
-#if _GRDK_EDITION < 251000
-#error The Desktop version of this sample requires the October 2025 GDK or later
-#endif
-#else
 #if _GRDK_VER < 0x65F41800 /* GDK Edition 251000 */
 #error This sample requires the October 2025 GDK or later
 #endif
@@ -53,7 +50,6 @@
 #if defined(_M_ARM64)
 #if _GRDK_EDITION < 260400
 #error ARM64 support requires April 2026 GDK or later
-#endif
 #endif
 #endif
 
@@ -89,14 +85,24 @@
 #include <cstring>
 #include <cwchar>
 #include <exception>
+#include <filesystem>
 #include <functional>
 #include <future>
 #include <iterator>
+#include <map>
 #include <memory>
 #include <stdexcept>
 #include <string>
 #include <system_error>
 #include <tuple>
+#include <vector>
+
+// GameInput (the Microsoft.GameInput NuGet package overrides the GDK version on all platforms)
+#include <GameInput.h>
+#if GAMEINPUT_API_VERSION != 3
+#error This sample requires the GameInput v3 API from Microsoft.GameInput 3.5 or later.
+#endif
+using namespace GameInput::v3;
 
 #ifdef _GAMING_XBOX
 #include <pix3.h>
@@ -108,56 +114,31 @@
 
 #include <XGame.h>
 #include <XSystem.h>
-#include <XTaskQueue.h>
 
+// DirectXTK12 -- used by the 3D controller model viewer (ImGuiAtg::ModelViewer)
 #include "CommonStates.h"
 #include "DDSTextureLoader.h"
 #include "DescriptorHeap.h"
 #include "DirectXHelpers.h"
+#include "Effects.h"
 #include "GraphicsMemory.h"
+#include "Model.h"
 #include "RenderTargetState.h"
 #include "ResourceUploadBatch.h"
 #include "SimpleMath.h"
-#include "SpriteBatch.h"
-#include "SpriteFont.h"
+
+#include "StringUtil.h"
+
+// Dear ImGui + ATG ImGui helpers
+#include "imgui.h"
+#include "backends/imgui_impl_dx12.h"
+#include "backends/imgui_impl_win32.h"
+#include "imgui/imgui_atg.h"
+#include "imgui/imgui_atg_render_target.h"
+#include "imgui/imgui_atg_model_viewer.h"
 
 // To opt-out of telemetry uncomment the following line
 //#define ATG_DISABLE_TELEMETRY
-
-namespace DX
-{
-    // Helper class for COM exceptions
-    class com_exception : public std::exception
-    {
-    public:
-        com_exception(HRESULT hr) noexcept : result(hr) {}
-
-        const char* what() const noexcept override
-        {
-            static char s_str[64] = {};
-            sprintf_s(s_str, "Failure with HRESULT of %08X", static_cast<unsigned int>(result));
-            return s_str;
-        }
-
-    private:
-        HRESULT result;
-    };
-
-    // Helper utility converts D3D API failures into exceptions.
-    inline void ThrowIfFailed(HRESULT hr)
-    {
-        if (FAILED(hr))
-        {
-#ifdef _DEBUG
-            char str[64] = {};
-            sprintf_s(str, "**ERROR** Fatal Error with HRESULT of %08X\n", static_cast<unsigned int>(hr));
-            OutputDebugStringA(str);
-            __debugbreak();
-#endif
-            throw com_exception(hr);
-        }
-    }
-}
 
 // Enable off by default warnings to improve code conformance
 #pragma warning(default : 4061 4062 4191 4263 4264 4265 4266 4289 4365 4746 4826 4841 4986 4987 5029 5038 5042)

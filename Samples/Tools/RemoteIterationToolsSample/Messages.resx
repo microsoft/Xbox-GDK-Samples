@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppWindowTitle" xml:space="preserve">
+    <value>Remote Deployment</value>
+  </data>
+  <data name="MainHeading" xml:space="preserve">
+    <value>Remote Iteration Tools</value>
+  </data>
+  <data name="DeviceStepHeading" xml:space="preserve">
+    <value>1. Choose a paired device</value>
+  </data>
+  <data name="DeviceLabel" xml:space="preserve">
+    <value>Device (IP address or host name)</value>
+  </data>
+  <data name="DeviceGuidance" xml:space="preserve">
+    <value>Use a target with Remote Tools running, already paired with this PC. Example: 192.168.1.100 or MyDevPC.</value>
+  </data>
+  <data name="DeviceAutomationName" xml:space="preserve">
+    <value>Device name or IP address</value>
+  </data>
+  <data name="DeviceToolTip" xml:space="preserve">
+    <value>IP address or resolvable host name of an already-paired device. This sample does not discover or pair devices.</value>
+  </data>
+  <data name="DeployStepHeading" xml:space="preserve">
+    <value>2. Deploy a local build</value>
+  </data>
+  <data name="DeploySourceLabel" xml:space="preserve">
+    <value>Source Folder (this PC)</value>
+  </data>
+  <data name="DeploySourceGuidance" xml:space="preserve">
+    <value>Local folder containing your build, e.g. C:\Builds\MyGame.</value>
+  </data>
+  <data name="DeploySourceAutomationName" xml:space="preserve">
+    <value>Source folder path</value>
+  </data>
+  <data name="DeploySourceToolTip" xml:space="preserve">
+    <value>Type a path or use Browse to select a folder</value>
+  </data>
+  <data name="DeployBrowseButtonAutomationName" xml:space="preserve">
+    <value>Browse for source folder</value>
+  </data>
+  <data name="BrowseButtonText" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="DeployDestinationLabel" xml:space="preserve">
+    <value>Destination Folder (device)</value>
+  </data>
+  <data name="DeployDestinationGuidance" xml:space="preserve">
+    <value>Example: MyGame under the device's default Common Root, or an absolute path on the device.</value>
+  </data>
+  <data name="DeployDestinationAutomationName" xml:space="preserve">
+    <value>Destination folder path</value>
+  </data>
+  <data name="DeployDestinationToolTip" xml:space="preserve">
+    <value>Remote destination relative to the device's default Common Root, or an absolute device path.</value>
+  </data>
+  <data name="DeployAdvancedOptionsHeader" xml:space="preserve">
+    <value>Advanced Options</value>
+  </data>
+  <data name="DeployFiltersGuidance" xml:space="preserve">
+    <value>Optional copy filters. Leave patterns blank and attributes unselected for an unfiltered first deployment.</value>
+  </data>
+  <data name="IncludeFilePatternLabel" xml:space="preserve">
+    <value>Include File Pattern</value>
+  </data>
+  <data name="CopyIncludeFilePatternToolTip" xml:space="preserve">
+    <value>Includes files that match the specified names. Wildcards * and ? and semicolon-separated patterns are supported. Default includes everything. Exclusions take precedence over inclusions.</value>
+  </data>
+  <data name="CopyIncludeFilePatternAutomationName" xml:space="preserve">
+    <value>Include file pattern</value>
+  </data>
+  <data name="ExcludeFilePatternLabel" xml:space="preserve">
+    <value>Exclude File Pattern</value>
+  </data>
+  <data name="CopyExcludeFilePatternToolTip" xml:space="preserve">
+    <value>Excludes files that match the specified names. Wildcards * and ? and semicolon-separated patterns are supported. Default excludes nothing. Exclusions take precedence over inclusions.</value>
+  </data>
+  <data name="CopyExcludeFilePatternAutomationName" xml:space="preserve">
+    <value>Exclude file pattern</value>
+  </data>
+  <data name="ExcludeDirectoryPatternLabel" xml:space="preserve">
+    <value>Exclude Directory Pattern</value>
+  </data>
+  <data name="CopyExcludeDirectoryPatternToolTip" xml:space="preserve">
+    <value>Excludes directories by name, not path. Wildcards * and ? are supported. Default excludes no directories. Exclusions take precedence over inclusions.</value>
+  </data>
+  <data name="CopyExcludeDirectoryPatternAutomationName" xml:space="preserve">
+    <value>Exclude directory pattern</value>
+  </data>
+  <data name="AttributeFilterGuidance" xml:space="preserve">
+    <value>Match any selected attribute. No selection means no attribute filtering; exclusions win.</value>
+  </data>
+  <data name="IncludeFileAttributesLabel" xml:space="preserve">
+    <value>Include file attributes</value>
+  </data>
+  <data name="ExcludeFileAttributesLabel" xml:space="preserve">
+    <value>Exclude file attributes</value>
+  </data>
+  <data name="IncludeDirectoryAttributesLabel" xml:space="preserve">
+    <value>Include directory attributes</value>
+  </data>
+  <data name="ExcludeDirectoryAttributesLabel" xml:space="preserve">
+    <value>Exclude directory attributes</value>
+  </data>
+  <data name="CopyIncludeFileAttributesAutomationName" xml:space="preserve">
+    <value>Copy include file attributes</value>
+  </data>
+  <data name="CopyExcludeFileAttributesAutomationName" xml:space="preserve">
+    <value>Copy exclude file attributes</value>
+  </data>
+  <data name="CopyIncludeDirectoryAttributesAutomationName" xml:space="preserve">
+    <value>Copy include directory attributes</value>
+  </data>
+  <data name="CopyExcludeDirectoryAttributesAutomationName" xml:space="preserve">
+    <value>Copy exclude directory attributes</value>
+  </data>
+  <data name="DeployActionGuidance" xml:space="preserve">
+    <value>Deploy copies the build, then validates its remote path. It does not install or register the game. Cancel requests cancellation; wait for the final result.</value>
+  </data>
+  <data name="DeployButtonAutomationName" xml:space="preserve">
+    <value>Deploy build</value>
+  </data>
+  <data name="DeployButtonText" xml:space="preserve">
+    <value>Deploy</value>
+  </data>
+  <data name="DeployCancelButtonAutomationName" xml:space="preserve">
+    <value>Cancel deployment</value>
+  </data>
+  <data name="DeployCancelButtonToolTip" xml:space="preserve">
+    <value>Request copy cancellation, then wait for the native result. This does not confirm a complete deployment.</value>
+  </data>
+  <data name="DeployProgressLabel" xml:space="preserve">
+    <value>Deploy Progress</value>
+  </data>
+  <data name="DeployProgressAutomationName" xml:space="preserve">
+    <value>Deployment progress</value>
+  </data>
+  <data name="LaunchStepHeading" xml:space="preserve">
+    <value>3. Launch and control the remote game</value>
+  </data>
+  <data name="ExecutableLabel" xml:space="preserve">
+    <value>Executable to launch (device)</value>
+  </data>
+  <data name="ExecutableGuidance" xml:space="preserve">
+    <value>Example: MyGame\MyGame.exe. Relative paths start at the device's default Common Root, not Destination Folder. Absolute device paths also work.</value>
+  </data>
+  <data name="ExecutableAutomationName" xml:space="preserve">
+    <value>Executable path</value>
+  </data>
+  <data name="ExecutableToolTip" xml:space="preserve">
+    <value>Remote executable relative to the device's default Common Root, or an absolute device path. This is not relative to Destination Folder.</value>
+  </data>
+  <data name="DeleteSectionHeading" xml:space="preserve">
+    <value>Remote deletion (optional)</value>
+  </data>
+  <data name="DeleteOverview" xml:space="preserve">
+    <value>Delete files or folder contents on the selected device.</value>
+  </data>
+  <data name="DeleteSelectedDeviceLabel" xml:space="preserve">
+    <value>Device (selected above)</value>
+  </data>
+  <data name="DeleteDeviceAutomationName" xml:space="preserve">
+    <value>Remote delete device</value>
+  </data>
+  <data name="DeletePathLabel" xml:space="preserve">
+    <value>Remote folder or single-file path to delete</value>
+  </data>
+  <data name="DeletePathAutomationName" xml:space="preserve">
+    <value>Remote path to delete</value>
+  </data>
+  <data name="DeletePathToolTip" xml:space="preserve">
+    <value>Relative to a Common Root, or an absolute path on the device.</value>
+  </data>
+  <data name="DeleteCommonRootLabel" xml:space="preserve">
+    <value>Common Root alias (optional)</value>
+  </data>
+  <data name="DeleteCommonRootAutomationName" xml:space="preserve">
+    <value>Delete Common Root alias</value>
+  </data>
+  <data name="DeleteCommonRootToolTip" xml:space="preserve">
+    <value>Blank uses the default Common Root. Ignored for absolute paths.</value>
+  </data>
+  <data name="DeleteRootFolderLabel" xml:space="preserve">
+    <value>Remove root folder if empty</value>
+  </data>
+  <data name="DeleteRootFolderAutomationName" xml:space="preserve">
+    <value>Remove delete root folder</value>
+  </data>
+  <data name="DeleteRootFolderToolTip" xml:space="preserve">
+    <value>Applies to folder targets only.</value>
+  </data>
+  <data name="DeleteFiltersHeader" xml:space="preserve">
+    <value>Delete filters (folders only)</value>
+  </data>
+  <data name="DeleteFiltersGuidance" xml:space="preserve">
+    <value>Ignored for single-file targets. Exclusions take precedence.</value>
+  </data>
+  <data name="DeleteIncludeFilePatternAutomationName" xml:space="preserve">
+    <value>Delete include file pattern</value>
+  </data>
+  <data name="DeleteIncludeFilePatternToolTip" xml:space="preserve">
+    <value>Names with * and ? wildcards; separate patterns with semicolons. Blank includes all.</value>
+  </data>
+  <data name="DeleteExcludeFilePatternAutomationName" xml:space="preserve">
+    <value>Delete exclude file pattern</value>
+  </data>
+  <data name="DeleteExcludeFilePatternToolTip" xml:space="preserve">
+    <value>Names with * and ? wildcards; separate patterns with semicolons. Blank excludes none.</value>
+  </data>
+  <data name="DeleteExcludeDirectoryLabel" xml:space="preserve">
+    <value>Exclude directory names</value>
+  </data>
+  <data name="DeleteExcludeDirectoryAutomationName" xml:space="preserve">
+    <value>Delete exclude directory pattern</value>
+  </data>
+  <data name="DeleteExcludeDirectoryToolTip" xml:space="preserve">
+    <value>Directory names, not paths. Supports * and ? wildcards. Blank excludes none.</value>
+  </data>
+  <data name="DeleteIncludeFileAttributesAutomationName" xml:space="preserve">
+    <value>Delete include file attributes</value>
+  </data>
+  <data name="DeleteExcludeFileAttributesAutomationName" xml:space="preserve">
+    <value>Delete exclude file attributes</value>
+  </data>
+  <data name="DeleteIncludeDirectoryAttributesAutomationName" xml:space="preserve">
+    <value>Delete include directory attributes</value>
+  </data>
+  <data name="DeleteExcludeDirectoryAttributesAutomationName" xml:space="preserve">
+    <value>Delete exclude directory attributes</value>
+  </data>
+  <data name="DeleteButtonText" xml:space="preserve">
+    <value>Delete...</value>
+  </data>
+  <data name="DeleteButtonAutomationName" xml:space="preserve">
+    <value>Delete remote content</value>
+  </data>
+  <data name="DeleteButtonToolTip" xml:space="preserve">
+    <value>Review the request before deleting.</value>
+  </data>
+  <data name="StopWaitingButtonText" xml:space="preserve">
+    <value>Stop waiting</value>
+  </data>
+  <data name="StopWaitingButtonAutomationName" xml:space="preserve">
+    <value>Stop waiting for delete</value>
+  </data>
+  <data name="StopWaitingButtonToolTip" xml:space="preserve">
+    <value>Stops the client wait, not deletion already started on the endpoint.</value>
+  </data>
+  <data name="DeleteProgressAutomationName" xml:space="preserve">
+    <value>Delete request activity</value>
+  </data>
+  <data name="DeleteIdleStatus" xml:space="preserve">
+    <value>No delete request active.</value>
+  </data>
+  <data name="CommandOutputHeading" xml:space="preserve">
+    <value>Command Output</value>
+  </data>
+  <data name="CommandOutputGuidance" xml:space="preserve">
+    <value>Read the final result here and in the status above. Progress alone does not confirm completion.</value>
+  </data>
+  <data name="CommandOutputAutomationName" xml:space="preserve">
+    <value>Command output</value>
+  </data>
+  <data name="ReadOnlyAttributeText" xml:space="preserve">
+    <value>Read-only</value>
+  </data>
+  <data name="HiddenAttributeText" xml:space="preserve">
+    <value>Hidden</value>
+  </data>
+  <data name="SystemAttributeText" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="ArchiveAttributeText" xml:space="preserve">
+    <value>Archive</value>
+  </data>
+  <data name="ActiveOperationClosingGuidance" xml:space="preserve">
+    <value>&#xA;Wait for the active operation to return before closing. If it appears stalled, choose Cancel for copy or Stop waiting for delete when available, then wait for the call to return. If it remains unresponsive, end RemoteIterationToolsSample.exe in Task Manager as a last resort. Force-closing does not undo completed transfers or deletions, or confirm that the remote operation stopped.&#xA;</value>
+  </data>
+  <data name="CallbackFailureFormat" xml:space="preserve">
+    <value>&#xA;✗ Callback processing failed: {0} (HRESULT 0x{1:X8}). A callback failure does not stop native copy or replace its final HRESULT.&#xA;</value>
+  </data>
+  <data name="CopyProgressStatusFormat" xml:space="preserve">
+    <value>Copied {0:N0} / {1:N0} bytes ({2:N0} / {3:N0} files); {4}</value>
+  </data>
+  <data name="CopyProgressWaitingForResult" xml:space="preserve">
+    <value>waiting for copy result.</value>
+  </data>
+  <data name="CopyProgressDisplayingRemainingOutput" xml:space="preserve">
+    <value>displaying remaining copy output.</value>
+  </data>
+  <data name="DeployRequiredInputsMessage" xml:space="preserve">
+    <value>Enter a device, a local source folder, and a remote destination folder.</value>
+  </data>
+  <data name="DeployStartingFormat" xml:space="preserve">
+    <value>&gt; Deploying to {0}:{1}&#xA;Source: {2}&#xA;&#xA;</value>
+  </data>
+  <data name="DeployCopyFailedFormat" xml:space="preserve">
+    <value>✗ Copy failed: HRESULT 0x{0:X8}.&#xA;</value>
+  </data>
+  <data name="RemotePathValidationSkippedMessage" xml:space="preserve">
+    <value>Remote path validation skipped.&#xA;</value>
+  </data>
+  <data name="DeployCancellationUnconfirmedMessage" xml:space="preserve">
+    <value>Cancellation was requested. Copy returning success does not confirm a complete deployment. Remote path validation skipped.&#xA;</value>
+  </data>
+  <data name="DeployCallbackFailureMessage" xml:space="preserve">
+    <value>Deployment status is not confirmed because callback processing failed. Remote path validation skipped.&#xA;</value>
+  </data>
+  <data name="RemotePathValidationStartingMessage" xml:space="preserve">
+    <value>Validating remote path with WdRegisterRemoteXboxGame (not platform game registration).&#xA;</value>
+  </data>
+  <data name="LaunchSucceededFormat" xml:space="preserve">
+    <value>Launch succeeded (Process ID: {0}, Thread ID: {1}).&#xA;</value>
+  </data>
+  <data name="OperationFailureFormat" xml:space="preserve">
+    <value>&#xA;✗ {0} failed: {1} (HRESULT 0x{2:X8}).{3}{4}&#xA;</value>
+  </data>
+  <data name="OperationFailureCancellationNote" xml:space="preserve">
+    <value> Cancellation was also requested.</value>
+  </data>
+  <data name="OperationFailureDeleteMayContinueNote" xml:space="preserve">
+    <value> Remote deletion may continue.</value>
+  </data>
+  <data name="GameActionsGuidance" xml:space="preserve">
+    <value>Deploy first, or use an existing build on the device. Choose Launch, or Launch Suspended then Resume. Terminate stops the last game launched through this API on that device.</value>
+  </data>
+  <data name="LaunchButtonText" xml:space="preserve">
+    <value>Launch</value>
+  </data>
+  <data name="LaunchButtonAutomationName" xml:space="preserve">
+    <value>Launch game</value>
+  </data>
+  <data name="LaunchSuspendedButtonText" xml:space="preserve">
+    <value>Launch Suspended</value>
+  </data>
+  <data name="LaunchSuspendedButtonAutomationName" xml:space="preserve">
+    <value>Launch game suspended</value>
+  </data>
+  <data name="ResumeButtonText" xml:space="preserve">
+    <value>Resume</value>
+  </data>
+  <data name="ResumeButtonAutomationName" xml:space="preserve">
+    <value>Resume game</value>
+  </data>
+  <data name="TerminateButtonText" xml:space="preserve">
+    <value>Terminate</value>
+  </data>
+  <data name="TerminateButtonAutomationName" xml:space="preserve">
+    <value>Terminate game</value>
+  </data>
+  <data name="RetrieveStepHeading" xml:space="preserve">
+    <value>4. Retrieve artifacts</value>
+  </data>
+  <data name="RetrieveOverview" xml:space="preserve">
+    <value>Copy artifacts from the paired device to an existing folder on this PC. Deploy filters do not select remote files for this operation.</value>
+  </data>
+  <data name="RetrieveSourceLabel" xml:space="preserve">
+    <value>Source Folder (device)</value>
+  </data>
+  <data name="RetrieveSourceGuidance" xml:space="preserve">
+    <value>Use a path relative to a Common Root, or an absolute path on the device.</value>
+  </data>
+  <data name="RetrieveSourceToolTip" xml:space="preserve">
+    <value>Remote source relative to the selected or default Common Root, or an absolute path on the device.</value>
+  </data>
+  <data name="RetrieveSourceAutomationName" xml:space="preserve">
+    <value>Retrieve remote source folder</value>
+  </data>
+  <data name="RetrieveCommonRootLabel" xml:space="preserve">
+    <value>Common Root Alias (optional)</value>
+  </data>
+  <data name="RetrieveCommonRootGuidance" xml:space="preserve">
+    <value>Leave blank to use the default Common Root. Absolute remote source paths ignore this alias.</value>
+  </data>
+  <data name="RetrieveCommonRootToolTip" xml:space="preserve">
+    <value>Common Root alias for a relative remote source. Leave blank to use the default Common Root.</value>
+  </data>
+  <data name="RetrieveCommonRootAutomationName" xml:space="preserve">
+    <value>Retrieve common root alias</value>
+  </data>
+  <data name="RetrieveDestinationLabel" xml:space="preserve">
+    <value>Destination Folder (this PC)</value>
+  </data>
+  <data name="RetrieveDestinationGuidance" xml:space="preserve">
+    <value>Choose an existing local folder where the retrieved artifacts will be copied.</value>
+  </data>
+  <data name="RetrieveDestinationToolTip" xml:space="preserve">
+    <value>Existing local destination folder on this PC.</value>
+  </data>
+  <data name="RetrieveDestinationAutomationName" xml:space="preserve">
+    <value>Retrieve local destination folder</value>
+  </data>
+  <data name="RetrieveBrowseButtonAutomationName" xml:space="preserve">
+    <value>Browse for retrieve destination folder</value>
+  </data>
+  <data name="RetrieveActionGuidance" xml:space="preserve">
+    <value>Retrieve copies files only; it does not launch the game or validate the remote path as a deployment.</value>
+  </data>
+  <data name="RetrieveButtonText" xml:space="preserve">
+    <value>Retrieve</value>
+  </data>
+  <data name="RetrieveButtonAutomationName" xml:space="preserve">
+    <value>Retrieve artifacts</value>
+  </data>
+  <data name="CancelButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="RetrieveCancelButtonAutomationName" xml:space="preserve">
+    <value>Cancel artifact retrieval</value>
+  </data>
+  <data name="RetrieveCancelButtonToolTip" xml:space="preserve">
+    <value>Request retrieval cancellation, then wait for the native result.</value>
+  </data>
+  <data name="RetrieveProgressLabel" xml:space="preserve">
+    <value>Retrieve Progress</value>
+  </data>
+  <data name="RetrieveProgressAutomationName" xml:space="preserve">
+    <value>Artifact retrieval progress</value>
+  </data>
+  <data name="RetrieveInvalidInputsTitle" xml:space="preserve">
+    <value>Invalid retrieval inputs</value>
+  </data>
+  <data name="RetrieveRequiredInputsMessage" xml:space="preserve">
+    <value>Enter a device, a remote source folder, and a local destination folder.</value>
+  </data>
+  <data name="RetrieveDestinationNotFoundFormat" xml:space="preserve">
+    <value>The local destination folder does not exist: {0}</value>
+  </data>
+  <data name="DefaultCommonRootDisplayName" xml:space="preserve">
+    <value>default</value>
+  </data>
+  <data name="RetrieveStartingFormat" xml:space="preserve">
+    <value>&gt; Retrieving from {0}:{1}&#xA;Local destination: {2}&#xA;Common Root: {3}&#xA;&#xA;</value>
+  </data>
+  <data name="RetrieveProgressActive" xml:space="preserve">
+    <value>Retrieving files; see Command Output for per-file activity.</value>
+  </data>
+  <data name="RetrieveCopyReturnedFormat" xml:space="preserve">
+    <value>&#xA;CopyFrom returned HRESULT 0x{0:X8}.&#xA;</value>
+  </data>
+  <data name="RetrieveDisplayingRemainingOutput" xml:space="preserve">
+    <value>CopyFrom returned; displaying remaining output.</value>
+  </data>
+  <data name="RetrieveOperationFailed" xml:space="preserve">
+    <value>Retrieve failed before CopyFrom returned.</value>
+  </data>
+  <data name="RetrieveCopyFailedStatus" xml:space="preserve">
+    <value>Retrieve failed during copy.</value>
+  </data>
+  <data name="RetrieveCopyFailedFormat" xml:space="preserve">
+    <value>✗ Retrieve failed: HRESULT 0x{0:X8}.&#xA;</value>
+  </data>
+  <data name="CopyFailureCancellationNote" xml:space="preserve">
+    <value>Cancellation was also requested; this does not establish the failure's cause.&#xA;</value>
+  </data>
+  <data name="RetrieveCancellationUnconfirmedStatus" xml:space="preserve">
+    <value>Cancellation requested; retrieval completeness not confirmed.</value>
+  </data>
+  <data name="RetrieveCancellationUnconfirmedMessage" xml:space="preserve">
+    <value>Cancellation was requested. CopyFrom returning success does not confirm complete retrieval.&#xA;</value>
+  </data>
+  <data name="RetrieveCallbackFailureStatus" xml:space="preserve">
+    <value>CopyFrom returned success, but callback processing failed.</value>
+  </data>
+  <data name="RetrieveCallbackFailureMessage" xml:space="preserve">
+    <value>Retrieval status is not confirmed because callback processing failed.&#xA;</value>
+  </data>
+  <data name="RetrieveCompletedStatus" xml:space="preserve">
+    <value>Retrieval completed.</value>
+  </data>
+  <data name="RetrieveCompletedMessage" xml:space="preserve">
+    <value>Retrieval completed successfully.&#xA;</value>
+  </data>
+  <data name="CopyCancellationRequestedStatus" xml:space="preserve">
+    <value>Cancellation requested; waiting for copy to return.</value>
+  </data>
+  <data name="CopyCancellationRequestedOutput" xml:space="preserve">
+    <value>&#xA;Cancellation requested; waiting for the copy result.&#xA;</value>
+  </data>
+  <data name="CopyCancellationSignalReturnedFormat" xml:space="preserve">
+    <value>Cancellation signal returned HRESULT 0x{0:X8}.&#xA;</value>
+  </data>
+  <data name="CopyCancellationSignalFailedStatus" xml:space="preserve">
+    <value>Cancellation signal failed; waiting for copy to return.</value>
+  </data>
+  <data name="CopyCancellationSignalFailedOutput" xml:space="preserve">
+    <value>✗ Cancellation signal failed; copy may continue. Cancellation intent is retained.&#xA;</value>
+  </data>
+  <data name="CopyCancellationSignalExceptionFormat" xml:space="preserve">
+    <value>✗ Cancellation signal failed: {0} (HRESULT 0x{1:X8}). Copy may continue.&#xA;</value>
+  </data>
+</root>

@@ -22,9 +22,9 @@ description: "A WPF sample application demonstrating how to use the Remote Itera
 ## Description
 
 A C# WPF sample for tool developers integrating the **Xbox PC Remote Iteration
-API**. Use it to deploy a build, launch and control a game, and delete remote
-content. The UI provides a way to exercise the API; the [code map](#code-map)
-points to the integration patterns.
+API**. Use it to deploy a build, launch and control a game, retrieve remote
+artifacts, and delete remote content. The UI provides a way to exercise the API;
+the [code map](#code-map) points to the integration patterns.
 
 ## Building the Sample
 
@@ -81,11 +81,22 @@ to change the base directory.
 Read final results and HRESULTs in the status area and **Command Output**, not
 just the progress indicator. Each new action clears the output.
 
+### Retrieve artifacts
+
+Enter a **Remote source path**, select an existing **Local destination**, and
+choose **Retrieve**. Relative remote paths use the optional **Common-root alias**
+or the default Common Root when left blank; absolute remote paths ignore it.
+
+Retrieve calls `WdRemoteCopy` with `WdCopyDirection.CopyFrom`. It does not use
+Deploy filters or remote-path validation. Progress remains indeterminate while
+per-file activity and completed files are reported in **Command Output**; use
+the final HRESULT to determine the result.
+
 ### Filters
 
 **Advanced Options** filters deployment; **Delete filters** applies to folder
 deletion. Name patterns accept `*` and `?`; file patterns can be separated with
-`;`. Directory exclusions match names, not paths. Exclusions take precedence.
+`;`. Directory name exclusions match names, not paths. Exclusions take precedence.
 
 Attribute checkboxes select **Read-only**, **Hidden**, **System**, and **Archive**.
 An include group matches any selected attribute; an exclude group rejects any
@@ -98,6 +109,15 @@ See [WdCopySearchOptions](https://learn.microsoft.com/en-us/gaming/gdk/docs/refe
 and [WdDeleteSearchOptions](https://learn.microsoft.com/en-us/gaming/gdk/docs/reference/remoting/structs/wddeletesearchoptions)
 for filtering semantics. [File Attribute Constants](https://learn.microsoft.com/en-us/windows/win32/fileio/file-attribute-constants)
 explains the flags; RIT supports the four offered here, not every Windows attribute.
+
+#### Example: exclude hidden directories during Deploy
+
+To try directory filtering, create a source containing an ordinary folder and a
+folder marked **Hidden**, each with a file. Under **Advanced Options**, select
+**Hidden** in **Exclude directory attributes** and deploy to an empty destination.
+Only the ordinary folder's file should be copied. Naming a folder "Hidden" does
+not set its attribute, and filtering does not remove files from earlier
+deployments.
 
 ### Delete remote content
 
@@ -122,15 +142,16 @@ for the full contract.
 
 ### Cancellation and operation lifetime
 
-**Cancel** requests copy cancellation. **Stop waiting** ends the client wait for
-delete; remote deletion may continue. Controls remain disabled until the client
-call returns. No follow-on operation starts automatically. The delete status
-describes the previous request and remains until another delete starts.
+**Cancel** requests deployment or retrieval cancellation. **Stop waiting** ends
+the client wait for delete; remote deletion may continue. Controls remain
+disabled until the client call returns. No follow-on operation starts
+automatically. The delete status describes the previous request and remains
+until another delete starts.
 
 The sample tracks cancellation intent separately from HRESULT: a success return
-after cancellation does not prove a complete copy or delete. Cancelled copies
-skip path validation. A tool using delete must decide when conflicting remote
-work is safe; see [WdCancelRemoteDelete](https://learn.microsoft.com/en-us/gaming/gdk/docs/reference/remoting/functions/wdcancelremotedelete).
+after cancellation does not prove a complete deployment, retrieval, or delete.
+Cancelled deployments skip path validation. A tool using delete must decide
+when conflicting remote work is safe; see [WdCancelRemoteDelete](https://learn.microsoft.com/en-us/gaming/gdk/docs/reference/remoting/functions/wdcancelremotedelete).
 
 Closing is blocked during an active call to preserve native resource lifetime.
 For a stalled operation, request cancellation when available. Ending
@@ -140,8 +161,8 @@ undo completed work or confirm that the remote operation stopped.
 ### Common Root configuration
 
 Without configured roots, relative paths use `%ProgramData%\Microsoft GDK\gameroot`.
-Deploy and Launch use the default Common Root; Delete can select an existing
-alias. Absolute remote paths ignore the alias.
+Deploy and Launch use the default Common Root; Retrieve and Delete can select an
+existing alias. Absolute remote paths ignore the alias.
 
 On the **target device**, add `gameRoots` to
 `%ProgramData%\Microsoft GDK\wdEndpoint\wdEndpoint.json`, preserving other settings:
@@ -164,14 +185,15 @@ it does not configure them. See the [Common Root configuration guide](https://le
 
 | Pattern | Entry points |
 |---------|--------------|
-| Package and generated bindings | [Project](RemoteIterationToolsSample.csproj#L3-L37), [projection requests](NativeMethods.txt) |
-| Deploy and validate the remote path | [`Deploy_Click`](MainWindow.xaml.cs#L162-L266), [`CopyAsync` / `RegisterRemoteXboxGameAsync`](RemoteIteration.cs#L16-L80) |
-| Launch, resume, terminate | [UI handlers](MainWindow.xaml.cs#L297-L381), [native wrappers](RemoteIteration.cs#L82-L144) |
+| Package and generated bindings | [Project](RemoteIterationToolsSample.csproj#L3-L49), [projection requests](NativeMethods.txt) |
+| Deploy and validate the remote path | [`Deploy_Click`](MainWindow.xaml.cs#L322-L437), [`CopyAsync`](RemoteIteration.cs#L14-L62), [`RegisterRemoteXboxGameAsync`](RemoteIteration.cs#L66-L84) |
+| Retrieve artifacts | [`Retrieve_Click`](MainWindow.xaml.cs#L50-L167), [`CopyAsync`](RemoteIteration.cs#L14-L62) with `WdCopyDirection.CopyFrom` |
+| Launch, resume, terminate | [UI handlers](MainWindow.xaml.cs#L471-L554), [native wrappers](RemoteIteration.cs#L90-L147) |
 | Delete and stop waiting | [UI handlers and confirmation](MainWindow.Delete.xaml.cs#L8-L138), [`DeleteAsync` / `RequestDeleteStopWaiting`](RemoteIteration.Delete.cs#L10-L62) |
 | Attribute flags | [`FileAttributeSelector.Mask`](FileAttributeSelector.xaml.cs#L22-L37), [copy model](CopySearchOptions.cs#L3-L13), [delete model](DeleteSearchOptions.cs#L3-L13) |
-| Single active operation and handle lifetime | [`BeginOperation` / `EndOperation` / closing guard](MainWindow.xaml.cs#L36-L83), [operation state](OperationState.cs#L10-L188) |
-| Copy cancellation and final results | [Result handling](MainWindow.xaml.cs#L208-L263), [`Cancel_Click`](MainWindow.xaml.cs#L268-L295) |
-| Responsive callback processing | [Bounded UI draining](MainWindow.xaml.cs#L85-L160), [callback capture and ownership](OperationState.cs#L42-L188) |
+| Single active operation and handle lifetime | [`BeginOperation` / `EndOperation` / closing guard](MainWindow.xaml.cs#L169-L235), [operation state](OperationState.cs#L10-L191) |
+| Copy cancellation and final results | [Retrieve result handling](MainWindow.xaml.cs#L119-L151), [Deploy result handling](MainWindow.xaml.cs#L378-L435), [`Cancel_Click`](MainWindow.xaml.cs#L439-L469) |
+| Responsive callback processing | [Bounded UI draining](MainWindow.xaml.cs#L247-L320), [callback capture and ownership](OperationState.cs#L49-L188) |
 
 Callbacks copy native data into operation-owned queues; the UI drains bounded
 batches and yields between them. Callback-processing failures are reported
