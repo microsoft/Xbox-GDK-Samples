@@ -153,12 +153,10 @@ Following is a list of categories for the samples.
 | __FrontPanelText__ | The FrontPanelText sample demonstrates how to use the CPU to draw text on the Xbox Devkit Front Panel Display. | ✓ |  | 
 | __GameInputInterfacing__ | This sample demonstrates how to effectively interface and read inputs from a gamepad, arcade sticks, racing wheels, and more in the Microsoft GDK. | ✓ | ✓ | 
 | __GameInputSequential__ | This sample demonstrates how to read inputs sequentially from a gamepad using GameInput. | ✓ | ✓ | 
-| __Gamepad__ | This sample demonstrates how to read inputs from a gamepad on Xbox. | ✓ | ✓ | 
+| __Gamepad__ | This sample demonstrates gamepad input, motion sensor readings, vibration control, and audio-driven haptics using GameInput on Xbox and Windows PC. | ✓ | ✓ | 
 | __GamepadKeyboardMouse__ | This sample demonstrates how to read and process inputs from gamepad, mouse, and keyboard using GameInput. | ✓ | ✓ | 
-| __GamepadVibration__ | This sample demonstrates how to use vibration with a gamepad on an Xbox. | ✓ | ✓ | 
 | __GameSaveCombo__ | This sample demonstrates the use of the XGameSave APIs to save and load game save data on Xbox. | ✓ | ✓ | 
 | __GameSaveFilesCombo__ | This sample demonstrates the use of the XGameSaveFiles APIs to access folders on Xbox. | ✓ | ✓ | 
-| __Haptics__ | This sample demonstrates Advanced Haptics APIs. |  | ✓ | 
 | __IntelligentDelivery__ | This sample demonstrates Intelligent Delivery APIs. | ✓ | ✓ | 
 | __Lighting__ | This sample shows how to use the LampArray API. | ✓ | ✓ | 
 | __LocalStorage__ | This sample shows how to use different local storage locations in a title for both Xbox and PC platforms. | ✓ | ✓ | 

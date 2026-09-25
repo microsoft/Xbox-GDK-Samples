@@ -7,18 +7,17 @@ namespace RemoteIterationToolsSample
 {
     public static partial class RemoteIteration
     {
-        /* The WdRemoteCopy API automates copying game builds from local environments to remote devices, efficiently
-         * transferring assets and binaries. It reduces manual errors by managing file movement and provides blocking
-         * operations that return an HRESULT for clear status and error tracking. 
-         * Files are copied to C:\ProgramData\Microsoft GDK\gameroot by default. 
-         * WdCopyStatusCallbacks provides multiple callbacks for copy progress information.
+        /* The WdRemoteCopy API copies files to or from remote devices. Relative remote paths use the selected
+         * common root, or the endpoint's default common root when no alias is supplied. WdCopyStatusCallbacks
+         * provides progress and diagnostic callbacks while the blocking operation is active.
          */
         public static Task<HRESULT> CopyAsync(
             string remoteDevice,
-            string localSourcePath,
-            string remoteDestPath,
+            string sourcePath,
+            string destinationPath,
+            WdCopyDirection copyDirection = WdCopyDirection.CopyTo,
+            string? commonRootAlias = null,
             WdCancellationHandleWrapper? cancellationHandleWrapper = null,
-            WdCopyOptions? copyOptions = null,
             CopySearchOptions? searchOptions = null,
             WdCopyStatusCallbacks? statusCallbacks = null
             )
@@ -31,7 +30,12 @@ namespace RemoteIterationToolsSample
                     fixed (byte* includeFilePatternBytes = string.IsNullOrEmpty(searchOptions?.IncludeFilePattern) ? null : Encoding.UTF8.GetBytes(searchOptions.IncludeFilePattern + '\0'))
                     fixed (byte* excludeFilePatternBytes = string.IsNullOrEmpty(searchOptions?.ExcludeFilePattern) ? null : Encoding.UTF8.GetBytes(searchOptions.ExcludeFilePattern + '\0'))
                     fixed (byte* excludeDirPatternBytes = string.IsNullOrEmpty(searchOptions?.ExcludeDirPattern) ? null : Encoding.UTF8.GetBytes(searchOptions.ExcludeDirPattern + '\0'))
+                    fixed (byte* commonRootAliasBytes = string.IsNullOrEmpty(commonRootAlias) ? null : Encoding.UTF8.GetBytes(commonRootAlias + '\0'))
                     {
+                        WdCopyOptions nativeCopyOptions = default;
+                        nativeCopyOptions.copyDirection = copyDirection;
+                        nativeCopyOptions.commonRootAlias = new PCSTR(commonRootAliasBytes);
+
                         WdCopySearchOptions nativeSearchOptions = default;
                         nativeSearchOptions.includeFilePattern = new PCSTR(includeFilePatternBytes);
                         nativeSearchOptions.excludeFilePattern = new PCSTR(excludeFilePatternBytes);
@@ -44,9 +48,9 @@ namespace RemoteIterationToolsSample
                         // CsWin32's string overload uses UTF-8 on .NET 8, but does not append NUL.
                         hr = PInvoke.WdRemoteCopy(
                             remoteDevice + '\0',
-                            localSourcePath + '\0',
-                            remoteDestPath + '\0',
-                            copyOptions,
+                            sourcePath + '\0',
+                            destinationPath + '\0',
+                            nativeCopyOptions,
                             nativeSearchOptions,
                             statusCallbacks,
                             cancellationHandleWrapper?.Handle);

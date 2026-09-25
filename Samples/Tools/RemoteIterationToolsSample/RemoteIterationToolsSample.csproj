@@ -28,6 +28,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Messages.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Compile Update="Messages.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Messages.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.GDK.RemoteIterationClientApi" Version="0.1.2-preview.26.9.9002" />
     <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.269">
       <PrivateAssets>all</PrivateAssets>

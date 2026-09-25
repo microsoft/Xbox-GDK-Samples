@@ -25,7 +25,10 @@ namespace RemoteIterationToolsSample
         public string Name { get; }
         public string Device { get; }
         public string RemotePath { get; }
-        public string LocalSourcePath { get; init; } = "";
+        public string SourcePath { get; init; } = "";
+        public string DestinationPath { get; init; } = "";
+        public WdCopyDirection CopyDirection { get; init; } = WdCopyDirection.CopyTo;
+        public string? CommonRootAlias { get; init; }
         public CopySearchOptions? SearchOptions { get; init; }
         public DeleteOptions? DeleteOptions { get; init; }
         public DeleteSearchOptions? DeleteSearchOptions { get; init; }
@@ -125,6 +128,7 @@ namespace RemoteIterationToolsSample
                 }
 
                 var lines = new List<string>();
+                string copyAction = operation.CopyDirection == WdCopyDirection.CopyFrom ? "Retrieve" : "Deploy";
                 for (nuint i = 0; i < fileProgressCount; i++)
                 {
                     WdCopyFileProgressInfo info = fileUpdates[i];
@@ -135,7 +139,7 @@ namespace RemoteIterationToolsSample
                     }
                     else
                     {
-                        lines.Add($"[Deploy] {filePath} ({info.bytesTransferred:N0} / {info.fileSize:N0} bytes)\n");
+                        lines.Add($"[{copyAction}] {filePath} ({info.bytesTransferred:N0} / {info.fileSize:N0} bytes)\n");
                     }
                 }
 
