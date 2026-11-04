@@ -1,7 +1,17 @@
 //--------------------------------------------------------------------------------------
-// MyD3DCompiler.cpp
+// MyHlslCompiler.cpp
 //
-// Defines the entry point for the console application.
+// A minimal offline build tool that compiles HLSL with the Xbox shader compiler DLL
+// (dxcompiler_x.dll for Xbox One, dxcompiler_xs.dll for Xbox Series X|S), and shows the
+// options for storing shader symbols (PDBs).
+//
+//   MyHlslCompiler.exe dxc <flags> <input.hlsl> <output.cso> [output.pdb]
+//
+//   flags  0  Embed symbols in the shader binary.
+//          1  Strip symbols from the shader binary (CompileFlag_StripPdbs).
+//          3  Strip symbols and save them to a PDB file (CompileFlag_StripPdbs | CompileFlag_SavePdbs).
+//             If output.pdb is omitted, the compiler names the PDB after the shader hash and
+//             it is written next to output.cso.
 //
 // Advanced Technology Group (ATG)
 // Copyright (C) Microsoft Corporation. All rights reserved.
@@ -9,15 +19,10 @@
 
 #include <gxdk.h>
 
-#include <assert.h>
-#include <iomanip>
-#include <regex>
-#include <stdio.h>
-#include <string>
-#include <sstream>
-#include <windows.h>
+#include <Windows.h>
+#include <wrl/client.h>
 
-#ifdef _TOOL_XBOX
+// Xbox shader compiler headers and import libraries for PC tools.
 #ifdef _TOOL_XBOX_SCARLETT
 #include <dxcapi_xs.h>
 #pragma comment(lib, "dxcompiler_xs.lib")
@@ -25,376 +30,204 @@
 #include <dxcapi_x.h>
 #pragma comment(lib, "dxcompiler_x.lib")
 #endif
-#endif
 
-#include <wrl/client.h>
-
-#include "Shlwapi.h"
+#include <cstdint>
+#include <cstdio>
+#include <cstdlib>
+#include <cwchar>
+#include <fstream>
+#include <stdexcept>
+#include <string>
+#include <vector>
 
 using Microsoft::WRL::ComPtr;
 
 namespace
 {
-    void PrintMessage(_In_z_ _Printf_format_string_ const char* fmt, ...)
+    enum CompileFlags : uint32_t
     {
-        char  buf[1024] = {};
+        CompileFlag_StripPdbs = 0x1,
+        CompileFlag_SavePdbs = 0x2,
+    };
 
-        va_list ap;
-
-        va_start(ap, fmt);
-
-        vsprintf_s(buf, _countof(buf) - 1, fmt, ap);
-        buf[_countof(buf) - 1] = 0;
-
-        va_end(ap);
-
-        OutputDebugStringA(buf);
-        printf("%s", buf);
-    }
-}
-
-template <typename str_t> HANDLE MyCreateFile(_In_ str_t pFileName,
-	_In_ BOOL bOverwrite);
-template <> HANDLE MyCreateFile<LPCSTR>(_In_ LPCSTR pFileName,
-	_In_ BOOL bOverwrite)
-{
-	return CreateFileA(pFileName, GENERIC_WRITE, 0, NULL,
-		bOverwrite ? CREATE_ALWAYS : CREATE_NEW,
-		FILE_ATTRIBUTE_NORMAL, NULL);
-}
-template <> HANDLE MyCreateFile<wchar_t*>(_In_ wchar_t* pFileName,
-	_In_ BOOL bOverwrite)
-{
-	return CreateFileW(pFileName, GENERIC_WRITE, 0, NULL,
-		bOverwrite ? CREATE_ALWAYS : CREATE_NEW,
-		FILE_ATTRIBUTE_NORMAL, NULL);
-}
-
-template <typename str_t>
-HRESULT WINAPI WriteBlobToFile(_In_ IDxcBlob* pBlob,
-	_In_ str_t pFileName,
-	_In_ BOOL bOverwrite)
-{
-
-	HRESULT hr;
-	HANDLE hFile = INVALID_HANDLE_VALUE;
-
-	hFile = MyCreateFile(pFileName, bOverwrite);
-
-	if (INVALID_HANDLE_VALUE == hFile)
-	{
-		return HRESULT_FROM_WIN32(GetLastError());
-	}
-
-	BYTE* pBytes = (BYTE*)pBlob->GetBufferPointer();
-	SIZE_T uBytes = pBlob->GetBufferSize();
-
-	while (uBytes > 0)
-	{
-		DWORD uReq;
-		DWORD uDone;
-
-#ifdef _WIN64
-		if (uBytes > UINT_MAX)
-		{
-			uReq = UINT_MAX;
-		}
-		else
-		{
-			uReq = (DWORD)uBytes;
-		}
-#else
-		uReq = uBytes;
-#endif
-
-		if (!WriteFile(hFile, pBytes, uReq, &uDone, NULL))
-		{
-			hr = HRESULT_FROM_WIN32(GetLastError());
-			if (FAILED(hr)) goto lExit;
-		}
-		if (uDone < uReq)
-		{
-			hr = E_FAIL;
-			goto lExit;
-		}
-
-		pBytes += uDone;
-		uBytes -= uDone;
-	}
-
-	hr = S_OK;
-
-lExit:
-	if (hFile != INVALID_HANDLE_VALUE)
-	{
-		CloseHandle(hFile);
-	}
-
-	return hr;
-}
-
-int CompileDxc(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
-{
-	enum CompileFlags : uint32_t
-	{
-		CompileFlag_StripPdbs = 0x00000001,
-		CompileFlag_SavePdbs = 0x00000002,
-	};
-
-	// Usage
-	// argv[1] -- Flags
-	// argv[2] -- Path to HLSL input
-	// argv[3] -- Path to binary output
-	// argv[4] -- Path to updb output (optional)
-	if (argc < 4)
-	{
-		PrintMessage("Usage: compiler.exe <fxc|dxc> flags HlslFilename BinaryOutputFilename [ShaderPdbFileName]\n"
-			"Shader PDB is always written even if the filename is not specified\n");
-		return -1;
-	}
-
-	uint32_t flags = 0;
-	swscanf_s(argv[1], L"%d", &flags);
-
-	// Whether to leave PDBs in the binary, or strip them out.
-	bool stripPdbs = flags & CompileFlag_StripPdbs;
-
-	// Whether to save PDBs to disk.
-	bool savePdbs = flags & CompileFlag_SavePdbs;
-
-	// Whether the command line included an explicit symbol file name
-	bool pdbNameSpecifiedByUser = argc > 4;
-
-	ComPtr<IDxcUtils> utils;
-	auto hr = DxcCreateInstance(CLSID_DxcUtils, 
-        IID_PPV_ARGS(utils.ReleaseAndGetAddressOf()));
-	if (FAILED(hr))
-		return hr;
-
-    wchar_t pdbPath[MAX_PATH] = {};
-    if (savePdbs)
+    void ThrowIfFailed(HRESULT hr, const char* operation)
     {
-        if (pdbNameSpecifiedByUser)
-        {
-            wcscpy_s(pdbPath, argv[4]);
-        }
-        else
-        {
-            // Find the path for the shader binary output, and leave a trailing '\'
-            wchar_t* fname = PathFindFileName(argv[3]);
-            size_t pathCharCount = fname - argv[3];
-            wcsncpy_s(pdbPath, argv[3], pathCharCount);
-            pdbPath[pathCharCount] = L'\0';
-        }
-    }
-    
-    ComPtr<IDxcResult> result;
-
-    try 
-    {
-        ComPtr<IDxcBlobEncoding> sourceEncoding;
-        auto fileName = argv[2];
-        hr = utils->LoadFile(fileName, nullptr, sourceEncoding.ReleaseAndGetAddressOf());
         if (FAILED(hr))
-            return hr;
-        BOOL knownEncoding = FALSE;
-        UINT32 encoding = 0U;
-        sourceEncoding->GetEncoding(&knownEncoding, &encoding);
-        DxcBuffer source =
         {
-            sourceEncoding->GetBufferPointer(),
-            sourceEncoding->GetBufferSize(),
-            encoding, 
-        };
+            char message[256] = {};
+            sprintf_s(message, "%s failed with HRESULT 0x%08X", operation, static_cast<unsigned int>(hr));
+            throw std::runtime_error(message);
+        }
+    }
+
+    void WriteBlobToFile(const std::wstring& path, IDxcBlob* blob)
+    {
+        std::ofstream file(path, std::ios::binary | std::ios::trunc);
+        file.write(static_cast<const char*>(blob->GetBufferPointer()), static_cast<std::streamsize>(blob->GetBufferSize()));
+        if (!file)
+        {
+            char message[MAX_PATH + 64] = {};
+            sprintf_s(message, "Unable to write %ls", path.c_str());
+            throw std::runtime_error(message);
+        }
+
+        wprintf(L"  %6zu bytes -> %ls\n", blob->GetBufferSize(), path.c_str());
+    }
+
+    void CompileShader(uint32_t flags, const wchar_t* inputPath, const wchar_t* outputPath, const wchar_t* pdbPath)
+    {
+        // Whether to strip symbols from the shader binary, rather than embed them.
+        const bool stripPdbs = (flags & CompileFlag_StripPdbs) != 0;
+
+        // Whether to save the symbols to a PDB file. Only stripped symbols can be saved.
+        const bool savePdbs = (flags & CompileFlag_SavePdbs) != 0;
+
+        if (savePdbs && !stripPdbs)
+        {
+            throw std::invalid_argument("CompileFlag_SavePdbs requires CompileFlag_StripPdbs");
+        }
+
+        wprintf(L"Compiling %ls\n", inputPath);
+
+        // The -Fd argument is either a full PDB file name, or a folder with a trailing '\'. For a
+        // folder, the compiler chooses a PDB file name based on the shader hash.
+        std::wstring pdbOutput;
+        if (savePdbs)
+        {
+            if (pdbPath)
+            {
+                pdbOutput = pdbPath;
+            }
+            else
+            {
+                const std::wstring output(outputPath);
+                const size_t folderEnd = output.find_last_of(L"\\/");
+                pdbOutput = (folderEnd == std::wstring::npos) ? L".\\" : output.substr(0, folderEnd + 1);
+            }
+        }
+
+        ComPtr<IDxcUtils> utils;
+        ThrowIfFailed(DxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(utils.GetAddressOf())), "DxcCreateInstance(CLSID_DxcUtils)");
+
+        ComPtr<IDxcBlobEncoding> source;
+        ThrowIfFailed(utils->LoadFile(inputPath, nullptr, source.GetAddressOf()), "IDxcUtils::LoadFile");
+
+        const DxcBuffer sourceBuffer = { source->GetBufferPointer(), source->GetBufferSize(), DXC_CP_ACP };
 
         ComPtr<IDxcIncludeHandler> includeHandler;
-        utils->CreateDefaultIncludeHandler(includeHandler.ReleaseAndGetAddressOf());
-        if (FAILED(hr))
-            return hr;
+        ThrowIfFailed(utils->CreateDefaultIncludeHandler(includeHandler.GetAddressOf()), "IDxcUtils::CreateDefaultIncludeHandler");
 
-        // Pass the same arguments as you would to the command line, as text
-        std::vector<LPCWSTR> arguments;
-
-        // entrypoint
-        arguments.push_back(L"-E");
-        arguments.push_back(L"main");
-
-        // shader model
-        arguments.push_back(L"-T");
-        arguments.push_back(L"ps_6_0");
-
-        // Generate symbols
-	    if (stripPdbs)
+        // These are the same arguments you would pass to dxc.exe on the command line.
+        std::vector<const wchar_t*> arguments =
         {
+            inputPath,                  // Source file name, recorded in the PDB
+            L"-E", L"main",
+            L"-T", L"ps_6_0",
+        };
+
+        if (stripPdbs)
+        {
+            // Generate a small PDB containing the source and compile options, and leave the
+            // symbols out of the shader binary.
             arguments.push_back(L"-Zs");
         }
         else
         {
+            // Generate full symbols and embed them in the shader binary.
             arguments.push_back(L"-Zi");
-
-            // Embed symbols
             arguments.push_back(L"-Qembed_debug");
         }
 
-        // Output symbols (we still need to do the WriteBlobToFile ourselves
-        arguments.push_back(L"-Fd");
-        arguments.push_back(pdbPath);
+        if (savePdbs)
+        {
+            // The compiler records the PDB name in the shader binary so PIX can find it. It returns
+            // the PDB contents, and the tool writes the file itself (see below).
+            arguments.push_back(L"-Fd");
+            arguments.push_back(pdbOutput.c_str());
+        }
 
-        // Strip
+        // Reflection data isn't needed at runtime.
         arguments.push_back(L"-Qstrip_reflect");
-        //arguments.push_back(L"-Qstrip_rootsignature");    // Currently gives a validation error
+
+        // Remove the DXIL from the final binary. Only the Xbox precompiled code is needed at runtime.
         arguments.push_back(L"-D");
         arguments.push_back(L"__XBOX_STRIP_DXIL=1");
 
-        ComPtr<IDxcCompiler> compiler;
-        hr = DxcCreateInstance(CLSID_DxcCompiler, 
-            IID_PPV_ARGS(compiler.ReleaseAndGetAddressOf()));
-        if (FAILED(hr))
-            return hr;
+        ComPtr<IDxcCompiler3> compiler;
+        ThrowIfFailed(DxcCreateInstance(CLSID_DxcCompiler, IID_PPV_ARGS(compiler.GetAddressOf())), "DxcCreateInstance(CLSID_DxcCompiler)");
 
-        ComPtr<IDxcCompiler3> compiler3;
-        compiler.Get()->QueryInterface(compiler3.GetAddressOf());
-        if (FAILED(hr))
-            return hr;
+        ComPtr<IDxcResult> result;
+        ThrowIfFailed(compiler->Compile(&sourceBuffer, arguments.data(), static_cast<UINT32>(arguments.size()),
+            includeHandler.Get(), IID_PPV_ARGS(result.GetAddressOf())), "IDxcCompiler3::Compile");
 
-        hr = compiler3->Compile(&source,
-            arguments.data(),
-            (UINT32)arguments.size(),
-            includeHandler.Get(),
-            IID_PPV_ARGS(result.ReleaseAndGetAddressOf()));
-        if (FAILED(hr))
-            return hr;
+        // Print warnings and errors in the standard compiler format, so they show up in the build output.
+        ComPtr<IDxcBlobUtf8> messages;
+        if (SUCCEEDED(result->GetOutput(DXC_OUT_ERRORS, IID_PPV_ARGS(messages.GetAddressOf()), nullptr))
+            && messages && messages->GetStringLength() > 0)
+        {
+            printf("%s\n", messages->GetStringPointer());
+        }
+
+        HRESULT status = E_FAIL;
+        ThrowIfFailed(result->GetStatus(&status), "IDxcResult::GetStatus");
+        ThrowIfFailed(status, "Shader compilation");
+
+        if (savePdbs)
+        {
+            // The compiler also returns the PDB file name it recorded in the shader binary.
+            ComPtr<IDxcBlob> pdb;
+            ComPtr<IDxcBlobUtf16> pdbName;
+            ThrowIfFailed(result->GetOutput(DXC_OUT_PDB, IID_PPV_ARGS(pdb.GetAddressOf()), pdbName.GetAddressOf()), "IDxcResult::GetOutput(DXC_OUT_PDB)");
+
+            if (!pdbPath)
+            {
+                // The binary contains only the PDB file name, not the folder. In PIX, the user
+                // must add the folder to the PDB search paths.
+                if (!pdbName || pdbName->GetStringLength() == 0)
+                {
+                    throw std::runtime_error("The compiler didn't generate a PDB file name");
+                }
+
+                pdbOutput += pdbName->GetStringPointer();
+            }
+            // Otherwise the binary contains the fully qualified PDB path, and PIX finds the PDB
+            // automatically as long as it isn't moved.
+
+            WriteBlobToFile(pdbOutput, pdb.Get());
+        }
+
+        ComPtr<IDxcBlob> shader;
+        ThrowIfFailed(result->GetOutput(DXC_OUT_OBJECT, IID_PPV_ARGS(shader.GetAddressOf()), nullptr), "IDxcResult::GetOutput(DXC_OUT_OBJECT)");
+        WriteBlobToFile(outputPath, shader.Get());
     }
-	catch (const std::bad_alloc &) {
-		return E_OUTOFMEMORY;
-	}
 
-	result->GetStatus(&hr);
-	if (FAILED(hr))
-	{
-        ComPtr<IDxcBlobEncoding> errorMsgs;
-        auto otherHr = result->GetOutput(DXC_OUT_ERRORS, 
-            IID_PPV_ARGS(errorMsgs.ReleaseAndGetAddressOf()), 
-            nullptr);
-		if (FAILED(otherHr))
-			return otherHr;
-
-		PrintMessage("Compile returned error (0x%x), message = %p\n",
-			hr,
-			errorMsgs->GetBufferPointer());
-		return hr;
-	}
-
-    ComPtr<IDxcBlob> code;
-
-    hr = result->GetOutput(DXC_OUT_OBJECT, 
-        IID_PPV_ARGS(code.ReleaseAndGetAddressOf()), 
-        nullptr);
-	if (FAILED(hr))
-		return hr;
-
-	if (savePdbs)
-	{
-        ComPtr<IDxcBlob> pdbData;
-        ComPtr<IDxcBlobUtf16> pdbPathFromCompiler;
-
-        hr = result->GetOutput(DXC_OUT_PDB, 
-            IID_PPV_ARGS(pdbData.ReleaseAndGetAddressOf()), 
-            pdbPathFromCompiler.ReleaseAndGetAddressOf());
-        if (FAILED(hr))
-            return hr;
-
-        if (!stripPdbs)
-		{
-			PrintMessage("CompileFlag_SavePdbs requires CompileFlag_StripPdbs\n");
-			return E_INVALIDARG;
-		}
-
-        if (pdbNameSpecifiedByUser)
-        {
-            // This way the binary contains the fully qualified pdb path.
-            // PIX will pick the pdb up automatically if it's not moved.
-        }
-        else if (pdbPathFromCompiler->GetStringLength() > 0U)
-        {
-            // This way the binary contains only the pdb file name, not the folder.
-            // PIX will need the user to set a pdb path, or resolve the pdb file manually.
-            wcscat_s(pdbPath, pdbPathFromCompiler->GetStringPointer());
-        }
-        else
-        {
-            PrintMessage("Pdb output was requested, but pdbName neither passed in by user nor generated by compiler.\n");
-            return E_FAIL;
-        }
-
-		// Now write the contents of pPDB to a file 
-		hr = WriteBlobToFile(pdbData.Get(), pdbPath, TRUE);
-		if (FAILED(hr))
-		{
-			PrintMessage("WriteBlobToFile returned error (0x%08X)\n", static_cast<unsigned int>(hr));
-			return hr;
-		}
-
-		PrintMessage("PDB size %zu is written here: %ls\n",
-			pdbData->GetBufferSize(),
-			pdbPath);
-	}
-
-	hr = WriteBlobToFile(code.Get(), argv[3], TRUE);
-	if (FAILED(hr))
-	{
-		PrintMessage("WriteBlobToFile returned error (0x%08X)\n", static_cast<unsigned int>(hr));
-		return hr;
-	}
-
-	PrintMessage("Binary size %zu is written here: %ls\n",
-		code->GetBufferSize(),
-		argv[3]);
-
-	return hr;
+    void PrintUsage()
+    {
+        wprintf(L"Usage: MyHlslCompiler.exe dxc <flags> <input.hlsl> <output.cso> [output.pdb]\n"
+            L"  flags: 0 = embed symbols, 1 = strip symbols, 3 = strip symbols and save them to a PDB file\n");
+    }
 }
 
-int __cdecl wmain(_In_ int argc, _In_z_count_(argc) wchar_t* argv[])
+int __cdecl wmain(int argc, wchar_t* argv[])
 {
-	if (argc < 2)
-	{
-		PrintMessage("First argument is missing, must be either fxc or dxc\n");
-		return -1;
-	}
-
-	if (0 != wcscmp(argv[1], L"fxc") && 0 != wcscmp(argv[1], L"dxc"))
-	{
-		PrintMessage("First argument was \"%ws\", must be either fxc or dxc\n", argv[1]);
-		return -1;
-	}
-
-    wchar_t** argvPassOn;
-    int errcode;
-    __try
+    try
     {
-        argvPassOn = (wchar_t**)alloca((argc - 1) * sizeof(wchar_t*));
-        argvPassOn[0] = argv[0];
-        for (auto i = 2; i < argc; ++i)
+        // The first argument names the compiler. Only dxc is supported; the legacy fxc compiler
+        // is no longer supported for Xbox.
+        if ((argc == 5 || argc == 6) && wcscmp(argv[1], L"dxc") == 0)
         {
-            argvPassOn[i - 1] = argv[i];
+            const auto flags = static_cast<uint32_t>(wcstoul(argv[2], nullptr, 10));
+            CompileShader(flags, argv[3], argv[4], (argc == 6) ? argv[5] : nullptr);
+            return 0;
         }
 
-        if (0 != wcscmp(argv[1], L"dxc"))
-        {
-            PrintMessage("The old shader compiler fxc is no longer supported\n");
-            return -1;
-        }
-        else
-        {
-            return CompileDxc(argc - 1, argvPassOn);
-        }
+        PrintUsage();
     }
-    __except ((GetExceptionCode() == STATUS_STACK_OVERFLOW) ?
-        EXCEPTION_EXECUTE_HANDLER : EXCEPTION_CONTINUE_SEARCH)
+    catch (const std::exception& e)
     {
-        errcode = _resetstkoflw();
-        PrintMessage("_resetstkoflw failed with error code %d\n", errcode);
-        return -1;
+        // The "error" prefix makes MSBuild report this as a build error.
+        printf("MyHlslCompiler : error : %s\n", e.what());
     }
+
+    return 1;
 }
-

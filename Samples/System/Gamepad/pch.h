@@ -99,10 +99,10 @@
 
 // GameInput (the Microsoft.GameInput NuGet package overrides the GDK version on all platforms)
 #include <GameInput.h>
-#if GAMEINPUT_API_VERSION != 3
-#error This sample requires the GameInput v3 API from Microsoft.GameInput 3.5 or later.
+#if GAMEINPUT_API_VERSION != 4
+#error This sample requires the GameInput v4 API from Microsoft.GameInput 4.0 or later.
 #endif
-using namespace GameInput::v3;
+using namespace GameInput::v4;
 
 #ifdef _GAMING_XBOX
 #include <pix3.h>

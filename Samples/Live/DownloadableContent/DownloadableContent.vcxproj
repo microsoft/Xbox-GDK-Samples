@@ -962,8 +962,12 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(VCTargetsPath)\Platforms\$(Platform)\Platform.props')" Text="$([System.String]::Format('$(ErrorText)', '$(Platform)'))" />
   </Target>
-  <Target Name="BuildMGC" AfterTargets="Build" Condition="!$([System.Text.RegularExpressions.Regex]::IsMatch('$(Platform)', 'Gaming\..+\.x64'))" Inputs="@(MGCCompile)" Outputs="$(OutDir)MicrosoftGame.config">
-    <Exec ConsoleToMsBuild="true" Command="copy &quot;%(MGCCompile.Identity)&quot; &quot;$(OutDir)MicrosoftGame.config&quot;" />
-    <Exec ConsoleToMsBuild="true" Command="makepkg.exe localize /d &quot;$(OutDir).&quot; /pd &quot;$(OutDir).&quot; /gc &quot;%(MGCCompile.Identity)&quot;" />
+  <ItemGroup Condition="'$(Platform)'=='x64' Or '$(Platform)'=='ARM64'">
+    <_DesktopMGCCompile Include="@(MGCCompile)" Exclude="@(MGCCompile->WithMetadataValue('ExcludedFromBuild', 'true'))" />
+  </ItemGroup>
+  <Target Name="BuildMGC" AfterTargets="Build" Condition="'$(Platform)'=='x64' Or '$(Platform)'=='ARM64'" Inputs="@(_DesktopMGCCompile);$(MSBuildProjectFullPath)" Outputs="$(OutDir)MicrosoftGame.config">
+    <Exec ConsoleToMsBuild="true" Command="copy &quot;%(_DesktopMGCCompile.Identity)&quot; &quot;$(OutDir)MicrosoftGame.config&quot;" />
+    <Exec ConsoleToMsBuild="true" Command="makepkg.exe localize /d &quot;$(OutDir).&quot; /pd &quot;$(OutDir).&quot; /gc &quot;%(_DesktopMGCCompile.Identity)&quot;" />
+    <Touch Files="$(OutDir)MicrosoftGame.config" />
   </Target>
 </Project>

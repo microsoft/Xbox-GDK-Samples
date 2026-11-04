@@ -1,0 +1,1060 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build" ToolsVersion="15.0">
+  <Import Project="..\..\packages\Microsoft.Direct3D.DXC.1.8.2502.8\build\native\Microsoft.Direct3D.DXC.props" Condition="Exists('..\..\packages\Microsoft.Direct3D.DXC.1.8.2502.8\build\native\Microsoft.Direct3D.DXC.props')" />
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Gaming.Xbox.Scarlett.x64">
+      <Configuration>Debug</Configuration>
+      <Platform>Gaming.Xbox.Scarlett.x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Profile|Gaming.Xbox.Scarlett.x64">
+      <Configuration>Profile</Configuration>
+      <Platform>Gaming.Xbox.Scarlett.x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Gaming.Xbox.Scarlett.x64">
+      <Configuration>Release</Configuration>
+      <Platform>Gaming.Xbox.Scarlett.x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Profile|x64">
+      <Configuration>Profile</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <RootNamespace>AMD_FSR</RootNamespace>
+    <ProjectGuid>{A7C22B41-48A4-4D45-9E2E-3AFAAD2A7610}</ProjectGuid>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <Keyword>Win32Proj</Keyword>
+    <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
+    <TargetRuntime>Native</TargetRuntime>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+    <GDKCrossPlatform>true</GDKCrossPlatform>
+    <ProjectName>AMD_FSR</ProjectName>
+  </PropertyGroup>
+  <Import Condition="Exists($(ATGBuildProps))" Project="$(ATGBuildProps)" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup>
+    <GDKCrossPlatformPath Condition="'$(GDKCrossPlatformPath)'==''">$(GameDKCoreLatest)</GDKCrossPlatformPath>
+    <GDKCrossPlatformPath Condition="'$(GDKCrossPlatformPath)'==''">$(GameDKXboxLatest)</GDKCrossPlatformPath>
+    <ATGTelemetryLibs>libHttpClient.lib</ATGTelemetryLibs>
+  </PropertyGroup>
+  <PropertyGroup>
+    <XSAPIVersion>142</XSAPIVersion>
+    <XSAPIVersion Condition="'$(XSAPIVersion)'=='142' AND Exists('$(GDKCrossPlatformPath)windows\lib\x64\Microsoft.Xbox.Services.143.C.lib')">143</XSAPIVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <EmbedManifest>false</EmbedManifest>
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <EmbedManifest>false</EmbedManifest>
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <EmbedManifest>false</EmbedManifest>
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets">
+    <Import Condition="Exists('$(MSBuildThisFileDirectory)AMD_FSR.props')" Project="$(MSBuildThisFileDirectory)AMD_FSR.props" Label="FFX Sample" />
+  </ImportGroup>
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Profile|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">
+    <ReferencePath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</ReferencePath>
+    <LibraryPath>$(Console_SdkLibPath)</LibraryPath>
+    <LibraryWPath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</LibraryWPath>
+    <IncludePath>$(Console_SdkIncludeRoot)</IncludePath>
+    <ExecutablePath>$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">
+    <ReferencePath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</ReferencePath>
+    <LibraryPath>$(Console_SdkLibPath)</LibraryPath>
+    <LibraryWPath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</LibraryWPath>
+    <IncludePath>$(Console_SdkIncludeRoot)</IncludePath>
+    <ExecutablePath>$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">
+    <ReferencePath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</ReferencePath>
+    <LibraryPath>$(Console_SdkLibPath)</LibraryPath>
+    <LibraryWPath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</LibraryWPath>
+    <IncludePath>$(Console_SdkIncludeRoot)</IncludePath>
+    <ExecutablePath>$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(GDKCrossPlatformPath)windows\include;$(IncludePath);</IncludePath>
+    <LibraryPath>$(GDKCrossPlatformPath)windows\lib\x64;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>$(GameDK)bin;$(ExecutablePath)</ExecutablePath>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">
+    <IncludePath>$(GDKCrossPlatformPath)windows\include;$(IncludePath);</IncludePath>
+    <LibraryPath>$(GDKCrossPlatformPath)windows\lib\x64;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>$(GameDK)bin;$(ExecutablePath)</ExecutablePath>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(GDKCrossPlatformPath)windows\include;$(IncludePath);</IncludePath>
+    <LibraryPath>$(GDKCrossPlatformPath)windows\lib\x64;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>$(GameDK)bin;$(ExecutablePath)</ExecutablePath>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VcpkgEnabled>false</VcpkgEnabled>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">
+    <Link>
+      <AdditionalDependencies>Microsoft.Xbox.Services.$(XSAPIVersion).C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits;..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;..\..\..\Kits\DirectXMesh\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalUsingDirectories />
+      <ForcedUsingFiles />
+      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level4</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalOptions>/Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <FXCompile>
+      <AdditionalOptions>-HV 2021 %(AdditionalOptions)</AdditionalOptions>
+    </FXCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">
+    <Link>
+      <AdditionalDependencies>Microsoft.Xbox.Services.$(XSAPIVersion).C.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits;..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;..\..\..\Kits\DirectXMesh\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalUsingDirectories />
+      <ForcedUsingFiles />
+      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>NDEBUG;PROFILE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level4</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalOptions>/Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <FXCompile>
+      <AdditionalOptions>-HV 2021 %(AdditionalOptions)</AdditionalOptions>
+    </FXCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">
+    <Link>
+      <AdditionalDependencies>Microsoft.Xbox.Services.$(XSAPIVersion).C.Debug.lib;PlayFabCore.lib;PlayFabServices.lib;libHttpClient.lib;XCurl.lib;appnotify.lib;winhttp.lib;crypt32.lib;$(Console_Libs);%(XboxExtensionsDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <ClCompile>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <MinimalRebuild>false</MinimalRebuild>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits;..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;..\..\..\Kits\DirectXMesh\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalUsingDirectories />
+      <ForcedUsingFiles />
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalOptions>/Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <FXCompile>
+      <AdditionalOptions>-HV 2021 %(AdditionalOptions)</AdditionalOptions>
+    </FXCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>uuid.lib;xgameruntime.lib;gameinput.lib;d3d12.lib;dxgi.lib;dxguid.lib;kernel32.lib;user32.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;runtimeobject.lib;$(ATGTelemetryLibs);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Manifest>
+      <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
+    </Manifest>
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits;..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;..\..\..\Kits\DirectXMesh\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalUsingDirectories />
+      <ForcedUsingFiles />
+      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>NDEBUG;__WRL_NO_DEFAULT_LIB__;_GAMING_DESKTOP;_WINDOWS;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level4</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalOptions>/Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <FXCompile>
+      <ShaderModel>6.0</ShaderModel>
+      <EnableDebuggingInformation>true</EnableDebuggingInformation>
+      <AdditionalOptions>/Fd "$(OutDir)%(Filename).pdb" %(AdditionalOptions)</AdditionalOptions>
+    </FXCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>uuid.lib;xgameruntime.lib;gameinput.lib;d3d12.lib;dxgi.lib;dxguid.lib;kernel32.lib;user32.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;runtimeobject.lib;$(ATGTelemetryLibs);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Manifest>
+      <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
+    </Manifest>
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits;..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;..\..\..\Kits\DirectXMesh\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalUsingDirectories />
+      <ForcedUsingFiles />
+      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>NDEBUG;__WRL_NO_DEFAULT_LIB__;PROFILE;_GAMING_DESKTOP;_WINDOWS;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level4</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalOptions>/Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <FXCompile>
+      <ShaderModel>6.0</ShaderModel>
+      <EnableDebuggingInformation>true</EnableDebuggingInformation>
+      <AdditionalOptions>/Fd "$(OutDir)%(Filename).pdb" %(AdditionalOptions)</AdditionalOptions>
+    </FXCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>uuid.lib;xgameruntime.lib;gameinput.lib;d3d12.lib;dxgi.lib;dxguid.lib;kernel32.lib;user32.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;runtimeobject.lib;$(ATGTelemetryLibs);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Manifest>
+      <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
+    </Manifest>
+    <ClCompile>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <MinimalRebuild>false</MinimalRebuild>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\..\..\Kits;..\..\..\Kits\LiveTK\;..\..\..\Kits\DirectXTK12\Inc\;..\..\..\Kits\ATGTK\;..\..\..\Kits\ATGTelemetry\GDK\;..\..\..\Kits\DirectXMesh\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalUsingDirectories />
+      <ForcedUsingFiles />
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;__WRL_NO_DEFAULT_LIB__;_GAMING_DESKTOP;_WINDOWS;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalOptions>/Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>5204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <FXCompile>
+      <ShaderModel>6.0</ShaderModel>
+      <EnableDebuggingInformation>true</EnableDebuggingInformation>
+      <AdditionalOptions>/Fd "$(OutDir)%(Filename).pdb" %(AdditionalOptions)</AdditionalOptions>
+    </FXCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup>
+    <CopyFileToFolders>
+      <DestinationFolders>$(OutDir)Assets</DestinationFolders>
+    </CopyFileToFolders>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\gltf\gltf.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\gltf\GltfProcessing.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\ReadData.h" />
+    <ClInclude Include="..\..\..\Kits\FidelityFX\api\include\dx12\ffx_api_dx12.h" />
+    <ClInclude Include="..\..\..\Kits\FidelityFX\api\include\dx12\ffx_api_dx12.hpp" />
+    <ClInclude Include="..\..\..\Kits\FidelityFX\api\include\ffx_api.h" />
+    <ClInclude Include="..\..\..\Kits\FidelityFX\api\include\ffx_api.hpp" />
+    <ClInclude Include="..\..\..\Kits\FidelityFX\api\include\ffx_api_loader.h" />
+    <ClInclude Include="..\..\..\Kits\FidelityFX\api\include\ffx_api_matrix_helpers.h" />
+    <ClInclude Include="..\..\..\Kits\FidelityFX\api\include\ffx_api_matrix_helpers.hpp" />
+    <ClInclude Include="..\..\..\Kits\FidelityFX\api\include\ffx_api_types.h" />
+    <ClInclude Include="..\..\..\Kits\FidelityFX\api\include\xbox\ffx_api_xbox.h" />
+    <ClInclude Include="..\..\..\Kits\FidelityFX\api\include\xbox\ffx_api_xbox.hpp" />
+    <ClInclude Include="..\..\..\Kits\FidelityFX\upscalers\include\ffx_upscale.h" />
+    <ClInclude Include="..\..\..\Kits\FidelityFX\upscalers\include\ffx_upscale.hpp" />
+    <ClInclude Include="PathManager.h" />
+    <ClInclude Include="AnimationPlayer.h" />
+    <ClInclude Include="AMD_FSR.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="StepTimer.h" />
+    <ClInclude Include="DeviceResources.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\Json.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h" />
+    <ClInclude Include="..\..\..\Kits\ATGTK\FlyCamera.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Kits\ATGTK\gltf\gltf.cpp" />
+    <ClCompile Include="..\..\..\Kits\ATGTK\gltf\GltfProcessing.cpp" />
+    <ClCompile Include="PathManager.cpp" />
+    <ClCompile Include="AnimationPlayer.cpp" />
+    <ClCompile Include="AMD_FSR.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="DeviceResources.cpp" />
+    <ClCompile Include="..\..\..\Kits\ATGTK\FlyCamera.cpp" />
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp" />
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Kits\DirectXMesh\DirectXMesh_GDK_2022.vcxproj">
+      <Project>{0b019afb-d02b-430a-9331-b2a9d6d9c0c3}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Kits\DirectXTK12\DirectXTK12_GDKX_2022.vcxproj">
+      <Project>{052c4858-c76f-4cea-8a1a-e8e5559e67c2}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\Logo.png">
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\LargeLogo.png">
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\SmallLogo.png">
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\SplashScreen.png">
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\StoreLogo.png">
+      <DeploymentContent>true</DeploymentContent>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Media\GLTF\RampagingTRex\RampagingTRex.glb">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">true</DeploymentContent>
+    </None>
+    <None Include="..\..\NuGet.config" />
+    <None Include="packages.config" />
+    <None Include="readme.md" />
+    <None Include="CharacterPath.json">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="PBRCommon.hlsli" />
+    <None Include="SkinningCommon.hlsli" />
+    <None Include="ParticleCommon.hlsli" />
+    <None Include="SmokeParticleCommon.hlsli" />
+    <None Include="AMD_FSR.props" />
+    <None Include="SkyboxCommon.hlsli" />
+    <None Include="UpscaleBlitCommon.hlsli" />
+    <None Include="MagnifierCommon.hlsli" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="MagnifierVertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+    </FxCompile>
+    <FxCompile Include="MagnifierPixelShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">Pixel</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T ps_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T ps_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T ps_6_6 &lt;different options&gt;</AdditionalOptions>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/Qembed_debug /T ps_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/Qembed_debug /T ps_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">/Qembed_debug /T ps_6_6 </AdditionalOptions>
+    </FxCompile>
+    <FxCompile Include="UpscaleBlitVertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+    </FxCompile>
+    <FxCompile Include="UpscaleBlitPixelShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">Pixel</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T ps_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T ps_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T ps_6_6 &lt;different options&gt;</AdditionalOptions>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/Qembed_debug /T ps_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/Qembed_debug /T ps_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">/Qembed_debug /T ps_6_6 </AdditionalOptions>
+    </FxCompile>
+    <FxCompile Include="MotionVectorsVertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+    </FxCompile>
+    <FxCompile Include="SkinnedMotionVectorsVertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+    </FxCompile>
+    <FxCompile Include="MotionVectorsPixelShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">Pixel</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T ps_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T ps_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T ps_6_6 &lt;different options&gt;</AdditionalOptions>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/Qembed_debug /T ps_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/Qembed_debug /T ps_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">/Qembed_debug /T ps_6_6 </AdditionalOptions>
+    </FxCompile>
+    <FxCompile Include="PixelShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">Pixel</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T ps_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T ps_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T ps_6_6 &lt;different options&gt;</AdditionalOptions>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/Qembed_debug /T ps_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/Qembed_debug /T ps_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">/Qembed_debug /T ps_6_6 </AdditionalOptions>
+    </FxCompile>
+    <FxCompile Include="ParticlePixelShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">Pixel</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T ps_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T ps_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T ps_6_6 &lt;different options&gt;</AdditionalOptions>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/Qembed_debug /T ps_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/Qembed_debug /T ps_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">/Qembed_debug /T ps_6_6 </AdditionalOptions>
+    </FxCompile>
+    <FxCompile Include="ParticleVertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+    </FxCompile>
+    <FxCompile Include="SmokeParticlePixelShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">Pixel</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T ps_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T ps_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T ps_6_6 &lt;different options&gt;</AdditionalOptions>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/Qembed_debug /T ps_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/Qembed_debug /T ps_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">/Qembed_debug /T ps_6_6 </AdditionalOptions>
+    </FxCompile>
+    <FxCompile Include="SmokeParticleVertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+    </FxCompile>
+    <FxCompile Include="ShadowVertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+    </FxCompile>
+    <FxCompile Include="SkinnedShadowVertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+    </FxCompile>
+    <FxCompile Include="SkyboxPixelShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">Pixel</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T ps_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T ps_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T ps_6_6 &lt;different options&gt;</AdditionalOptions>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/Qembed_debug /T ps_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/Qembed_debug /T ps_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">/Qembed_debug /T ps_6_6 </AdditionalOptions>
+    </FxCompile>
+    <FxCompile Include="SkyboxVertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+    </FxCompile>
+    <FxCompile Include="VertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+    </FxCompile>
+    <FxCompile Include="SkinnedVertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">Vertex</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">/Qembed_debug /T vs_6_6 &lt;different options&gt;</AdditionalOptions>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">/Qembed_debug /T vs_6_6 </AdditionalOptions>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64'">
+    <ReferenceCopyLocalPaths Include="$(GDKCrossPlatformPath)xbox\bin\x64\libHttpClient.dll" />
+    <ReferenceCopyLocalPaths Include="$(GDKCrossPlatformPath)xbox\bin\x64\XCurl.dll" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(GDKCrossPlatform)'=='true' AND '$(Platform)'=='x64'">
+    <ReferenceCopyLocalPaths Include="$(GDKCrossPlatformPath)windows\bin\x64\libHttpClient.dll" />
+    <ReferenceCopyLocalPaths Include="$(GDKCrossPlatformPath)windows\bin\x64\XCurl.dll" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\..\packages\Microsoft.Direct3D.DXC.1.8.2502.8\build\native\Microsoft.Direct3D.DXC.targets" Condition="Exists('..\..\packages\Microsoft.Direct3D.DXC.1.8.2502.8\build\native\Microsoft.Direct3D.DXC.targets')" />
+    <Import Project="..\..\packages\WinPixEventRuntime.1.0.240308001\build\WinPixEventRuntime.targets" Condition="Exists('..\..\packages\WinPixEventRuntime.1.0.240308001\build\WinPixEventRuntime.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureGDK" BeforeTargets="_CheckForInvalidConfigurationAndPlatform">
+    <PropertyGroup>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(VCTargetsPath)\Platforms\$(Platform)\Platform.props')" Text="$([System.String]::Format('$(ErrorText)', '$(Platform)'))" />
+  </Target>
+  <Target Name="BuildMGC" AfterTargets="Build" Condition="!$([System.Text.RegularExpressions.Regex]::IsMatch('$(Platform)', 'Gaming\..+\.x64'))" Inputs="@(MGCCompile)" Outputs="$(OutDir)MicrosoftGame.config">
+    <Exec ConsoleToMsBuild="true" Command="copy &quot;%(MGCCompile.Identity)&quot; &quot;$(OutDir)MicrosoftGame.config&quot;" />
+    <Exec ConsoleToMsBuild="true" Command="makepkg.exe localize /d &quot;$(OutDir).&quot; /pd &quot;$(OutDir).&quot; /gc &quot;%(MGCCompile.Identity)&quot;" />
+  </Target>
+  <ItemGroup>
+    <None Include="..\..\..\Media\GLTF\SponzaNew\MainSponza.gltf">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\Media\GLTF\SponzaNew\MainSponza_0.bin">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\Media\GLTF\SponzaNew\MainSponza_1.bin">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\Media\GLTF\SponzaNew\MainSponza_2.bin">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\Media\GLTF\SponzaNew\MainSponza_3.bin">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\Media\GLTF\SponzaNew\MainSponza_4.bin">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\Media\GLTF\SponzaNew\credits_license.txt">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <Image Include="..\..\..\Media\Textures\RampagingTRex\TRex_BaseColor.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\RampagingTRex\TRex_MetallicRoughness.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\RampagingTRex\TRex_Normal.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\RampagingTRex\TRex_Occlusion.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\arch_stone_wall_01_BaseColor.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\arch_stone_wall_01_Normal.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\arch_stone_wall_01_Roughnessarch_stone_wall_01_Metalness.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\brickwall_01_BaseColor.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\brickwall_01_Normal.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\brickwall_01_Roughnessbrickwall_01_Metalness.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\brickwall_02_BaseColor.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\brickwall_02_Normal.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\brickwall_02_Roughnessbrickwall_02_Metalness.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\ceiling_plaster_01_BaseColor.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\ceiling_plaster_01_Normal.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\ceiling_plaster_01_Roughnessceiling_plaster_01_Metalness.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\ceiling_plaster_02_BaseColor.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\ceiling_plaster_02_Roughnessceiling_plaster_01_Metalness.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_1stfloor_BaseColor.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_1stfloor_Normal.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_1stfloor_Roughnesscol_1stfloor_Metalness.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_brickwall_01_BaseColor.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_brickwall_01_Normal.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_brickwall_01_Roughnesscol_brickwall_01_Metalness.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_head_1stfloor_BaseColor.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_head_1stfloor_Normal.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_head_1stfloor_Roughnesscol_head_1stfloor_Metalness.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_head_2ndfloor_02_BaseColor.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_head_2ndfloor_02_Normal.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_head_2ndfloor_02_Roughnesscol_head_2ndfloor_02_Metalness.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_head_2ndfloor_03_BaseColor.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_head_2ndfloor_03_Normal.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_head_2ndfloor_03_Roughnesscol_head_2ndfloor_03_Metalness.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\curtain_fabric_Normal.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\curtain_fabric_Roughnesscurtain_fabric_Metalness.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\curtain_fabric_blue_BaseColor.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\curtain_fabric_green_BaseColor.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\curtain_fabric_red_BaseColor.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\door_stoneframe_01_BaseColor.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\door_stoneframe_01_Normal.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\door_stoneframe_01_Roughnessdoor_stoneframe_01_Metalness.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\door_stoneframe_02_BaseColor.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\door_stoneframe_02_Normal.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\door_stoneframe_02_Roughnessdoor_stoneframe_02_Metalness.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\floor_tiles_01_BaseColor.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\floor_tiles_01_Normal.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\floor_tiles_01_Roughnessfloor_tiles_01_Metalness.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\lionhead_01_BaseColor.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\lionhead_01_Normal.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\lionhead_01_Roughnesslionhead_01_Metalness.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\metal_door_01_BaseColor_png.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\metal_door_01_Normal_png.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\metal_door_01_Roughnessmetal_door_01_Metalness_png.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\ornament_01_BaseColor.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\ornament_01_Normal.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\ornament_01_Roughnessornament_01_Metalness.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\roof_tiles_01_BaseColor.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\roof_tiles_01_Normal.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\roof_tiles_01_Roughnessroof_tiles_01_Metalness.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\stone_01_tile_BaseColor.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\stone_01_tile_Normal.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\stone_01_tile_Roughnessstone_01_tile_Metalness.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\stone_trims_01_BaseColor.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\stone_trims_01_Normal.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\stone_trims_01_Roughnessstone_trims_01_Metalness.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\stone_trims_02_BaseColor.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\stone_trims_02_Normal.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\stone_trims_02_Roughnessstone_trims_02_Metalness.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\stones_2ndfloor_01_BaseColor.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\stones_2ndfloor_01_Normal.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\stones_2ndfloor_01_Roughnessstones_2ndfloor_01_Metalness.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\window_frame_01_BaseColor.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\window_frame_01_Normal.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\window_frame_01_Roughnesswindow_frame_01_Metalness.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\wood_door_01_BaseColor.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\wood_door_01_Normal.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\wood_door_01_Roughnesswood_door_01_Metalness.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\wood_tile_01_BaseColor.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\wood_tile_01_Normal.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\wood_tile_01_Roughnesswood_tile_01_Metalness.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\CubeMaps\HDR-Image based lighting\SunSubMixerHRes_diffuseIBL.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\CubeMaps\HDR-Image based lighting\SunSubMixerHRes_specularIBL.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\HDR\Sponza_BRDF_LUT.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\Particles\SmokeSpriteSheet.dds">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+  </ItemGroup>
+  <!-- List SDK binaries explicitly for distribution; deploy only Xbox DLLs to the dev kit. -->
+  <ItemGroup>
+    <None Include="$(FfxDllPathLoader)amd_fidelityfx_loader_dx12.dll" />
+    <None Include="$(FfxDllPathUpscaler)amd_fidelityfx_upscaler_dx12.dll" />
+    <None Include="$(FfxDllPathLoader)amd_fidelityfx_loader_xbox.dll">
+      <DeploymentContent Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64'">false</DeploymentContent>
+    </None>
+    <None Include="$(FfxDllPathUpscaler)amd_fidelityfx_upscaler_xbox.dll">
+      <DeploymentContent Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Platform)'!='Gaming.Xbox.Scarlett.x64'">false</DeploymentContent>
+    </None>
+  </ItemGroup>
+  <Target Name="CopyRequiredFfxDlls" AfterTargets="Build">
+    <Message Importance="high" Text="Copying required AMD FSR DLLs..." />
+    <!-- Copy FFX Loader DLLs -->
+    <Copy DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" SourceFiles="$(FfxDllPathLoader)amd_fidelityfx_loader_$(FfxPlatformName).dll" />
+    <Copy DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" SourceFiles="$(FfxDllPathLoader)amd_fidelityfx_loader_$(FfxPlatformName).pdb" Condition="Exists('$(FfxDllPathLoader)amd_fidelityfx_loader_$(FfxPlatformName).pdb')" />
+    <!-- Copy FFX Upscaler DLLs -->
+    <Copy DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" SourceFiles="$(FfxDllPathUpscaler)amd_fidelityfx_upscaler_$(FfxPlatformName).dll" />
+    <Copy DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" SourceFiles="$(FfxDllPathUpscaler)amd_fidelityfx_upscaler_$(FfxPlatformName).pdb" Condition="Exists('$(FfxDllPathUpscaler)amd_fidelityfx_upscaler_$(FfxPlatformName).pdb')" />
+    <Message Importance="high" Text="Successfully copied all required AMD FSR DLLs" />
+  </Target>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Microsoft.Direct3D.DXC.1.8.2502.8\build\native\Microsoft.Direct3D.DXC.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Direct3D.DXC.1.8.2502.8\build\native\Microsoft.Direct3D.DXC.props'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.Direct3D.DXC.1.8.2502.8\build\native\Microsoft.Direct3D.DXC.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Direct3D.DXC.1.8.2502.8\build\native\Microsoft.Direct3D.DXC.targets'))" />
+    <Error Condition="!Exists('..\..\packages\WinPixEventRuntime.1.0.240308001\build\WinPixEventRuntime.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\WinPixEventRuntime.1.0.240308001\build\WinPixEventRuntime.targets'))" />
+  </Target>
+  <Target Name="GDKEditionCheck" BeforeTargets="PrepareForBuild">
+    <Error Condition="'$(GameDK)'==''" Text="GameDK property is required" />
+    <Error Condition="!HasTrailingSlash('$(GameDK)')" Text="GameDK property must have trailing slash" />
+    <Error Condition="'$(GDKCrossPlatformPath)'==''" Text="GDKCrossPlatformPath property or GameDKXboxLatest environment variable is required" />
+    <Error Condition="!HasTrailingSlash('$(GDKCrossPlatformPath)')" Text="GDKCrossPlatformPath property must have trailing slash" />
+    <Error Condition="!Exists('$(GDKCrossPlatformPath)windows')" Text="GDKCrossPlatformPath needs to point to a valid GDK installation" />
+    <Message Importance="high" Text="Using $(GDKCrossPlatformPath)" />
+  </Target>
+</Project>

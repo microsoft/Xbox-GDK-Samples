@@ -1,0 +1,28 @@
+{
+  "checkpoints": [
+    {
+      "x": 8.0,
+      "y": 0.0,
+      "z": -16.0,
+      "animation": "bite"
+    },
+    {
+      "x": 8.0,
+      "y": 0.0,
+      "z": 16.0,
+      "animation": "roar"
+    },
+    {
+      "x": -22.0,
+      "y": 0.0,
+      "z": 16.0,
+      "animation": "attack_tail"
+    },
+    {
+      "x": -22.0,
+      "y": 0.0,
+      "z": -16.0,
+      "animation": "idle"
+    }
+  ]
+}

@@ -639,6 +639,10 @@ void glTF::Asset::ProcessAnimations(json& animations)
     {
         json& thisAnimation = it.value();
         glTF::Animation& animation = m_animations[animIdx++];
+        if (thisAnimation.find("name") != thisAnimation.end())
+        {
+            animation.m_name = thisAnimation.at("name").get<std::string>();
+        }
 
         // Process this animation's samplers
         json& samplers = thisAnimation.at("samplers");

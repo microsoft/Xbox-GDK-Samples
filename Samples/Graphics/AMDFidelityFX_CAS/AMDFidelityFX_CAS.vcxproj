@@ -308,9 +308,11 @@
       <DestinationFolders>$(OutDir)Media\Fonts</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
     </CopyFileToFolders>
-    <None Include="..\..\..\Media\Meshes\AbstractCathedral\AbstractCathedral.sdkmes_">
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AbstractCathedral\AbstractCathedral.sdkmes_">
       <DeploymentContent>true</DeploymentContent>
-    </None>
+      <FileType>Document</FileType>
+      <DestinationFolders>$(OutDir)Media\Meshes\AbstractCathedral</DestinationFolders>
+    </CopyFileToFolders>
     <None Include="packages.config" />
     <None Include="readme_ja-jp.md" />
     <None Include="readme_ko-kr.md" />

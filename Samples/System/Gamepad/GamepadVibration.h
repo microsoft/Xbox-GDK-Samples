@@ -48,7 +48,7 @@ struct VibrationEffectState
     GunState gunState = GunState::WaitForRelease;
 
     // Values passed directly to SetRumbleState each frame.
-    GameInput::v3::GameInputRumbleParams rumble = {};
+    GameInputRumbleParams rumble = {};
 
     static constexpr int HistorySize = 180;  // ~3 seconds at 60fps
     float lowFreqHistory[HistorySize] = {};

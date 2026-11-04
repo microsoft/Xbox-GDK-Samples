@@ -22,7 +22,7 @@ description: "The InGameChat sample provides a working example of integrating th
 #   InGameChat Sample
 
 *This sample is compatible with the Microsoft Game Development Kit
-(March 2022)*
+(October 2025)*
 
 # 
 
@@ -104,3 +104,5 @@ June, 2019 -- Created
 November, 2020 -- Updated to use PlayFab Party for networking
 
 June, 2022 -- Updated to use March GDK 2022 and MicrosoftGameConfig.mgc
+
+October, 2026 -- Updated to use PlayFab Core for PlayFab login and Party local user creation

@@ -159,6 +159,11 @@ the three ways a device's geometry can be read: Color Wave maps the lamp's
 center, and **Ripple** its **radial** distance from the center. Each value is cached
 once on attach.
 
+**Color generation.** Color Cycle, Color Wave, and Color Wheel use
+`ImGui::ColorConvertHSVtoRGB` to turn a repeating hue into a fully saturated
+rainbow. Health uses the same conversion with hue from 0 to 1/3 for its
+red-through-yellow-to-green ramp. Fades simply scale the resulting RGB values.
+
 **Per-lamp introspection.** The Lamp inspector reads a single lamp's `ILampInfo`
 (`ILampArray::GetLampInfo`) live: `GetPurposes`, `GetPosition`, the per-channel
 `GetRedLevelCount` / `GetGreenLevelCount` / `GetBlueLevelCount` / `GetGainLevelCount`
@@ -187,14 +192,16 @@ to scale the device's output; the initial value is read back with
 `GetBrightnessLevel` on attach. `GetMinUpdateIntervalInMicroseconds`, shown in the
 info table, is the hardware floor on update frequency.
 
-**Frame timing.** The effects are time-based and each times itself:
-`LightingEffects::Run` measures the wall-clock time since that device's effect last
-ran (via `QueryPerformanceCounter`) and advances the animation by that delta, so
-animations run at the same speed regardless of refresh rate and both `Main.cpp` and
-`Update()` stay free of timing logic. The delta is clamped to a small maximum so a
-long stall (a breakpoint or window drag) cannot make an animation jump visibly.
+**Frame timing.** `LightingEffects::Run` uses `ImGui::GetIO().DeltaTime` instead of
+maintaining its own performance counters. Each device accumulates effect time
+scaled by its speed setting, so changing speed does not jump the animation's
+phase. The delta is capped at 0.1 seconds before scaling to limit jumps after a
+stall, and is zero on an effect's first frame after reset. Reactive uses the same
+delta without speed scaling. Because `Update()` runs before ImGui's frame setup,
+it uses the previous frame's measured delta.
 
 # Update history
 
+10/2026 -- Simplified effect timing and color generation using Dear ImGui.
 06/2026 -- Refreshed sample with Windows and Win32 API support.
 05/2023 -- Initial Release

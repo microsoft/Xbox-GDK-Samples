@@ -103,6 +103,12 @@
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <!-- The ACO compiler example requires Xbox Series X|S and the October 2026 GDK or later.
+         HlslCompile.h applies the same condition to the ACO code (ACO_EXAMPLE_ENABLED). -->
+    <AcoExampleEnabled>false</AcoExampleEnabled>
+    <AcoExampleEnabled Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' and '$(XdkEdition)'!='' and $(XdkEdition) &gt;= 261000">true</AcoExampleEnabled>
+  </PropertyGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -341,8 +347,14 @@
     <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h" />
     <ClInclude Include="..\..\..\Kits\ATGTK\Json.h" />
     <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h" />
+    <ClInclude Include="AcoPipelineState.h">
+      <ExcludedFromBuild Condition="'$(AcoExampleEnabled)'!='true'">true</ExcludedFromBuild>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AcoPipelineState.cpp">
+      <ExcludedFromBuild Condition="'$(AcoExampleEnabled)'!='true'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="HlslCompile.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="DeviceResources.cpp" />
@@ -376,33 +388,33 @@
     <CustomBuild Include="PixelShader_DxCompiler_EmbeddedPdb.hlsl">
       <FileType>Document</FileType>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">
-        echo Running command: MyHlslCompiler.XboxOne.exe dxc 0 %(Identity) "$(OutDir)\%(Filename)%.cso"
-        MyHlslCompiler.XboxOne.exe dxc 0 %(Identity) "$(OutDir)\%(Filename)%.cso"
+        echo Running command: MyHlslCompiler.XboxOne.exe dxc 0 %(Identity) "$(OutDir)\%(Filename).cso"
+        MyHlslCompiler.XboxOne.exe dxc 0 %(Identity) "$(OutDir)\%(Filename).cso"
         echo ...
       </Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">
-        echo Running command: MyHlslCompiler.Scarlett.exe dxc 0 %(Identity) "$(OutDir)\%(Filename)%.cso"
-        MyHlslCompiler.Scarlett.exe dxc 0 %(Identity) "$(OutDir)\%(Filename)%.cso"
+        echo Running command: MyHlslCompiler.Scarlett.exe dxc 0 %(Identity) "$(OutDir)\%(Filename).cso"
+        MyHlslCompiler.Scarlett.exe dxc 0 %(Identity) "$(OutDir)\%(Filename).cso"
         echo ...
       </Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">
-        echo Running command: MyHlslCompiler.XboxOne.exe dxc 0 %(Identity) "$(OutDir)\%(Filename)%.cso"
-        MyHlslCompiler.XboxOne.exe dxc 0 %(Identity) "$(OutDir)\%(Filename)%.cso"
+        echo Running command: MyHlslCompiler.XboxOne.exe dxc 0 %(Identity) "$(OutDir)\%(Filename).cso"
+        MyHlslCompiler.XboxOne.exe dxc 0 %(Identity) "$(OutDir)\%(Filename).cso"
         echo ...
       </Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">
-        echo Running command: MyHlslCompiler.Scarlett.exe dxc 0 %(Identity) "$(OutDir)\%(Filename)%.cso"
-        MyHlslCompiler.Scarlett.exe dxc 0 %(Identity) "$(OutDir)\%(Filename)%.cso"
+        echo Running command: MyHlslCompiler.Scarlett.exe dxc 0 %(Identity) "$(OutDir)\%(Filename).cso"
+        MyHlslCompiler.Scarlett.exe dxc 0 %(Identity) "$(OutDir)\%(Filename).cso"
         echo ...
       </Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">
-        echo Running command: MyHlslCompiler.XboxOne.exe dxc 0 %(Identity) "$(OutDir)\%(Filename)%.cso"
-        MyHlslCompiler.XboxOne.exe dxc 0 %(Identity) "$(OutDir)\%(Filename)%.cso"
+        echo Running command: MyHlslCompiler.XboxOne.exe dxc 0 %(Identity) "$(OutDir)\%(Filename).cso"
+        MyHlslCompiler.XboxOne.exe dxc 0 %(Identity) "$(OutDir)\%(Filename).cso"
         echo ...
       </Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">
-        echo Running command: MyHlslCompiler.Scarlett.exe dxc 0 %(Identity) "$(OutDir)\%(Filename)%.cso"
-        MyHlslCompiler.Scarlett.exe dxc 0 %(Identity) "$(OutDir)\%(Filename)%.cso"
+        echo Running command: MyHlslCompiler.Scarlett.exe dxc 0 %(Identity) "$(OutDir)\%(Filename).cso"
+        MyHlslCompiler.Scarlett.exe dxc 0 %(Identity) "$(OutDir)\%(Filename).cso"
         echo ...
       </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">$(OutDir)\%(Filename).cso</Outputs>
@@ -421,33 +433,33 @@
     <CustomBuild Include="PixelShader_DxCompiler_AutoPdb.hlsl">
       <FileType>Document</FileType>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">
-        echo Running command: MyHlslCompiler.XboxOne.exe dxc 3 %(Identity) "$(OutDir)\%(Filename)%.cso"
-        MyHlslCompiler.XboxOne.exe dxc 3 %(Identity) "$(OutDir)\%(Filename)%.cso"
+        echo Running command: MyHlslCompiler.XboxOne.exe dxc 3 %(Identity) "$(OutDir)\%(Filename).cso"
+        MyHlslCompiler.XboxOne.exe dxc 3 %(Identity) "$(OutDir)\%(Filename).cso"
         echo ...
       </Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.Scarlett.x64'">
-        echo Running command: MyHlslCompiler.Scarlett.exe dxc 3 %(Identity) "$(OutDir)\%(Filename)%.cso"
-        MyHlslCompiler.Scarlett.exe dxc 3 %(Identity) "$(OutDir)\%(Filename)%.cso"
+        echo Running command: MyHlslCompiler.Scarlett.exe dxc 3 %(Identity) "$(OutDir)\%(Filename).cso"
+        MyHlslCompiler.Scarlett.exe dxc 3 %(Identity) "$(OutDir)\%(Filename).cso"
         echo ...
       </Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.XboxOne.x64'">
-        echo Running command: MyHlslCompiler.XboxOne.exe dxc 3 %(Identity) "$(OutDir)\%(Filename)%.cso"
-        MyHlslCompiler.XboxOne.exe dxc 3 %(Identity) "$(OutDir)\%(Filename)%.cso"
+        echo Running command: MyHlslCompiler.XboxOne.exe dxc 3 %(Identity) "$(OutDir)\%(Filename).cso"
+        MyHlslCompiler.XboxOne.exe dxc 3 %(Identity) "$(OutDir)\%(Filename).cso"
         echo ...
       </Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Gaming.Xbox.Scarlett.x64'">
-        echo Running command: MyHlslCompiler.Scarlett.exe dxc 3 %(Identity) "$(OutDir)\%(Filename)%.cso"
-        MyHlslCompiler.Scarlett.exe dxc 3 %(Identity) "$(OutDir)\%(Filename)%.cso"
+        echo Running command: MyHlslCompiler.Scarlett.exe dxc 3 %(Identity) "$(OutDir)\%(Filename).cso"
+        MyHlslCompiler.Scarlett.exe dxc 3 %(Identity) "$(OutDir)\%(Filename).cso"
         echo ...
       </Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.XboxOne.x64'">
-        echo Running command: MyHlslCompiler.XboxOne.exe dxc 3 %(Identity) "$(OutDir)\%(Filename)%.cso"
-        MyHlslCompiler.XboxOne.exe dxc 3 %(Identity) "$(OutDir)\%(Filename)%.cso"
+        echo Running command: MyHlslCompiler.XboxOne.exe dxc 3 %(Identity) "$(OutDir)\%(Filename).cso"
+        MyHlslCompiler.XboxOne.exe dxc 3 %(Identity) "$(OutDir)\%(Filename).cso"
         echo ...
       </Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Xbox.Scarlett.x64'">
-        echo Running command: MyHlslCompiler.Scarlett.exe dxc 3 %(Identity) "$(OutDir)\%(Filename)%.cso"
-        MyHlslCompiler.Scarlett.exe dxc 3 %(Identity) "$(OutDir)\%(Filename)%.cso"
+        echo Running command: MyHlslCompiler.Scarlett.exe dxc 3 %(Identity) "$(OutDir)\%(Filename).cso"
+        MyHlslCompiler.Scarlett.exe dxc 3 %(Identity) "$(OutDir)\%(Filename).cso"
         echo ...
       </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Xbox.XboxOne.x64'">$(OutDir)\%(Filename).cso</Outputs>
@@ -609,11 +621,15 @@
     <None Include="readme_ko-kr.md" />
     <None Include="readme_zh-cn.md" />
     <None Include="readme.md" />
+    <None Include="PixelShader_Aco.hlsl" />
+    <None Include="HlslCompile_Aco.targets" />
   </ItemGroup>
   <ItemGroup>
     <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <!-- The ACO compiler example's build steps (see AcoExampleEnabled above). -->
+  <Import Project="HlslCompile_Aco.targets" Condition="'$(AcoExampleEnabled)'=='true'" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <Target Name="GDKEditionCheck" BeforeTargets="PrepareForBuild">

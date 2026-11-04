@@ -639,6 +639,9 @@ void Sample::JoinFriend(const char* handle)
 
 void Sample::ReturnToStart()
 {
+    // Remove the remote users of the session we just left so they don't appear in the next session
+    m_chatManager->Shutdown();
+
     m_state = SampleState::LocalLobby;
     m_ui->FindPanel<ATG::Overlay>(200)->Show();
 }

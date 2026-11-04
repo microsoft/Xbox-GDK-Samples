@@ -18,10 +18,8 @@ HRESULT HapticsManager::Initialize(IGameInput* gameInput)
     {
         return m_gameInput->RegisterDeviceCallback(nullptr,
             GameInputKind::GameInputKindController,
-            GameInputDeviceStatus::GameInputDeviceAnyStatus,
-            GameInputEnumerationKind::GameInputBlockingEnumeration,
             this,
-            &HapticsManager::DeviceCallback, &m_deviceCallbackToken);
+            HapticsManager::OnDeviceChanged, &m_deviceCallbackToken);
     }
     return E_NOT_VALID_STATE;
 }
@@ -34,29 +32,38 @@ HapticsManager::~HapticsManager()
     }
 }
 
-void HapticsManager::DeviceCallback(GameInputCallbackToken, void* context, IGameInputDevice* gameInputDevice, uint64_t,
-                                    GameInputDeviceStatus currentStatus, GameInputDeviceStatus previousStatus) noexcept
+void CALLBACK HapticsManager::OnDeviceChanged(
+    GameInputCallbackToken /*token*/,
+    void* context,
+    GameInputDeviceEvent deviceEvent,
+    IGameInputDevice* device) noexcept
 {
     HapticsManager* manager = reinterpret_cast<HapticsManager*>(context);
 
-    bool wasConnected = (previousStatus & GameInputDeviceConnected) != 0;
-    bool isConnected = (currentStatus & GameInputDeviceConnected) != 0;
-
-    // Haptic information can become ready after the device connects.
-    if(isConnected && currentStatus & GameInputDeviceStatus::GameInputDeviceHapticInfoReady)
+    switch(deviceEvent)
     {
-        GameInputHapticInfo hapticInfo;
-        if(FAILED(gameInputDevice->GetHapticInfo(&hapticInfo)))
+        case GameInputDeviceEventHapticInfoUpdated:
         {
-            return;
+            GameInputHapticInfo hapticInfo = {};
+            if (FAILED(device->GetHapticInfo(&hapticInfo)))
+            {
+                return;
+            }
+            manager->AddHapticsDevice(device, hapticInfo.audioEndpointId, hapticInfo.locationCount, hapticInfo.locations);
+            break;
         }
 
-        manager->AddHapticsDevice(gameInputDevice, hapticInfo.audioEndpointId, hapticInfo.locationCount, hapticInfo.locations);
-    }
+        case GameInputDeviceEventDisconnected:
+            if (manager->m_devices.find(device) != manager->m_devices.end())
+            {
+                manager->m_devices.erase(device);
+            }
+            break;
 
-    if(wasConnected && !isConnected && manager->m_devices.find(gameInputDevice) != manager->m_devices.end())
-    {
-        manager->m_devices.erase(gameInputDevice);
+        case GameInputDeviceEventConnected:
+        case GameInputDeviceEventKeyboardLayoutUpdated:
+        case GameInputDeviceEventXInputIndexUpdated:
+            break;
     }
 }
 
@@ -66,7 +73,7 @@ HRESULT HapticsManager::AddHapticsDevice(IGameInputDevice* gameInputDevice, wcha
     {
         HapticsDevice hapticsDevice;
 
-        HRESULT hr = hapticsDevice.Initialize(gameInputDevice, endpoint, locationCount, locations);
+        HRESULT hr = hapticsDevice.Initialize(endpoint, locationCount, locations);
         if (FAILED(hr))
         {
             return hr;

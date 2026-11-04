@@ -40,6 +40,7 @@ Following is a list of categories for the samples.
 | ------ | ----------- | ------- | -- | 
 | __AdvancedESRAM__ | This sample demonstrates the use of advanced DirectX 12.x memory features on Xbox One to effectively alias memory for Direct3D resources. | ✓ |  | 
 | __AdvancedLighting__ | This sample demonstrates different techniques to improve performance of deferred rendering with many lights. | ✓ | ✓ | 
+| __AMD_FSR__ | This sample demonstrates AMD FSR� Upscaling 4 on the Microsoft GDK, integrated through the unified AMD FSR� SDK. | ✓ | ✓ | 
 | __AMDFidelityFX_CACAO__ | This sample demonstrates AMD's FidelityFX Combined Adaptive Compute Ambient Occlusion (CACAO) algorithm. | ✓ | ✓ | 
 | __AMDFidelityFX_CAS__ | This sample demonstrates AMD's FidelityFX Contrast Adaptive Sharpening (CAS) algorithm. | ✓ | ✓ | 
 | __AMDFidelityFX_FSR3FrameInterpolation__ | This sample demonstrates AMD's FidelityFX FSR3 algorithm. | ✓ | ✓ | 
@@ -64,7 +65,7 @@ Following is a list of categories for the samples.
 | __HDRDisplayMapping__ | This sample shows that even when rendering a HDR scene on a HDR capable TV, some tone mapping is still needed, referred to as 'HDR display mapping'. | ✓ |  | 
 | __HDRPrecision__ | This sample demonstrates how precision and GPU performance are affected when using different formats and color spaces while rendering HDR on Xbox Series X\|S. | ✓ |  | 
 | __HistogramCS__ | This sample demonstrates some performance considerations for Compute Shaders on Xbox. | ✓ |  | 
-| __HlslCompile__ | The sample compiles the same pixel shader in a number of different ways, to illustrate different options for PC-side asset build. | ✓ |  | 
+| __HlslCompile__ | The sample compiles the same pixel shader in a number of different ways, to illustrate different options for PC-side asset build. It also shows how to precompile pipeline state offline with the ACO shader compiler for Xbox Series X\|S. | ✓ |  | 
 | __MeshletCull__ | This sample demonstrates how to leverage amplification shaders to cull meshlets against the camera using per-meshlet culling metadata on Xbox Series X\|S and PC. | ✓ | ✓ | 
 | __MeshletInstancing__ | Demonstrates GPU instancing for DirectX 12 Mesh Shaders. | ✓ | ✓ | 
 | __MP4Reader__ | This sample shows how the Media Foundation Source Reader can be used to read a MP4 file which contains an H264 or HEVC video stream, and decode it using hardware acceleration on Xbox. | ✓ |  | 
@@ -153,7 +154,7 @@ Following is a list of categories for the samples.
 | __FrontPanelText__ | The FrontPanelText sample demonstrates how to use the CPU to draw text on the Xbox Devkit Front Panel Display. | ✓ |  | 
 | __GameInputInterfacing__ | This sample demonstrates how to effectively interface and read inputs from a gamepad, arcade sticks, racing wheels, and more in the Microsoft GDK. | ✓ | ✓ | 
 | __GameInputSequential__ | This sample demonstrates how to read inputs sequentially from a gamepad using GameInput. | ✓ | ✓ | 
-| __Gamepad__ | This sample demonstrates gamepad input, motion sensor readings, vibration control, and audio-driven haptics using GameInput on Xbox and Windows PC. | ✓ | ✓ | 
+| __Gamepad__ | This sample demonstrates gamepad input, motion sensor readings, vibration control, audio-driven haptics, and RGB lighting using GameInput on Xbox and Windows PC. | ✓ | ✓ | 
 | __GamepadKeyboardMouse__ | This sample demonstrates how to read and process inputs from gamepad, mouse, and keyboard using GameInput. | ✓ | ✓ | 
 | __GameSaveCombo__ | This sample demonstrates the use of the XGameSave APIs to save and load game save data on Xbox. | ✓ | ✓ | 
 | __GameSaveFilesCombo__ | This sample demonstrates the use of the XGameSaveFiles APIs to access folders on Xbox. | ✓ | ✓ | 

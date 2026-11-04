@@ -10,6 +10,7 @@
 
 #include "Party.h"
 #include "PartyXboxLive.h"
+#include <playfab/core/PFCore.h>
 
 enum class NetworkManagerState
 {
@@ -80,6 +81,8 @@ public:
 
 private:
     bool InternalConnectToNetwork(const char* networkId, Party::PartyNetworkDescriptor& descriptor);
+    void StartPlayFabCoreLogin();
+    void OnPlayFabCoreLoginCompleted();
     void CreateLocalUser();
 
     std::function<void(std::string)> m_onNetworkCreated;
@@ -94,6 +97,10 @@ private:
     Party::PartyNetwork* m_network = nullptr;
     Party::PartyLocalUser* m_localUser = nullptr;
     Party::PartyXblLocalChatUser* m_localChatUser = nullptr;
+    PFServiceConfigHandle m_pfServiceConfig = nullptr;
+    PFEntityHandle m_pfEntityHandle = nullptr;
+    XAsyncBlock m_pfLoginAsync = {};
+    bool m_pfLoginPending = false;
     bool m_partyInitialized = false;
     bool m_partyXblInitialized = false;
     bool m_host = false;

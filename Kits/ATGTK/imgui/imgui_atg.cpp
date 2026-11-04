@@ -903,6 +903,8 @@ namespace ImGuiAtg
             { GameInputLabelBack,                   ControllerGlyph::Back },
             { GameInputLabelOptions,                ControllerGlyph::Options },
             { GameInputLabelHome,                   ControllerGlyph::Home },
+            { GameInputLabelIconMinus,              ControllerGlyph::Minus },
+            { GameInputLabelIconPlus,               ControllerGlyph::Plus },
         };
 
         auto it = glyphs.find(label);

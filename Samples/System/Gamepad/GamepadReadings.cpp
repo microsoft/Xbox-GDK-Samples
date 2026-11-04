@@ -31,20 +31,22 @@ void Sample::PollGamepadReading(GamepadDevice& gamepad)
     ComPtr<IGameInputReading> reading;
 
     HRESULT hr = m_gameInput->GetCurrentReading(
-        GameInputKindGamepad | GameInputKindSensors,
+        GameInputKindGamepad | GameInputKindSystemButton | GameInputKindSensors,
         gamepad.device.Get(),
         &reading);
 
     if (SUCCEEDED(hr) && reading)
     {
-        gamepad.hasGamepadState = reading->GetGamepadState(&gamepad.gamepadState);
-        gamepad.hasSensorsState = reading->GetSensorsState(&gamepad.sensorsState);
-        gamepad.readingTimestamp = reading->GetTimestamp();
+        gamepad.hasGamepadState      = reading->GetGamepadState(&gamepad.gamepadState);
+        gamepad.hasSensorsState      = reading->GetSensorsState(&gamepad.sensorsState);
+        gamepad.hasSystemButtonState = reading->GetSystemButtonState(&gamepad.systemButtons);
+        gamepad.readingTimestamp     = reading->GetTimestamp();
     }
     else
     {
-        gamepad.hasGamepadState = false;
-        gamepad.hasSensorsState = false;
+        gamepad.hasGamepadState      = false;
+        gamepad.hasSensorsState      = false;
+        gamepad.hasSystemButtonState = false;
     }
 }
 
@@ -69,9 +71,10 @@ void CALLBACK Sample::OnReadingChanged(
     {
         if (gamepad.device.Get() == device.Get())
         {
-            gamepad.hasGamepadState = reading->GetGamepadState(&gamepad.gamepadState);
-            gamepad.hasSensorsState = reading->GetSensorsState(&gamepad.sensorsState);
-            gamepad.readingTimestamp = reading->GetTimestamp();
+            gamepad.hasGamepadState      = reading->GetGamepadState(&gamepad.gamepadState);
+            gamepad.hasSensorsState      = reading->GetSensorsState(&gamepad.sensorsState);
+            gamepad.hasSystemButtonState = reading->GetSystemButtonState(&gamepad.systemButtons);
+            gamepad.readingTimestamp     = reading->GetTimestamp();
             break;
         }
     }
@@ -92,7 +95,7 @@ bool Sample::RegisterReadingCallbacks()
     {
         HRESULT hr = m_gameInput->RegisterReadingCallback(
             nullptr,
-            GameInputKindGamepad | GameInputKindSensors,
+            GameInputKindGamepad | GameInputKindSystemButton | GameInputKindSensors,
             this,
             OnReadingChanged,
             &m_readingCallbackToken);
@@ -130,42 +133,60 @@ void Sample::UnregisterReadingCallbacks()
 void Sample::DrawButtonsSection(const GamepadDevice& gamepad)
 {
     const auto& state = gamepad.gamepadState;
-    const auto* gamepadInfo = gamepad.deviceInfo->gamepadInfo;
 
-    if (gamepadInfo && ImGui::CollapsingHeader("Buttons", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Leaf))
+    if (ImGui::CollapsingHeader("Buttons", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Leaf))
     {
         float glyphSize = ImGui::GetFontSize() * 1.5f;
         float spacing = ImGuiAtg::Scaled(8);
 
-        DrawButtonGlyph("A",         gamepadInfo->aButtonLabel,    state.buttons & GameInputGamepadA,         glyphSize); ImGui::SameLine(0.0f, spacing);
-        DrawButtonGlyph("B",         gamepadInfo->bButtonLabel,    state.buttons & GameInputGamepadB,         glyphSize); ImGui::SameLine(0.0f, spacing);
-        DrawButtonGlyph("X",         gamepadInfo->xButtonLabel,    state.buttons & GameInputGamepadX,         glyphSize); ImGui::SameLine(0.0f, spacing);
-        DrawButtonGlyph("Y",         gamepadInfo->yButtonLabel,    state.buttons & GameInputGamepadY,         glyphSize); ImGui::SameLine(0.0f, spacing);
-        DrawButtonGlyph("DPad Up",   gamepadInfo->dpadUpLabel,     state.buttons & GameInputGamepadDPadUp,    glyphSize); ImGui::SameLine(0.0f, spacing);
-        DrawButtonGlyph("DPad Down", gamepadInfo->dpadDownLabel,   state.buttons & GameInputGamepadDPadDown,  glyphSize); ImGui::SameLine(0.0f, spacing);
-        DrawButtonGlyph("DPad Left", gamepadInfo->dpadLeftLabel,   state.buttons & GameInputGamepadDPadLeft,  glyphSize); ImGui::SameLine(0.0f, spacing);
-        DrawButtonGlyph("DPad Right",gamepadInfo->dpadRightLabel,  state.buttons & GameInputGamepadDPadRight, glyphSize);
+        DrawButtonGlyph("A",          gamepad.deviceInfo.aButtonLabel,               state.buttons & GameInputGamepadA,               glyphSize); ImGui::SameLine(0.0f, spacing);
+        DrawButtonGlyph("B",          gamepad.deviceInfo.bButtonLabel,               state.buttons & GameInputGamepadB,               glyphSize); ImGui::SameLine(0.0f, spacing);
+        DrawButtonGlyph("X",          gamepad.deviceInfo.xButtonLabel,               state.buttons & GameInputGamepadX,               glyphSize); ImGui::SameLine(0.0f, spacing);
+        DrawButtonGlyph("Y",          gamepad.deviceInfo.yButtonLabel,               state.buttons & GameInputGamepadY,               glyphSize); ImGui::SameLine(0.0f, spacing);
+        DrawButtonGlyph("DPad Up",    gamepad.deviceInfo.dpadUpLabel,                state.buttons & GameInputGamepadDPadUp,          glyphSize); ImGui::SameLine(0.0f, spacing);
+        DrawButtonGlyph("DPad Down",  gamepad.deviceInfo.dpadDownLabel,              state.buttons & GameInputGamepadDPadDown,        glyphSize); ImGui::SameLine(0.0f, spacing);
+        DrawButtonGlyph("DPad Left",  gamepad.deviceInfo.dpadLeftLabel,              state.buttons & GameInputGamepadDPadLeft,        glyphSize); ImGui::SameLine(0.0f, spacing);
+        DrawButtonGlyph("DPad Right", gamepad.deviceInfo.dpadRightLabel,             state.buttons & GameInputGamepadDPadRight,       glyphSize);
 
-        DrawButtonGlyph("LB",     gamepadInfo->leftShoulderButtonLabel,    state.buttons & GameInputGamepadLeftShoulder,    glyphSize); ImGui::SameLine(0.0f, spacing);
-        DrawButtonGlyph("RB",     gamepadInfo->rightShoulderButtonLabel,   state.buttons & GameInputGamepadRightShoulder,   glyphSize); ImGui::SameLine(0.0f, spacing);
-        DrawButtonGlyph("LStick", gamepadInfo->leftThumbstickButtonLabel,  state.buttons & GameInputGamepadLeftThumbstick,  glyphSize); ImGui::SameLine(0.0f, spacing);
-        DrawButtonGlyph("RStick", gamepadInfo->rightThumbstickButtonLabel, state.buttons & GameInputGamepadRightThumbstick, glyphSize); ImGui::SameLine(0.0f, spacing);
-        DrawButtonGlyph("View",   gamepadInfo->viewButtonLabel,            state.buttons & GameInputGamepadView,            glyphSize); ImGui::SameLine(0.0f, spacing);
-        DrawButtonGlyph("Menu",   gamepadInfo->menuButtonLabel,            state.buttons & GameInputGamepadMenu,            glyphSize); ImGui::SameLine(0.0f, spacing);
+        DrawButtonGlyph("LB",         gamepad.deviceInfo.leftShoulderButtonLabel,    state.buttons & GameInputGamepadLeftShoulder,    glyphSize); ImGui::SameLine(0.0f, spacing);
+        DrawButtonGlyph("RB",         gamepad.deviceInfo.rightShoulderButtonLabel,   state.buttons & GameInputGamepadRightShoulder,   glyphSize); ImGui::SameLine(0.0f, spacing);
+        DrawButtonGlyph("LStick",     gamepad.deviceInfo.leftThumbstickButtonLabel,  state.buttons & GameInputGamepadLeftThumbstick,  glyphSize); ImGui::SameLine(0.0f, spacing);
+        DrawButtonGlyph("RStick",     gamepad.deviceInfo.rightThumbstickButtonLabel, state.buttons & GameInputGamepadRightThumbstick, glyphSize); ImGui::SameLine(0.0f, spacing);
+        DrawButtonGlyph("View",       gamepad.deviceInfo.viewButtonLabel,            state.buttons & GameInputGamepadView,            glyphSize); ImGui::SameLine(0.0f, spacing);
+        DrawButtonGlyph("Menu",       gamepad.deviceInfo.menuButtonLabel,            state.buttons & GameInputGamepadMenu,            glyphSize); ImGui::SameLine(0.0f, spacing);
 
-        if (gamepad.deviceInfo->supportedSystemButtons & GameInputSystemButtonGuide)
+        // Guide and Share are system buttons; their state comes from GetSystemButtonState.
+        const GameInputSystemButtons supportedSystemButtons = gamepad.device->GetSupportedSystemButtons();
+
+        if (gamepad.hasSystemButtonState && (supportedSystemButtons & GameInputSystemButtonGuide))
         {
             DrawButtonGlyph("Guide", GameInputLabelGuide, (gamepad.systemButtons & GameInputSystemButtonGuide) != 0, glyphSize); ImGui::SameLine(0.0f, spacing);
         }
-        if (gamepad.deviceInfo->supportedSystemButtons & GameInputSystemButtonShare)
+
+        if (gamepad.hasSystemButtonState && (supportedSystemButtons & GameInputSystemButtonShare))
         {
             DrawButtonGlyph("Share", GameInputLabelShare, (gamepad.systemButtons & GameInputSystemButtonShare) != 0, glyphSize); ImGui::SameLine(0.0f, spacing);
         }
 
-        DrawButtonGlyph("PL1", GameInputLabelPaddleLeft1,  state.buttons & GameInputGamepadPaddleLeft1,  glyphSize); ImGui::SameLine(0.0f, spacing);
-        DrawButtonGlyph("PL2", GameInputLabelPaddleLeft2,  state.buttons & GameInputGamepadPaddleLeft2,  glyphSize); ImGui::SameLine(0.0f, spacing);
-        DrawButtonGlyph("PR1", GameInputLabelPaddleRight1, state.buttons & GameInputGamepadPaddleRight1, glyphSize); ImGui::SameLine(0.0f, spacing);
-        DrawButtonGlyph("PR2", GameInputLabelPaddleRight2, state.buttons & GameInputGamepadPaddleRight2, glyphSize);
+        if (gamepad.deviceInfo.supportedLayout & GameInputGamepadPaddleLeft1)
+        {
+            DrawButtonGlyph("PL1", gamepad.deviceInfo.paddleLeft1Label,  state.buttons & GameInputGamepadPaddleLeft1,  glyphSize); ImGui::SameLine(0.0f, spacing);
+        }
+
+        if (gamepad.deviceInfo.supportedLayout & GameInputGamepadPaddleLeft2)
+        {
+            DrawButtonGlyph("PL2", gamepad.deviceInfo.paddleLeft2Label,  state.buttons & GameInputGamepadPaddleLeft2,  glyphSize); ImGui::SameLine(0.0f, spacing);
+        }
+
+        if (gamepad.deviceInfo.supportedLayout & GameInputGamepadPaddleRight1)
+        {
+            DrawButtonGlyph("PR1", gamepad.deviceInfo.paddleRight1Label, state.buttons & GameInputGamepadPaddleRight1, glyphSize); ImGui::SameLine(0.0f, spacing);
+        }
+
+        if (gamepad.deviceInfo.supportedLayout & GameInputGamepadPaddleRight2)
+        {
+            DrawButtonGlyph("PR2", gamepad.deviceInfo.paddleRight2Label, state.buttons & GameInputGamepadPaddleRight2, glyphSize);
+        }
     }
 }
 
@@ -199,7 +220,7 @@ void Sample::DrawSensorsSection(const GamepadDevice& gamepad)
 {
     if (ImGui::CollapsingHeader("Sensors", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Leaf))
     {
-        if (!(gamepad.deviceInfo->supportedInput & GameInputKindSensors))
+        if (!(gamepad.device->GetSupportedInput() & GameInputKindSensors))
         {
             ImGui::TextColored(ImGui::GetStyleColorVec4(ImGuiCol_TextDisabled), "Sensors not supported by this device.");
             return;
@@ -216,7 +237,10 @@ void Sample::DrawSensorsSection(const GamepadDevice& gamepad)
             ImGui::TableHeadersRow();
 
             const auto& state = gamepad.sensorsState;
-            const auto supportedSensors = gamepad.deviceInfo->sensorsInfo->supportedSensors;
+            GameInputSensorsInfo sensorsInfo = {};
+            const auto supportedSensors = gamepad.device->GetSensorsInfo(&sensorsInfo)
+                ? sensorsInfo.supportedSensors
+                : GameInputSensorsNone;
 
             if (supportedSensors & GameInputSensorsAccelerometer)
             {

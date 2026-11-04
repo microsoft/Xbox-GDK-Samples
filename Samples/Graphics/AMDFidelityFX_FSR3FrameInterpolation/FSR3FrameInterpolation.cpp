@@ -1541,8 +1541,8 @@ void Sample::RenderFSR3(ID3D12GraphicsCommandList* commandList)
     dispatchParametersUpscaling.upscaleSize.height  = (unsigned int)size.bottom;
     
     dispatchParametersUpscaling.cameraFovAngleVertical = XM_PIDIV4;
-    dispatchParametersUpscaling.cameraFar           = FLT_MAX;
-    dispatchParametersUpscaling.cameraNear          = 0.1f;
+    dispatchParametersUpscaling.cameraNear           = FLT_MAX;
+    dispatchParametersUpscaling.cameraFar            = 0.1f;
 
     FfxErrorCode errorCode = ffxFsr3ContextDispatchUpscale(&m_fsr3Context, &dispatchParametersUpscaling);
     SAMPLE_ASSERT(errorCode == FFX_OK);
@@ -1636,8 +1636,8 @@ void Sample::RenderFSR3(ID3D12GraphicsCommandList* commandList)
 
         // Setup camera params as required
         dispatchUpscale.cameraFovAngleVertical = XM_PIDIV4;
-        dispatchUpscale.cameraFar = FLT_MAX;
-        dispatchUpscale.cameraNear = 0.1f;
+        dispatchUpscale.cameraNear = FLT_MAX;
+        dispatchUpscale.cameraFar = 0.1f;
         
         dispatchUpscale.flags = 0;
 
@@ -1667,8 +1667,8 @@ void Sample::RenderFSR3(ID3D12GraphicsCommandList* commandList)
         dispatchFgPrep.renderSize.width       = (unsigned int)inWidth;
         dispatchFgPrep.renderSize.height      = (unsigned int)inHeight;
         dispatchFgPrep.cameraFovAngleVertical = XM_PIDIV4;
-        dispatchFgPrep.cameraFar = FLT_MAX;
-        dispatchFgPrep.cameraNear = 0.1f;
+        dispatchFgPrep.cameraNear = FLT_MAX;
+        dispatchFgPrep.cameraFar = 0.1f;
         dispatchFgPrep.viewSpaceToMetersFactor = 0.f;
         dispatchFgPrep.frameID = m_frame;
 

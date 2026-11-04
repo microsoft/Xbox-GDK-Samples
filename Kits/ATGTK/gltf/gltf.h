@@ -239,6 +239,7 @@ namespace glTF
 
     struct Animation
     {
+        std::string m_name;
         std::vector<AnimChannel> m_channels;
         std::vector<AnimSampler> m_samplers;
     };

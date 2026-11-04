@@ -14,6 +14,8 @@ using namespace GameInput::v1;
 using namespace GameInput::v2;
 #elif GAMEINPUT_API_VERSION == 3
 using namespace GameInput::v3;
+#elif GAMEINPUT_API_VERSION == 4
+using namespace GameInput::v4;
 #endif
 
 #include <memory>
@@ -46,7 +48,7 @@ namespace ATG
             bool IsPlaying() const { return (m_wasapi && m_wasapi->IsPlaying()) || (m_xaudio && m_xaudio->IsPlaying()); }
 
         private:
-            HRESULT Initialize(IGameInputDevice* gameInputDevice, wchar_t* endpoint, uint32_t locationCount, GUID* locations);
+            HRESULT Initialize(wchar_t* endpoint, uint32_t locationCount, GUID* locations);
             std::unique_ptr<WASAPIManager> m_wasapi {};
             std::unique_ptr<XAudio2Manager> m_xaudio {};
 

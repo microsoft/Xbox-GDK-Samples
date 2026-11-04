@@ -9,17 +9,10 @@
 
 namespace ATG
 {
-    HRESULT HapticsDevice::Initialize(IGameInputDevice* gameInputDevice, wchar_t* endpoint, uint32_t locationCount, GUID* locations)
+    HRESULT HapticsDevice::Initialize(wchar_t* endpoint, uint32_t locationCount, GUID* locations)
     {
-        const GameInputDeviceInfo* deviceInfo = nullptr;
-        HRESULT hr = gameInputDevice->GetDeviceInfo(&deviceInfo);
-        if (FAILED(hr))
-        {
-            return hr;
-        }
-
         m_wasapi = std::make_unique<WASAPIManager>();
-        hr = m_wasapi->InitializeDevice(endpoint, locationCount, locations);
+        HRESULT hr = m_wasapi->InitializeDevice(endpoint, locationCount, locations);
         if (FAILED(hr))
         {
             return hr;

@@ -371,15 +371,15 @@
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="..\..\..\Media\Textures\ATGSampleBackground.DDS">
-      <DestinationFolders>$(OutDir)Media\Textures</DestinationFolders>
+      <DestinationFolders>$(OutDir)</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Media\Textures\callout_circle.dds">
-      <DestinationFolders>$(OutDir)Media\Textures</DestinationFolders>
+      <DestinationFolders>$(OutDir)</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Media\Textures\gamepad.dds">
-      <DestinationFolders>$(OutDir)Media\Textures</DestinationFolders>
+      <DestinationFolders>$(OutDir)</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Media\Textures\RedCircle.DDS">
@@ -620,15 +620,15 @@
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
-      <DestinationFolders>$(OutDir)Media\Fonts</DestinationFolders>
+      <DestinationFolders>$(OutDir)</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_22.spritefont">
-      <DestinationFolders>$(OutDir)Media\Fonts</DestinationFolders>
+      <DestinationFolders>$(OutDir)</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_36.spritefont">
-      <DestinationFolders>$(OutDir)Media\Fonts</DestinationFolders>
+      <DestinationFolders>$(OutDir)</DestinationFolders>
       <DeploymentContent>true</DeploymentContent>
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">

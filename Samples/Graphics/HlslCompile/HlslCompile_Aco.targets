@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  HlslCompile_Aco.targets
+
+  Build steps for the ACO (aco_xbox.dll) example. HlslCompile.vcxproj imports this file only when
+  AcoExampleEnabled is true: Xbox Series X|S with the October 2026 GDK or later.
+
+  Graphics shaders compiled with ACO run on the console only through a pipeline state that was
+  serialized offline, so the build runs MyAcoCompiler twice:
+
+    1. compile : HLSL -> DXIL container with ACO code (.cso) + PDB, for each shader stage
+    2. pso     : vertex + pixel shader -> serialized pipeline state (*.bin files)
+
+  At runtime AcoPipelineState.cpp loads the *.bin files with DeserializeGraphicsPipelineStateX.
+
+  Advanced Technology Group (ATG)
+  Copyright (C) Microsoft Corporation. All rights reserved.
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <AcoCompilerExe>$(MSBuildThisFileDirectory)x64\Tools\MyAcoCompiler.exe</AcoCompilerExe>
+    <AcoPipelineStateName>HlslCompile_Aco</AcoPipelineStateName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Build the tool before this project. -->
+    <ProjectReference Include="$(MSBuildThisFileDirectory)MyAcoCompiler\MyAcoCompiler.vcxproj">
+      <Project>{2d4beacc-0300-4b49-9c2d-e15fd891b644}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+
+    <!-- The shaders of the ACO pipeline state, with their HLSL target profiles. -->
+    <AcoShader Include="$(MSBuildThisFileDirectory)VertexShader.hlsl">
+      <Profile>vs_6_0</Profile>
+      <OutputName>VertexShader_Aco</OutputName>
+    </AcoShader>
+    <AcoShader Include="$(MSBuildThisFileDirectory)PixelShader_Aco.hlsl">
+      <Profile>ps_6_0</Profile>
+      <OutputName>PixelShader_Aco</OutputName>
+    </AcoShader>
+  </ItemGroup>
+
+  <!-- Step 1: compile each shader with ACO. Batched per AcoShader item. -->
+  <Target Name="AcoCompileShaders"
+          BeforeTargets="ClCompile"
+          Inputs="@(AcoShader);$(AcoCompilerExe)"
+          Outputs="@(AcoShader->'$(OutDir)%(OutputName).cso')">
+    <Exec Command="&quot;$(AcoCompilerExe)&quot; compile %(AcoShader.Profile) &quot;%(AcoShader.FullPath)&quot; &quot;$(OutDir)%(AcoShader.OutputName).cso&quot; &quot;$(OutDir)%(AcoShader.OutputName).pdb&quot;" />
+  </Target>
+
+  <!-- Step 2: serialize the pipeline state from the compiled shaders. -->
+  <Target Name="AcoSerializePipelineState"
+          AfterTargets="AcoCompileShaders"
+          Inputs="$(OutDir)VertexShader_Aco.cso;$(OutDir)PixelShader_Aco.cso;$(AcoCompilerExe)"
+          Outputs="$(OutDir)$(AcoPipelineStateName).packet.bin">
+    <Exec Command="&quot;$(AcoCompilerExe)&quot; pso &quot;$(OutDir)VertexShader_Aco.cso&quot; &quot;$(OutDir)PixelShader_Aco.cso&quot; &quot;$(OutDir)$(AcoPipelineStateName)&quot;" />
+  </Target>
+
+  <!-- Let Clean (and cleanhere) remove the ACO outputs. -->
+  <Target Name="AcoTrackOutputs" AfterTargets="AcoSerializePipelineState">
+    <ItemGroup>
+      <FileWrites Include="@(AcoShader->'$(OutDir)%(OutputName).cso');@(AcoShader->'$(OutDir)%(OutputName).pdb')" />
+      <FileWrites Include="$(OutDir)$(AcoPipelineStateName).*.bin" />
+    </ItemGroup>
+  </Target>
+
+</Project>

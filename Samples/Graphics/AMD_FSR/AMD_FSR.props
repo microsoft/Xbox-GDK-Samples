@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup Condition="'$(Platform)'=='x64' OR '$(Platform)'=='Gaming.Desktop.x64'">
+    <FfxPlatformName>dx12</FfxPlatformName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64'">
+    <FfxPlatformName>xbox</FfxPlatformName>
+  </PropertyGroup>
+
+  <!-- Gaming.Desktop.x64 paths (unused by this project, which builds desktop as plain x64, but kept for parity) -->
+  <PropertyGroup Condition="'$(Platform)'=='Gaming.Desktop.x64'">
+    <ReferencePath>$(VC_ReferencesPath_x64);</ReferencePath>
+    <LibraryPath>$(WindowsSDK_LibraryPath_x64);$(Console_SdkLibPath);$(LibraryPath)</LibraryPath>
+    <LibraryWPath>$(WindowsSDK_MetadataPath);</LibraryWPath>
+    <IncludePath>$(WindowsSDK_IncludePath);$(Console_SdkIncludeRoot);$(IncludePath)</IncludePath>
+    <ExecutablePath>$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
+  </PropertyGroup>
+  <!-- Gaming.Xbox.Scarlett.x64 paths -->
+  <PropertyGroup Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64'">
+    <ReferencePath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</ReferencePath>
+    <LibraryPath>$(Console_SdkLibPath)</LibraryPath>
+    <LibraryWPath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</LibraryWPath>
+    <IncludePath>$(Console_SdkIncludeRoot)</IncludePath>
+    <ExecutablePath>$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
+  </PropertyGroup>
+
+  <!-- AGS/FFX paths -->
+  <PropertyGroup>
+    <AgsDllPath>$(MSBuildThisFileDirectory)..\..\..\Kits\OpenSource\amd\ags\</AgsDllPath>
+    <AgsLibPath>$(MSBuildThisFileDirectory)..\..\..\Kits\OpenSource\amd\ags\</AgsLibPath>
+    <FfxDllPath>$(FFX_DLL_PATH)</FfxDllPath>
+    <FfxDllPathLoader>$(MSBuildThisFileDirectory)..\..\..\Kits\FidelityFX\signedbin\</FfxDllPathLoader>
+    <FfxDllPathFrameGen>$(MSBuildThisFileDirectory)..\..\..\Kits\FidelityFX\signedbin\</FfxDllPathFrameGen>
+    <FfxDllPathUpscaler>$(MSBuildThisFileDirectory)..\..\..\Kits\FidelityFX\signedbin\</FfxDllPathUpscaler>
+    <FfxDllPathDenoiser>$(MSBuildThisFileDirectory)..\..\..\Kits\FidelityFX\signedbin\</FfxDllPathDenoiser>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(FfxDllPath)' == '' OR !Exists('$(FfxDllPath)')">
+    <FfxDllPath>$(MSBuildThisFileDirectory)..\..\..\Kits\FidelityFX\signedbin\</FfxDllPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="Exists('$(FfxDllPath)amd_fidelityfx_loader_$(FfxPlatformName).dll')">
+    <FfxDllPathLoader>$(FfxDllPath)</FfxDllPathLoader>
+  </PropertyGroup>
+  <PropertyGroup Condition="Exists('$(FfxDllPath)amd_fidelityfx_denoiser_$(FfxPlatformName).dll')">
+    <FfxDllPathDenoiser>$(FfxDllPath)</FfxDllPathDenoiser>
+  </PropertyGroup>
+  <PropertyGroup Condition="Exists('$(FfxDllPath)amd_fidelityfx_framegeneration_$(FfxPlatformName).dll')">
+    <FfxDllPathFrameGen>$(FfxDllPath)</FfxDllPathFrameGen>
+  </PropertyGroup>
+  <PropertyGroup Condition="Exists('$(FfxDllPath)amd_fidelityfx_upscaler_$(FfxPlatformName).dll')">
+    <FfxDllPathUpscaler>$(FfxDllPath)</FfxDllPathUpscaler>
+  </PropertyGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(MSBuildThisFileDirectory)..\..\..\Kits\FidelityFX\amdinternal\devprops\amd_fidelityfx_debug_environment.props" Condition="Exists('$(MSBuildThisFileDirectory)..\..\..\Kits\FidelityFX\amdinternal\devprops\amd_fidelityfx_debug_environment.props')" Label="FfxInternalProperties" />
+  </ImportGroup>
+
+</Project>

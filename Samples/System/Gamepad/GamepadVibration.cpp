@@ -50,7 +50,7 @@ namespace
 //--------------------------------------------------------------------------------------
 void Sample::InitializeVibrationEffect(GamepadDevice& gamepad)
 {
-    auto& effectState = gamepad.vibEffect;
+    auto& effectState = gamepad.vibEffectState;
     effectState.leftTriggerIndex = 0;
     effectState.rightTriggerIndex = 0;
     effectState.rumble = {};
@@ -61,23 +61,23 @@ void Sample::InitializeVibrationEffect(GamepadDevice& gamepad)
 
     switch (effectState.selectedEffect)
     {
-    case VibrationEffect::FlatTire:
-        effectState.leftTriggerNextTime = counter + (m_perfFrequency * g_flatTireLTDurations[0]) / 1000;
-        break;
-    case VibrationEffect::Heartbeat:
-        effectState.leftTriggerNextTime = counter + (m_perfFrequency * g_heartbeatLTDurations[0]) / 1000;
-        effectState.rightTriggerNextTime = counter + (m_perfFrequency * g_heartbeatRTDurations[0]) / 1000;
-        break;
-    case VibrationEffect::Footsteps:
-        effectState.leftTriggerNextTime = counter + (m_perfFrequency * g_footstepsLTDurations[0]) / 1000;
-        effectState.rightTriggerNextTime = counter + (m_perfFrequency * g_footstepsRTDurations[0]) / 1000;
-        break;
-    case VibrationEffect::Manual:
-    case VibrationEffect::ImpulseTest:
-    case VibrationEffect::GunWithRecoil:
-    case VibrationEffect::Count:
-    default:
-        break;
+        case VibrationEffect::FlatTire:
+            effectState.leftTriggerNextTime = counter + (m_perfFrequency * g_flatTireLTDurations[0]) / 1000;
+            break;
+        case VibrationEffect::Heartbeat:
+            effectState.leftTriggerNextTime = counter + (m_perfFrequency * g_heartbeatLTDurations[0]) / 1000;
+            effectState.rightTriggerNextTime = counter + (m_perfFrequency * g_heartbeatRTDurations[0]) / 1000;
+            break;
+        case VibrationEffect::Footsteps:
+            effectState.leftTriggerNextTime = counter + (m_perfFrequency * g_footstepsLTDurations[0]) / 1000;
+            effectState.rightTriggerNextTime = counter + (m_perfFrequency * g_footstepsRTDurations[0]) / 1000;
+            break;
+        case VibrationEffect::Manual:
+        case VibrationEffect::ImpulseTest:
+        case VibrationEffect::GunWithRecoil:
+        case VibrationEffect::Count:
+        default:
+            break;
     }
 }
 
@@ -88,7 +88,7 @@ void Sample::InitializeVibrationEffect(GamepadDevice& gamepad)
 //--------------------------------------------------------------------------------------
 void Sample::UpdateVibration(GamepadDevice& gamepad)
 {
-    auto& effectState = gamepad.vibEffect;
+    auto& effectState = gamepad.vibEffectState;
 
     if (gamepad.hasGamepadState)
     {
@@ -98,113 +98,113 @@ void Sample::UpdateVibration(GamepadDevice& gamepad)
 
         switch (effectState.selectedEffect)
         {
-        case VibrationEffect::Manual:
-            // Sliders set these values directly.
-            break;
-
-        case VibrationEffect::ImpulseTest:
-            // Trigger positions directly drive all four channels.
-            effectState.rumble.leftTrigger = state.leftTrigger;
-            effectState.rumble.rightTrigger = state.rightTrigger;
-            effectState.rumble.lowFrequency = state.leftTrigger;
-            effectState.rumble.highFrequency = state.rightTrigger;
-            break;
-
-        case VibrationEffect::FlatTire:
-            effectState.rumble.leftTrigger = g_flatTireLTLevels[effectState.leftTriggerIndex];
-            if (counter > effectState.leftTriggerNextTime)
-            {
-                effectState.leftTriggerIndex = (effectState.leftTriggerIndex + 1) % _countof(g_flatTireLTDurations);
-                effectState.leftTriggerNextTime = counter + (m_perfFrequency * g_flatTireLTDurations[effectState.leftTriggerIndex]) / 1000;
-            }
-            break;
-
-        case VibrationEffect::GunWithRecoil:
-            // Wait for release, wait for press, then play the recoil sequence.
-            switch (effectState.gunState)
-            {
-            case VibrationEffectState::GunState::WaitForRelease:
-                if (state.leftTrigger <= 1.0f / 255.0f)
-                    effectState.gunState = VibrationEffectState::GunState::WaitForPress;
+            case VibrationEffect::Manual:
+                // Sliders set these values directly.
                 break;
-            case VibrationEffectState::GunState::WaitForPress:
-                if (state.leftTrigger >= 32.0f / 255.0f)
+
+            case VibrationEffect::ImpulseTest:
+                // Trigger positions directly drive all four channels.
+                effectState.rumble.leftTrigger = state.leftTrigger;
+                effectState.rumble.rightTrigger = state.rightTrigger;
+                effectState.rumble.lowFrequency = state.leftTrigger;
+                effectState.rumble.highFrequency = state.rightTrigger;
+                break;
+
+            case VibrationEffect::FlatTire:
+                effectState.rumble.leftTrigger = g_flatTireLTLevels[effectState.leftTriggerIndex];
+                if (counter > effectState.leftTriggerNextTime)
                 {
-                    effectState.leftTriggerIndex = 0;
-                    effectState.leftTriggerNextTime = counter + (m_perfFrequency * g_gunRecoilLTDurations[0]) / 1000;
-                    effectState.gunState = VibrationEffectState::GunState::Playing;
+                    effectState.leftTriggerIndex = (effectState.leftTriggerIndex + 1) % _countof(g_flatTireLTDurations);
+                    effectState.leftTriggerNextTime = counter + (m_perfFrequency * g_flatTireLTDurations[effectState.leftTriggerIndex]) / 1000;
                 }
                 break;
-            case VibrationEffectState::GunState::Playing:
-                effectState.rumble.leftTrigger = g_gunRecoilLTLevels[effectState.leftTriggerIndex];
 
-                // Step 2 adds the recoil kick.
-                if (effectState.leftTriggerIndex == 2)
+            case VibrationEffect::GunWithRecoil:
+                // Wait for release, wait for press, then play the recoil sequence.
+                switch (effectState.gunState)
                 {
-                    effectState.rumble.lowFrequency = 1.0f;
-                    effectState.rumble.highFrequency = 1.0f;
-                }
-                else
-                {
-                    effectState.rumble.lowFrequency = 0.0f;
-                    effectState.rumble.highFrequency = 0.0f;
-                }
+                case VibrationEffectState::GunState::WaitForRelease:
+                    if (state.leftTrigger <= 1.0f / 255.0f)
+                        effectState.gunState = VibrationEffectState::GunState::WaitForPress;
+                    break;
+                case VibrationEffectState::GunState::WaitForPress:
+                    if (state.leftTrigger >= 32.0f / 255.0f)
+                    {
+                        effectState.leftTriggerIndex = 0;
+                        effectState.leftTriggerNextTime = counter + (m_perfFrequency * g_gunRecoilLTDurations[0]) / 1000;
+                        effectState.gunState = VibrationEffectState::GunState::Playing;
+                    }
+                    break;
+                case VibrationEffectState::GunState::Playing:
+                    effectState.rumble.leftTrigger = g_gunRecoilLTLevels[effectState.leftTriggerIndex];
 
-                if (effectState.leftTriggerIndex == 3)
-                {
-                    effectState.leftTriggerIndex = 0;
-                    effectState.gunState = VibrationEffectState::GunState::WaitForRelease;
-                    effectState.rumble.lowFrequency = 0;
-                    effectState.rumble.highFrequency = 0;
-                    effectState.rumble.leftTrigger = 0;
+                    // Step 2 adds the recoil kick.
+                    if (effectState.leftTriggerIndex == 2)
+                    {
+                        effectState.rumble.lowFrequency = 1.0f;
+                        effectState.rumble.highFrequency = 1.0f;
+                    }
+                    else
+                    {
+                        effectState.rumble.lowFrequency = 0.0f;
+                        effectState.rumble.highFrequency = 0.0f;
+                    }
+
+                    if (effectState.leftTriggerIndex == 3)
+                    {
+                        effectState.leftTriggerIndex = 0;
+                        effectState.gunState = VibrationEffectState::GunState::WaitForRelease;
+                        effectState.rumble.lowFrequency = 0;
+                        effectState.rumble.highFrequency = 0;
+                        effectState.rumble.leftTrigger = 0;
+                        break;
+                    }
+
+                    if (counter > effectState.leftTriggerNextTime)
+                    {
+                        effectState.leftTriggerIndex = (effectState.leftTriggerIndex + 1) % _countof(g_gunRecoilLTDurations);
+                        effectState.leftTriggerNextTime = counter + (m_perfFrequency * g_gunRecoilLTDurations[effectState.leftTriggerIndex]) / 1000;
+                    }
                     break;
                 }
+                break;
+
+            case VibrationEffect::Heartbeat:
+                // Left and right patterns advance independently.
+                effectState.rumble.leftTrigger = g_heartbeatLTLevels[effectState.leftTriggerIndex];
+                effectState.rumble.rightTrigger = g_heartbeatRTLevels[effectState.rightTriggerIndex];
 
                 if (counter > effectState.leftTriggerNextTime)
                 {
-                    effectState.leftTriggerIndex = (effectState.leftTriggerIndex + 1) % _countof(g_gunRecoilLTDurations);
-                    effectState.leftTriggerNextTime = counter + (m_perfFrequency * g_gunRecoilLTDurations[effectState.leftTriggerIndex]) / 1000;
+                    effectState.leftTriggerIndex = (effectState.leftTriggerIndex + 1) % _countof(g_heartbeatLTDurations);
+                    effectState.leftTriggerNextTime = counter + (m_perfFrequency * g_heartbeatLTDurations[effectState.leftTriggerIndex]) / 1000;
+                }
+                if (counter > effectState.rightTriggerNextTime)
+                {
+                    effectState.rightTriggerIndex = (effectState.rightTriggerIndex + 1) % _countof(g_heartbeatRTDurations);
+                    effectState.rightTriggerNextTime = counter + (m_perfFrequency * g_heartbeatRTDurations[effectState.rightTriggerIndex]) / 1000;
                 }
                 break;
-            }
-            break;
 
-        case VibrationEffect::Heartbeat:
-            // Left and right patterns advance independently.
-            effectState.rumble.leftTrigger = g_heartbeatLTLevels[effectState.leftTriggerIndex];
-            effectState.rumble.rightTrigger = g_heartbeatRTLevels[effectState.rightTriggerIndex];
+            case VibrationEffect::Footsteps:
+                effectState.rumble.leftTrigger = g_footstepsLTLevels[effectState.leftTriggerIndex];
+                effectState.rumble.rightTrigger = g_footstepsRTLevels[effectState.rightTriggerIndex];
 
-            if (counter > effectState.leftTriggerNextTime)
-            {
-                effectState.leftTriggerIndex = (effectState.leftTriggerIndex + 1) % _countof(g_heartbeatLTDurations);
-                effectState.leftTriggerNextTime = counter + (m_perfFrequency * g_heartbeatLTDurations[effectState.leftTriggerIndex]) / 1000;
-            }
-            if (counter > effectState.rightTriggerNextTime)
-            {
-                effectState.rightTriggerIndex = (effectState.rightTriggerIndex + 1) % _countof(g_heartbeatRTDurations);
-                effectState.rightTriggerNextTime = counter + (m_perfFrequency * g_heartbeatRTDurations[effectState.rightTriggerIndex]) / 1000;
-            }
-            break;
+                if (counter > effectState.leftTriggerNextTime)
+                {
+                    effectState.leftTriggerIndex = (effectState.leftTriggerIndex + 1) % _countof(g_footstepsLTDurations);
+                    effectState.leftTriggerNextTime = counter + (m_perfFrequency * g_footstepsLTDurations[effectState.leftTriggerIndex]) / 1000;
+                }
+                if (counter > effectState.rightTriggerNextTime)
+                {
+                    effectState.rightTriggerIndex = (effectState.rightTriggerIndex + 1) % _countof(g_footstepsRTDurations);
+                    effectState.rightTriggerNextTime = counter + (m_perfFrequency * g_footstepsRTDurations[effectState.rightTriggerIndex]) / 1000;
+                }
+                break;
 
-        case VibrationEffect::Footsteps:
-            effectState.rumble.leftTrigger = g_footstepsLTLevels[effectState.leftTriggerIndex];
-            effectState.rumble.rightTrigger = g_footstepsRTLevels[effectState.rightTriggerIndex];
-
-            if (counter > effectState.leftTriggerNextTime)
-            {
-                effectState.leftTriggerIndex = (effectState.leftTriggerIndex + 1) % _countof(g_footstepsLTDurations);
-                effectState.leftTriggerNextTime = counter + (m_perfFrequency * g_footstepsLTDurations[effectState.leftTriggerIndex]) / 1000;
-            }
-            if (counter > effectState.rightTriggerNextTime)
-            {
-                effectState.rightTriggerIndex = (effectState.rightTriggerIndex + 1) % _countof(g_footstepsRTDurations);
-                effectState.rightTriggerNextTime = counter + (m_perfFrequency * g_footstepsRTDurations[effectState.rightTriggerIndex]) / 1000;
-            }
-            break;
-
-        case VibrationEffect::Count:
-        default:
-            break;
+            case VibrationEffect::Count:
+            default:
+                break;
         }
 
         int historyIndex = effectState.historyOffset;
@@ -239,7 +239,7 @@ void Sample::DrawVibrationSection(GamepadDevice& gamepad)
 {
     if (ImGui::CollapsingHeader("Vibration", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Leaf))
     {
-        if (!gamepad.deviceInfo->supportedRumbleMotors)
+        if (!gamepad.device->GetSupportedRumbleMotors())
         {
             ImGui::TextWrapped("No rumble motors supported by this device.");
             return;
@@ -250,44 +250,44 @@ void Sample::DrawVibrationSection(GamepadDevice& gamepad)
         ImGui::TextWrapped("Select a vibration effect to play:");
         ImGui::Spacing();
 
-        int effectIndex = static_cast<int>(gamepad.vibEffect.selectedEffect);
+        int effectIndex = static_cast<int>(gamepad.vibEffectState.selectedEffect);
         if (ImGui::Combo("##Vibration", &effectIndex, g_vibrationEffectNames, static_cast<int>(VibrationEffect::Count)))
         {
-            gamepad.vibEffect.selectedEffect = static_cast<VibrationEffect>(effectIndex);
+            gamepad.vibEffectState.selectedEffect = static_cast<VibrationEffect>(effectIndex);
             InitializeVibrationEffect(gamepad);
         }
         ImGui::SameLine();
         if (ImGui::Button("Stop"))
         {
-            gamepad.vibEffect.selectedEffect = VibrationEffect::Manual;
-            gamepad.vibEffect.rumble = {};
+            gamepad.vibEffectState.selectedEffect = VibrationEffect::Manual;
+            gamepad.vibEffectState.rumble = {};
         }
 
         ImGui::Spacing();
         float width = (ImGui::GetContentRegionAvail().x - ImGui::GetStyle().ItemSpacing.x) * 0.5f;
 
-        switch (gamepad.vibEffect.selectedEffect)
+        switch (gamepad.vibEffectState.selectedEffect)
         {
             case VibrationEffect::Manual:
             {
                 ImGui::PushItemWidth(width);
-                bool hasLowFrequencyMotor = (gamepad.deviceInfo->supportedRumbleMotors & GameInputRumbleLowFrequency) != 0;
-                bool hasHighFrequencyMotor = (gamepad.deviceInfo->supportedRumbleMotors & GameInputRumbleHighFrequency) != 0;
-                bool hasLeftTriggerMotor = (gamepad.deviceInfo->supportedRumbleMotors & GameInputRumbleLeftTrigger) != 0;
-                bool hasRightTriggerMotor = (gamepad.deviceInfo->supportedRumbleMotors & GameInputRumbleRightTrigger) != 0;
+                bool hasLowFrequencyMotor  = (gamepad.device->GetSupportedRumbleMotors() & GameInputRumbleLowFrequency)  != 0;
+                bool hasHighFrequencyMotor = (gamepad.device->GetSupportedRumbleMotors() & GameInputRumbleHighFrequency) != 0;
+                bool hasLeftTriggerMotor   = (gamepad.device->GetSupportedRumbleMotors() & GameInputRumbleLeftTrigger)   != 0;
+                bool hasRightTriggerMotor  = (gamepad.device->GetSupportedRumbleMotors() & GameInputRumbleRightTrigger)  != 0;
 
                 if (hasLowFrequencyMotor)
-                    ImGui::SliderFloat("##lfm", &gamepad.vibEffect.rumble.lowFrequency, 0.0f, 1.0f, "Low Freq Motor %.3f");
+                    ImGui::SliderFloat("##lfm", &gamepad.vibEffectState.rumble.lowFrequency, 0.0f, 1.0f, "Low Freq Motor %.3f");
                 if (hasLowFrequencyMotor && hasHighFrequencyMotor)
                     ImGui::SameLine();
                 if (hasHighFrequencyMotor)
-                    ImGui::SliderFloat("##hfm", &gamepad.vibEffect.rumble.highFrequency, 0.0f, 1.0f, "High Freq Motor %.3f");
+                    ImGui::SliderFloat("##hfm", &gamepad.vibEffectState.rumble.highFrequency, 0.0f, 1.0f, "High Freq Motor %.3f");
                 if (hasLeftTriggerMotor)
-                    ImGui::SliderFloat("##ltvib", &gamepad.vibEffect.rumble.leftTrigger, 0.0f, 1.0f, "Left Trigger %.3f");
+                    ImGui::SliderFloat("##ltvib", &gamepad.vibEffectState.rumble.leftTrigger, 0.0f, 1.0f, "Left Trigger %.3f");
                 if (hasLeftTriggerMotor && hasRightTriggerMotor)
                     ImGui::SameLine();
                 if (hasRightTriggerMotor)
-                    ImGui::SliderFloat("##rtvib", &gamepad.vibEffect.rumble.rightTrigger, 0.0f, 1.0f, "Right Trigger %.3f");
+                    ImGui::SliderFloat("##rtvib", &gamepad.vibEffectState.rumble.rightTrigger, 0.0f, 1.0f, "Right Trigger %.3f");
                 ImGui::PopItemWidth();
                 break;
             }
@@ -313,16 +313,16 @@ void Sample::DrawVibrationSection(GamepadDevice& gamepad)
 
         ImGui::Spacing();
         float graphHeight = ImGuiAtg::Scaled(30);
-        int offset = gamepad.vibEffect.historyOffset;
+        int offset = gamepad.vibEffectState.historyOffset;
         int count = VibrationEffectState::HistorySize;
         ImGui::PushStyleVar(ImGuiStyleVar_DisabledAlpha, 1.0f);
         ImGui::BeginDisabled(true);
-        ImGui::PlotLines("##LowFreq",   gamepad.vibEffect.lowFreqHistory,      count, offset, "Low Frequency",  0.0f, 1.0f, ImVec2(width, graphHeight));
+        ImGui::PlotLines("##LowFreq",   gamepad.vibEffectState.lowFreqHistory,      count, offset, "Low Frequency",  0.0f, 1.0f, ImVec2(width, graphHeight));
         ImGui::SameLine();
-        ImGui::PlotLines("##HighFreq",  gamepad.vibEffect.highFreqHistory,     count, offset, "High Frequency", 0.0f, 1.0f, ImVec2(width, graphHeight));
-        ImGui::PlotLines("##LeftTrig",  gamepad.vibEffect.leftTriggerHistory,  count, offset, "Left Trigger",   0.0f, 1.0f, ImVec2(width, graphHeight));
+        ImGui::PlotLines("##HighFreq",  gamepad.vibEffectState.highFreqHistory,     count, offset, "High Frequency", 0.0f, 1.0f, ImVec2(width, graphHeight));
+        ImGui::PlotLines("##LeftTrig",  gamepad.vibEffectState.leftTriggerHistory,  count, offset, "Left Trigger",   0.0f, 1.0f, ImVec2(width, graphHeight));
         ImGui::SameLine();
-        ImGui::PlotLines("##RightTrig", gamepad.vibEffect.rightTriggerHistory, count, offset, "Right Trigger",  0.0f, 1.0f, ImVec2(width, graphHeight));
+        ImGui::PlotLines("##RightTrig", gamepad.vibEffectState.rightTriggerHistory, count, offset, "Right Trigger",  0.0f, 1.0f, ImVec2(width, graphHeight));
         ImGui::EndDisabled();
         ImGui::PopStyleVar();
 

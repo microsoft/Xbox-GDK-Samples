@@ -83,11 +83,9 @@ struct LampArrayDevice
     // set to an individually chosen color, demonstrating addressing lamps by index.
     std::vector<std::array<float, 3>>       manualColors;
 
-    // Per-device animation clock. elapsedSeconds accumulates effect time while the
-    // current effect runs (reset when the effect is reassigned); lastCounter is the
-    // QueryPerformanceCounter value from the previous run, used to measure the delta.
+    // Per-device effect time, advanced by ImGui's frame delta scaled by speedScale.
+    // Reset when the effect is reassigned.
     double                                  elapsedSeconds = 0.0;
-    uint64_t                                lastCounter = 0;
 
     // Per-effect color-picker values (normalized RGB), kept per effect so adjusting
     // one effect's color does not disturb another's. Slot meaning is per effect:

@@ -33,6 +33,7 @@
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
     <ClInclude Include="HlslCompile.h" />
+    <ClInclude Include="AcoPipelineState.h" />
     <ClInclude Include="..\..\..\Kits\ATGTK\ReadData.h">
       <Filter>ATG Tool Kit</Filter>
     </ClInclude>
@@ -50,6 +51,7 @@
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="HlslCompile.cpp" />
+    <ClCompile Include="AcoPipelineState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Logo.png">
@@ -92,6 +94,12 @@
     <CustomBuild Include="PixelShader_DxCompiler_ManualPdb.hlsl">
       <Filter>Assets</Filter>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PixelShader_Aco.hlsl">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="HlslCompile_Aco.targets" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">

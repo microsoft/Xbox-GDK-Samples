@@ -13,7 +13,7 @@ extendedZipContent:
   target: Kits
 - path: Media
   target: Media
-description: "The sample compiles the same pixel shader in a number of different ways, to illustrate different options for PC-side asset build."
+description: "The sample compiles the same pixel shader in a number of different ways, to illustrate different options for PC-side asset build. It also shows how to precompile pipeline state offline with the ACO shader compiler for Xbox Series X|S."
 ---
 ----->
 
@@ -21,14 +21,12 @@ description: "The sample compiles the same pixel shader in a number of different
 
 #   HlslCompile Sample
 
-*This sample is compatible with the Microsoft Game Development Kit (March 2022)*
+*This sample is compatible with the Microsoft Game Development Kit (March 2022). The ACO shader compiler example requires the Microsoft Game Development Kit (October 2026) or later.*
 
 # Description
 
 The sample compiles the same pixel shader in a number of different ways,
-to illustrate different options for PC-side asset build. The shader
-compiler is under active development, and we will update the sample as
-functionality changes.
+to illustrate different options for PC-side asset build.
 
 The sample builds shaders using two different compiler interfaces:
 
@@ -60,6 +58,39 @@ symbols:
     recommended, since PIX can compute the same shader hash without a
     hint.
 
+## ACO shader compiler (Xbox Series X|S only)
+
+On Xbox Series X|S the sample also renders one triangle (`AcoManualPdb`)
+with shaders compiled by the ACO back end (`aco_xbox.dll`). ACO requires
+the Microsoft Game Development Kit (October 2026) or later and isn't
+supported on Xbox One. With an older GDK, or on Xbox One, the sample
+builds and runs without this row. The check is `ACO_EXAMPLE_ENABLED` in
+`HlslCompile.h` and `AcoExampleEnabled` in `HlslCompile.vcxproj`.
+
+Graphics shaders compiled by ACO are consumed on the console through a
+pipeline state that is serialized offline on the PC and deserialized at
+runtime. The whole flow is kept separate from the other examples so it
+can be read on its own:
+
+| Step | File | What it does |
+|------|------|--------------|
+| Build tool | `MyAcoCompiler\MyAcoCompiler.cpp` | `compile` mode: compiles HLSL with `DxCompiler_xs.dll` using `-requireacoprecompile`, strips symbols to a PDB. `pso` mode: calls `AcoOfflineSerializePipelineStateXEx` to serialize a graphics pipeline state into `*.bin` files. |
+| Build wiring | `HlslCompile_Aco.targets` | Imported by `HlslCompile.vcxproj` when `AcoExampleEnabled` is true. Runs `MyAcoCompiler.exe compile <profile> <hlsl> <cso> <pdb>` per shader, then `MyAcoCompiler.exe pso <vs.cso> <ps.cso> <outputBase>`. |
+| Runtime | `AcoPipelineState.h/.cpp` | Loads the `*.bin` files, places the shader code in `XMemAlloc` graphics-shader memory, and calls `DeserializeGraphicsPipelineStateX`. |
+
+Notes:
+
+-   The PC-side `d3d12_xs.dll` can't deserialize Xbox root signatures,
+    so `MyAcoCompiler` builds the root signature description in code. It
+    must match the `[RootSignature]` declared in the shaders.
+
+-   The serialized pipeline state is tied to the GDK version that
+    produced it. Rebuild the assets whenever the GDK changes.
+
+-   ACO symbols are written to the PDB passed to the `compile` step. PIX
+    shows the ACO disassembly for the shader, but can't currently map
+    it back to HLSL source lines.
+
 # Building the sample
 
 If using an Xbox One devkit, set the active solution platform to `Gaming.Xbox.XboxOne.x64`.
@@ -70,9 +101,11 @@ If using an Xbox Series X|S devkit, set the active solution platform to `Gaming.
 
 When you build and run the Solution, Visual Studio will 
 
-- Build the MyHlslCompiler project
+- Build the MyHlslCompiler project (and MyAcoCompiler for Xbox Series X|S)
 - Build the HlslCompile project 
   - As part of that build, compile certain shaders using MyHlslCompiler.exe
+  - For Xbox Series X|S, compile the ACO shaders and serialize the ACO
+    pipeline state using MyAcoCompiler.exe
 - Run the HlslCompile executable on the console using the compilation results
 
 # Using the sample
@@ -106,6 +139,8 @@ None.
 Initial release April 2019
 
 Updated for Microsoft GDK November 2019
+
+October 2026: Added the ACO shader compiler example for Xbox Series X|S
 
 # Privacy Statement
 

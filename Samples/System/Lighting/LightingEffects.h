@@ -47,9 +47,7 @@ namespace LightingEffects
     // The adjustable controls the effect exposes (color pickers and/or speed).
     const EffectControls& Controls(Effect effect);
 
-    // Runs the device's currently assigned effect for one frame. The effect
-    // measures its own real elapsed time (via QueryPerformanceCounter) to advance
-    // its animation, and performs the one-time reset first if the effect was just
-    // (re)assigned.
+    // Runs the device's currently assigned effect using ImGui's frame delta,
+    // resetting its animation state first if the effect was just (re)assigned.
     void Run(LampArrayDevice& device);
 }

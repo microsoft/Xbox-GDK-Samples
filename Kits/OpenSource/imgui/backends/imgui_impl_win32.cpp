@@ -109,6 +109,8 @@ using namespace GameInput::v1;
 using namespace GameInput::v2;
 #elif GAMEINPUT_API_VERSION == 3
 using namespace GameInput::v3;
+#elif GAMEINPUT_API_VERSION == 4
+using namespace GameInput::v4;
 #endif
 
 // Clang/GCC warnings with -Weverything
@@ -175,6 +177,7 @@ static void ImGui_ImplWin32_UpdateKeyboardCodePage(ImGuiIO& io)
 #endif
 }
 
+#if GAMEINPUT_API_VERSION <= 3
 static void CALLBACK ImGui_ImplWin32_DeviceCallback(
     _In_ GameInputCallbackToken,
     _In_ void* context,
@@ -207,6 +210,38 @@ static void CALLBACK ImGui_ImplWin32_DeviceCallback(
         );
     }
 }
+#else
+static void CALLBACK ImGui_ImplWin32_DeviceCallback(
+    _In_ GameInputCallbackToken,
+    _In_ void* context,
+    _In_ GameInputDeviceEvent deviceEvent,
+    _In_ IGameInputDevice* device) noexcept
+{
+    auto* bd = static_cast<ImGui_ImplWin32_Data*>(context);
+
+    std::lock_guard<std::mutex> lock(bd->GamepadsMutex);
+
+    switch (deviceEvent)
+    {
+        case GameInputDeviceEventConnected:
+            bd->Gamepads.emplace_back(device);
+            break;
+
+        case GameInputDeviceEventDisconnected:
+            bd->Gamepads.erase(
+                std::remove_if(bd->Gamepads.begin(), bd->Gamepads.end(), [device](ComPtr<IGameInputDevice> const& entry)
+                    {
+                        return entry.Get() == device;
+                    }), bd->Gamepads.end());
+            break;
+
+        case GameInputDeviceEventHapticInfoUpdated:
+        case GameInputDeviceEventKeyboardLayoutUpdated:
+        case GameInputDeviceEventXInputIndexUpdated:
+            break;
+    }
+}
+#endif
 
 static bool ImGui_ImplWin32_InitEx(void* hwnd, bool platform_has_own_dc)
 {
@@ -226,32 +261,6 @@ static bool ImGui_ImplWin32_InitEx(void* hwnd, bool platform_has_own_dc)
     bd->Time = perf_counter;
     bd->LastMouseCursor = ImGuiMouseCursor_COUNT;
 
-    // Setup GameInput
-#ifndef IMGUI_IMPL_GDK_DISABLE_GAMEPAD
-    HRESULT hr = GameInputCreate(&bd->GameInput);
-    if (FAILED(hr))
-    {
-        IM_DELETE(bd);
-        return false;
-    }
-
-    hr = bd->GameInput->RegisterDeviceCallback(
-        nullptr,
-        GameInputKindGamepad,
-        GameInputDeviceConnected,
-        GameInputBlockingEnumeration,
-        bd,
-        ImGui_ImplWin32_DeviceCallback,
-        &bd->DeviceCallbackToken);
-
-    if (FAILED(hr))
-    {
-        IM_DELETE(bd);
-        return false;
-    }
-
-#endif // IMGUI_IMPL_GDK_DISABLE_GAMEPAD
-
     // Setup backend capabilities flags
     io.BackendPlatformUserData = (void*)bd;
     io.BackendPlatformName = "imgui_impl_win32";
@@ -264,6 +273,41 @@ static bool ImGui_ImplWin32_InitEx(void* hwnd, bool platform_has_own_dc)
     ImGuiViewport* main_viewport = ImGui::GetMainViewport();
     main_viewport->PlatformHandle = main_viewport->PlatformHandleRaw = (void*)bd->hWnd;
     IM_UNUSED(platform_has_own_dc); // Used in 'docking' branch
+
+    // Setup GameInput
+#ifndef IMGUI_IMPL_GDK_DISABLE_GAMEPAD
+    HRESULT hr = GameInputCreate(&bd->GameInput);
+    if (FAILED(hr))
+    {
+        OutputDebugStringA("*** GameInputCreate failed\n");
+        return false;
+    }
+
+#if GAMEINPUT_API_VERSION <= 3
+    hr = bd->GameInput->RegisterDeviceCallback(
+        nullptr,
+        GameInputKindGamepad,
+        GameInputDeviceConnected,
+        GameInputBlockingEnumeration,
+        bd,
+        ImGui_ImplWin32_DeviceCallback,
+        &bd->DeviceCallbackToken);
+#else
+    hr = bd->GameInput->RegisterDeviceCallback(
+        nullptr,
+        GameInputKindGamepad,
+        bd,
+        ImGui_ImplWin32_DeviceCallback,
+        &bd->DeviceCallbackToken);
+#endif
+
+    if (FAILED(hr))
+    {
+        OutputDebugStringA("*** RegisterDeviceCallback failed\n");
+        return false;
+    }
+
+#endif // IMGUI_IMPL_GDK_DISABLE_GAMEPAD
 
     return true;
 }

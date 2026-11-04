@@ -17,6 +17,8 @@ using namespace GameInput::v1;
 using namespace GameInput::v2;
 #elif GAMEINPUT_API_VERSION == 3
 using namespace GameInput::v3;
+#elif GAMEINPUT_API_VERSION == 4
+using namespace GameInput::v4;
 #endif
 
 #include "Audio/WASAPIManager.h"
@@ -41,7 +43,7 @@ namespace ATG
             void StopAllDevices();
 
         private:
-            static void DeviceCallback(GameInputCallbackToken, void* context, IGameInputDevice* device, uint64_t, GameInputDeviceStatus currentStatus, GameInputDeviceStatus previousStatus) noexcept;
+            static void CALLBACK OnDeviceChanged(GameInputCallbackToken token, void* context, GameInputDeviceEvent deviceEvent, IGameInputDevice* device) noexcept;
             HRESULT AddHapticsDevice(IGameInputDevice* gameInputDevice, wchar_t* endpoint, uint32_t locationCount, GUID* locations);
 
             std::map<Microsoft::WRL::ComPtr<IGameInputDevice>, HapticsDevice> m_devices {};
