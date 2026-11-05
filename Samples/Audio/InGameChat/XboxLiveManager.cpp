@@ -46,6 +46,10 @@ XboxLiveManager::XboxLiveManager() :
 
 XboxLiveManager::~XboxLiveManager()
 {
+    if (m_networkManager)
+    {
+        m_networkManager->Shutdown();
+    }
 }
 
 HRESULT XboxLiveManager::Initialize()
@@ -584,12 +588,7 @@ HRESULT XboxLiveManager::DoWork(float)
         return hr;
     }
 
-    if (events == nullptr || eventCount == 0)
-    {
-        return S_OK;
-    }
-
-    for (size_t x = 0; x < eventCount; x++)
+    for (size_t x = 0; events != nullptr && x < eventCount; x++)
     {
         auto& event = events[x];
 
@@ -855,9 +854,11 @@ void XboxLiveManager::OnMemberJoined(const XblMultiplayerEvent& event)
                                     );
 
                                 XblMultiplayerManagerMember user;
-                                GetMemberByXuid(xuid, &user);
-                                // Keep track of the GamerTag for the UI
-                                m_mapXuidToGamertag[xuid] = user.DebugGamertag;
+                                if (SUCCEEDED(GetMemberByXuid(xuid, &user)) && user.DebugGamertag != nullptr)
+                                {
+                                    // Keep track of the GamerTag for the UI
+                                    m_mapXuidToGamertag[xuid] = user.DebugGamertag;
+                                }
                             }
                         }
                     }
@@ -915,6 +916,27 @@ void XboxLiveManager::OnEndpointChanged(uint64_t xuid, bool connected)
     else
     {
         DebugTrace("User %llu disconnected", xuid);
+
+        std::lock_guard<std::recursive_mutex> lock(m_dataLock);
+
+        // Stop waiting for a user that disconnected before their connection was processed
+        m_pendingConnections.erase(
+            std::remove(m_pendingConnections.begin(), m_pendingConnections.end(), xuid),
+            m_pendingConnections.end()
+            );
+
+        // Stop routing chat data to the disconnected endpoint
+        for (auto it = m_mapChatIdToEndpointId.begin(); it != m_mapChatIdToEndpointId.end();)
+        {
+            if (it->second == xuid)
+            {
+                it = m_mapChatIdToEndpointId.erase(it);
+            }
+            else
+            {
+                ++it;
+            }
+        }
     }
 }
 
@@ -1043,11 +1065,15 @@ HRESULT XboxLiveManager::GetMemberByXuid(uint64_t xuid, XblMultiplayerManagerMem
 
     if (SUCCEEDED(hr))
     {
+        // The member may have already left the lobby
+        hr = HRESULT_FROM_WIN32(ERROR_NOT_FOUND);
+
         for (const auto& member : members)
         {
             if (member.Xuid == xuid)
             {
                 *sessionMember = member;
+                hr = S_OK;
             }
         }
     }

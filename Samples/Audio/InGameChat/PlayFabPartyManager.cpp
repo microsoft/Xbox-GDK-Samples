@@ -179,6 +179,25 @@ void PlayFabPartyManager::Initialize()
     PartyManager& partyManager = PartyManager::GetSingleton();
     PartyError err;
 
+    if (m_pfServiceConfig == nullptr)
+    {
+        // Initialize PlayFab Core
+        HRESULT hr = PFInitialize(nullptr);
+        if (FAILED(hr))
+        {
+            DebugTrace("PFInitialize failed: 0x%08X", static_cast<unsigned int>(hr));
+            return;
+        }
+
+        std::string endpoint = std::string("https://") + c_pfTitleId + ".playfabapi.com";
+        hr = PFServiceConfigCreateHandle(endpoint.c_str(), c_pfTitleId, &m_pfServiceConfig);
+        if (FAILED(hr))
+        {
+            DebugTrace("PFServiceConfigCreateHandle failed: 0x%08X", static_cast<unsigned int>(hr));
+            return;
+        }
+    }
+
     if (m_partyInitialized == false)
     {
         // Initialize PlayFab Party
@@ -209,6 +228,91 @@ void PlayFabPartyManager::Initialize()
     }
 }
 
+void PlayFabPartyManager::StartPlayFabCoreLogin()
+{
+    uint64_t xuid = 0;
+    m_localChatUser->GetXboxUserId(&xuid);
+
+    XUserHandle user = nullptr;
+    for (const auto& context : Sample::Instance()->GetUserManager()->GetUsers())
+    {
+        uint64_t userXuid = 0;
+        if (SUCCEEDED(XUserGetId(context->UserHandle, &userXuid)) && userXuid == xuid)
+        {
+            user = context->UserHandle;
+            break;
+        }
+    }
+
+    if (user == nullptr)
+    {
+        DebugTrace("StartPlayFabCoreLogin: no XUser for %llu", xuid);
+        if (m_userCreatedCallback)
+        {
+            m_userCreatedCallback(static_cast<PartyError>(E_FAIL));
+        }
+        return;
+    }
+
+    DebugTrace("Calling PFAuthenticationLoginWithXUserAsync");
+
+    PFAuthenticationLoginWithXUserRequest request{};
+    request.createAccount = true;
+    request.user = user;
+
+    m_pfLoginAsync = {};
+    HRESULT hr = PFAuthenticationLoginWithXUserAsync(m_pfServiceConfig, &request, &m_pfLoginAsync);
+    if (FAILED(hr))
+    {
+        DebugTrace("PFAuthenticationLoginWithXUserAsync failed: 0x%08X", static_cast<unsigned int>(hr));
+        if (m_userCreatedCallback)
+        {
+            m_userCreatedCallback(static_cast<PartyError>(hr));
+        }
+        return;
+    }
+
+    m_pfLoginPending = true;
+}
+
+void PlayFabPartyManager::OnPlayFabCoreLoginCompleted()
+{
+    PFEntityHandle entityHandle = nullptr;
+    std::vector<char> loginResultBuffer;
+    PFAuthenticationLoginResult const* loginResult;
+    size_t bufferSize{};
+    HRESULT hr = PFAuthenticationLoginWithXUserGetResultSize(&m_pfLoginAsync, &bufferSize);
+
+    if (SUCCEEDED(hr))
+    {
+        loginResultBuffer.resize(bufferSize);
+
+        hr = PFAuthenticationLoginWithXUserGetResult(
+            &m_pfLoginAsync,
+            &entityHandle,
+            loginResultBuffer.size(),
+            loginResultBuffer.data(),
+            &loginResult,
+            nullptr);
+    }
+
+    if (SUCCEEDED(hr))
+    {
+        m_pfEntityHandle = entityHandle;
+
+        CreateLocalUser();
+    }
+    else
+    {
+        DebugTrace("PFAuthenticationLoginWithXUserGetResult failed: 0x%08X", static_cast<unsigned int>(hr));
+    }
+
+    if (m_userCreatedCallback)
+    {
+        m_userCreatedCallback(m_localUser != nullptr ? c_partyErrorSuccess : static_cast<PartyError>(FAILED(hr) ? hr : E_FAIL));
+    }
+}
+
 void PlayFabPartyManager::CreateLocalUser()
 {
     PartyManager& partyManager = PartyManager::GetSingleton();
@@ -220,7 +324,7 @@ void PlayFabPartyManager::CreateLocalUser()
 
         // Create a local user object
         err = partyManager.CreateLocalUser(
-            reinterpret_cast<PFEntityHandle>(m_localChatUser),  // Entity handle
+            m_pfEntityHandle,                           // Entity handle
             &m_localUser                                // OUT local user object
             );
 
@@ -295,14 +399,46 @@ void PlayFabPartyManager::Shutdown()
 
     m_state = NetworkManagerState::Initialize;
 
+    if (m_pfLoginPending)
+    {
+        XAsyncCancel(&m_pfLoginAsync);
+        XAsyncGetStatus(&m_pfLoginAsync, true);
+        m_pfLoginPending = false;
+    }
+
     // This cleans up everything allocated in Initialize() and
     // should only be used when done with networking
     PartyManager::GetSingleton().Cleanup();
     PartyXblManager::GetSingleton().Cleanup();
 
+    if (m_pfEntityHandle != nullptr)
+    {
+        PFEntityCloseHandle(m_pfEntityHandle);
+        m_pfEntityHandle = nullptr;
+    }
+
+    if (m_pfServiceConfig != nullptr)
+    {
+        PFServiceConfigCloseHandle(m_pfServiceConfig);
+        m_pfServiceConfig = nullptr;
+
+        XAsyncBlock async{};
+        HRESULT hr = PFUninitializeAsync(&async);
+        if (SUCCEEDED(hr))
+        {
+            hr = XAsyncGetStatus(&async, true);
+        }
+
+        if (FAILED(hr))
+        {
+            DebugTrace("PFUninitializeAsync failed: 0x%08X", static_cast<unsigned int>(hr));
+        }
+    }
+
     m_localEndpoint = nullptr;
     m_network = nullptr;
     m_localUser = nullptr;
+    m_localChatUser = nullptr;
     m_partyInitialized = false;
     m_partyXblInitialized = false;
 }
@@ -432,6 +568,14 @@ void PlayFabPartyManager::SendNetworkMessage(uint64_t xuid, std::vector<uint8_t>
 {
     if (m_localEndpoint && m_state == NetworkManagerState::NetworkConnected)
     {
+        // The remote endpoint may have already been destroyed
+        auto endpoint = m_partyEndpoints.find(xuid);
+        if (endpoint == m_partyEndpoints.end())
+        {
+            DebugTrace("No endpoint found for %llu", xuid);
+            return;
+        }
+
         // Form the data packet into a data buffer structure
         PartyDataBuffer data[] = {
             {
@@ -443,7 +587,7 @@ void PlayFabPartyManager::SendNetworkMessage(uint64_t xuid, std::vector<uint8_t>
         PartySendMessageOptions deliveryOptions =
             reliable ? PartySendMessageOptions::GuaranteedDelivery : PartySendMessageOptions::BestEffortDelivery;
 
-        PartyEndpointArray sendToEndpoint = { &m_partyEndpoints[xuid] };
+        PartyEndpointArray sendToEndpoint = { &endpoint->second };
 
         // Send out the message to all other peers
         PartyError err = m_localEndpoint->SendMessage(
@@ -579,6 +723,13 @@ void PlayFabPartyManager::DoWork()
     // Check for entity token refresh
     TryEntityTokenRefresh();
 
+    // Finish the PlayFab Core login without blocking the frame
+    if (m_pfLoginPending && XAsyncGetStatus(&m_pfLoginAsync, false) != E_PENDING)
+    {
+        m_pfLoginPending = false;
+        OnPlayFabCoreLoginCompleted();
+    }
+
     uint32_t count;
     PartyXblStateChangeArray xblChanges;
 
@@ -666,6 +817,9 @@ void PlayFabPartyManager::DoWork()
             uint64_t xuid = GetXuidFromEntityId(entityId);
             if(xuid != 0)
             {
+                // Store the endpoint for sends
+                m_partyEndpoints[xuid] = *it;
+
                 // Tell the engine a user is ready to receive data
                 if (m_onEndpointChanged)
                 {
@@ -927,30 +1081,6 @@ void PlayFabPartyManager::OnLoginToPlayFabCompleted(const PartyXblStateChange* c
             time_t currentTime = std::time(nullptr);
             m_localEntityTokenExpirationTime -= static_cast<int>((result->expirationTime - currentTime) / 2);
 
-            // Finish creating our local Party user
-            if (m_localUser == nullptr)
-            {
-                DebugTrace("CreateLocalUser with entityId %s", m_localEntityId.c_str());
-
-                // Create a local user object
-                PartyError err = PartyManager::GetSingleton().CreateLocalUser(
-                    reinterpret_cast<PFEntityHandle>(m_localChatUser),  // Entity handle
-                    &m_localUser                                // OUT local user object
-                    );
-
-                if (PARTY_FAILED(err))
-                {
-                    DebugTrace("CreateLocalUser failed: %hs", GetErrorMessage(err));
-
-                    if (m_userCreatedCallback)
-                    {
-                        m_userCreatedCallback(err);
-                    }
-
-                    return;
-                }
-            }
-
             uint64_t xuid = 0;
             m_localChatUser->GetXboxUserId(&xuid);
 
@@ -958,6 +1088,13 @@ void PlayFabPartyManager::OnLoginToPlayFabCompleted(const PartyXblStateChange* c
             m_entityIdToXuid[m_localEntityId] = xuid;
 
             m_playfabLoginComplete = true;
+
+            // Finish creating our local Party user
+            if (m_localUser == nullptr && m_refreshingEntityToken == false)
+            {
+                StartPlayFabCoreLogin();
+                return;
+            }
         }
 
         // Don't fire the callback if we are refreshing the entity token

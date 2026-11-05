@@ -78,8 +78,11 @@ void Sample::DrawModelSection(const GamepadDevice& gamepad)
 {
     if (ImGui::CollapsingHeader("3D Orientation", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Leaf))
     {
-        if (!(gamepad.deviceInfo->supportedInput & GameInputKindSensors)
-            || !(gamepad.deviceInfo->sensorsInfo->supportedSensors & GameInputSensorsOrientation))
+        GameInputSensorsInfo sensorsInfo = {};
+
+        if (!(gamepad.device->GetSupportedInput() & GameInputKindSensors)
+            || !gamepad.device->GetSensorsInfo(&sensorsInfo)
+            || !(sensorsInfo.supportedSensors & GameInputSensorsOrientation))
         {
             ImGui::TextColored(ImGui::GetStyleColorVec4(ImGuiCol_TextDisabled), "Orientation sensor not supported by this device.");
             return;

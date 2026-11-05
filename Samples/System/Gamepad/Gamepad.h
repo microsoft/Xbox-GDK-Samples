@@ -10,6 +10,7 @@
 #pragma once
 
 #include "GamepadHaptics.h"
+#include "GamepadLighting.h"
 #include "GamepadVibration.h"
 #include "HapticsManager/HapticsManager.h"
 
@@ -21,20 +22,22 @@ struct GamepadDevice
 {
     Microsoft::WRL::ComPtr<IGameInputDevice> device;
 
-    // Valid for the lifetime of device.
-    const GameInputDeviceInfo* deviceInfo = nullptr;
+    std::string displayName;                      // Cached from IGameInputDevice::GetDisplayName at connect
+    std::string pnpPath;                          // Cached from IGameInputDevice::GetPnpPath at connect
 
-    GameInputGamepadState gamepadState = {};      // Buttons, triggers, thumbsticks
-    GameInputSensorsState sensorsState = {};      // Accelerometer, gyroscope, orientation
-    uint64_t readingTimestamp = 0;                 // Microseconds (from IGameInputReading::GetTimestamp)
-    bool hasGamepadState = false;
-    bool hasSensorsState = false;
+    GameInputGamepadInfo  deviceInfo     = {};    // Gamepad-specific info
+    GameInputGamepadState gamepadState   = {};    // Buttons, triggers, thumbsticks
+    GameInputSensorsState sensorsState   = {};    // Accelerometer, gyroscope, orientation
+    GameInputSystemButtons systemButtons = {};    // System buttons (Guide, Share)
 
-    // Guide/Share state from RegisterSystemButtonCallback.
-    GameInputSystemButtons systemButtons = {};
+    bool hasGamepadState  = false;
+    bool hasSensorsState  = false;
+    bool hasSystemButtonState = false;
 
+    uint64_t readingTimestamp = 0;                // Microseconds (from IGameInputReading::GetTimestamp)
     size_t selectedMediaIndex = 0;
-    VibrationEffectState vibEffect;
+    VibrationEffectState vibEffectState;
+    LightingEffectState lightingEffectState;
 };
 
 //--------------------------------------------------------------------------------------
@@ -66,48 +69,40 @@ public:
 private:
     // Gamepad.cpp
     void DrawDeviceInfoSection(const GamepadDevice& gamepad);
-    bool DrawFocusPolicyCheckbox(const char* label, GameInputFocusPolicy flag);
+
+    static std::string GetDeviceDisplayName(IGameInputDevice* device);
+    static std::string GetDevicePnpPath(IGameInputDevice* device);
+    static const char* GameInputFamilyToString(GameInputDeviceFamily family);
     static std::string GameInputKindToString(GameInputKind kind);
-    static const char* GetDeviceDisplayName(const GameInputDeviceInfo* deviceInfo);
+    static std::string GameInputLightingGroupsToString(GameInputLightingGroups groups);
     void ToggleGamepadNavigation();
     void HandleSampleInput();
-
-    static void CALLBACK OnDeviceChanged(
-        GameInputCallbackToken token,
-        void* context,
-        IGameInputDevice* device,
-        uint64_t timestamp,
-        GameInputDeviceStatus currentStatus,
-        GameInputDeviceStatus previousStatus) noexcept;
-
-    static void CALLBACK OnSystemButtonChanged(
-        GameInputCallbackToken token,
-        void* context,
-        IGameInputDevice* device,
-        uint64_t timestamp,
-        GameInputSystemButtons currentButtons,
-        GameInputSystemButtons previousButtons) noexcept;
+    static void CALLBACK OnDeviceChanged(GameInputCallbackToken token, void* context, GameInputDeviceEvent deviceEvent, IGameInputDevice* device) noexcept;
 
     Microsoft::WRL::ComPtr<IGameInput> m_gameInput;         // Main GameInput interface
     GameInputCallbackToken m_deviceCallbackToken = 0;       // Token for device callback
-    GameInputCallbackToken m_systemButtonCallbackToken = 0; // Token for Guide/Share callback
     std::mutex m_gamepadsMutex;                             // Synchronization for m_gamepads
     std::vector<GamepadDevice> m_gamepads;                  // All tracked gamepads
     int m_selectedGamepad = 0;                              // Currently viewed tab
     int m_requestedGamepadTab = -1;                         // Tab selected by a gamepad shortcut
-    GameInputFocusPolicy m_focusPolicy = GameInputDefaultFocusPolicy;
+#ifndef _GAMING_XBOX
+    bool m_enableBackgroundInput = false;                   // Receive input while the window is unfocused (PC only)
+#endif
 
     // GamepadReadings.cpp
     void PollGamepadReading(GamepadDevice& gamepad);
-    static void CALLBACK OnReadingChanged(
-        GameInputCallbackToken token,
-        void* context,
-        IGameInputReading* reading) noexcept;
     bool RegisterReadingCallbacks();
     void UnregisterReadingCallbacks();
     void DrawButtonsSection(const GamepadDevice& gamepad);
     void DrawAnalogSection(const GameInputGamepadState& state);
     void DrawSensorsSection(const GamepadDevice& gamepad);
+
+    // GamepadLighting.cpp
+    void UpdateLighting(GamepadDevice& gamepad);
+    void RestoreSystemLighting();
+    void DrawLightingSection(GamepadDevice& gamepad);
+
+    static void CALLBACK OnReadingChanged(GameInputCallbackToken token, void* context, IGameInputReading* reading) noexcept;
 
     GameInputCallbackToken m_readingCallbackToken = 0;      // Token for reading callback
     bool m_useCallbackMode = false;                         // false = polling, true = callback-driven

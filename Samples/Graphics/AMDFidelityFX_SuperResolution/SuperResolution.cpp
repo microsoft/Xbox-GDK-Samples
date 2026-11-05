@@ -1057,8 +1057,8 @@ void Sample::RenderFSR2(ID3D12GraphicsCommandList* commandList)
 
     dispatchParameters.cameraFovAngleVertical = XM_PIDIV4;
 
-    dispatchParameters.cameraFar = FLT_MAX;
-    dispatchParameters.cameraNear = 0.1f;
+    dispatchParameters.cameraNear = FLT_MAX;
+    dispatchParameters.cameraFar = 0.1f;
 
     dispatchParameters.enableSharpening = m_rcasEnable;
     dispatchParameters.sharpness = m_rcasSharpness;

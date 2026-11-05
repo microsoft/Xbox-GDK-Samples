@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MyAcoCompiler.cpp">
+      <ExcludedFromBuild Condition="'$(AcoCompilerAvailable)'!='true'">true</ExcludedFromBuild>
+    </ClCompile>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{2D4BEACC-0300-4B49-9C2D-E15FD891B644}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>MyAcoCompiler</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="Exists($(ATGBuildProps))" Project="$(ATGBuildProps)" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup>
+    <!-- The Xbox Series X|S compilers for PC build tools ship in the GDK's xbox\*\devpctools\gen9 folders. -->
+    <XboxToolsPath>$(GameDKXboxLatest)xbox\</XboxToolsPath>
+    <XboxToolsBinPath>$(XboxToolsPath)bin\devpctools\gen9\</XboxToolsBinPath>
+    <!-- GDKs before October 2026 don't include the ACO compiler. HlslCompile skips the ACO example
+         for those GDKs, so this project then builds nothing instead of failing. -->
+    <AcoCompilerAvailable>false</AcoCompilerAvailable>
+    <AcoCompilerAvailable Condition="Exists('$(XboxToolsBinPath)aco_xbox.dll')">true</AcoCompilerAvailable>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType Condition="'$(AcoCompilerAvailable)'=='true'">Application</ConfigurationType>
+    <ConfigurationType Condition="'$(AcoCompilerAvailable)'!='true'">Utility</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <!-- External so /W4 and code analysis don't report warnings from the SDK headers. -->
+    <ExternalIncludePath>$(XboxToolsPath)include\devpctools;$(XboxToolsPath)include\devpctools\gen9;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>$(XboxToolsPath)lib\devpctools\gen9;$(LibraryPath)</LibraryPath>
+    <!-- HlslCompile_Aco.targets runs the tool from here. -->
+    <OutDir>$(MSBuildProjectDirectory)\..\x64\Tools\</OutDir>
+    <IntDir>$(MSBuildProjectDirectory)\..\x64\Tools\obj\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VcpkgEnabled>false</VcpkgEnabled>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <WarningLevel>Level4</WarningLevel>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <DisableAnalyzeExternal>true</DisableAnalyzeExternal>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>xdxcompiler_xs.lib;aco_xbox.lib;d3d12_xs.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <!-- xdxcompiler_xs.dll, aco_xbox.dll, d3d12_xs.dll and the DLLs they load must be next to the tool.
+       The wildcard is evaluated inside targets because the Visual Studio project system doesn't
+       support wildcards in project items. -->
+  <Target Name="CopyAcoCompilerDlls" AfterTargets="Build" Condition="'$(AcoCompilerAvailable)'=='true'">
+    <ItemGroup>
+      <AcoCompilerDll Include="$(XboxToolsBinPath)*.dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(AcoCompilerDll)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
+  </Target>
+  <Target Name="CleanAcoCompilerDlls" AfterTargets="Clean" Condition="'$(AcoCompilerAvailable)'=='true'">
+    <ItemGroup>
+      <AcoCompilerDll Include="$(XboxToolsBinPath)*.dll" />
+    </ItemGroup>
+    <Delete Files="@(AcoCompilerDll->'$(OutDir)%(Filename)%(Extension)')" />
+  </Target>
+  <Target Name="AcoCompilerCheck" BeforeTargets="PrepareForBuild">
+    <Error Condition="'$(GameDKXboxLatest)'==''" Text="GameDKXboxLatest property or environment variable is required" />
+    <Message Condition="'$(AcoCompilerAvailable)'!='true'" Importance="high" Text="Skipping MyAcoCompiler: the ACO shader compiler requires the October 2026 GDK or later ($(XboxToolsBinPath)aco_xbox.dll was not found)" />
+    <Message Condition="'$(AcoCompilerAvailable)'=='true'" Importance="high" Text="Using $(XboxToolsPath)" />
+  </Target>
+</Project>

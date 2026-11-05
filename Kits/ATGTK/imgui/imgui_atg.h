@@ -27,6 +27,8 @@ using namespace GameInput::v1;
 using namespace GameInput::v2;
 #elif GAMEINPUT_API_VERSION == 3
 using namespace GameInput::v3;
+#elif GAMEINPUT_API_VERSION == 3
+using namespace GameInput::v4;
 #endif
 
 namespace ImGuiAtg
@@ -213,6 +215,8 @@ namespace ImGuiAtg
         Back            = 0x23CE,
         Options         = 0x21E5,
         Home            = 0x21F9,
+        Minus           = 0x21FD,
+        Plus            = 0x21FE,
 
         // Keyboard -- modifiers and named keys
         KbEsc           = 0x242F,

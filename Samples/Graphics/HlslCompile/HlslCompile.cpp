@@ -17,15 +17,6 @@ using namespace DirectX;
 
 using Microsoft::WRL::ComPtr;
 
-namespace
-{
-    struct Vertex
-    {
-        XMFLOAT4 position;
-        XMFLOAT4 color;
-    };
-}
-
 Sample::Sample() noexcept(false) :
     m_frame(0)
 {
@@ -35,6 +26,15 @@ Sample::Sample() noexcept(false) :
         2,
         DX::DeviceResources::c_Enable4K_UHD);
     m_deviceResources->SetClearColor(ATG::ColorsLinear::Background);
+}
+
+Sample::~Sample()
+{
+    // The ACO shader instructions are freed with the pipeline state, so the GPU must be finished with them.
+    if (m_deviceResources)
+    {
+        m_deviceResources->WaitForGpu();
+    }
 }
 
 // Initialize the Direct3D resources required to run.
@@ -104,9 +104,9 @@ void Sample::Render()
     PIXBeginEvent(commandList, PIX_COLOR_DEFAULT, L"Render");
 
     auto const size = m_deviceResources->GetOutputSize();
-    auto const safeRect = SimpleMath::Viewport::ComputeTitleSafeArea(UINT(size.right), UINT(size.bottom));
+    auto const safeRect = SimpleMath::Viewport::ComputeTitleSafeArea(static_cast<UINT>(size.right), static_cast<UINT>(size.bottom));
 
-    XMFLOAT2 positionTitle = { (float)safeRect.left, (float)safeRect.top, };
+    XMFLOAT2 positionTitle = { static_cast<float>(safeRect.left), static_cast<float>(safeRect.top) };
     m_spriteBatch->Begin(commandList);
     m_spriteBatch->SetViewport(m_deviceResources->GetScreenViewport());
     m_fontDescription->DrawString(m_spriteBatch.get(), L"HlslCompile sample - To test HLSL symbols, take a PIX GPU capture and examine the pixel shaders for each triangle below", positionTitle);
@@ -122,7 +122,7 @@ void Sample::Render()
     viewportExample.Width =
     viewportExample.Height = 0.05f * height;
     viewportExample.MinDepth = 0.0f;
-    viewportExample.MaxDepth = 1.0;
+    viewportExample.MaxDepth = 1.0f;
 
     auto DrawExample = [commandList, this, &viewportExample](const wchar_t* name,
         ID3D12PipelineState* pso)-> void
@@ -168,8 +168,8 @@ void Sample::Render()
             positionSize.y,
         };
 
-        wchar_t buffer[2048] = L"";
-        swprintf_s(buffer, L"(%6zd bytes)", size);
+        wchar_t buffer[32] = L"";
+        swprintf_s(buffer, L"(%6zu bytes)", size);
 
         m_spriteBatch->Begin(commandList);
         m_spriteBatch->SetViewport(m_deviceResources->GetScreenViewport());
@@ -191,26 +191,32 @@ void Sample::Render()
     viewportExample.TopLeftY += viewportExample.Height + yMargin;
 
     DrawExample(L"DxCompilerEmbeddedPdb", m_pipelineStateDxCompilerEmbeddedPdb.Get());
-#if _GAMING_XBOX_SCARLETT
+#ifdef _GAMING_XBOX_SCARLETT
     DrawDescription(L"DxCompiler_xs.dll - Symbols are embedded in the shader binary and automatically found by PIX.", m_sizeDxCompilerEmbeddedPdb);
 #else
     DrawDescription(L"DxCompiler_x.dll - Symbols are embedded in the shader binary and automatically found by PIX.", m_sizeDxCompilerEmbeddedPdb);
 #endif
     viewportExample.TopLeftY += viewportExample.Height + yMargin;
     DrawExample(L"DxCompilerManualPdb", m_pipelineStateDxCompilerManualPdb.Get());
-#if _GAMING_XBOX_SCARLETT
+#ifdef _GAMING_XBOX_SCARLETT
     DrawDescription(L"DxCompiler_xs.dll - Symbols are saved to a user-specified pdb file and automatically found by PIX.", m_sizeDxCompilerManualPdb);
 #else
     DrawDescription(L"DxCompiler_x.dll - Symbols are saved to a user-specified pdb file and automatically found by PIX.", m_sizeDxCompilerManualPdb);
 #endif
     viewportExample.TopLeftY += viewportExample.Height + yMargin;
     DrawExample(L"DxCompilerAutoPdb", m_pipelineStateDxCompilerAutoPdb.Get());
-#if _GAMING_XBOX_SCARLETT
+#ifdef _GAMING_XBOX_SCARLETT
     DrawDescription(L"DxCompiler_xs.dll - Symbols are saved to a pdb file with an auto-generated filename, and the user must set a pdb path in PIX.", m_sizeDxCompilerAutoPdb);
 #else
     DrawDescription(L"DxCompiler_x.dll - Symbols are saved to a pdb file with an auto-generated filename, and the user must set a pdb path in PIX.", m_sizeDxCompilerAutoPdb);
 #endif
     viewportExample.TopLeftY += viewportExample.Height + yMargin;
+
+#ifdef ACO_EXAMPLE_ENABLED
+    DrawExample(L"AcoManualPdb", m_acoPipelineState->Get());
+    DrawDescription(L"aco_xbox.dll - Offline-serialized PSO. Symbols are saved to a user-specified pdb file; PIX shows ACO disassembly but can't map it to HLSL lines.", m_acoPipelineState->GetPixelShaderSize());
+    viewportExample.TopLeftY += viewportExample.Height + yMargin;
+#endif
 
     PIXEndEvent(commandList);
 
@@ -325,12 +331,18 @@ void Sample::CreateDeviceDependentResources()
     m_sizeDxCompilerEmbeddedPdb = LoadPixelShader(L"PixelShader_DxCompiler_EmbeddedPdb.cso", psoDesc, IID_GRAPHICS_PPV_ARGS(m_pipelineStateDxCompilerEmbeddedPdb.ReleaseAndGetAddressOf()));
 
     // The pixel shader compiled with IDxcCompiler and /Zi /Qstrip_debug, with the symbols
-    // saved to a file with a name chosen manually. 
+    // saved to a file with a name chosen manually.
     m_sizeDxCompilerManualPdb = LoadPixelShader(L"PixelShader_DxCompiler_ManualPdb.cso", psoDesc, IID_GRAPHICS_PPV_ARGS(m_pipelineStateDxCompilerManualPdb.ReleaseAndGetAddressOf()));
 
     // The pixel shader compiled with IDxcCompiler and /Zi /Qstrip_debug, with the symbols
-    // saved to a file named after the shader hash. 
+    // saved to a file named after the shader hash.
     m_sizeDxCompilerAutoPdb = LoadPixelShader(L"PixelShader_DxCompiler_AutoPdb.cso", psoDesc, IID_GRAPHICS_PPV_ARGS(m_pipelineStateDxCompilerAutoPdb.ReleaseAndGetAddressOf()));
+
+#ifdef ACO_EXAMPLE_ENABLED
+    // The vertex and pixel shaders compiled with ACO by MyAcoCompiler, which also serialized the
+    // complete pipeline state offline. See AcoPipelineState.cpp and MyAcoCompiler.cpp.
+    m_acoPipelineState = std::make_unique<AcoPipelineState>(device, m_rootSignature.Get(), L"HlslCompile_Aco");
+#endif
 
     {
         m_primitiveBatch = std::make_unique<DirectX::PrimitiveBatch<VertexPositionColor>>(device);

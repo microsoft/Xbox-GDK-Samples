@@ -100,10 +100,12 @@
     <ClCompile Include="HapticsManager\Audio\WAVFileReader.cpp">
       <Filter>HapticsManager\Audio</Filter>
     </ClCompile>
+    <ClCompile Include="GamepadLighting.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gamepad.h" />
     <ClInclude Include="GamepadHaptics.h" />
+    <ClInclude Include="GamepadLighting.h" />
     <ClInclude Include="GamepadVibration.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">

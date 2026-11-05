@@ -657,6 +657,7 @@
   <ItemGroup>
     <ClInclude Include="Gamepad.h" />
     <ClInclude Include="GamepadHaptics.h" />
+    <ClInclude Include="GamepadLighting.h" />
     <ClInclude Include="GamepadVibration.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h" />
@@ -709,6 +710,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Gamepad.cpp" />
+    <ClCompile Include="GamepadLighting.cpp" />
     <ClCompile Include="GamepadReadings.cpp" />
     <ClCompile Include="GamepadVibration.cpp" />
     <ClCompile Include="GamepadHaptics.cpp" />
@@ -1209,8 +1211,12 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\..\packages\Microsoft.GameInput.3.5.278\build\native\targets\Microsoft.GameInput.targets" Condition="Exists('..\..\packages\Microsoft.GameInput.3.5.278\build\native\targets\Microsoft.GameInput.targets')" />
+    <Import Project="..\..\packages\Microsoft.GameInput.4.0.306\build\native\targets\Microsoft.GameInput.targets" Condition="Exists('..\..\packages\Microsoft.GameInput.4.0.306\build\native\targets\Microsoft.GameInput.targets')" />
   </ImportGroup>
+  <ItemGroup Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' Or '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">
+    <!-- The package defines GameInputNativeBuildDirectory; the GDK deploys DLLs from OutDir. -->
+    <ReferenceCopyLocalPaths Include="$(GameInputNativeBuildDirectory)bin\xbox\GameInputRedist.dll" Condition="'$(XdkEdition)' != '' And '$(XdkEdition)' &lt; '261000'" />
+  </ItemGroup>
   <Target Name="EnsureGDK" BeforeTargets="_CheckForInvalidConfigurationAndPlatform" Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(Platform)', 'Gaming\.Xbox\..+\.x64'))">
     <PropertyGroup>
       <ErrorText>This project requires the Microsoft GDK with Xbox Extensions to be installed. If you have already installed the GDK, then run Repair to ensure proper integration with Visual Studio. The missing platform is {0}.</ErrorText>
@@ -1233,6 +1239,6 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Microsoft.GameInput.3.5.278\build\native\targets\Microsoft.GameInput.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.GameInput.3.5.278\build\native\targets\Microsoft.GameInput.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.GameInput.4.0.306\build\native\targets\Microsoft.GameInput.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.GameInput.4.0.306\build\native\targets\Microsoft.GameInput.targets'))" />
   </Target>
 </Project>

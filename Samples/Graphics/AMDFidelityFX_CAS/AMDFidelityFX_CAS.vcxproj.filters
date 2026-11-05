@@ -133,6 +133,9 @@
     <CopyFileToFolders Include="Assets\StoreLogo.png">
       <Filter>Assets</Filter>
     </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Media\Meshes\AbstractCathedral\AbstractCathedral.sdkmes_">
+      <Filter>Assets\AbstractCathedral</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
@@ -155,9 +158,6 @@
     </CopyFileToFolders>
     <None Include="..\..\..\Kits\ATGTK\FullScreenQuad\FullScreenQuad.hlsli">
       <Filter>ATG Tool Kit\FullScreenQuad</Filter>
-    </None>
-    <None Include="..\..\..\Media\Meshes\AbstractCathedral\AbstractCathedral.sdkmes_">
-      <Filter>Assets\AbstractCathedral</Filter>
     </None>
     <None Include="..\..\NuGet.config" />
     <None Include="readme_ja-jp.md" />

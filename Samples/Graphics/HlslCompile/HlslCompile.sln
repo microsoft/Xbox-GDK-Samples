@@ -8,6 +8,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTK12", "..\..\..\Kit
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MyHlslCompiler", "MyHlslCompiler\MyHlslCompiler.vcxproj", "{47021643-9DBB-4540-968F-C215FE19096E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MyAcoCompiler", "MyAcoCompiler\MyAcoCompiler.vcxproj", "{2D4BEACC-0300-4B49-9C2D-E15FD891B644}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Gaming.Xbox.Scarlett.x64 = Debug|Gaming.Xbox.Scarlett.x64
@@ -60,6 +62,15 @@ Global
 		{47021643-9DBB-4540-968F-C215FE19096E}.Release|Gaming.Xbox.Scarlett.x64.Build.0 = Debug.Scarlett|x64
 		{47021643-9DBB-4540-968F-C215FE19096E}.Release|Gaming.Xbox.XboxOne.x64.ActiveCfg = Debug.XboxOne|x64
 		{47021643-9DBB-4540-968F-C215FE19096E}.Release|Gaming.Xbox.XboxOne.x64.Build.0 = Debug.XboxOne|x64
+		{2D4BEACC-0300-4B49-9C2D-E15FD891B644}.Debug|Gaming.Xbox.Scarlett.x64.ActiveCfg = Debug|x64
+		{2D4BEACC-0300-4B49-9C2D-E15FD891B644}.Debug|Gaming.Xbox.Scarlett.x64.Build.0 = Debug|x64
+		{2D4BEACC-0300-4B49-9C2D-E15FD891B644}.Debug|Gaming.Xbox.XboxOne.x64.ActiveCfg = Debug|x64
+		{2D4BEACC-0300-4B49-9C2D-E15FD891B644}.Profile|Gaming.Xbox.Scarlett.x64.ActiveCfg = Debug|x64
+		{2D4BEACC-0300-4B49-9C2D-E15FD891B644}.Profile|Gaming.Xbox.Scarlett.x64.Build.0 = Debug|x64
+		{2D4BEACC-0300-4B49-9C2D-E15FD891B644}.Profile|Gaming.Xbox.XboxOne.x64.ActiveCfg = Debug|x64
+		{2D4BEACC-0300-4B49-9C2D-E15FD891B644}.Release|Gaming.Xbox.Scarlett.x64.ActiveCfg = Debug|x64
+		{2D4BEACC-0300-4B49-9C2D-E15FD891B644}.Release|Gaming.Xbox.Scarlett.x64.Build.0 = Debug|x64
+		{2D4BEACC-0300-4B49-9C2D-E15FD891B644}.Release|Gaming.Xbox.XboxOne.x64.ActiveCfg = Debug|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

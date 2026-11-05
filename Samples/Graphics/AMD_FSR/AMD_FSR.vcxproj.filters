@@ -1,0 +1,561 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <FxCompile Include="PixelShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="SmokeParticlePixelShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="SkyboxVertexShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="SkyboxPixelShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="SkinnedShadowVertexShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="SkinnedMotionVectorsVertexShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="SkinnedVertexShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ShadowVertexShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="SmokeParticleVertexShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="UpscaleBlitPixelShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="UpscaleBlitVertexShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="VertexShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ParticleVertexShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ParticlePixelShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="MotionVectorsVertexShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="MotionVectorsPixelShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="MagnifierVertexShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="MagnifierPixelShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AMD_FSR.cpp" />
+    <ClCompile Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.cpp">
+      <Filter>ATGTK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\FlyCamera.cpp">
+      <Filter>ATGTK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\gltf\GltfProcessing.cpp">
+      <Filter>ATGTK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\gltf\gltf.cpp">
+      <Filter>ATGTK</Filter>
+    </ClCompile>
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Kits\ATGTK\StringUtil.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationPlayer.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="PathManager.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AMD_FSR.h" />
+    <ClInclude Include="..\..\..\Kits\FidelityFX\api\include\ffx_api.h">
+      <Filter>FidelityFX</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\FidelityFX\api\include\ffx_api.hpp">
+      <Filter>FidelityFX</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\FidelityFX\api\include\dx12\ffx_api_dx12.h">
+      <Filter>FidelityFX</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\FidelityFX\api\include\dx12\ffx_api_dx12.hpp">
+      <Filter>FidelityFX</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\FidelityFX\api\include\ffx_api_loader.h">
+      <Filter>FidelityFX</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\FidelityFX\api\include\ffx_api_matrix_helpers.h">
+      <Filter>FidelityFX</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\FidelityFX\api\include\ffx_api_matrix_helpers.hpp">
+      <Filter>FidelityFX</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\FidelityFX\api\include\ffx_api_types.h">
+      <Filter>FidelityFX</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\FidelityFX\api\include\xbox\ffx_api_xbox.h">
+      <Filter>FidelityFX</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\FidelityFX\api\include\xbox\ffx_api_xbox.hpp">
+      <Filter>FidelityFX</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\FidelityFX\upscalers\include\ffx_upscale.h">
+      <Filter>FidelityFX</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\FidelityFX\upscalers\include\ffx_upscale.hpp">
+      <Filter>FidelityFX</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ControllerFont.h">
+      <Filter>ATGTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTelemetry\GDK\ATGTelemetry.h">
+      <Filter>ATGTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ATGColors.h">
+      <Filter>ATGTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FlyCamera.h">
+      <Filter>ATGTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\FindMedia.h">
+      <Filter>ATGTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\json\json.hpp">
+      <Filter>ATGTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\Json.h">
+      <Filter>ATGTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\gltf\GltfProcessing.h">
+      <Filter>ATGTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\gltf\gltf.h">
+      <Filter>ATGTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\ReadData.h">
+      <Filter>ATGTK</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\StringUtil.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationPlayer.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="PathManager.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Kits\ATGTK\d3dx12.h">
+      <Filter>ATGTK</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Media\CubeMaps\HDR-Image based lighting\SunSubMixerHRes_diffuseIBL.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\CubeMaps\HDR-Image based lighting\SunSubMixerHRes_specularIBL.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\HDR\Sponza_BRDF_LUT.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\Particles\SmokeSpriteSheet.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\RampagingTRex\TRex_BaseColor.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\RampagingTRex\TRex_MetallicRoughness.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\RampagingTRex\TRex_Normal.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\RampagingTRex\TRex_Occlusion.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\arch_stone_wall_01_BaseColor.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\arch_stone_wall_01_Normal.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\arch_stone_wall_01_Roughnessarch_stone_wall_01_Metalness.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\brickwall_01_BaseColor.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\brickwall_01_Normal.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\brickwall_01_Roughnessbrickwall_01_Metalness.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\brickwall_02_BaseColor.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\brickwall_02_Normal.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\brickwall_02_Roughnessbrickwall_02_Metalness.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\ceiling_plaster_01_BaseColor.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\ceiling_plaster_01_Normal.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\ceiling_plaster_01_Roughnessceiling_plaster_01_Metalness.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\ceiling_plaster_02_BaseColor.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\ceiling_plaster_02_Roughnessceiling_plaster_01_Metalness.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_1stfloor_BaseColor.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_1stfloor_Normal.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_1stfloor_Roughnesscol_1stfloor_Metalness.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_brickwall_01_BaseColor.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_brickwall_01_Normal.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_brickwall_01_Roughnesscol_brickwall_01_Metalness.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_head_1stfloor_BaseColor.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_head_1stfloor_Normal.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_head_1stfloor_Roughnesscol_head_1stfloor_Metalness.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_head_2ndfloor_02_BaseColor.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_head_2ndfloor_02_Normal.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_head_2ndfloor_02_Roughnesscol_head_2ndfloor_02_Metalness.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_head_2ndfloor_03_BaseColor.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_head_2ndfloor_03_Normal.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\col_head_2ndfloor_03_Roughnesscol_head_2ndfloor_03_Metalness.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\curtain_fabric_blue_BaseColor.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\curtain_fabric_green_BaseColor.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\curtain_fabric_Normal.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\curtain_fabric_red_BaseColor.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\curtain_fabric_Roughnesscurtain_fabric_Metalness.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\door_stoneframe_01_BaseColor.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\door_stoneframe_01_Normal.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\door_stoneframe_01_Roughnessdoor_stoneframe_01_Metalness.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\door_stoneframe_02_BaseColor.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\door_stoneframe_02_Normal.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\door_stoneframe_02_Roughnessdoor_stoneframe_02_Metalness.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\floor_tiles_01_BaseColor.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\floor_tiles_01_Normal.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\floor_tiles_01_Roughnessfloor_tiles_01_Metalness.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\lionhead_01_BaseColor.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\lionhead_01_Normal.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\lionhead_01_Roughnesslionhead_01_Metalness.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\metal_door_01_BaseColor_png.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\metal_door_01_Normal_png.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\metal_door_01_Roughnessmetal_door_01_Metalness_png.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\ornament_01_BaseColor.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\ornament_01_Normal.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\ornament_01_Roughnessornament_01_Metalness.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\roof_tiles_01_BaseColor.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\roof_tiles_01_Normal.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\roof_tiles_01_Roughnessroof_tiles_01_Metalness.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\stone_01_tile_BaseColor.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\stone_01_tile_Normal.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\stone_01_tile_Roughnessstone_01_tile_Metalness.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\stone_trims_01_BaseColor.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\stone_trims_01_Normal.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\stone_trims_01_Roughnessstone_trims_01_Metalness.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\stone_trims_02_BaseColor.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\stone_trims_02_Normal.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\stone_trims_02_Roughnessstone_trims_02_Metalness.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\stones_2ndfloor_01_BaseColor.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\stones_2ndfloor_01_Normal.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\stones_2ndfloor_01_Roughnessstones_2ndfloor_01_Metalness.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\window_frame_01_BaseColor.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\window_frame_01_Normal.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\window_frame_01_Roughnesswindow_frame_01_Metalness.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\wood_door_01_BaseColor.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\wood_door_01_Normal.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\wood_door_01_Roughnesswood_door_01_Metalness.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\wood_tile_01_BaseColor.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\wood_tile_01_Normal.dds">
+      <Filter>Media</Filter>
+    </Image>
+    <Image Include="..\..\..\Media\Textures\SponzaNew\wood_tile_01_Roughnesswood_tile_01_Metalness.dds">
+      <Filter>Media</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\SmallLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\Logo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\LargeLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Assets\SplashScreen.png">
+      <Filter>Assets</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\NuGet.config" />
+    <None Include="packages.config" />
+    <None Include="readme.md" />
+    <None Include="AMD_FSR.props">
+      <Filter>Props</Filter>
+    </None>
+    <None Include="..\..\..\Media\GLTF\SponzaNew\credits_license.txt">
+      <Filter>Media</Filter>
+    </None>
+    <None Include="PBRCommon.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="SmokeParticleCommon.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="SkyboxCommon.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="SkinningCommon.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="UpscaleBlitCommon.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="ParticleCommon.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="MagnifierCommon.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Media\GLTF\SponzaNew\MainSponza_0.bin">
+      <Filter>Media</Filter>
+    </None>
+    <None Include="..\..\..\Media\GLTF\SponzaNew\MainSponza_1.bin">
+      <Filter>Media</Filter>
+    </None>
+    <None Include="..\..\..\Media\GLTF\SponzaNew\MainSponza_2.bin">
+      <Filter>Media</Filter>
+    </None>
+    <None Include="..\..\..\Media\GLTF\SponzaNew\MainSponza_3.bin">
+      <Filter>Media</Filter>
+    </None>
+    <None Include="..\..\..\Media\GLTF\SponzaNew\MainSponza_4.bin">
+      <Filter>Media</Filter>
+    </None>
+    <None Include="..\..\..\Media\GLTF\SponzaNew\MainSponza.gltf">
+      <Filter>Media</Filter>
+    </None>
+    <None Include="..\..\..\Media\GLTF\RampagingTRex\RampagingTRex.glb">
+      <Filter>Media</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\SegoeUI_18.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="..\..\..\Media\Fonts\XboxOneControllerLegendSmall.spritefont">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="$(FfxDllPathLoader)amd_fidelityfx_loader_dx12.dll">
+      <Filter>FidelityFX</Filter>
+    </None>
+    <None Include="$(FfxDllPathUpscaler)amd_fidelityfx_upscaler_dx12.dll">
+      <Filter>FidelityFX</Filter>
+    </None>
+    <None Include="$(FfxDllPathLoader)amd_fidelityfx_loader_xbox.dll">
+      <Filter>FidelityFX</Filter>
+    </None>
+    <None Include="$(FfxDllPathUpscaler)amd_fidelityfx_upscaler_xbox.dll">
+      <Filter>FidelityFX</Filter>
+    </None>
+    <None Include="CharacterPath.json">
+      <Filter>Scene</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="ATGTK">
+      <UniqueIdentifier>{d6a4fe41-c623-4273-80ee-178d5efc417d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{c1dcbfc0-466d-4514-be92-6ae1e9eac027}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media">
+      <UniqueIdentifier>{396e3181-bbcd-41ba-ab6f-af828d1a5683}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FidelityFX">
+      <UniqueIdentifier>{86389a45-6c4b-455f-a2b2-f4c8095d44b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{fdc16a0a-1bf4-4102-ad8e-6f234d0bbd96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Props">
+      <UniqueIdentifier>{9c78a479-1acc-4189-a627-6025f03d4a03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{5aab48c5-25ca-40ff-aad9-78366162c41a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{9089ea1c-2c42-47c7-96eb-87087eb130e2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <MGCCompile Include="MicrosoftGameConfig.mgc" />
+  </ItemGroup>
+</Project>

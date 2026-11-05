@@ -44,7 +44,7 @@ namespace
     //
     // Each routine below is one self-contained technique. It reads the device's
     // cached lamp geometry and per-effect state, computes colors, and pushes them to
-    // the LampArray. Animated effects use WrapTime/TickDelta; one-shot effects are
+    // the LampArray. Animated effects use ImGui's frame delta; one-shot effects are
     // applied once by Run(). Any tuning constants sit directly above their effect.
     //==================================================================================
 
@@ -60,8 +60,8 @@ namespace
     {
         WrapTime(device, c_ColorCyclePeriod);
 
-        const double angle = c_TwoPi * device.elapsedSeconds / c_ColorCyclePeriod;
-        device.lampArray->SetColor(ColorForAngle(angle));
+        const double hue = device.elapsedSeconds / c_ColorCyclePeriod;
+        device.lampArray->SetColor(ColorForHue(hue));
     }
 
     //----------------------------------------------------------------------------------
@@ -77,11 +77,10 @@ namespace
     {
         WrapTime(device, c_ColorWavePeriod);
 
-        const double angle = c_TwoPi * device.elapsedSeconds / c_ColorWavePeriod;
+        const double hue = device.elapsedSeconds / c_ColorWavePeriod;
         for (uint32_t i = 0; i < device.lampCount; ++i)
         {
-            const double angleOffset = c_TwoPi * device.normalizedX[i];
-            device.lampColors[i] = ColorForAngle(angle + angleOffset);
+            device.lampColors[i] = ColorForHue(hue + device.normalizedX[i]);
         }
 
         device.lampArray->SetColorsForIndices(device.lampCount, device.lampIndices.get(), device.lampColors.get());
@@ -100,10 +99,10 @@ namespace
     {
         WrapTime(device, c_ColorWheelPeriod);
 
-        const double angle = c_TwoPi * device.elapsedSeconds / c_ColorWheelPeriod;
+        const double hue = device.elapsedSeconds / c_ColorWheelPeriod;
         for (uint32_t i = 0; i < device.lampCount; ++i)
         {
-            device.lampColors[i] = ColorForAngle(angle + device.wheelAngle[i]);
+            device.lampColors[i] = ColorForHue(hue + device.wheelAngle[i] / c_TwoPi);
         }
 
         device.lampArray->SetColorsForIndices(device.lampCount, device.lampIndices.get(), device.lampColors.get());
@@ -272,7 +271,8 @@ namespace
             return;
         }
 
-        const LampArrayColor color = HealthColor(device.health);
+        // Hue 0 is red, 1/6 is yellow, and 1/3 is green.
+        const LampArrayColor color = ColorForHue(device.health / 3.0);
 
         if (device.lampCount <= 1)
         {
@@ -424,9 +424,10 @@ void LightingEffects::Run(LampArrayDevice& device)
         Reset(device);
     }
 
-    // Real time elapsed since this effect last ran. Reset zeroes lastCounter, so a
-    // freshly assigned effect reports zero and renders its starting phase.
-    const double deltaSeconds = TickDelta(device);
+    // Reuse ImGui's frame timing, limiting stalls to 0.1 seconds. A newly assigned
+    // effect starts with zero delta, preserving its initial phase.
+    const double deltaSeconds = justChanged ? 0.0 :
+        (std::min)(static_cast<double>(ImGui::GetIO().DeltaTime), 0.1);
 
     // Animated effects render at the current elapsed time, then advance it scaled by
     // the device's speed. The static effects (WASD, Solid, Purposes) only need to be

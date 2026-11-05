@@ -10,6 +10,13 @@
 #include "DeviceResources.h"
 #include "StepTimer.h"
 
+// The ACO compiler example requires Xbox Series X|S and the October 2026 GDK or later.
+// HlslCompile.vcxproj applies the same condition to the ACO build steps.
+#if defined(_GAMING_XBOX_SCARLETT) && (_GXDK_EDITION >= 261000)
+#define ACO_EXAMPLE_ENABLED
+#include "AcoPipelineState.h"
+#endif
+
 
 // A basic sample implementation that creates a D3D12 device and
 // provides a render loop.
@@ -18,7 +25,7 @@ class Sample
 public:
 
     Sample() noexcept(false);
-    ~Sample() = default;
+    ~Sample();
 
     Sample(Sample&&) = default;
     Sample& operator= (Sample&&) = default;
@@ -67,7 +74,6 @@ private:
 
     // Direct3D 12 objects
     Microsoft::WRL::ComPtr<ID3D12RootSignature> m_rootSignature;
-    Microsoft::WRL::ComPtr<ID3D12Resource>      m_vertexBuffer;
 
     // Pipeline states for each version of the pixel shader.
     // These differ only in compiler arguments pertaining to symbols.
@@ -81,16 +87,21 @@ private:
     Microsoft::WRL::ComPtr<ID3D12PipelineState> m_pipelineStateDxCompilerAutoPdb;
 
     // Binary sizes
-    size_t										m_sizeDxcEmbeddedPdb =  0;
-    size_t										m_sizeDxcManualPdb = 0;
-    size_t										m_sizeDxcAutoPdb = 0;
+    size_t                                      m_sizeDxcEmbeddedPdb = 0;
+    size_t                                      m_sizeDxcManualPdb = 0;
+    size_t                                      m_sizeDxcAutoPdb = 0;
 
-    size_t										m_sizeDxCompilerEmbeddedPdb = 0;
-    size_t										m_sizeDxCompilerManualPdb = 0;
-    size_t										m_sizeDxCompilerAutoPdb= 0;
+    size_t                                      m_sizeDxCompilerEmbeddedPdb = 0;
+    size_t                                      m_sizeDxCompilerManualPdb = 0;
+    size_t                                      m_sizeDxCompilerAutoPdb = 0;
+
+#ifdef ACO_EXAMPLE_ENABLED
+    // Pipeline state compiled with ACO and serialized offline by MyAcoCompiler.
+    std::unique_ptr<AcoPipelineState>           m_acoPipelineState;
+#endif
 
     // Draw helper
-    std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionColor>>  
+    std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionColor>>
                                                 m_primitiveBatch;
 
     // Fonts
@@ -98,7 +109,7 @@ private:
     {
         enum : uint32_t
         {
-            FontDescription,    
+            FontDescription,
             Count
         };
     };

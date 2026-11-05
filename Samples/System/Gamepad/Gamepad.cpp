@@ -23,25 +23,28 @@ void Sample::Initialize(HWND hWnd, ImGuiAtg::DeviceContext* deviceContext)
 
     if (FAILED(hr))
     {
-        wchar_t buff[256] = {};
 #ifdef _GAMING_XBOX
-        swprintf_s(buff,
-            L"GameInput creation failed with error: %08X\n\n",
+        ImGuiAtg::Log(
+            "GameInput creation failed with error: %08X\n\n"
+            "Verify that you are using GDK 2610 or newer, or that GameInputRedist.dll "
+            "from the NuGet package has deployed next to the executable for older GDK usage.",
             static_cast<unsigned int>(hr));
-        OutputDebugStringW(buff);
 #else
-        swprintf_s(buff,
-            L"GameInput creation failed with error: %08X\n\n"
-            L"Verify that the GameInput runtime has been installed that is included with\n"
-            L"the redist in the NuGet package or via 'winget install Microsoft.GameInput'",
+        ImGuiAtg::Log(
+            "GameInput creation failed with error: %08X\n\n"
+            "Verify that the GameInput runtime has been installed that is included with "
+            "the redist in the NuGet package or via 'winget install Microsoft.GameInput'",
             static_cast<unsigned int>(hr));
-        MessageBoxW(hWnd, buff, L"Gamepad", MB_ICONERROR | MB_OK);
 #endif
-        PostQuitMessage(1);
         return;
     }
 
     ImGuiAtg::Log("GameInput created successfully\n");
+
+#ifndef _GAMING_XBOX
+    // Set background input explicitly so the runtime state matches the UI at startup.
+    m_gameInput->EnableBackgroundInput(m_enableBackgroundInput);
+#endif
 
     QueryPerformanceFrequency(reinterpret_cast<LARGE_INTEGER*>(&m_perfFrequency));
 
@@ -50,12 +53,9 @@ void Sample::Initialize(HWND hWnd, ImGuiAtg::DeviceContext* deviceContext)
         InitializeModelRenderer(deviceContext);
     }
 
-    // Blocking enumeration reports already-connected matching devices before returning.
     hr = m_gameInput->RegisterDeviceCallback(
         nullptr,
         GameInputKindGamepad | GameInputKindSensors,
-        GameInputDeviceAnyStatus,
-        GameInputBlockingEnumeration,
         this,
         OnDeviceChanged,
         &m_deviceCallbackToken);
@@ -65,128 +65,71 @@ void Sample::Initialize(HWND hWnd, ImGuiAtg::DeviceContext* deviceContext)
         ImGuiAtg::Log("Failed to register device callback: %08X\n", static_cast<unsigned int>(hr));
     }
 
-    // Guide and Share are system buttons, not GameInputGamepadState buttons.
-    hr = m_gameInput->RegisterSystemButtonCallback(
-        nullptr,
-        GameInputSystemButtonGuide | GameInputSystemButtonShare,
-        this,
-        OnSystemButtonChanged,
-        &m_systemButtonCallbackToken);
-
-    if (FAILED(hr))
-    {
-        ImGuiAtg::Log("Failed to register system button callback: %08X\n", static_cast<unsigned int>(hr));
-    }
-
     InitializeHaptics();
 }
 
 //--------------------------------------------------------------------------------------
-// Track device connection and status changes.
+// Track device connection and disconnection.
 //
-// GameInput device pointers have stable identity. GetDeviceInfo returns data valid for
-// the lifetime of the device.
+// Devices that are already connected when the callback is registered are reported
+// asynchronously through GameInputDeviceEventConnected, the same as newly connected
+// devices. GameInput device pointers have stable identity and can be compared directly.
+// Static device properties are read once here and cached in GamepadDevice.
 //--------------------------------------------------------------------------------------
 void CALLBACK Sample::OnDeviceChanged(
     GameInputCallbackToken /*token*/,
     void* context,
-    IGameInputDevice* device,
-    uint64_t /*timestamp*/,
-    GameInputDeviceStatus currentStatus,
-    GameInputDeviceStatus previousStatus) noexcept
+    GameInputDeviceEvent deviceEvent,
+    IGameInputDevice* device) noexcept
 {
     auto* sample = static_cast<Sample*>(context);
 
-    const GameInputDeviceInfo* info = nullptr;
-    HRESULT infoResult = device->GetDeviceInfo(&info);
-
-    bool wasConnected = (previousStatus & GameInputDeviceConnected) != 0;
-    bool isConnected = (currentStatus & GameInputDeviceConnected) != 0;
-    bool hapticsReady = (currentStatus & GameInputDeviceHapticInfoReady) && !(previousStatus & GameInputDeviceHapticInfoReady);
-
     std::lock_guard<std::mutex> lock(sample->m_gamepadsMutex);
 
-    if (wasConnected && !isConnected)
+    switch (deviceEvent)
     {
-        if (SUCCEEDED(infoResult))
+        case GameInputDeviceEventConnected:
         {
-            ImGuiAtg::Log("Disconnected: %s (VID: %04X, PID: %04X) prev=0x%08X cur=0x%08X\n",
-                GetDeviceDisplayName(info), info->vendorId, info->productId, static_cast<unsigned int>(previousStatus), static_cast<unsigned int>(currentStatus));
-        }
-        else
-        {
-            ImGuiAtg::Log("Failed to get disconnected device info: %08X\n", static_cast<unsigned int>(infoResult));
-        }
+            GamepadDevice newDevice = {};
+            newDevice.device = device;
+            newDevice.displayName = GetDeviceDisplayName(device);
+            newDevice.pnpPath = GetDevicePnpPath(device);
 
-        for (auto it = sample->m_gamepads.begin(); it != sample->m_gamepads.end(); ++it)
-        {
-            if (it->device.Get() == device)
+            // Only track devices that report gamepad info.
+            if (!device->GetGamepadInfo(&newDevice.deviceInfo))
             {
-                sample->m_gamepads.erase(it);
+                ImGuiAtg::Log("Ignoring non-gamepad device: %s (VID: %04X, PID: %04X)\n", newDevice.displayName.c_str(), device->GetVendorId(), device->GetProductId());
                 break;
             }
-        }
 
-        return;
-    }
+            ImGuiAtg::Log("Connected: %s (VID: %04X, PID: %04X)\n", newDevice.displayName.c_str(), device->GetVendorId(), device->GetProductId());
 
-    if (FAILED(infoResult))
-    {
-        ImGuiAtg::Log("Failed to get device info: %08X\n", static_cast<unsigned int>(infoResult));
-        return;
-    }
-
-    if (isConnected && !wasConnected)
-    {
-        ImGuiAtg::Log("Connected: %s (VID: %04X, PID: %04X) prev=0x%08X cur=0x%08X\n",
-            GetDeviceDisplayName(info), info->vendorId, info->productId, static_cast<unsigned int>(previousStatus), static_cast<unsigned int>(currentStatus));
-
-        GamepadDevice newDevice = {};
-        newDevice.device = device;
-        newDevice.deviceInfo = info;
-
-        sample->m_gamepads.push_back(std::move(newDevice));
-        sample->m_selectedGamepad = static_cast<int>(sample->m_gamepads.size() - 1);
-    }
-
-    if (hapticsReady)
-    {
-        // Haptic information may become ready after connection.
-        ImGuiAtg::Log("Haptics ready: %s (VID: %04X, PID: %04X) prev=0x%08X cur=0x%08X\n",
-            GetDeviceDisplayName(info), info->vendorId, info->productId, static_cast<unsigned int>(previousStatus), static_cast<unsigned int>(currentStatus));
-    }
-}
-
-//--------------------------------------------------------------------------------------
-// Track Guide and Share button state.
-//
-// Guide and Share require RegisterSystemButtonCallback. Guide delivery also depends
-// on the configured focus policy.
-//--------------------------------------------------------------------------------------
-void CALLBACK Sample::OnSystemButtonChanged(
-    GameInputCallbackToken /*token*/,
-    void* context,
-    IGameInputDevice* device,
-    uint64_t /*timestamp*/,
-    GameInputSystemButtons currentButtons,
-    GameInputSystemButtons /*previousButtons*/) noexcept
-{
-    auto* sample = static_cast<Sample*>(context);
-
-    std::lock_guard<std::mutex> lock(sample->m_gamepadsMutex);
-
-    for (auto& gamepad : sample->m_gamepads)
-    {
-        if (gamepad.device.Get() == device)
-        {
-            gamepad.systemButtons = currentButtons;
+            sample->m_gamepads.push_back(std::move(newDevice));
+            sample->m_selectedGamepad = static_cast<int>(sample->m_gamepads.size() - 1);
             break;
         }
+
+        case GameInputDeviceEventDisconnected:
+            for (auto it = sample->m_gamepads.begin(); it != sample->m_gamepads.end(); ++it)
+            {
+                if (it->device.Get() == device)
+                {
+                    ImGuiAtg::Log("Disconnected: %s (VID: %04X, PID: %04X)\n", it->displayName.c_str(), device->GetVendorId(), device->GetProductId());
+                    sample->m_gamepads.erase(it);
+                    break;
+                }
+            }
+            break;
+
+        case GameInputDeviceEventHapticInfoUpdated:
+        case GameInputDeviceEventKeyboardLayoutUpdated:
+        case GameInputDeviceEventXInputIndexUpdated:
+            break;
     }
 }
 
 //--------------------------------------------------------------------------------------
-// Update readings, vibration, and model orientation.
+// Update readings, vibration, lighting, and model orientation.
 //--------------------------------------------------------------------------------------
 void Sample::Update()
 {
@@ -204,6 +147,7 @@ void Sample::Update()
         }
 
         UpdateVibration(gamepad);
+        UpdateLighting(gamepad);
     }
 
     // render the 3D model for the visible tab
@@ -235,30 +179,6 @@ void Sample::Draw()
     {
         ImGui::SetWindowFocus();
     }
-
-    // Focus policy controls foreground/background input and system-button routing.
-#ifndef _GAMING_XBOX
-    if (ImGui::CollapsingHeader("Focus Policy and Reading Mode", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Leaf))
-    {
-        ImGuiAtg::BeginNavigationGroup("FocusPolicy");
-
-        bool changed = false;
-        changed |= DrawFocusPolicyCheckbox("ExclusiveForegroundInput",       GameInputExclusiveForegroundInput);
-        changed |= DrawFocusPolicyCheckbox("ExclusiveForegroundGuideButton", GameInputExclusiveForegroundGuideButton);
-        changed |= DrawFocusPolicyCheckbox("ExclusiveForegroundShareButton", GameInputExclusiveForegroundShareButton);
-        changed |= DrawFocusPolicyCheckbox("EnableBackgroundInput",          GameInputEnableBackgroundInput);
-        changed |= DrawFocusPolicyCheckbox("EnableBackgroundGuideButton",    GameInputEnableBackgroundGuideButton);
-        changed |= DrawFocusPolicyCheckbox("EnableBackgroundShareButton",    GameInputEnableBackgroundShareButton);
-
-        if (changed && m_gameInput)
-        {
-            m_gameInput->SetFocusPolicy(m_focusPolicy);
-            ImGuiAtg::Log("Focus policy changed to: 0x%04X\n", static_cast<unsigned int>(m_focusPolicy));
-        }
-
-        ImGuiAtg::EndNavigationGroup();
-    }
-#endif
 
     // Switch between polling and callback-driven readings.
     {
@@ -295,10 +215,32 @@ void Sample::Draw()
         ImGuiAtg::EndNavigationGroup();
     }
 
+#ifndef _GAMING_XBOX
+    // On PC, GameInput only delivers input while the title's window has focus unless
+    // background input is enabled. Console titles do not use this setting.
+    {
+        ImGui::SameLine(0.0f, ImGuiAtg::Scaled(30));
+
+        ImGuiAtg::BeginNavigationGroup("BackgroundInput");
+
+        if (ImGui::Checkbox("Enable background input", &m_enableBackgroundInput) && m_gameInput)
+        {
+            m_gameInput->EnableBackgroundInput(m_enableBackgroundInput);
+            ImGuiAtg::Log("Background input %s\n", m_enableBackgroundInput ? "enabled" : "disabled");
+        }
+
+        ImGuiAtg::EndNavigationGroup();
+    }
+#endif
+
     {
         std::lock_guard<std::mutex> lock(m_gamepadsMutex);
 
-        if (m_gamepads.empty())
+        if(m_gameInput == nullptr)
+        {
+            ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "GameInputCreate failed, see log below for more details...");
+        }
+        else if (m_gamepads.empty())
         {
             ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "No gamepad connected.");
             ImGui::TextWrapped("Connect a gamepad to see input readings.");
@@ -315,7 +257,7 @@ void Sample::Draw()
                     ImGuiTabItemFlags tabFlags = (m_requestedGamepadTab == static_cast<int>(i))
                         ? ImGuiTabItemFlags_SetSelected
                         : ImGuiTabItemFlags_None;
-                    if (ImGui::BeginTabItem(GetDeviceDisplayName(gamepad.deviceInfo), nullptr, tabFlags))
+                    if (ImGui::BeginTabItem(gamepad.displayName.c_str(), nullptr, tabFlags))
                     {
                         m_selectedGamepad = static_cast<int>(i);
 
@@ -346,6 +288,9 @@ void Sample::Draw()
                         DrawVibrationSection(gamepad);
                         ImGui::Spacing();
                         DrawHapticsSection(gamepad);
+                        ImGui::Spacing();
+                        DrawLightingSection(gamepad);
+
                         ImGui::EndChild();
 
                         ImGui::EndTabItem();
@@ -389,45 +334,25 @@ void Sample::DrawDeviceInfoSection(const GamepadDevice& gamepad)
             ImGui::TableSetupColumn("Property", ImGuiTableColumnFlags_WidthFixed, ImGuiAtg::Scaled(180));
             ImGui::TableSetupColumn("Value");
 
-            ImGuiAtg::DrawNameValueTable("Name", "%s", GetDeviceDisplayName(gamepad.deviceInfo));
-            ImGuiAtg::DrawNameValueTable("VID / PID", "%04X / %04X", gamepad.deviceInfo->vendorId, gamepad.deviceInfo->productId);
+            ImGuiAtg::DrawNameValueTable("Name", "%s", gamepad.displayName.c_str());
+            ImGuiAtg::DrawNameValueTable("VID / PID", "%04X / %04X", gamepad.device->GetVendorId(), gamepad.device->GetProductId());
 
-            const char* familyStr = "Unknown";
-            switch (gamepad.deviceInfo->deviceFamily)
-            {
-                case GameInputFamilyVirtual:
-                    familyStr = "Virtual";
-                    break;
-                case GameInputFamilyXboxOne:
-                    familyStr = "Xbox One";
-                    break;
-                case GameInputFamilyXbox360:
-                    familyStr = "Xbox 360";
-                    break;
-                case GameInputFamilyHid:
-                    familyStr = "HID";
-                    break;
-                case GameInputFamilyI8042:
-                    familyStr = "I8042";
-                    break;
-                case GameInputFamilyAggregate:
-                    familyStr = "Aggregate";
-                    break;
-                case GameInputFamilyUnknown:
-                    break;
-            }
-            ImGuiAtg::DrawNameValueTable("Device Family", "%s", familyStr);
+            ImGuiAtg::DrawNameValueTable("Device Family", "%s", GameInputFamilyToString(gamepad.device->GetDeviceFamily()));
 
-            std::string supportedInputText = GameInputKindToString(gamepad.deviceInfo->supportedInput);
+            std::string supportedInputText = GameInputKindToString(gamepad.device->GetSupportedInput());
             ImGuiAtg::DrawNameValueTable("Supported Input", "%s", supportedInputText.c_str());
+
+            std::string supportedLightingText = GameInputLightingGroupsToString(gamepad.device->GetSupportedLightingGroups());
+            ImGuiAtg::DrawNameValueTable("Lighting Groups", "%s", supportedLightingText.c_str());
+
             ImGuiAtg::DrawNameValueTable("Last Reading Timestamp", "%llu \xc2\xb5s", gamepad.readingTimestamp);
 
 #ifndef _GAMING_XBOX
-            ImGuiAtg::DrawNameValueTable("PnP Path", "%s", gamepad.deviceInfo->pnpPath);
+            ImGuiAtg::DrawNameValueTable("PnP Path", "%s", gamepad.pnpPath.c_str());
             if (ImGui::IsItemHovered())
             {
                 ImGui::BeginTooltip();
-                ImGui::TextUnformatted(gamepad.deviceInfo->pnpPath);
+                ImGui::TextUnformatted(gamepad.pnpPath.c_str());
                 ImGui::EndTooltip();
             }
 #endif
@@ -451,17 +376,12 @@ void Sample::Shutdown()
     }
 
     StopVibration();
+    RestoreSystemLighting();
 
     if (m_gameInput && m_deviceCallbackToken)
     {
         m_gameInput->UnregisterCallback(m_deviceCallbackToken);
         m_deviceCallbackToken = 0;
-    }
-
-    if (m_gameInput && m_systemButtonCallbackToken)
-    {
-        m_gameInput->UnregisterCallback(m_systemButtonCallbackToken);
-        m_systemButtonCallbackToken = 0;
     }
 
     m_gamepads.clear();
@@ -475,6 +395,7 @@ void Sample::Shutdown()
 void Sample::Suspend(ImGuiAtg::DeviceContext* deviceContext)
 {
     StopVibration();
+    RestoreSystemLighting();
 
     if (deviceContext)
     {
@@ -506,8 +427,7 @@ void Sample::HandleSampleInput()
         && ImGui::IsKeyDown(ImGuiKey_GamepadR1);
 
     if ((!ImGui::GetIO().WantTextInput && ImGui::IsKeyPressed(ImGuiKey_F3, false)) ||
-        (gamepadChord &&
-         ImGui::IsKeyPressed(ImGuiKey_GamepadFaceLeft, false)))
+        (gamepadChord && ImGui::IsKeyPressed(ImGuiKey_GamepadFaceLeft, false)))
     {
         ToggleGamepadNavigation();
     }
@@ -533,52 +453,104 @@ void Sample::HandleSampleInput()
     }
 }
 
-const char* Sample::GetDeviceDisplayName(const GameInputDeviceInfo* deviceInfo)
+std::string Sample::GetDeviceDisplayName(IGameInputDevice* device)
 {
-    return deviceInfo->displayName[0] != '\0' ? deviceInfo->displayName : "Xbox Gamepad";
+    char buff[1024]{};
+    device->GetDisplayName(std::size(buff), buff);
+    return buff[0] != '\0' ? buff : "Unknown";
 }
 
-bool Sample::DrawFocusPolicyCheckbox(const char* label, GameInputFocusPolicy flag)
+std::string Sample::GetDevicePnpPath(IGameInputDevice* device)
 {
-    const float rightEdge = ImGui::GetWindowPos().x + ImGui::GetWindowWidth() - ImGui::GetStyle().WindowPadding.x;
-    const float width = ImGui::CalcTextSize(label).x + ImGuiAtg::Scaled(30);
-    if (ImGui::GetItemRectMax().x + ImGui::GetStyle().ItemSpacing.x + width < rightEdge)
-        ImGui::SameLine();
+    char buff[1024]{};
+    device->GetPnpPath(std::size(buff), buff);
+    return buff;
+}
 
-    bool enabled = (m_focusPolicy & flag) != 0;
-    if (ImGui::Checkbox(label, &enabled))
+namespace
+{
+    template<typename T>
+    struct EnumName
     {
-        if (enabled)
-            m_focusPolicy = static_cast<GameInputFocusPolicy>(m_focusPolicy | flag);
-        else
-            m_focusPolicy = static_cast<GameInputFocusPolicy>(m_focusPolicy & ~flag);
-        return true;
+        T value;
+        const char* name;
+    };
+
+    constexpr EnumName<GameInputDeviceFamily> c_deviceFamilyNames[] =
+    {
+        { GameInputFamilyVirtual,   "Virtual" },
+        { GameInputFamilyUnknown,   "Unknown" },
+        { GameInputFamilyXboxOne,   "Xbox One" },
+        { GameInputFamilyXbox360,   "Xbox 360" },
+        { GameInputFamilyHid,       "HID" },
+        { GameInputFamilyI8042,     "I8042" },
+        { GameInputFamilyAggregate, "Aggregate" }
+    };
+
+    constexpr EnumName<GameInputKind> c_inputKindNames[] =
+    {
+        { GameInputKindGamepad,      "Gamepad" },
+        { GameInputKindSensors,      "Sensors" },
+        { GameInputKindLighting,     "Lighting" },
+        { GameInputKindSystemButton, "SystemButton" }
+    };
+
+    // Flag tables contain individual bits, not composite values such as All.
+    constexpr EnumName<GameInputLightingGroups> c_lightingGroupNames[] =
+    {
+        { GameInputLightingGroupLeftThumbstick,  "LeftThumbstick" },
+        { GameInputLightingGroupRightThumbstick, "RightThumbstick" },
+        { GameInputLightingGroupDPad,            "DPad" },
+        { GameInputLightingGroupFaceButtons,     "FaceButtons" },
+        { GameInputLightingGroupCenterLight,     "CenterLight" },
+        { GameInputLightingGroupKeyboardKey,     "KeyboardKey" },
+        { GameInputLightingGroupLeftHeadset,     "LeftHeadset" },
+        { GameInputLightingGroupRightHeadset,    "RightHeadset" }
+    };
+
+    template<typename T, size_t N>
+    const char* EnumToString(T value, const EnumName<T> (&names)[N], const char* fallback)
+    {
+        for (const auto& entry : names)
+        {
+            if (value == entry.value)
+                return entry.name;
+        }
+
+        return fallback;
     }
-    return false;
+
+    template<typename T, size_t N>
+    std::string FlagsToString(T value, const EnumName<T> (&names)[N], const char* fallback)
+    {
+        std::string result;
+        for (const auto& entry : names)
+        {
+            if (value & entry.value)
+            {
+                if (!result.empty())
+                    result += " | ";
+                result += entry.name;
+            }
+        }
+
+        return result.empty() ? fallback : result;
+    }
+}
+
+const char* Sample::GameInputFamilyToString(GameInputDeviceFamily family)
+{
+    return EnumToString(family, c_deviceFamilyNames, "Unknown");
 }
 
 std::string Sample::GameInputKindToString(GameInputKind kind)
 {
-    std::string result;
-    auto append = [&](GameInputKind flag, const char* name)
-    {
-        if (kind & flag)
-        {
-            if (!result.empty())
-                result += " | ";
-            result += name;
-        }
-    };
+    return FlagsToString(kind, c_inputKindNames, "Unknown");
+}
 
-    append(GameInputKindGamepad, "Gamepad");
-    append(GameInputKindKeyboard, "Keyboard");
-    append(GameInputKindMouse, "Mouse");
-    append(GameInputKindArcadeStick, "ArcadeStick");
-    append(GameInputKindFlightStick, "FlightStick");
-    append(GameInputKindRacingWheel, "RacingWheel");
-    append(GameInputKindSensors, "Sensors");
-
-    return result.empty() ? "Unknown" : result;
+std::string Sample::GameInputLightingGroupsToString(GameInputLightingGroups groups)
+{
+    return FlagsToString(groups, c_lightingGroupNames, "None / Unknown");
 }
 
 void Sample::Activated()
@@ -593,4 +565,3 @@ LRESULT Sample::WndProcHandler(HWND /*hWnd*/, UINT /*msg*/, WPARAM /*wParam*/, L
 {
     return 0;
 }
-
