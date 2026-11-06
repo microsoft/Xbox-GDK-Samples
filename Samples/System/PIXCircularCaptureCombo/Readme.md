@@ -19,7 +19,7 @@ description: "This sample shows how to use the PIX[Begin/End]Capture APIs to imp
 
   ![](./media/image1.png)
 
-#   SimpleDirectStorageCombo Sample
+#   PIXCircularCaptureCombo Sample
 
 *This sample is compatible with the Microsoft Game Development Kit (October
 2023)*

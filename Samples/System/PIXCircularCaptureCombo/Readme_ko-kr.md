@@ -1,6 +1,6 @@
 ![](./media/image1.png)
 
-# SimpleDirectStorageCombo 샘플
+# PIXCircularCaptureCombo 샘플
 
 *이 샘플은 Microsoft 게임 개발 키트와 호환됩니다(2023년 10월).*
 
