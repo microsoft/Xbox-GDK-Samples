@@ -13,7 +13,7 @@ extendedZipContent:
   target: Kits
 - path: Media
   target: Media
-description: "This sample demonstrates AMD FSR� Upscaling 4 on the Microsoft GDK, integrated through the unified AMD FSR� SDK."
+description: "This sample demonstrates AMD FSR™ Upscaling 4 on the Microsoft GDK, integrated through the unified AMD FSR™ SDK."
 ---
 ----->
 
