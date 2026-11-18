@@ -51,7 +51,7 @@ goto :eof
 :define_vs_2022_bwoi
 if NOT EXIST "%VSInstallDir%\MSBuild\Microsoft\VC\v170\Microsoft.cpp.Default.props" goto :missingvsinstalldir
 
-if %XDKEditionTarget GEQ 251000 goto :newlayoutdirs
+if %XDKEditionTarget% GEQ 251000 goto :newlayoutdirs
 if NOT EXIST "%ExtractedFolder%\Microsoft GDK\%XDKEditionTarget%\GXDK\VS2022" goto :needsvs2022gdk
 if NOT EXIST "%ExtractedFolder%\Microsoft GDK\%XDKEditionTarget%\GRDK\VS2022" goto :needsvs2022gdk
 :newlayoutdirs
@@ -63,7 +63,7 @@ if NOT EXIST "%ExtractedFolder%\VCTargets170" md "%ExtractedFolder%\VCTargets170
 echo Set up VS 2022 170 VC Targets (Platform Toolset v143)
 
 robocopy /NJH /NJS /NDL /NC /NS /S "%VSInstallDir%\MSBuild\Microsoft\VC\v170" %ExtractedFolder%\VCTargets170
-if %XDKEditionTarget GEQ 251000 (
+if %XDKEditionTarget% GEQ 251000 (
     robocopy /NJH /NJS /NDL /NC /NS /S "%ExtractedFolder%\Microsoft GDK\%XDKEditionTarget%\xbox\build\VS2022\pc\v170" "%ExtractedFolder%\VCTargets170"
     robocopy /NJH /NJS /NDL /NC /NS /S "%ExtractedFolder%\Microsoft GDK\%XDKEditionTarget%\xbox\build\VS2022\gen9\v170" "%ExtractedFolder%\VCTargets170"
     robocopy /NJH /NJS /NDL /NC /NS /S "%ExtractedFolder%\Microsoft GDK\%XDKEditionTarget%\xbox\build\VS2022\gen8\v170" "%ExtractedFolder%\VCTargets170"
@@ -77,7 +77,7 @@ if NOT EXIST "%VSInstallDir%\MSBuild\Microsoft\VC\v160\Microsoft.Cpp.Default.pro
 echo Set up VS 2022 160 VC Targets (Platform Toolset v142)
 
 robocopy /NJH /NJS /NDL /NC /NS /S "%VSInstallDir%\MSBuild\Microsoft\VC\v160" %ExtractedFolder%\VCTargets160
-if %XDKEditionTarget GEQ 251000 (
+if %XDKEditionTarget% GEQ 251000 (
     robocopy /NJH /NJS /NDL /NC /NS /S "%ExtractedFolder%\Microsoft GDK\%XDKEditionTarget%\xbox\build\VS2022\pc\v160" "%ExtractedFolder%\VCTargets160"
     robocopy /NJH /NJS /NDL /NC /NS /S "%ExtractedFolder%\Microsoft GDK\%XDKEditionTarget%\xbox\build\VS2022\gen9\v160" "%ExtractedFolder%\VCTargets160"
     robocopy /NJH /NJS /NDL /NC /NS /S "%ExtractedFolder%\Microsoft GDK\%XDKEditionTarget%\xbox\build\VS2022\gen8\v160" "%ExtractedFolder%\VCTargets160"
